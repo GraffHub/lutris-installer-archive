@@ -1,0 +1,71 @@
+{
+  "id": 14384,
+  "game_id": 11850,
+  "game_slug": "anno-1503",
+  "name": "Anno 1503 A.D.",
+  "year": 2003,
+  "user": "codingHahn",
+  "runner": "wine",
+  "slug": "anno-1503-ad-dvd-gold",
+  "version": "DVD Gold",
+  "description": "Installs the gold version of the game with the DVD-ROM.",
+  "notes": "",
+  "created_at": "2019-07-02T15:09:44.502656Z",
+  "updated_at": "2019-07-02T15:09:44.502687Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/game/ANNO 1503/1503Startup.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "reset_desktop": true
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "install_gecko": false,
+          "install_mono": false,
+          "name": "create_prefix",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting up winetricks...",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "windowmanagermanaged=n",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "wine": {
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/game/ANNO 1503/1503Startup.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing...\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  reset_desktop: true\nwine:\n  version: tkg-4.0-x86_64\n"
+}

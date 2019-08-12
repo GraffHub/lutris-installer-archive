@@ -1,0 +1,91 @@
+{
+  "id": 5517,
+  "game_id": 9991,
+  "game_slug": "no-one-lives-forever",
+  "name": "No One Lives Forever",
+  "year": 2000,
+  "user": "Zerginator",
+  "runner": "wine",
+  "slug": "no-one-lives-forever-nolfrevivaltk",
+  "version": "nolfrevival.tk",
+  "description": "Installer for GOTY Widescreen patched abandonware version of NOLF on nolfrevival.tk",
+  "notes": "Be sure to set your native resolution under \"Displays\" in the game launcher. Select your graphics card and be sure to select a resolution with \"x32\" at the end for 32bit. \r\n\r\nYou may have to alt tab into the game once you hit launch.",
+  "created_at": "2017-08-24T18:52:11.243000Z",
+  "updated_at": "2019-03-23T07:05:28.586876Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Games/NOLF/NOLF.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "N/A:Provide the installer file"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows version to XP",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "winxp"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing NOLF",
+          "prefix": "$GAMEDIR",
+          "executable": "$setup",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dsound",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "dsound",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dmusic",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "directmusic",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing DirectX 9",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "directx9",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup: N/A:Provide the installer file\ngame:\n  arch: win32\n  exe: drive_c/Games/NOLF/NOLF.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    arch: win32\n    description: Setting Windows version to XP\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing NOLF\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dsound\n    description: Installing dsound\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: directmusic\n    description: Installing dmusic\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: directx9\n    description: Installing DirectX 9\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

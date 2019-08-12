@@ -1,0 +1,156 @@
+{
+  "id": 2783,
+  "game_id": 3663,
+  "game_slug": "jazz-jackrabbit-2",
+  "name": "Jazz Jackrabbit 2",
+  "year": 1998,
+  "user": "djazz",
+  "runner": "wine",
+  "slug": "jazz-jackrabbit-2-gog",
+  "version": "GOG",
+  "description": "Installs Jazz Jackrabbit 2 from a GOG installer",
+  "notes": "Use the JJ2+ version from GOG.com (required for online play)\r\n\r\n<a href=\"https://www.gog.com/downloads/jazz_jackrabbit_2_secret_files/79894\">Download JJ2+ directly from GOG.com</a>",
+  "created_at": "2016-09-26T19:56:06.959000Z",
+  "updated_at": "2019-03-23T14:40:23.300631Z",
+  "draft": false,
+  "published": true,
+  "published_by": 2045,
+  "rating": "5",
+  "steamid": null,
+  "gogid": 1917711239,
+  "gogslug": "jazz_jackrabbit_2_collection",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Games/Jazz2/Jazz2.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "args": "-windowed"
+    },
+    "files": [
+      {
+        "setup": "N/A:Please select the GOG.com Jazz Jackrabbit 2 with JJ2+ installer executable"
+      },
+      {
+        "helper": "https://gist.github.com/daniel-j/83bf128212c085cc99989e4d1e33ffb1/archive/master.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Epic MegaGames\\Jazz Jackrabbit 2 Special Edition\\1.24\\System",
+          "value": "04 00 00 00",
+          "key": "Last VideoMode",
+          "type": "REG_BINARY"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer",
+          "prefix": "$GAMEDIR",
+          "key": "Desktop",
+          "name": "set_regedit",
+          "value": "Installing Jazz Jackrabbit 2"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
+          "prefix": "$GAMEDIR",
+          "key": "Installing Jazz Jackrabbit 2",
+          "name": "set_regedit",
+          "value": "800x600"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/SP- /DIR=\"C:\\\\Games\\\\Jazz2\" /NOICONS /NORESTART /CLOSEAPPLICATIONS",
+          "description": "Installing game",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "exclude_processes": "jazz2.exe"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer",
+          "prefix": "$GAMEDIR",
+          "key": "Desktop",
+          "name": "set_regedit",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "description": "Stopping wine processes",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/helper/",
+          "file": "helper"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Games/Jazz2/",
+          "src": "$GAMEDIR/drive_c/helper/JAZZ2.CFG"
+        }
+      },
+      {
+        "write_config": {
+          "section": "General",
+          "value": 1,
+          "key": "GameInfo",
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini"
+        }
+      },
+      {
+        "write_config": {
+          "section": "General",
+          "value": 2,
+          "key": "PlayerListSort",
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini"
+        }
+      },
+      {
+        "write_config": {
+          "section": "General",
+          "value": false,
+          "key": "MouseAim",
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini"
+        }
+      },
+      {
+        "write_config": {
+          "section": "Server",
+          "value": true,
+          "key": "AllowSpectating",
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini"
+        }
+      },
+      {
+        "task": {
+          "description": "Applying some registry fixes",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit_file",
+          "filename": "$GAMEDIR/drive_c/helper/reset.reg"
+        }
+      }
+    ]
+  },
+  "content": "game:\r\n  arch: win32\r\n  exe: drive_c/Games/Jazz2/Jazz2.exe\r\n  args: -windowed\r\n  prefix: $GAMEDIR\r\n\r\nfiles:\r\n- setup: 'N/A:Please select the GOG.com Jazz Jackrabbit 2 with JJ2+ installer executable'\r\n- helper: https://gist.github.com/daniel-j/83bf128212c085cc99989e4d1e33ffb1/archive/master.zip\r\n\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n    description: Creating Wine prefix\r\n\r\n- task:\r\n    name: set_regedit\r\n    prefix: $GAMEDIR\r\n    path: HKEY_CURRENT_USER\\Software\\Epic MegaGames\\Jazz Jackrabbit 2 Special Edition\\1.24\\System\r\n    key: Last VideoMode\r\n    type: 'REG_BINARY'\r\n    value: 04 00 00 00\r\n- task:\r\n    name: set_regedit\r\n    prefix: $GAMEDIR\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Explorer\r\n    key: Desktop\r\n    value: Installing Jazz Jackrabbit 2\r\n- task:\r\n    name: set_regedit\r\n    prefix: $GAMEDIR\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops\r\n    key: Installing Jazz Jackrabbit 2\r\n    value: 800x600\r\n\r\n- task:\r\n    args: /SP- /DIR=\"C:\\\\Games\\\\Jazz2\" /NOICONS /NORESTART /CLOSEAPPLICATIONS\r\n    description: Installing game\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n    exclude_processes: jazz2.exe\r\n- task:\r\n    name: set_regedit\r\n    prefix: $GAMEDIR\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Explorer\r\n    key: Desktop\r\n    value: ''\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n    description: Stopping wine processes\r\n\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/helper/\r\n    file: helper\r\n\r\n# Enable high quality audio (and reset keybindings)\r\n- merge:\r\n    src: $GAMEDIR/drive_c/helper/JAZZ2.CFG\r\n    dst: $GAMEDIR/drive_c/Games/Jazz2/\r\n\r\n# Tweak JJ2+ settings\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: GameInfo\r\n    section: General\r\n    value: 1\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: PlayerListSort\r\n    section: General\r\n    value: 2\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: MouseAim\r\n    section: General\r\n    value: false\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: AllowSpectating\r\n    section: Server\r\n    value: true\r\n\r\n# Set some good registry defaults\r\n- task:\r\n    name: set_regedit_file\r\n    filename: $GAMEDIR/drive_c/helper/reset.reg\r\n    prefix: $GAMEDIR\r\n    description: Applying some registry fixes"
+}

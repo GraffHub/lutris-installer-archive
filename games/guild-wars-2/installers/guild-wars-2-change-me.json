@@ -1,0 +1,97 @@
+{
+  "id": 14951,
+  "game_id": 3364,
+  "game_slug": "guild-wars-2",
+  "name": "Guild Wars 2",
+  "year": 2012,
+  "user": "fudomiwa",
+  "runner": "wine",
+  "slug": "guild-wars-2-change-me",
+  "version": "Change Me",
+  "description": "This version uses D9VK, which greatly improves performance.",
+  "notes": "With AMD graphics (with or without D9VK), it's highly recommended to use a virtual desktop as GW2's launcher will slow most desktop environments to a crawl only recoverable by hard reboot. Unsure if this affects NVIDIA. Doesn't seem to affect Intel.\r\n\r\nAlso ideal to have a context menu entry for updating the game; running GW2's exe with -image lets it download all game data and updates.",
+  "created_at": "2019-08-10T07:41:37.418810Z",
+  "updated_at": "2019-08-10T07:41:37.418836Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "args": "-autologin"
+    },
+    "files": [
+      {
+        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
+      },
+      {
+        "d9vk": {
+          "filename": "d9vk-m0.12.6b12583491eaab7d2a3d7b1ff1fd5dc9392761f2.zip",
+          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/502/artifacts/download"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "disable_compositor": "true"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "d9vk"
+        }
+      },
+      {
+        "move": {
+          "dst": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-6b125834/",
+          "src": "$CACHE/dxvk-release/"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating win64 prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "faudio d3dcompiler_43 d3dx9",
+          "name": "winetricks"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2\""
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe",
+          "src": "client"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk_version": "d9vk-6b125834",
+      "esync": true,
+      "dxvk": true
+    }
+  },
+  "content": "files:\n- client: https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe\n- d9vk:\n    filename: d9vk-m0.12.6b12583491eaab7d2a3d7b1ff1fd5dc9392761f2.zip\n    url: https://git.froggi.es/joshua/d9vk/-/jobs/502/artifacts/download\ngame:\n  arch: win64\n  args: -autologin\n  exe: drive_c/Program Files/Guild Wars 2/GW2-64.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: d9vk\n- move:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-6b125834/\n    src: $CACHE/dxvk-release/\n- task:\n    arch: win64\n    description: Creating win64 prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: faudio d3dcompiler_43 d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2\"\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe\n    src: client\nsystem:\n  disable_compositor: 'true'\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  dxvk_version: d9vk-6b125834\n  esync: true\n"
+}

@@ -1,0 +1,92 @@
+{
+  "id": 9009,
+  "game_id": 16262,
+  "game_slug": "twitch-app",
+  "name": "Twitch App",
+  "year": 2017,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "twitch-app-latest",
+  "version": "Latest",
+  "description": null,
+  "notes": "Doesn't close. Needs to be stopped with Lutris.",
+  "created_at": "2018-07-03T23:31:38.030000Z",
+  "updated_at": "2019-05-09T00:36:13.876396Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/users/$USER/Application Data/Twitch/Bin/Twitch.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "app": "https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe"
+      }
+    ],
+    "wine": {
+      "version": "tkg-4.0-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y",
+          "key": "ShowDotFiles",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.7.2 will take a while...",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet472"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows to Win10",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win10"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "executable": "app",
+          "arch": "win64",
+          "exclude_processes": "mscorsvw.exe Twitch.exe TwitchUI.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- app: https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe\ngame:\n  arch: win64\n  exe: drive_c/users/$USER/Application Data/Twitch/Bin/Twitch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: ShowDotFiles\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing .NET 4.7.2 will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Windows to Win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    exclude_processes: mscorsvw.exe Twitch.exe TwitchUI.exe\n    executable: app\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  version: tkg-4.0-x86_64\n"
+}

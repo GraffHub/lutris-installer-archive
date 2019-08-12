@@ -1,0 +1,110 @@
+{
+  "id": 12672,
+  "game_id": 26313,
+  "game_slug": "the-sims-medieval",
+  "name": "The Sims Medieval",
+  "year": 2011,
+  "user": "citrusalex",
+  "runner": "wine",
+  "slug": "the-sims-medieval-origin",
+  "version": "Origin",
+  "description": null,
+  "notes": "- Please disable Origin-In-Game to avoid crashing on startup.",
+  "created_at": "2019-04-08T05:08:52.902000Z",
+  "updated_at": "2019-05-07T23:54:45.671910Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Origin/Origin.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
+      }
+    ],
+    "system": {
+      "restore_gamma": true
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine Prefix...",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "name": "winetricks",
+          "description": "Installing .Net 2.0",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "dotnet20",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Hiding annoying dialogs...",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "nocrashdialog",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting version to xp...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "winxp",
+          "key": "Version",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Origin...",
+          "prefix": "$GAMEDIR",
+          "executable": "origin",
+          "name": "wineexec",
+          "exclude_processes": "Origin.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "UseXvidMode": true,
+      "version": "tkg-oldnvidia-sims3-4.1-x86_64"
+    }
+  },
+  "content": "files:\r\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/Origin/Origin.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine Prefix...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet20\r\n    arch: win32\r\n    description: Installing .Net 2.0\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    app: nocrashdialog\r\n    description: Hiding annoying dialogs...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    arch: win32\r\n    description: Setting version to xp...\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    value: winxp\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    description: Installing Origin...\r\n    exclude_processes: Origin.exe\r\n    executable: origin\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  restore_gamma: true\r\nwine:\r\n  UseXvidMode: true\r\n  version: tkg-oldnvidia-sims3-4.1-x86_64"
+}

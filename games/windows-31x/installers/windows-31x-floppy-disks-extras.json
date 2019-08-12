@@ -1,0 +1,96 @@
+{
+  "id": 12906,
+  "game_id": 26784,
+  "game_slug": "windows-31x",
+  "name": "Windows 3.1x",
+  "year": 1992,
+  "user": "TheLimeyDragon",
+  "runner": "dosbox",
+  "slug": "windows-31x-floppy-disks-extras",
+  "version": "Floppy Disks + Extras",
+  "description": "A installation with S3 and Sound Blaster drivers.",
+  "notes": "Currently require to manually extract the contents of the install floppy disks into a single folder.\r\n\r\nDuring Windows Setup select a custom install by pressing C\r\n\r\nSelect Display\r\nScroll down to Other\r\nType: B:\\S3\r\nSelect S3 Trio64V 1.70.04 1024x768 64K C SF (Clicking Desktop Settings crashes with this option)\r\nor\r\nSelect S3 Trio64V 1.70.04 1024x768 256 C SF (Clicking Desktop Settings hangs but does open with this option)\r\n\r\nOnce Windows has installed DO NOT CLICK REBOOT.\r\n\r\nWhen the Audio drives are installing at the part it asks to \"proceed using the settings shown\"\r\nScroll down to Windows 3.1 path, press enter and accept the default option.",
+  "created_at": "2019-04-17T18:07:27.712000Z",
+  "updated_at": "2019-04-20T07:06:40.500374Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/win31x.conf"
+    },
+    "files": [
+      {
+        "s3": "https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1"
+      },
+      {
+        "sb16": "https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1"
+      }
+    ],
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "DISK1"
+        }
+      },
+      {
+        "task": {
+          "commands": [
+            "A:",
+            "SETUP.EXE",
+            "B:",
+            "CD SB16",
+            "INSTALL.EXE",
+            "EXIT"
+          ],
+          "drives": {
+            "c": "$GAMEDIR/C",
+            "b": "$GAMEDIR/B",
+            "a": "$DISC"
+          },
+          "name": "makeconfig",
+          "path": "$GAMEDIR/win31x-install.conf"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E",
+          "file": "mkdir"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/B/sb16",
+          "format": "zip",
+          "file": "sb16"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/B/s3",
+          "format": "zip",
+          "file": "s3"
+        }
+      },
+      {
+        "task": {
+          "name": "dosexec",
+          "config_file": "$GAMEDIR/win31x-install.conf",
+          "working_dir": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[dosbox]\nmemsize = 64\n[sblaster]\nirq=5\n[autoexec]\nmount a $GAMEDIR/A\nmount b $GAMEDIR/B\nmount c $GAMEDIR/C\nmount d $GAMEDIR/D\nmount d $GAMEDIR/E\nc:\ncd windows\nwin",
+          "file": "$GAMEDIR/win31x.conf"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- s3: https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1\n- sb16: https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1\ngame:\n  main_file: $GAMEDIR/win31x.conf\ninstaller:\n- insert-disc:\n    requires: DISK1\n- task:\n    commands:\n    - 'A:'\n    - SETUP.EXE\n    - 'B:'\n    - CD SB16\n    - INSTALL.EXE\n    - EXIT\n    drives:\n      a: $DISC\n      b: $GAMEDIR/B\n      c: $GAMEDIR/C\n    name: makeconfig\n    path: $GAMEDIR/win31x-install.conf\n- execute:\n    args: $GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E\n    file: mkdir\n- extract:\n    dst: $GAMEDIR/B/sb16\n    file: sb16\n    format: zip\n- extract:\n    dst: $GAMEDIR/B/s3\n    file: s3\n    format: zip\n- task:\n    config_file: $GAMEDIR/win31x-install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- write_file:\n    content: '[dosbox]\n\n      memsize = 64\n\n      [sblaster]\n\n      irq=5\n\n      [autoexec]\n\n      mount a $GAMEDIR/A\n\n      mount b $GAMEDIR/B\n\n      mount c $GAMEDIR/C\n\n      mount d $GAMEDIR/D\n\n      mount d $GAMEDIR/E\n\n      c:\n\n      cd windows\n\n      win'\n    file: $GAMEDIR/win31x.conf\n"
+}

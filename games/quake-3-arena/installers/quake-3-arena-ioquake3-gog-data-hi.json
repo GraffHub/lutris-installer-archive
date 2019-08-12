@@ -1,0 +1,81 @@
+{
+  "id": 9487,
+  "game_id": 19,
+  "game_slug": "quake-3-arena",
+  "name": "Quake 3 Arena",
+  "year": 1999,
+  "user": "veleiro",
+  "runner": "linux",
+  "slug": "quake-3-arena-ioquake3-gog-data-hi",
+  "version": "ioquake3 + GOG Data + HiRes",
+  "description": "Uses the iqquake3 engine, with GOG data, and the High-Res Texture Pack.",
+  "notes": "",
+  "created_at": "2018-07-30T23:09:24.132983Z",
+  "updated_at": "2018-07-31T18:49:13.119831Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 2200,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "ioquake3"
+    },
+    "files": [
+      {
+        "highrestextures": "http://ioquake3.org/files/xcsv_hires.zip"
+      },
+      {
+        "ioquake3installer": "http://ioquake3.org/files/1.36/installer/ioquake3-1.36-7.1.x86_64.run"
+      },
+      {
+        "innoextract": "https://lutris.net/files/tools/innoextract.tar.gz"
+      },
+      {
+        "q3data": "N/A:Please select the GOG.com Windows installer"
+      }
+    ],
+    "installer": [
+      {
+        "mkdir": "$GAMEDIR/bin"
+      },
+      {
+        "chmodx": "$CACHE/ioquake3-1.36-7.1.x86_64.run"
+      },
+      {
+        "execute": {
+          "args": "-- -i $GAMEDIR -b $GAMEDIR/bin",
+          "file": "ioquake3installer"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/innoextract",
+          "file": "innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $q3data --output-dir $CACHE/q3data/",
+          "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/baseq3",
+          "src": "$CACHE/q3data/app/baseq3"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/baseq3",
+          "file": "$highrestextures"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- highrestextures: http://ioquake3.org/files/xcsv_hires.zip\n- ioquake3installer: http://ioquake3.org/files/1.36/installer/ioquake3-1.36-7.1.x86_64.run\n- innoextract: https://lutris.net/files/tools/innoextract.tar.gz\n- q3data: N/A:Please select the GOG.com Windows installer\ngame:\n  exe: ioquake3\ninstaller:\n- mkdir: $GAMEDIR/bin\n- chmodx: $CACHE/ioquake3-1.36-7.1.x86_64.run\n- execute:\n    args: -- -i $GAMEDIR -b $GAMEDIR/bin\n    file: ioquake3installer\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    args: --extract $q3data --output-dir $CACHE/q3data/\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/baseq3\n    src: $CACHE/q3data/app/baseq3\n- extract:\n    dst: $GAMEDIR/baseq3\n    file: $highrestextures\n"
+}

@@ -1,0 +1,143 @@
+{
+  "id": 12478,
+  "game_id": 690,
+  "game_slug": "tom-clancys-splinter-cell",
+  "name": "Tom Clancy's Splinter Cell",
+  "year": 2003,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "tom-clancys-splinter-cell-gog-widescreen-dgvoo",
+  "version": "GOG + Widescreen + DGVoodoo2",
+  "description": "This script will install \"Tom Clancy's Splinter Cell\" Gog edition with support for modern resolution.",
+  "notes": "During install please let all options by default.\r\n\r\nThis script uses different projects:\r\ndgvoodoo2: http://www.dege.freeweb.hu/\r\nThirteenAG: https://thirteenag.github.io/wfp#sc\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "created_at": "2019-03-23T10:09:13.512000Z",
+  "updated_at": "2019-06-01T06:11:44.712621Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 13560,
+  "gogid": 1207659034,
+  "gogslug": "splinter_cell",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Splinter Cell/system/SplinterCell.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "scg": "N/A:Please select the GOG installer"
+      },
+      {
+        "dgv": "http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_4_1.zip"
+      },
+      {
+        "scws": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/sc/SplinterCell.WidescreenFix.zip"
+      }
+    ],
+    "wine": {
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "d3dcompiler_47",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "executable": "scg",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Splinter Cell/",
+          "file": "scws"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Splinter Cell/system",
+          "file": "dgv"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/",
+          "src": "$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/MS/D3D8.dll"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "key": "d3d8",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "key": "msacm32",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "key": "msvfw32",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/\"; mv dgVoodoo.conf dgVoodoo_original.conf; cd scripts; mv modupdater.asi modupdater.asi.off;"
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "General": {
+              "CaptureMouse": false
+            },
+            "DirectX": {
+              "dgVoodooWatermark": false,
+              "VRAM": 256,
+              "Resolution": "unforced",
+              "DisableAltEnterToToggleScreenMode": false,
+              "AppControlledScreenMode": false,
+              "ForceVerticalSync": true
+            }
+          },
+          "file": "$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/dgVoodoo.conf"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- scg: N/A:Please select the GOG installer\n- dgv: http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_4_1.zip\n- scws: https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/sc/SplinterCell.WidescreenFix.zip\ngame:\n  exe: drive_c/GOG Games/Splinter Cell/system/SplinterCell.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: scg\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Splinter Cell/\n    file: scws\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system/\n    src: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system/MS/D3D8.dll\n- task:\n    arch: win64\n    key: d3d8\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: msacm32\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: msvfw32\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/\"; mv dgVoodoo.conf\n      dgVoodoo_original.conf; cd scripts; mv modupdater.asi modupdater.asi.off;\n- write_config:\n    data:\n      DirectX:\n        AppControlledScreenMode: false\n        DisableAltEnterToToggleScreenMode: false\n        ForceVerticalSync: true\n        Resolution: unforced\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n    file: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system/dgVoodoo.conf\nwine:\n  dxvk: true\n"
+}

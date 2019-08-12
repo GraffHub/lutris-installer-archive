@@ -1,0 +1,70 @@
+{
+  "id": 9169,
+  "game_id": 4129,
+  "game_slug": "starcraft-anthology",
+  "name": "StarCraft Anthology",
+  "year": 1999,
+  "user": "empi_pl",
+  "runner": "wine",
+  "slug": "starcraft-anthology-36_staging",
+  "version": "3.6_staging",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-07-11T15:52:36.419420Z",
+  "updated_at": "2018-07-12T04:38:27.044884Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/StarCraft/StarCraft Launcher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": {
+          "filename": "StarCraft-Setup.exe",
+          "url": "https://www.battle.net/download/getInstallerForGame?os=win&locale=enEN&version=LIVE&gameProgram=STARCRAFT"
+        }
+      }
+    ],
+    "wine": {
+      "version": "staging-3.6-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows version to Windows 7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing StarCraft Anthology",
+          "prefix": "$GAMEDIR",
+          "executable": "$setup",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: StarCraft-Setup.exe\n    url: https://www.battle.net/download/getInstallerForGame?os=win&locale=enEN&version=LIVE&gameProgram=STARCRAFT\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/StarCraft/StarCraft Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Windows version to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing StarCraft Anthology\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: staging-3.6-x86_64\n"
+}

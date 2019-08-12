@@ -1,0 +1,261 @@
+{
+  "id": 14724,
+  "game_id": 2424,
+  "game_slug": "league-of-legends",
+  "name": "League of Legends",
+  "year": 2009,
+  "user": "HyrumGraff",
+  "runner": "linux",
+  "slug": "league-of-legends-experimental-appimg-",
+  "version": "Experimental AppImg w/ wrapper",
+  "description": "League of Legends with AppImage Wine and launch scriptIF YOU CANCEL THIS INSTALLER, YOU NEED TO RUN rm ~/.wine-appimage-lol IN A TERMINAL OR SUBSEQUENT INSTALLS WILL FAIL. This will be fixed by the time this installer is no longer experimental.",
+  "notes": "The wine-lol appimage uses a hard coded prefix, ~/.wine-appimage-lol, which causes issues when trying multiple versions of League (eg, d9vk and plain appimage).\r\n\r\nThis version installs League to the game directory you choose (where you want & expect it) and includes a launch script that will link the hard-coded prefix to the game's actual install location while you're running it.",
+  "created_at": "2019-07-26T06:53:00.855000Z",
+  "updated_at": "2019-08-06T14:41:40.143737Z",
+  "draft": false,
+  "published": false,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 20590,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/start.sh"
+    },
+    "system": {
+      "env": {
+        "WINEPREFIX": "$HOME/.wine-appimage-lol",
+        "WINEARCH": "win32",
+        "WINEDEBUG": "-all",
+        "WINEOVERRIDES": "msvcp140=native"
+      }
+    },
+    "require-binaries": "wine",
+    "custom-name": "League of Legends - AppImage (symlink)",
+    "files": [
+      {
+        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
+      },
+      {
+        "appimage": "https://github.com/mmtrt/Wine_Appimage/releases/download/release-lol-patched/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/usr/bin/env bash\n\nif [[ ! \"$0\" -ef \"$1/setup_prefix.sh\" ]]; then\n    echo 1>&2 \"WARNING: File name of this script was changed or setting up an unexpected prefix (not containing this file). This may work, but is not intended usage.\"\nfi\n\nif [[ ! -d \"$1\" ]]; then\n    echo 1>&2 \"ERROR: Not a directory: $1\"\nelif [[ \"$$HOME/.wine-appimage-lol\" -ef \"$1\" ]]; then\n    echo 1>&2 \"WARNING: League prefix symlink not cleaned up from last time.\"\n    exit 0\nelif [[ -L \"$$HOME/.wine-appimage-lol\" ]]; then\n    echo 1>&2 \"ERROR: Another version of League is (probably) running. Please make sure all other version are closed, then delete $$HOME/.wine-appimage-lol\"\nelif [[ -e \"$$HOME/.wine-appimage-lol\" ]]; then\n    echo 1>&2 \"ERROR: An old or non-Lutris version of League is already installed. Please uninstall it by deleting $$HOME/.wine-appimage-lol\"\nelse\n    ln -s \"$1\" \"$$HOME/.wine-appimage-lol\"\n    exit 0\nfi\n\nexit 1\n",
+          "file": "$GAMEDIR/setup_prefix.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/setup_prefix.sh"
+      },
+      {
+        "write_file": {
+          "content": "#!/usr/bin/env bash\n\nif [[ ! \"$0\" -ef \"$1/cleanup_prefix.sh\" ]]; then\n    echo 1>&2 \"WARNING: File name of this script was changed or setting up an unexpected prefix (not containing this file). This may work, but is not intended usage.\"\nfi\n\nif [[ ! -e \"$$HOME/.wine-appimage-lol\" ]]; then\n    echo 1>&2 \"INFO: The League prefix was already cleaned up (symlink does not exist).\"\nelif [[ ! -L \"$$HOME/.wine-appimage-lol\" ]]; then\n    echo 1>&2 \"ERROR: An old or non-Lutris version of League is already installed. Please uninstall it by deleting $$HOME/.wine-appimage-lol\"\nelif [[ ! \"$$HOME/.wine-appimage-lol\" -ef \"$1\" ]]; then\n    echo 1>&2 \"WARNING: Two versions of League were running with the wine-lol appimage at the same time. This will likely cause them to interfere with each other.\"\nelse\n    rm \"$$HOME/.wine-appimage-lol\"\nfi\n",
+          "file": "$GAMEDIR/cleanup_prefix.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/cleanup_prefix.sh"
+      },
+      {
+        "write_file": {
+          "content": "#!/usr/bin/env bash\n\nif [[ $# -eq 1 ]]; then\n    echo 1>&2 \"WARNING: Using user-provided gamedir location. This can break things. Use it at your own risk!\"\n    gamedir=\"$1\"\nelif type realpath >/dev/null && type dirname >/dev/null; then\n    gamedir=\"$(dirname \"$(realpath \"$0\")\")\"\nelif [[ \"$0\" -ef \"$GAMEDIR/setup_prefix.sh\" ]]; then\n    echo 1>&2 \"INFO: 'realpath' or 'dirname' not present on your system. Using hard coded location instead. If you move your game folder, League will not launch.\"\n    gamedir=\"$GAMEDIR\"\nelse\n    echo 1>&2 \"ERROR: Could not determine where League is installed.\"\n    exit 1\nfi\n\ncleanup() {\n    \"$gamedir/cleanup_prefix.sh\" \"$gamedir\"\n}\n\ntrap cleanup EXIT\n\nif \"$gamedir/setup_prefix.sh\" \"$gamedir\"; then\n    \"$gamedir/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\" wine \"$$HOME/.wine-appimage-lol/drive_c/Riot Games/League of Legends/LeagueClient.exe\"\nfi\n",
+          "file": "$GAMEDIR/start.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/start.sh"
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR",
+          "file": "$GAMEDIR/setup_prefix.sh"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "chmodx": "appimage"
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "appimage"
+        }
+      },
+      {
+        "execute": {
+          "description": "Setting up wine prefix",
+          "env": {
+            "WINEPREFIX": "$HOME/.wine-appimage-lol",
+            "WINEARCH": "win32"
+          },
+          "args": "wine wineboot",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose the game's language:",
+          "id": "LOCALE",
+          "options": [
+            {
+              "cs_CZ": "Čeština"
+            },
+            {
+              "en_AU": "English AUS"
+            },
+            {
+              "en_GB": "English U.K."
+            },
+            {
+              "en_US": "English U.S."
+            },
+            {
+              "fr_FR": "Français"
+            },
+            {
+              "de_DE": "Deutsch"
+            },
+            {
+              "es_ES": "Español"
+            },
+            {
+              "es_MX": "Español Mexicano"
+            },
+            {
+              "it_IT": "Italiano"
+            },
+            {
+              "ja_JP": "日本語"
+            },
+            {
+              "hu_HU": "Magyar"
+            },
+            {
+              "pl_PL": "Polski"
+            },
+            {
+              "pt_BR": "Português do Brasil"
+            },
+            {
+              "ro_RO": "Romanian"
+            },
+            {
+              "ru_RU": "русский"
+            },
+            {
+              "tr_TR": "Türkçe"
+            }
+          ],
+          "preselect": "en_US"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose the game's server region:",
+          "id": "REGION",
+          "options": [
+            {
+              "BR": "Brazil"
+            },
+            {
+              "EUNE": "Europe Nordic & East"
+            },
+            {
+              "EUW": "Europe West"
+            },
+            {
+              "LAN": "Latin America North"
+            },
+            {
+              "LAS": "Latin America South"
+            },
+            {
+              "NA": "North America"
+            },
+            {
+              "OCE": "Oceania"
+            },
+            {
+              "RU": "Russia"
+            },
+            {
+              "TR": "Turkey"
+            },
+            {
+              "JP": "Japan"
+            },
+            {
+              "SEA": "South East Asia"
+            }
+          ],
+          "preselect": "NA"
+        }
+      },
+      {
+        "execute": {
+          "description": "Installing Directx9",
+          "env": {
+            "WINEPREFIX": "$HOME/.wine-appimage-lol"
+          },
+          "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+        }
+      },
+      {
+        "execute": {
+          "description": "Installing League of Legends",
+          "env": {
+            "WINEPREFIX": "$HOME/.wine-appimage-lol"
+          },
+          "args": "wine lol_installer --mode unattended",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Please let the game finish patching, then close it.",
+          "id": "PlACEHOLDER",
+          "options": [
+            {
+              "OK": "Okay"
+            }
+          ],
+          "preselect": "OK"
+        }
+      },
+      {
+        "write_file": {
+          "content": "install:\n    globals:\n        locale: \"$INPUT_LOCALE\"\n        region: \"$INPUT_REGION\"\n",
+          "file": "$HOME/.wine-appimage-lol/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml"
+        }
+      },
+      {
+        "execute": {
+          "description": "Waiting for League of Legends to patch",
+          "args": "wine \"$HOME/.wine-appimage-lol/drive_c/Riot Games/League of Legends/LeagueClient.exe\"",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR",
+          "file": "$GAMEDIR/cleanup_prefix.sh"
+        }
+      }
+    ]
+  },
+  "content": "custom-name: League of Legends - AppImage (symlink)\r\nfiles:\r\n- lol_installer: https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe\r\n- appimage: https://github.com/mmtrt/Wine_Appimage/releases/download/release-lol-patched/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\ngame:\r\n  exe: $GAMEDIR/start.sh\r\ninstaller:\r\n- write_file:\r\n    content: \"#!/usr/bin/env bash\\n\\nif [[ ! \\\"$0\\\" -ef \\\"$1/setup_prefix.sh\\\" ]];\\\r\n      \\ then\\n    echo 1>&2 \\\"WARNING: File name of this script was changed or setting\\\r\n      \\ up an unexpected prefix (not containing this file). This may work, but is\\\r\n      \\ not intended usage.\\\"\\nfi\\n\\nif [[ ! -d \\\"$1\\\" ]]; then\\n    echo 1>&2 \\\"\\\r\n      ERROR: Not a directory: $1\\\"\\nelif [[ \\\"$$HOME/.wine-appimage-lol\\\" -ef \\\"$1\\\"\\\r\n      \\ ]]; then\\n    echo 1>&2 \\\"WARNING: League prefix symlink not cleaned up from\\\r\n      \\ last time.\\\"\\n    exit 0\\nelif [[ -L \\\"$$HOME/.wine-appimage-lol\\\" ]]; then\\n\\\r\n      \\    echo 1>&2 \\\"ERROR: Another version of League is (probably) running. Please\\\r\n      \\ make sure all other version are closed, then delete $$HOME/.wine-appimage-lol\\\"\\\r\n      \\nelif [[ -e \\\"$$HOME/.wine-appimage-lol\\\" ]]; then\\n    echo 1>&2 \\\"ERROR:\\\r\n      \\ An old or non-Lutris version of League is already installed. Please uninstall\\\r\n      \\ it by deleting $$HOME/.wine-appimage-lol\\\"\\nelse\\n    ln -s \\\"$1\\\" \\\"$$HOME/.wine-appimage-lol\\\"\\\r\n      \\n    exit 0\\nfi\\n\\nexit 1\\n\"\r\n    file: $GAMEDIR/setup_prefix.sh\r\n- chmodx: $GAMEDIR/setup_prefix.sh\r\n- write_file:\r\n    content: \"#!/usr/bin/env bash\\n\\nif [[ ! \\\"$0\\\" -ef \\\"$1/cleanup_prefix.sh\\\" ]];\\\r\n      \\ then\\n    echo 1>&2 \\\"WARNING: File name of this script was changed or setting\\\r\n      \\ up an unexpected prefix (not containing this file). This may work, but is\\\r\n      \\ not intended usage.\\\"\\nfi\\n\\nif [[ ! -e \\\"$$HOME/.wine-appimage-lol\\\" ]];\\\r\n      \\ then\\n    echo 1>&2 \\\"INFO: The League prefix was already cleaned up (symlink\\\r\n      \\ does not exist).\\\"\\nelif [[ ! -L \\\"$$HOME/.wine-appimage-lol\\\" ]]; then\\n\\\r\n      \\    echo 1>&2 \\\"ERROR: An old or non-Lutris version of League is already installed.\\\r\n      \\ Please uninstall it by deleting $$HOME/.wine-appimage-lol\\\"\\nelif [[ ! \\\"\\\r\n      $$HOME/.wine-appimage-lol\\\" -ef \\\"$1\\\" ]]; then\\n    echo 1>&2 \\\"WARNING: Two\\\r\n      \\ versions of League were running with the wine-lol appimage at the same time.\\\r\n      \\ This will likely cause them to interfere with each other.\\\"\\nelse\\n    rm\\\r\n      \\ \\\"$$HOME/.wine-appimage-lol\\\"\\nfi\\n\"\r\n    file: $GAMEDIR/cleanup_prefix.sh\r\n- chmodx: $GAMEDIR/cleanup_prefix.sh\r\n- write_file:\r\n    content: \"#!/usr/bin/env bash\\n\\nif [[ $# -eq 1 ]]; then\\n    echo 1>&2 \\\"WARNING:\\\r\n      \\ Using user-provided gamedir location. This can break things. Use it at your\\\r\n      \\ own risk!\\\"\\n    gamedir=\\\"$1\\\"\\nelif type realpath >/dev/null && type dirname\\\r\n      \\ >/dev/null; then\\n    gamedir=\\\"$(dirname \\\"$(realpath \\\"$0\\\")\\\")\\\"\\nelif\\\r\n      \\ [[ \\\"$0\\\" -ef \\\"$GAMEDIR/setup_prefix.sh\\\" ]]; then\\n    echo 1>&2 \\\"INFO:\\\r\n      \\ 'realpath' or 'dirname' not present on your system. Using hard coded location\\\r\n      \\ instead. If you move your game folder, League will not launch.\\\"\\n    gamedir=\\\"\\\r\n      $GAMEDIR\\\"\\nelse\\n    echo 1>&2 \\\"ERROR: Could not determine where League is\\\r\n      \\ installed.\\\"\\n    exit 1\\nfi\\n\\ncleanup() {\\n    \\\"$gamedir/cleanup_prefix.sh\\\"\\\r\n      \\ \\\"$gamedir\\\"\\n}\\n\\ntrap cleanup EXIT\\n\\nif \\\"$gamedir/setup_prefix.sh\\\" \\\"\\\r\n      $gamedir\\\"; then\\n    \\\"$gamedir/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\\\"\\\r\n      \\ wine \\\"$$HOME/.wine-appimage-lol/drive_c/Riot Games/League of Legends/LeagueClient.exe\\\"\\\r\n      \\nfi\\n\"\r\n    file: $GAMEDIR/start.sh\r\n- chmodx: $GAMEDIR/start.sh\r\n- execute:\r\n    args: $GAMEDIR\r\n    file: $GAMEDIR/setup_prefix.sh\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- chmodx: appimage\r\n- move:\r\n    dst: $GAMEDIR\r\n    src: appimage\r\n- execute:\r\n    args: wine wineboot\r\n    description: Setting up wine prefix\r\n    env:\r\n      WINEARCH: win32\r\n      WINEPREFIX: $HOME/.wine-appimage-lol\r\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\r\n- input_menu:\r\n    description: 'Choose the game''s language:'\r\n    id: LOCALE\r\n    options:\r\n    - cs_CZ: \"\\u010Ce\\u0161tina\"\r\n    - en_AU: English AUS\r\n    - en_GB: English U.K.\r\n    - en_US: English U.S.\r\n    - fr_FR: \"Fran\\xE7ais\"\r\n    - de_DE: Deutsch\r\n    - es_ES: \"Espa\\xF1ol\"\r\n    - es_MX: \"Espa\\xF1ol Mexicano\"\r\n    - it_IT: Italiano\r\n    - ja_JP: \"\\u65E5\\u672C\\u8A9E\"\r\n    - hu_HU: Magyar\r\n    - pl_PL: Polski\r\n    - pt_BR: \"Portugu\\xEAs do Brasil\"\r\n    - ro_RO: Romanian\r\n    - ru_RU: \"\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439\"\r\n    - tr_TR: \"T\\xFCrk\\xE7e\"\r\n    preselect: en_US\r\n- input_menu:\r\n    description: 'Choose the game''s server region:'\r\n    id: REGION\r\n    options:\r\n    - BR: Brazil\r\n    - EUNE: Europe Nordic & East\r\n    - EUW: Europe West\r\n    - LAN: Latin America North\r\n    - LAS: Latin America South\r\n    - NA: North America\r\n    - OCE: Oceania\r\n    - RU: Russia\r\n    - TR: Turkey\r\n    - JP: Japan\r\n    - SEA: South East Asia\r\n    preselect: NA\r\n- execute:\r\n    args: wine $CACHE/dxsetup/DXSETUP.exe /silent\r\n    description: Installing Directx9\r\n    env:\r\n      WINEPREFIX: $HOME/.wine-appimage-lol\r\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\r\n- execute:\r\n    args: wine lol_installer --mode unattended\r\n    description: Installing League of Legends\r\n    env:\r\n      WINEPREFIX: $HOME/.wine-appimage-lol\r\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\r\n- input_menu:\r\n    description: Please let the game finish patching, then close it.\r\n    id: PlACEHOLDER\r\n    options:\r\n    - OK: Okay\r\n    preselect: OK\r\n- write_file:\r\n    content: \"install:\\n    globals:\\n        locale: \\\"$INPUT_LOCALE\\\"\\n        region:\\\r\n      \\ \\\"$INPUT_REGION\\\"\\n\"\r\n    file: $HOME/.wine-appimage-lol/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml\r\n- execute:\r\n    args: wine \"$HOME/.wine-appimage-lol/drive_c/Riot Games/League of Legends/LeagueClient.exe\"\r\n    description: Waiting for League of Legends to patch\r\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\r\n- execute:\r\n    args: $GAMEDIR\r\n    file: $GAMEDIR/cleanup_prefix.sh\r\nrequire-binaries: wine\r\nsystem:\r\n  env:\r\n    WINEARCH: win32\r\n    WINEDEBUG: -all\r\n    WINEOVERRIDES: msvcp140=native\r\n    WINEPREFIX: $HOME/.wine-appimage-lol"
+}

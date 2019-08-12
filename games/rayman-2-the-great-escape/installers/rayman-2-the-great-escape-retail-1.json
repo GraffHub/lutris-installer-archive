@@ -1,0 +1,188 @@
+{
+  "id": 13036,
+  "game_id": 8093,
+  "game_slug": "rayman-2-the-great-escape",
+  "name": "Rayman 2: The Great Escape",
+  "year": 1999,
+  "user": "tognee",
+  "runner": "wine",
+  "slug": "rayman-2-the-great-escape-retail-1",
+  "version": "Retail",
+  "description": "Installs Retail version from disc and applies widescreen fix\r\nAlso nGlide is used to fix graphic problems (like blurry textures)",
+  "notes": "The installer can't download the widescreen fix automatically, so you need to download it (link is provided)\r\n\r\nBy default the resolution used is 1920x1080\r\nYou can change that by editing the ubi.ini file and running nglide_config with wineprefix and change it there as well",
+  "created_at": "2019-04-22T19:36:25.015000Z",
+  "updated_at": "2019-04-24T02:29:10.978618Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207658940,
+  "gogslug": "rayman_2_the_great_escape",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/UbiSoft/Rayman2/Rayman2.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "glide": {
+          "referer": "www.zeus-software.com",
+          "filename": "nglide.exe",
+          "url": "http://www.zeus-software.com/downloads/nglide/d-1.html"
+        }
+      },
+      {
+        "widescreenzip": "N/A:Select the widescreen fix zip file\nhttps://raymanpc.com/forum/viewtopic.php?t=21665"
+      }
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1024x768",
+      "version": "tkg-4.0-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing nGlide",
+          "executable": "glide",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "0",
+          "key": "Aspect",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "2",
+          "key": "Backend",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "2",
+          "key": "Gamma",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "2",
+          "key": "Refresh",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "21",
+          "key": "Resolution",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "0",
+          "key": "Splash",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "1",
+          "key": "Vsync",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "Rayman2.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Rayman 2, don't change default settings.",
+          "executable": "$DISC/setup.exe",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/UbiSoft/Rayman2/Data/",
+          "src": "$DISC/Data/Vignette.cnt"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/UbiSoft/Rayman2/Data/World/Levels/",
+          "src": "$DISC/Data/World/Levels/LEVELS0.dat"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/widescreen",
+          "file": "widescreenzip"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/UbiSoft/Rayman2",
+          "src": "$GAMEDIR/widescreen/"
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "Rayman2": {
+              "Language": "English",
+              "GLI_Mode": "1 - 1920 x 1080 x 32",
+              "GLI_Driver": "",
+              "GLI_Device": "",
+              "GLI_Dll": "Glide2",
+              "GLI_DllFile": "GliVd1"
+            }
+          },
+          "file": "$GAMEDIR/drive_c/UbiSoft/Rayman2/ubi.ini"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- glide:\n    filename: nglide.exe\n    referer: www.zeus-software.com\n    url: http://www.zeus-software.com/downloads/nglide/d-1.html\n- widescreenzip: 'N/A:Select the widescreen fix zip file\n\n    https://raymanpc.com/forum/viewtopic.php?t=21665'\ngame:\n  arch: win32\n  exe: drive_c/UbiSoft/Rayman2/Rayman2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing nGlide\n    executable: glide\n    name: wineexec\n- task:\n    key: Aspect\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '0'\n- task:\n    key: Backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '2'\n- task:\n    key: Gamma\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '2'\n- task:\n    key: Refresh\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '2'\n- task:\n    key: Resolution\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '21'\n- task:\n    key: Splash\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '0'\n- task:\n    key: Vsync\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '1'\n- insert-disc:\n    requires: Rayman2.exe\n- task:\n    arch: win32\n    description: Installing Rayman 2, don't change default settings.\n    executable: $DISC/setup.exe\n    name: wineexec\n- copy:\n    dst: $GAMEDIR/drive_c/UbiSoft/Rayman2/Data/\n    src: $DISC/Data/Vignette.cnt\n- copy:\n    dst: $GAMEDIR/drive_c/UbiSoft/Rayman2/Data/World/Levels/\n    src: $DISC/Data/World/Levels/LEVELS0.dat\n- extract:\n    dst: $GAMEDIR/widescreen\n    file: widescreenzip\n- merge:\n    dst: $GAMEDIR/drive_c/UbiSoft/Rayman2\n    src: $GAMEDIR/widescreen/\n- write_config:\n    data:\n      Rayman2:\n        GLI_Device: ''\n        GLI_Dll: Glide2\n        GLI_DllFile: GliVd1\n        GLI_Driver: ''\n        GLI_Mode: 1 - 1920 x 1080 x 32\n        Language: English\n    file: $GAMEDIR/drive_c/UbiSoft/Rayman2/ubi.ini\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  version: tkg-4.0-x86_64\n"
+}

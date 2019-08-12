@@ -1,0 +1,81 @@
+{
+  "id": 14584,
+  "game_id": 4986,
+  "game_slug": "smite",
+  "name": "SMITE",
+  "year": null,
+  "user": "DeadKper",
+  "runner": "winesteam",
+  "slug": "smite-steam",
+  "version": "Steam",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-07-15T17:16:39.564731Z",
+  "updated_at": "2019-07-15T17:16:39.564758Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 386360,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/Smite",
+      "appid": 386360,
+      "arch": "win64"
+    },
+    "system": {
+      "env": {
+        "PBA_ENABLE": "0",
+        "mesa_glthread": "true"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit Wine prefix.",
+          "prefix": "$GAMEDIR/Smite",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Visual Studio Runtime 2010",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/Smite",
+          "name": "winetricks",
+          "app": "vcrun2010"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Dot Net 4.0",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/Smite",
+          "name": "winetricks",
+          "app": "dotnet40"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/Smite",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10",
+          "key": "Version",
+          "arch": "win64"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "dxvk": true,
+      "version": "esync-staging-pba-3.16-x86_64"
+    }
+  },
+  "content": "game:\n  appid: 386360\n  arch: win64\n  prefix: $GAMEDIR/Smite\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR/Smite\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Installing Visual Studio Runtime 2010\n    name: winetricks\n    prefix: $GAMEDIR/Smite\n- task:\n    app: dotnet40\n    arch: win64\n    description: Installing Dot Net 4.0\n    name: winetricks\n    prefix: $GAMEDIR/Smite\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/Smite\n    value: win10\nsystem:\n  env:\n    PBA_ENABLE: '0'\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n  version: esync-staging-pba-3.16-x86_64\n"
+}

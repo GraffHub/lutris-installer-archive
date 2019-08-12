@@ -1,0 +1,65 @@
+{
+  "id": 12910,
+  "game_id": 14357,
+  "game_slug": "pokemon-tcg-online",
+  "name": "Pokémon TCG Online",
+  "year": 2011,
+  "user": "nokiomanz",
+  "runner": "wine",
+  "slug": "pokemon-tcg-online-latest-w-dxvk",
+  "version": "Latest w/ DXVK",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-04-17T23:45:49.487000Z",
+  "updated_at": "2019-04-18T04:31:41.970425Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-4.6-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
+          "prefix": "$GAMEDIR",
+          "executable": "msiexec",
+          "name": "wineexec",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win64\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  version: tkg-4.6-x86_64\n"
+}

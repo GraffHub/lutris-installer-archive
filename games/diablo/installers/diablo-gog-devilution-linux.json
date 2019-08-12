@@ -1,0 +1,72 @@
+{
+  "id": 14113,
+  "game_id": 5826,
+  "game_slug": "diablo",
+  "name": "Diablo",
+  "year": 1996,
+  "user": "Haringat",
+  "runner": "linux",
+  "slug": "diablo-gog-devilution-linux",
+  "version": "GOG + Devilution (Linux native)",
+  "description": "extracts the game files from the GOG installer and runs the game using the linux version of devilution. Requires innoextract to be installed.",
+  "notes": "",
+  "created_at": "2019-06-15T20:29:06.302399Z",
+  "updated_at": "2019-06-15T20:29:06.302422Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1412601690,
+  "gogslug": "diablo",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/game/devilution",
+      "arch": "i386"
+    },
+    "files": [
+      {
+        "devilution": "https://github.com/diasurgical/devilutionX/releases/download/0.4.0/devilutionx-linux-i386.tar.xz"
+      },
+      {
+        "installer": "N/A:Please select the GOG installer"
+      }
+    ],
+    "installer": [
+      {
+        "execute": {
+          "description": "extracting game data",
+          "command": "innoextract --gog -d $CACHE/diablo installer"
+        }
+      },
+      {
+        "mkdir": {
+          "description": "creating temporary directory for devilution",
+          "command": "mkdir $CACHE/devilution"
+        }
+      },
+      {
+        "execute": {
+          "description": "extracting devilution",
+          "command": "tar xf devilution --xz $CACHE/devilution"
+        }
+      },
+      {
+        "move": {
+          "description": "moving devilution files",
+          "dst": "$GAMEDIR/game",
+          "src": "$CACHE/devilution"
+        }
+      },
+      {
+        "move": {
+          "description": "moving the game files",
+          "dst": "$GAMEDIR/game",
+          "src": "$CACHE/diablo/app"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- devilution: https://github.com/diasurgical/devilutionX/releases/download/0.4.0/devilutionx-linux-i386.tar.xz\n- installer: N/A:Please select the GOG installer\ngame:\n  arch: i386\n  exe: $GAMEDIR/game/devilution\ninstaller:\n- execute:\n    command: innoextract --gog -d $CACHE/diablo installer\n    description: extracting game data\n- mkdir:\n    command: mkdir $CACHE/devilution\n    description: creating temporary directory for devilution\n- execute:\n    command: tar xf devilution --xz $CACHE/devilution\n    description: extracting devilution\n- move:\n    description: moving devilution files\n    dst: $GAMEDIR/game\n    src: $CACHE/devilution\n- move:\n    description: moving the game files\n    dst: $GAMEDIR/game\n    src: $CACHE/diablo/app\n"
+}

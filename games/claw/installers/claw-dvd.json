@@ -1,0 +1,82 @@
+{
+  "id": 8475,
+  "game_id": 10447,
+  "game_slug": "claw",
+  "name": "Claw",
+  "year": 1997,
+  "user": "nastys",
+  "runner": "wine",
+  "slug": "claw-dvd",
+  "version": "DVD",
+  "description": "Installer for the DVD version of the game (it should also work with the CD version). This will also patch the game to version 1.3.0.",
+  "notes": "- A MIDI device or synthesizer (e.g. Qsynth) is required for in-game music playback\r\n- CD-quality movies will be played instead of the DVD ones",
+  "created_at": "2018-05-30T18:42:30.131422Z",
+  "updated_at": "2018-05-30T18:44:36.594712Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "patch": "http://kapitanpazur.piasta.pl/dl/claw13.zip"
+      }
+    ],
+    "wine": {
+      "version": "3.6-i386"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "DATA/CLAW.REZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Claw...",
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/SETUP.EXE",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "description": "Patching Claw...",
+          "dst": "$GAMEDIR/drive_c/games/claw/",
+          "src": "patch"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0",
+          "value": 1,
+          "arch": "win32",
+          "type": "REG_DWORD",
+          "description": "Setting registry keys...",
+          "prefix": "$GAMEDIR",
+          "key": "Disable DVD Movies"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: http://kapitanpazur.piasta.pl/dl/claw13.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/games/claw/CLAW.EXE\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: DATA/CLAW.REZ\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Claw...\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Patching Claw...\n    dst: $GAMEDIR/drive_c/games/claw/\n    src: patch\n- task:\n    arch: win32\n    description: Setting registry keys...\n    key: Disable DVD Movies\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 1\nwine:\n  version: 3.6-i386\n"
+}

@@ -1,0 +1,259 @@
+{
+  "id": 14775,
+  "game_id": 27150,
+  "game_slug": "vortex-mod-manager",
+  "name": "Vortex Mod Manager",
+  "year": 2016,
+  "user": "jbmorgado",
+  "runner": "wine",
+  "slug": "vortex-mod-manager-change-me-1",
+  "version": "Change Me",
+  "description": null,
+  "notes": "Plug and play installation, everything configured out of the box for games installed for Steam Play or Lutris Winesteam. Check <a href=\"https://github.com/rockerbacon/lutris-skyrimse-installers\">https://github.com/rockerbacon/lutris-skyrimse-installers</a> for more information.\r\n\r\nWorking Games:\r\n\r\n- TESV: Skyrim Special Edition\r\n- TESV: Skyrim\r\n- TESIV: Oblivion\r\n- Fallout 4\r\n- Fallout 3 - Game of the Year Edition\r\n- Fallout 3\r\n- Fallout New Vegas\r\n- Morrowind\r\n\r\n<b>KNOWN BUGS/LIMITATIONS:</b>\r\n\r\n- The game cannot be launched from within the application;\r\n\r\n- If a new game is installed after Vortex, it'll be unable to manage mods for that game untill the symlinks are rebuild;\r\n\r\n- After Vortex update 0.18.7, having the dashlets \"Announcements\", \"News\" and \"Latest Mods\" enabled in \"Settings\" can cause Vortex to go on a crash loop after a game is added",
+  "created_at": "2019-07-29T20:53:04.906662Z",
+  "updated_at": "2019-07-29T20:53:04.906693Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "https://github.com/Nexus-Mods/Vortex/releases/download/v0.17.11/vortex-setup-0.17.11.exe"
+      },
+      {
+        "symlinks_setup": "https://github.com/rockerbacon/lutris-skyrimse-installers/releases/download/1.7/vortex-symlinks.sh"
+      },
+      {
+        "downloads_handler": "https://github.com/rockerbacon/lutris-skyrimse-installers/releases/download/1.7/vortex-downloads-handler.desktop"
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    },
+    "installer": [
+      {
+        "copy": {
+          "dst": "$GAMEDIR/config_scripts",
+          "src": "symlinks_setup"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/config_scripts/vortex-symlinks.sh"
+      },
+      {
+        "copy": {
+          "dst": "$HOME/.local/share/applications",
+          "src": "downloads_handler"
+        }
+      },
+      {
+        "chmodx": "$HOME/.local/share/applications/vortex-downloads-handler.desktop"
+      },
+      {
+        "execute": {
+          "file": "$GAMEDIR/config_scripts/vortex-symlinks.sh"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.6",
+          "prefix": "$GAMEDIR",
+          "app": "dotnet46 win10",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Skyrim Special Edition",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim special edition",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\489830",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim special edition",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Skyrim",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\72850",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Oblivion",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\oblivion",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22330",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\oblivion",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout 4",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\fallout 4",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\377160",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\fallout 4",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout 3 goty",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3 goty",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22370",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3 goty",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout 3",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22300",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout New Vegas",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout New Vegas",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22380",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout New Vegas",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Morrowind",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Morrowind",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22320",
+          "value": "c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Morrowind",
+          "key": "Installed Path",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "ATTENTION!\n -Vortex cannot be updated after installed, doing so will break it\n -After installation finishes, Vortex will start. Before adding any games you must go to \"Settings\" and disable \"Annoucements\", \"News\" and \"Latest Mods\" in the \"Interface\" tab, otherwise you'll get stuck in a crash loop",
+          "options": [
+            {
+              "waiting": "Click here after you read everything carefully"
+            },
+            {
+              "proceed": "I'm aware of what I need to do, procced with the installation"
+            }
+          ],
+          "preselect": "waiting"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup: https://github.com/Nexus-Mods/Vortex/releases/download/v0.17.11/vortex-setup-0.17.11.exe\n- symlinks_setup: https://github.com/rockerbacon/lutris-skyrimse-installers/releases/download/1.7/vortex-symlinks.sh\n- downloads_handler: https://github.com/rockerbacon/lutris-skyrimse-installers/releases/download/1.7/vortex-downloads-handler.desktop\ngame:\n  exe: drive_c/Program Files/Black Tree Gaming Ltd/Vortex/Vortex.exe\n  prefix: $GAMEDIR\ninstaller:\n- copy:\n    dst: $GAMEDIR/config_scripts\n    src: symlinks_setup\n- chmodx: $GAMEDIR/config_scripts/vortex-symlinks.sh\n- copy:\n    dst: $HOME/.local/share/applications\n    src: downloads_handler\n- chmodx: $HOME/.local/share/applications/vortex-downloads-handler.desktop\n- execute:\n    file: $GAMEDIR/config_scripts/vortex-symlinks.sh\n- task:\n    app: dotnet46 win10\n    description: Installing .NET 4.6\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Skyrim Special\n      Edition\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim special edition\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\489830\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim special edition\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Skyrim\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\72850\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\skyrim\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Oblivion\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\oblivion\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22330\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\oblivion\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout 4\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\fallout 4\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\377160\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\fallout 4\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout 3 goty\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3 goty\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22370\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3 goty\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout 3\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22300\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout 3\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Fallout New Vegas\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout New Vegas\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22380\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Fallout New Vegas\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\Morrowind\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Morrowind\n- task:\n    key: Installed Path\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Valve\\Steam\\Apps\\22320\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\program files (x86)\\\\steam\\\\steamapps\\\\common\\\\Morrowind\n- input_menu:\n    description: \"ATTENTION!\\n -Vortex cannot be updated after installed, doing so\\\n      \\ will break it\\n -After installation finishes, Vortex will start. Before adding\\\n      \\ any games you must go to \\\"Settings\\\" and disable \\\"Annoucements\\\", \\\"News\\\"\\\n      \\ and \\\"Latest Mods\\\" in the \\\"Interface\\\" tab, otherwise you'll get stuck in\\\n      \\ a crash loop\"\n    options:\n    - waiting: Click here after you read everything carefully\n    - proceed: I'm aware of what I need to do, procced with the installation\n    preselect: waiting\n- task:\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
+}

@@ -1,0 +1,72 @@
+{
+  "id": 9771,
+  "game_id": 12086,
+  "game_slug": "the-simpsons-hit-run",
+  "name": "The Simpsons: Hit & Run",
+  "year": 2003,
+  "user": "CodingKoopa",
+  "runner": "wine",
+  "slug": "the-simpsons-hit-run-pc-mod-launcher-v120",
+  "version": "PC Mod Launcher v1.20",
+  "description": "Includes Lucas' Simpsons Hit & Run Mod Launcher v1.20, for:\r\n\r\n- Improved game compatibility on modern computers.\r\n\r\n- Tweaks to change how the game runs.\r\n\r\n- The ability to play mods for the game.\r\n\r\nFor more info on the mod launcher, see http://docs.donutteam.com/books/lucas-simpsons-hit-run-mod-launcher.",
+  "notes": "",
+  "created_at": "2018-08-17T05:54:59.891000Z",
+  "updated_at": "2018-12-27T01:26:34.572046Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "custom-name": "Lucas Simpsons Hit & Run Mod Launcher",
+      "exe": "drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons Hit & Run Mod Launcher/Lucas Simpsons Hit & Run Mod Launcher.exe"
+    },
+    "files": [
+      {
+        "mod-launcher-archive": "https://cdn.donutteam.com/Downloads/Tools/Lucas'%20Simpsons%20Hit%20&%20Run%20Mod%20Launcher%201.20.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Installing .NET 3.5 Service Pack 1 runtime",
+          "prefix": "$GAMEDIR",
+          "app": "dotnet35sp1",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting mod launcher archive",
+          "dst": "drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons Hit & Run Mod Launcher",
+          "file": "mod-launcher-archive"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting mod launcher game EXE path registry key",
+          "path": "HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\",
+          "value": "$GAMEDIR/Simpsons.exe",
+          "key": "Game EXE Path"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting mod launcher game directory path registry key",
+          "path": "HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\",
+          "value": "$GAMEDIR",
+          "key": "Game Path"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- mod-launcher-archive: https://cdn.donutteam.com/Downloads/Tools/Lucas'%20Simpsons%20Hit%20&%20Run%20Mod%20Launcher%201.20.zip\ngame:\n  custom-name: Lucas Simpsons Hit & Run Mod Launcher\n  exe: drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons\n    Hit & Run Mod Launcher/Lucas Simpsons Hit & Run Mod Launcher.exe\ninstaller:\n- task:\n    app: dotnet35sp1\n    description: Installing .NET 3.5 Service Pack 1 runtime\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting mod launcher archive\n    dst: drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas'\n      Simpsons Hit & Run Mod Launcher\n    file: mod-launcher-archive\n- task:\n    description: Setting mod launcher game EXE path registry key\n    key: Game EXE Path\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\\n    prefix: $GAMEDIR\n    value: $GAMEDIR/Simpsons.exe\n- task:\n    description: Setting mod launcher game directory path registry key\n    key: Game Path\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\\n    prefix: $GAMEDIR\n    value: $GAMEDIR\n"
+}

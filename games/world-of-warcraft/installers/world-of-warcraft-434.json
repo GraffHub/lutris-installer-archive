@@ -1,0 +1,120 @@
+{
+  "id": 14430,
+  "game_id": 2033,
+  "game_slug": "world-of-warcraft",
+  "name": "World of Warcraft",
+  "year": 2004,
+  "user": "Siysrril",
+  "runner": "wine",
+  "slug": "world-of-warcraft-434",
+  "version": "4.3.4",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-07-06T01:53:40.780951Z",
+  "updated_at": "2019-07-06T01:53:40.780976Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/LauncherWarSages/Launcher WarSages.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "script": null,
+    "files": [
+      {
+        "setup": {
+          "filename": "Launcher WarSages Installer.exe",
+          "url": "https://1drv.ms/u/s!AmwFOkxMfn6WgYZhgL7hhsXpH6xMpA?e=ztfiD1&download=1"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "nvapi64": "disabled",
+        "nvapi": "disabled",
+        "d3d12": "disabled"
+      },
+      "dxvk": true,
+      "version": "ge-protonified-nofshack-4.9-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Arial font",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10",
+          "key": "Version",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Wine Staging: Enabling DXVA2",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "value": "va",
+          "key": "backend",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Warsages Lancher",
+          "executable": "Launcher WarSages.exe",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: Launcher WarSages Installer.exe\n    url: https://1drv.ms/u/s!AmwFOkxMfn6WgYZhgL7hhsXpH6xMpA?e=ztfiD1&download=1\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/LauncherWarSages/Launcher WarSages.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Warsages Lancher\n    executable: Launcher WarSages.exe\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nscript: null\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+}

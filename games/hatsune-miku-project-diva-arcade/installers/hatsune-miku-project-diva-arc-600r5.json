@@ -1,0 +1,101 @@
+{
+  "id": 13357,
+  "game_id": 27195,
+  "game_slug": "hatsune-miku-project-diva-arcade",
+  "name": "Hatsune Miku: Project DIVA Arcade",
+  "year": 2010,
+  "user": "nastys",
+  "runner": "wine",
+  "slug": "hatsune-miku-project-diva-arc-600r5",
+  "version": "600r5",
+  "description": "Uses ELAC by samyuu and lybxlpsv.\r\nThe \"songfix\" must be installed manually.\r\nDisable \"Reduce PulseAudio latency\" if you get no sound.\r\nThe installer will set the resolution to 1080p by default. To set it to 720p, remove \"-hd1080\" from the arguments. To use a custom resolution, edit graphics.ini (don't remove \"-hd1080\" from the arguments).",
+  "notes": "- An NVIDIA GPU is required. On Turing-based GPUs, you may experience some glitches. A custom shader may be used to mitigate the issue, but it must be installed manually;\r\n- WMV playback may not work (32-bit codecs required). Converting all WMVs to MP4 and then changing the entries in pv_db.txt might fix it.",
+  "created_at": "2019-05-06T14:41:05.545000Z",
+  "updated_at": "2019-06-12T04:47:11.558117Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/PDA/elac.exe",
+      "prefix": "$GAMEDIR",
+      "args": "\"diva.exe -hdtv1080\""
+    },
+    "files": [
+      {
+        "gamedata": "N/A:Select the archive containing the game"
+      },
+      {
+        "elac": {
+          "filename": "elac.zip",
+          "url": "https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1"
+      },
+      "pulse_latency": "true"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix...",
+          "install_gecko": false,
+          "prefix": "$GAMEDIR",
+          "install_mono": false,
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing quartz...",
+          "prefix": "$GAMEDIR",
+          "app": "quartz",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting game data...",
+          "dst": "$GAMEDIR/drive_c/PDA",
+          "file": "gamedata"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting ELAC...",
+          "dst": "$GAMEDIR/drive_c/PDA",
+          "file": "elac"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/PDA/bak/",
+          "src": "$GAMEDIR/drive_c/PDA/diva.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/PDA/prepatch.exe",
+          "name": "wineexec",
+          "args": "diva.exe"
+        }
+      }
+    ],
+    "wine": {
+      "single_cpu": true,
+      "version": "tkg-4.6-x86_64"
+    }
+  },
+  "content": "files:\n- gamedata: N/A:Select the archive containing the game\n- elac:\n    filename: elac.zip\n    url: https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental\ngame:\n  args: '\"diva.exe -hdtv1080\"'\n  exe: $GAMEDIR/drive_c/PDA/elac.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    description: Installing quartz...\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting game data...\n    dst: $GAMEDIR/drive_c/PDA\n    file: gamedata\n- extract:\n    description: Extracting ELAC...\n    dst: $GAMEDIR/drive_c/PDA\n    file: elac\n- merge:\n    dst: $GAMEDIR/drive_c/PDA/bak/\n    src: $GAMEDIR/drive_c/PDA/diva.exe\n- task:\n    args: diva.exe\n    executable: $GAMEDIR/drive_c/PDA/prepatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\n  pulse_latency: 'true'\nwine:\n  single_cpu: true\n  version: tkg-4.6-x86_64\n"
+}

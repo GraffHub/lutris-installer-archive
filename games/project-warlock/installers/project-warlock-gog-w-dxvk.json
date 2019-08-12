@@ -1,0 +1,93 @@
+{
+  "id": 14102,
+  "game_id": 22209,
+  "game_slug": "project-warlock",
+  "name": "Project Warlock",
+  "year": 2018,
+  "user": "jacksapper",
+  "runner": "wine",
+  "slug": "project-warlock-gog-w-dxvk",
+  "version": "GOG w/ DXVK",
+  "description": "Installs DX-2010 and Visual C++ 2015 as dependencies.",
+  "notes": "The installer will complain a few times towards the end of the install.  Just click OK and it will install fine.",
+  "created_at": "2019-06-15T05:21:37.593000Z",
+  "updated_at": "2019-06-17T00:19:21.456533Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 893680,
+  "gogid": 1459073823,
+  "gogslug": "project_warlock",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Project Warlock/pw_x64.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "setup": "N/A:Select the game's setup file"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "pulse_latency": false
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2015 faudio win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Project Warlock",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "dxvk": true,
+      "version": "ge-protonified-4.9-x86_64"
+    }
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Project Warlock/pw_x64.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 faudio win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing Project Warlock\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: false\nwine:\n  dxvk: true\n  esync: true\n  version: ge-protonified-4.9-x86_64\n"
+}

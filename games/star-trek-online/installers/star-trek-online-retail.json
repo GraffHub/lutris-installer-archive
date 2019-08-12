@@ -1,0 +1,89 @@
+{
+  "id": 2530,
+  "game_id": 3446,
+  "game_slug": "star-trek-online",
+  "name": "Star Trek Online",
+  "year": 2010,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "star-trek-online-retail",
+  "version": "Retail",
+  "description": "Uses the old Cryptic Launcher(No Arc, No Steam)\r\n\r\n- After a launcher update the game won't restart automatically so you'll need to launch it again",
+  "notes": "",
+  "created_at": "2016-08-21T19:10:15.016000Z",
+  "updated_at": "2018-06-05T05:04:38.031691Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 9900,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Star Trek Online.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "game": "http://files.startrekonline.com/launcher/Star%20Trek%20Online.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing IE8, necessary for log in functionality",
+          "prefix": "$GAMEDIR",
+          "app": "ie8",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting required Windows version (Win10)",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10",
+          "key": "Version"
+        }
+      },
+      {
+        "task": {
+          "description": "Disabling unused WINE features",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "sandbox",
+          "name": "winetricks"
+        }
+      },
+      {
+        "move": {
+          "description": "Moving launcher into place",
+          "dst": "$GAMEDIR/drive_c/Star Trek Online.exe",
+          "src": "$game"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: http://files.startrekonline.com/launcher/Star%20Trek%20Online.exe\ngame:\n  arch: win32\n  exe: drive_c/Star Trek Online.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: ie8\n    description: Installing IE8, necessary for log in functionality\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Setting required Windows version (Win10)\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- move:\n    description: Moving launcher into place\n    dst: $GAMEDIR/drive_c/Star Trek Online.exe\n    src: $game\n"
+}

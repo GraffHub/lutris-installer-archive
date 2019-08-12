@@ -1,0 +1,73 @@
+{
+  "id": 11375,
+  "game_id": 6328,
+  "game_slug": "worms-2",
+  "name": "Worms 2",
+  "year": 1997,
+  "user": "djazz",
+  "runner": "wine",
+  "slug": "worms-2-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-12-28T21:56:17.829000Z",
+  "updated_at": "2018-12-28T22:21:09.180826Z",
+  "draft": false,
+  "published": true,
+  "published_by": 2045,
+  "rating": "3",
+  "steamid": null,
+  "gogid": 1207659104,
+  "gogslug": "worms_2",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Worms 2/frontend.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "N/A:Please select the GOG.com Worms 2 installer executable"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Team17SoftwareLTD\\frontend\\Worms2",
+          "value": 5,
+          "key": "VideoSetting",
+          "arch": "win32",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "arch": "win32",
+          "exclude_processes": "GOGLauncher.exe start.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\r\n- setup: N/A:Please select the GOG.com Worms 2 installer executable\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/GOG Games/Worms 2/frontend.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    key: VideoSetting\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Team17SoftwareLTD\\frontend\\Worms2\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: 5\r\n- task:\r\n    arch: win32\r\n    exclude_processes: GOGLauncher.exe start.exe\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    name: winekill\r\n    prefix: $GAMEDIR"
+}

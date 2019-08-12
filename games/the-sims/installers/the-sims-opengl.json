@@ -1,0 +1,104 @@
+{
+  "id": 12805,
+  "game_id": 15315,
+  "game_slug": "the-sims",
+  "name": "The Sims",
+  "year": 2000,
+  "user": "citrusalex",
+  "runner": "wine",
+  "slug": "the-sims-opengl",
+  "version": "OpenGL",
+  "description": "REQUIRES a NoCD executable. Please download it before continuing.",
+  "notes": "- Ignore the message about lacking memory, just press Yes and continue.\r\n- Don't press \"Play\" after the setup of the game has finished. Just wait for the installer to finish.\r\n- This installer has only been tested with Complete Collection and Deluxe Edition, but other versions should work too.\r\n- NoCD executable for Deluxe Edition (<b>you need unrar to get it extracted</b>): <a href=\"http://www.gameburnworld.com/gp/gamefixes/simsdeluxeedition.shtml\">http://www.gameburnworld.com/gp/gamefixes/simsdeluxeedition.shtml</a>\r\n- NoCD executable for Complete Collection (<b>you need unrar get it extracted</b>): \r\n<a href=\"http://www.gameburnworld.com/gp/gamefixes/simscompletecollection.shtml\">http://www.gameburnworld.com/gp/gamefixes/simscompletecollection.shtml</a>",
+  "created_at": "2019-04-15T05:15:57.189000Z",
+  "updated_at": "2019-08-03T13:19:40.204896Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "4",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/Sims.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "args": "-r1024x768 -skip_intro -skip_verify"
+    },
+    "files": [
+      {
+        "nocd": "N/A:Select the NoCD executable (Sims.exe):"
+      },
+      {
+        "installer": "N/A:Select the Setup executable (Setup.exe in Setup folder, NOT start.exe):"
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "winegstreamer": "disabled"
+      },
+      "version": "lutris-4.12.1-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating prefix",
+          "prefix": "$GAMEDIR",
+          "install_mono": false,
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/Sims.exe",
+          "src": "nocd"
+        }
+      },
+      {
+        "execute": {
+          "description": "Changing permissions...",
+          "command": "chmod 770 \"$GAMEDIR/Sims.exe\""
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "quartz",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "description": "Installing The Sims...",
+          "prefix": "$GAMEDIR",
+          "executable": "installer",
+          "arch": "win32",
+          "exclude_processes": "Start.exe start.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/",
+          "src": "$GAMEDIR/Sims.exe"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- nocd: 'N/A:Select the NoCD executable (Sims.exe):'\n- installer: 'N/A:Select the Setup executable (Setup.exe in Setup folder, NOT start.exe):'\ngame:\n  arch: win32\n  args: -r1024x768 -skip_intro -skip_verify\n  exe: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/Sims.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/Sims.exe\n    src: nocd\n- execute:\n    command: chmod 770 \"$GAMEDIR/Sims.exe\"\n    description: Changing permissions...\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing The Sims...\n    exclude_processes: Start.exe start.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/\n    src: $GAMEDIR/Sims.exe\nwine:\n  overrides:\n    winegstreamer: disabled\n  version: lutris-4.12.1-x86_64\n"
+}

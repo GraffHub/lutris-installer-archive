@@ -1,0 +1,81 @@
+{
+  "id": 10864,
+  "game_id": 4275,
+  "game_slug": "elite-dangerous",
+  "name": "Elite: Dangerous",
+  "year": 2014,
+  "user": "fl_2018",
+  "runner": "wine",
+  "slug": "elite-dangerous-standalone-w-dxvk",
+  "version": "Standalone w/ DXVK",
+  "description": null,
+  "notes": "Download the setup exe by signing in to your Frontier account and visiting the <a href=\"https://www.frontierstore.net/downloadable/customer/products/\">My Downloadable Products</a> page of the Frontier Store.",
+  "created_at": "2018-11-14T05:42:57.248000Z",
+  "updated_at": "2019-04-25T03:52:37.565722Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 359320,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "N/A:Select setup exe for Elite Dangerous"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing stuff with winetricks. This will take a while.",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts vcrun2012 dotnet472 win7"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/silent",
+          "description": "Installing Elite Dangerous",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-4.6-x86_64"
+    }
+  },
+  "content": "files:\n- setup: N/A:Select setup exe for Elite Dangerous\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2012 dotnet472 win7\n    arch: win64\n    description: Installing stuff with winetricks. This will take a while.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Elite Dangerous\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n  version: tkg-4.6-x86_64\n"
+}

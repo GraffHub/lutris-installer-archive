@@ -1,0 +1,71 @@
+{
+  "id": 10725,
+  "game_id": 23054,
+  "game_slug": "deltarune",
+  "name": "Deltarune",
+  "year": 2018,
+  "user": "zeioth",
+  "runner": "wine",
+  "slug": "deltarune-wine",
+  "version": "Wine",
+  "description": "Download required: <a href=\"https://www.deltarune.com/\">https://www.deltarune.com/</a>",
+  "notes": "Press Alt+Enter for fullscreen.",
+  "created_at": "2018-11-02T00:05:31.900000Z",
+  "updated_at": "2019-04-20T18:43:55.372836Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "5",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "installer": "https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe"
+      }
+    ],
+    "system": {
+      "fps_limit": "30"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2015 win7"
+        }
+      },
+      {
+        "write_file": {
+          "content": "$PLUGINSDIR\n$TEMP",
+          "file": "$CACHE/exclude.txt"
+        }
+      },
+      {
+        "execute": {
+          "command": "7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\" -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\""
+        }
+      }
+    ],
+    "wine": {
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "files:\n- installer: https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: '$PLUGINSDIR\n\n      $TEMP'\n    file: $CACHE/exclude.txt\n- execute:\n    command: 7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\"\n      -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\"\nsystem:\n  fps_limit: '30'\nwine:\n  version: tkg-4.0-x86_64\n"
+}

@@ -1,0 +1,104 @@
+{
+  "id": 14973,
+  "game_id": 5965,
+  "game_slug": "lineage-ii",
+  "name": "Lineage II",
+  "year": null,
+  "user": "xkazerike",
+  "runner": "wine",
+  "slug": "lineage-ii-ncsoft",
+  "version": "NCsoft",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-08-11T17:53:38.527744Z",
+  "updated_at": "2019-08-11T17:53:38.527769Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 373700,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/NCWest/NCLauncher/NCLauncher.exe",
+      "arch": "win32"
+    },
+    "files": [
+      {
+        "NCSOFTLAUNCHER": "http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe?_ga=2.30289791.1342608396.1537224810-250827587.1536292294"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1
+      }
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2008 vcrun2013 physx corefonts"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.7.2",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet472 win7"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "aion",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "UseGLSL": "disabled",
+      "version": "esync-staging-pba-3.16-x86_64"
+    }
+  },
+  "content": "files:\n- NCSOFTLAUNCHER: http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe?_ga=2.30289791.1342608396.1537224810-250827587.1536292294\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/NCWest/NCLauncher/NCLauncher.exe\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008 vcrun2013 physx corefonts\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win7\n    arch: win32\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: aion\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    PBA_ENABLE: 1\nwine:\n  UseGLSL: disabled\n  esync: true\n  version: esync-staging-pba-3.16-x86_64\n"
+}

@@ -1,0 +1,82 @@
+{
+  "id": 11764,
+  "game_id": 11178,
+  "game_slug": "playerunknowns-battlegrounds",
+  "name": "PLAYERUNKNOWN'S BATTLEGROUNDS",
+  "year": 2017,
+  "user": "OsamaBinlada",
+  "runner": "wine",
+  "slug": "playerunknowns-battlegrounds-lite",
+  "version": "Lite",
+  "description": "Not working yet!",
+  "notes": "It does not work because of the lack of implementation of Wine's httpapi dll, see more about: <a href=\"https://bugs.winehq.org/show_bug.cgi?id=46549\">Wine Bugzilla</a>, <a href=\"https://github.com/wine-staging/wine-staging/tree/master/patches/httpapi-HttpCreateServerSession\">Wine Staging patchset</a>",
+  "created_at": "2019-01-29T00:51:07.065000Z",
+  "updated_at": "2019-06-01T05:49:48.259337Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "1",
+  "steamid": 578080,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/PUBGLite/Launcher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "launcher": "https://lpc-dl.playbattlegrounds.com/installer/PUBG-Lite-Setup.exe"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine 64-bit Prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET Framework 4.7.2 (This will take several minutes, please wait)",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet472"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Visual C++ Runtime 2017",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2017"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the game (WARNING: Do not run the game when the installation is complete)",
+          "prefix": "$GAMEDIR",
+          "executable": "launcher",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-protonified-4.6-x86_64"
+    }
+  },
+  "content": "files:\n- launcher: https://lpc-dl.playbattlegrounds.com/installer/PUBG-Lite-Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/PUBGLite/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing .NET Framework 4.7.2 (This will take several minutes,\n      please wait)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    arch: win64\n    description: Installing Visual C++ Runtime 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing the game (WARNING: Do not run the game when the installation\n      is complete)'\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: tkg-protonified-4.6-x86_64\n"
+}

@@ -1,0 +1,137 @@
+{
+  "id": 11545,
+  "game_id": 18175,
+  "game_slug": "catherine",
+  "name": "Catherine",
+  "year": 2011,
+  "user": "cxf",
+  "runner": "winesteam",
+  "slug": "catherine-steam",
+  "version": "Steam",
+  "description": "Requires Lutris 0.5.0",
+  "notes": "",
+  "created_at": "2019-01-10T21:50:52.731000Z",
+  "updated_at": "2019-01-30T23:53:56.045138Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "1",
+  "steamid": 893180,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 893180,
+      "arch": "win32"
+    },
+    "files": [
+      {
+        "mfplat_dll": "https://lutris.net/files/tools/dll/mfplat/x32/mfplat.dll"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "mf vcrun2017"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "component": "mediafoundation",
+          "name": "install_cab_component"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "component": "mf_",
+          "name": "install_cab_component"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "component": "mfreadwrite",
+          "name": "install_cab_component"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "component": "wmadmod",
+          "name": "install_cab_component"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "component": "wmvdecod",
+          "name": "install_cab_component"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "mfplat_dll"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "xact win7"
+        }
+      }
+    ]
+  },
+  "content": "files:\r\n- mfplat_dll: https://lutris.net/files/tools/dll/mfplat/x32/mfplat.dll\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\ngame:\r\n  appid: 893180\r\n  arch: win32\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    name: winekill\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: mf vcrun2017\r\n    arch: win32\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\r\n    component: mediafoundation\r\n    name: install_cab_component\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\r\n    component: mf_\r\n    name: install_cab_component\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\r\n    component: mfreadwrite\r\n    name: install_cab_component\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\r\n    component: wmadmod\r\n    name: install_cab_component\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\r\n    component: wmvdecod\r\n    name: install_cab_component\r\n    prefix: $GAMEDIR/prefix\r\n- move:\r\n    dst: $GAMEDIR\r\n    src: mfplat_dll\r\n- task:\r\n    app: xact win7\r\n    arch: win32\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix"
+}

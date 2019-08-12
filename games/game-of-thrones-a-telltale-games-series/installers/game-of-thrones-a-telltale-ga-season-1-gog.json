@@ -1,0 +1,68 @@
+{
+  "id": 2224,
+  "game_id": 3656,
+  "game_slug": "game-of-thrones-a-telltale-games-series",
+  "name": "Game of Thrones - A Telltale Games Series",
+  "year": 2014,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "game-of-thrones-a-telltale-ga-season-1-gog",
+  "version": "Season 1 - GOG",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-06-28T17:38:58.413364Z",
+  "updated_at": "2016-08-18T21:34:48.006481Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 330840,
+  "gogid": 1432208050,
+  "gogslug": "game_of_thrones_season_1",
+  "humblestoreid": "",
+  "script": {
+    "exe": "drive_c/GOG Games/Game of Thrones - Season 1/Thrones.exe",
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "args": "/verysilent /RESTARTEXITCODE=0 /SP- /NORESTART /NOICONS /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "task": {
+          "description": "Disabling unused WINE features",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "sandbox",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "exe: drive_c/GOG Games/Game of Thrones - Season 1/Thrones.exe\nfiles:\n- game: N/A:Please select the GOG.com Windows installer.\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /verysilent /RESTARTEXITCODE=0 /SP- /NORESTART /NOICONS /CLOSEAPPLICATIONS\n      /SUPPRESSMSGBOXES\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

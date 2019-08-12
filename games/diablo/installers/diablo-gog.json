@@ -1,0 +1,68 @@
+{
+  "id": 12313,
+  "game_id": 5826,
+  "game_slug": "diablo",
+  "name": "Diablo",
+  "year": 1996,
+  "user": "citrusalex",
+  "runner": "wine",
+  "slug": "diablo-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "Diablo option is working\r\nDiablo Classic option crashes\r\nMenus are not refreshing properly but it is still possible to get into the game and the game works well.",
+  "created_at": "2019-03-09T14:23:36.164000Z",
+  "updated_at": "2019-03-09T18:21:10.505905Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1412601690,
+  "gogslug": "diablo",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "installer": "N/A:Select the EXE downloaded from GOG"
+      }
+    ],
+    "wine": {
+      "Desktop": true,
+      "overrides": {
+        "ddraw.dll": "n"
+      },
+      "WineDesktop": "1024x768",
+      "version": "4.3-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Setup, please wait...",
+          "executable": "installer",
+          "name": "wineexec",
+          "args": "/VERYSILENT /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  overrides:\n    ddraw.dll: n\n  version: 4.3-x86_64\n"
+}

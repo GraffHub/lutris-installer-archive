@@ -1,0 +1,79 @@
+{
+  "id": 10850,
+  "game_id": 852,
+  "game_slug": "dungeons-dragons-online",
+  "name": "Dungeons & Dragons Online®",
+  "year": null,
+  "user": "vfreeze_31",
+  "runner": "wine",
+  "slug": "dungeons-dragons-online-standalone-w-dxvk",
+  "version": "Standalone w/ DXVK",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-11-12T13:16:37.982000Z",
+  "updated_at": "2019-02-14T05:55:03.971103Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 206480,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/TurbineLauncher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "http://content.turbine.com/sites/clientdl/ddo/ddolive.exe"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true,
+      "reset_pulse": true
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online",
+          "src": "setup"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Dungeons & Dragons",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "files:\n- setup: http://content.turbine.com/sites/clientdl/ddo/ddolive.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/TurbineLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons\n      Online\n    src: setup\n- task:\n    description: Installing Dungeons & Dragons\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\n  reset_pulse: true\nwine:\n  dxvk: true\n  esync: true\n  version: tkg-4.0-x86_64\n"
+}

@@ -1,0 +1,104 @@
+{
+  "id": 4788,
+  "game_id": 4716,
+  "game_slug": "the-elder-scrolls-arena",
+  "name": "The Elder Scrolls: Arena",
+  "year": 1994,
+  "user": "FakeShemp",
+  "runner": "dosbox",
+  "slug": "the-elder-scrolls-arena-gog",
+  "version": "GOG",
+  "description": "Uses the files from the Windows installer from GOG.",
+  "notes": "No MIDI audio with pre-configured settings from Windows installer (Linux Mint 19).\r\n\r\nTo resolve, there are 2 options:\r\n\r\nOption 1:\r\nChange dosbox_arena_single.conf, Line 14 from:\r\n@ACD -Ssbpdig.adv -IOS220 -IRQS7 -DMAS1 -Mgenmidi.adv -IOM330 -IRQM2 -DMAM1\r\n\r\nto:\r\n\r\n@ACD -Ssbpdig.adv -IOS220 -IRQS7 -DMAS1 -Msbfm.adv -IOM220 -IRQM7 -DMAM1\r\n\r\nOption 2:\r\nLeave change dosbox_arena_single.conf, Line 14 as:\r\n@ACD -Ssbpdig.adv -IOS220 -IRQS7 -DMAS1 -Mgenmidi.adv -IOM330 -IRQM2 -DMAM\r\n\r\nInstall fluid-soundfont-gm and fluidsynth.  For Mint 19:\r\nsudo apt install -y fluid-soundfont-gm fluidsynth\r\n\r\nOpen terminal and run the command (needs to be run each time you want to play):\r\nfluidsynth -l -s -i -aalsa -o audio.alsa.device=default /usr/share/sounds/sf2/FluidR3_GM.sf2\r\n\r\nStart the game.",
+  "created_at": "2017-07-03T20:16:33.495000Z",
+  "updated_at": "2018-11-05T07:04:10.047468Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "config_file": "$GAMEDIR/dosbox_arena.conf"
+    },
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file2"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE\" \"$file1\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/app"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/DOSBOX",
+          "src": "$GAMEDIR/dosbox_arena_single.conf"
+        }
+      },
+      {
+        "write_config": {
+          "section": "render",
+          "value": true,
+          "key": "aspect",
+          "file": "$GAMEDIR/dosbox_arena.conf"
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "value": "overlay",
+          "key": "output",
+          "file": "$GAMEDIR/dosbox_arena.conf"
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "value": "1920x1080",
+          "key": "fullresolution",
+          "file": "$GAMEDIR/dosbox_arena.conf"
+        }
+      },
+      {
+        "write_config": {
+          "section": "midi",
+          "value": "128:0",
+          "key": "midiconfig",
+          "file": "$GAMEDIR/dosbox_arena.conf"
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "value": false,
+          "key": "fullscreen",
+          "file": "$GAMEDIR/dosbox_arena.conf"
+        }
+      }
+    ],
+    "main_file": "DOSBOX/dosbox_arena_single.conf"
+  },
+  "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosbox_arena.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosbox_arena_single.conf\n- write_config:\n    file: $GAMEDIR/dosbox_arena.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosbox_arena.conf\n    key: output\n    section: sdl\n    value: overlay\n- write_config:\n    file: $GAMEDIR/dosbox_arena.conf\n    key: fullresolution\n    section: sdl\n    value: 1920x1080\n- write_config:\n    file: $GAMEDIR/dosbox_arena.conf\n    key: midiconfig\n    section: midi\n    value: '128:0'\n- write_config:\n    file: $GAMEDIR/dosbox_arena.conf\n    key: fullscreen\n    section: sdl\n    value: false\nmain_file: DOSBOX/dosbox_arena_single.conf\n"
+}

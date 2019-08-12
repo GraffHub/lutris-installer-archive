@@ -1,0 +1,94 @@
+{
+  "id": 11015,
+  "game_id": 1601,
+  "game_slug": "x-com-terror-from-the-deep",
+  "name": "X-COM: Terror from the Deep",
+  "year": 1995,
+  "user": "rom42",
+  "runner": "dosbox",
+  "slug": "x-com-terror-from-the-deep-gogcom",
+  "version": "GOG.com",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-11-28T17:51:37.095000Z",
+  "updated_at": "2018-11-29T04:53:18.571664Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 7650,
+  "gogid": 1445249983,
+  "gogslug": "xcom_terror_from_the_deep",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 7650,
+      "config_file": "$GAMEDIR/dosbox_xcomtftd.conf",
+      "main_file": "$GAMEDIR/dosbox_xcomtftd_single.conf"
+    },
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wine.set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing ...",
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wine.wineexec",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      },
+      {
+        "execute": {
+          "description": "cleaning...",
+          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      },
+      {
+        "execute": {
+          "description": "cleaning...",
+          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-i 's|mount C \"..\" -freesize 1024|mount C \".\" -freesize 1024|g' $GAMEDIR/dosbox_xcomtftd_single.conf",
+          "terminal": false,
+          "file": "/bin/sed"
+        }
+      },
+      {
+        "execute": {
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer\ngame:\n  appid: 7650\n  config_file: $GAMEDIR/dosbox_xcomtftd.conf\n  main_file: $GAMEDIR/dosbox_xcomtftd_single.conf\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: game\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -i 's|mount C \"..\" -freesize 1024|mount C \".\" -freesize 1024|g' $GAMEDIR/dosbox_xcomtftd_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/DOSBOX'\n    file: /bin/sh\n    terminal: false\n"
+}

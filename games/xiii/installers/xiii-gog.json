@@ -1,0 +1,79 @@
+{
+  "id": 2283,
+  "game_id": 6542,
+  "game_slug": "xiii",
+  "name": "XIII",
+  "year": 2003,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "xiii-gog",
+  "version": "GOG",
+  "description": "The now unavailable GOG version.",
+  "notes": "- Ignore error messages during installation, press exit after the gog setup installs.\r\n- For HD resolutions have a look here: http://pcgamingwiki.com/wiki/XIII#Widescreen_resolution\r\n- Some settings in the option menus hard crash the game, edit the game options through xIII.ini and DefUser.ini",
+  "created_at": "2016-07-08T20:07:56.687000Z",
+  "updated_at": "2018-08-28T07:20:58.644129Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "3",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG.com/XIII/system/XIII.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "game": "N/A:Please select Windows installer provided by GOG"
+      },
+      {
+        "game15": "https://lutris.net/files/games/xiii/patch1.5.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing XIII",
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "game15"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing patch 1.5",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/Unofficial XIII Patch 1.5.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "description": "Disabling unused WINE features",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "sandbox",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select Windows installer provided by GOG\n- game15: https://lutris.net/files/games/xiii/patch1.5.zip\ngame:\n  exe: drive_c/GOG.com/XIII/system/XIII.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing XIII\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: game15\n- task:\n    args: /silent\n    description: Installing patch 1.5\n    executable: $CACHE/Unofficial XIII Patch 1.5.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

@@ -1,0 +1,94 @@
+{
+  "id": 2591,
+  "game_id": 7256,
+  "game_slug": "syndicate-plus",
+  "name": "Syndicate Plus",
+  "year": 1993,
+  "user": "ssf",
+  "runner": "dosbox",
+  "slug": "syndicate-plus-gogcom",
+  "version": "GOG.com",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-08-24T19:01:58.437077Z",
+  "updated_at": "2016-08-30T14:47:18.902092Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207658992,
+  "gogslug": "syndicate",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "config_file": "$GAMEDIR/dosboxSyndicate.conf",
+      "main_file": "$GAMEDIR/dosboxSyndicate_single.conf"
+    },
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wine.set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing ...",
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wine.wineexec",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      },
+      {
+        "execute": {
+          "description": "cleaning...",
+          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      },
+      {
+        "execute": {
+          "description": "cleaning...",
+          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSyndicate_single.conf",
+          "terminal": false,
+          "file": "/bin/sed"
+        }
+      },
+      {
+        "execute": {
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      }
+    ],
+    "gogid": "syndicate"
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer\ngame:\n  config_file: $GAMEDIR/dosboxSyndicate.conf\n  main_file: $GAMEDIR/dosboxSyndicate_single.conf\ngogid: syndicate\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: game\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSyndicate_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/DOSBOX'\n    file: /bin/sh\n    terminal: false\n"
+}

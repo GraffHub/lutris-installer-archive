@@ -1,0 +1,164 @@
+{
+  "id": 10212,
+  "game_id": 1513,
+  "game_slug": "tomb-raider-the-last-revelation",
+  "name": "Tomb Raider: The Last Revelation",
+  "year": 1999,
+  "user": "nastys",
+  "runner": "wine",
+  "slug": "tomb-raider-the-last-revelati-gog-dgvoodoo2dxvk",
+  "version": "GOG dgVoodoo2+DXVK",
+  "description": "Installs the GOG version and dgVoodoo2+DXVK and Tomb Raider Mod Launcher to fix the graphical issues (shading and aspect ratio). Uses dgvoodoo Graphics Api Wrapper by Dege, (c) 2013-2018 Official website: <a href=\"http://dege.fw.hu/\">http://dege.fw.hu/</a>",
+  "notes": "Only install Tomb Raider 4, do not create desktop icons and do not launch the game! You can run dgVoodooCpl.exe from the game folder to change some settings.",
+  "created_at": "2018-09-16T11:47:48.091000Z",
+  "updated_at": "2019-02-16T04:58:49.423355Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 224980,
+  "gogid": 1207659077,
+  "gogslug": "tomb_raider_the_last_revelation_chronicles",
+  "humblestoreid": "tomb-raider-iv-the-last-revelation",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Jack's Mini Network/Tomb Raider Mod Launcher/Launcher.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "N/A:Please select the GOG installer (Tomb Raider 4+5)"
+      },
+      {
+        "dgvoodoo2": "http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_3.zip"
+      },
+      {
+        "modlauncher": "http://tombraidermodlauncher.co.uk/downloads/Tomb%20Raider%20Mod%20Launcher%201.0.6.7z"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Running GOG installer... ONLY install Tomb Raider 4! No desktop icons! DO NOT launch the game!",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "description": "Installing dgVoodoo2...",
+          "dst": "$GAMEDIR/dgVoodoo2",
+          "file": "dgvoodoo2"
+        }
+      },
+      {
+        "merge": {
+          "description": "Installing dgVoodoo2...",
+          "dst": "$GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/",
+          "src": "$GAMEDIR/dgVoodoo2/MS/D3D8.dll"
+        }
+      },
+      {
+        "merge": {
+          "description": "Installing dgVoodoo2...",
+          "dst": "$GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/",
+          "src": "$GAMEDIR/dgVoodoo2/MS/DDraw.dll"
+        }
+      },
+      {
+        "merge": {
+          "description": "Installing dgVoodoo2...",
+          "dst": "$GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/",
+          "src": "$GAMEDIR/dgVoodoo2/MS/D3DImm.dll"
+        }
+      },
+      {
+        "merge": {
+          "description": "Installing dgVoodoo2...",
+          "dst": "$GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/",
+          "src": "$GAMEDIR/dgVoodoo2/dgVoodooCpl.exe"
+        }
+      },
+      {
+        "merge": {
+          "description": "Installing dgVoodoo2...",
+          "dst": "$GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/",
+          "src": "$GAMEDIR/dgVoodoo2/dgVoodoo.conf"
+        }
+      },
+      {
+        "extract": {
+          "description": "Installing Tomb Raider Mod Launcher...",
+          "dst": "$GAMEDIR",
+          "file": "$modlauncher"
+        }
+      },
+      {
+        "move": {
+          "description": "Installing Tomb Raider Mod Launcher...",
+          "dst": "$GAMEDIR/Tomb Raider Mod Launcher 1.0.6.zip",
+          "src": "$GAMEDIR/Tomb Raider Mod Launcher 1.0.6.exe"
+        }
+      },
+      {
+        "extract": {
+          "description": "Installing Tomb Raider Mod Launcher...",
+          "dst": "$GAMEDIR/drive_c/Program Files/Jack's Mini Network/Tomb Raider Mod Launcher",
+          "file": "$GAMEDIR/Tomb Raider Mod Launcher 1.0.6.zip"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Installing Tomb Raider Mod Launcher...",
+          "path": "HKEY_CURRENT_USER\\Software\\Jack's Mini Network\\Tomb Raider Mod Launcher\\Tomb Raider: The Last Revelation",
+          "value": "C:\\\\Program Files\\\\GOG.com\\\\Tomb Raider 4-5\\\\Tomb Raider 4\\\\tomb4.exe",
+          "key": "Game EXE Path"
+        }
+      },
+      {
+        "task": {
+          "description": "Running dgVoodooCpl.exe...",
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/dgVoodooCpl.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting registry keys...",
+          "path": "HKEY_CURRENT_USER\\Software\\Core Design\\Tomb Raider IV\\System",
+          "value": 0,
+          "key": "Setup"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "d3d8,d3dimm,ddraw": "native"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "files:\n- setup: N/A:Please select the GOG installer (Tomb Raider 4+5)\n- dgvoodoo2: http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_3.zip\n- modlauncher: http://tombraidermodlauncher.co.uk/downloads/Tomb%20Raider%20Mod%20Launcher%201.0.6.7z\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Jack's Mini Network/Tomb Raider Mod Launcher/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Running GOG installer... ONLY install Tomb Raider 4! No desktop icons!\n      DO NOT launch the game!\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing dgVoodoo2...\n    dst: $GAMEDIR/dgVoodoo2\n    file: dgvoodoo2\n- merge:\n    description: Installing dgVoodoo2...\n    dst: $GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/\n    src: $GAMEDIR/dgVoodoo2/MS/D3D8.dll\n- merge:\n    description: Installing dgVoodoo2...\n    dst: $GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/\n    src: $GAMEDIR/dgVoodoo2/MS/DDraw.dll\n- merge:\n    description: Installing dgVoodoo2...\n    dst: $GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/\n    src: $GAMEDIR/dgVoodoo2/MS/D3DImm.dll\n- merge:\n    description: Installing dgVoodoo2...\n    dst: $GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/\n    src: $GAMEDIR/dgVoodoo2/dgVoodooCpl.exe\n- merge:\n    description: Installing dgVoodoo2...\n    dst: $GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider 4/\n    src: $GAMEDIR/dgVoodoo2/dgVoodoo.conf\n- extract:\n    description: Installing Tomb Raider Mod Launcher...\n    dst: $GAMEDIR\n    file: $modlauncher\n- move:\n    description: Installing Tomb Raider Mod Launcher...\n    dst: $GAMEDIR/Tomb Raider Mod Launcher 1.0.6.zip\n    src: $GAMEDIR/Tomb Raider Mod Launcher 1.0.6.exe\n- extract:\n    description: Installing Tomb Raider Mod Launcher...\n    dst: $GAMEDIR/drive_c/Program Files/Jack's Mini Network/Tomb Raider Mod Launcher\n    file: $GAMEDIR/Tomb Raider Mod Launcher 1.0.6.zip\n- task:\n    description: Installing Tomb Raider Mod Launcher...\n    key: Game EXE Path\n    name: set_regedit\n    path: 'HKEY_CURRENT_USER\\Software\\Jack''s Mini Network\\Tomb Raider Mod Launcher\\Tomb\n      Raider: The Last Revelation'\n    prefix: $GAMEDIR\n    value: C:\\\\Program Files\\\\GOG.com\\\\Tomb Raider 4-5\\\\Tomb Raider 4\\\\tomb4.exe\n- task:\n    description: Running dgVoodooCpl.exe...\n    executable: $GAMEDIR/drive_c/Program Files/GOG.com/Tomb Raider 4-5/Tomb Raider\n      4/dgVoodooCpl.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Setting registry keys...\n    key: Setup\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Core Design\\Tomb Raider IV\\System\n    prefix: $GAMEDIR\n    value: 0\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    d3d8,d3dimm,ddraw: native\n  version: tkg-4.0-x86_64\n"
+}

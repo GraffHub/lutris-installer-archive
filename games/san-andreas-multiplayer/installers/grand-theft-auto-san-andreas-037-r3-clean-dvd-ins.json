@@ -1,0 +1,78 @@
+{
+  "id": 13819,
+  "game_id": 11948,
+  "game_slug": "san-andreas-multiplayer",
+  "name": "Grand Theft Auto: San Andreas Multiplayer",
+  "year": 2005,
+  "user": "socterean",
+  "runner": "wine",
+  "slug": "grand-theft-auto-san-andreas-037-r3-clean-dvd-ins",
+  "version": "0.3.7-R3 + clean DVD install",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-05-30T21:15:56.561753Z",
+  "updated_at": "2019-05-30T21:15:56.561783Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "SAMP": "http://files.sa-mp.com/sa-mp-0.3.7-R3-1-install.exe"
+      },
+      {
+        "SAMP_update": "http://www.gta-samp.com/SAMP_Addon_2.3_Setup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing GTA:San Andreas...",
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing San Andreas:Multiplayer...",
+          "prefix": "$GAMEDIR",
+          "executable": "$SAMP",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Patching San Andreas:Multiplayer...",
+          "prefix": "$GAMEDIR",
+          "executable": "$SAMP_update",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- SAMP: http://files.sa-mp.com/sa-mp-0.3.7-R3-1-install.exe\n- SAMP_update: http://www.gta-samp.com/SAMP_Addon_2.3_Setup.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing GTA:San Andreas...\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing San Andreas:Multiplayer...\n    executable: $SAMP\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Patching San Andreas:Multiplayer...\n    executable: $SAMP_update\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

@@ -1,0 +1,63 @@
+{
+  "id": 2718,
+  "game_id": 3650,
+  "game_slug": "freespace-2",
+  "name": "Freespace 2",
+  "year": 1999,
+  "user": "ssf",
+  "runner": "linux",
+  "slug": "freespace-2-fs2_open",
+  "version": "fs2_open",
+  "description": "",
+  "notes": "- official  x86-32 binary\r\n- uses the gog.com data files\r\n- starts with fs2-compatibe flags\r\n- starts in 800x600, check the cmd line to change resolution\r\n- see reference ( http://www.hard-light.net/wiki/index.php/Command-Line_Reference ) for all possible options",
+  "created_at": "2016-09-10T07:32:27.344260Z",
+  "updated_at": "2016-09-22T18:06:05.016254Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 273620,
+  "gogid": 5,
+  "gogslug": "freespace_2",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "args": "-res 800x600 -nospec -noglow -noenv -nonormal -noheight -old_collision",
+      "working_dir": "$GAMEDIR/freespace2"
+    },
+    "exe": "freespace2/fs2_open.sh",
+    "files": [
+      {
+        "game": "http://scp.fsmods.net/builds/LINUX/fs2_open_3.7.4.tar.bz2"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "description": "extracting...",
+          "dst": "$GAMEDIR/freespace2",
+          "file": "$game"
+        }
+      },
+      {
+        "execute": {
+          "args": "-c \"chmod +x $GAMEDIR/freespace2/fs2_open_*\"",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR/freespace2\\n./fs2_open_3.7.4 \\\"$$@\\\"'>$GAMEDIR/freespace2/fs2_open.sh\"",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/freespace2/fs2_open.sh"
+      }
+    ],
+    "requires": "freespace-2-gogcom"
+  },
+  "content": "exe: freespace2/fs2_open.sh\nfiles:\n- game: http://scp.fsmods.net/builds/LINUX/fs2_open_3.7.4.tar.bz2\ngame:\n  args: -res 800x600 -nospec -noglow -noenv -nonormal -noheight -old_collision\n  working_dir: $GAMEDIR/freespace2\ninstaller:\n- extract:\n    description: extracting...\n    dst: $GAMEDIR/freespace2\n    file: $game\n- execute:\n    args: -c \"chmod +x $GAMEDIR/freespace2/fs2_open_*\"\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c \"printf '#!/bin/sh\\ncd $GAMEDIR/freespace2\\n./fs2_open_3.7.4 \\\"$$@\\\"'>$GAMEDIR/freespace2/fs2_open.sh\"\n    file: /bin/sh\n    terminal: false\n- chmodx: $GAMEDIR/freespace2/fs2_open.sh\nrequires: freespace-2-gogcom\n"
+}

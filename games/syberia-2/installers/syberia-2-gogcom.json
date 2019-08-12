@@ -1,0 +1,82 @@
+{
+  "id": 2760,
+  "game_id": 1135,
+  "game_slug": "syberia-2",
+  "name": "Syberia 2",
+  "year": null,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "syberia-2-gogcom",
+  "version": "GOG.com",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-09-21T19:20:40.842431Z",
+  "updated_at": "2016-09-30T20:49:02.783328Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 46510,
+  "gogid": 1207658849,
+  "gogslug": "syberia_2",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/game/Syberia2.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/game"
+    },
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      },
+      {
+        "task": {
+          "description": "Disabling unused WINE features",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "sandbox",
+          "name": "winetricks"
+        }
+      },
+      {
+        "execute": {
+          "args": "-c \"printf '0 BaseCMO.cmo'>$GAMEDIR/drive_c/game/player.ini\"",
+          "terminal": false,
+          "file": "/bin/sh"
+        }
+      }
+    ],
+    "gogid": "syberia"
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Syberia2.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ngogid: syberia\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- execute:\n    args: -c \"printf '0 BaseCMO.cmo'>$GAMEDIR/drive_c/game/player.ini\"\n    file: /bin/sh\n    terminal: false\n"
+}

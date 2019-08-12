@@ -1,0 +1,72 @@
+{
+  "id": 14437,
+  "game_id": 1114,
+  "game_slug": "star-wars-the-force-unleashed",
+  "name": "Star Wars: The Force Unleashed Ultimate Sith Edition",
+  "year": 2009,
+  "user": "VortexAcherontic",
+  "runner": "wine",
+  "slug": "star-wars-the-force-unleashed-2-disc-retail",
+  "version": "2 Disc Retail",
+  "description": "This installer is for the retail version of the game with 2 DVDs.\r\nThis installer will copy the content of the first DVD to your Disk and run the setup from there. This is made to make the installer working as expected when changing disks.",
+  "notes": "",
+  "created_at": "2019-07-06T09:26:37.207275Z",
+  "updated_at": "2019-07-06T09:26:37.207336Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 32430,
+  "gogid": 1189268228,
+  "gogslug": "star_wars_the_force_unleashed_ultimate_sith_edition",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": null,
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "version": "staging-3.16-i386"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine Bottle, please wait...",
+          "prefix": "$GAMEDIR",
+          "install_mono": false,
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 1",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "merge": {
+          "description": "Extracting installation data from disc, please wait ...",
+          "dst": "$GAMEDIR/drive_c/swsetup",
+          "src": "$DISC"
+        }
+      },
+      {
+        "execute": {
+          "descritpion": "Set proper file permissions for extracted data, please wait...",
+          "args": "744 -R $GAMEDIR/drive_c/swsetup",
+          "file": "chmod"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/swsetup/setup.exe",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: null\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Extracting installation data from disc, please wait ...\n    dst: $GAMEDIR/drive_c/swsetup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/swsetup\n    descritpion: Set proper file permissions for extracted data, please wait...\n    file: chmod\n- task:\n    executable: $GAMEDIR/drive_c/swsetup/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: staging-3.16-i386\n"
+}

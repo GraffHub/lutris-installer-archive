@@ -1,0 +1,98 @@
+{
+  "id": 2961,
+  "game_id": 8200,
+  "game_slug": "command-conquer-generals",
+  "name": "Command & Conquer: Generals",
+  "year": 2003,
+  "user": "strider",
+  "runner": "wine",
+  "slug": "command-conquer-generals-cd",
+  "version": "CD",
+  "description": null,
+  "notes": "Game is configured to run at 1920x1080, to run in different resolutions, edit file drive_c/users/$USER/My Documents/Command and Conquer Generals Data/options.ini",
+  "created_at": "2016-10-31T19:50:00.195000Z",
+  "updated_at": "2018-06-22T17:23:15.729551Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
+    "exe": "drive_c/Program Files/EA Games/Command and Conquer Generals/generals.exe",
+    "files": [
+      {
+        "patch1": "https://lutris.net/files/games/command-conquer-generals/Generals-108-english.exe"
+      },
+      {
+        "patch2": "https://lutris.net/files/games/command-conquer-generals/cc-generals-patch-1.08.tar.gz"
+      },
+      {
+        "optionsini": "https://lutris.net/files/games/command-conquer-generals/options.ini"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "ccinstaller",
+          "name": "wineexec",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying disc 1 to cache",
+          "dst": "$CACHE/cdrom",
+          "src": "$DISC"
+        }
+      },
+      {
+        "insert-disc": {
+          "message": "Insert disc 2",
+          "requires": "Data2.cab"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying disc 2 to cache",
+          "dst": "$CACHE/cdrom",
+          "src": "$DISC/Data2.cab"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/cdrom/setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "patch1",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/EA Games/Command and Conquer Generals/",
+          "file": "patch2"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/users/$USER/My Documents/Command and Conquer Generals Data/",
+          "src": "optionsini"
+        }
+      }
+    ]
+  },
+  "content": "exe: drive_c/Program Files/EA Games/Command and Conquer Generals/generals.exe\nfiles:\n- patch1: https://lutris.net/files/games/command-conquer-generals/Generals-108-english.exe\n- patch2: https://lutris.net/files/games/command-conquer-generals/cc-generals-patch-1.08.tar.gz\n- optionsini: https://lutris.net/files/games/command-conquer-generals/options.ini\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    executable: ccinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n    requires: setup.exe\n- merge:\n    description: Copying disc 1 to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- insert-disc:\n    message: Insert disc 2\n    requires: Data2.cab\n- merge:\n    description: Copying disc 2 to cache\n    dst: $CACHE/cdrom\n    src: $DISC/Data2.cab\n- task:\n    executable: $CACHE/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch1\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/EA Games/Command and Conquer Generals/\n    file: patch2\n- merge:\n    dst: $GAMEDIR/drive_c/users/$USER/My Documents/Command and Conquer Generals Data/\n    src: optionsini\n"
+}

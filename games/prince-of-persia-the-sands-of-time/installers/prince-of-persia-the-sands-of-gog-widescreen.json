@@ -1,0 +1,141 @@
+{
+  "id": 14028,
+  "game_id": 2,
+  "game_slug": "prince-of-persia-the-sands-of-time",
+  "name": "Prince of Persia: The Sands of Time",
+  "year": 2003,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "prince-of-persia-the-sands-of-gog-widescreen",
+  "version": "GOG + WIDESCREEN",
+  "description": "This script will install \"Prince of Persia: The Forgotten Sands\" Gog edition with support for modern resolution. \r\n\r\nDuring install please let all options by default.\r\n\r\nThis script uses ps2wide widescreen patch: http://ps2wide.net/\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "notes": "The POP:TFS has not good controller support. \r\nBut you will find profiles for x360 and Steam Controller in the \"gamepad profiles\" folder.",
+  "created_at": "2019-06-10T07:14:50.408686Z",
+  "updated_at": "2019-06-11T23:19:51.387131Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 13600,
+  "gogid": 1207658747,
+  "gogslug": "prince_of_persia_the_sands_of_time",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Prince of Persia - The Sands of Time/PrinceOfPersia.EXE",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "goginstaller": "N/A:Please select the GOG.com Windows installer"
+      },
+      {
+        "wds": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/pop.7z"
+      },
+      {
+        "gppreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/gamepad%20profiles/pop-sot_gamepad_readme.html"
+      },
+      {
+        "gppx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/gamepad%20profiles/pop-sot_x360.gamecontroller.amgp"
+      },
+      {
+        "gppsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/gamepad%20profiles/pop-sot_steam.sccprofile"
+      }
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "goginstaller",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES /SILENT"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/",
+          "file": "wds"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[MAIN]\nWidth = $RESOLUTION_WIDTH\nHeight = $RESOLUTION_HEIGHT\n\n[HUD]\nHUD_posX_auto = 1 // 0 - Off; 1 - On;\nHUD_posX =  -0.148958 // -0.082450 - for 16x10 mode; -0.148958 for 16x9 mode;\n\n[MISC]\ncutscenes_black_borders = 0 //  0 - Off; 1 - On\nXbox_fov = 0 //  0 - Off; 1 - On\nfov_multiplier = 1.0 // original value 1.0;",
+          "file": "$GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/pop.ini"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "key": "d3d9",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/gamepad profiles/",
+          "src": "gppreadme"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/gamepad profiles/",
+          "src": "gppx360"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/gamepad profiles/",
+          "src": "gppsteam"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "value": "00000000",
+          "key": "csmt",
+          "arch": "win64",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
+          "value": "Y",
+          "key": "EAXEnabled",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "key": "background",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\n- wds: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/pop.7z\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/gamepad%20profiles/pop-sot_gamepad_readme.html\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/gamepad%20profiles/pop-sot_x360.gamecontroller.amgp\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Prince%20of%20Persia%20-%20Sands%20of%20time/gamepad%20profiles/pop-sot_steam.sccprofile\ngame:\n  exe: drive_c/GOG Games/Prince of Persia - The Sands of Time/PrinceOfPersia.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /SILENT\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/\n    file: wds\n- write_file:\n    content: '[MAIN]\n\n      Width = $RESOLUTION_WIDTH\n\n      Height = $RESOLUTION_HEIGHT\n\n\n      [HUD]\n\n      HUD_posX_auto = 1 // 0 - Off; 1 - On;\n\n      HUD_posX =  -0.148958 // -0.082450 - for 16x10 mode; -0.148958 for 16x9 mode;\n\n\n      [MISC]\n\n      cutscenes_black_borders = 0 //  0 - Off; 1 - On\n\n      Xbox_fov = 0 //  0 - Off; 1 - On\n\n      fov_multiplier = 1.0 // original value 1.0;'\n    file: $GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/pop.ini\n- task:\n    arch: win64\n    key: d3d9\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/gamepad profiles/\n    src: gppreadme\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/gamepad profiles/\n    src: gppx360\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Prince of Persia - The Sands of Time/gamepad profiles/\n    src: gppsteam\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: EAXEnabled\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
+}

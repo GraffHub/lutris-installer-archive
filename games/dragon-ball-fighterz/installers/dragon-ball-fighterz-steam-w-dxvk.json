@@ -1,0 +1,107 @@
+{
+  "id": 7358,
+  "game_id": 16549,
+  "game_slug": "dragon-ball-fighterz",
+  "name": "Dragon Ball: FighterZ",
+  "year": 2018,
+  "user": "TuiorGames",
+  "runner": "winesteam",
+  "slug": "dragon-ball-fighterz-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": null,
+  "notes": "Works only when replacing EAC dlls with Paladins' EAC dlls.\r\n\r\n<b>WARNING: Use Multiplayer at your own risk. You might get banned otherwise. Lutris is not responsible should you ignore this.</b>",
+  "created_at": "2018-02-19T11:14:58.617000Z",
+  "updated_at": "2019-02-14T05:53:02.255284Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "2",
+  "steamid": 678950,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 678950,
+      "arch": "win64"
+    },
+    "files": [
+      {
+        "EAC64": "$WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x64.dll"
+      },
+      {
+        "EAC32": "$WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x86.dll"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "vcrun2015 win7"
+        }
+      },
+      {
+        "rename": {
+          "dst": "$GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll.bak",
+          "src": "$GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll"
+        }
+      },
+      {
+        "rename": {
+          "dst": "$GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll.bak",
+          "src": "$GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/EasyAntiCheat",
+          "src": "EAC64"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/EasyAntiCheat",
+          "src": "EAC32"
+        }
+      }
+    ],
+    "winesteam": {
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "files:\n- EAC64: $WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x64.dll\n- EAC32: $WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x86.dll\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 678950\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- rename:\n    dst: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll.bak\n    src: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll\n- rename:\n    dst: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll.bak\n    src: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll\n- move:\n    dst: $GAMEDIR/EasyAntiCheat\n    src: EAC64\n- move:\n    dst: $GAMEDIR/EasyAntiCheat\n    src: EAC32\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
+}

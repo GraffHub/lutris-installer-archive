@@ -1,0 +1,72 @@
+{
+  "id": 12271,
+  "game_id": 26127,
+  "game_slug": "my-disney-kitchen",
+  "name": "My Disney Kitchen",
+  "year": 2002,
+  "user": "ShadowBladez",
+  "runner": "wine",
+  "slug": "my-disney-kitchen-cd",
+  "version": "CD",
+  "description": "Requires CD to install. Installer will copy files from CD to wine C: drive and set label to allow running without CD.",
+  "notes": "When warning appears about 16-bit/24-bit color, select \"No\" to continue install. Game runs fine without the need for Xephyr.",
+  "created_at": "2019-03-05T14:18:06.553000Z",
+  "updated_at": "2019-03-05T17:19:40.642551Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "640x480",
+      "version": "tkg-4.2-x86_64"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "SETUP.EXE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Enable Windows 98 compatibility mode",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win98",
+          "key": "Version"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/MDKitchen/Assets/",
+          "src": "$DISC/MDKitchen/Assets/"
+        }
+      },
+      {
+        "write_file": {
+          "content": "MDKitchen",
+          "file": "$GAMEDIR/drive_c/.windows-label"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/SETUP.EXE",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: SETUP.EXE\n- task:\n    description: Enable Windows 98 compatibility mode\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win98\n- merge:\n    dst: $GAMEDIR/drive_c/MDKitchen/Assets/\n    src: $DISC/MDKitchen/Assets/\n- write_file:\n    content: MDKitchen\n    file: $GAMEDIR/drive_c/.windows-label\n- task:\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 640x480\n  version: tkg-4.2-x86_64\n"
+}

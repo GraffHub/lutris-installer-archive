@@ -1,0 +1,116 @@
+{
+  "id": 10720,
+  "game_id": 23120,
+  "game_slug": "adobe-lightroom-5",
+  "name": "Adobe Lightroom 5",
+  "year": 2013,
+  "user": "mathue",
+  "runner": "wine",
+  "slug": "adobe-lightroom-5-318",
+  "version": "3.18",
+  "description": "Adobe Lightroom 5.7.1 32-bit version",
+  "notes": "Based on the gold rated WineHQ instructions:\r\nhttps://appdb.winehq.org/objectManager.php?sClass=version&iId=28669",
+  "created_at": "2018-11-01T22:07:28.879000Z",
+  "updated_at": "2018-11-02T06:31:10.539742Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Adobe/Adobe Photoshop Lightroom 5.7.1/lightroom.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "N/A:Select the 32-bit setup file"
+      }
+    ],
+    "wine": {
+      "version": "3.19-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 32-bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting Windows 7 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win7",
+          "key": "Version",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Lightroom 5 32-bit",
+          "executable": "setup",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing gdiplus",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "gdiplus"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing corefonts",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing windowscodecs",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "windowscodecs"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing ie6",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "ie6"
+        }
+      },
+      {
+        "write_file": {
+          "content": "prefs = { noAutomaticallyCheckUpdates = true }",
+          "file": "$GAMEDIR/drive_c/users/1001/Application Data/Adobe/Lightroom/Preferences/Lightroom 5/Preferences.agprefs"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup: N/A:Select the 32-bit setup file\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Adobe/Adobe Photoshop Lightroom 5.7.1/lightroom.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    arch: win32\n    description: Installing Lightroom 5 32-bit\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus\n    arch: win32\n    description: Installing gdiplus\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    description: Installing corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: windowscodecs\n    arch: win32\n    description: Installing windowscodecs\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ie6\n    arch: win32\n    description: Installing ie6\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: prefs = { noAutomaticallyCheckUpdates = true }\n    file: $GAMEDIR/drive_c/users/1001/Application Data/Adobe/Lightroom/Preferences/Lightroom\n      5/Preferences.agprefs\nwine:\n  version: 3.19-x86_64\n"
+}

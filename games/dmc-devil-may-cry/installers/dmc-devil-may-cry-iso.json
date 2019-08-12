@@ -1,0 +1,81 @@
+{
+  "id": 8762,
+  "game_id": 750,
+  "game_slug": "dmc-devil-may-cry",
+  "name": "DmC Devil May Cry",
+  "year": 2013,
+  "user": "strider",
+  "runner": "wine",
+  "slug": "dmc-devil-may-cry-iso",
+  "version": "ISO",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-06-17T00:03:35.610000Z",
+  "updated_at": "2018-10-27T09:00:43.138318Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 220440,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "DMC.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "install_mono": false,
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "mfc42"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun6"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet40"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/setup.exe",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: DMC.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mfc42\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    app: vcrun6\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    app: dotnet40\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    arch: win32\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

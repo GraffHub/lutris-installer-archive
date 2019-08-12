@@ -1,0 +1,75 @@
+{
+  "id": 13019,
+  "game_id": 219,
+  "game_slug": "dead-space",
+  "name": "Dead Space",
+  "year": 2008,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "dead-space-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-04-21T20:28:02.401335Z",
+  "updated_at": "2019-04-21T20:28:08.297655Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 17470,
+  "gogid": 1312818781,
+  "gogslug": "dead_space",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Dead Space/Dead Space.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "setup": "N/A:Select gog Windows setup exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "vcrun2005 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- setup: N/A:Select gog Windows setup exe\ngame:\n  exe: drive_c/GOG Games/Dead Space/Dead Space.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

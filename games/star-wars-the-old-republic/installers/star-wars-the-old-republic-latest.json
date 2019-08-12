@@ -1,0 +1,103 @@
+{
+  "id": 3262,
+  "game_id": 3709,
+  "game_slug": "star-wars-the-old-republic",
+  "name": "Star Wars: The Old Republic",
+  "year": 2011,
+  "user": "djazz",
+  "runner": "wine",
+  "slug": "star-wars-the-old-republic-latest",
+  "version": "Latest",
+  "description": null,
+  "notes": "",
+  "created_at": "2017-02-13T15:12:23.307000Z",
+  "updated_at": "2019-05-10T01:51:04.206197Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "4",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": "https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe"
+      },
+      {
+        "launcher": "https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/launcher.settings"
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": "true",
+        "PBA_ENABLE": 1
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing winetricks verbs",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "msxml3 msls31 winhttp vcrun2008 d3dx9"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing SWTOR",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/S"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic\""
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic",
+          "file": "$GAMEDIR/drive_c/users/$USER/Temp/InstallSWTOR/swtor.rar"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic",
+          "src": "launcher"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "version": "esync-staging-pba-3.16-x86_64"
+    }
+  },
+  "content": "files:\r\n- setup: https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe\r\n- launcher: https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/launcher.settings\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: msxml3 msls31 winhttp vcrun2008 d3dx9\r\n    arch: win64\r\n    description: Installing winetricks verbs\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /S\r\n    description: Installing SWTOR\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star\r\n      Wars - The Old Republic\"\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars -\r\n      The Old Republic\r\n    file: $GAMEDIR/drive_c/users/$USER/Temp/InstallSWTOR/swtor.rar\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars -\r\n      The Old Republic\r\n    src: launcher\r\nsystem:\r\n  env:\r\n    PBA_ENABLE: 1\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: 'true'\r\nwine:\r\n  esync: true\r\n  version: esync-staging-pba-3.16-x86_64"
+}

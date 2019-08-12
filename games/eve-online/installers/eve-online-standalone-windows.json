@@ -1,0 +1,77 @@
+{
+  "id": 8538,
+  "game_id": 1397,
+  "game_slug": "eve-online",
+  "name": "EVE Online",
+  "year": 2003,
+  "user": "e7a05979dd5994e4572ab90daa17c762",
+  "runner": "wine",
+  "slug": "eve-online-standalone-windows",
+  "version": "Standalone Windows",
+  "description": "Test-env:\r\n    Distro/DE: Fedora 30 with Gnome 3.32.1\r\n    GPU/driver: AMD Radeon VII with mesa-driver 19.0.3-1.fc30",
+  "notes": "Manual tweaks with test-env:\r\n    - enable DXVK (current version 1.1.1)\r\n    - enable Esync (otherwise cursor flicker ingame)\r\n    - setting vulkan ICD loader = radeon_icd.x86_64.json\r\n    - enable reset pulseaudio (prevent clicking/cracking sounds)\r\n\r\nIssues under Gnome 3.32.1 xorg-session:\r\n    - Micro stutter while running non native resolution\r\n    - Resets used monitor when exiting ingame settings menu\r\n\r\nSolution to above issues is to use the wayland-session for gnome.",
+  "created_at": "2018-06-04T18:18:44.218000Z",
+  "updated_at": "2019-05-18T06:51:44.461164Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 8500,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/EVE/eve.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": {
+          "filename": "EveLauncher-1456374.exe",
+          "url": "https://binaries.eveonline.com/EveLauncher-1456374.exe"
+        }
+      }
+    ],
+    "wine": {
+      "version": "tkg-4.6-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10",
+          "key": "Version",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "arial",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: EveLauncher-1456374.exe\n    url: https://binaries.eveonline.com/EveLauncher-1456374.exe\ngame:\n  exe: $GAMEDIR/drive_c/EVE/eve.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running EVE Online Installer. Please do not run the game until this\n      script finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: tkg-4.6-x86_64\n"
+}

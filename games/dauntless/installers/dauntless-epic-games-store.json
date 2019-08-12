@@ -1,0 +1,124 @@
+{
+  "id": 10415,
+  "game_id": 18951,
+  "game_slug": "dauntless",
+  "name": "Dauntless",
+  "year": 2018,
+  "user": "GloriousEggroll",
+  "runner": "wine",
+  "slug": "dauntless-epic-games-store",
+  "version": "Epic Games Store",
+  "description": null,
+  "notes": "You must install Dauntless manually through the Epic Games Store.\r\n\r\nRename <tt>Logo.mp4</tt>, found in <tt>$GAMEDIR/drive_c/Program Files/Epic Games/Archon/Content/Movies/Windows</tt>, after installing Dauntless from the Epic Games Store. Otherwise, you'll receive a black screen when launching Dauntless.",
+  "created_at": "2018-10-04T03:54:55.354000Z",
+  "updated_at": "2019-06-26T22:15:12.378752Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "args": "-opengl"
+    },
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "mf_install": {
+          "filename": "mfinstall.7z",
+          "url": "https://drive.google.com/uc?export=download&id=1SO-QYCXNDgjlC_yDY7EKgoPfp_GdxQhE"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      }
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/mfinstall",
+          "src": "mf_install"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "execute": {
+          "env": {
+            "WINEPREFIX": "$GAMEDIR",
+            "WINE64": "$HOME/.local/share/lutris/runners/wine/ge-protonified-4.9-x86_64/bin/wine64",
+            "WINE": "$HOME/.local/share/lutris/runners/wine/ge-protonified-4.9-x86_64/bin/wine",
+            "WINEARCH": "win64"
+          },
+          "file": "$CACHE/mfinstall/install-mf.sh"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "app": "arial vcrun2015 dotnet48 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "prefix": "$GAMEDIR",
+          "executable": "msiexec",
+          "arch": "win64",
+          "exclude_processes": "EpicGamesLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "d3dcompiler_47": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true,
+      "version": "ge-protonified-4.10-x86_64"
+    }
+  },
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- mf_install:\n    filename: mfinstall.7z\n    url: https://drive.google.com/uc?export=download&id=1SO-QYCXNDgjlC_yDY7EKgoPfp_GdxQhE\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/mfinstall\n    src: mf_install\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    env:\n      WINE: $HOME/.local/share/lutris/runners/wine/ge-protonified-4.9-x86_64/bin/wine\n      WINE64: $HOME/.local/share/lutris/runners/wine/ge-protonified-4.9-x86_64/bin/wine64\n      WINEARCH: win64\n      WINEPREFIX: $GAMEDIR\n    file: $CACHE/mfinstall/install-mf.sh\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2015 dotnet48 win7\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3dcompiler_47: native,builtin\n    nvapi,nvapi64: disabled\n  version: ge-protonified-4.10-x86_64\n"
+}

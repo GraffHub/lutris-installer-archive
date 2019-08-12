@@ -1,0 +1,65 @@
+{
+  "id": 4694,
+  "game_id": 11948,
+  "game_slug": "san-andreas-multiplayer",
+  "name": "Grand Theft Auto: San Andreas Multiplayer",
+  "year": 2005,
+  "user": "Lucki",
+  "runner": "wine",
+  "slug": "grand-theft-auto-san-andreas-037",
+  "version": "0.3.7",
+  "description": "Includes downgrade of GTA:SA to v1.0.",
+  "notes": "",
+  "created_at": "2017-06-27T20:00:10.266000Z",
+  "updated_at": "2019-01-11T00:51:16.660373Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
+      },
+      {
+        "samp": "http://files.sa-mp.com/sa-mp-0.3.7-install.exe"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$downgrade"
+        }
+      },
+      {
+        "task": {
+          "description": "Downgrading GTA:SA...",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/gtasapatch.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing SA:MP...",
+          "prefix": "$GAMEDIR",
+          "executable": "$samp",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      }
+    ],
+    "requires": "grand-theft-auto-san-andreas"
+  },
+  "content": "files:\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\n- samp: http://files.sa-mp.com/sa-mp-0.3.7-install.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing SA:MP...\n    executable: $samp\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
+}

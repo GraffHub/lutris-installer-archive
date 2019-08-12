@@ -1,0 +1,96 @@
+{
+  "id": 8375,
+  "game_id": 1512,
+  "game_slug": "tomb-raider-i",
+  "name": "Tomb Raider I",
+  "year": 1996,
+  "user": "nastys",
+  "runner": "wine",
+  "slug": "tomb-raider-i-cd-glrage",
+  "version": "CD GLRage",
+  "description": "Native Windows version.\r\nPC (DOS) version CD required.",
+  "notes": "",
+  "created_at": "2018-05-22T13:35:27.171691Z",
+  "updated_at": "2018-05-22T14:40:04.549416Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 224960,
+  "gogid": 1207659052,
+  "gogslug": "tomb_raider_123",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/TOMBRAID/tombati.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "script": null,
+    "files": [
+      {
+        "trati": "https://web.archive.org/web/20081121063015if_/http://ftp.eidos-france.fr/pub/fr/tomb_raider/patches/tombatiragepro.zip"
+      },
+      {
+        "glrage": "https://github.com/ata4/glrage/releases/download/r10/glrage_r10.zip"
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "ddraw.dll": "n,b"
+      },
+      "version": "3.6-i386"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "tomb.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying game files...",
+          "dst": "$GAMEDIR/drive_c/TOMBRAID",
+          "src": "$DISC"
+        }
+      },
+      {
+        "extract": {
+          "description": "Installing 3D Rage Pro patch...",
+          "dst": "$GAMEDIR/drive_c/TOMBRAID",
+          "src": "trati"
+        }
+      },
+      {
+        "move": {
+          "description": "Installing 3D Rage Pro patch...",
+          "dst": "$GAMEDIR/drive_c/TOMBRAID/ATI.zip",
+          "src": "$GAMEDIR/drive_c/TOMBRAID/ATI.exe"
+        }
+      },
+      {
+        "extract": {
+          "description": "Installing 3D Rage Pro patch...",
+          "dst": "$GAMEDIR/drive_c/TOMBRAID",
+          "src": "$GAMEDIR/drive_c/TOMBRAID/ATI.zip"
+        }
+      },
+      {
+        "extract": {
+          "description": "Installing GLRage...",
+          "dst": "$GAMEDIR/drive_c/TOMBRAID",
+          "src": "glrage"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- trati: https://web.archive.org/web/20081121063015if_/http://ftp.eidos-france.fr/pub/fr/tomb_raider/patches/tombatiragepro.zip\n- glrage: https://github.com/ata4/glrage/releases/download/r10/glrage_r10.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/TOMBRAID/tombati.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: tomb.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- merge:\n    description: Copying game files...\n    dst: $GAMEDIR/drive_c/TOMBRAID\n    src: $DISC\n- extract:\n    description: Installing 3D Rage Pro patch...\n    dst: $GAMEDIR/drive_c/TOMBRAID\n    src: trati\n- move:\n    description: Installing 3D Rage Pro patch...\n    dst: $GAMEDIR/drive_c/TOMBRAID/ATI.zip\n    src: $GAMEDIR/drive_c/TOMBRAID/ATI.exe\n- extract:\n    description: Installing 3D Rage Pro patch...\n    dst: $GAMEDIR/drive_c/TOMBRAID\n    src: $GAMEDIR/drive_c/TOMBRAID/ATI.zip\n- extract:\n    description: Installing GLRage...\n    dst: $GAMEDIR/drive_c/TOMBRAID\n    src: glrage\nscript: null\nwine:\n  overrides:\n    ddraw.dll: n,b\n  version: 3.6-i386\n"
+}

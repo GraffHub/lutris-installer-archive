@@ -1,0 +1,95 @@
+{
+  "id": 13282,
+  "game_id": 16721,
+  "game_slug": "starship-titanic",
+  "name": "Starship Titanic",
+  "year": 1998,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "starship-titanic-cd-cnc-ddraw",
+  "version": "CD + cnc-ddraw",
+  "description": "This script will install \"Starship Titanic\" CD edition with support for modern screen resolution.",
+  "notes": "During install please let all options by default.\r\n\r\nThis script uses cnc-ddraw: https://github.com/CnCNet/cnc-ddraw\r\nTo modify graphic config, edit ddraw.ini text file. \r\nLook at ddraw_original.ini file for instructions.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "created_at": "2019-05-02T10:39:31.867000Z",
+  "updated_at": "2019-05-18T06:42:18.898864Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 467290,
+  "gogid": 1441102382,
+  "gogslug": "starship_titanic",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Starship Titanic/St.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "cncddraw": "https://github.com/CnCNet/cnc-ddraw/files/3139881/ddraw.zip"
+      }
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "Autorun.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/Autorun.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Starship Titanic/",
+          "file": "cncddraw"
+        }
+      },
+      {
+        "execute": {
+          "command": "cp \"$GAMEDIR/drive_c/Starship Titanic/ddraw.ini\" \"$GAMEDIR/drive_c/Starship Titanic/ddraw_original.ini\""
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "ddraw": {
+              "fullscreen": false,
+              "singlecpu": false,
+              "renderer": "opengl",
+              "vsync": true,
+              "width": "$RESOLUTION_WIDTH",
+              "maxfps": -1,
+              "windowed": true,
+              "maintas": true,
+              "height": "$RESOLUTION_HEIGHT",
+              "border": false
+            }
+          },
+          "merge": true,
+          "file": "$GAMEDIR/drive_c/Starship Titanic/ddraw.ini"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "key": "ddraw",
+          "arch": "win64",
+          "type": "REG_SZ"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- cncddraw: https://github.com/CnCNet/cnc-ddraw/files/3139881/ddraw.zip\ngame:\n  exe: drive_c/Starship Titanic/St.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Autorun.exe\n- task:\n    description: Running setup of the game. Just proceed and keep all settings at\n      their defaults\n    executable: $DISC/Autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Starship Titanic/\n    file: cncddraw\n- execute:\n    command: cp \"$GAMEDIR/drive_c/Starship Titanic/ddraw.ini\" \"$GAMEDIR/drive_c/Starship\n      Titanic/ddraw_original.ini\"\n- write_config:\n    data:\n      ddraw:\n        border: false\n        fullscreen: false\n        height: $RESOLUTION_HEIGHT\n        maintas: true\n        maxfps: -1\n        renderer: opengl\n        singlecpu: false\n        vsync: true\n        width: $RESOLUTION_WIDTH\n        windowed: true\n    file: $GAMEDIR/drive_c/Starship Titanic/ddraw.ini\n    merge: true\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\nwine:\n  Desktop: true\n"
+}

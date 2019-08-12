@@ -1,0 +1,65 @@
+{
+  "id": 4705,
+  "game_id": 11954,
+  "game_slug": "multi-theft-auto",
+  "name": "Multi Theft Auto",
+  "year": 2005,
+  "user": "Lucki",
+  "runner": "wine",
+  "slug": "multi-theft-auto-156",
+  "version": "1.5.6",
+  "description": "Includes downgrade of GTA:SA to v1.0.",
+  "notes": "",
+  "created_at": "2017-06-28T13:22:16.441000Z",
+  "updated_at": "2018-11-10T09:11:00.568007Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "mta": "http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa_xp-1.5.6.exe"
+      },
+      {
+        "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$downgrade"
+        }
+      },
+      {
+        "task": {
+          "description": "Downgrading GTA:SA...",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/gtasapatch.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing MTA...",
+          "prefix": "$GAMEDIR",
+          "executable": "$mta",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      }
+    ],
+    "requires": "grand-theft-auto-san-andreas"
+  },
+  "content": "files:\n- mta: http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa_xp-1.5.6.exe\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing MTA...\n    executable: $mta\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
+}

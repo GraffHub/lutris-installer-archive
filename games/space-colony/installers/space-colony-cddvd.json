@@ -1,0 +1,99 @@
+{
+  "id": 9726,
+  "game_id": 5365,
+  "game_slug": "space-colony",
+  "name": "Space Colony",
+  "year": 2003,
+  "user": "VortexAcherontic",
+  "runner": "wine",
+  "slug": "space-colony-cddvd",
+  "version": "CD/DVD",
+  "description": null,
+  "notes": "If you want to play/install the game you need to manually mount your CD/DVD in your system.\r\nAfter the CD/DVD is mounted you can launch the game this may take a few minutes.\r\nBeforehand the game tries to validate your disc.\r\n\r\nYou can download an HD Patch for the game here: http://www.spacecolonyhd.com/patch.html",
+  "created_at": "2018-08-13T22:55:07.173000Z",
+  "updated_at": "2018-08-16T06:20:49.629353Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 297920,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
+    "exe": "prefix/drive_c/Program Files/Firefly Studios/Space Colony/Space Colony.exe",
+    "arch": "win32",
+    "installer": [
+      {
+        "task": {
+          "description": "Setting Windows Version to XP",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "winxp"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine Prefix",
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Direct Music",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "directmusic"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Direct Play",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "directplay"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing DirectX 9",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "d3dx9_36"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "autoplay.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "executable": "$DISC/autoplay.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows Version to XP",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "winxp"
+        }
+      }
+    ]
+  },
+  "content": "arch: win32\nexe: prefix/drive_c/Program Files/Firefly Studios/Space Colony/Space Colony.exe\ngame:\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    app: winxp\n    arch: win32\n    description: Setting Windows Version to XP\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    description: Creating Wine Prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: directmusic\n    arch: win32\n    description: Installing Direct Music\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: directplay\n    arch: win32\n    description: Installing Direct Play\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9_36\n    arch: win32\n    description: Installing DirectX 9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- insert-disc:\n    requires: autoplay.exe\n- task:\n    executable: $DISC/autoplay.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: winxp\n    arch: win32\n    description: Setting Windows Version to XP\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n"
+}

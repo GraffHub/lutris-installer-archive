@@ -1,0 +1,99 @@
+{
+  "id": 14329,
+  "game_id": 19386,
+  "game_slug": "playstation-now",
+  "name": "PlayStation Now",
+  "year": 2018,
+  "user": "leagueGamer",
+  "runner": "wine",
+  "slug": "playstation-now-change-me",
+  "version": "Change Me",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-06-28T15:50:43.867190Z",
+  "updated_at": "2019-06-28T15:50:43.867227Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/PlayStation Now/psnowlauncher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "psnow": "https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2013"
+        }
+      },
+      {
+        "task": {
+          "args": "/extract",
+          "prefix": "$GAMEDIR",
+          "executable": "psnow",
+          "name": "wineexec",
+          "arch": "win64"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now",
+          "src": "$CACHE/psnow/294C619"
+        }
+      },
+      {
+        "write_config": {
+          "section": "config",
+          "value": "https://1update-psnow.playstation.com/downloads/psnow/pc/meta",
+          "key": "URL",
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.ini"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe.bak",
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-3.21-x86_64"
+    }
+  },
+  "content": "files:\n- psnow: https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStation Now/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /extract\n    executable: psnow\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now\n    src: $CACHE/psnow/294C619\n- write_config:\n    file: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.ini\n    key: URL\n    section: config\n    value: https://1update-psnow.playstation.com/downloads/psnow/pc/meta\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe.bak\n    src: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: tkg-3.21-x86_64\n"
+}

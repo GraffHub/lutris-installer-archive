@@ -1,0 +1,70 @@
+{
+  "id": 12783,
+  "game_id": 7250,
+  "game_slug": "lego-loco",
+  "name": "Lego Loco",
+  "year": 1998,
+  "user": "Nithanim",
+  "runner": "wine",
+  "slug": "lego-loco-10-retail-cd",
+  "version": "1.0 (Retail CD)",
+  "description": "Installs the version from the original CD. Install the game to the default path in the installer.",
+  "notes": "",
+  "created_at": "2019-04-14T07:29:30.479351Z",
+  "updated_at": "2019-05-18T07:40:21.629429Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/LEGO Media/Constructive/LEGO LOCO/Exe/Loco.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "xephyr": "16bpp",
+      "xephyr_resolution": "1024x768",
+      "xephyr_fullscreen": false
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "art-res"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing networking capabilities",
+          "prefix": "$GAMEDIR",
+          "app": "directplay",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Run installer",
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/SETUP.EXE",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": false
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/LEGO Media/Constructive/LEGO LOCO/Exe/Loco.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: art-res\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: directplay\n    description: Installing networking capabilities\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Run installer\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  xephyr: 16bpp\n  xephyr_fullscreen: false\n  xephyr_resolution: 1024x768\nwine:\n  Desktop: false\n"
+}

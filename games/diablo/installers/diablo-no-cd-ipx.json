@@ -1,0 +1,96 @@
+{
+  "id": 3679,
+  "game_id": 5826,
+  "game_slug": "diablo",
+  "name": "Diablo",
+  "year": 1996,
+  "user": "gugutz",
+  "runner": "wine",
+  "slug": "diablo-no-cd-ipx",
+  "version": "No CD / IPX",
+  "description": "Includes Diablo No-Cd Loader\r\nIncludes IPX Wrapper, to allow playing over LAN.",
+  "notes": "- Uses No-Cd Loader, but you still have to provide diabdat.mpq from the original CD.\r\n- Use default options during the Windows setup. \r\n- Close the game with Alt+F4 if it launches automatically at the end.",
+  "created_at": "2017-05-14T13:39:45.383000Z",
+  "updated_at": "2018-12-12T05:58:14.632648Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1412601690,
+  "gogslug": "diablo",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Diablo/diablo.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "patch": "http://ftp.blizzard.com:80/pub/diablo/patches/pc/drtl109b.zip"
+      },
+      {
+        "nocd": "http://savagesteel.free.fr/diablo/files/Diablo.1.09b.No-CD.Crack.7z"
+      },
+      {
+        "ipxwrapper": "http://www.solemnwarning.net/ipxwrapper/ipxwrapper-0.6.0.zip"
+      }
+    ],
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "diabdat.mpq"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/setup.exe",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "patch"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/drtl109b.exe",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Diablo",
+          "file": "ipxwrapper"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Diablo",
+          "file": "nocd"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/diabdat.mpq"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: http://ftp.blizzard.com:80/pub/diablo/patches/pc/drtl109b.zip\n- nocd: http://savagesteel.free.fr/diablo/files/Diablo.1.09b.No-CD.Crack.7z\n- ipxwrapper: http://www.solemnwarning.net/ipxwrapper/ipxwrapper-0.6.0.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Diablo/diablo.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: diabdat.mpq\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: patch\n- task:\n    arch: win32\n    executable: $CACHE/drtl109b.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Diablo\n    file: ipxwrapper\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Diablo\n    file: nocd\n- merge:\n    dst: $GAMEDIR\n    src: $DISC/diabdat.mpq\n"
+}

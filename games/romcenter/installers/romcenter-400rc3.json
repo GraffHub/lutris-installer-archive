@@ -1,0 +1,81 @@
+{
+  "id": 5702,
+  "game_id": 7299,
+  "game_slug": "romcenter",
+  "name": "RomCenter",
+  "year": 1997,
+  "user": "Lulu",
+  "runner": "wine",
+  "slug": "romcenter-400rc3",
+  "version": "4.0.0.rc3",
+  "description": "Not working.",
+  "notes": "Not working.",
+  "created_at": "2017-09-11T20:47:16.389000Z",
+  "updated_at": "2018-08-30T04:07:44.963218Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "1",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/RomCenter/RomCenter.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/RomCenter"
+    },
+    "files": [
+      {
+        "download": "http://www.romcenter.com/download/rc_4_0_0_rc3.7z"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Visual C++ Runtime 2010",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2010"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 3.5",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "dotnet35"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.0",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "dotnet40"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting RomCenter",
+          "dst": "$GAMEDIR/drive_c/Program Files/RomCenter",
+          "file": "$download"
+        }
+      }
+    ]
+  },
+  "content": "files:\r\n- download: http://www.romcenter.com/download/rc_4_0_0_rc3.7z\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/RomCenter/RomCenter.exe\r\n  prefix: $GAMEDIR\r\n  working_dir: $GAMEDIR/drive_c/Program Files/RomCenter\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n    arch: win32\r\n- task:\r\n    app: vcrun2010\r\n    arch: win32\r\n    description: Installing Visual C++ Runtime 2010\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet35\r\n    description: Installing .NET 3.5\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    arch: win32\r\n- task:\r\n    app: dotnet40\r\n    description: Installing .NET 4.0\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    arch: win32\r\n- extract:\r\n    description: Extracting RomCenter\r\n    dst: $GAMEDIR/drive_c/Program Files/RomCenter\r\n    file: $download"
+}

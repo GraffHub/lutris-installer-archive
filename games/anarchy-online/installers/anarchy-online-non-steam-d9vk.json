@@ -1,0 +1,218 @@
+{
+  "id": 14967,
+  "game_id": 11357,
+  "game_slug": "anarchy-online",
+  "name": "Anarchy Online",
+  "year": null,
+  "user": "magzu",
+  "runner": "wine",
+  "slug": "anarchy-online-non-steam-d9vk",
+  "version": "non-steam d9vk",
+  "description": "New-engine with D9VK",
+  "notes": "",
+  "created_at": "2019-08-11T12:38:57.294845Z",
+  "updated_at": "2019-08-11T12:38:57.294868Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 396280,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.13f/d9vk-0.13f.tar.gz"
+      },
+      {
+        "AO_installer": "http://update.anarchy-online.com/download/AO/AnarchyOnline_EP2.exe"
+      }
+    ],
+    "wine": {
+      "dxvk_version": "d9vk-0.13f",
+      "esync": true,
+      "overrides": {
+        "d3d10_1": "n",
+        "d3d9": "n",
+        "d3d11": "n",
+        "dxgi": "n",
+        "d3d10core": "n",
+        "d3d10": "n"
+      },
+      "dxvk": true,
+      "version": "ge-protonified-4.10-x86_64"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxvk-release/",
+          "file": "d9vk"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/",
+          "src": "$CACHE/dxvk-release/"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine Prefix...",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "app": "d3dcompiler_43 d3dx9 corefonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Anarchy Online Installer. Please do not run the game until this script finishes installing.",
+          "prefix": "$GAMEDIR",
+          "executable": "AO_installer",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Funcom/Anarchy Online/",
+          "src": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d9.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Funcom/Anarchy Online/",
+          "src": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d10.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Funcom/Anarchy Online/",
+          "src": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d10_1.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Funcom/Anarchy Online/",
+          "src": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d10core.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Funcom/Anarchy Online/",
+          "src": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d11.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Funcom/Anarchy Online/",
+          "src": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/dxgi.dll"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3d11",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "dxgi",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "dxgi",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3dcompiler_43",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3d9",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3d11",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3d10core",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3d10_1",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Adding DLL Overrides",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "native",
+          "key": "d3d10",
+          "arch": "win64"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- d9vk: https://github.com/Joshua-Ashton/d9vk/releases/download/0.13f/d9vk-0.13f.tar.gz\n- AO_installer: http://update.anarchy-online.com/download/AO/AnarchyOnline_EP2.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxvk-release/\n    file: d9vk\n- copy:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/\n    src: $CACHE/dxvk-release/\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9 corefonts\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running Anarchy Online Installer. Please do not run the game until\n      this script finishes installing.\n    executable: AO_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- copy:\n    dst: $GAMEDIR/drive_c/Funcom/Anarchy Online/\n    src: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d9.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Funcom/Anarchy Online/\n    src: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d10.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Funcom/Anarchy Online/\n    src: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d10_1.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Funcom/Anarchy Online/\n    src: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d10core.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Funcom/Anarchy Online/\n    src: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/d3d11.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Funcom/Anarchy Online/\n    src: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/x32/dxgi.dll\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3d11\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: dxgi\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: dxgi\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3dcompiler_43\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3d9\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3d11\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3d10core\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3d10_1\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3d10\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\nwine:\n  dxvk: true\n  dxvk_version: d9vk-0.13f\n  esync: true\n  overrides:\n    d3d10: n\n    d3d10_1: n\n    d3d10core: n\n    d3d11: n\n    d3d9: n\n    dxgi: n\n  version: ge-protonified-4.10-x86_64\n"
+}

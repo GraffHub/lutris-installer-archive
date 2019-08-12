@@ -1,0 +1,97 @@
+{
+  "id": 7270,
+  "game_id": 7877,
+  "game_slug": "command-conquer-generals-zero-hour",
+  "name": "Command & Conquer: Generals – Zero Hour",
+  "year": 2003,
+  "user": "matefh",
+  "runner": "wine",
+  "slug": "command-conquer-generals-zero-10",
+  "version": "1.0",
+  "description": null,
+  "notes": "Game is configured to run at 1920x1080, to run in different resolutions, edit file drive_c/users/$USER/My Documents/Command and Conquer Generals Data/options.ini",
+  "created_at": "2018-02-08T14:55:26.623000Z",
+  "updated_at": "2018-05-19T03:42:00.777704Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
+    "exe": "drive_c/Program Files/EA Games/Command & Conquer Generals Zero Hour/generals.exe",
+    "files": [
+      {
+        "patch1": "driver_c/GeneralsZH-104-english.exe"
+      },
+      {
+        "patch2": "driver_c/generals-zh-v104_crack.zip"
+      },
+      {
+        "optionsini": "https://lutris.net/files/games/command-conquer-generals/options.ini"
+      },
+      "crack"
+    ],
+    "installer": [
+      {
+        "insert-disc": {
+          "message": "Insert disc 1",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying disc 1 to cache",
+          "dst": "$CACHE/cdrom",
+          "src": "$DISC"
+        }
+      },
+      {
+        "insert-disc": {
+          "message": "Insert disc 2",
+          "requires": "Language.cab"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying disc 2 to cache",
+          "dst": "$CACHE/cdrom",
+          "src": "$DISC/Language.cab"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/cdrom/setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "patch1",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/EA Games/Command & Conquer Generals Zero Hour/",
+          "file": "patch2"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/users/$USER/My Documents/Command and Conquer Generals Zero Hour Data/",
+          "src": "optionsini"
+        }
+      }
+    ]
+  },
+  "content": "exe: drive_c/Program Files/EA Games/Command & Conquer Generals Zero Hour/generals.exe\nfiles:\n- patch1: driver_c/GeneralsZH-104-english.exe\n- patch2: driver_c/generals-zh-v104_crack.zip\n- optionsini: https://lutris.net/files/games/command-conquer-generals/options.ini\n- crack\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Copying disc 1 to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- insert-disc:\n    message: Insert disc 2\n    requires: Language.cab\n- merge:\n    description: Copying disc 2 to cache\n    dst: $CACHE/cdrom\n    src: $DISC/Language.cab\n- task:\n    executable: $CACHE/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch1\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/EA Games/Command & Conquer Generals Zero Hour/\n    file: patch2\n- merge:\n    dst: $GAMEDIR/drive_c/users/$USER/My Documents/Command and Conquer Generals Zero\n      Hour Data/\n    src: optionsini\n"
+}

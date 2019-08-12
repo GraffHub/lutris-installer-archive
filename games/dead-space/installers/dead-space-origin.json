@@ -1,0 +1,107 @@
+{
+  "id": 13158,
+  "game_id": 219,
+  "game_slug": "dead-space",
+  "name": "Dead Space",
+  "year": 2008,
+  "user": "homergdog",
+  "runner": "wine",
+  "slug": "dead-space-origin",
+  "version": "Origin",
+  "description": "This Installs Origin and set up the environment for Dead Space.",
+  "notes": "You need to manually install Dead Space from the Origin Launcher.",
+  "created_at": "2019-04-27T16:54:37.514000Z",
+  "updated_at": "2019-05-18T07:17:07.599343Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 17470,
+  "gogid": 1312818781,
+  "gogslug": "dead_space",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "client": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
+      },
+      {
+        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "system": {
+      "disable_runtime": false
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "nocrashdialog vcrun2005 vcrun2012 vcrun2013 vcrun2015 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/silent",
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "prefix": "$GAMEDIR",
+          "executable": "client",
+          "arch": "win64",
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "chmodx": "updater"
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Origin",
+          "src": "updater"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": false,
+      "version": "tkg-protonified-faudio-4.5-x86_64"
+    }
+  },
+  "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog vcrun2005 vcrun2012 vcrun2013 vcrun2015 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  disable_runtime: false\nwine:\n  dxvk: false\n  version: tkg-protonified-faudio-4.5-x86_64\n"
+}

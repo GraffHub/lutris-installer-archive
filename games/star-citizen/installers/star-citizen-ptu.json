@@ -1,0 +1,74 @@
+{
+  "id": 10619,
+  "game_id": 17622,
+  "game_slug": "star-citizen",
+  "name": "Star Citizen",
+  "year": 2016,
+  "user": "LeBarbier",
+  "runner": "wine",
+  "slug": "star-citizen-ptu",
+  "version": "PTU",
+  "description": "Welcome to the Star Citizen PTU installer maintained by the Star Citizen LUG! Note that you must have access to the PTU to get into the game if using this installer!Please make sure to read through the technical instructions in the installer, which are important to prevent game crashes.For help with the installer or just hang out we invite Linux Star Citizen players to join us: https://robertsspaceindustries.com/orgs/LUG/",
+  "notes": "Please make sure you have all Wine dependencies properly installed, else your game may crash during start-up. A good starting point is this post from GloriousEggroll: https://www.gloriouseggroll.tv/how-to-get-out-of-wine-dependency-hell/\r\n\r\nFurthermore, to prevent crashes at areas with lots of geometry, the game needs a Linux resource limit named \"vm.max_map_count\" increased. To do this, execute:\r\n\r\nsudo sysctl -w vm.max_map_count=655300\r\n\r\n(Consult your distro's documentation on how to set this permanently, or ask a LUG member)",
+  "created_at": "2018-10-24T14:05:35.068000Z",
+  "updated_at": "2019-08-11T09:16:41.452841Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Roberts Space Industries/RSI PTU Launcher/RSI PTU Launcher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "client": "https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.1.1-ptu.1.exe"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": "0"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts win10"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/S",
+          "description": "Installing client",
+          "prefix": "$GAMEDIR",
+          "executable": "client",
+          "arch": "win64"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "dxvk": true,
+      "version": "tkg-4.6-x86_64"
+    }
+  },
+  "content": "files:\r\n- client: https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.1.1-ptu.1.exe\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files/Roberts Space Industries/RSI PTU Launcher/RSI PTU Launcher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: corefonts win10\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /S\r\n    description: Installing client\r\n    executable: client\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: '0'\r\nwine:\r\n  dxvk: true\r\n  esync: true\r\n  version: tkg-4.6-x86_64"
+}

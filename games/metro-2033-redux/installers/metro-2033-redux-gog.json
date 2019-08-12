@@ -1,0 +1,96 @@
+{
+  "id": 11888,
+  "game_id": 2989,
+  "game_slug": "metro-2033-redux",
+  "name": "Metro 2033 Redux",
+  "year": 2014,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "metro-2033-redux-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-02-07T00:19:24.853000Z",
+  "updated_at": "2019-02-16T03:43:26.171482Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 286690,
+  "gogid": 1436434037,
+  "gogslug": "metro_2033_redux",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Metro 2033 Redux/metro.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "goginstaller": "N/A:Please select the GOG.com Windows installer"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2012 win7"
+        }
+      },
+      {
+        "task": {
+          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "executable": "goginstaller",
+          "name": "wineexec",
+          "arch": "win64"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Metro 2033 Redux/metro.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=English /SP- /SUPPRESSMSGBOXES\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
+}

@@ -1,0 +1,92 @@
+{
+  "id": 14838,
+  "game_id": 12182,
+  "game_slug": "d-the-game",
+  "name": "D: The Game",
+  "year": 1995,
+  "user": "legluondunet",
+  "runner": "dosbox",
+  "slug": "d-the-game-cd-dos",
+  "version": "CD DOS",
+  "description": "This script will install \"D\" DOS CD edition for Dosbox.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "",
+  "created_at": "2019-08-02T19:41:03.805067Z",
+  "updated_at": "2019-08-02T19:41:03.805094Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 510590,
+  "gogid": 1852354510,
+  "gogslug": "d_the_game",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/D.conf"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "description": "Please insert disc 1",
+          "requires": "d/laura.exe"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/CD",
+          "src": "$DISC"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc 2",
+          "requires": "efc/baby.raw"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR; cp -fR $DISC/* $GAMEDIR/CD/;"
+        }
+      },
+      {
+        "task": {
+          "commands": [
+            "d:",
+            "D:\\install.bat",
+            "exit"
+          ],
+          "drives": {
+            "d": "$GAMEDIR/CD",
+            "c": "$GAMEDIR"
+          },
+          "name": "makeconfig",
+          "path": "$GAMEDIR/versailles_1685_install.conf"
+        }
+      },
+      {
+        "task": {
+          "commands": [
+            "c:",
+            "cd VERSAILL",
+            "VERSAILL.EXE",
+            "exit"
+          ],
+          "drives": {
+            "d": "$GAMEDIR/CD",
+            "c": "$GAMEDIR"
+          },
+          "name": "makeconfig",
+          "path": "$GAMEDIR/versailles_1685.conf"
+        }
+      },
+      {
+        "task": {
+          "name": "dosexec",
+          "config_file": "$GAMEDIR/versailles_1685_install.conf",
+          "working_dir": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  main_file: $GAMEDIR/D.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- merge:\n    dst: $GAMEDIR/CD\n    src: $DISC\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    command: cd $GAMEDIR; cp -fR $DISC/* $GAMEDIR/CD/;\n- task:\n    commands:\n    - 'd:'\n    - D:\\install.bat\n    - exit\n    drives:\n      c: $GAMEDIR\n      d: $GAMEDIR/CD\n    name: makeconfig\n    path: $GAMEDIR/versailles_1685_install.conf\n- task:\n    commands:\n    - 'c:'\n    - cd VERSAILL\n    - VERSAILL.EXE\n    - exit\n    drives:\n      c: $GAMEDIR\n      d: $GAMEDIR/CD\n    name: makeconfig\n    path: $GAMEDIR/versailles_1685.conf\n- task:\n    config_file: $GAMEDIR/versailles_1685_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n"
+}

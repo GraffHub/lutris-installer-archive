@@ -1,0 +1,115 @@
+{
+  "id": 5192,
+  "game_id": 1116,
+  "game_slug": "rift",
+  "name": "Rift",
+  "year": 2011,
+  "user": "jdwininger",
+  "runner": "wine",
+  "slug": "rift-current-live",
+  "version": "Current Live",
+  "description": "RIFT is a fantasy massively multiplayer online role-playing game (MMORPG). RIFT is very similar to World of Warcraft but requires no subscription.",
+  "notes": "Make sure you have cabextract, wine-staging and winetricks installed before installing RIFT. For installation information consult your distribution's documentation.\r\n\r\nFor RIFT in game graphical glitches change the executable to 32bit in the Glyph launcher's settings and enable CMST in WINE-Staging's winecfg (under the staging tab).",
+  "created_at": "2017-07-25T10:36:45.858000Z",
+  "updated_at": "2017-12-21T15:47:33.004770Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 39120,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClient.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "glyph_installer": "http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe"
+      }
+    ],
+    "system": {
+      "disable_runtime": true
+    },
+    "installer": [
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c",
+          "src": "glyph_installer"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 7 mode for Wine",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Microsoft TrueType Fonts",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "corefonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Direct3D Compiler 43",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "d3dcompiler_43",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Direct3D DLL 43",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "d3dx9_43",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX Audio DLL",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "xact_jun2010",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows version to 7",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/GlyphInstall-9999-1001.exe",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- glyph_installer: http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- merge:\n    dst: $GAMEDIR/drive_c\n    src: glyph_installer\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Microsoft TrueType Fonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dcompiler_43\n    description: Direct3D Compiler 43\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dx9_43\n    description: Direct3D DLL 43\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: xact_jun2010\n    description: DirectX Audio DLL\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: win7\n    description: Setting Windows version to 7\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    executable: $GAMEDIR/drive_c/GlyphInstall-9999-1001.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: true\n"
+}

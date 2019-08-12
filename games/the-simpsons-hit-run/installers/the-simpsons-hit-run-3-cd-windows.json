@@ -1,0 +1,75 @@
+{
+  "id": 9146,
+  "game_id": 12086,
+  "game_slug": "the-simpsons-hit-run",
+  "name": "The Simpsons: Hit & Run",
+  "year": 2003,
+  "user": "__eMpTy__",
+  "runner": "wine",
+  "slug": "the-simpsons-hit-run-3-cd-windows",
+  "version": "3 CD Windows",
+  "description": null,
+  "notes": "IMPORTANT NOTES, PLEASE READ:\r\nYou may have to drag the installer window around to look for important windows spawning UNDER the install window, such as the one for selecting additional discs as the installer requires them.\r\n\r\nAs the game installer is running, everything on your computer OTHER THAN the installer windows may appear to visually freeze, upon finishing and closing the installer everything will return to normal.",
+  "created_at": "2018-07-11T00:00:04.680000Z",
+  "updated_at": "2018-08-19T19:12:44.862794Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Vivendi Universal Games/The Simpsons Hit & Run/Simpsons.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "hnr_patch": "https://lutris.net/files/games/the-simpsons-hit-and-run/the-simpsons-hit-and-run-patch.tar.xz"
+      }
+    ],
+    "system": {
+      "MouseWarpOverride": "enable",
+      "xboxdrv": "--deadzone=6000 --trigger-as-button=true"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Waiting for game installer EXE.",
+          "message": "Insert disc 1 out of 3 from the Simpsons Hit & Run CD set.",
+          "requires": "AutoRunLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Executing game installer EXE. When prompted for a setup type, select 2. Full Install. Keep the default destination location, and program folder. When prompted to install DirectX 8.1, select no.",
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/AutoRunLauncher.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "description": "Applying SecuROM removal patch to game EXE.",
+          "dst": "$GAMEDIR/drive_c/Program Files/Vivendi Universal Games/The Simpsons Hit & Run/",
+          "file": "hnr_patch"
+        }
+      }
+    ],
+    "wine": {
+      "version": "esync-3.13-x86_64"
+    }
+  },
+  "content": "files:\n- hnr_patch: https://lutris.net/files/games/the-simpsons-hit-and-run/the-simpsons-hit-and-run-patch.tar.xz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Vivendi Universal Games/The Simpsons Hit & Run/Simpsons.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Waiting for game installer EXE.\n    message: Insert disc 1 out of 3 from the Simpsons Hit & Run CD set.\n    requires: AutoRunLauncher.exe\n- task:\n    description: Executing game installer EXE. When prompted for a setup type, select\n      2. Full Install. Keep the default destination location, and program folder.\n      When prompted to install DirectX 8.1, select no.\n    executable: $DISC/AutoRunLauncher.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Applying SecuROM removal patch to game EXE.\n    dst: $GAMEDIR/drive_c/Program Files/Vivendi Universal Games/The Simpsons Hit &\n      Run/\n    file: hnr_patch\nsystem:\n  MouseWarpOverride: enable\n  xboxdrv: --deadzone=6000 --trigger-as-button=true\nwine:\n  version: esync-3.13-x86_64\n"
+}

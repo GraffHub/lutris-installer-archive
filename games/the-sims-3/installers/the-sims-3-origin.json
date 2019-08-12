@@ -1,0 +1,111 @@
+{
+  "id": 8691,
+  "game_id": 954,
+  "game_slug": "the-sims-3",
+  "name": "The Sims 3",
+  "year": 2009,
+  "user": "ramram",
+  "runner": "wine",
+  "slug": "the-sims-3-origin",
+  "version": "Origin",
+  "description": null,
+  "notes": "- Please install wine-staging from WineHQ to get all necessary dependencies.\r\n- Use this command in terminal \"xgamma -gamma 1.5\" to adjust color gamma.\r\n- It is highly suggested to install ErrorTrap, Traveler and Overwatch mods by nRaas to improve game's stability.",
+  "created_at": "2018-06-11T13:40:45.304000Z",
+  "updated_at": "2019-05-18T10:54:10.012297Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 47890,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Origin/Origin.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
+      }
+    ],
+    "system": {
+      "restore_gamma": true
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine Prefix...",
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "name": "winetricks",
+          "description": "Installing .Net 2.0",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "dotnet20",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Hiding annoying dialogs...",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "nocrashdialog",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting version to xp...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "winxp",
+          "key": "Version",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Origin...",
+          "prefix": "$GAMEDIR",
+          "executable": "origin",
+          "name": "wineexec",
+          "exclude_processes": "Origin.exe OriginClientService.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "UseXvidMode": true,
+      "version": "tkg-oldnvidia-sims3-4.1-x86_64"
+    }
+  },
+  "content": "files:\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20\n    arch: win32\n    description: Installing .Net 2.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: nocrashdialog\n    description: Hiding annoying dialogs...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Installing Origin...\n    exclude_processes: Origin.exe OriginClientService.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  restore_gamma: true\nwine:\n  UseXvidMode: true\n  esync: true\n  version: tkg-oldnvidia-sims3-4.1-x86_64\n"
+}

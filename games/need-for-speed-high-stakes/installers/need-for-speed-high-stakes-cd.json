@@ -1,0 +1,76 @@
+{
+  "id": 12327,
+  "game_id": 10365,
+  "game_slug": "need-for-speed-high-stakes",
+  "name": "Need for Speed: High Stakes",
+  "year": 1999,
+  "user": "NijiDash",
+  "runner": "wine",
+  "slug": "need-for-speed-high-stakes-cd",
+  "version": "CD",
+  "description": "Installation script for installing Need for Speed: High Stakes (also known as Need for Speed Road Challenge).",
+  "notes": "Script tested with Need For Speed: Road Challenge (which is the same as High Stakes, apart from name). Notes:\r\n\r\n- The executable location and working directory will be determined according to your version selection. Please make sure you've selected the right version.\r\n- Copy protection stops Wine from launching the game correctly, but the game works fine after patching the game executable.",
+  "created_at": "2019-03-10T17:10:16.295000Z",
+  "updated_at": "2019-03-15T10:53:04.687833Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/Electronic Arts/$INPUT_GAMEVER/nfshs.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/Electronic Arts/$INPUT_GAMEVER"
+    },
+    "installer": [
+      {
+        "input_menu": {
+          "description": "Please select your version:",
+          "id": "GAMEVER",
+          "options": [
+            {
+              "Need For Speed High Stakes": "Need for Speed: High Stakes"
+            },
+            {
+              "Need For Speed Road Challenge": "Need for Speed: Road Challenge"
+            }
+          ],
+          "preselect": "Need For Speed High Stakes"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "AUTORUN.EXE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win98"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/AUTORUN.EXE",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Electronic Arts/$INPUT_GAMEVER/nfshs.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/Electronic Arts/$INPUT_GAMEVER\ninstaller:\n- input_menu:\n    description: 'Please select your version:'\n    id: GAMEVER\n    options:\n    - Need For Speed High Stakes: 'Need for Speed: High Stakes'\n    - Need For Speed Road Challenge: 'Need for Speed: Road Challenge'\n    preselect: Need For Speed High Stakes\n- insert-disc:\n    requires: AUTORUN.EXE\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/AUTORUN.EXE\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

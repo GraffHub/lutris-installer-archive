@@ -1,0 +1,89 @@
+{
+  "id": 3596,
+  "game_id": 681,
+  "game_slug": "warframe",
+  "name": "Warframe",
+  "year": 2013,
+  "user": "GloriousEggroll",
+  "runner": "wine",
+  "slug": "warframe-standalone",
+  "version": "Standalone",
+  "description": "This installer is Esync and DXVK ready.",
+  "notes": "This runner has been built with Faudio and ffmpeg enabled. This is necessary in order for the game to run properly. \r\n\r\n**IMPORTANT, PLEASE NOTE**\r\n\r\nThis game uses a custom, script-based launcher in place of the official launcher in order to update the game.\r\n\r\n\r\nFor issues regarding installation, feel free to join my (GloriousEggroll)'s discord. We h ave many users using a variety of methods to play the game including my launcher and a custom proton version for steam:\r\n\r\nhttps://discord.gg/6y3BdzC\r\n\r\n**************************\r\n\r\nThere is no discord integration because in order to do so would be against the Warframe TOS:\r\n\r\nhttps://forums.warframe.com/topic/1003139-simple-question-regarding-discord-rpcdll-for-devs/",
+  "created_at": "2017-04-30T06:20:44.943000Z",
+  "updated_at": "2019-05-16T03:14:39.348151Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "4",
+  "steamid": 230410,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/Warframe/Warframe-Launcher.bat",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "launcherlinux": "https://gitlab.com/GloriousEggroll/warframe-linux/-/archive/master/warframe-linux-master.zip"
+      }
+    ],
+    "system": {
+      "env": {
+        "PBA_DISABLE": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      },
+      "pulse_latency": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Warframe",
+          "src": "launcherlinux"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Warframe",
+          "nomerge": true,
+          "file": "launcherlinux"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/warframe-linux-master/* \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/"
+        }
+      },
+      {
+        "execute": {
+          "command": "rm -R \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/warframe-linux-master/"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/Downloaded/Public/ && cp \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/Warframe.x64.dxvk-cache \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/Downloaded/Public/"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk_version": "1.1.1",
+      "esync": true,
+      "dxvk": true,
+      "version": "ge-faudio-protonified-4.8-x86_64"
+    }
+  },
+  "content": "files:\r\n- launcherlinux: https://gitlab.com/GloriousEggroll/warframe-linux/-/archive/master/warframe-linux-master.zip\r\ngame:\r\n  arch: win64\r\n  exe:  $GAMEDIR/drive_c/Program Files/Warframe/Warframe-Launcher.bat\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files/Warframe\r\n    src: launcherlinux\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/Warframe\r\n    file: launcherlinux\r\n    nomerge: true\r\n- execute:\r\n    command: mv \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/warframe-linux-master/*\r\n      \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/\r\n- execute:\r\n    command: rm -R \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/warframe-linux-master/\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/Downloaded/Public/\r\n      && cp \"$GAMEDIR\"/drive_c/Program\\ Files/Warframe/Warframe.x64.dxvk-cache \"$GAMEDIR\"/drive_c/Program\\\r\n      Files/Warframe/Downloaded/Public/\r\nsystem:\r\n  env:\r\n    PBA_DISABLE: 0\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: 'true'\r\n  pulse_latency: true\r\nwine:\r\n  dxvk: true\r\n  dxvk_version: 1.1.1\r\n  esync: true\r\n  version: ge-faudio-protonified-4.8-x86_64"
+}

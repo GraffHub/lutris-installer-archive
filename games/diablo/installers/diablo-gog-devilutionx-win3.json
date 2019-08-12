@@ -1,0 +1,75 @@
+{
+  "id": 12418,
+  "game_id": 5826,
+  "game_slug": "diablo",
+  "name": "Diablo",
+  "year": 1996,
+  "user": "predator8bit",
+  "runner": "wine",
+  "slug": "diablo-gog-devilutionx-win3",
+  "version": "GOG + Devilutionx win32",
+  "description": "Using the DIABLO GOG windows version's data with the DevilutionX engine.",
+  "notes": "",
+  "created_at": "2019-03-18T16:08:57.945000Z",
+  "updated_at": "2019-04-16T19:32:45.737184Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1412601690,
+  "gogslug": "diablo",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/devilutionx-win32/devilutionx.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "diablosetup": "N/A:Select the EXE downloaded from GOG"
+      },
+      {
+        "devil": "https://github.com/diasurgical/devilutionX/releases/download/0.3.1/devilutionx-win32.zip"
+      },
+      {
+        "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/devilutionx-win32",
+          "file": "devil"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/innoextract",
+          "file": "innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $diablosetup --output-dir $CACHE/diabdat/",
+          "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/devilutionx-win32/diabdat.mpq",
+          "src": "$CACHE/diabdat/DIABDAT.MPQ"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- diablosetup: N/A:Select the EXE downloaded from GOG\n- devil: https://github.com/diasurgical/devilutionX/releases/download/0.3.1/devilutionx-win32.zip\n- innoextract: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  arch: win64\n  exe: drive_c/devilutionx-win32/devilutionx.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/devilutionx-win32\n    file: devil\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    args: --extract $diablosetup --output-dir $CACHE/diabdat/\n    file: $CACHE/innoextract/innoextract\n- move:\n    dst: $GAMEDIR/drive_c/devilutionx-win32/diabdat.mpq\n    src: $CACHE/diabdat/DIABDAT.MPQ\n"
+}

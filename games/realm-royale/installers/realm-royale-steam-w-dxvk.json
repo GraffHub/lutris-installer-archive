@@ -1,0 +1,62 @@
+{
+  "id": 8559,
+  "game_id": 19178,
+  "game_slug": "realm-royale",
+  "name": "Realm Royale",
+  "year": 2018,
+  "user": "cxf",
+  "runner": "winesteam",
+  "slug": "realm-royale-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": null,
+  "notes": "They implemented EAC. Game no longer runs.",
+  "created_at": "2018-06-07T08:29:49.184000Z",
+  "updated_at": "2019-02-16T04:27:11.436140Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "1",
+  "steamid": 813820,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 813820,
+      "arch": "win64"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y",
+          "key": "HideWineExports",
+          "arch": "win64"
+        }
+      }
+    ],
+    "winesteam": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    }
+  },
+  "content": "game:\n  appid: 813820\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n  version: tkg-4.0-x86_64\n"
+}

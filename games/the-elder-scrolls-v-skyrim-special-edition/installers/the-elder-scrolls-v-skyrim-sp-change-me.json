@@ -1,0 +1,99 @@
+{
+  "id": 14894,
+  "game_id": 8224,
+  "game_slug": "the-elder-scrolls-v-skyrim-special-edition",
+  "name": "The Elder Scrolls V: Skyrim Special Edition",
+  "year": 2015,
+  "user": "Linux_Player",
+  "runner": "winesteam",
+  "slug": "the-elder-scrolls-v-skyrim-sp-change-me",
+  "version": "Change Me",
+  "description": "Windows Steam Version with DXVK and FAudio installed.\r\nTested with Mesa 19.1-dev on KDE Neon\r\n\r\nOpenGL: renderer: Radeon RX 580 Series (POLARIS10, DRM 3.27.0, 4.20.12-042012-generic, LLVM 8.0.0)\r\nversion: 4.5 Mesa 19.1.0-devel (git-9bb63e9 2019-03-15 bionic-oibaf-ppa)\r\n\r\nCard-1 Advanced Micro Devices [AMD] Family 17h (Models 00h-0fh) HD Audio Controller\r\ndriver: snd_hda_intel\r\n\r\nOccasional stutter, but perfectly playable.",
+  "notes": "FAudio (https://github.com/Kron4ek/FAudio-Builds) installed - to address audio / script sync. problems.\r\n - Skyrim first-time setup will overwrite faudio files\r\n\r\nALSA - to get better sound (May differ for another system - try pulseaudio instead)\r\n\r\nBy sound issues try to change phonon VLC backend to Gstreamer backend.",
+  "created_at": "2019-08-06T20:57:57.483368Z",
+  "updated_at": "2019-08-06T20:57:57.483408Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 489830,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 489830,
+      "arch": "win64"
+    },
+    "files": [
+      {
+        "faudio": "https://github.com/Kron4ek/FAudio-Builds/archive/master.zip"
+      }
+    ],
+    "system": {
+      "pulse_latency": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/prefix/FAudio-Builds-master/",
+          "file": "faudio"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/prefix/FAudio-Builds-master/wine_setup_faudio.sh"
+      },
+      {
+        "input_menu": {
+          "description": "Don't launch skyrim yet, if steam.exe process will not exit, then kill him! Skyrim firsttime setup would overwrite faudio files.",
+          "options": [
+            {
+              "ok": "ok, I unterstand"
+            }
+          ]
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "executable": "$HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/Program Files (x86)/Steam/Steam.exe",
+          "name": "wineexec",
+          "args": "steam://rungameid/489830"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "execute": {
+          "env": {
+            "WINEPREFIX": "$GAMEDIR/prefix"
+          },
+          "terminal": true,
+          "file": "$GAMEDIR/prefix/FAudio-Builds-master/wine_setup_faudio.sh"
+        }
+      }
+    ],
+    "winesteam": {
+      "esync": true,
+      "Audio": "alsa",
+      "quit_steam_on_exit": true,
+      "OffscreenRenderingMode": "backbuffer",
+      "dxvk": true,
+      "version": "tkg-4.3-x86_64"
+    }
+  },
+  "content": "files:\n- faudio: https://github.com/Kron4ek/FAudio-Builds/archive/master.zip\ngame:\n  appid: 489830\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $GAMEDIR/prefix/FAudio-Builds-master/\n    file: faudio\n- chmodx: $GAMEDIR/prefix/FAudio-Builds-master/wine_setup_faudio.sh\n- input_menu:\n    description: Don't launch skyrim yet, if steam.exe process will not exit, then\n      kill him! Skyrim firsttime setup would overwrite faudio files.\n    options:\n    - ok: ok, I unterstand\n- task:\n    args: steam://rungameid/489830\n    executable: $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/Program\n      Files (x86)/Steam/Steam.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- execute:\n    env:\n      WINEPREFIX: $GAMEDIR/prefix\n    file: $GAMEDIR/prefix/FAudio-Builds-master/wine_setup_faudio.sh\n    terminal: true\nsystem:\n  pulse_latency: true\nwinesteam:\n  Audio: alsa\n  OffscreenRenderingMode: backbuffer\n  dxvk: true\n  esync: true\n  quit_steam_on_exit: true\n  version: tkg-4.3-x86_64\n"
+}

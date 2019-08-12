@@ -1,0 +1,62 @@
+{
+  "id": 3785,
+  "game_id": 62,
+  "game_slug": "bioshock",
+  "name": "BioShock",
+  "year": 2007,
+  "user": "FakeShemp",
+  "runner": "wine",
+  "slug": "bioshock-humble",
+  "version": "Humble",
+  "description": "",
+  "notes": "",
+  "created_at": "2017-05-22T09:15:48.936000Z",
+  "updated_at": "2018-05-19T03:41:52.973911Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 7670,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "bioshock",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "file1": "N/A:Please select the Humble archive"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file1"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/Setup.exe",
+          "name": "wineexec",
+          "args": "/S"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "key": "dxgi",
+          "type": "REG_SZ"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- file1: N/A:Please select the Humble archive\ngame:\n  arch: win32\n  exe: drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file1\n- task:\n    args: /S\n    executable: $CACHE/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    key: dxgi\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n"
+}
