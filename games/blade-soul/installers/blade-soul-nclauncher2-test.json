@@ -1,0 +1,104 @@
+{
+  "id": 14960,
+  "game_id": 18077,
+  "game_slug": "blade-soul",
+  "name": "Blade & Soul",
+  "year": 2012,
+  "user": "WinterR",
+  "runner": "wine",
+  "slug": "blade-soul-nclauncher2-test",
+  "version": "NCLauncher2 test",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-08-10T22:47:02.292000Z",
+  "updated_at": "2019-08-14T01:56:25.618396Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/NCSOFT/NC Launcher 2/Matryoshka.exe",
+      "arch": "win32",
+      "args": "/GameID:BnS"
+    },
+    "files": [
+      {
+        "blade & soul": "http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1
+      }
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2008 vcrun2013 physx corefonts"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.7.2",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet472 win7"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "BnS",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "UseGLSL": "disabled"
+    }
+  },
+  "content": "files:\n- blade & soul: http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win32\n  args: /GameID:BnS\n  exe: drive_c/Program Files (x86)/NCSOFT/NC Launcher 2/Matryoshka.exe\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008 vcrun2013 physx corefonts\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win7\n    arch: win32\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: BnS\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    PBA_ENABLE: 1\nwine:\n  UseGLSL: disabled\n  esync: true\n"
+}

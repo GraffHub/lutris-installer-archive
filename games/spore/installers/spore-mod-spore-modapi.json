@@ -1,0 +1,75 @@
+{
+  "id": 15012,
+  "game_id": 1599,
+  "game_slug": "spore",
+  "name": "Spore",
+  "year": 2008,
+  "user": "ThePixelMouse",
+  "runner": "wine",
+  "slug": "spore-mod-spore-modapi",
+  "version": "[Mod] Spore ModAPI",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-08-14T18:59:27.751341Z",
+  "updated_at": "2019-08-14T18:59:27.751370Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 17390,
+  "gogid": 1948823323,
+  "gogslug": "spore_collection",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/ProgramData/SPORE ModAPI Launcher Kit/Spore ModAPI Launcher.exe"
+    },
+    "custom-name": "Spore ModAPI",
+    "files": [
+      {
+        "modApiInstaller": {
+          "filename": "SporeModApi.exe",
+          "url": "https://drive.google.com/uc?export=download&id=1enaNUryG7ElSbYFLDLBI-XHaeie8ZPwR"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet452"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "description": "Setting version to 7...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win7",
+          "key": "Version",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the ModAPI",
+          "prefix": "$GAMEDIR",
+          "executable": "modApiInstaller",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "requires": "spore-origin | spore-origin-d9vk | spore-gog | spore-gog-d9vk | spore-steam | spore-steam-d9vk"
+  },
+  "content": "custom-name: Spore ModAPI\nfiles:\n- modApiInstaller:\n    filename: SporeModApi.exe\n    url: https://drive.google.com/uc?export=download&id=1enaNUryG7ElSbYFLDLBI-XHaeie8ZPwR\ngame:\n  exe: drive_c/ProgramData/SPORE ModAPI Launcher Kit/Spore ModAPI Launcher.exe\ninstaller:\n- task:\n    app: dotnet452\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Setting version to 7...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing the ModAPI\n    executable: modApiInstaller\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: spore-origin | spore-origin-d9vk | spore-gog | spore-gog-d9vk | spore-steam\n  | spore-steam-d9vk\n"
+}

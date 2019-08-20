@@ -1,0 +1,54 @@
+{
+  "id": 15066,
+  "game_id": 264,
+  "game_slug": "legend-of-grimrock",
+  "name": "Legend of Grimrock",
+  "year": 2012,
+  "user": "jardx66",
+  "runner": "linux",
+  "slug": "legend-of-grimrock-change-me",
+  "version": "Change Me",
+  "description": null,
+  "notes": "Default executable is set for 64 bit systems. If running on a 32 bit system, you need to manually set \"Grimrock/Grimrock.bin.x86\" as the executable.",
+  "created_at": "2019-08-20T04:49:05.104209Z",
+  "updated_at": "2019-08-20T04:49:05.104245Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 207170,
+  "gogid": 1207659016,
+  "gogslug": "legend_of_grimrock",
+  "humblestoreid": "legend-of-grimrock",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/start.sh"
+    },
+    "files": [
+      {
+        "game": "N/A: Select the .sh archive downloaded from Humble Bundle"
+      }
+    ],
+    "installer": [
+      {
+        "chmodx": "$game"
+      },
+      {
+        "execute": {
+          "args": "-u -r -d $GAMEDIR -b $GAMEDIR --nox11",
+          "file": "$game"
+        }
+      },
+      {
+        "write_file": {
+          "content": "#!/bin/sh\nexe=./Grimrock/Grimrock.bin.x86\n( [ -e ${exe}_64 ] && ${exe}_64 ) ||\n( [ -e ${exe} ] && ${exe} )\n",
+          "file": "$GAMEDIR/start.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/start.sh"
+      }
+    ]
+  },
+  "content": "files:\n- game: 'N/A: Select the .sh archive downloaded from Humble Bundle'\ngame:\n  exe: $GAMEDIR/start.sh\ninstaller:\n- chmodx: $game\n- execute:\n    args: -u -r -d $GAMEDIR -b $GAMEDIR --nox11\n    file: $game\n- write_file:\n    content: '#!/bin/sh\n\n      exe=./Grimrock/Grimrock.bin.x86\n\n      ( [ -e ${exe}_64 ] && ${exe}_64 ) ||\n\n      ( [ -e ${exe} ] && ${exe} )\n\n      '\n    file: $GAMEDIR/start.sh\n- chmodx: $GAMEDIR/start.sh\n"
+}

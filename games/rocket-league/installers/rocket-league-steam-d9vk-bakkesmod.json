@@ -1,0 +1,115 @@
+{
+  "id": 10989,
+  "game_id": 4974,
+  "game_slug": "rocket-league",
+  "name": "Rocket League",
+  "year": 2015,
+  "user": "cxf",
+  "runner": "winesteam",
+  "slug": "rocket-league-steam-d9vk-bakkesmod",
+  "version": "Steam D9VK + BakkesMod",
+  "description": "Installs D9VK 0.12 w/ BakkesMod",
+  "notes": "You'll need to run BakkesMod.exe manually every time you launch Rocket League.\r\n\r\nBakkesMod GUI doesn't open but works otherwise.\r\n\r\n<b>Warning: Crashes when using D9VK. We don't reccommend you play competitive currently.</b>",
+  "created_at": "2018-11-25T21:46:00.630000Z",
+  "updated_at": "2019-06-19T06:14:51.687523Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 252950,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "nolaunch": true,
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 252950,
+      "arch": "win32"
+    },
+    "files": [
+      {
+        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.12/d9vk-0.12.tar.gz"
+      },
+      {
+        "bakke": "http://bakkesmod.com/static/BakkesModInjector.zip"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_HUD": "compiler",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "src": "bakke"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/d9vk-0.12/",
+          "file": "d9vk"
+        }
+      },
+      {
+        "move": {
+          "dst": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.12/",
+          "src": "$CACHE/d9vk-0.12/"
+        }
+      },
+      {
+        "task": {
+          "description": "Please select RocketLeague.exe through the setup prompt to install BakkesMod.",
+          "prefix": "$GAMEDIR/prefix",
+          "executable": "$GAMEDIR/BakkesMod.exe",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y",
+          "key": "ShowDotFiles",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      }
+    ],
+    "winesteam": {
+      "Desktop": true,
+      "dxvk_version": "d9vk-0.12",
+      "WineDesktop": "1920x1080",
+      "dxvk": true,
+      "version": "tkg-3.21-x86_64"
+    }
+  },
+  "content": "files:\n- d9vk: https://github.com/Joshua-Ashton/d9vk/releases/download/0.12/d9vk-0.12.tar.gz\n- bakke: http://bakkesmod.com/static/BakkesModInjector.zip\ngame:\n  appid: 252950\n  arch: win32\n  nolaunch: true\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $GAMEDIR\n    src: bakke\n- extract:\n    dst: $CACHE/d9vk-0.12/\n    file: d9vk\n- move:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.12/\n    src: $CACHE/d9vk-0.12/\n- task:\n    arch: win32\n    description: Please select RocketLeague.exe through the setup prompt to install\n      BakkesMod.\n    executable: $GAMEDIR/BakkesMod.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: ShowDotFiles\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: Y\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_LOG_LEVEL: none\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\nwinesteam:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  dxvk_version: d9vk-0.12\n  version: tkg-3.21-x86_64\n"
+}

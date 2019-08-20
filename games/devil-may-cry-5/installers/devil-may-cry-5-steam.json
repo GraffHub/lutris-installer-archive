@@ -1,0 +1,118 @@
+{
+  "id": 12304,
+  "game_id": 26148,
+  "game_slug": "devil-may-cry-5",
+  "name": "Devil May Cry 5",
+  "year": 2019,
+  "user": "s9209122222",
+  "runner": "winesteam",
+  "slug": "devil-may-cry-5-steam",
+  "version": "Steam",
+  "description": null,
+  "notes": "**CONFIGURE AND INSTALL THE DEPENDENCIES FIRST**\r\nInstructions for DXVK support: <a href=\"https://github.com/lutris/lutris/wiki/How-to:-DXVK\">https://github.com/lutris/lutris/wiki/How-to:-DXVK</a>",
+  "created_at": "2019-03-09T01:26:25.680000Z",
+  "updated_at": "2019-06-13T06:59:47.343493Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 601150,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 601150,
+      "arch": "win64"
+    },
+    "files": [
+      {
+        "mfplat_dll_64": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "app": "cjkfonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/prefix/drive_c/windows/system32",
+          "src": "mfplat_dll_64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "app": "mf",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "install_cab_component",
+          "component": "mediafoundation"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "install_cab_component",
+          "component": "mf_"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "install_cab_component",
+          "component": "mfreadwrite"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "install_cab_component",
+          "component": "wmadmod"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "install_cab_component",
+          "component": "wmvdecod"
+        }
+      }
+    ],
+    "winesteam": {
+      "esync": true,
+      "overrides": {
+        "mfplat": "native,builtin"
+      },
+      "dxvk": true,
+      "version": "tkg-protonified-4.4-x86_64"
+    }
+  },
+  "content": "files:\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  appid: 601150\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: cjkfonts\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- merge:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: mfplat_dll_64\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    mfplat: native,builtin\n  version: tkg-protonified-4.4-x86_64\n"
+}

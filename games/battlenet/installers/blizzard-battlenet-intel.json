@@ -1,0 +1,89 @@
+{
+  "id": 15054,
+  "game_id": 6237,
+  "game_slug": "battlenet",
+  "name": "Blizzard Battle.net",
+  "year": 1996,
+  "user": "edjaa84",
+  "runner": "wine",
+  "slug": "blizzard-battlenet-intel",
+  "version": "INTEL",
+  "description": "Blizzard-app para INTEL \r\n\r\nDebian 10 64bit\r\n\r\nStarcraft, Diablo 3, Heroes of Storm, StarCraft 2, Heartstone (pronto)",
+  "notes": "Primero que nada instala las siguientes dependencias:\r\nlibgnutls30:i386 libldap-2.4-2:i386 libgpg-error0:i386 libsqlite3-0:i386\r\n\r\nInstalar DXVK desde winetricks si su chip INTEL es Broadwell, Skylake, Kabylake.\r\n\r\nHeroes of Storm:\r\nLas Librerías de DirectX11 incluidos dentro del directorio del Juego específicamente en la Carpeta Support64 las copiamos en la Carpeta System32.\r\n\r\n\r\nd3dcompiler_47.dll y d3dx11_42.dl",
+  "created_at": "2019-08-19T02:26:38.911612Z",
+  "updated_at": "2019-08-19T02:26:38.911637Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "setup": {
+          "filename": "Battle.net-Setup.exe",
+          "url": "https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP&id=1080421053.1563775333"
+        }
+      },
+      {
+        "instalador": "N/A:Please select the Blizzardapp setup file"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Installing DirectX 9",
+          "silent": true,
+          "prefix": "$GAMEDIR/",
+          "app": "d3dx9",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing d3dcompiler43",
+          "silent": true,
+          "prefix": "$GAMEDIR/",
+          "app": "d3dcompiler_43",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing VisualC2017",
+          "silent": true,
+          "prefix": "$GAMEDIR/",
+          "app": "vcrun2017",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Cambiando a Windows 7",
+          "silent": true,
+          "prefix": "$GAMEDIR/",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Blizzard App.",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: Battle.net-Setup.exe\n    url: https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP&id=1080421053.1563775333\n- instalador: N/A:Please select the Blizzardapp setup file\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: d3dx9\n    description: Installing DirectX 9\n    name: winetricks\n    prefix: $GAMEDIR/\n    silent: true\n- task:\n    app: d3dcompiler_43\n    description: Installing d3dcompiler43\n    name: winetricks\n    prefix: $GAMEDIR/\n    silent: true\n- task:\n    app: vcrun2017\n    description: Installing VisualC2017\n    name: winetricks\n    prefix: $GAMEDIR/\n    silent: true\n- task:\n    app: win7\n    description: Cambiando a Windows 7\n    name: winetricks\n    prefix: $GAMEDIR/\n    silent: true\n- task:\n    arch: win64\n    description: Installing Blizzard App.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

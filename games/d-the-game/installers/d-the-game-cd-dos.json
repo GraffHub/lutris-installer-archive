@@ -9,12 +9,12 @@
   "slug": "d-the-game-cd-dos",
   "version": "CD DOS",
   "description": "This script will install \"D\" DOS CD edition for Dosbox.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
-  "notes": "",
-  "created_at": "2019-08-02T19:41:03.805067Z",
-  "updated_at": "2019-08-02T19:41:03.805094Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "notes": "- This script requires cdrdao and toc2cue to be installed. \r\nOn Debian and Ubuntu type in a terminal: \r\nsudo apt-get install cdrdao\r\n- You will need the 2 CD only during install\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-08-02T19:41:03.805000Z",
+  "updated_at": "2019-08-14T01:54:11.542119Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": 510590,
   "gogid": 1852354510,
@@ -22,8 +22,17 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "main_file": "$GAMEDIR/D.conf"
+      "main_file": "$GAMEDIR/D_dosbox.conf"
     },
+    "custom-name": "D - The Game - CD DOS - DOSBOX",
+    "files": [
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tools/Scripts/copycd.sh"
+      },
+      {
+        "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf"
+      }
+    ],
     "installer": [
       {
         "insert-disc": {
@@ -32,9 +41,12 @@
         }
       },
       {
-        "merge": {
-          "dst": "$GAMEDIR/CD",
-          "src": "$DISC"
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "disk",
+          "file": "script"
         }
       },
       {
@@ -45,48 +57,44 @@
       },
       {
         "execute": {
-          "command": "cd $GAMEDIR; cp -fR $DISC/* $GAMEDIR/CD/;"
+          "args": "D_",
+          "file": "script"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR; rm -f -r *.toc; mv disk.cue D_CD1.cue; mv disk.bin D_CD1.bin; mv D_.cue D_CD2.cue; mv D_.bin D_CD2.bin; sed -i 's/disk.bin/D_CD1.bin/g' D_CD1.cue; sed -i 's/D_.bin/D_CD2.bin/g' D_CD2.cue"
         }
       },
       {
         "task": {
           "commands": [
+            "imgmount d \"D_CD1.cue\" \"D_CD2.cue\" -t iso",
             "d:",
-            "D:\\install.bat",
+            "call D:\\install.bat",
             "exit"
           ],
           "drives": {
-            "d": "$GAMEDIR/CD",
-            "c": "$GAMEDIR"
+            "c": "."
           },
           "name": "makeconfig",
-          "path": "$GAMEDIR/versailles_1685_install.conf"
-        }
-      },
-      {
-        "task": {
-          "commands": [
-            "c:",
-            "cd VERSAILL",
-            "VERSAILL.EXE",
-            "exit"
-          ],
-          "drives": {
-            "d": "$GAMEDIR/CD",
-            "c": "$GAMEDIR"
-          },
-          "name": "makeconfig",
-          "path": "$GAMEDIR/versailles_1685.conf"
+          "path": "$GAMEDIR/D_dosbox_install.conf"
         }
       },
       {
         "task": {
           "name": "dosexec",
-          "config_file": "$GAMEDIR/versailles_1685_install.conf",
+          "config_file": "$GAMEDIR/D_dosbox_install.conf",
           "working_dir": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "conf"
         }
       }
     ]
   },
-  "content": "game:\n  main_file: $GAMEDIR/D.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- merge:\n    dst: $GAMEDIR/CD\n    src: $DISC\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    command: cd $GAMEDIR; cp -fR $DISC/* $GAMEDIR/CD/;\n- task:\n    commands:\n    - 'd:'\n    - D:\\install.bat\n    - exit\n    drives:\n      c: $GAMEDIR\n      d: $GAMEDIR/CD\n    name: makeconfig\n    path: $GAMEDIR/versailles_1685_install.conf\n- task:\n    commands:\n    - 'c:'\n    - cd VERSAILL\n    - VERSAILL.EXE\n    - exit\n    drives:\n      c: $GAMEDIR\n      d: $GAMEDIR/CD\n    name: makeconfig\n    path: $GAMEDIR/versailles_1685.conf\n- task:\n    config_file: $GAMEDIR/versailles_1685_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n"
+  "content": "custom-name: D - The Game - CD DOS - DOSBOX\nfiles:\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tools/Scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf\ngame:\n  main_file: $GAMEDIR/D_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- chmodx: script\n- execute:\n    args: disk\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    args: D_\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv disk.cue D_CD1.cue; mv disk.bin D_CD1.bin;\n      mv D_.cue D_CD2.cue; mv D_.bin D_CD2.bin; sed -i 's/disk.bin/D_CD1.bin/g' D_CD1.cue;\n      sed -i 's/D_.bin/D_CD2.bin/g' D_CD2.cue\n- task:\n    commands:\n    - imgmount d \"D_CD1.cue\" \"D_CD2.cue\" -t iso\n    - 'd:'\n    - call D:\\install.bat\n    - exit\n    drives:\n      c: .\n    name: makeconfig\n    path: $GAMEDIR/D_dosbox_install.conf\n- task:\n    config_file: $GAMEDIR/D_dosbox_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

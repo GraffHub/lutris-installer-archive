@@ -10,11 +10,11 @@
   "version": "GOG + ScummVM",
   "description": "This script will install \"Toonstruck\" GOG edition for ScummVM.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
   "notes": "- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
-  "created_at": "2019-08-06T21:35:09.154198Z",
-  "updated_at": "2019-08-06T21:35:09.154231Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-08-06T21:35:09.154000Z",
+  "updated_at": "2019-08-14T01:57:17.089699Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": 369830,
   "gogid": 1207666633,
@@ -23,7 +23,7 @@
   "script": {
     "game": {
       "path": "$GAMEDIR/TOONSTRUCK/",
-      "game_id": "toonstruck"
+      "game_id": "toon"
     },
     "custom-name": "Toonstruck - GOG - ScummVM",
     "files": [
@@ -31,7 +31,10 @@
         "game": "N/A:Please select the GOG.com Windows installer."
       },
       {
-        "innoextract": "https://lutris.net/files/tools/innoextract.tar.gz"
+        "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "dat": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Toonstruck/toon.dat"
       }
     ],
     "installer": [
@@ -43,11 +46,35 @@
       },
       {
         "execute": {
-          "args": "--extract $game --output-dir $GAMEDIR/TOONSTRUCK/",
+          "args": "--extract $game --output-dir $CACHE/",
           "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/TOONSTRUCK/ACT1",
+          "src": "$CACHE/Toonstruck/ACT1"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/TOONSTRUCK/ACT2",
+          "src": "$CACHE/Toonstruck/ACT2"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/TOONSTRUCK/MISC",
+          "src": "$CACHE/Toonstruck/MISC"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/TOONSTRUCK/",
+          "src": "dat"
         }
       }
     ]
   },
-  "content": "custom-name: Toonstruck - GOG - ScummVM\nfiles:\n- game: N/A:Please select the GOG.com Windows installer.\n- innoextract: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  game_id: toonstruck\n  path: $GAMEDIR/TOONSTRUCK/\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    args: --extract $game --output-dir $GAMEDIR/TOONSTRUCK/\n    file: $CACHE/innoextract/innoextract\n"
+  "content": "custom-name: Toonstruck - GOG - ScummVM\nfiles:\n- game: N/A:Please select the GOG.com Windows installer.\n- innoextract: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- dat: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Toonstruck/toon.dat\ngame:\n  game_id: toon\n  path: $GAMEDIR/TOONSTRUCK/\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    args: --extract $game --output-dir $CACHE/\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/TOONSTRUCK/ACT1\n    src: $CACHE/Toonstruck/ACT1\n- merge:\n    dst: $GAMEDIR/TOONSTRUCK/ACT2\n    src: $CACHE/Toonstruck/ACT2\n- merge:\n    dst: $GAMEDIR/TOONSTRUCK/MISC\n    src: $CACHE/Toonstruck/MISC\n- copy:\n    dst: $GAMEDIR/TOONSTRUCK/\n    src: dat\n"
 }

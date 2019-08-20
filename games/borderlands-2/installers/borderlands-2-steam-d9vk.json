@@ -1,0 +1,76 @@
+{
+  "id": 13496,
+  "game_id": 549,
+  "game_slug": "borderlands-2",
+  "name": "Borderlands 2",
+  "year": 2012,
+  "user": "anisan8371",
+  "runner": "winesteam",
+  "slug": "borderlands-2-steam-d9vk",
+  "version": "Steam | D9VK",
+  "description": "Installs the windows version of borderlands 2 with D9VK 0.12",
+  "notes": "Rename Boderlands2.exe to Launcher.exe\r\n\r\nDon't set physx to high or you may experience crashing",
+  "created_at": "2019-05-13T18:50:57.852000Z",
+  "updated_at": "2019-06-17T00:37:18.219183Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 49520,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 49520,
+      "arch": "win64"
+    },
+    "files": [
+      {
+        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.11/d9vk-0.11.tar.gz"
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0,
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/prefix",
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/prefix"
+      }
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.12",
+          "src": "d9vk"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix.",
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "d3dcompiler_43 d3dx9"
+        }
+      }
+    ],
+    "winesteam": {
+      "dxvk_version": "d9vk-0.12",
+      "dxvk": true,
+      "version": "ge-protonified-4.9-x86_64"
+    }
+  },
+  "content": "files:\n- d9vk: https://github.com/Joshua-Ashton/d9vk/releases/download/0.11/d9vk-0.11.tar.gz\ngame:\n  appid: 49520\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- extract:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.12\n    src: d9vk\n- task:\n    arch: win64\n    description: Creating Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43 d3dx9\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR/prefix\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/prefix\n    __GL_THREADED_OPTIMIZATIONS: 1\nwinesteam:\n  dxvk: true\n  dxvk_version: d9vk-0.12\n  version: ge-protonified-4.9-x86_64\n"
+}

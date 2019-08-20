@@ -1,0 +1,90 @@
+{
+  "id": 15043,
+  "game_id": 237,
+  "game_slug": "saints-row-the-third",
+  "name": "Saints Row: The Third",
+  "year": 2011,
+  "user": "alfyn",
+  "runner": "wine",
+  "slug": "saints-row-the-third-dvd-or-digital",
+  "version": "DVD or Digital",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-08-17T21:23:17.282816Z",
+  "updated_at": "2019-08-17T21:23:17.282845Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 55230,
+  "gogid": 1430740694,
+  "gogslug": "saints_row_the_third_the_full_package",
+  "humblestoreid": "saints-row-the-third-the-full-package",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Saints Row The Third/sr3.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "args": "-noChunkedDownload -DX11"
+    },
+    "files": [
+      {
+        "setup": "setup.exe"
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating win64 prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing corefonts",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "description": "Changing windows version to Win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the game. You might get an error at the end of the installation, just close the installer window and don't click on retry",
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "winedbg.exe": "disabled"
+      },
+      "dxvk": true,
+      "version": "tkg-protonified-4.6-x86_64"
+    }
+  },
+  "content": "files:\n- setup: setup.exe\ngame:\n  arch: win64\n  args: -noChunkedDownload -DX11\n  exe: drive_c/Program Files/Saints Row The Third/sr3.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating win64 prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Changing windows version to Win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing the game. You might get an error at the end of the installation,\n      just close the installer window and don't click on retry\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: disabled\n  version: tkg-protonified-4.6-x86_64\n"
+}
