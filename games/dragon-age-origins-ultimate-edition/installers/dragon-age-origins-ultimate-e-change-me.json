@@ -1,0 +1,79 @@
+{
+  "id": 15171,
+  "game_id": 606,
+  "game_slug": "dragon-age-origins-ultimate-edition",
+  "name": "Dragon Age: Origins - Ultimate Edition",
+  "year": null,
+  "user": "GenTooMan3d",
+  "runner": "wine",
+  "slug": "dragon-age-origins-ultimate-e-change-me",
+  "version": "Change Me",
+  "description": "",
+  "notes": "",
+  "created_at": "2019-08-27T22:04:53.455832Z",
+  "updated_at": "2019-08-27T22:04:53.455871Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 47810,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/game/DAOriginsLauncher.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "system": {
+      "disable_monitoring": true,
+      "pulse_latency": true
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Game...",
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "windowmanagermanaged=n",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/quiet /qn",
+          "description": "Installing PhysX...",
+          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe",
+          "prefix": "$GAMEDIR",
+          "blocking": true
+        }
+      }
+    ],
+    "wine": {
+      "StrictDrawOrdering": "enabled"
+    }
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/DAOriginsLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing Game...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /quiet /qn\n    blocking: true\n    description: Installing PhysX...\n    executable: $GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_monitoring: true\n  pulse_latency: true\nwine:\n  StrictDrawOrdering: enabled\n"
+}

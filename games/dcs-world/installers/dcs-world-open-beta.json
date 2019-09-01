@@ -1,0 +1,107 @@
+{
+  "id": 15226,
+  "game_id": 3219,
+  "game_slug": "dcs-world",
+  "name": "DCS World",
+  "year": 2008,
+  "user": "ZenimNL",
+  "runner": "wine",
+  "slug": "dcs-world-open-beta",
+  "version": "Open Beta",
+  "description": "See if the Open Beta can be installed through a script with Winetricks since the steam version seems to be working.",
+  "notes": "",
+  "created_at": "2019-08-31T20:47:04.303663Z",
+  "updated_at": "2019-08-31T20:47:04.303686Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 223750,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "client": "https://updates.digitalcombatsimulator.com/installers/DCS_World_OpenBeta_web.exe"
+      }
+    ],
+    "system": {
+      "env": null,
+      "DXVK_HUD": "0"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2013"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2017"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts win10"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "d3dcompiler_43"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "xact"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "args": "/S",
+          "description": "Installing client",
+          "prefix": "$GAMEDIR",
+          "executable": "client",
+          "arch": "win64"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "nvapi,nvapi64": "disabled",
+      "overrides": null,
+      "dxvk": true,
+      "version": "lutris-4.13-x86_64"
+    }
+  },
+  "content": "files:\n- client: https://updates.digitalcombatsimulator.com/installers/DCS_World_OpenBeta_web.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  DXVK_HUD: '0'\n  env: null\nwine:\n  dxvk: true\n  esync: true\n  nvapi,nvapi64: disabled\n  overrides: null\n  version: lutris-4.13-x86_64\n"
+}

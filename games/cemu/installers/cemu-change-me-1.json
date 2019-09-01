@@ -1,0 +1,146 @@
+{
+  "id": 15223,
+  "game_id": 16449,
+  "game_slug": "cemu",
+  "name": "Cemu",
+  "year": 2015,
+  "user": "abelian424",
+  "runner": "wine",
+  "slug": "cemu-change-me-1",
+  "version": "Change Me",
+  "description": null,
+  "notes": "Includes Cemuhook plugin, graphic packs, and controller support\r\n\r\nSome options under the Debug menu cause the program to crash.\r\n\r\nUpdating games via xml causes Cemu to crash. Use this method instead:\r\n\r\n- Open up: drive_c/Program Files (x86)/cemu_1.15.8/mlc01/usr/title and create a folder as well as an additional subfolder inside the newly created one. Name them after the game's Title ID.\r\n\r\nNow you're ready to extract your update folders:\r\n\r\n- For updates: mlc01/usr/title/00050000/101C9500\r\n- For DLC: mlc01/usr/title/00050000/101C9500/aoc\r\n\r\nTo obtain your game's Title ID launch your game and open your drive_c/Program Files (x86)/cemu_1.15.8/log.txt file. Search for the file path similar to the given example.\r\n\r\nChoose the Xbox_Controller profile in Cemu's input settings to enable controller support.",
+  "created_at": "2019-08-31T17:01:17.785208Z",
+  "updated_at": "2019-08-31T17:01:17.785241Z",
+  "draft": false,
+  "published": false,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/cemu_1.15.11c/Cemu.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "files": [
+      {
+        "cemu": "http://cemu.info/releases/cemu_1.15.11.zip"
+      },
+      {
+        "fonts": "https://github.com/dnmodder/cemu_lutris_files/raw/master/sharedFonts.tar.gz"
+      },
+      {
+        "hook": "https://files.sshnuke.net/cemuhook_1159_0573.zip"
+      },
+      {
+        "config": "https://raw.githubusercontent.com/dnmodder/cemu_lutris_files/master/cemuhook.ini"
+      },
+      {
+        "packs": "https://github.com/slashiee/cemu_graphic_packs/releases/download/Travis512/graphicPacks512.zip"
+      },
+      {
+        "controller": "https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/Xbox_Controller.txt"
+      }
+    ],
+    "system": {
+      "env": {
+        "vblank_mode": 0,
+        "R600_DEBUG": "nohyperz",
+        "mesa_glthread": true,
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      },
+      "disable_compositor": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "xact faudio vcrun2017 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c",
+          "file": "cemu"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/sharedFonts",
+          "format": "tgz",
+          "file": "fonts"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c",
+          "src": "$CACHE/sharedFonts"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/hook",
+          "file": "hook"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c",
+          "src": "$CACHE/hook"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/graphicPacks/downloadedGraphicPacks",
+          "file": "packs"
+        }
+      },
+      {
+        "write_file": {
+          "content": "bleh",
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/controllerProfiles/Xbox_Controller.txt"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/controllerProfiles",
+          "src": "controller"
+        }
+      },
+      {
+        "write_file": {
+          "content": "bleh",
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/cemuhook.ini"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/cemuhook.ini",
+          "src": "config"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "mshtml": "disabled",
+        "mscoree": "disabled",
+        "dbghelp": "native,builtin"
+      },
+      "version": "ge-protonified-4.10-x86_64"
+    }
+  },
+  "content": "files:\n- cemu: http://cemu.info/releases/cemu_1.15.11.zip\n- fonts: https://github.com/dnmodder/cemu_lutris_files/raw/master/sharedFonts.tar.gz\n- hook: https://files.sshnuke.net/cemuhook_1159_0573.zip\n- config: https://raw.githubusercontent.com/dnmodder/cemu_lutris_files/master/cemuhook.ini\n- packs: https://github.com/slashiee/cemu_graphic_packs/releases/download/Travis512/graphicPacks512.zip\n- controller: https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/Xbox_Controller.txt\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/cemu_1.15.11c/Cemu.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: xact faudio vcrun2017 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c\n    file: cemu\n- extract:\n    dst: $CACHE/sharedFonts\n    file: fonts\n    format: tgz\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c\n    src: $CACHE/sharedFonts\n- extract:\n    dst: $CACHE/hook\n    file: hook\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c\n    src: $CACHE/hook\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/graphicPacks/downloadedGraphicPacks\n    file: packs\n- write_file:\n    content: bleh\n    file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/controllerProfiles/Xbox_Controller.txt\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/controllerProfiles\n    src: controller\n- write_file:\n    content: bleh\n    file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/cemuhook.ini\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.15.11c/cemuhook.ini\n    src: config\nsystem:\n  disable_compositor: true\n  env:\n    R600_DEBUG: nohyperz\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: true\n    vblank_mode: 0\nwine:\n  esync: true\n  overrides:\n    dbghelp: native,builtin\n    mscoree: disabled\n    mshtml: disabled\n  version: ge-protonified-4.10-x86_64\n"
+}

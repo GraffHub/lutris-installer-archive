@@ -1,0 +1,108 @@
+{
+  "id": 15117,
+  "game_id": 26784,
+  "game_slug": "windows-31x",
+  "name": "Windows 3.1x",
+  "year": 1992,
+  "user": "appoloin",
+  "runner": "dosbox",
+  "slug": "windows-31x-8-disc-floppy-s3-sb1",
+  "version": "8 Disc Floppy + S3 + SB16",
+  "description": "The installer requires the 8 disc version of WfW 3.11.    S3 and SB16 are downloaded  from the same source as the other installer, the relevant  instructions apply.   For display I would go with 800x600,   games using win3.1  won't need a higher resolution than this.",
+  "notes": "",
+  "created_at": "2019-08-23T22:24:45.478815Z",
+  "updated_at": "2019-08-23T22:24:45.478842Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/windows-for-workgroups.conf"
+    },
+    "files": [
+      {
+        "Disc1": "N/A:Select the image of Disc 1"
+      },
+      {
+        "Disc2": "N/A:Select the image of Disc 2"
+      },
+      {
+        "Disc3": "N/A:Select the image of Disc 3"
+      },
+      {
+        "Disc4": "N/A:Select the image of Disc 4"
+      },
+      {
+        "Disc5": "N/A:Select the image of Disc 5"
+      },
+      {
+        "Disc6": "N/A:Select the image of Disc 6"
+      },
+      {
+        "Disc7": "N/A:Select the image of Disc 7"
+      },
+      {
+        "Disc8": "N/A:Select the image of Disc 8"
+      },
+      {
+        "S3": "https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1"
+      },
+      {
+        "SB16": "https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1"
+      }
+    ],
+    "installer": [
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD $GAMEDIR/FDD  $GAMEDIR/FDD/DISC1",
+          "file": "mkdir"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/FDD/Drivers $GAMEDIR/FDD/Drivers/sb16  $GAMEDIR/FDD/Drivers/s3",
+          "file": "mkdir"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/FDD/Drivers/sb16",
+          "format": "zip",
+          "file": "$SB16"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/FDD/Drivers/s3",
+          "format": "zip",
+          "file": "$S3"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sblaster]\nirq=5\n[sdl]\nsensitivity=10\n[autoexec]\nimgmount A \"$Disc1\" -t floppy\nimgmount J \"$Disc2\" -t floppy\nimgmount I \"$Disc3\" -t floppy\nimgmount D \"$Disc4\" -t floppy\nimgmount E \"$Disc5\" -t floppy\nimgmount F \"$Disc6\" -t floppy\nimgmount G \"$Disc7\" -t floppy\nimgmount H \"$Disc1\" -t floppy\nmount B \"$GAMEDIR/FDD/Drivers\" -t dir\nmount C \"$GAMEDIR/HDD\" -t dir\nmount Y \"$GAMEDIR/FDD/DISC1\" -t dir\nA:\ncopy *.* Y:\nJ:\ncopy *.* Y:\nI:\ncopy *.* Y:\nD:\ncopy *.* Y:\nE:\ncopy *.* Y:\nF:\ncopy *.* Y:\nG:\ncopy *.* Y:\nH:\ncopy *.* Y:\nY:\nsetup.exe\nSET PATH=%PATH%;C:\\WINDOWS;\nSET TEMP=C:\\WINDOWS\\TEMP\nc:\ncd Windows\nSetup\nB:\ncd sb16\ninstall\nexit",
+          "file": "$GAMEDIR/windows-for-workgroups-setup.conf"
+        }
+      },
+      {
+        "task": {
+          "name": "dosexec",
+          "config_file": "$GAMEDIR/windows-for-workgroups-setup.conf",
+          "working_dir": "$GAMEDIR/HDD"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sblaster]\nirq=5\n[sdl]\nsensitivity=10\n[autoexec]\nmount A \"$GAMEDIR/FDD/DISC1\" -t dir\nmount B \"$GAMEDIR/FDD/Drivers\" -t dir\nmount C \"$GAMEDIR/HDD\" -t dir\nSET PATH=%PATH%;C:\\WINDOWS;\nSET TEMP=C:\\WINDOWS\\TEMP\nc:\nwin\nexit",
+          "file": "$GAMEDIR/windows-for-workgroups.conf"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- Disc1: N/A:Select the image of Disc 1\n- Disc2: N/A:Select the image of Disc 2\n- Disc3: N/A:Select the image of Disc 3\n- Disc4: N/A:Select the image of Disc 4\n- Disc5: N/A:Select the image of Disc 5\n- Disc6: N/A:Select the image of Disc 6\n- Disc7: N/A:Select the image of Disc 7\n- Disc8: N/A:Select the image of Disc 8\n- S3: https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1\n- SB16: https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1\ngame:\n  main_file: $GAMEDIR/windows-for-workgroups.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/FDD  $GAMEDIR/FDD/DISC1\n    file: mkdir\n- execute:\n    args: $GAMEDIR/FDD/Drivers $GAMEDIR/FDD/Drivers/sb16  $GAMEDIR/FDD/Drivers/s3\n    file: mkdir\n- extract:\n    dst: $GAMEDIR/FDD/Drivers/sb16\n    file: $SB16\n    format: zip\n- extract:\n    dst: $GAMEDIR/FDD/Drivers/s3\n    file: $S3\n    format: zip\n- write_file:\n    content: '[sblaster]\n\n      irq=5\n\n      [sdl]\n\n      sensitivity=10\n\n      [autoexec]\n\n      imgmount A \"$Disc1\" -t floppy\n\n      imgmount J \"$Disc2\" -t floppy\n\n      imgmount I \"$Disc3\" -t floppy\n\n      imgmount D \"$Disc4\" -t floppy\n\n      imgmount E \"$Disc5\" -t floppy\n\n      imgmount F \"$Disc6\" -t floppy\n\n      imgmount G \"$Disc7\" -t floppy\n\n      imgmount H \"$Disc1\" -t floppy\n\n      mount B \"$GAMEDIR/FDD/Drivers\" -t dir\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount Y \"$GAMEDIR/FDD/DISC1\" -t dir\n\n      A:\n\n      copy *.* Y:\n\n      J:\n\n      copy *.* Y:\n\n      I:\n\n      copy *.* Y:\n\n      D:\n\n      copy *.* Y:\n\n      E:\n\n      copy *.* Y:\n\n      F:\n\n      copy *.* Y:\n\n      G:\n\n      copy *.* Y:\n\n      H:\n\n      copy *.* Y:\n\n      Y:\n\n      setup.exe\n\n      SET PATH=%PATH%;C:\\WINDOWS;\n\n      SET TEMP=C:\\WINDOWS\\TEMP\n\n      c:\n\n      cd Windows\n\n      Setup\n\n      B:\n\n      cd sb16\n\n      install\n\n      exit'\n    file: $GAMEDIR/windows-for-workgroups-setup.conf\n- task:\n    config_file: $GAMEDIR/windows-for-workgroups-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD\n- write_file:\n    content: '[sblaster]\n\n      irq=5\n\n      [sdl]\n\n      sensitivity=10\n\n      [autoexec]\n\n      mount A \"$GAMEDIR/FDD/DISC1\" -t dir\n\n      mount B \"$GAMEDIR/FDD/Drivers\" -t dir\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      SET PATH=%PATH%;C:\\WINDOWS;\n\n      SET TEMP=C:\\WINDOWS\\TEMP\n\n      c:\n\n      win\n\n      exit'\n    file: $GAMEDIR/windows-for-workgroups.conf\n"
+}
