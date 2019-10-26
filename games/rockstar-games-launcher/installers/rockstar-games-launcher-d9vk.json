@@ -1,0 +1,85 @@
+{
+  "id": 15875,
+  "game_id": 29437,
+  "game_slug": "rockstar-games-launcher",
+  "name": "Rockstar Games Launcher",
+  "year": 2019,
+  "user": "WarfaceZ",
+  "runner": "wine",
+  "slug": "rockstar-games-launcher-d9vk",
+  "version": "D9VK",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-29T13:11:11Z",
+  "updated_at": "2019-10-17T06:15:04.571896Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe"
+    },
+    "wine": {
+      "d9vk": true,
+      "esync": true,
+      "version": "lutris-rockstar-4.16-x86_64"
+    },
+    "files": [
+      {
+        "launcher": "https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine 64-bit Prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Installing Arial Font",
+          "name": "winetricks",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "launcher",
+          "description": "Installing the launcher (Don't login, close the window)",
+          "arch": "win64",
+          "exclude_processes": "RockstarService.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Setting Windows 10 mode for Wine",
+          "name": "winetricks",
+          "app": "win10"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- launcher: https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial Font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing the launcher (Don't login, close the window)\n    exclude_processes: RockstarService.exe\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    description: Setting Windows 10 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  d9vk: true\n  esync: true\n  version: lutris-rockstar-4.16-x86_64\n"
+}

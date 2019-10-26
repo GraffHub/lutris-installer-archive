@@ -21,31 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
-      "args": "wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\""
-    },
-    "system": {
-      "env": {
-        "WINEPREFIX": "$GAMEDIR",
-        "WINEARCH": "win32",
-        "WINEDEBUG": "-all",
-        "WINEOVERRIDES": "msvcp140=native"
-      }
-    },
     "require-binaries": "wine",
-    "custom-name": "Teamfight Tactics",
-    "files": [
-      {
-        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
-      },
-      {
-        "appimage_ci": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/lol-wine/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
-      },
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      }
-    ],
+    "game": {
+      "args": "wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\"",
+      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+    },
     "installer": [
       {
         "extract": {
@@ -64,19 +44,20 @@
       },
       {
         "execute": {
+          "args": "wine wineboot",
           "description": "Setting up wine prefix",
           "env": {
             "WINEPREFIX": "$GAMEDIR",
             "WINEARCH": "win32"
           },
-          "args": "wine wineboot",
           "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
       {
         "input_menu": {
-          "description": "Choose the game's language:",
+          "preselect": "en_US",
           "id": "LOCALE",
+          "description": "Choose the game's language:",
           "options": [
             {
               "cs_CZ": "Čeština"
@@ -126,14 +107,14 @@
             {
               "tr_TR": "Türkçe"
             }
-          ],
-          "preselect": "en_US"
+          ]
         }
       },
       {
         "input_menu": {
-          "description": "Choose the game's server region:",
+          "preselect": "NA",
           "id": "REGION",
+          "description": "Choose the game's server region:",
           "options": [
             {
               "BR": "Brazil"
@@ -168,27 +149,26 @@
             {
               "SEA": "South East Asia"
             }
-          ],
-          "preselect": "NA"
+          ]
         }
       },
       {
         "execute": {
+          "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent",
           "description": "Installing Directx9",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent",
           "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
       {
         "execute": {
+          "args": "wine lol_installer --mode unattended",
           "description": "Installing League of Legends",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "args": "wine lol_installer --mode unattended",
           "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
@@ -197,6 +177,26 @@
           "content": "install:\n    globals:\n        locale: \"$INPUT_LOCALE\"\n        region: \"$INPUT_REGION\"\n",
           "file": "$GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml"
         }
+      }
+    ],
+    "system": {
+      "env": {
+        "WINEDEBUG": "-all",
+        "WINEOVERRIDES": "msvcp140=native",
+        "WINEARCH": "win32",
+        "WINEPREFIX": "$GAMEDIR"
+      }
+    },
+    "custom-name": "Teamfight Tactics",
+    "files": [
+      {
+        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
+      },
+      {
+        "appimage_ci": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/lol-wine/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ]
   },

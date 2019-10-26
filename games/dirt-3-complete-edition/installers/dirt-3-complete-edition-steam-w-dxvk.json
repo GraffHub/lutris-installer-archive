@@ -21,46 +21,46 @@
   "gogslug": "",
   "humblestoreid": "dirt-3-complete-edition",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 321040,
-      "arch": "win32"
-    },
     "system": {
+      "pulse_latency": true,
       "env": {
         "DXVK_HUD": 0
+      }
+    },
+    "winesteam": {
+      "dumbxinputemu": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
       },
-      "pulse_latency": true
+      "dxvk": true,
+      "x360ce-path": "$GAMEDIR",
+      "version": "tkg-4.0-x86_64"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 321040
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "disabled",
-          "key": "xinput9_1_0",
           "arch": "win32",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "xinput9_1_0",
+          "name": "set_regedit"
         }
       }
-    ],
-    "winesteam": {
-      "dumbxinputemu": true,
-      "x360ce-path": "$GAMEDIR",
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "game:\n  appid: 321040\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: xinput9_1_0\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR/prefix\n    type: REG_SZ\n    value: disabled\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dumbxinputemu: true\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n  x360ce-path: $GAMEDIR\n"
 }

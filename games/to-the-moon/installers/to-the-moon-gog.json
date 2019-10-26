@@ -8,49 +8,42 @@
   "runner": "linux",
   "slug": "to-the-moon-gog",
   "version": "GOG",
-  "description": "",
+  "description": null,
   "notes": "",
   "created_at": "2016-12-20T11:18:38.413000Z",
-  "updated_at": "2017-04-03T19:08:12.604985Z",
+  "updated_at": "2019-10-20T01:50:12.012868Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 19464,
   "rating": "",
   "steamid": 206440,
   "gogid": 1207659072,
   "gogslug": "to_the_moon",
   "humblestoreid": "",
   "script": {
-    "exe": "game/start.sh",
+    "game": {
+      "exe": "start.sh"
+    },
     "files": [
       {
-        "game": "N/A:Please select the GOG.com Linux installer"
-      },
-      {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+        "goginstaller": "N/A:Please select the GOG.com Linux installer"
       }
     ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE/GOG",
+          "format": "zip",
+          "file": "goginstaller"
         }
       },
       {
-        "execute": {
-          "description": "Extracting game data, it will take a while...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/game",
-          "src": "$GAMEDIR/data/noarch"
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/GOG/data/noarch/"
         }
       }
     ]
   },
-  "content": "exe: game/start.sh\nfiles:\n- game: N/A:Please select the GOG.com Linux installer\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data, it will take a while...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/game\n    src: $GAMEDIR/data/noarch\n"
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Linux installer\ngame:\n  exe: start.sh\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/GOG/data/noarch/\n"
 }

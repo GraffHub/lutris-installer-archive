@@ -5,52 +5,45 @@
   "name": "Realpolitiks",
   "year": 2017,
   "user": "Talvi",
-  "runner": "web",
+  "runner": "linux",
   "slug": "realpolitiks-gog",
   "version": "GOG",
   "description": null,
   "notes": "",
   "created_at": "2017-12-10T17:12:56.007000Z",
-  "updated_at": "2018-01-01T15:41:40.551138Z",
+  "updated_at": "2019-10-21T04:20:15.903557Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 19464,
   "rating": "",
   "steamid": 553260,
   "gogid": 1106698055,
   "gogslug": "realpolitiks",
   "humblestoreid": "",
   "script": {
-    "exe": "game/start.sh",
+    "game": {
+      "exe": "start.sh"
+    },
     "files": [
       {
-        "game": "N/A:Please select the GOG.com Linux installer"
-      },
-      {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+        "goginstaller": "N/A:Please select the GOG.com Linux installer"
       }
     ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE/GOG",
+          "format": "zip",
+          "file": "goginstaller"
         }
       },
       {
-        "execute": {
-          "description": "Extracting game data, it will take a while...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/game",
-          "src": "$GAMEDIR/data/noarch"
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/GOG/data/noarch/"
         }
       }
     ]
   },
-  "content": "exe: game/start.sh\nfiles:\n- game: N/A:Please select the GOG.com Linux installer\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data, it will take a while...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/game\n    src: $GAMEDIR/data/noarch\n"
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Linux installer\ngame:\n  exe: start.sh\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/GOG/data/noarch/\n"
 }

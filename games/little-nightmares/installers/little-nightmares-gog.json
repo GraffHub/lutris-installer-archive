@@ -21,21 +21,25 @@
   "gogslug": "little_nightmares",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler"
+      }
+    },
     "game": {
-      "exe": "drive_c/GOG Games/Little Nightmares/Atlas/Binaries/Win64/LittleNightmares.exe",
       "prefix": "$GAMEDIR",
-      "args": "-onethread"
+      "args": "-onethread",
+      "exe": "drive_c/GOG Games/Little Nightmares/Atlas/Binaries/Win64/LittleNightmares.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
     },
     "files": [
       {
         "install": "N/A:Select the Windows setup file downloaded from GOG for the base game"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -46,23 +50,19 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "xact vcrun2013 vcrun2015 win7",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "xact vcrun2013 vcrun2015 win7"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
           "executable": "install",
-          "name": "wineexec",
-          "args": "/LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES"
+          "args": "/LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    }
+    ]
   },
   "content": "files:\n- install: N/A:Select the Windows setup file downloaded from GOG for the base game\ngame:\n  args: -onethread\n  exe: drive_c/GOG Games/Little Nightmares/Atlas/Binaries/Win64/LittleNightmares.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: xact vcrun2013 vcrun2015 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n  esync: true\n"
 }

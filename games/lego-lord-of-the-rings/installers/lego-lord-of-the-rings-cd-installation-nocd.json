@@ -22,10 +22,12 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
     },
-    "exe": "drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/LEGOLOTR.exe",
+    "wine": {
+      "xinput": true
+    },
     "files": [
       {
         "GamepadSupportSettings": "https://dl.dropboxusercontent.com/s/o1d6nndmczd2els/LutrisGamepadSupportSettings.tar.gz"
@@ -37,9 +39,7 @@
         "X360": "https://lutris.net/files/tools/x360ce-dinput8.tar.gz"
       }
     ],
-    "wine": {
-      "xinput": true
-    },
+    "exe": "drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/LEGOLOTR.exe",
     "installer": [
       {
         "insert-disc": {
@@ -48,39 +48,39 @@
       },
       {
         "task": {
-          "description": "Creating Windows File System (Wine Bottle)",
           "prefix": "$GAMEDIR",
+          "description": "Creating Windows File System (Wine Bottle)",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Please follow the instructions of the Installer   Don't kill the Installer(As long as the Drive is spinning)   nIt will finish the installation even though it is recognized as Non responsive      This should take only about 5min",
           "prefix": "$GAMEDIR",
           "executable": "$DISC/Launcher.exe",
-          "name": "wineexec",
-          "args": null
+          "args": null,
+          "description": "Please follow the instructions of the Installer   Don't kill the Installer(As long as the Drive is spinning)   nIt will finish the installation even though it is recognized as Non responsive      This should take only about 5min",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "description": "Installing x360 dinput8 for controller support",
           "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/",
+          "description": "Installing x360 dinput8 for controller support",
           "file": "$X360"
         }
       },
       {
         "extract": {
-          "description": "Installing NoCD fix",
           "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/",
+          "description": "Installing NoCD fix",
           "format": "tgz",
           "file": "$NoCDfix"
         }
       },
       {
         "extract": {
-          "description": "Setting up Gamepad support",
           "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/",
+          "description": "Setting up Gamepad support",
           "format": "tgz",
           "file": "$GamepadSupportSettings"
         }

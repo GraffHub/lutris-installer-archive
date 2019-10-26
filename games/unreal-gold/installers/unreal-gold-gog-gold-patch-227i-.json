@@ -1,0 +1,138 @@
+{
+  "id": 14389,
+  "game_id": 16,
+  "game_slug": "unreal-gold",
+  "name": "Unreal Gold",
+  "year": 1998,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "unreal-gold-gog-gold-patch-227i-",
+  "version": "GOG Gold + Patch 227i + MULTI5",
+  "description": "This script will install \"Unreal Gold\" Gog edition with last patch 227i from \r\nhttps://www.oldunreal.com/.\r\nDuring install please let all options by default.\r\n\r\nThanks to the people who helped us play this game in the best conditions.",
+  "notes": "- Multilanguage support (en,fr,de,it,sp)\r\n- This script: \"UnrealLinux.sh\" will launch the linux version.",
+  "created_at": "2019-07-02T21:10:42.106000Z",
+  "updated_at": "2019-09-09T01:01:07.264066Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 13250,
+  "gogid": 1207658679,
+  "gogslug": "unreal_gold",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Unreal Gold/System/Unreal.exe"
+    },
+    "files": [
+      {
+        "install": "N/A:Select the EXE downloaded from GOG"
+      },
+      {
+        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_patch_227i_MULTI5.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/defconfig.sh"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "install",
+          "args": "/SP- /SUPPRESSMSGBOXES /SILENT",
+          "description": "Installing...",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/",
+          "src": "patch"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/lin_convenience_libs",
+          "src": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/Help/lin_convenience_libs.tar.bz2"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/System/UnrealLinux.bin"
+      },
+      {
+        "input_menu": {
+          "preselect": "int",
+          "id": "LANG",
+          "description": "Choose your game's language:",
+          "options": [
+            {
+              "int": "English"
+            },
+            {
+              "frt": "French"
+            },
+            {
+              "det": "German"
+            },
+            {
+              "itt": "Italian"
+            },
+            {
+              "est": "Spanish"
+            }
+          ]
+        }
+      },
+      {
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "$INPUT_LANG $RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
+          "file": "script"
+        }
+      },
+      {
+        "write_file": {
+          "content": "#!/bin/sh\ncd System\nMESA_EXTENSION_MAX_YEAR=1999\n#LD_LIBRARY_PATH=../lin_convenience_libs\n#export LD_LIBRARY_PATH\nexec ./UnrealLinux.bin -log",
+          "file": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh"
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "value": "00000000",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "key": "csmt",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "background",
+          "name": "set_regedit"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- install: N/A:Select the EXE downloaded from GOG\n- patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_patch_227i_MULTI5.zip\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/defconfig.sh\ngame:\n  exe: drive_c/GOG Games/Unreal Gold/System/Unreal.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /SILENT\n    description: Installing...\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/\n    src: patch\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/lin_convenience_libs\n    src: $GAMEDIR/drive_c/GOG Games/Unreal Gold/Help/lin_convenience_libs.tar.bz2\n- chmodx: $GAMEDIR/drive_c/GOG Games/Unreal Gold/System/UnrealLinux.bin\n- input_menu:\n    description: 'Choose your game''s language:'\n    id: LANG\n    options:\n    - int: English\n    - frt: French\n    - det: German\n    - itt: Italian\n    - est: Spanish\n    preselect: int\n- chmodx: script\n- execute:\n    args: $INPUT_LANG $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: script\n- write_file:\n    content: '#!/bin/sh\n\n      cd System\n\n      MESA_EXTENSION_MAX_YEAR=1999\n\n      #LD_LIBRARY_PATH=../lin_convenience_libs\n\n      #export LD_LIBRARY_PATH\n\n      exec ./UnrealLinux.bin -log'\n    file: $GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh\n- chmodx: $GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n"
+}

@@ -1,0 +1,59 @@
+{
+  "id": 15480,
+  "game_id": 7313,
+  "game_slug": "gabriel-knight-2-the-beast-within",
+  "name": "Gabriel Knight 2: The Beast Within",
+  "year": null,
+  "user": "appoloin",
+  "runner": "scummvm",
+  "slug": "gabriel-knight-2-the-beast-wi-dvd",
+  "version": "DVD",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-12T16:11:43.412323Z",
+  "updated_at": "2019-09-12T16:11:43.412354Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 496760,
+  "gogid": 1207658837,
+  "gogslug": "gabriel_knight_2_the_beast_within",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "sci"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\ncp -avr \"$src/.\"  \"$dst\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy-alt.sh"
+      },
+      {
+        "insert-disc": {
+          "requires": "GK2CD.BAT",
+          "description": "Please insert disc"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC $GAMEDIR",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  game_id: sci\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      cp -avr \"$src/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- insert-disc:\n    description: Please insert disc\n    requires: GK2CD.BAT\n- execute:\n    args: $DISC $GAMEDIR\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
+}

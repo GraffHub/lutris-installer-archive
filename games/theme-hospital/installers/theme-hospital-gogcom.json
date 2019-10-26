@@ -30,55 +30,55 @@
         "game": "N/A:Please select the GOG.com Windows installer"
       }
     ],
+    "gogid": "theme_hospital",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "wine.create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing ...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wine.wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing ...",
+          "name": "wine.wineexec"
         }
       },
       {
         "execute": {
-          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false,
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "terminal": false,
-          "file": "/bin/sh"
+          "description": "cleaning..."
         }
       },
       {
         "execute": {
-          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false,
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "terminal": false,
-          "file": "/bin/sh"
+          "description": "cleaning..."
         }
       },
       {
         "execute": {
-          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxTH_single.conf",
           "terminal": false,
+          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxTH_single.conf",
           "file": "/bin/sed"
         }
       },
       {
         "execute": {
-          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "terminal": false,
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "file": "/bin/sh"
         }
       }
-    ],
-    "gogid": "theme_hospital"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer\ngame:\n  config_file: $GAMEDIR/dosboxTH.conf\n  main_file: $GAMEDIR/dosboxTH_single.conf\ngogid: theme_hospital\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: game\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxTH_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/DOSBOX'\n    file: /bin/sh\n    terminal: false\n"
 }

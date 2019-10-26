@@ -21,40 +21,40 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "env": {
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files/Battle.net/Battle.net Launcher.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Battle.net/Battle.net Launcher.exe"
     },
     "files": [
       {
         "setup": {
-          "filename": "Battle.net-Setup.exe",
-          "url": "https://www.battle.net/download/getInstallerForGame?os=win&version=LIVE&gameProgram=BATTLENET_APP"
+          "url": "https://www.battle.net/download/getInstallerForGame?os=win&version=LIVE&gameProgram=BATTLENET_APP",
+          "filename": "Battle.net-Setup.exe"
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      },
-      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\""
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating 32bit Wine prefix.",
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 32bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Arial font",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing Arial font",
           "name": "winetricks",
           "app": "arial"
         }
@@ -62,23 +62,23 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting vcruntime140 to native for Hearthstone.exe",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Hearthstone.exe\\DllOverrides",
           "value": "native",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Hearthstone.exe\\DllOverrides",
           "key": "vcruntime140",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Windows 10 mode for Wine",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       },
       {
@@ -86,19 +86,19 @@
           "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
           "data": {
             "Client": {
-              "GameLaunchWindowBehavior": "2",
-              "HardwareAcceleration": "false",
               "Sound": {
                 "Enabled": "false"
               },
+              "HardwareAcceleration": "false",
+              "GameLaunchWindowBehavior": "2",
               "Streaming": {
                 "StreamingEnabled": "false"
               }
             },
             "Games": {
               "hs_beta": {
-                "AdditionalLaunchArguments": "-force-d3d9",
-                "ServerUid": "hs_beta"
+                "ServerUid": "hs_beta",
+                "AdditionalLaunchArguments": "-force-d3d9"
               }
             }
           },
@@ -107,11 +107,11 @@
       },
       {
         "task": {
-          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
-          "executable": "setup",
           "arch": "win32",
-          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
-          "name": "wineexec"
+          "executable": "setup",
+          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
+          "name": "wineexec",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\""
         }
       },
       {
@@ -123,12 +123,12 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Wine Staging: Enabling DXVA2",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "value": "va",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "key": "backend",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       }
     ]

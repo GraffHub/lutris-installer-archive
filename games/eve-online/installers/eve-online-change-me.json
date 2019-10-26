@@ -22,52 +22,52 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/drive_c/EVE/eve.exe",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/EVE/eve.exe"
+    },
+    "wine": {
+      "version": "tkg-4.6-x86_64"
     },
     "files": [
       {
         "setup": {
-          "filename": "EveLauncher-1456374.exe",
-          "url": "https://binaries.eveonline.com/EveLauncher-1456374.exe"
+          "url": "https://binaries.eveonline.com/EveLauncher-1456374.exe",
+          "filename": "EveLauncher-1456374.exe"
         }
       }
     ],
-    "wine": {
-      "version": "tkg-4.6-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating 64bit Wine prefix.",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 64bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Windows 10 mode for Wine",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "arial",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "arial"
         }
       },
       {
         "task": {
-          "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
           "prefix": "$GAMEDIR",
           "executable": "setup",
+          "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
           "name": "wineexec"
         }
       }

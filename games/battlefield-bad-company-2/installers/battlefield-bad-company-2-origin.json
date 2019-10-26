@@ -11,20 +11,29 @@
   "description": null,
   "notes": "",
   "created_at": "2019-04-05T23:36:27.446000Z",
-  "updated_at": "2019-04-26T06:43:59.576010Z",
+  "updated_at": "2019-09-08T23:03:49.324513Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 1,
   "rating": "",
   "steamid": 24960,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": "fps,compiler"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "version": "lutris-4.15"
     },
     "files": [
       {
@@ -34,16 +43,11 @@
         "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -57,19 +61,19 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/silent",
-          "description": "Installing Origin... Login window will pop-up and close.",
           "prefix": "$GAMEDIR",
           "executable": "client",
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "args": "/silent",
           "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       },
@@ -82,11 +86,7 @@
           "src": "updater"
         }
       }
-    ],
-    "wine": {
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
-  "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog vcrun2005 vcrun2008 vcrun2010 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
+  "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog vcrun2005 vcrun2008 vcrun2010 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  env:\n    DXVK_HUD: fps,compiler\nwine:\n  dxvk: true\n  version: lutris-4.15\n"
 }

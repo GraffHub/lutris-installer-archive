@@ -8,50 +8,42 @@
   "runner": "linux",
   "slug": "x3-reunion-gogcom",
   "version": "GOG.com",
-  "description": "",
+  "description": null,
   "notes": "",
-  "created_at": "2016-08-22T16:20:01.082038Z",
-  "updated_at": "2016-09-30T20:51:15.780875Z",
+  "created_at": "2016-08-22T16:20:01.082000Z",
+  "updated_at": "2019-09-09T01:11:16.632329Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 1,
   "rating": "",
   "steamid": 2810,
   "gogid": 1441038404,
   "gogslug": "x3_reunion",
   "humblestoreid": "",
   "script": {
-    "gogid": "x3_reunion",
-    "exe": "game/start.sh",
+    "game": {
+      "exe": "start.sh"
+    },
     "files": [
       {
-        "game": "N/A:Plese select the GOG.com Linux installer"
-      },
-      {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+        "goginstaller": "N/A:Plese select the GOG.com Linux installer"
       }
     ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE/GOG",
+          "format": "zip",
+          "file": "goginstaller"
         }
       },
       {
-        "execute": {
-          "description": "Extracting game data, it will take a while...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/game",
-          "src": "$GAMEDIR/data/noarch"
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/GOG/data/noarch/"
         }
       }
     ]
   },
-  "content": "exe: game/start.sh\nfiles:\n- game: N/A:Plese select the GOG.com Linux installer\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngogid: x3_reunion\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data, it will take a while...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/game\n    src: $GAMEDIR/data/noarch\n"
+  "content": "files:\n- goginstaller: N/A:Plese select the GOG.com Linux installer\ngame:\n  exe: start.sh\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/GOG/data/noarch/\n"
 }

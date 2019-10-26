@@ -21,28 +21,36 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "allow_glsl_builtin_variable_redeclaration": true,
+        "force_glsl_extensions_warn": true
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
       "arch": "win64",
       "prefix": "$GAMEDIR",
-      "args": "/runWithoutUpdating /deelevated"
+      "args": "/runWithoutUpdating /deelevated",
+      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "xaudio2_6": "native,builtin"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "galaxy": "https://cdn.gog.com/open/galaxy/client/setup_galaxy_1.2.54.23.exe"
       }
     ],
-    "system": {
-      "env": {
-        "force_glsl_extensions_warn": true,
-        "allow_glsl_builtin_variable_redeclaration": true
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -72,44 +80,44 @@
       },
       {
         "task": {
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
+          "arch": "win64",
           "executable": "galaxy",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "arch": "win64"
+          "args": "/silent"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting version to xp for Crysis.exe...",
+          "value": "winxp64",
+          "arch": "win64",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis.exe",
-          "value": "winxp64",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting version to xp for Crysis64.exe...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe",
           "value": "winxp64",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting ddraw to native for FALLOUT2.EXE",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides",
           "value": "native",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides",
           "key": "ddraw",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
@@ -123,12 +131,12 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Illusion Softworks\\Mafia",
           "value": "14 00 00 05 00 00 00 04 00 00 20 00 00 00 00 00 00 00 00 00 00 00 01 00 00 00 01 00 01 00 01 01 00 01 00 00 00 00 01 00 00 80 3f 00 00 80 3f 02 00 00 00 02 00 00 00 03 00 00 00 02 00 00 00",
-          "key": "LS3D_setup",
           "arch": "win64",
-          "type": "REG_BINARY"
+          "type": "REG_BINARY",
+          "key": "LS3D_setup",
+          "name": "set_regedit"
         }
       },
       {
@@ -142,30 +150,22 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting winegstreamer to native for Game.exe",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides",
           "value": null,
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides",
           "key": "winegstreamer",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "xaudio2_6": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- galaxy: https://cdn.gog.com/open/galaxy/client/setup_galaxy_1.2.54.23.exe\ngame:\n  arch: win64\n  args: /runWithoutUpdating /deelevated\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: galaxy\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting version to xp for Crysis.exe...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis.exe\n    prefix: $GAMEDIR\n    value: winxp64\n- task:\n    arch: win64\n    description: Setting version to xp for Crysis64.exe...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe\n    prefix: $GAMEDIR\n    value: winxp64\n- task:\n    arch: win64\n    description: Setting ddraw to native for FALLOUT2.EXE\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides\n    prefix: $GAMEDIR\n    value: native\n- task:\n    app: vcrun6\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: LS3D_setup\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Illusion Softworks\\Mafia\n    prefix: $GAMEDIR\n    type: REG_BINARY\n    value: 14 00 00 05 00 00 00 04 00 00 20 00 00 00 00 00 00 00 00 00 00 00 01 00\n      00 00 01 00 01 00 01 01 00 01 00 00 00 00 01 00 00 80 3f 00 00 80 3f 02 00 00\n      00 02 00 00 00 03 00 00 00 02 00 00 00\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting winegstreamer to native for Game.exe\n    key: winegstreamer\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides\n    prefix: $GAMEDIR\n    value: null\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    allow_glsl_builtin_variable_redeclaration: true\n    force_glsl_extensions_warn: true\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_6: native,builtin\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
 }

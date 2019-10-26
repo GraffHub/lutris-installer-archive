@@ -21,26 +21,29 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Entropia Universe/bin32/ClientLoader.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Entropia Universe/bin32/ClientLoader.exe"
+    },
+    "wine": {
+      "version": "esync-staging-pba-3.16-x86_64"
     },
     "files": [
       {
         "setup": "http://install2.entropiauniverse.com/entropia_universe_setup.exe"
       }
     ],
-    "system": {
-      "env": {
-        "PBA_ENABLE": 1
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -54,93 +57,90 @@
       },
       {
         "task": {
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
+          "arch": "win64",
           "executable": "setup",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "arch": "win64"
+          "args": "/silent"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\MindArk\\Entropia Universe",
           "value": "(value not set)",
+          "arch": "win64",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\MindArk\\Entropia Universe",
           "key": "(Default)",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\MindArk\\Entropia Universe\\Language",
           "value": "00000001",
-          "key": "Language",
           "arch": "win64",
-          "type": "REG_DWORD"
+          "type": "REG_DWORD",
+          "key": "Language",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\MindArk\\Entropia Universe\\DynamicContent",
           "value": "00000001",
-          "key": "BGDownloadInitialized",
           "arch": "win64",
-          "type": "REG_DWORD"
+          "type": "REG_DWORD",
+          "key": "BGDownloadInitialized",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\MindArk\\Entropia Universe\\DynamicContent",
           "value": "",
-          "key": "BGDownloadList",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "BGDownloadList",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\MindArk\\Entropia Universe\\Language",
           "value": "00000001",
-          "key": "Language",
           "arch": "win64",
-          "type": "REG_DWORD"
+          "type": "REG_DWORD",
+          "key": "Language",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\MindArk\\Entropia Universe\\DynamicContent",
           "value": "00000001",
-          "key": "BGDownloadInitialized",
           "arch": "win64",
-          "type": "REG_DWORD"
+          "type": "REG_DWORD",
+          "key": "BGDownloadInitialized",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\MindArk\\Entropia Universe\\DynamicContent",
           "value": "",
-          "key": "BGDownloadList",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "BGDownloadList",
+          "name": "set_regedit"
         }
       }
-    ],
-    "wine": {
-      "version": "esync-staging-pba-3.16-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: http://install2.entropiauniverse.com/entropia_universe_setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Entropia Universe/bin32/ClientLoader.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: (Default)\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\MindArk\\Entropia Universe\n    prefix: $GAMEDIR\n    value: (value not set)\n- task:\n    arch: win64\n    key: Language\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\MindArk\\Entropia Universe\\Language\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000001'\n- task:\n    arch: win64\n    key: BGDownloadInitialized\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\MindArk\\Entropia Universe\\DynamicContent\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000001'\n- task:\n    arch: win64\n    key: BGDownloadList\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\MindArk\\Entropia Universe\\DynamicContent\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    arch: win64\n    key: Language\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\MindArk\\Entropia Universe\\Language\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000001'\n- task:\n    arch: win64\n    key: BGDownloadInitialized\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\MindArk\\Entropia Universe\\DynamicContent\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000001'\n- task:\n    arch: win64\n    key: BGDownloadList\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\MindArk\\Entropia Universe\\DynamicContent\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\nsystem:\n  env:\n    PBA_ENABLE: 1\nwine:\n  version: esync-staging-pba-3.16-x86_64\n"
 }

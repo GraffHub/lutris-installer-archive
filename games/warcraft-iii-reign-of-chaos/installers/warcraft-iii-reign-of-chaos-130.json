@@ -21,54 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Warcraft III/Warcraft III.exe",
-      "arch": "win32"
-    },
-    "files": [
-      {
-        "setup": "N/A:Select the installer for Warcraft III: Reign of Chaos"
-      }
-    ],
     "system": {},
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "name": "winetricks",
-          "description": "Installing Arial font and FAudio...",
-          "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "arial faudio",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "description": "Setting Windows XP mode for Wine",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "winxp",
-          "key": "Version",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Warcraft III: Reign of Chaos",
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
-          "name": "wineexec"
-        }
-      }
-    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Warcraft III/Warcraft III.exe"
+    },
     "wine": {
       "overrides": {
         "nvapi64": "disabled",
@@ -76,7 +33,50 @@
         "d3d12": "disabled"
       },
       "dxvk": false
-    }
+    },
+    "files": [
+      {
+        "setup": "N/A:Select the installer for Warcraft III: Reign of Chaos"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Installing Arial font and FAudio...",
+          "app": "arial faudio",
+          "arch": "win32",
+          "name": "winetricks",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Setting Windows XP mode for Wine",
+          "value": "winxp",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "key": "Version",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "description": "Installing Warcraft III: Reign of Chaos",
+          "name": "wineexec"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: 'N/A:Select the installer for Warcraft III: Reign of Chaos'\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Warcraft III/Warcraft III.exe\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial faudio\n    arch: win32\n    description: Installing Arial font and FAudio...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting Windows XP mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    description: 'Installing Warcraft III: Reign of Chaos'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem: {}\nwine:\n  dxvk: false\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n"
 }

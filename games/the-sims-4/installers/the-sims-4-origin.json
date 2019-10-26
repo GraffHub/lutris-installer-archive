@@ -21,10 +21,29 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": 0,
+        "STAGING_SHARED_MEMORY": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "PULSE_LATENCY_MSEC": 60,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "wine": {
+      "overrides": {
+        "OriginThinSetupInternal.exe": "disabled",
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
@@ -34,23 +53,12 @@
         "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
-        "STAGING_SHARED_MEMORY": 0,
-        "DXVK_HUD": 0,
-        "PULSE_LATENCY_MSEC": 60
-      },
-      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
@@ -75,13 +83,13 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/silent",
-          "description": "Installing Origin... Login window will pop-up and close.",
           "prefix": "$GAMEDIR",
           "executable": "client",
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "args": "/silent",
           "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
+          "name": "wineexec"
         }
       },
       {
@@ -92,26 +100,26 @@
       },
       {
         "task": {
-          "name": "set_regedit",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "description": "Spoofing AMD RX 550...",
           "value": 1002,
           "arch": "win64",
-          "type": "REG_DWORD",
-          "description": "Spoofing AMD RX 550...",
-          "prefix": "$GAMEDIR",
-          "key": "VideoPciVendorID"
+          "key": "VideoPciVendorID",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "description": "Spoofing AMD RX 550...",
           "value": "699f",
           "arch": "win64",
-          "type": "REG_DWORD",
-          "description": "Spoofing AMD RX 550...",
-          "prefix": "$GAMEDIR",
-          "key": "VideoPciDeviceID"
+          "key": "VideoPciDeviceID",
+          "name": "set_regedit"
         }
       },
       {
@@ -129,15 +137,7 @@
           "src": "updater"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "OriginThinSetupInternal.exe": "disabled",
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- client: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/OriginSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir \"$GAMEDIR/nv-shaders\"\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: nocrashdialog win7 arial faudio\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Spoofing AMD RX 550...\n    key: VideoPciVendorID\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 1002\n- task:\n    arch: win64\n    description: Spoofing AMD RX 550...\n    key: VideoPciDeviceID\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 699f\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: 0\n    PULSE_LATENCY_MSEC: 60\n    STAGING_SHARED_MEMORY: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\nwine:\n  dxvk: true\n  overrides:\n    OriginThinSetupInternal.exe: disabled\n    nvapi,nvapi64: disabled\n  version: tkg-4.0-x86_64\n"
 }

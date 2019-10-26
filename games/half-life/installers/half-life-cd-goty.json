@@ -8,13 +8,13 @@
   "runner": "wine",
   "slug": "half-life-cd-goty",
   "version": "CD (GOTY)",
-  "description": "Installs from the original CD-ROM without the need for the Steam client.  To my knowledge, this is the only way to run Half-Life on Linux legally without the Steam client.",
-  "notes": "",
-  "created_at": "2019-06-25T02:19:10.424315Z",
-  "updated_at": "2019-06-25T02:19:10.424346Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "description": "Installs from the original Sierra branded CD-ROM without the need for the Steam client.  To my knowledge, this is the only way to run Half-Life on Linux legally without the Steam client.",
+  "notes": "When it prompts \"Did you hear the sound file?\" say yes, even if you didn't hear anything.\r\nClick the default options in the installer.\r\nDon't opt to update the game during installation.\r\nDon't opt to register or to run the game through the windows installer at the end.\r\nOn first run, the game will ask for a CD Key.  You can either use your legitimate key or find one online.\r\nThe game won't play its CD audio OST without the disc inserted, but the game is quite playable after install without a disc.",
+  "created_at": "2019-06-25T02:19:10.424000Z",
+  "updated_at": "2019-09-09T01:24:14.634249Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": 70,
   "gogid": null,
@@ -22,40 +22,24 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "system": {
-        "env": {
-          "WINEDLLOVERRIDES": "d3d11=",
-          "SOMEENV": true
-        },
-        "terminal": true
-      },
-      "exe": "$GAMEDIR/mygame",
-      "arch": "win32",
-      "installer": [
-        {
-          "task": null,
-          "prefix": "$GAMEDIR/prefix",
-          "executable": "installer",
-          "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "args": "-gl -w 640 -h 480",
+      "exe": "drive_c/SIERRA/Half-Life/hl.exe"
+    },
+    "files": [
+      {
+        "game": "N/A:Select the game's Setup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
           "name": "wineexec"
         }
-      ],
-      "args": "--some-args",
-      "prefix": "$GAMEDIR/prefix",
-      "files": [
-        {
-          "installer": "N/A:Select the game's setup file"
-        }
-      ],
-      "wine": {
-        "Desktop": true,
-        "overrides": {
-          "ddraw.dll": "n"
-        },
-        "WineDesktop": "1024x768"
-      },
-      "working_dir": "$GAMEDIR/prefix"
-    }
+      }
+    ]
   },
-  "content": "game:\n  arch: win32\n  args: --some-args\n  exe: $GAMEDIR/mygame\n  files:\n  - installer: N/A:Select the game's setup file\n  installer:\n  - arch: win64\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n    task: null\n  prefix: $GAMEDIR/prefix\n  system:\n    env:\n      SOMEENV: true\n      WINEDLLOVERRIDES: d3d11=\n    terminal: true\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n    overrides:\n      ddraw.dll: n\n  working_dir: $GAMEDIR/prefix\n"
+  "content": "files:\n- game: N/A:Select the game's Setup.exe\ngame:\n  args: -gl -w 640 -h 480\n  exe: drive_c/SIERRA/Half-Life/hl.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

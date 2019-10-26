@@ -21,10 +21,19 @@
   "gogslug": "metro_last_light_redux",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
-      "exe": "drive_c/GOG Games/Metro Last Light Redux/metro.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Metro Last Light Redux/metro.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-4.6-x86_64"
     },
     "files": [
       {
@@ -34,11 +43,6 @@
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "extract": {
@@ -48,24 +52,24 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
+          "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "arch": "win64"
+          "args": "/silent"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       },
@@ -79,18 +83,14 @@
       },
       {
         "task": {
-          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
-          "prefix": "$GAMEDIR",
+          "arch": "win64",
           "executable": "goginstaller",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "arch": "win64"
+          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES"
         }
       }
-    ],
-    "wine": {
-      "dxvk": true,
-      "version": "tkg-4.6-x86_64"
-    }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Metro Last Light Redux/metro.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=English /SP- /SUPPRESSMSGBOXES\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: tkg-4.6-x86_64\n"
 }

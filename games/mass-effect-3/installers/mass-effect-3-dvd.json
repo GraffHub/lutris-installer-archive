@@ -21,17 +21,17 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Mass Effect 3/Binaries/Win32/MassEffect3.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "wine": {
       "overrides": {
         "dxgi": "disable",
         "nvcuda": "disable"
       },
       "version": "staging-3.3-i386"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Mass Effect 3/Binaries/Win32/MassEffect3.exe"
     },
     "installer": [
       {
@@ -41,93 +41,93 @@
       },
       {
         "task": {
-          "description": "Creating 64bit Wine prefix.",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 64bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting OS as Windows 7.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win7",
-          "key": "Version"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "key": "Version",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Allow DirectX apps to stop the mouse leaving their window.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "Y",
-          "key": "GrabFullScreen"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "key": "GrabFullScreen",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Deny the window manager to decorate the windows.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "N",
-          "key": "Decorated"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "description": "Allow the window manager to control the windows.",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "key": "Decorated",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Allow the window manager to control the windows.",
           "value": "Y",
-          "key": "Managed"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "key": "Managed",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Enabling CSMT for better graphic performance.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
           "value": "wined3d-csmt.dll",
-          "key": "wined3d"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "key": "wined3d",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Enabling VAAPI as backend for DXVA2 GPU decoding.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "value": "va",
-          "key": "backend"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "key": "backend",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Installing DirectX 11.",
-          "prefix": "$GAMEDIR",
-          "app": "d3dx11_43",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "d3dx11_43"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Installing PhysX.",
-          "prefix": "$GAMEDIR",
-          "app": "physx",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "physx"
         }
       },
       {
         "task": {
-          "description": "Installing Mass Effect 3.\nThe installating folder MUST BE 'C:\\Program Files\\Mass Effect 3'\nIgnore install of DirectX, Visual C++ and PhysX.",
           "prefix": "$GAMEDIR",
           "executable": "$DISC/Setup.exe",
+          "description": "Installing Mass Effect 3.\nThe installating folder MUST BE 'C:\\Program Files\\Mass Effect 3'\nIgnore install of DirectX, Visual C++ and PhysX.",
           "name": "wineexec"
         }
       }

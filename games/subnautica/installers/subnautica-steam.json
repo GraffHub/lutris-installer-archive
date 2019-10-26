@@ -1,0 +1,79 @@
+{
+  "id": 6226,
+  "game_id": 4870,
+  "game_slug": "subnautica",
+  "name": "Subnautica",
+  "year": 2018,
+  "user": "cxf",
+  "runner": "winesteam",
+  "slug": "subnautica-steam",
+  "version": "Steam",
+  "description": null,
+  "notes": "To run in borderless windowed mode add the argument <b>-popupwindow</b> through the game's Lutris configuration window under Game Options.",
+  "created_at": "2017-11-03T07:01:51.002000Z",
+  "updated_at": "2019-09-09T01:42:18.974957Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 264710,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      }
+    },
+    "wine": {
+      "desktop": true,
+      "version": "tkg-4.0-x86_64",
+      "winedesktop": "1920x1080",
+      "dxvk": true,
+      "dxvk_version": "1.2.1",
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 264710
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "app": "vcrun2013"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "HideWineExports",
+          "name": "set_regedit"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  appid: 264710\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2013\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    type: REG_SZ\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_THREADED_OPTIMIZATIONS: 1\nwine:\n  desktop: true\n  dxvk: true\n  dxvk_version: 1.2.1\n  esync: true\n  version: tkg-4.0-x86_64\n  winedesktop: 1920x1080\n"
+}

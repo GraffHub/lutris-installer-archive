@@ -22,42 +22,42 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe/ProjectUniverse.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe/ProjectUniverse.exe"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "esync": false
     },
     "files": [
       {
         "setup": {
-          "filename": "PU Installer.exe",
-          "url": "N/A:Select the \"PU Installer.exe\" for game install"
+          "url": "N/A:Select the \"PU Installer.exe\" for game install",
+          "filename": "PU Installer.exe"
         }
       },
       {
         "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.7-rc1/innoextract-1.7-rc1-linux.tar.xz"
       }
     ],
-    "wine": {
-      "esync": false,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating win64 prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating win64 prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing xact",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing xact",
           "name": "winetricks",
           "app": "xact"
         }
@@ -77,8 +77,8 @@
       },
       {
         "move": {
-          "description": "Extracting game data",
           "dst": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe",
+          "description": "Extracting game data",
           "src": "$CACHE/app"
         }
       }

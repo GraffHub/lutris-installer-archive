@@ -3,7 +3,7 @@
   "game_id": 5297,
   "game_slug": "gabriel-knight-sins-of-the-fathers",
   "name": "Gabriel Knight - Sins of the Fathers",
-  "year": null,
+  "year": 1993,
   "user": "ssf",
   "runner": "dosbox",
   "slug": "gabriel-knight-sins-of-the-fa-gogcom",
@@ -16,7 +16,7 @@
   "published": true,
   "published_by": null,
   "rating": "",
-  "steamid": 262000,
+  "steamid": 495700,
   "gogid": 1207658828,
   "gogslug": "gabriel_knight_sins_of_the_fathers",
   "humblestoreid": "",
@@ -30,72 +30,72 @@
         "game": "N/A:Please select the GOG.com Windows installer"
       }
     ],
+    "gogid": "gabriel_knight_sins_of_the_fathers",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "wine.create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "wine.set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "wine.set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing ...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wine.wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing ...",
+          "name": "wine.wineexec"
         }
       },
       {
         "execute": {
-          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false,
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "terminal": false,
-          "file": "/bin/sh"
+          "description": "cleaning..."
         }
       },
       {
         "execute": {
-          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false,
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "terminal": false,
-          "file": "/bin/sh"
+          "description": "cleaning..."
         }
       },
       {
         "execute": {
+          "terminal": false,
           "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxGK_single.conf",
-          "terminal": false,
           "file": "/bin/sed"
         }
       },
       {
         "execute": {
+          "terminal": false,
           "args": "-i 's|..\\GK1.gog|GK1.gog|g' $GAMEDIR/dosboxGK_single.conf",
-          "terminal": false,
           "file": "/bin/sed"
         }
       },
       {
         "execute": {
-          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "terminal": false,
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "file": "/bin/sh"
         }
       }
-    ],
-    "gogid": "gabriel_knight_sins_of_the_fathers"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer\ngame:\n  config_file: $GAMEDIR/dosboxGK.conf\n  main_file: $GAMEDIR/dosboxGK_single.conf\ngogid: gabriel_knight_sins_of_the_fathers\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: game\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxGK_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -i 's|..\\GK1.gog|GK1.gog|g' $GAMEDIR/dosboxGK_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/DOSBOX'\n    file: /bin/sh\n    terminal: false\n"
 }

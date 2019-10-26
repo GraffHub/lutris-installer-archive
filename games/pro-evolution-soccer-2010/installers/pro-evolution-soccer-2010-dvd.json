@@ -10,28 +10,28 @@
   "version": "DVD",
   "description": null,
   "notes": "",
-  "created_at": "2019-06-15T08:57:06.126197Z",
-  "updated_at": "2019-06-15T08:57:06.126227Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-06-15T08:57:06.126000Z",
+  "updated_at": "2019-09-09T01:40:59.334523Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/KONAMI/Pro Evolution Soccer 2010/pes2010.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "wine": {
       "overrides": {
         "dxgi": "disable",
         "nvcuda": "disable"
       },
       "version": "staging-3.3-i386"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/KONAMI/Pro Evolution Soccer 2010/pes2010.exe"
     },
     "installer": [
       {
@@ -41,38 +41,38 @@
       },
       {
         "task": {
-          "description": "Creating 64bit Wine prefix.",
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "arch": "win64",
+          "description": "Creating 32bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Enabling CSMT for better graphic performance.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
           "value": "wined3d-csmt.dll",
-          "key": "wined3d"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "key": "wined3d",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing PES6.\nThe installating folder MUST BE 'C:\\Program Files\\KONAMI\\Pro Evolution Soccer 2010'",
           "prefix": "$GAMEDIR",
           "executable": "$DISC/Setup.exe",
+          "description": "Installing PES6.\nThe installating folder MUST BE 'C:\\Program Files\\KONAMI\\Pro Evolution Soccer 2010'",
           "name": "wineexec"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "d3dx9",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "d3dx9"
         }
       }
     ]
   },
-  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/KONAMI/Pro Evolution Soccer 2010/pes2010.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Setup.exe\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Enabling CSMT for better graphic performance.\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- task:\n    description: 'Installing PES6.\n\n      The installating folder MUST BE ''C:\\Program Files\\KONAMI\\Pro Evolution Soccer\n      2010'''\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    dxgi: disable\n    nvcuda: disable\n  version: staging-3.3-i386\n"
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/KONAMI/Pro Evolution Soccer 2010/pes2010.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Setup.exe\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Enabling CSMT for better graphic performance.\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- task:\n    description: 'Installing PES6.\n\n      The installating folder MUST BE ''C:\\Program Files\\KONAMI\\Pro Evolution Soccer\n      2010'''\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    dxgi: disable\n    nvcuda: disable\n  version: staging-3.3-i386\n"
 }

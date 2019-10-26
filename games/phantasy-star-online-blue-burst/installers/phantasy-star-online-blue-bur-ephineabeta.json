@@ -21,48 +21,48 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/EphineaPSO/psobb.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/EphineaPSO/psobb.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "ge-faudio-protonified-4.8-x86_64"
     },
     "files": [
       {
         "ephineapsobb": "http://files.pioneer2.net/Ephinea_PSOBB_Installer.exe"
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      },
-      "pulse_latency": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Changing to Windows 7",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Changing to Windows 7",
           "name": "winetricks",
           "app": "win7"
         }
       },
       {
         "task": {
-          "description": "Running Ephinea PSOBB Installer.",
-          "prefix": "$GAMEDIR",
-          "executable": "ephineapsobb",
           "arch": "win64",
+          "executable": "ephineapsobb",
+          "prefix": "$GAMEDIR",
+          "description": "Running Ephinea PSOBB Installer.",
           "name": "wine.wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "dxvk": true,
-      "version": "ge-faudio-protonified-4.8-x86_64"
-    }
+    ]
   },
   "content": "files:\n- ephineapsobb: http://files.pioneer2.net/Ephinea_PSOBB_Installer.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/EphineaPSO/psobb.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: win7\n    arch: win64\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running Ephinea PSOBB Installer.\n    executable: ephineapsobb\n    name: wine.wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  version: ge-faudio-protonified-4.8-x86_64\n"
 }

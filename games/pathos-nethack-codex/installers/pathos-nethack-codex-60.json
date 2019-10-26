@@ -10,59 +10,57 @@
   "version": "6.0",
   "description": null,
   "notes": "",
-  "created_at": "2019-08-02T19:31:23.499366Z",
-  "updated_at": "2019-08-02T19:31:23.499416Z",
+  "created_at": "2019-08-02T19:31:23.499000Z",
+  "updated_at": "2019-09-09T00:23:35.864742Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "script": {
-      "game": {
-        "exe": "$GAMEDIR/prefix/drive_c/Games/Pathos/PathosGame.exe",
-        "prefix": "$GAMEDIR/prefix",
-        "working_dir": "$GAMEDIR/prefix"
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "working_dir": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Games/Pathos/PathosGame.exe"
+    },
+    "files": [
+      {
+        "installer": "https://dl.dropboxusercontent.com/s/0dzcwh25jc710g7/PathosSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "install_gecko": true,
+          "install_mono": false,
+          "name": "create_prefix"
+        }
       },
-      "files": [
-        {
-          "installer": "https://dl.dropboxusercontent.com/s/0dzcwh25jc710g7/PathosSetup.exe"
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "description": "Installing .net, corefonts",
+          "name": "winetricks",
+          "app": "remove_mono corefonts dotnet46"
         }
-      ],
-      "installer": [
-        {
-          "task": {
-            "install_gecko": true,
-            "install_mono": false,
-            "name": "create_prefix",
-            "description": "Creating Wine prefix",
-            "prefix": "$GAMEDIR/prefix",
-            "arch": "win32"
-          }
-        },
-        {
-          "task": {
-            "description": "Installing .net, corefonts",
-            "arch": "win32",
-            "prefix": "$GAMEDIR/prefix",
-            "name": "winetricks",
-            "app": "remove_mono corefonts dotnet46"
-          }
-        },
-        {
-          "task": {
-            "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI",
-            "prefix": "$GAMEDIR/prefix",
-            "executable": "installer",
-            "name": "wineexec",
-            "arch": "win32"
-          }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "installer",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec",
+          "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI"
         }
-      ]
-    }
+      }
+    ]
   },
-  "content": "script:\n  files:\n  - installer: https://dl.dropboxusercontent.com/s/0dzcwh25jc710g7/PathosSetup.exe\n  game:\n    exe: $GAMEDIR/prefix/drive_c/Games/Pathos/PathosGame.exe\n    prefix: $GAMEDIR/prefix\n    working_dir: $GAMEDIR/prefix\n  installer:\n  - task:\n      arch: win32\n      description: Creating Wine prefix\n      install_gecko: true\n      install_mono: false\n      name: create_prefix\n      prefix: $GAMEDIR/prefix\n  - task:\n      app: remove_mono corefonts dotnet46\n      arch: win32\n      description: Installing .net, corefonts\n      name: winetricks\n      prefix: $GAMEDIR/prefix\n  - task:\n      arch: win32\n      args: /SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI\n      executable: installer\n      name: wineexec\n      prefix: $GAMEDIR/prefix\n"
+  "content": "files:\n- installer: https://dl.dropboxusercontent.com/s/0dzcwh25jc710g7/PathosSetup.exe\ngame:\n  exe: $GAMEDIR/prefix/drive_c/Games/Pathos/PathosGame.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    install_gecko: true\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: remove_mono corefonts dotnet46\n    arch: win32\n    description: Installing .net, corefonts\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    args: /SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n"
 }

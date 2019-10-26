@@ -9,21 +9,36 @@
   "slug": "obduction-gog",
   "version": "GOG",
   "description": null,
-  "notes": "Game must be downloaded from GOG manually.",
-  "created_at": "2019-05-31T09:01:47.939114Z",
-  "updated_at": "2019-05-31T09:01:47.939138Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "notes": "",
+  "created_at": "2019-05-31T09:01:47.939000Z",
+  "updated_at": "2019-10-14T00:12:32.691679Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": 306760,
   "gogid": 2003665371,
   "gogslug": "obduction",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
       "prefix": "$GAMEDIR",
-      "appid": 306760
+      "exe": "drive_c/GOG Games/Obduction/Obduction.exe"
+    },
+    "wine": {
+      "overrides": {
+        "mfreadwrite": "native,builtin",
+        "xaudio2_7": "native,builtin",
+        "mf": "native,builtin",
+        "mfplat": "native,builtin"
+      },
+      "dxvk": true,
+      "version": "tkg-protonified-4.1-x86_64"
     },
     "files": [
       {
@@ -33,16 +48,11 @@
         "mfplat_dll_64": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
           "name": "create_prefix"
         }
       },
@@ -55,68 +65,66 @@
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "app": "mf",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "mf"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "install_cab_component",
-          "component": "mediafoundation"
+          "component": "mediafoundation",
+          "name": "install_cab_component"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "install_cab_component",
-          "component": "mf_"
+          "component": "mf_",
+          "name": "install_cab_component"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "install_cab_component",
-          "component": "mfreadwrite"
+          "component": "mfreadwrite",
+          "name": "install_cab_component"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "install_cab_component",
-          "component": "wmadmod"
+          "component": "wmadmod",
+          "name": "install_cab_component"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "install_cab_component",
-          "component": "wmvdecod"
+          "component": "wmvdecod",
+          "name": "install_cab_component"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "app": "xact",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "xact"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "mf": "native,builtin",
-        "mfplat": "native,builtin",
-        "mfreadwrite": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-protonified-4.1-x86_64"
-    }
+    ]
   },
-  "content": "files:\n- setup: N/A:Select gog setup exe\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  appid: 306760\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- merge:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: mfplat_dll_64\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    mf: native,builtin\n    mfplat: native,builtin\n    mfreadwrite: native,builtin\n    xaudio2_7: native,builtin\n  version: tkg-protonified-4.1-x86_64\n"
+  "content": "files:\n- setup: N/A:Select gog setup exe\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  exe: drive_c/GOG Games/Obduction/Obduction.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- merge:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: mfplat_dll_64\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    mf: native,builtin\n    mfplat: native,builtin\n    mfreadwrite: native,builtin\n    xaudio2_7: native,builtin\n  version: tkg-protonified-4.1-x86_64\n"
 }

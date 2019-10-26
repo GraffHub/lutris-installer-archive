@@ -22,9 +22,12 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "wine": {
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
@@ -34,15 +37,12 @@
         "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
       }
     ],
-    "wine": {
-      "version": "tkg-4.0-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
@@ -56,13 +56,13 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/silent",
-          "description": "Installing Origin... Login window will pop-up and close.",
           "prefix": "$GAMEDIR",
           "executable": "origin",
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "args": "/silent",
           "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
+          "name": "wineexec"
         }
       },
       {
@@ -73,26 +73,26 @@
       },
       {
         "task": {
-          "name": "set_regedit",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "description": "Spoofing AMD RX 550...",
           "value": 1002,
           "arch": "win64",
-          "type": "REG_DWORD",
-          "description": "Spoofing AMD RX 550...",
-          "prefix": "$GAMEDIR",
-          "key": "VideoPciVendorID"
+          "key": "VideoPciVendorID",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "description": "Spoofing AMD RX 550...",
           "value": "699f",
           "arch": "win64",
-          "type": "REG_DWORD",
-          "description": "Spoofing AMD RX 550...",
-          "prefix": "$GAMEDIR",
-          "key": "VideoPciDeviceID"
+          "key": "VideoPciDeviceID",
+          "name": "set_regedit"
         }
       },
       {

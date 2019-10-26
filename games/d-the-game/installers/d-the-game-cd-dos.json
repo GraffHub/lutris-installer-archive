@@ -11,10 +11,10 @@
   "description": "This script will install \"D\" DOS CD edition for Dosbox.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
   "notes": "- This script requires cdrdao and toc2cue to be installed. \r\nOn Debian and Ubuntu type in a terminal: \r\nsudo apt-get install cdrdao\r\n- You will need the 2 CD only during install\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2019-08-02T19:41:03.805000Z",
-  "updated_at": "2019-08-14T01:54:11.542119Z",
+  "updated_at": "2019-09-21T21:06:26.357078Z",
   "draft": false,
   "published": true,
-  "published_by": 1,
+  "published_by": 494,
   "rating": "",
   "steamid": 510590,
   "gogid": 1852354510,
@@ -27,7 +27,7 @@
     "custom-name": "D - The Game - CD DOS - DOSBOX",
     "files": [
       {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tools/Scripts/copycd.sh"
+        "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
       },
       {
         "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf"
@@ -36,8 +36,8 @@
     "installer": [
       {
         "insert-disc": {
-          "description": "Please insert disc 1",
-          "requires": "d/laura.exe"
+          "requires": "d/laura.exe",
+          "description": "Please insert disc 1"
         }
       },
       {
@@ -51,8 +51,8 @@
       },
       {
         "insert-disc": {
-          "description": "Please insert disc 2",
-          "requires": "efc/baby.raw"
+          "requires": "efc/baby.raw",
+          "description": "Please insert disc 2"
         }
       },
       {
@@ -68,24 +68,24 @@
       },
       {
         "task": {
+          "name": "makeconfig",
+          "path": "$GAMEDIR/D_dosbox_install.conf",
+          "drives": {
+            "c": "."
+          },
           "commands": [
             "imgmount d \"D_CD1.cue\" \"D_CD2.cue\" -t iso",
             "d:",
             "call D:\\install.bat",
             "exit"
-          ],
-          "drives": {
-            "c": "."
-          },
-          "name": "makeconfig",
-          "path": "$GAMEDIR/D_dosbox_install.conf"
+          ]
         }
       },
       {
         "task": {
-          "name": "dosexec",
           "config_file": "$GAMEDIR/D_dosbox_install.conf",
-          "working_dir": "$GAMEDIR"
+          "working_dir": "$GAMEDIR",
+          "name": "dosexec"
         }
       },
       {
@@ -96,5 +96,5 @@
       }
     ]
   },
-  "content": "custom-name: D - The Game - CD DOS - DOSBOX\nfiles:\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tools/Scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf\ngame:\n  main_file: $GAMEDIR/D_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- chmodx: script\n- execute:\n    args: disk\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    args: D_\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv disk.cue D_CD1.cue; mv disk.bin D_CD1.bin;\n      mv D_.cue D_CD2.cue; mv D_.bin D_CD2.bin; sed -i 's/disk.bin/D_CD1.bin/g' D_CD1.cue;\n      sed -i 's/D_.bin/D_CD2.bin/g' D_CD2.cue\n- task:\n    commands:\n    - imgmount d \"D_CD1.cue\" \"D_CD2.cue\" -t iso\n    - 'd:'\n    - call D:\\install.bat\n    - exit\n    drives:\n      c: .\n    name: makeconfig\n    path: $GAMEDIR/D_dosbox_install.conf\n- task:\n    config_file: $GAMEDIR/D_dosbox_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
+  "content": "custom-name: D - The Game - CD DOS - DOSBOX\nfiles:\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf\ngame:\n  main_file: $GAMEDIR/D_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- chmodx: script\n- execute:\n    args: disk\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    args: D_\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv disk.cue D_CD1.cue; mv disk.bin D_CD1.bin;\n      mv D_.cue D_CD2.cue; mv D_.bin D_CD2.bin; sed -i 's/disk.bin/D_CD1.bin/g' D_CD1.cue;\n      sed -i 's/D_.bin/D_CD2.bin/g' D_CD2.cue\n- task:\n    commands:\n    - imgmount d \"D_CD1.cue\" \"D_CD2.cue\" -t iso\n    - 'd:'\n    - call D:\\install.bat\n    - exit\n    drives:\n      c: .\n    name: makeconfig\n    path: $GAMEDIR/D_dosbox_install.conf\n- task:\n    config_file: $GAMEDIR/D_dosbox_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

@@ -9,12 +9,12 @@
   "slug": "the-lord-of-the-rings-onlinet-standalone-dxvk-esyn",
   "version": "Standalone DXVK + Esync",
   "description": "Standalone lotro client with DXVK and Esync enabled",
-  "notes": "Getting directx11 working in Lord of the Rings Online\r\nhttps://www.reddit.com/r/SteamPlay/comments/9umhk2/getting_directx11_working_in_lord_of_the_rings/",
+  "notes": "https://www.youtube.com/watch?time_continue=3&v=kH5zCrJ4PGA\r\n\r\nThis guide is inspired by the guide 'LOTRO on Linux: A Modern Guide (2019)', posted by Webgiant on the LotRO forums. Check out that guide here: https://www.lotro.com/forums/showthre...)\r\n\r\nWinetricks terminal command: \r\nWINEPREFIX=~/Games/lotro winetricks d3dcompiler_43 d3dx11_42 d3dx11_43 winhttp corefonts\r\n(Make sure to edit the WINEPREFIX location to where you've installed the game)\r\n\r\nReddit post on how to get DX11 working: https://www.reddit.com/r/SteamPlay/co...\r\nA big thanks to /u/tolinbran for the hard work!\r\n\r\nd3dcompiler_42.verb terminal commands:\r\ncd Documents\r\nWINEPREFIX=~/Games/lotro winetricks d3dcompiler_42.verb\r\n\r\nAfterwards, the game should work as it does in Windows.",
   "created_at": "2018-10-29T02:53:50.652000Z",
-  "updated_at": "2019-06-12T04:03:13.962993Z",
+  "updated_at": "2019-09-09T00:02:56.692392Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 1,
   "rating": "",
   "steamid": 212500,
   "gogid": null,
@@ -22,70 +22,60 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files (x86)/StandingStoneGames/The Lord of the Rings Online/LotroLauncher.exe",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/StandingStoneGames/The Lord of the Rings Online/TurbineLauncher.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-4.13-x86_64"
     },
     "files": [
       {
         "lotro_installer": "http://content.turbine.com/sites/clientdl/lotro/lotrolive.exe"
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": 0,
-        "DXVK_STATE_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Installing fonts",
-          "prefix": "$GAMEDIR",
-          "app": "corefonts",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "corefonts"
         }
       },
       {
         "task": {
-          "description": "Installing Visual C++ 2017",
           "prefix": "$GAMEDIR",
-          "app": "vcrun2017",
-          "name": "winetricks"
+          "description": "Setting Windows version to Visual C++ 2017",
+          "name": "winetricks",
+          "app": "vcrun2017"
         }
       },
       {
         "task": {
-          "description": "Setting Windows version to Windows 10",
           "prefix": "$GAMEDIR",
-          "app": "win10",
-          "name": "winetricks"
+          "description": "Setting Windows version to Windows10",
+          "name": "winetricks",
+          "app": "win10"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
           "executable": "lotro_installer",
-          "name": "wineexec",
-          "args": "--mode unattended"
+          "args": "--mode unattended",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "dxvk": true,
-      "version": "ge-protonified-4.9-x86_64"
-    }
+    ]
   },
-  "content": "files:\n- lotro_installer: http://content.turbine.com/sites/clientdl/lotro/lotrolive.exe\ngame:\n  exe: drive_c/Program Files (x86)/StandingStoneGames/The Lord of the Rings Online/LotroLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Installing Visual C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    description: Setting Windows version to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: --mode unattended\n    executable: lotro_installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n  version: ge-protonified-4.9-x86_64\n"
+  "content": "files:\n- lotro_installer: http://content.turbine.com/sites/clientdl/lotro/lotrolive.exe\ngame:\n  exe: $GAMEDIR/drive_c/Program Files/StandingStoneGames/The Lord of the Rings Online/TurbineLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Setting Windows version to Visual C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    description: Setting Windows version to Windows10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: --mode unattended\n    executable: lotro_installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  version: lutris-4.13-x86_64\n"
 }

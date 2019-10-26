@@ -3,57 +3,40 @@
   "game_id": 432,
   "game_slug": "sacred-2-gold",
   "name": "Sacred 2 Gold",
-  "year": null,
+  "year": 2012,
   "user": "Bleistift33",
   "runner": "wine",
   "slug": "sacred-2-gold-gog",
   "version": "GOG",
   "description": null,
   "notes": "",
-  "created_at": "2019-05-31T16:06:19.459612Z",
-  "updated_at": "2019-05-31T16:06:19.459639Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-05-31T16:06:19.459000Z",
+  "updated_at": "2019-10-14T00:20:19.579693Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": 225640,
   "gogid": 1207665233,
   "gogslug": "sacred_2_gold",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "game": {
-      "exe": "drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe"
     },
     "files": [
       {
-        "sacred2": "N/A:Select the Windows installer downloaded from GOG"
-      },
-      {
-        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.12/d9vk-0.12.tar.gz"
+        "setup": "N/A:Select the Windows installer downloaded from GOG"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_LOG_LEVEL": "none",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
     "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/d9vk-0.12/",
-          "file": "d9vk"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.12/",
-          "src": "$CACHE/d9vk-0.12/"
-        }
-      },
       {
         "task": {
           "prefix": "$GAMEDIR",
@@ -63,21 +46,19 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "sacred2",
-          "name": "wineexec",
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
+          "name": "winetricks",
+          "app": "vcrun2005 physx win7"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "dxvk_version": "d9vk-0.12",
-      "MouseWarpOverride": "enable",
-      "overrides": {
-        "msvcp140": "native"
-      },
-      "dxvk": true,
-      "version": "tkg-protonified-4.6-x86_64"
-    }
+    ]
   },
-  "content": "files:\n- sacred2: N/A:Select the Windows installer downloaded from GOG\n- d9vk: https://github.com/Joshua-Ashton/d9vk/releases/download/0.12/d9vk-0.12.tar.gz\ngame:\n  exe: drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/d9vk-0.12/\n    file: d9vk\n- copy:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.12/\n    src: $CACHE/d9vk-0.12/\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: sacred2\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  MouseWarpOverride: enable\n  dxvk: true\n  dxvk_version: d9vk-0.12\n  overrides:\n    msvcp140: native\n  version: tkg-protonified-4.6-x86_64\n"
+  "content": "files:\n- setup: N/A:Select the Windows installer downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005 physx win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n"
 }

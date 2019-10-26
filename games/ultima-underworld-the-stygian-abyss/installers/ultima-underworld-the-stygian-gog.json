@@ -11,10 +11,10 @@
   "description": null,
   "notes": "- Recent GOG installer required (v2 or above)\r\n- Fixed music not playing\r\n- Keyboard layout image included in the game's folder.",
   "created_at": "2015-03-12T11:34:36.933000Z",
-  "updated_at": "2018-12-14T13:13:35.538673Z",
+  "updated_at": "2019-09-09T02:04:21.638638Z",
   "draft": false,
   "published": true,
-  "published_by": 20548,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": 1207658937,
@@ -22,60 +22,104 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "config_file": "$GAMEDIR/uw/dosboxULTIMA1.conf"
+      "config_file": "$GAMEDIR/dosboxULTIMA1.conf",
+      "main_file": "$GAMEDIR/dosboxULTIMA1_single.conf",
+      "game_id": "ultima-underworld-the-stygian-abyss"
     },
     "files": [
       {
-        "game": "N/A:Select the Windows installer for Ultima Underworld 1 and 2 provided by GOG"
+        "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/ultima_underworld_1/en1installer0\n"
       },
       {
-        "innoextract": "https://lutris.net/files/tools/innoextract-1.7-pre-x86_64.tar.gz"
-      },
-      {
-        "conf": "https://lutris.net/files/games/ultima-underworld-the-stygian-abyss/uuw1_conf.zip"
+        "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
       }
     ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/innoextract",
-          "file": "innoextract"
+          "dst": "$CACHE",
+          "description": "Extracting innoextract application",
+          "file": "$fileextract"
         }
       },
       {
         "execute": {
-          "args": "--extract $game --output-dir $CACHE/uw",
-          "file": "$CACHE/innoextract/innoextract"
+          "description": "Extracting game data",
+          "args": "-d \"$CACHE/game\" \"$installer\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/uw",
-          "src": "$CACHE/uw/app"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/uw",
-          "file": "$conf"
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/game"
         }
       },
       {
         "move": {
           "dst": "$GAMEDIR",
-          "src": "$GAMEDIR/uw/game.gog"
+          "src": "$GAMEDIR/__support/app/dosboxULTIMA1.conf"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "$GAMEDIR/__support/app/dosboxULTIMA1_single.conf"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosboxULTIMA1.conf",
           "section": "sdl",
-          "value": "opengl",
           "key": "output",
-          "file": "$GAMEDIR/uw/dosboxULTIMA1.conf"
+          "value": "opengl"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxULTIMA1.conf",
+          "section": "sdl",
+          "key": "fulldouble",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxULTIMA1.conf",
+          "section": "sdl",
+          "key": "fullresolution",
+          "value": "desktop"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxULTIMA1.conf",
+          "section": "render",
+          "key": "aspect",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxULTIMA1.conf",
+          "section": "render",
+          "key": "scaler",
+          "value": "normal2x"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[ipx] ipx=false\n[autoexec]\nmount c \".\"\nimgmount d game.gog -t iso -fs iso\nd: \nuw.bat\nexit\n",
+          "file": "$GAMEDIR/dosboxULTIMA1_single.conf"
+        }
+      },
+      {
+        "write_file": {
+          "content": "4 7 220 1 sound\n\n2 7 220 1 speech\n\n0 cuts\n",
+          "file": "$GAMEDIR/UNDEROM1/DATA/UW.CFG"
         }
       }
-    ],
-    "main_file": "$GAMEDIR/uw/dosboxULTIMA1_single.conf"
+    ]
   },
-  "content": "files:\n- game: N/A:Select the Windows installer for Ultima Underworld 1 and 2 provided by\n    GOG\n- innoextract: https://lutris.net/files/tools/innoextract-1.7-pre-x86_64.tar.gz\n- conf: https://lutris.net/files/games/ultima-underworld-the-stygian-abyss/uuw1_conf.zip\ngame:\n  config_file: $GAMEDIR/uw/dosboxULTIMA1.conf\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    args: --extract $game --output-dir $CACHE/uw\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/uw\n    src: $CACHE/uw/app\n- extract:\n    dst: $GAMEDIR/uw\n    file: $conf\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/uw/game.gog\n- write_config:\n    file: $GAMEDIR/uw/dosboxULTIMA1.conf\n    key: output\n    section: sdl\n    value: opengl\nmain_file: $GAMEDIR/uw/dosboxULTIMA1_single.conf\n"
+  "content": "files:\n- installer: \"N/A:Select the GOG.com game setup file. Download it here: \\nhttps://www.gog.com/downloads/ultima_underworld_1/en1installer0\\n\"\n- fileextract: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/dosboxULTIMA1.conf\n  game_id: ultima-underworld-the-stygian-abyss\n  main_file: $GAMEDIR/dosboxULTIMA1_single.conf\ninstaller:\n- extract:\n    description: Extracting innoextract application\n    dst: $CACHE\n    file: $fileextract\n- execute:\n    args: -d \"$CACHE/game\" \"$installer\"\n    description: Extracting game data\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/game\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/__support/app/dosboxULTIMA1.conf\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/__support/app/dosboxULTIMA1_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: output\n    section: sdl\n    value: opengl\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: fulldouble\n    section: sdl\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: fullresolution\n    section: sdl\n    value: desktop\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: scaler\n    section: render\n    value: normal2x\n- write_file:\n    content: \"[ipx] ipx=false\\n[autoexec]\\nmount c \\\".\\\"\\nimgmount d game.gog -t iso\\\n      \\ -fs iso\\nd: \\nuw.bat\\nexit\\n\"\n    file: $GAMEDIR/dosboxULTIMA1_single.conf\n- write_file:\n    content: '4 7 220 1 sound\n\n\n      2 7 220 1 speech\n\n\n      0 cuts\n\n      '\n    file: $GAMEDIR/UNDEROM1/DATA/UW.CFG\n"
 }

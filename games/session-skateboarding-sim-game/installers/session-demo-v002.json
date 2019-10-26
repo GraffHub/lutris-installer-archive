@@ -21,46 +21,56 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "DXVK_HUD": "compiler"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Session Demo/SessionGame/Binaries/Win64/SessionGame-Win64-Shipping.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Session Demo/SessionGame/Binaries/Win64/SessionGame-Win64-Shipping.exe"
+    },
+    "wine": {
+      "dumbxinputemu": true,
+      "x360ce-path": "$GAMEDIR/drive_c/Program Files (x86)/Session Demo/SessionGame/Binaries/Win64",
+      "version": "tkg-4.0-x86_64",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "esync": true
     },
     "files": [
       {
         "session": {
-          "referer": "http://www.indiedb.com/members/crea-turestudios/downloads",
+          "url": "https://www.indiedb.com/downloads/mirror/130492/115/4d7818fd6551c9811f827b59e07028cd/",
           "filename": "Kickstarter_-_DemoV002.zip",
-          "url": "https://www.indiedb.com/downloads/mirror/130492/115/4d7818fd6551c9811f827b59e07028cd/"
+          "referer": "http://www.indiedb.com/members/crea-turestudios/downloads"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
-      },
-      "pulse_latency": true
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "xact",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "xact"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "win7",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "win7"
         }
       },
       {
@@ -72,24 +82,14 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "Y",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "HideWineExports",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       }
-    ],
-    "wine": {
-      "x360ce-path": "$GAMEDIR/drive_c/Program Files (x86)/Session Demo/SessionGame/Binaries/Win64",
-      "esync": true,
-      "dumbxinputemu": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- session:\n    filename: Kickstarter_-_DemoV002.zip\n    referer: http://www.indiedb.com/members/crea-turestudios/downloads\n    url: https://www.indiedb.com/downloads/mirror/130492/115/4d7818fd6551c9811f827b59e07028cd/\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Session Demo/SessionGame/Binaries/Win64/SessionGame-Win64-Shipping.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Session Demo\n    file: session\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: compiler\n  pulse_latency: true\nwine:\n  dumbxinputemu: true\n  dxvk: true\n  esync: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n  x360ce-path: $GAMEDIR/drive_c/Program Files (x86)/Session Demo/SessionGame/Binaries/Win64\n"
 }

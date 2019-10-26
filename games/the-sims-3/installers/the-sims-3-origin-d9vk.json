@@ -21,31 +21,37 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "version": "ge-protonified-4.9-x86_64",
+      "dxvk_version": "d9vk-58669173",
+      "esync": true
     },
     "files": [
       {
         "d9vk": {
-          "filename": "d9vk-master.58669173dd95f00e800ce28f3caf03dd18512426.zip",
-          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/456/artifacts/download"
+          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/456/artifacts/download",
+          "filename": "d9vk-master.58669173dd95f00e800ce28f3caf03dd18512426.zip"
         }
       },
       {
         "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
       }
     ],
-    "system": {
-      "env": {
-        "WINE_LARGE_ADDRESS_AWARE": 1,
-        "DXVK_LOG_LEVEL": "none",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
     "installer": [
       {
         "extract": {
@@ -61,40 +67,40 @@
       },
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "winetricks",
+          "prefix": "$GAMEDIR",
           "description": "Installing dependencies",
-          "silent": true,
-          "prefix": "$GAMEDIR",
           "app": "dotnet20 d3dcompiler_43 d3dx9",
-          "arch": "win64"
+          "arch": "win64",
+          "name": "winetricks",
+          "silent": true
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Hiding annoying dialogs...",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "nocrashdialog",
-          "name": "winetricks"
+          "app": "nocrashdialog"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting version to xp...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "winxp",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
@@ -105,9 +111,9 @@
       },
       {
         "task": {
-          "description": "Installing Origin...",
           "prefix": "$GAMEDIR",
           "executable": "origin",
+          "description": "Installing Origin...",
           "name": "wineexec",
           "exclude_processes": "Origin.exe OriginClientService.exe"
         }
@@ -118,13 +124,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "dxvk_version": "d9vk-58669173",
-      "esync": true,
-      "dxvk": true,
-      "version": "ge-protonified-4.9-x86_64"
-    }
+    ]
   },
   "content": "files:\n- d9vk:\n    filename: d9vk-master.58669173dd95f00e800ce28f3caf03dd18512426.zip\n    url: https://git.froggi.es/joshua/d9vk/-/jobs/456/artifacts/download\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: d9vk\n- copy:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-58669173/\n    src: $CACHE/dxvk-release/\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20 d3dcompiler_43 d3dx9\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: nocrashdialog\n    description: Hiding annoying dialogs...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Installing Origin...\n    exclude_processes: Origin.exe OriginClientService.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  dxvk_version: d9vk-58669173\n  esync: true\n  version: ge-protonified-4.9-x86_64\n"
 }

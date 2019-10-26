@@ -21,28 +21,37 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
-      "exe": "drive_c/Games/World_of_Warplanes/WoWPLauncher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Games/World_of_Warplanes/WoWPLauncher.exe"
+    },
+    "wine": {
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "Desktop": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "game": "http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_WoWP_EU.exe"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      },
-      "pulse_latency": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
@@ -56,32 +65,23 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
-          "description": "Installing World of Warplanes",
           "prefix": "$GAMEDIR",
           "executable": "game",
+          "description": "Installing World of Warplanes",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
           "arch": "win64",
-          "exclude_processes": "explorer.exe rpcss.exe services.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoWPLauncher.exe"
+          "exclude_processes": "explorer.exe rpcss.exe services.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoWPLauncher.exe",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "WineDesktop": "1920x1080",
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- game: http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_WoWP_EU.exe\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Warplanes/WoWPLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing World of Warplanes\n    exclude_processes: explorer.exe rpcss.exe services.exe winedevice.exe plugplay.exe\n      WargamingGameUpdater.exe WoWPLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
 }

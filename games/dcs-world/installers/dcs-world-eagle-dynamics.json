@@ -10,37 +10,44 @@
   "version": "Eagle Dynamics",
   "description": "Install the non-Steam version of DCS World directly from the Eagle Dynamics website. \r\nThis installer will allow you to play without any other configuration.",
   "notes": "To be able to use your Joystick/Hotas  you must configure your game in Lutris. Into \"Runner options\", check \"Show advanced options\", scroll down and disable \"Autoconfigure joypads\".",
-  "created_at": "2019-08-14T13:53:08.323076Z",
-  "updated_at": "2019-08-14T13:53:08.323102Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-08-14T13:53:08.323000Z",
+  "updated_at": "2019-09-09T00:17:26.532637Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": 223750,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": null,
+      "DXVK_HUD": "0"
+    },
     "game": {
-      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe"
+    },
+    "wine": {
+      "overrides": null,
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-4.13-x86_64",
+      "nvapi,nvapi64": "disabled"
     },
     "files": [
       {
         "client": "https://updates.digitalcombatsimulator.com/installers/DCS_World_web.exe"
       }
     ],
-    "system": {
-      "env": null,
-      "DXVK_HUD": "0"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
@@ -78,22 +85,15 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/S",
-          "description": "Installing client",
           "prefix": "$GAMEDIR",
           "executable": "client",
-          "arch": "win64"
+          "description": "Installing client",
+          "args": "/S",
+          "arch": "win64",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "nvapi,nvapi64": "disabled",
-      "overrides": null,
-      "dxvk": true,
-      "version": "lutris-4.13-x86_64"
-    }
+    ]
   },
   "content": "files:\n- client: https://updates.digitalcombatsimulator.com/installers/DCS_World_web.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  DXVK_HUD: '0'\n  env: null\nwine:\n  dxvk: true\n  esync: true\n  nvapi,nvapi64: disabled\n  overrides: null\n  version: lutris-4.13-x86_64\n"
 }

@@ -21,10 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "restore_gamma": true
+    },
+    "winesteam": {
+      "overrides": {
+        "steamwebhelper.exe": "disabled"
+      },
+      "UseXVidMode": true,
+      "version": "tkg-oldnvidia-sims3-4.1-x86_64",
+      "esync": true
+    },
     "game": {
+      "arch": "win32",
       "prefix": "$GAMEDIR/prefix",
-      "appid": 47890,
-      "arch": "win32"
+      "appid": 47890
     },
     "files": [
       {
@@ -34,16 +45,13 @@
         "overwatch": "https://github.com/tannisroot/sims3-stuff/releases/download/mods/NRaas_Overwatch.tar.xz"
       }
     ],
-    "system": {
-      "restore_gamma": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating prefix",
-          "prefix": "$GAMEDIR/prefix",
-          "install_mono": false,
           "arch": "win32",
+          "install_mono": false,
+          "prefix": "$GAMEDIR/prefix",
+          "description": "Creating prefix",
           "name": "create_prefix"
         }
       },
@@ -59,34 +67,34 @@
       },
       {
         "task": {
-          "name": "winetricks",
+          "prefix": "$CACHE/prefix",
           "description": "Installing .Net 2.0",
-          "silent": true,
-          "prefix": "$CACHE/prefix",
           "app": "dotnet20",
-          "arch": "win32"
+          "arch": "win32",
+          "name": "winetricks",
+          "silent": true
         }
       },
       {
         "task": {
           "prefix": "$CACHE/prefix",
-          "name": "set_regedit",
           "description": "Setting version to xp for Sims3LauncherW...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe",
           "value": "winxp",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe",
           "key": "Version",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$CACHE/prefix",
-          "name": "set_regedit",
           "description": "Setting version to 7 for default...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win7",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       },
       {
@@ -95,15 +103,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "winesteam": {
-      "esync": true,
-      "UseXVidMode": true,
-      "overrides": {
-        "steamwebhelper.exe": "disabled"
-      },
-      "version": "tkg-oldnvidia-sims3-4.1-x86_64"
-    }
+    ]
   },
   "content": "files:\n- resource: https://github.com/tannisroot/sims3-stuff/releases/download/mods/Resource.tar.xz\n- overwatch: https://github.com/tannisroot/sims3-stuff/releases/download/mods/NRaas_Overwatch.tar.xz\ngame:\n  appid: 47890\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- execute:\n    command: ln -s \"$GAMEDIR/prefix\" \"$CACHE/prefix\"\n- execute:\n    command: ln -s \"$HOME/.local/share/lutris\" \"$GAMEDIR/prefix/dosdevices/g:\"\n- task:\n    app: dotnet20\n    arch: win32\n    description: Installing .Net 2.0\n    name: winetricks\n    prefix: $CACHE/prefix\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to xp for Sims3LauncherW...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe\n    prefix: $CACHE/prefix\n    value: winxp\n- task:\n    arch: win32\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $CACHE/prefix\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  restore_gamma: true\nwinesteam:\n  UseXVidMode: true\n  esync: true\n  overrides:\n    steamwebhelper.exe: disabled\n  version: tkg-oldnvidia-sims3-4.1-x86_64\n"
 }

@@ -21,6 +21,9 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "disable_runtime": false
+    },
     "game": {
       "main_file": "$GAMEDIR/dosbox.conf"
     },
@@ -32,44 +35,41 @@
         "patch": "https://www.pistegamez.net/PK/Pk_fixed.zip"
       }
     ],
-    "system": {
-      "disable_runtime": false
-    },
     "installer": [
       {
         "extract": {
-          "description": "Installing Pekka Kana...",
           "dst": "$GAMEDIR/PKANA",
+          "description": "Installing Pekka Kana...",
           "src": "game"
         }
       },
       {
         "extract": {
-          "description": "Installing Pekka Kana...",
           "dst": "$GAMEDIR/PKANA",
+          "description": "Installing Pekka Kana...",
           "src": "patch"
         }
       },
       {
         "task": {
+          "name": "makeconfig",
+          "path": "$GAMEDIR/dosbox.conf",
+          "drives": {
+            "c": "$GAMEDIR"
+          },
           "commands": [
             "C:",
             "cd PKANA",
             "PKANA.EXE",
             "exit"
-          ],
-          "drives": {
-            "c": "$GAMEDIR"
-          },
-          "name": "makeconfig",
-          "path": "$GAMEDIR/dosbox.conf"
+          ]
         }
       },
       {
         "write_file": {
-          "mode": "a",
           "content": "[cpu]\ncore=auto\ncputype=auto\ncycles=max 105%\ncycleup=10\ncycledown=20\n",
-          "file": "$GAMEDIR/dosbox.conf"
+          "file": "$GAMEDIR/dosbox.conf",
+          "mode": "a"
         }
       }
     ]

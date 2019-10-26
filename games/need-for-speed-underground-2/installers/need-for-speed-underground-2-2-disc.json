@@ -1,0 +1,72 @@
+{
+  "id": 14069,
+  "game_id": 8212,
+  "game_slug": "need-for-speed-underground-2",
+  "name": "Need for Speed: Underground 2",
+  "year": 2004,
+  "user": "VortexAcherontic",
+  "runner": "wine",
+  "slug": "need-for-speed-underground-2-2-disc",
+  "version": "2 Disc",
+  "description": "Installer which requires 2 CDs for the game installation.\r\nThis installer will copy the content of the entire 1st disc into the wine prefix in order to launch the setup from there and prevent Linux from refusing to eject the CD ROM because of open files. You'll be able to switch CDs if requested by the installer.\r\n\r\nForked from NFSU 2 Disc installer",
+  "notes": "",
+  "created_at": "2019-06-13T15:31:44.717000Z",
+  "updated_at": "2019-09-09T01:43:20.605048Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "wine": {
+      "version": "staging-3.16-i386"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/EA GAMES/Need for Speed Underground 2/speed2.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "install_mono": false,
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Bottle, please wait...",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "setup.exe",
+          "description": "Insert disc 1"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/nfsusetup",
+          "description": "Extracting installation data from disc, please wait ...",
+          "src": "$DISC"
+        }
+      },
+      {
+        "execute": {
+          "descritpion": "Set proper file permissions for extracted data, please wait...",
+          "args": "744 -R $GAMEDIR/drive_c/nfsusetup",
+          "file": "chmod"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/nfsusetup/setup.exe",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/EA GAMES/Need for Speed Underground 2/speed2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Extracting installation data from disc, please wait ...\n    dst: $GAMEDIR/drive_c/nfsusetup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/nfsusetup\n    descritpion: Set proper file permissions for extracted data, please wait...\n    file: chmod\n- task:\n    executable: $GAMEDIR/drive_c/nfsusetup/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: staging-3.16-i386\n"
+}

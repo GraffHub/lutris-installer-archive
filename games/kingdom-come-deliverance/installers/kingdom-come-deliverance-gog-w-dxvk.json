@@ -21,39 +21,47 @@
   "gogslug": "kingdom_come_deliverance",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "mesa_glthread": "true",
+        "DXVK_HUD": 0,
+        "DXVK_STATE_CACHE": 1,
+        "__GL_SHADER_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_THREADED_OPTIMIZATION": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "game": {
-      "exe": "drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64/KingdomCome.exe",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64/KingdomCome.exe"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "esync": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "setup": "N/A:Select the GOG setup exe"
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_CACHE": 1,
-        "DXVK_HUD": 0,
-        "DXVK_STATE_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_THREADED_OPTIMIZATION": 1,
-        "mesa_glthread": "true",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Running GOG Installer",
           "prefix": "$GAMEDIR",
           "executable": "setup",
+          "description": "Running GOG Installer",
           "name": "wineexec"
         }
       },
@@ -75,15 +83,7 @@
           "src": "$GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64Shared/amd_ags_x64.dll"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Select the GOG setup exe\ngame:\n  exe: drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64/KingdomCome.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running GOG Installer\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64\n    src: $GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64Shared/d3dcompiler_46.dll\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64\n    src: $GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64Shared/d3dcompiler_47.dll\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64\n    src: $GAMEDIR/drive_c/GOG Games/Kingdom Come Deliverance/bin/Win64Shared/amd_ags_x64.dll\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATION: 1\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
 }

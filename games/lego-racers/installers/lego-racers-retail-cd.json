@@ -8,13 +8,13 @@
   "runner": "wine",
   "slug": "lego-racers-retail-cd",
   "version": "Retail CD",
-  "description": "The wine version for lego racers",
+  "description": "Wine version for the retail cd version.\r\nYou will need the original game cd for this.",
   "notes": "",
-  "created_at": "2019-05-22T21:48:54.853372Z",
-  "updated_at": "2019-05-22T21:48:54.853404Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-05-22T21:48:54.853000Z",
+  "updated_at": "2019-09-09T01:59:29.029027Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
@@ -22,25 +22,32 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files (x86)/LEGO Media/Games/LEGO Racers/LEGORacers.exe",
       "prefix": "$GAMEDIR",
-      "args": "-novideo"
+      "args": "-novideo",
+      "exe": "drive_c/Program Files (x86)/LEGO Media/Games/LEGO Racers/LEGORacers.exe"
     },
     "installer": [
       {
         "insert-disc": {
-          "message": "Insert disc",
-          "requires": "Setup.exe"
+          "requires": "Setup.exe",
+          "message": "Insert disc"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$CACHE/cdrom",
+          "description": "Copying disc to cache",
+          "src": "$DISC"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$DISC/cdrom/setup.exe",
+          "executable": "$CACHE/cdrom/Setup.exe",
           "name": "wineexec"
         }
       }
     ]
   },
-  "content": "game:\n  args: -novideo\n  exe: drive_c/Program Files (x86)/LEGO Media/Games/LEGO Racers/LEGORacers.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc\n    requires: Setup.exe\n- task:\n    executable: $DISC/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+  "content": "game:\n  args: -novideo\n  exe: drive_c/Program Files (x86)/LEGO Media/Games/LEGO Racers/LEGORacers.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc\n    requires: Setup.exe\n- merge:\n    description: Copying disc to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- task:\n    executable: $CACHE/cdrom/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

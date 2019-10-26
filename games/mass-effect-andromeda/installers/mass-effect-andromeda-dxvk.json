@@ -21,10 +21,25 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": 0
+      },
+      "disable_runtime": false
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true,
+      "version": "tkg-protonified-3.21-x86_64"
     },
     "files": [
       {
@@ -34,26 +49,20 @@
         "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
     ],
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "input_menu": {
-          "description": "Setting DXVK workarounds please choose your GPU:",
+          "preselect": "Not needed for AMD. Ignore this.",
           "id": "GPU",
+          "description": "Setting DXVK workarounds please choose your GPU:",
           "options": [
             {
               "Not needed for AMD. Ignore this.": "AMD"
@@ -61,8 +70,7 @@
             {
               "dxgi.customVendorId = 10de\ndxgi.nvapiHack = False": "Nvidia"
             }
-          ],
-          "preselect": "Not needed for AMD. Ignore this."
+          ]
         }
       },
       {
@@ -81,19 +89,19 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/silent",
-          "description": "Installing Origin... Login window will pop-up and close.",
           "prefix": "$GAMEDIR",
           "executable": "client",
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "args": "/silent",
           "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       },
@@ -106,15 +114,7 @@
           "src": "updater"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "version": "tkg-protonified-3.21-x86_64"
-    }
+    ]
   },
   "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- input_menu:\n    description: 'Setting DXVK workarounds please choose your GPU:'\n    id: GPU\n    options:\n    - Not needed for AMD. Ignore this.: AMD\n    - ? 'dxgi.customVendorId = 10de\n\n        dxgi.nvapiHack = False'\n      : Nvidia\n    preselect: Not needed for AMD. Ignore this.\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: nocrashdialog win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n  version: tkg-protonified-3.21-x86_64\n"
 }

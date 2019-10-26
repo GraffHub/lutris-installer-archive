@@ -22,53 +22,53 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/game/CrimzonClover_WI_GOG.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/CrimzonClover_WI_GOG.exe"
     },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "gogid": "crimzon_clover_world_ignition",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Disabling unused WINE features",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "sandbox",
-          "name": "winetricks"
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "silent": true,
+          "app": "sandbox"
         }
       }
-    ],
-    "gogid": "crimzon_clover_world_ignition"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/CrimzonClover_WI_GOG.exe\n  prefix: $GAMEDIR\ngogid: crimzon_clover_world_ignition\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

@@ -22,44 +22,44 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe"
+    },
+    "wine": {
+      "version": "tkg-3.20-x86_64"
     },
     "files": [
       {
         "setup": {
-          "filename": "Battle.net-Setup.exe",
-          "url": "http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe"
+          "url": "http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe",
+          "filename": "Battle.net-Setup.exe"
         }
       }
     ],
-    "wine": {
-      "version": "tkg-3.20-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating 64bit Wine prefix.",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 64bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Arial font",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing Arial font",
           "name": "winetricks",
           "app": "arial"
         }
       },
       {
         "task": {
-          "description": "Setting fontsmooth=rbg",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Setting fontsmooth=rbg",
           "name": "winetricks",
           "app": "fontsmooth-rgb"
         }
@@ -67,12 +67,12 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Windows 10 mode for Wine",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
@@ -80,11 +80,11 @@
           "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
           "data": {
             "Client": {
-              "GameLaunchWindowBehavior": "2",
-              "HardwareAcceleration": "false",
               "Sound": {
                 "Enabled": "false"
               },
+              "HardwareAcceleration": "false",
+              "GameLaunchWindowBehavior": "2",
               "Streaming": {
                 "StreamingEnabled": "false"
               }
@@ -95,11 +95,11 @@
       },
       {
         "task": {
-          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
-          "executable": "setup",
           "arch": "win64",
-          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
-          "name": "wineexec"
+          "executable": "setup",
+          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
+          "name": "wineexec",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\""
         }
       },
       {

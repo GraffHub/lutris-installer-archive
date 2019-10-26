@@ -1,0 +1,77 @@
+{
+  "id": 15530,
+  "game_id": 1591,
+  "game_slug": "the-7th-guest",
+  "name": "The 7th Guest",
+  "year": 1993,
+  "user": "appoloin",
+  "runner": "scummvm",
+  "slug": "the-7th-guest-2cd",
+  "version": "2CD",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-14T10:40:23.940208Z",
+  "updated_at": "2019-09-14T10:40:23.940236Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 255920,
+  "gogid": 1207658999,
+  "gogslug": "the_7th_guest",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "Groovie"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nfind \"$src\" -type f \\( -name \"*.gjd\" -o -name \"*.grv\" -o -name \"*.rl\" -o -name \"fat.*\" -o -name \"sphinx.fnt\" \\) -exec cp {} \"$dst\" \\;",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/selectcopy.sh"
+      },
+      {
+        "insert-disc": {
+          "requires": "t7g",
+          "description": "Please insert disc 1"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC/t7g $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "t7g",
+          "description": "Please insert disc 2"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC/t7g $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  game_id: Groovie\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      find \"$src\" -type f \\( -name \"*.gjd\" -o -name \"*.grv\" -o -name \"*.rl\" -o -name\n      \"fat.*\" -o -name \"sphinx.fnt\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- insert-disc:\n    description: Please insert disc 1\n    requires: t7g\n- execute:\n    args: $DISC/t7g $GAMEDIR\n    file: $CACHE/selectcopy.sh\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 2\n    requires: t7g\n- execute:\n    args: $DISC/t7g $GAMEDIR\n    file: $CACHE/selectcopy.sh\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
+}

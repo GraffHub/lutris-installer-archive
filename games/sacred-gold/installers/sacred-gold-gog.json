@@ -11,10 +11,10 @@
   "description": null,
   "notes": "You should edit config file, which located here: '/drive_c/GOG Games/Sacred Gold/Settings.cfg' and change line SHOWMOVIE : 1 to SHOWMOVIE : 0 otherwise you will experiencing black screen after starting game.",
   "created_at": "2018-10-28T20:01:40.813000Z",
-  "updated_at": "2018-10-29T05:50:09.479574Z",
+  "updated_at": "2019-09-08T23:36:06.465287Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 1,
   "rating": "",
   "steamid": 12320,
   "gogid": 1207658688,
@@ -22,54 +22,56 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/GOG Games/Sacred Gold/Sacred.exe",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Sacred Gold/Sacred.exe"
+    },
+    "wine": {
+      "WineDesktop": "1024x768",
+      "version": "lutris-4.13-x86_64",
+      "Desktop": true,
+      "esync": true
     },
     "files": [
       {
         "setup": "N/A:Select the GOG setup exe"
       }
     ],
-    "wine": {
-      "Desktop": true,
-      "esync": true,
-      "WineDesktop": "1024x768",
-      "version": "tkg-3.19-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Running GOG Installer",
+          "arch": "win32",
+          "executable": "setup",
           "prefix": "$GAMEDIR",
-          "executable": "$setup",
+          "description": "Running GOG Installer",
           "name": "wineexec"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "app": "winxp",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "winxp"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "Y",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullscreen",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       }
     ]
   },
-  "content": "files:\n- setup: N/A:Select the GOG setup exe\ngame:\n  exe: drive_c/GOG Games/Sacred Gold/Sacred.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running GOG Installer\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  esync: true\n  version: tkg-3.19-x86_64\n"
+  "content": "files:\n- setup: N/A:Select the GOG setup exe\ngame:\n  exe: drive_c/GOG Games/Sacred Gold/Sacred.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Running GOG Installer\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  esync: true\n  version: lutris-4.13-x86_64\n"
 }

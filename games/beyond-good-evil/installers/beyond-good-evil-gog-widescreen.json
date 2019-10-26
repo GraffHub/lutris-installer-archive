@@ -21,11 +21,14 @@
   "gogslug": "beyond_good_and_evil",
   "humblestoreid": "beyond-good-evil",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Beyond Good and Evil/run.exe",
-      "prefix": "$GAMEDIR"
-    },
     "custom-name": "Beyond Good & Evil - GOG",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Beyond Good and Evil/run.exe"
+    },
+    "wine": {
+      "Desktop": true
+    },
     "files": [
       {
         "setup": "N/A:Select the EXE downloaded from GOG"
@@ -46,24 +49,21 @@
         "gppreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Beyong%20Good%20and%20Evil/gamepad%20profiles/bge_gamepad_readme.html"
       }
     ],
-    "wine": {
-      "Desktop": true
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing...",
           "prefix": "$GAMEDIR",
           "executable": "setup",
-          "name": "wineexec",
-          "args": "/SILENT /SUPPRESSMSGBOXES"
+          "args": "/SILENT /SUPPRESSMSGBOXES",
+          "description": "Installing...",
+          "name": "wineexec"
         }
       },
       {
@@ -76,8 +76,8 @@
         "write_config": {
           "data": {
             "MAIN": {
-              "Height": "$RESOLUTION_HEIGHT",
-              "Width": "$RESOLUTION_WIDTH"
+              "Width": "$RESOLUTION_WIDTH",
+              "Height": "$RESOLUTION_HEIGHT"
             }
           },
           "file": "$GAMEDIR/drive_c/GOG Games/Beyond Good and Evil/bge.ini"
@@ -86,12 +86,12 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
-          "key": "d3d9",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "d3d9",
+          "name": "set_regedit"
         }
       },
       {
@@ -121,40 +121,40 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
-          "key": "dsound",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "dsound",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
-          "key": "csmt",
           "arch": "win64",
-          "type": "REG_DWORD"
+          "type": "REG_DWORD",
+          "key": "csmt",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "key": "background",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "background",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Please choose only your resolution, save and quit.",
           "executable": "$GAMEDIR/drive_c/GOG Games/Beyond Good and Evil/SettingsApplication.exe",
+          "description": "Please choose only your resolution, save and quit.",
           "name": "wineexec"
         }
       }

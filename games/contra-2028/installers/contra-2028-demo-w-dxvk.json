@@ -21,34 +21,41 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "contra": "N/A:Please select the itch.io archive"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "xact",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "xact"
         }
       },
       {
@@ -60,21 +67,14 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "Y",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "HideWineExports",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- contra: N/A:Please select the itch.io archive\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Contra 2028\n    file: contra\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
 }

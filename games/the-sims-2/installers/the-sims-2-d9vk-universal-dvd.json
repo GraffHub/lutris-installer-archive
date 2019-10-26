@@ -21,15 +21,25 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "prelaunch_command": "$GAMEDIR/sims2fix.sh",
+      "env": {
+        "WINE_LARGE_ADDRESS_AWARE": 1
+      }
+    },
     "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "version": "lutris-sims2-4.12.1-x86_64",
+      "dxvk_version": "d9vk-b25eaf65"
     },
     "files": [
       {
         "d9vk": {
-          "filename": "d9vk-master.b25eaf65e7731d42263b78d091de672cdc791e05.zip",
-          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/750/artifacts/download"
+          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/750/artifacts/download",
+          "filename": "d9vk-master.b25eaf65e7731d42263b78d091de672cdc791e05.zip"
         }
       },
       {
@@ -42,18 +52,12 @@
         "file": "N/A:Select the game's setup file"
       }
     ],
-    "system": {
-      "prelaunch_command": "$GAMEDIR/sims2fix.sh",
-      "env": {
-        "WINE_LARGE_ADDRESS_AWARE": 1
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
@@ -71,43 +75,43 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Installing dependencies...",
+          "name": "winetricks",
           "silent": "true",
-          "prefix": "$GAMEDIR",
-          "app": "mfc42 d3dcompiler_43 d3dx9",
-          "name": "winetricks"
+          "app": "mfc42 d3dcompiler_43 d3dx9"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting version to xp...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "winxp",
-          "key": "Version"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "key": "Version",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Vertex Shader Model to 2...",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "value": "00000002",
+          "type": "REG_DWORD",
           "key": "MaxShaderModelVS",
-          "type": "REG_DWORD"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Pixel Shader Model to 2...",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "value": "00000002",
+          "type": "REG_DWORD",
           "key": "MaxShaderModelPS",
-          "type": "REG_DWORD"
+          "name": "set_regedit"
         }
       },
       {
@@ -139,9 +143,9 @@
       },
       {
         "task": {
-          "description": "Installing The Sims 2...",
           "prefix": "$GAMEDIR",
           "executable": "file",
+          "description": "Installing The Sims 2...",
           "name": "wineexec"
         }
       },
@@ -151,11 +155,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "dxvk_version": "d9vk-b25eaf65",
-      "version": "lutris-sims2-4.12.1-x86_64"
-    }
+    ]
   },
   "content": "files:\n- d9vk:\n    filename: d9vk-master.b25eaf65e7731d42263b78d091de672cdc791e05.zip\n    url: https://git.froggi.es/joshua/d9vk/-/jobs/750/artifacts/download\n- fixes: https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz\n- script: https://raw.githubusercontent.com/tannisroot/installer-fixes/master/sims2fix.sh\n- file: N/A:Select the game's setup file\ngame:\n  arch: win64\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: d9vk\n- copy:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-b25eaf65/\n    src: $CACHE/dxvk-release/\n- task:\n    app: mfc42 d3dcompiler_43 d3dx9\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: 'true'\n- task:\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    description: Setting Vertex Shader Model to 2...\n    key: MaxShaderModelVS\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- task:\n    description: Setting Pixel Shader Model to 2...\n    key: MaxShaderModelPS\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- copy:\n    dst: $GAMEDIR\n    src: script\n- chmodx: $GAMEDIR/sims2fix.sh\n- extract:\n    dst: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\n      \\ Collection/Downloads\"\n    file: fixes\n- write_file:\n    content: boolprop useshaders true\n    file: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\n      \\ Collection/Config/userstartup.cheat\"\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Installing The Sims 2...\n    executable: file\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    WINE_LARGE_ADDRESS_AWARE: 1\n  prelaunch_command: $GAMEDIR/sims2fix.sh\nwine:\n  dxvk_version: d9vk-b25eaf65\n  version: lutris-sims2-4.12.1-x86_64\n"
 }

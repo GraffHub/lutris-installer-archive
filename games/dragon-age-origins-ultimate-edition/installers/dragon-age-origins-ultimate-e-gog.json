@@ -21,59 +21,59 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "disable_monitoring": true
+    },
     "game": {
-      "exe": "drive_c/game/DAOriginsLauncher.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/DAOriginsLauncher.exe"
+    },
+    "wine": {
+      "StrictDrawOrdering": "enabled"
     },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
-    "system": {
-      "disable_monitoring": true,
-      "pulse_latency": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Game...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing Game...",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "windowmanagermanaged=n",
-          "name": "winetricks"
+          "app": "windowmanagermanaged=n"
         }
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/quiet /qn",
-          "description": "Installing PhysX...",
-          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe",
           "prefix": "$GAMEDIR",
-          "blocking": true
+          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe",
+          "description": "Installing PhysX...",
+          "args": "/quiet /qn",
+          "blocking": true,
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "StrictDrawOrdering": "enabled"
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/DAOriginsLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing Game...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /quiet /qn\n    blocking: true\n    description: Installing PhysX...\n    executable: $GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_monitoring: true\n  pulse_latency: true\nwine:\n  StrictDrawOrdering: enabled\n"
 }

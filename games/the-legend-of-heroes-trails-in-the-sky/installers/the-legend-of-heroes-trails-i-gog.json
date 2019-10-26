@@ -9,12 +9,12 @@
   "slug": "the-legend-of-heroes-trails-i-gog",
   "version": "GOG",
   "description": "Runs the DX8 version by default.",
-  "notes": "After GOG installer finishes, some error messages will show up. You can ignore them.\r\n\r\nThe intro video might not work, but you can skip through it or disable it with the Config.exe\r\n\r\nThe DX9 version may have menu scaling issues at higher resolutions unless you disable \"High-Res Assets\" in the config.",
-  "created_at": "2018-04-23T06:22:24.495832Z",
-  "updated_at": "2018-04-30T23:48:47.484504Z",
+  "notes": "After GOG installer finishes, some error messages will show up. You can ignore them.\r\n\r\nThe video works and if you add Japanese voices  it will work (see here : https://github.com/ZhenjianYang/SoraVoice)\r\n\r\nThe DX9 version may have menu scaling issues at higher resolutions unless you disable \"High-Res Assets\" in the config.",
+  "created_at": "2018-04-23T06:22:24.495000Z",
+  "updated_at": "2019-09-09T01:50:37.860096Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 1,
   "rating": "",
   "steamid": 251150,
   "gogid": 1207665083,
@@ -24,17 +24,20 @@
     "game": {
       "prefix": "$GAMEDIR"
     },
-    "exe": "drive_c/GOG Games/The Legend of Heroes - Trails in the Sky/ed6_win.exe",
     "files": [
+      {
+        "lavf": "https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe"
+      },
       {
         "gog": "N/A:Select the Windows GOG installer"
       }
     ],
+    "exe": "drive_c/GOG Games/The Legend of Heroes - Trails in the Sky/ed6_win.exe",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix...",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix...",
           "name": "create_prefix"
         }
       },
@@ -48,47 +51,41 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "quartz",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "quartz"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "amstream",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "amstream"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "dsound",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "dinput8"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "gdiplus",
-          "name": "winetricks"
+          "executable": "lavf",
+          "description": "Install LavFilter to have movies",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "app": "xvid",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "description": "Running config tool for first time launch...",
           "prefix": "$GAMEDIR",
           "executable": "C:/GOG Games/The Legend of Heroes - Trails in the Sky/Config.exe",
+          "description": "Running config tool for first time launch...",
           "name": "wineexec"
         }
       }
     ]
   },
-  "content": "exe: drive_c/GOG Games/The Legend of Heroes - Trails in the Sky/ed6_win.exe\nfiles:\n- gog: N/A:Select the Windows GOG installer\ngame:\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: gog\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: amstream\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dsound\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xvid\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running config tool for first time launch...\n    executable: C:/GOG Games/The Legend of Heroes - Trails in the Sky/Config.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+  "content": "exe: drive_c/GOG Games/The Legend of Heroes - Trails in the Sky/ed6_win.exe\nfiles:\n- lavf: https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe\n- gog: N/A:Select the Windows GOG installer\ngame:\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: gog\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: amstream\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dinput8\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Install LavFilter to have movies\n    executable: lavf\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Running config tool for first time launch...\n    executable: C:/GOG Games/The Legend of Heroes - Trails in the Sky/Config.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

@@ -1,0 +1,210 @@
+{
+  "id": 16273,
+  "game_id": 12270,
+  "game_slug": "xmage",
+  "name": "XMage",
+  "year": 2015,
+  "user": "xatrekak",
+  "runner": "linux",
+  "slug": "xmage-latest",
+  "version": "LATEST",
+  "description": "Downloads the xMage launcher  and the Lutris java to bootstrap the installer.\r\n\r\nAlso downloads some of the harder to find promo cards that can not be downloaded in game",
+  "notes": "",
+  "created_at": "2019-10-19T01:17:24.819000Z",
+  "updated_at": "2019-10-22T20:36:08.670900Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "args": "-jar $GAMEDIR/XMageLauncher-0.3.8.jar",
+      "exe": "$GAMEDIR/java/java/java"
+    },
+    "files": [
+      {
+        "launcher": "http://xmage.de/xmage/XMageLauncher-0.3.8.jar"
+      },
+      {
+        "java": "https://lutris.nyc3.digitaloceanspaces.com/runners/java/jre-8u73-linux-x64.tar.gz"
+      },
+      {
+        "EXP": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AAC2NyFLg93TbOh6-QGeDJ7qa/EXP.zip?dl=1"
+      },
+      {
+        "FNMP": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADpIy10F-Wkk0fZU8FHPQ6pa/FNMP.zip?dl=1"
+      },
+      {
+        "GPX": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADz4zM2_fv5z0b_9lFtPt6Wa/GPX.zip?dl=1"
+      },
+      {
+        "GRC": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AAALX7vh_dXB595x7kFRpcOka/GRC.zip?dl=1"
+      },
+      {
+        "GUR": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AABn05D2FHPD5bxTI3ER_isYa/GUR.zip?dl=1"
+      },
+      {
+        "JR": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AABJQX21uxA9WfSAhvmEapj9a/JR.zip?dl=1"
+      },
+      {
+        "MBP": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADQk5t411UR752I-xTAboTVa/MBP.zip?dl=1"
+      },
+      {
+        "MGDC": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AAA1Dko38aPZ3vPbrjHgHnlUa/MGDC.zip?dl=1"
+      },
+      {
+        "MLP": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AACECVEZfIiA8Px_sME8_x6ma/MLP.zip?dl=1"
+      },
+      {
+        "MPRP": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADdD3vhjzUdCV9mamkSJJvfa/MPRP.zip?dl=1"
+      },
+      {
+        "MPS_AKH": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AACIWBVwHQyUrFubID_UX1gea/MPS-AKH.zip?dl=1"
+      },
+      {
+        "MPS": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADhkQhu9uzHKTl-ikOi2n3xa/MPS.zip?dl=1"
+      },
+      {
+        "PPRO": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADx3kMplA3L4ZDm47FYB1kPa/PPRO.zip?dl=1"
+      },
+      {
+        "UGIN": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AACMlJvHsnhNJlJo9QzYkBaea/UGIN.zip?dl=1"
+      },
+      {
+        "WMCQ": "https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADlcKgBGDH6x_3-DQdWr3S4a/WMCQ.zip?dl=1"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/java",
+          "file": "java"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "launcher"
+        }
+      },
+      {
+        "execute": {
+          "command": "$CACHE/java/bin/java -jar XMageLauncher-0.3.8.jar"
+        }
+      },
+      {
+        "execute": {
+          "command": "find $GAMEDIR/java/ -mindepth 1 -name 'java' -exec sh -c 'ln -vs \"$(dirname \"$0\")\" \"$1\" | cut -c 2-' {} $GAMEDIR/java/java \\;"
+        }
+      },
+      {
+        "write_file": {
+          "content": "xmage.client.console=false",
+          "file": "$GAMEDIR/installed.properties",
+          "mode": "a"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "EXP"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "FNMP"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "GPX"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "GRC"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "GUR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "JR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "MBP"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "MGDC"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "MLP"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "MPRP"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "MPS_AKH"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "MPS"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "PPRO"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "UGIN"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/xmage/mage-client/plugins/images/",
+          "src": "WMCQ"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR/xmage/mage-client/plugins/images/ && rename zip?dl=1 zip *.zip?dl=1"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- launcher: http://xmage.de/xmage/XMageLauncher-0.3.8.jar\n- java: https://lutris.nyc3.digitaloceanspaces.com/runners/java/jre-8u73-linux-x64.tar.gz\n- EXP: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AAC2NyFLg93TbOh6-QGeDJ7qa/EXP.zip?dl=1\n- FNMP: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADpIy10F-Wkk0fZU8FHPQ6pa/FNMP.zip?dl=1\n- GPX: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADz4zM2_fv5z0b_9lFtPt6Wa/GPX.zip?dl=1\n- GRC: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AAALX7vh_dXB595x7kFRpcOka/GRC.zip?dl=1\n- GUR: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AABn05D2FHPD5bxTI3ER_isYa/GUR.zip?dl=1\n- JR: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AABJQX21uxA9WfSAhvmEapj9a/JR.zip?dl=1\n- MBP: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADQk5t411UR752I-xTAboTVa/MBP.zip?dl=1\n- MGDC: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AAA1Dko38aPZ3vPbrjHgHnlUa/MGDC.zip?dl=1\n- MLP: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AACECVEZfIiA8Px_sME8_x6ma/MLP.zip?dl=1\n- MPRP: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADdD3vhjzUdCV9mamkSJJvfa/MPRP.zip?dl=1\n- MPS_AKH: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AACIWBVwHQyUrFubID_UX1gea/MPS-AKH.zip?dl=1\n- MPS: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADhkQhu9uzHKTl-ikOi2n3xa/MPS.zip?dl=1\n- PPRO: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADx3kMplA3L4ZDm47FYB1kPa/PPRO.zip?dl=1\n- UGIN: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AACMlJvHsnhNJlJo9QzYkBaea/UGIN.zip?dl=1\n- WMCQ: https://www.dropbox.com/sh/q6iq4r4brzw4s2o/AADlcKgBGDH6x_3-DQdWr3S4a/WMCQ.zip?dl=1\ngame:\n  args: -jar $GAMEDIR/XMageLauncher-0.3.8.jar\n  exe: $GAMEDIR/java/java/java\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/java\n    file: java\n- move:\n    dst: $GAMEDIR\n    src: launcher\n- execute:\n    command: $CACHE/java/bin/java -jar XMageLauncher-0.3.8.jar\n- execute:\n    command: find $GAMEDIR/java/ -mindepth 1 -name 'java' -exec sh -c 'ln -vs \"$(dirname\n      \"$0\")\" \"$1\" | cut -c 2-' {} $GAMEDIR/java/java \\;\n- write_file:\n    content: xmage.client.console=false\n    file: $GAMEDIR/installed.properties\n    mode: a\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: EXP\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: FNMP\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: GPX\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: GRC\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: GUR\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: JR\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: MBP\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: MGDC\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: MLP\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: MPRP\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: MPS_AKH\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: MPS\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: PPRO\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: UGIN\n- copy:\n    dst: $GAMEDIR/xmage/mage-client/plugins/images/\n    src: WMCQ\n- execute:\n    command: cd $GAMEDIR/xmage/mage-client/plugins/images/ && rename zip?dl=1 zip\n      *.zip?dl=1\n"
+}

@@ -8,40 +8,48 @@
   "runner": "wine",
   "slug": "star-citizen-liveptu",
   "version": "LIVE/PTU",
-  "description": "Welcome to the Star Citizen Live installer maintained by the Star Citizen LUG!\r\n\r\nPlease make sure to read through the technical instructions in the installer, which are important to prevent game crashes.\r\n\r\nFor help with the installer or just hang out we invite Linux Star Citizen players to join us: https://robertsspaceindustries.com/orgs/LUG/",
+  "description": "Welcome to the Star Citizen installer maintained by the Star Citizen LUG!\r\n\r\nPlease make sure to read through the technical instructions in the installer, which are important to prevent game crashes.\r\n\r\nFor help with the installer or just hang out we invite Linux Star Citizen players to join us: https://robertsspaceindustries.com/orgs/LUG/",
   "notes": "Please make sure you have all Wine dependencies properly installed, else your game may crash during start-up. A good starting point is this post from GloriousEggroll: https://www.gloriouseggroll.tv/how-to-get-out-of-wine-dependency-hell/\r\n\r\nFurthermore, to prevent crashes at areas with lots of geometry, the game needs a Linux resource limit named \"vm.max_map_count\" increased. To do this, execute:\r\n\r\nsudo sysctl -w vm.max_map_count=655300\r\n\r\n(Consult your distro's documentation on how to set this permanently, or ask a LUG member)",
   "created_at": "2018-11-15T17:43:07.367000Z",
-  "updated_at": "2019-08-11T09:17:55.322043Z",
+  "updated_at": "2019-10-21T03:35:05.292375Z",
   "draft": false,
   "published": true,
-  "published_by": 51687,
+  "published_by": 19464,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "files": [
-      {
-        "client": "https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.2.0.exe"
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": "0"
       }
     },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe"
+    },
+    "wine": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-4.16-x86_64"
+    },
+    "files": [
+      {
+        "client": "https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.2.1.exe"
+      }
+    ],
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
@@ -50,28 +58,20 @@
           "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "app": "corefonts win10"
+          "app": "corefonts vcrun2017 win10"
         }
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/S",
-          "description": "Installing client",
           "prefix": "$GAMEDIR",
           "executable": "client",
-          "arch": "win64"
+          "description": "Installing client",
+          "args": "/S",
+          "arch": "win64",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "version": "lutris-4.13-x86_64"
-    }
+    ]
   },
-  "content": "files:\n- client: https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.2.0.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: '0'\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n  version: lutris-4.13-x86_64\n"
+  "content": "files:\n- client: https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.2.1.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2017 win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: '0'\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n  version: lutris-4.16-x86_64\n"
 }

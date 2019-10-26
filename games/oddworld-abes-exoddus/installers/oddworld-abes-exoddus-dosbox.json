@@ -1,0 +1,105 @@
+{
+  "id": 16378,
+  "game_id": 142,
+  "game_slug": "oddworld-abes-exoddus",
+  "name": "Oddworld: Abe's Exoddus",
+  "year": 1998,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "oddworld-abes-exoddus-dosbox",
+  "version": "DosBox",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-10-24T17:36:09.866614Z",
+  "updated_at": "2019-10-24T17:36:09.866637Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 15710,
+  "gogid": 1207658709,
+  "gogslug": "oddworld_abes_exoddus",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "xboxdrv": "xboxdrv"
+    },
+    "game": {
+      "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+      "args": "-nojoy -applaunch 223220",
+      "arch": "win32",
+      "appid": "223220",
+      "custom-name": "Giana Sisters: Twisted Dreams",
+      "exe": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program Files (x86)/Steam/Steam.exe"
+    },
+    "wine": {
+      "esync": true
+    },
+    "files": [
+      "https://www.youtube.com/watch?v=m_fVqIXIZ7k",
+      {
+        "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "execute": {
+          "description": "Removing any existing winesteam-prefixes ...",
+          "command": "mv -v $HOME/.local/share/lutris/runners/winesteam/prefix /tmp/dump"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+          "description": "Creating 32-bit prefix ...",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/",
+          "src": "SteamSetup.exe"
+        }
+      },
+      {
+        "chmodx": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe"
+      },
+      {
+        "task": {
+          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+          "executable": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe",
+          "args": "/S",
+          "description": "Steam ...",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+          "description": "Windows version 8.1 ...",
+          "name": "winetricks",
+          "app": "win81"
+        }
+      },
+      {
+        "write_file": {
+          "content": "cd $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program\\ Files\\ \\(x86\\)/Steam && WINEPREFIX=\"$HOME/.local/share/lutris/runners/winesteam/prefix\" wine Steam.exe -applaunch 15710",
+          "description": "Creating Giana_Sisters:_Twisted_Dreams.sh with prefix ...",
+          "file": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh"
+        }
+      },
+      {
+        "chmodx": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh"
+      },
+      {
+        "execute": {
+          "description": "Clean-up ...",
+          "command": "rm $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- https://www.youtube.com/watch?v=m_fVqIXIZ7k\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\ngame:\n  appid: '223220'\n  arch: win32\n  args: -nojoy -applaunch 223220\n  custom-name: 'Giana Sisters: Twisted Dreams'\n  exe: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program Files (x86)/Steam/Steam.exe\n  prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\ninstaller:\n- execute:\n    command: mv -v $HOME/.local/share/lutris/runners/winesteam/prefix /tmp/dump\n    description: Removing any existing winesteam-prefixes ...\n- task:\n    arch: win32\n    description: Creating 32-bit prefix ...\n    name: create_prefix\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\n- move:\n    dst: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/\n    src: SteamSetup.exe\n- chmodx: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe\n- task:\n    args: /S\n    description: Steam ...\n    executable: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe\n    name: wineexec\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\n- task:\n    app: win81\n    arch: win32\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\n- write_file:\n    content: cd $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program\\\n      Files\\ \\(x86\\)/Steam && WINEPREFIX=\"$HOME/.local/share/lutris/runners/winesteam/prefix\"\n      wine Steam.exe -applaunch 15710\n    description: Creating Giana_Sisters:_Twisted_Dreams.sh with prefix ...\n    file: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh\n- chmodx: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh\n- execute:\n    command: rm $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe\n    description: Clean-up ...\nsystem:\n  xboxdrv: xboxdrv\nwine:\n  esync: true\n"
+}

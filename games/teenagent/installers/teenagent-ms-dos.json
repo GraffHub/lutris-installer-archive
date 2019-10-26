@@ -1,0 +1,52 @@
+{
+  "id": 15486,
+  "game_id": 1353,
+  "game_slug": "teenagent",
+  "name": "TeenAgent",
+  "year": 1995,
+  "user": "appoloin",
+  "runner": "scummvm",
+  "slug": "teenagent-ms-dos",
+  "version": "MS-DOS",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-12T16:33:52.183087Z",
+  "updated_at": "2019-09-12T16:33:52.183117Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207658753,
+  "gogslug": "teenagent",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "teenagent"
+    },
+    "files": [
+      {
+        "game": "N/A:Select the file TEENAGENT.EXE"
+      }
+    ],
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.DAT\" -o -iname \"*.RES\"  \\) -exec cp {} \"$dst\" \\;",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/selectcopy.sh"
+      },
+      {
+        "execute": {
+          "args": "$game $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Select the file TEENAGENT.EXE\ngame:\n  game_id: teenagent\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.DAT\" -o -iname \"*.RES\"  \\) -exec cp {}\n      \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/selectcopy.sh\n"
+}

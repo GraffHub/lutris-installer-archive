@@ -21,38 +21,42 @@
   "gogslug": "redout_solar_challenge_edition",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
-      "exe": "drive_c/GOG Games/Redout/redout.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Redout/redout.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "setup": "N/A: Select the installer downloaded from GOG and make sure the accompanying binary files are in the same directory"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Redout: Solar Challenge Edition",
           "prefix": "$GAMEDIR",
           "executable": "setup",
-          "name": "wineexec",
-          "args": "/SP- /VERYSILENT /SUPPRESSMSGBOXES /NOCANCEL /NORESTART"
+          "args": "/SP- /VERYSILENT /SUPPRESSMSGBOXES /NOCANCEL /NORESTART",
+          "description": "Installing Redout: Solar Challenge Edition",
+          "name": "wineexec"
         }
       },
       {
@@ -63,11 +67,7 @@
           "app": "win7"
         }
       }
-    ],
-    "wine": {
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: 'N/A: Select the installer downloaded from GOG and make sure the accompanying\n    binary files are in the same directory'\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Redout/redout.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /VERYSILENT /SUPPRESSMSGBOXES /NOCANCEL /NORESTART\n    description: 'Installing Redout: Solar Challenge Edition'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
 }

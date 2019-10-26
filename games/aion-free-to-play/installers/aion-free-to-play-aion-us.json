@@ -21,31 +21,34 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "disable_runtime": "true"
+    },
     "game": {
-      "exe": "drive_c/Program Files/Gameforge/NCLauncher/NCLauncher.exe",
-      "arch": "win32"
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Gameforge/NCLauncher/NCLauncher.exe"
+    },
+    "wine": {
+      "version": "staging-3.18-x86_64"
     },
     "files": [
       {
         "setup": "http://aion.patcher.ncsoft.com/AION/aioninstaller/AionInstaller.exe"
       }
     ],
-    "system": {
-      "disable_runtime": "true"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Setting Wine to Windows 7 64-Bit",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Setting Wine to Windows 7 64-Bit",
           "name": "winetricks",
           "app": "win7"
         }
@@ -57,10 +60,7 @@
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "version": "staging-3.18-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: http://aion.patcher.ncsoft.com/AION/aioninstaller/AionInstaller.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Gameforge/NCLauncher/NCLauncher.exe\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Wine to Windows 7 64-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: 'true'\nwine:\n  version: staging-3.18-x86_64\n"
 }

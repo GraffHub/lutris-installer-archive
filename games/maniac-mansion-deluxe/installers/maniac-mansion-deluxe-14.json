@@ -22,66 +22,66 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
     },
     "files": [
       {
-        "game": "http://www.adventurecorner.de/dl/mmd14setup.exe",
-        "exe": "drive_c/Program Files/LucasFan Games/MMD/winsetup.exe",
         "arch": "win32",
-        "prefix": "$GAMEDIR"
+        "prefix": "$GAMEDIR",
+        "game": "http://www.adventurecorner.de/dl/mmd14setup.exe",
+        "exe": "drive_c/Program Files/LucasFan Games/MMD/winsetup.exe"
       }
     ],
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "silent": false,
           "prefix": "$GAMEDIR",
-          "app": "sound=alsa",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
+          "name": "winetricks",
           "silent": false,
-          "prefix": "$GAMEDIR",
-          "app": "vd=640x480",
-          "name": "winetricks"
+          "app": "sound=alsa"
         }
       },
       {
         "task": {
-          "description": "Installing MMD",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "silent": false,
+          "app": "vd=640x480"
+        }
+      },
+      {
+        "task": {
           "prefix": "$GAMEDIR",
           "executable": "game",
+          "description": "Installing MMD",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Disabling unused WINE features",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "sandbox",
-          "name": "winetricks"
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "silent": true,
+          "app": "sandbox"
         }
       }
     ]

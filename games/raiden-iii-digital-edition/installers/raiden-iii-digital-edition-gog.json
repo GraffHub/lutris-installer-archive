@@ -22,62 +22,62 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/GOG Games/Raiden III/Raiden3.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Raiden III/Raiden3.exe"
     },
     "files": [
       {
         "game": "N/A:Please select the Windows installer provided by GOG"
       }
     ],
+    "gogid": "raiden_3_digital_edition",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing d3dx9_36 dll",
-          "silent": false,
           "prefix": "$GAMEDIR",
-          "app": "d3dx9_36",
-          "name": "winetricks"
+          "description": "Installing d3dx9_36 dll",
+          "name": "winetricks",
+          "silent": false,
+          "app": "d3dx9_36"
         }
       },
       {
         "task": {
-          "description": "Installing Raiden III",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "description": "Installing Raiden III",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Disabling unused WINE features",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "sandbox",
-          "name": "winetricks"
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "silent": true,
+          "app": "sandbox"
         }
       }
-    ],
-    "gogid": "raiden_3_digital_edition"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the Windows installer provided by GOG\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Raiden III/Raiden3.exe\n  prefix: $GAMEDIR\ngogid: raiden_3_digital_edition\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: d3dx9_36\n    description: Installing d3dx9_36 dll\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing Raiden III\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

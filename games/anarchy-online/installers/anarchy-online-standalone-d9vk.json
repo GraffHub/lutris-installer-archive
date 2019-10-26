@@ -22,9 +22,15 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "version": "ge-protonified-4.10-x86_64",
+      "dxvk_version": "d9vk-0.13f",
+      "esync": true
     },
     "files": [
       {
@@ -34,12 +40,6 @@
         "AO_installer": "http://update.anarchy-online.com/download/AO/AnarchyOnline_EP2.exe"
       }
     ],
-    "wine": {
-      "dxvk_version": "d9vk-0.13f",
-      "esync": true,
-      "dxvk": true,
-      "version": "ge-protonified-4.10-x86_64"
-    },
     "installer": [
       {
         "extract": {
@@ -55,26 +55,26 @@
       },
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing dependencies",
           "prefix": "$GAMEDIR",
-          "app": "d3dcompiler_43 d3dx9 arial",
-          "name": "winetricks"
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "app": "d3dcompiler_43 d3dx9 arial"
         }
       },
       {
         "task": {
-          "description": "Running Anarchy Online Installer. Please do not run the game until this script finishes installing.",
-          "prefix": "$GAMEDIR",
-          "executable": "AO_installer",
           "arch": "win64",
+          "executable": "AO_installer",
+          "prefix": "$GAMEDIR",
+          "description": "Running Anarchy Online Installer. Please do not run the game until this script finishes installing.",
           "name": "wineexec"
         }
       }

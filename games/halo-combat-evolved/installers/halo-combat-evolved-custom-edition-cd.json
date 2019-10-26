@@ -11,40 +11,41 @@
   "description": null,
   "notes": "Requires product key.\r\n\r\nBefore install, you must drag the halocesetup_en_1.00.exe from http://hce.halomaps.org/?fid=410 into your halo-combat-evolved folder.",
   "created_at": "2017-08-20T08:33:34.163000Z",
-  "updated_at": "2019-03-21T02:08:09.622757Z",
+  "updated_at": "2019-09-09T01:30:53.013371Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "requires": "halo-combat-evolved-cd",
+    "system": {
+      "disable_runtime": false
+    },
     "game": {
-      "exe": "drive_c/Program Files/Microsoft Games/Halo Custom Edition/haloce.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Microsoft Games/Halo Custom Edition/haloce.exe"
     },
     "files": [
       {
         "installer": {
-          "filename": "halocesetup_en_1.00.exe",
-          "url": "http://dl.halomaps.org/dl.cfm?fid=410&f=halocesetup%5Fen%5F1%2E00%2Eexe&S=3&h=779B3681498A06888C40C90A698F0DC0"
+          "url": "http://dl.halomaps.org/dl.cfm?fid=410&f=halocesetup%5Fen%5F1%2E00%2Eexe&S=3&h=779B3681498A06888C40C90A698F0DC0",
+          "filename": "halocesetup_en_1.00.exe"
         }
       },
       {
         "patch": "http://halo.bungie.net/images/games/halopc/patch/110/haloce-patch-1.0.10.exe"
       }
     ],
-    "system": {
-      "disable_runtime": false
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -58,22 +59,21 @@
       },
       {
         "task": {
-          "description": "Running setup for Halo CE. Leave paths default and uncheck installing Gamespy Arcade.",
           "prefix": "$GAMEDIR",
           "executable": "installer",
+          "description": "Running setup for Halo CE. Leave paths default and uncheck installing Gamespy Arcade.",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Installing latest patch.",
           "prefix": "$GAMEDIR",
           "executable": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Halo Custom Edition/haloupdate.exe",
+          "description": "Installing latest patch.",
           "name": "wineexec"
         }
       }
-    ],
-    "requires": "halo-combat-evolved-cd"
+    ]
   },
   "content": "files:\n- installer:\n    filename: halocesetup_en_1.00.exe\n    url: http://dl.halomaps.org/dl.cfm?fid=410&f=halocesetup%5Fen%5F1%2E00%2Eexe&S=3&h=779B3681498A06888C40C90A698F0DC0\n- patch: http://halo.bungie.net/images/games/halopc/patch/110/haloce-patch-1.0.10.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Games/Halo Custom Edition/haloce.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running setup for Halo CE. Leave paths default and uncheck installing\n      Gamespy Arcade.\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing latest patch.\n    executable: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Halo Custom Edition/haloupdate.exe\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: halo-combat-evolved-cd\nsystem:\n  disable_runtime: false\n"
 }

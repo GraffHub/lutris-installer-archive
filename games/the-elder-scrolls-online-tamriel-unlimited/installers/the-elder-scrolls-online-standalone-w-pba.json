@@ -21,10 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "VBLANK_MODE": 0,
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      }
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe"
+    },
+    "wine": {
+      "version": "esync-staging-pba-3.16-x86_64"
     },
     "files": [
       {
@@ -34,13 +44,6 @@
         "unzip_tar": "http://lutris.net/files/tools/unzip.tar.gz"
       }
     ],
-    "system": {
-      "env": {
-        "VBLANK_MODE": 0,
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": 1
-      }
-    },
     "installer": [
       {
         "extract": {
@@ -50,17 +53,17 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing vcrun2010",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing vcrun2010",
           "name": "winetricks",
           "app": "vcrun2010"
         }
@@ -97,12 +100,12 @@
       },
       {
         "task": {
-          "name": "set_regedit",
           "description": "Adding DLL Overrides",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "native",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "key": "d3dcompiler_47",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
@@ -116,18 +119,15 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "--update",
-          "description": "Updating Wine prefix.",
           "prefix": "$GAMEDIR",
           "executable": "wineboot",
-          "arch": "win64"
+          "description": "Updating Wine prefix.",
+          "args": "--update",
+          "arch": "win64",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "version": "esync-staging-pba-3.16-x86_64"
-    }
+    ]
   },
   "content": "files:\n- install_file: http://elderscrolls-a.akamaihd.net/products/BNA_Launcher/Install_ESO.exe\n- unzip_tar: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: unzip_tar\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Installing vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    args: -c \"mkdir $GAMEDIR/tmp\"\n    file: /bin/sh\n- move:\n    dst: $GAMEDIR/tmp/\n    src: install_file\n- execute:\n    args: $GAMEDIR/tmp/Install_ESO.exe -d $GAMEDIR/tmp/Install_ESO\n    file: $CACHE/unzip\n- execute:\n    args: $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1.zip -d $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1\n    file: $CACHE/unzip\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher\n    src: $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1/$IA_PROJECT_DIR$/src_path/Launcher\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3dcompiler_47\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- chmodx: $GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe\n- execute:\n    args: -c \"rm -rf $GAMEDIR/tmp\"\n    file: /bin/sh\n- task:\n    arch: win64\n    args: --update\n    description: Updating Wine prefix.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    VBLANK_MODE: 0\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\nwine:\n  version: esync-staging-pba-3.16-x86_64\n"
 }

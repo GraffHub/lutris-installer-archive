@@ -21,10 +21,25 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "PBA_DISABLE": 0
+      }
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Adobe/Adobe Creative Cloud/ACC/Creative Cloud.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Adobe/Adobe Creative Cloud/ACC/Creative Cloud.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "ge-protonified-4.10-x86_64"
     },
     "files": [
       {
@@ -34,23 +49,13 @@
         "offline_files": "http://ccmdl.adobe.com/AdobeProducts/KCCC/1/win32/ACCCx4_8_2_478.zip"
       }
     ],
-    "system": {
-      "env": {
-        "PBA_DISABLE": 0,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": 1
-      },
-      "pulse_latency": true
-    },
     "installer": [
       {
         "task": {
-          "silent": true,
           "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "silent": true,
           "app": "fontsmooth=rgb gdiplus vcrun2008 vcrun2010 vcrun2012 vcrun2013 vcrun2015 vcrun2017 atmlib msxml3 msxml6 corefonts msls31 riched20 tahoma win81"
         }
       },
@@ -69,20 +74,15 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "description": "Installing Creative Cloud... - WARNING Please Quit CC From Menu and signin after Installation finished.",
           "prefix": "$GAMEDIR",
           "executable": "$CACHE/CreativeCloud-Setup/CreativeCloudSet-Up.exe",
+          "description": "Installing Creative Cloud... - WARNING Please Quit CC From Menu and signin after Installation finished.",
           "arch": "win64",
-          "exclude_processes": "AGSService.exe AdobeIPCBroker.exe AdobeUpdateService.exe \"Adobe Desktop Service.exe\""
+          "exclude_processes": "AGSService.exe AdobeIPCBroker.exe AdobeUpdateService.exe \"Adobe Desktop Service.exe\"",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "dxvk": true,
-      "version": "ge-protonified-4.10-x86_64"
-    }
+    ]
   },
   "content": "files:\n- installer: https://ccmdls.adobe.com/AdobeProducts/KCCC/1/win32/CreativeCloudSet-Up.exe\n- offline_files: http://ccmdl.adobe.com/AdobeProducts/KCCC/1/win32/ACCCx4_8_2_478.zip\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Adobe/Adobe Creative Cloud/ACC/Creative\n    Cloud.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: fontsmooth=rgb gdiplus vcrun2008 vcrun2010 vcrun2012 vcrun2013 vcrun2015\n      vcrun2017 atmlib msxml3 msxml6 corefonts msls31 riched20 tahoma win81\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- extract:\n    dst: $CACHE/CreativeCloud-Setup\n    file: offline_files\n    format: zip\n- move:\n    dst: $CACHE/CreativeCloud-Setup\n    src: installer\n- task:\n    arch: win64\n    description: Installing Creative Cloud... - WARNING Please Quit CC From Menu and\n      signin after Installation finished.\n    exclude_processes: AGSService.exe AdobeIPCBroker.exe AdobeUpdateService.exe \"Adobe\n      Desktop Service.exe\"\n    executable: $CACHE/CreativeCloud-Setup/CreativeCloudSet-Up.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    PBA_DISABLE: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  version: ge-protonified-4.10-x86_64\n"
 }

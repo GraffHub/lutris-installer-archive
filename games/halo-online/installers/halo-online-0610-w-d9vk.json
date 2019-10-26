@@ -21,11 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "DXVK_HUD": "compiler"
+    },
     "game": {
-      "exe": "drive_c/Program Files/Halo Online/eldorado.exe",
       "arch": "win64",
       "prefix": "$GAMEDIR",
-      "args": "--no-sandbox"
+      "args": "--no-sandbox",
+      "exe": "drive_c/Program Files/Halo Online/eldorado.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "dxvk_version": "d9vk-8930577d"
     },
     "files": [
       {
@@ -36,20 +44,16 @@
       },
       {
         "d9vk8930577d": {
-          "filename": "d9vk-master.8930577d229f9b600699f45c6b087ca4af42d613.zip",
-          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/452/artifacts/download"
+          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/452/artifacts/download",
+          "filename": "d9vk-master.8930577d229f9b600699f45c6b087ca4af42d613.zip"
         }
       }
     ],
-    "system": {
-      "pulse_latency": true,
-      "DXVK_HUD": "compiler"
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -90,11 +94,7 @@
           "app": "corefonts vcrun2010 vcrun2012 win7"
         }
       }
-    ],
-    "wine": {
-      "dxvk_version": "d9vk-8930577d",
-      "dxvk": true
-    }
+    ]
   },
   "content": "files:\n- archive: N/A:Halo Online archive needed to proceed\n- upgrade: https://cdn.discordapp.com/attachments/287361838767800320/459847345526407178/dist_0.6.0_to_0.6.1_changeset_r2_2.7z\n- d9vk8930577d:\n    filename: d9vk-master.8930577d229f9b600699f45c6b087ca4af42d613.zip\n    url: https://git.froggi.es/joshua/d9vk/-/jobs/452/artifacts/download\ngame:\n  arch: win64\n  args: --no-sandbox\n  exe: drive_c/Program Files/Halo Online/eldorado.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/d9vk/\n    file: d9vk8930577d\n- move:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-8930577d/\n    src: $CACHE/d9vk/dxvk-release/\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Halo Online\"\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Halo Online\n    src: archive\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Halo Online\n    src: upgrade\n- task:\n    app: corefonts vcrun2010 vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  DXVK_HUD: compiler\n  pulse_latency: true\nwine:\n  dxvk: true\n  dxvk_version: d9vk-8930577d\n"
 }

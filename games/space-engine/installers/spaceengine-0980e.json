@@ -1,0 +1,70 @@
+{
+  "id": 12743,
+  "game_id": 17343,
+  "game_slug": "space-engine",
+  "name": "SpaceEngine",
+  "year": 2014,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "spaceengine-0980e",
+  "version": "0.9.8.0e",
+  "description": "Install the 9.8.0 base simulator, and then installs the 9.8.0e patch. Should work out of the box.",
+  "notes": "",
+  "created_at": "2019-04-12T01:37:07.315000Z",
+  "updated_at": "2019-09-08T23:32:34.157710Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 314650,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/SpaceEngine/system/SpaceEngine.exe"
+    },
+    "wine": {
+      "version": "tkg-4.5-x86_64"
+    },
+    "files": [
+      {
+        "setup": {
+          "url": "http://spaceengine.funix.cz/engine/latest/SE-0980-setup.exe",
+          "filename": "SE-0980-setup.exe",
+          "referer": "https://spaceengine.funix.cz/"
+        }
+      },
+      {
+        "patch": "http://spaceengine.funix.cz/engine/latest/SE-0980e-patch.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "setup",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES /SILENT /NOCANCEL"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/SpaceEngine",
+          "src": "patch"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: SE-0980-setup.exe\n    referer: https://spaceengine.funix.cz/\n    url: http://spaceengine.funix.cz/engine/latest/SE-0980-setup.exe\n- patch: http://spaceengine.funix.cz/engine/latest/SE-0980e-patch.zip\ngame:\n  arch: win64\n  exe: drive_c/SpaceEngine/system/SpaceEngine.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /SP- /SUPPRESSMSGBOXES /SILENT /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/SpaceEngine\n    src: patch\nwine:\n  version: tkg-4.5-x86_64\n"
+}

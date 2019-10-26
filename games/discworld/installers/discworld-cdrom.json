@@ -1,0 +1,53 @@
+{
+  "id": 15582,
+  "game_id": 11826,
+  "game_slug": "discworld",
+  "name": "Discworld",
+  "year": 1995,
+  "user": "appoloin",
+  "runner": "scummvm",
+  "slug": "discworld-cdrom",
+  "version": "CDrom",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-15T16:58:40.124561Z",
+  "updated_at": "2019-09-15T16:58:40.124599Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "tinsel"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nfind \"$src\" -type f \\( -name \"*.IDX\" -o -name \"*.GRA\" -o -name \"*.SCN\" -o -name \"*.SMP\" -o -name \"*.TXT\" -o -name \"FAT.OPL\" -o -name \"MIDI.DAT\"  -o -name \"INDEX\" -o -name \"SAMPLE.AD\" -o -name \"SAMPLE.OPL\" \\) -exec cp {} \"$dst\" \\;",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/selectcopy.sh"
+      },
+      {
+        "insert-disc": {
+          "requires": "DWU.EXE",
+          "description": "Please insert disc"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC/ $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  game_id: tinsel\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      find \"$src\" -type f \\( -name \"*.IDX\" -o -name \"*.GRA\" -o -name \"*.SCN\" -o -name\n      \"*.SMP\" -o -name \"*.TXT\" -o -name \"FAT.OPL\" -o -name \"MIDI.DAT\"  -o -name \"INDEX\"\n      -o -name \"SAMPLE.AD\" -o -name \"SAMPLE.OPL\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- insert-disc:\n    description: Please insert disc\n    requires: DWU.EXE\n- execute:\n    args: $DISC/ $GAMEDIR\n    file: $CACHE/selectcopy.sh\n"
+}

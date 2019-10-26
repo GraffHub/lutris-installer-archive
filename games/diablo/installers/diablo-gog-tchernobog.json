@@ -8,13 +8,13 @@
   "runner": "wine",
   "slug": "diablo-gog-tchernobog",
   "version": "GOG + Tchernobog",
-  "description": "This script will install Diablo GOG edition with Tchernobog mod, it's the new name and last version of the Belzebub mod version. It has multiplayer  and  others new features/corrected bugs. To find others players for online games, ask on Discord: https://discord.gg/82BaSAP.",
-  "notes": "During install please let all options by default.\r\n\r\nTchernobog site: https://mod.diablo.noktis.pl/\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "description": "This script will install \"Diablo\" GOG edition with Tchernobog mod, it's the new name and last version of the Belzebub mod. It has multiplayer  and  others new features/corrected bugs. \r\nDuring install please let all options by default.\r\nTchernobog site: https://mod.diablo.noktis.pl/\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- To find others players for online games, ask on Discord: https://discord.gg/82BaSAP.\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2019-05-04T15:36:30.330000Z",
-  "updated_at": "2019-05-18T08:06:37.990411Z",
+  "updated_at": "2019-09-09T00:25:39.496339Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": 1412601690,
@@ -22,10 +22,11 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Diablo Tchernobog/Tchernobog.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Diablo Tchernobog/Tchernobog.exe"
     },
+    "custom-name": "Diablo Tchernobog GOG",
     "files": [
       {
         "installer": "N/A:Select the installer downloaded from GOG"
@@ -37,19 +38,19 @@
     "installer": [
       {
         "task": {
-          "description": "Creating WINE prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating WINE prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Running Setup, please wait...",
           "prefix": "$CACHE",
           "executable": "installer",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES"
+          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
+          "description": "Running Setup, please wait...",
+          "name": "wineexec"
         }
       },
       {
@@ -67,37 +68,37 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "arch": "win64",
+          "type": "REG_SZ",
           "key": "background",
-          "arch": "win64",
-          "type": "REG_SZ"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "key": "ActiveTitle",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "ActiveTitle",
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "242 59 13",
-          "key": "GradientActiveTitle",
           "arch": "win64",
-          "type": "REG_SZ"
+          "type": "REG_SZ",
+          "key": "GradientActiveTitle",
+          "name": "set_regedit"
         }
       }
     ]
   },
-  "content": "files:\n- installer: N/A:Select the installer downloaded from GOG\n- tchernobog: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Diablo/Tchernobog.zip\ngame:\n  arch: win64\n  exe: drive_c/Diablo Tchernobog/Tchernobog.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n    prefix: $CACHE\n- extract:\n    dst: $GAMEDIR/drive_c/Diablo Tchernobog/\n    file: tchernobog\n- move:\n    dst: $GAMEDIR/drive_c/Diablo Tchernobog/\n    src: $CACHE/drive_c/GOG Games/Diablo/DIABDAT.MPQ\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 242 59 13\n"
+  "content": "custom-name: Diablo Tchernobog GOG\nfiles:\n- installer: N/A:Select the installer downloaded from GOG\n- tchernobog: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Diablo/Tchernobog.zip\ngame:\n  arch: win64\n  exe: drive_c/Diablo Tchernobog/Tchernobog.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n    prefix: $CACHE\n- extract:\n    dst: $GAMEDIR/drive_c/Diablo Tchernobog/\n    file: tchernobog\n- move:\n    dst: $GAMEDIR/drive_c/Diablo Tchernobog/\n    src: $CACHE/drive_c/GOG Games/Diablo/DIABDAT.MPQ\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 242 59 13\n"
 }

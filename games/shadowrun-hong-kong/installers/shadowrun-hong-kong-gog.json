@@ -8,49 +8,42 @@
   "runner": "linux",
   "slug": "shadowrun-hong-kong-gog",
   "version": "GOG",
-  "description": "",
+  "description": null,
   "notes": "Requires the latest version of GOG's Linux installer.",
-  "created_at": "2015-08-23T19:00:19.200314Z",
-  "updated_at": "2016-04-15T15:25:44.141125Z",
+  "created_at": "2015-08-23T19:00:19.200000Z",
+  "updated_at": "2019-09-09T01:40:14.148017Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 1,
   "rating": "",
   "steamid": 346940,
   "gogid": 1436866438,
   "gogslug": "shadowrun_hong_kong_extended_edition",
   "humblestoreid": "",
   "script": {
-    "exe": "Game/start.sh",
+    "game": {
+      "exe": "start.sh"
+    },
     "files": [
       {
-        "game": "N/A:Select the Linux installer downloaded from GOG"
-      },
-      {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+        "goginstaller": "N/A:Please select the GOG.com Linux installer"
       }
     ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE/GOG",
+          "format": "zip",
+          "file": "goginstaller"
         }
       },
       {
-        "execute": {
-          "description": "Extracting game data...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/data/noarch"
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/GOG/data/noarch/"
         }
       }
     ]
   },
-  "content": "exe: Game/start.sh\nfiles:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n"
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Linux installer\ngame:\n  exe: start.sh\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/GOG/data/noarch/\n"
 }

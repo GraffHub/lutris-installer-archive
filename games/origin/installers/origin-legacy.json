@@ -22,32 +22,32 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files/Origin/Origin.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Origin/Origin.exe"
+    },
+    "wine": {
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
       }
     ],
-    "wine": {
-      "version": "tkg-4.0-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Hiding annoying dialogs...",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Hiding annoying dialogs...",
           "name": "winetricks",
           "app": "nocrashdialog"
         }
@@ -55,12 +55,12 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting version to xp...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "winxp",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win32"
+          "name": "set_regedit"
         }
       },
       {
@@ -71,12 +71,12 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "description": "Installing Origin...",
           "prefix": "$GAMEDIR",
           "executable": "origin",
+          "description": "Installing Origin...",
           "arch": "win32",
-          "exclude_processes": "Origin.exe OriginClientService.exe"
+          "exclude_processes": "Origin.exe OriginClientService.exe",
+          "name": "wineexec"
         }
       },
       {

@@ -1,0 +1,84 @@
+{
+  "id": 15221,
+  "game_id": 4300,
+  "game_slug": "city-of-heroes",
+  "name": "City of Heroes",
+  "year": null,
+  "user": "nuggetsauce",
+  "runner": "wine",
+  "slug": "city-of-heroes-homecoming-32bit",
+  "version": "Homecoming - 32bit",
+  "description": "For additional install instructions:\r\nhttps://forums.homecomingservers.com/topic/584-dredds-guide-to-loading-city-of-heroes/",
+  "notes": "When run for the first  time it will ask for an install directory.  You can use what is selected by default.\r\n\r\nThe Tequila client may have issues downloading some of the other software it can run like paragon chat.  This will prevent the play button from appearing.  You can by pass that by just double clicking on Homecoming in the navbar to load the game.\r\n\r\nAfter loading the game you might need to hit \"Alt-Enter\" to change to windowed mode as the resolution may not be supported.",
+  "created_at": "2019-08-31T16:27:28.542000Z",
+  "updated_at": "2019-09-08T23:22:32.403285Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 29550,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Games/CoH/tequila.exe"
+    },
+    "files": [
+      {
+        "client": "http://patch.savecoh.com/tequila.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Installing Corefonts",
+          "name": "winetricks",
+          "silent": true,
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Installing MS .NET 3.5",
+          "name": "winetricks",
+          "silent": true,
+          "app": "dotnet35"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Installing DirectInput 8",
+          "name": "winetricks",
+          "silent": true,
+          "app": "dinput8"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR/drive_c/Games/CoH\""
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Games/CoH/tequila.exe",
+          "src": "client"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- client: http://patch.savecoh.com/tequila.exe\ngame:\n  arch: win32\n  exe: drive_c/Games/CoH/tequila.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dotnet35\n    description: Installing MS .NET 3.5\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dinput8\n    description: Installing DirectInput 8\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Games/CoH\"\n- move:\n    dst: $GAMEDIR/drive_c/Games/CoH/tequila.exe\n    src: client\n"
+}

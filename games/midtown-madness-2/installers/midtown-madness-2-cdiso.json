@@ -22,9 +22,16 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files/Microsoft Games/Midtown Madness 2/Midtown2.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Microsoft Games/Midtown Madness 2/Midtown2.exe"
+    },
+    "wine": {
+      "overrides": {
+        "ddraw": "native"
+      },
+      "dxvk": true,
+      "version": "staging-3.16-i386"
     },
     "files": [
       {
@@ -37,79 +44,72 @@
         "dgvoodoo": "http://www.dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_4.zip"
       }
     ],
-    "wine": {
-      "overrides": {
-        "ddraw": "native"
-      },
-      "dxvk": true,
-      "version": "staging-3.16-i386"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix...",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix...",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing DirectMusic...",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Installing DirectMusic...",
           "name": "winetricks",
           "app": "directmusic"
         }
       },
       {
         "task": {
-          "description": "Installing Indeo codec...",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Installing Indeo codec...",
           "name": "winetricks",
           "app": "icodecs"
         }
       },
       {
         "task": {
-          "description": "Installing Midtown Madness 2...",
           "prefix": "$GAMEDIR",
           "executable": "setup",
+          "description": "Installing Midtown Madness 2...",
           "name": "wineexec"
         }
       },
       {
         "merge": {
-          "description": "Installing No-CD executable...",
           "dst": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/",
+          "description": "Installing No-CD executable...",
           "src": "nocd"
         }
       },
       {
         "extract": {
-          "description": "Extracting dgVoodoo2 archive...",
           "dst": "$GAMEDIR/drive_c/dgvoodoo/",
+          "description": "Extracting dgVoodoo2 archive...",
           "file": "dgvoodoo"
         }
       },
       {
         "move": {
-          "description": "Installing dgVoodoo2 (1/3)...",
           "dst": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/",
+          "description": "Installing dgVoodoo2 (1/3)...",
           "src": "$GAMEDIR/drive_c/dgvoodoo/dgVoodooCpl.exe"
         }
       },
       {
         "move": {
-          "description": "Installing dgVoodoo2 (2/3)...",
           "dst": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/",
+          "description": "Installing dgVoodoo2 (2/3)...",
           "src": "$GAMEDIR/drive_c/dgvoodoo/dgVoodoo.conf"
         }
       },
       {
         "merge": {
-          "description": "Installing dgVoodoo (3/3)...",
           "dst": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/",
+          "description": "Installing dgVoodoo (3/3)...",
           "src": "$GAMEDIR/drive_c/dgvoodoo/MS/"
         }
       }

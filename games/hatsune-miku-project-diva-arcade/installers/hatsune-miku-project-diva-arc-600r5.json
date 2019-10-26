@@ -21,10 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": "true",
+      "env": {
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1"
+      }
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/PDA/elac.exe",
       "prefix": "$GAMEDIR",
-      "args": "\"diva.exe -hdtv1080\""
+      "args": "\"diva.exe -hdtv1080\"",
+      "exe": "$GAMEDIR/drive_c/PDA/elac.exe"
+    },
+    "wine": {
+      "single_cpu": true,
+      "version": "tkg-4.6-x86_64"
     },
     "files": [
       {
@@ -32,48 +44,40 @@
       },
       {
         "elac": {
-          "filename": "elac.zip",
-          "url": "https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental"
+          "url": "https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental",
+          "filename": "elac.zip"
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
-      },
-      "pulse_latency": "true"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix...",
-          "install_gecko": false,
-          "prefix": "$GAMEDIR",
           "install_mono": false,
-          "name": "create_prefix"
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix...",
+          "name": "create_prefix",
+          "install_gecko": false
         }
       },
       {
         "task": {
-          "description": "Installing quartz...",
           "prefix": "$GAMEDIR",
-          "app": "quartz",
-          "name": "winetricks"
+          "description": "Installing quartz...",
+          "name": "winetricks",
+          "app": "quartz"
         }
       },
       {
         "extract": {
-          "description": "Extracting game data...",
           "dst": "$GAMEDIR/drive_c/PDA",
+          "description": "Extracting game data...",
           "file": "gamedata"
         }
       },
       {
         "extract": {
-          "description": "Extracting ELAC...",
           "dst": "$GAMEDIR/drive_c/PDA",
+          "description": "Extracting ELAC...",
           "file": "elac"
         }
       },
@@ -87,15 +91,11 @@
         "task": {
           "prefix": "$GAMEDIR",
           "executable": "$GAMEDIR/drive_c/PDA/prepatch.exe",
-          "name": "wineexec",
-          "args": "diva.exe"
+          "args": "diva.exe",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "single_cpu": true,
-      "version": "tkg-4.6-x86_64"
-    }
+    ]
   },
   "content": "files:\n- gamedata: N/A:Select the archive containing the game\n- elac:\n    filename: elac.zip\n    url: https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental\ngame:\n  args: '\"diva.exe -hdtv1080\"'\n  exe: $GAMEDIR/drive_c/PDA/elac.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    description: Installing quartz...\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting game data...\n    dst: $GAMEDIR/drive_c/PDA\n    file: gamedata\n- extract:\n    description: Extracting ELAC...\n    dst: $GAMEDIR/drive_c/PDA\n    file: elac\n- merge:\n    dst: $GAMEDIR/drive_c/PDA/bak/\n    src: $GAMEDIR/drive_c/PDA/diva.exe\n- task:\n    args: diva.exe\n    executable: $GAMEDIR/drive_c/PDA/prepatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\n  pulse_latency: 'true'\nwine:\n  single_cpu: true\n  version: tkg-4.6-x86_64\n"
 }

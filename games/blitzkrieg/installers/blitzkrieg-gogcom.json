@@ -21,58 +21,58 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "disable_runtime": true
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/game/Run/game.exe",
       "arch": "win32",
       "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/game"
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "exe": "$GAMEDIR/drive_c/game/Run/game.exe"
     },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
-    "system": {
-      "disable_runtime": true
-    },
+    "gogid": "blitzkrieg",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Disabling unused WINE features",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "sandbox",
-          "name": "winetricks"
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "silent": true,
+          "app": "sandbox"
         }
       }
-    ],
-    "gogid": "blitzkrieg"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Run/game.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ngogid: blitzkrieg\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: true\n"
 }

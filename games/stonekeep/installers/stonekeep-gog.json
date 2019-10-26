@@ -1,0 +1,85 @@
+{
+  "id": 13402,
+  "game_id": 18577,
+  "game_slug": "stonekeep",
+  "name": "Stonekeep",
+  "year": null,
+  "user": "marciocr",
+  "runner": "dosbox",
+  "slug": "stonekeep-gog",
+  "version": "GOG",
+  "description": "Uses the files from the Windows installer from GOG.",
+  "notes": "",
+  "created_at": "2019-05-08T21:58:17.181000Z",
+  "updated_at": "2019-05-18T06:41:53.278901Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 613240,
+  "gogid": 1207658671,
+  "gogslug": "stonekeep",
+  "humblestoreid": "",
+  "script": {
+    "main_file": "DOSBOX/dosboxStonekeep_lutris.conf",
+    "game": {
+      "config_file": "$GAMEDIR/dosboxStonekeep.conf"
+    },
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file2"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE\" \"$file1\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/app"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/DOSBOX",
+          "src": "$GAMEDIR/dosboxStonekeep_single.conf"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxStonekeep.conf",
+          "section": "render",
+          "key": "aspect",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxStonekeep.conf",
+          "section": "sdl",
+          "key": "fullscreen",
+          "value": false
+        }
+      },
+      {
+        "execute": {
+          "command": "echo -e \"[IPX]\\n# ipx -- Enable ipx over UDP/IP emulation.\\n\\nipx=false\\n\\n[autoexec]# Lines in this section will be run at startup.\\n@echo off\\ncls\\nmount C \"..\"\\nmount d \"../CD\" -t cdrom\\nC:\\ncls\\nSK.EXE\\nEXIT\" > '$GAMEDIR/DOSBOX/dosboxStonekeep_lutris.conf'"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosboxStonekeep.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxStonekeep_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxStonekeep.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxStonekeep.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- execute:\n    command: echo -e \"[IPX]\\n# ipx -- Enable ipx over UDP/IP emulation.\\n\\nipx=false\\n\\n[autoexec]#\n      Lines in this section will be run at startup.\\n@echo off\\ncls\\nmount C \"..\"\\nmount\n      d \"../CD\" -t cdrom\\nC:\\ncls\\nSK.EXE\\nEXIT\" > '$GAMEDIR/DOSBOX/dosboxStonekeep_lutris.conf'\nmain_file: DOSBOX/dosboxStonekeep_lutris.conf\n"
+}

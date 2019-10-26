@@ -8,13 +8,13 @@
   "runner": "wine",
   "slug": "full-tilt-pinball-full-tilt-full-game",
   "version": "Full Tilt! (Full Game)",
-  "description": null,
-  "notes": "",
-  "created_at": "2019-05-18T11:02:52.076583Z",
-  "updated_at": "2019-05-18T11:02:52.076619Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "description": "This downloads the setup files to Full Tilt! from the freeware game Marble Drop, also made by Maxis, which contains both games.",
+  "notes": "You can remove the C:\\marble-drop-iso\\ directory entirely after installation if you want to save disk space.",
+  "created_at": "2019-05-18T11:02:52.076000Z",
+  "updated_at": "2019-09-09T01:49:44.391734Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
@@ -22,8 +22,8 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/",
-      "prefix": "$GAMEDIR/"
+      "prefix": "$GAMEDIR/",
+      "exe": "$GAMEDIR/drive_c/ProgramData/Microsoft/Windows/Start Menu/Programs/Maxis/FullTilt!.lnk"
     },
     "files": [
       {
@@ -33,16 +33,26 @@
     "installer": [
       {
         "extract": {
-          "dst": "$GAMEDIR/extracted-iso",
+          "dst": "$GAMEDIR/drive_c/marble-drop-iso",
           "file": "marble_drop_iso"
         }
       },
       {
-        "execute": {
-          "file": "$GAMEDIR/extracted-iso/FullTilt/setup.exe"
+        "write_file": {
+          "content": "[InstallShield Silent]\nVersion=v3.00.000\nFile=Response File\n[Application]\nName=FullTilt!\nVersion=1.1\nCompany=Maxis\n[DlgOrder]\nDlg0=Welcome-0\nCount=4\nDlg1=AskOptions-0\nDlg2=AskDestPath-0\nDlg3=MessageBox-0\n[Welcome-0]\nResult=1\n[AskOptions-0]\nResult=1\nSel-0=0\nSel-1=1\n[AskDestPath-0]\nszPath=C:\\Maxis\\FullTilt\nResult=1\n[MessageBox-0]\nResult=1\n",
+          "file": "$GAMEDIR/drive_c/marble-drop-iso/FullTilt/setup.iss"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "C:\\marble-drop-iso\\FullTilt\\setup.exe",
+          "args": "-s -f1 setup.iss",
+          "name": "wineexec",
+          "working_dir": "$GAMEDIR/drive_c/marble-drop-iso/FullTilt/"
         }
       }
     ]
   },
-  "content": "files:\n- marble_drop_iso: https://archive.org/download/marble-drop/Marble%20Drop%20%281997%29%28Maxis%29.iso\ngame:\n  exe: $GAMEDIR/\n  prefix: $GAMEDIR/\ninstaller:\n- extract:\n    dst: $GAMEDIR/extracted-iso\n    file: marble_drop_iso\n- execute:\n    file: $GAMEDIR/extracted-iso/FullTilt/setup.exe\n"
+  "content": "files:\n- marble_drop_iso: https://archive.org/download/marble-drop/Marble%20Drop%20%281997%29%28Maxis%29.iso\ngame:\n  exe: $GAMEDIR/drive_c/ProgramData/Microsoft/Windows/Start Menu/Programs/Maxis/FullTilt!.lnk\n  prefix: $GAMEDIR/\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/marble-drop-iso\n    file: marble_drop_iso\n- write_file:\n    content: '[InstallShield Silent]\n\n      Version=v3.00.000\n\n      File=Response File\n\n      [Application]\n\n      Name=FullTilt!\n\n      Version=1.1\n\n      Company=Maxis\n\n      [DlgOrder]\n\n      Dlg0=Welcome-0\n\n      Count=4\n\n      Dlg1=AskOptions-0\n\n      Dlg2=AskDestPath-0\n\n      Dlg3=MessageBox-0\n\n      [Welcome-0]\n\n      Result=1\n\n      [AskOptions-0]\n\n      Result=1\n\n      Sel-0=0\n\n      Sel-1=1\n\n      [AskDestPath-0]\n\n      szPath=C:\\Maxis\\FullTilt\n\n      Result=1\n\n      [MessageBox-0]\n\n      Result=1\n\n      '\n    file: $GAMEDIR/drive_c/marble-drop-iso/FullTilt/setup.iss\n- task:\n    args: -s -f1 setup.iss\n    executable: C:\\marble-drop-iso\\FullTilt\\setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR/drive_c/marble-drop-iso/FullTilt/\n"
 }

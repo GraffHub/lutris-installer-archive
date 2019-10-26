@@ -1,0 +1,100 @@
+{
+  "id": 15511,
+  "game_id": 6171,
+  "game_slug": "toonstruck",
+  "name": "Toonstruck",
+  "year": 1996,
+  "user": "legluondunet",
+  "runner": "dosbox",
+  "slug": "toonstruck-cd-dosbox",
+  "version": "CD + Dosbox",
+  "description": "This script will install \"Toonstruck\" CD edition for Dosbox.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- This script requires cdrdao and toc2cue to be installed. \r\nOn Debian and Ubuntu type in a terminal: \r\nsudo apt-get install cdrdao\r\n- You will need the 2 CD only during install.\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-09-13T19:10:28.352000Z",
+  "updated_at": "2019-09-21T21:02:47.012104Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 369830,
+  "gogid": 1207666633,
+  "gogslug": "toonstruck",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/toonstruck_dosbox.conf"
+    },
+    "custom-name": "Toonstruck - CD - Dosbox",
+    "files": [
+      {
+        "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
+      },
+      {
+        "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Toonstruck/toonstruck_dosbox.conf"
+      }
+    ],
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "act1/arcaddbl/arcaddbl.pak",
+          "description": "Please insert disc 1"
+        }
+      },
+      {
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "TOON",
+          "file": "script"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "act2/armory/armory.pak",
+          "description": "Please insert disc 2"
+        }
+      },
+      {
+        "execute": {
+          "args": "TOONS",
+          "file": "script"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR; rm -f -r *.toc; mv TOON.cue TOONSTRUCK_CD1.cue; mv TOON.bin TOONSTRUCK_CD1.bin; mv TOONS.cue TOONSTRUCK_CD2.cue; mv TOONS.bin TOONSTRUCK_CD2.bin; sed -i 's/TOON.bin/TOONSTRUCK_CD1.bin/g' TOONSTRUCK_CD1.cue; sed -i 's/TOONS.bin/TOONSTRUCK_CD2.bin/g' TOONSTRUCK_CD2.cue;"
+        }
+      },
+      {
+        "task": {
+          "name": "makeconfig",
+          "path": "$GAMEDIR/toonstruck_dosbox_install.conf",
+          "drives": {
+            "c": "."
+          },
+          "commands": [
+            "imgmount d \"TOONSTRUCK_CD1.cue\" \"TOONSTRUCK_CD2.cue\" -t iso",
+            "d:",
+            "call install.bat",
+            "exit"
+          ]
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/toonstruck_dosbox_install.conf",
+          "working_dir": "$GAMEDIR",
+          "name": "dosexec"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "conf"
+        }
+      }
+    ]
+  },
+  "content": "custom-name: Toonstruck - CD - Dosbox\nfiles:\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Toonstruck/toonstruck_dosbox.conf\ngame:\n  main_file: $GAMEDIR/toonstruck_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: act1/arcaddbl/arcaddbl.pak\n- chmodx: script\n- execute:\n    args: TOON\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: act2/armory/armory.pak\n- execute:\n    args: TOONS\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv TOON.cue TOONSTRUCK_CD1.cue; mv TOON.bin\n      TOONSTRUCK_CD1.bin; mv TOONS.cue TOONSTRUCK_CD2.cue; mv TOONS.bin TOONSTRUCK_CD2.bin;\n      sed -i 's/TOON.bin/TOONSTRUCK_CD1.bin/g' TOONSTRUCK_CD1.cue; sed -i 's/TOONS.bin/TOONSTRUCK_CD2.bin/g'\n      TOONSTRUCK_CD2.cue;\n- task:\n    commands:\n    - imgmount d \"TOONSTRUCK_CD1.cue\" \"TOONSTRUCK_CD2.cue\" -t iso\n    - 'd:'\n    - call install.bat\n    - exit\n    drives:\n      c: .\n    name: makeconfig\n    path: $GAMEDIR/toonstruck_dosbox_install.conf\n- task:\n    config_file: $GAMEDIR/toonstruck_dosbox_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
+}

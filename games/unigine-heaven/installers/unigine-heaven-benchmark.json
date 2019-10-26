@@ -1,0 +1,122 @@
+{
+  "id": 16368,
+  "game_id": 29900,
+  "game_slug": "unigine-heaven",
+  "name": "Unigine Heaven",
+  "year": 2009,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "unigine-heaven-benchmark",
+  "version": "Benchmark",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-10-24T16:04:56.549233Z",
+  "updated_at": "2019-10-24T16:04:56.549259Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "xboxdrv": "xboxdrv"
+    },
+    "game": {
+      "prefix": "$HOME/.local/share/lutris/runners/wine/prefix64",
+      "description": "Benchmarking DirectX9, X10, X11, DXVK.",
+      "args": "-config ../data/launcher/launcher.xml",
+      "arch": "win64",
+      "custom-name": "Unigine Heaven 4.0 benchmark",
+      "exe": "$HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Program Files (x86)/Unigine/Heaven Benchmark 4.0/bin/browser_x86.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "files": [
+      "https://www.youtube.com/watch?v=t6zttuxkYv0",
+      {
+        "Unigine_Heaven-4.0.exe": "https://assets.unigine.com/d/Unigine_Heaven-4.0.exe"
+      }
+    ],
+    "installer": [
+      {
+        "execute": {
+          "description": "Removing any existing wine-prefixes ...",
+          "command": "mv -v $HOME/.local/share/lutris/runners/wine/prefix64 /tmp/dump"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$HOME/.local/share/lutris/runners/wine/prefix64/drive_c/",
+          "src": "Unigine_Heaven-4.0.exe"
+        }
+      },
+      {
+        "chmodx": "$HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven-4.0.exe"
+      },
+      {
+        "task": {
+          "prefix": "$HOME/.local/share/lutris/runners/wine/prefix64",
+          "executable": "$HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven-4.0.exe",
+          "description": "Unigine_Heaven 4.0 ...",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$HOME/.local/share/lutris/runners/wine/prefix64",
+          "description": "Visual C++ 2017 libraries ...",
+          "name": "winetricks",
+          "app": "vcrun2017"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$HOME/.local/share/lutris/runners/wine/prefix64",
+          "description": "Windows version 8.1 ...",
+          "name": "winetricks",
+          "app": "win81"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$HOME/.local/share/lutris/runners/wine/prefix64",
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "app": "dxvk"
+        }
+      },
+      {
+        "write_file": {
+          "content": "cd /home/steamer/.local/share/lutris/runners/wine/prefix64/drive_c/Program\\ Files\\ \\(x86\\)/Unigine/Heaven Benchmark 4.0 && WINEPREFIX=\"/home/steamer/.local/share/lutris/runners/wine/prefix64\" wine start heaven.bat",
+          "description": "Creating Unigine_Heaven_benchmark.sh with prefix ...",
+          "file": "$HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven_benchmark.sh"
+        }
+      },
+      {
+        "chmodx": "$HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven_benchmark.sh"
+      },
+      {
+        "execute": {
+          "description": "Clean-up ...",
+          "command": "rm $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven-4.0.exe"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- https://www.youtube.com/watch?v=t6zttuxkYv0\n- Unigine_Heaven-4.0.exe: https://assets.unigine.com/d/Unigine_Heaven-4.0.exe\ngame:\n  arch: win64\n  args: -config ../data/launcher/launcher.xml\n  custom-name: Unigine Heaven 4.0 benchmark\n  description: Benchmarking DirectX9, X10, X11, DXVK.\n  exe: $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Program Files (x86)/Unigine/Heaven\n    Benchmark 4.0/bin/browser_x86.exe\n  prefix: $HOME/.local/share/lutris/runners/wine/prefix64\ninstaller:\n- execute:\n    command: mv -v $HOME/.local/share/lutris/runners/wine/prefix64 /tmp/dump\n    description: Removing any existing wine-prefixes ...\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n- move:\n    dst: $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/\n    src: Unigine_Heaven-4.0.exe\n- chmodx: $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven-4.0.exe\n- task:\n    description: Unigine_Heaven 4.0 ...\n    executable: $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven-4.0.exe\n    name: wineexec\n    prefix: $HOME/.local/share/lutris/runners/wine/prefix64\n- task:\n    app: vcrun2017\n    arch: win64\n    description: Visual C++ 2017 libraries ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/wine/prefix64\n- task:\n    app: win81\n    arch: win64\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/wine/prefix64\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/wine/prefix64\n- write_file:\n    content: cd /home/steamer/.local/share/lutris/runners/wine/prefix64/drive_c/Program\\\n      Files\\ \\(x86\\)/Unigine/Heaven Benchmark 4.0 && WINEPREFIX=\"/home/steamer/.local/share/lutris/runners/wine/prefix64\"\n      wine start heaven.bat\n    description: Creating Unigine_Heaven_benchmark.sh with prefix ...\n    file: $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven_benchmark.sh\n- chmodx: $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven_benchmark.sh\n- execute:\n    command: rm $HOME/.local/share/lutris/runners/wine/prefix64/drive_c/Unigine_Heaven-4.0.exe\n    description: Clean-up ...\nsystem:\n  xboxdrv: xboxdrv\nwine:\n  dxvk: true\n  esync: true\n"
+}

@@ -21,11 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files/Gameforge/NCLauncher/NCLauncher.exe",
       "arch": "win32",
       "prefix": "$GAMEDIR",
-      "args": "/LauncherID:\"GameForge\" /CompanyID:\"11\" /GameID:\"AION-LIVE\" /LUpdateAddr:\"update.aion.gfsrv.net\""
+      "args": "/LauncherID:\"GameForge\" /CompanyID:\"11\" /GameID:\"AION-LIVE\" /LUpdateAddr:\"update.aion.gfsrv.net\"",
+      "exe": "drive_c/Program Files/Gameforge/NCLauncher/NCLauncher.exe"
+    },
+    "wine": {
+      "version": "esync-staging-pba-3.16-x86_64",
+      "UseGLSL": "disabled",
+      "esync": true
     },
     "files": [
       {
@@ -35,11 +45,6 @@
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ],
-    "system": {
-      "env": {
-        "PBA_ENABLE": 1
-      }
-    },
     "installer": [
       {
         "extract": {
@@ -49,24 +54,24 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
+          "arch": "win32",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "arch": "win32"
+          "args": "/silent"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       },
@@ -80,27 +85,22 @@
       },
       {
         "task": {
-          "description": "Installing .NET 4.7.2",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Installing .NET 4.7.2",
           "name": "winetricks",
           "app": "dotnet472 win7"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "aion",
           "arch": "win32",
+          "executable": "aion",
+          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "UseGLSL": "disabled",
-      "version": "esync-staging-pba-3.16-x86_64"
-    }
+    ]
   },
   "content": "files:\n- aion: http://dl.aion.gameforge.com/aion/client/20180104/20180103_AION_Setup.exe\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win32\n  args: /LauncherID:\"GameForge\" /CompanyID:\"11\" /GameID:\"AION-LIVE\" /LUpdateAddr:\"update.aion.gfsrv.net\"\n  exe: drive_c/Program Files/Gameforge/NCLauncher/NCLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008 vcrun2013 physx corefonts\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win7\n    arch: win32\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: aion\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    PBA_ENABLE: 1\nwine:\n  UseGLSL: disabled\n  esync: true\n  version: esync-staging-pba-3.16-x86_64\n"
 }

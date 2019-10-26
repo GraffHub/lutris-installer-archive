@@ -1,0 +1,152 @@
+{
+  "id": 15778,
+  "game_id": 3367,
+  "game_slug": "starcraft-ii",
+  "name": "StarCraft II",
+  "year": 2010,
+  "user": "zenzou",
+  "runner": "wine",
+  "slug": "starcraft-ii-d9vk-test-20190924",
+  "version": "D9VK Test - 20190924",
+  "description": "Edited version of existing d9vk version of StarCraft II to include the new d9vk option baked into Lutris as well as lutris' wine 4.16 nofshack.",
+  "notes": "**CONFIGURE AND INSTALL THE DEPENDENCIES FIRST**\r\nInstructions for DXVK support: https://github.com/lutris/lutris/wiki/How-to:-DXVK\r\nInstructions for proper functionality of Battle.Net (+ common problems) https://github.com/lutris/lutris/wiki/Game:-Blizzard-App",
+  "created_at": "2019-09-25T01:49:34.035085Z",
+  "updated_at": "2019-09-25T01:49:34.035108Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "PULSE_LATENCY_MSEC": 60,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net.exe"
+    },
+    "wine": {
+      "d9vk": true,
+      "version": "lutris-nofshack-4.16-x86_64",
+      "d9vk_version": 0.21,
+      "overrides": {
+        "nvapi64": "disabled",
+        "nvapi": "disabled",
+        "d3d12": "disabled"
+      },
+      "dxvk": true,
+      "dxvk_version": 1.4,
+      "esync": true
+    },
+    "files": [
+      {
+        "setup": {
+          "url": "https://battle.net/download/getInstaller?os=win&installer=Battle.net-Setup.exe",
+          "filename": "Battle.net-Setup.exe"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Installing Arial, FAudio, d3dx9 and d3dcompier...",
+          "app": "arial faudio d3dx9 d3dcompiler_43",
+          "arch": "win64",
+          "name": "winetricks",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Setting Windows 10 mode for Wine",
+          "value": "win10",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "key": "Version",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "write_json": {
+          "description": "Writing a Battle.Net config file",
+          "data": {
+            "Client": {
+              "Sound": {
+                "Enabled": "false"
+              },
+              "HardwareAcceleration": "false",
+              "GameLaunchWindowBehavior": "2",
+              "GameSearch": {
+                "BackgroundSearch": "true"
+              },
+              "Streaming": {
+                "StreamingEnabled": "false"
+              }
+            }
+          },
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Wine Staging: Enabling DXVA2",
+          "value": "va",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "key": "backend",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "setup",
+          "description": "Installing Blizzard App. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window.",
+          "name": "wineexec",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\""
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: Battle.net-Setup.exe\n    url: https://battle.net/download/getInstaller?os=win&installer=Battle.net-Setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial faudio d3dx9 d3dcompiler_43\n    arch: win64\n    description: Installing Arial, FAudio, d3dx9 and d3dcompier...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        GameSearch:\n          BackgroundSearch: 'true'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n    description: Writing a Battle.Net config file\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing Blizzard App. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    PULSE_LATENCY_MSEC: 60\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\nwine:\n  d9vk: true\n  d9vk_version: 0.21\n  dxvk: true\n  dxvk_version: 1.4\n  esync: true\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n  version: lutris-nofshack-4.16-x86_64\n"
+}

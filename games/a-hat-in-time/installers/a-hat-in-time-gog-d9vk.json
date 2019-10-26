@@ -11,75 +11,64 @@
   "description": "Greatly improves performance.",
   "notes": "",
   "created_at": "2019-05-08T01:35:49.612000Z",
-  "updated_at": "2019-07-25T08:39:38.968620Z",
+  "updated_at": "2019-10-26T00:30:25.464205Z",
   "draft": false,
   "published": true,
-  "published_by": 51687,
-  "rating": "",
+  "published_by": 19464,
+  "rating": "5",
   "steamid": 253230,
   "gogid": 1686426343,
   "gogslug": "a_hat_in_time",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "files": [
-      {
-        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.13f/d9vk-0.13f.tar.gz"
-      },
-      {
-        "install": "N/A:Select the Windows setup file downloaded from GOG"
-      }
-    ],
     "system": {
+      "pulse_latency": true,
       "env": {
         "__GL_SHADER_DISK_CACHE": 1,
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
         "DXVK_HUD": "compiler",
-        "DXVK_LOG_LEVEL": "none",
-        "PULSE_LATENCY_MSEC": 60,
         "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
     },
-    "installer": [
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe"
+    },
+    "wine": {
+      "d9vk": true,
+      "version": "tkg-protonified-4.1-x86_64"
+    },
+    "files": [
       {
-        "extract": {
-          "dst": "$CACHE/dxvk-release/",
-          "file": "d9vk"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/",
-          "src": "$CACHE/dxvk-release/"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "app": "d3dcompiler_43 d3dx9",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "name": "wineexec",
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
-          "description": "Installing the Game",
-          "prefix": "$GAMEDIR",
-          "executable": "install",
-          "arch": "win64"
-        }
+        "install": "N/A:Select the Windows setup file downloaded from GOG"
       }
     ],
-    "wine": {
-      "dxvk_version": "d9vk-0.13f",
-      "dxvk": true,
-      "version": "ge-protonified-4.9-x86_64"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "faudio"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "install",
+          "description": "Installing the Game",
+          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
+          "arch": "win64",
+          "name": "wineexec"
+        }
+      }
+    ]
   },
-  "content": "files:\n- d9vk: https://github.com/Joshua-Ashton/d9vk/releases/download/0.13f/d9vk-0.13f.tar.gz\n- install: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxvk-release/\n    file: d9vk\n- copy:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-0.13f/\n    src: $CACHE/dxvk-release/\n- task:\n    app: d3dcompiler_43 d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Installing the Game\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    PULSE_LATENCY_MSEC: 60\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  dxvk_version: d9vk-0.13f\n  version: ge-protonified-4.9-x86_64\n"
+  "content": "files:\n- install: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: faudio\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Installing the Game\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  d9vk: true\n  version: tkg-protonified-4.1-x86_64\n"
 }

@@ -23,55 +23,55 @@
   "script": {
     "script": {
       "game": {
-        "exe": "$GAMEDIR/Juiced.exe",
         "arch": "win64",
         "prefix": "$GAMEDIR",
-        "working_dir": "$GAMEDIR"
+        "working_dir": "$GAMEDIR",
+        "exe": "$GAMEDIR/Juiced.exe"
+      },
+      "wine": {
+        "WineDesktop": "1024x768",
+        "Desktop": true
       },
       "files": [
         {
           "installer": "N/A:Select the game's setup file"
         }
       ],
-      "wine": {
-        "Desktop": true,
-        "WineDesktop": "1024x768"
-      },
       "installer": [
         {
           "task": {
-            "description": "Creating Wine Prefix...",
-            "prefix": "$GAMEDIR",
             "arch": "win32",
+            "prefix": "$GAMEDIR",
+            "description": "Creating Wine Prefix...",
             "name": "create_prefix"
           }
         },
         {
           "task": {
-            "name": "winetricks",
+            "prefix": "$GAMEDIR",
             "description": "Hiding crash dialogs...",
-            "silent": "true",
-            "prefix": "$GAMEDIR",
             "app": "nocrashdialog",
-            "arch": "win32"
-          }
-        },
-        {
-          "task": {
-            "prefix": "$GAMEDIR",
-            "name": "set_regedit",
-            "description": "Setting version to xp...",
-            "path": "HKEY_CURRENT_USER\\Software\\Wine",
-            "value": "winxp",
-            "key": "Version",
-            "arch": "win32"
-          }
-        },
-        {
-          "task": {
-            "prefix": "$GAMEDIR",
-            "executable": "installer",
             "arch": "win32",
+            "name": "winetricks",
+            "silent": "true"
+          }
+        },
+        {
+          "task": {
+            "prefix": "$GAMEDIR",
+            "description": "Setting version to xp...",
+            "value": "winxp",
+            "arch": "win32",
+            "path": "HKEY_CURRENT_USER\\Software\\Wine",
+            "key": "Version",
+            "name": "set_regedit"
+          }
+        },
+        {
+          "task": {
+            "arch": "win32",
+            "executable": "installer",
+            "prefix": "$GAMEDIR",
             "name": "wineexec"
           }
         }

@@ -21,10 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "disable_runtime": true
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/TERA/TERA-launcher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/TERA/TERA-launcher.exe"
+    },
+    "wine": {
+      "version": "esync-staging-pba-3.16-x86_64"
     },
     "files": [
       {
@@ -34,9 +40,6 @@
         "glyph_installer": "http://download.dyn.triongames.com/GlyphInstall.exe"
       }
     ],
-    "system": {
-      "disable_runtime": true
-    },
     "installer": [
       {
         "merge": {
@@ -46,86 +49,83 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Setting Windows 7 mode for Wine",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Setting Windows 7 mode for Wine",
           "name": "winetricks",
           "app": "win7"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Microsoft TrueType Fonts",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "corefonts",
-          "name": "winetricks"
+          "app": "corefonts"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Flash Player",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "flash",
-          "name": "winetricks"
+          "app": "flash"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Installing D3D9 Dlls",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "d3dx9",
-          "name": "winetricks"
+          "app": "d3dx9"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Visual C++ Runtime 2008",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "vcrun2008",
-          "name": "winetricks"
+          "app": "vcrun2008"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Visual C++ Runtime 2010",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "vcrun2010",
-          "name": "winetricks"
+          "app": "vcrun2010"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "description": "Visual C++ Runtime 2013",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "vcrun2013",
-          "name": "winetricks"
+          "app": "vcrun2013"
         }
       },
       {
         "task": {
-          "description": "Installing game. You will receive an error about installing Visual C++ runtime 2010 for x64. It is safe to click YES to continue the installation.",
           "prefix": "$GAMEDIR",
           "executable": "tera_installer",
+          "description": "Installing game. You will receive an error about installing Visual C++ runtime 2010 for x64. It is safe to click YES to continue the installation.",
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "version": "esync-staging-pba-3.16-x86_64"
-    }
+    ]
   },
   "content": "files:\n- tera_installer: http://dl.tera.gameforge.com/tera/installer/2018-11-27_TERA_Setup.exe\n- glyph_installer: http://download.dyn.triongames.com/GlyphInstall.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/TERA/TERA-launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- merge:\n    dst: $GAMEDIR/drive_c\n    src: glyph_installer\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Microsoft TrueType Fonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: flash\n    description: Flash Player\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dx9\n    description: Installing D3D9 Dlls\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2008\n    description: Visual C++ Runtime 2008\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2010\n    description: Visual C++ Runtime 2010\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2013\n    description: Visual C++ Runtime 2013\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    description: Installing game. You will receive an error about installing Visual\n      C++ runtime 2010 for x64. It is safe to click YES to continue the installation.\n    executable: tera_installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: true\nwine:\n  version: esync-staging-pba-3.16-x86_64\n"
 }

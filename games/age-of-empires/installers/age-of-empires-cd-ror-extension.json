@@ -1,0 +1,173 @@
+{
+  "id": 14772,
+  "game_id": 21682,
+  "game_slug": "age-of-empires",
+  "name": "Age of Empires",
+  "year": 1997,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "age-of-empires-cd-ror-extension",
+  "version": "CD ROR extension",
+  "description": "This script is a complement installer to \"Age of Empires I\" one,  it will help you to install \"Rise of Rome\" extension CD edition.\r\n\"Age of Empires I\" should be installed before to launch this installer.\r\nDuring install please let all options by default.\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "notes": "- Update ROR version to 1.0a version.\r\n- Support multilanguage CD install: eng,fra,ger,ita,por,spa.\r\n- You will need the CD only one time during install\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-07-29T18:29:30.212000Z",
+  "updated_at": "2019-10-20T20:36:08.715733Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "wine": {
+      "version": "ge-protonified-nofshack-4.9-x86_64",
+      "Desktop": true
+    },
+    "files": [
+      {
+        "scriptinstall": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/findaoe.sh"
+      },
+      {
+        "updt": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1_update_1.0c_multi.zip"
+      },
+      {
+        "scriptclean": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/clean.sh"
+      },
+      {
+        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1.bat"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1covers.zip"
+      }
+    ],
+    "extends": "age-of-empires",
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "winxp"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "file": "updt"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "aoex.ico"
+        }
+      },
+      {
+        "chmodx": "scriptinstall"
+      },
+      {
+        "execute": {
+          "args": "$DISC",
+          "file": "scriptinstall"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "args": "/desktop=ROR,1024x780 $GAMEDIR/drive_c/tmp/aoeinstall.bat",
+          "description": "Installing Rise of Rome extension...",
+          "name": "wineexec"
+        }
+      },
+      {
+        "input_menu": {
+          "preselect": "en",
+          "id": "LANG",
+          "description": "Please choose AOE I CD language (do not choose another language other than your CD's one)",
+          "options": [
+            {
+              "en": "English"
+            },
+            {
+              "fr": "French"
+            },
+            {
+              "ge": "German"
+            },
+            {
+              "it": "italian"
+            },
+            {
+              "sp": "Spanish"
+            },
+            {
+              "po": "Portuguese"
+            }
+          ]
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "ActiveTitle",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "255 0 0",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "GradientActiveTitle",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/aoe1covers",
+          "src": "wpp"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
+          "value": "c:\\\\aoe1.bmp",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "wallpaper",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "menu"
+        }
+      },
+      {
+        "chmodx": "scriptclean"
+      },
+      {
+        "execute": {
+          "args": "$INPUT_LANG \"$DISC\" ror",
+          "file": "scriptclean"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win7"
+        }
+      }
+    ]
+  },
+  "content": "extends: age-of-empires\nfiles:\n- scriptinstall: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/findaoe.sh\n- updt: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1_update_1.0c_multi.zip\n- scriptclean: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/clean.sh\n- menu: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1.bat\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1covers.zip\ninstaller:\n- task:\n    app: winxp\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/tmp/\n    file: updt\n- insert-disc:\n    requires: aoex.ico\n- chmodx: scriptinstall\n- execute:\n    args: $DISC\n    file: scriptinstall\n- task:\n    args: /desktop=ROR,1024x780 $GAMEDIR/drive_c/tmp/aoeinstall.bat\n    description: Installing Rise of Rome extension...\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    name: wineexec\n- input_menu:\n    description: Please choose AOE I CD language (do not choose another language other\n      than your CD's one)\n    id: LANG\n    options:\n    - en: English\n    - fr: French\n    - ge: German\n    - it: italian\n    - sp: Spanish\n    - po: Portuguese\n    preselect: en\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 255 0 0\n- extract:\n    dst: $GAMEDIR/drive_c/aoe1covers\n    src: wpp\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\aoe1.bmp\n- copy:\n    dst: $GAMEDIR/drive_c/\n    src: menu\n- chmodx: scriptclean\n- execute:\n    args: $INPUT_LANG \"$DISC\" ror\n    file: scriptclean\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+}

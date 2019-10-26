@@ -8,24 +8,37 @@
   "runner": "wine",
   "slug": "epic-games-store-latest",
   "version": "Latest",
-  "description": null,
+  "description": "This installs the mfplat workaround for use with The Outer Worlds.",
   "notes": "Ignore DXSETUP.exe error - it's just a one-time quirk.",
   "created_at": "2017-09-21T22:22:01.012000Z",
-  "updated_at": "2019-08-15T19:09:38.152252Z",
+  "updated_at": "2019-10-25T23:26:12.414319Z",
   "draft": false,
   "published": true,
-  "published_by": 51687,
+  "published_by": 19464,
   "rating": "5",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
       "arch": "win64",
       "prefix": "$GAMEDIR",
-      "args": "-opengl"
+      "args": "-opengl",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-wf-nofshack-4.15-x86_64"
     },
     "files": [
       {
@@ -33,17 +46,11 @@
       },
       {
         "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "mfinstaller": "https://github.com/z0z0z/mf-install/archive/master.zip"
       }
     ],
-    "system": {
-      "env": {
-        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "PULSE_LATENCY_MSEC": 60
-      }
-    },
     "installer": [
       {
         "extract": {
@@ -53,32 +60,47 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
-        "task": {
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "name": "wineexec",
-          "arch": "win64"
+        "extract": {
+          "dst": "$CACHE/mfinstaller",
+          "file": "mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "terminal": true,
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "command": "$CACHE/mfinstaller/install-mf.sh"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       },
       {
         "task": {
-          "description": "Installing dependencies",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing dependencies",
           "name": "winetricks",
           "app": "arial dotnet48"
         }
@@ -91,27 +113,22 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
           "prefix": "$GAMEDIR",
           "executable": "msiexec",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
           "arch": "win64",
-          "exclude_processes": "EpicGamesLauncher.exe"
+          "exclude_processes": "EpicGamesLauncher.exe",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "dxvk": true,
-      "version": "ge-protonified-4.10-x86_64"
-    }
+    ]
   },
-  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    PULSE_LATENCY_MSEC: 60\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  version: ge-protonified-4.10-x86_64\n"
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\n- mfinstaller: https://github.com/z0z0z/mf-install/archive/master.zip\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  version: lutris-wf-nofshack-4.15-x86_64\n"
 }

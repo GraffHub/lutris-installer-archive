@@ -21,48 +21,48 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": true,
+        "DXVK_HUD": 0,
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      }
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "version": "4.3-x86_64"
     },
     "files": [
       {
         "setup": "http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0.exe"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": true,
-        "__GL_THREADED_OPTIMIZATIONS": 1
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing the garena (WARNING: Don't login, close the window)",
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
           "arch": "win64",
+          "executable": "setup",
+          "prefix": "$GAMEDIR",
+          "description": "Installing the garena (WARNING: Don't login, close the window)",
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "dxvk": true,
-      "version": "4.3-x86_64"
-    }
+    ]
   },
   "content": "files:\r\n- setup: http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0.exe\r\ngame:\r\n  arch: win64\r\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: 'Installing the garena (WARNING: Don''t login, close the window)'\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: 0\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: true\r\nwine:\r\n  dxvk: true\r\n  version: 4.3-x86_64"
 }

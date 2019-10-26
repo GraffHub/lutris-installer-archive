@@ -21,10 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "LC_ALL": "ja_JP.UTF-8"
+      }
+    },
     "game": {
-      "exe": "$GAMEDIR/drive_c/kuro-no-tsuki",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/kuro-no-tsuki"
+    },
+    "wine": {
+      "WineDesktop": "800x600",
+      "Desktop": true
     },
     "files": [
       {
@@ -34,11 +43,6 @@
         "patch": "N/A:Please select the English patch archive"
       }
     ],
-    "system": {
-      "env": {
-        "LC_ALL": "ja_JP.UTF-8"
-      }
-    },
     "installer": [
       {
         "extract": {
@@ -48,9 +52,9 @@
       },
       {
         "task": {
-          "description": "Setting Windows version to XP",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Setting Windows version to XP",
           "name": "winetricks",
           "app": "winxp"
         }
@@ -63,17 +67,13 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/knt-patch-1[1].0.0.1.exe",
           "arch": "win32",
+          "executable": "$CACHE/knt-patch-1[1].0.0.1.exe",
+          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "800x600"
-    }
+    ]
   },
   "content": "files:\n- install: N/A:Please select the installer\n- patch: N/A:Please select the English patch archive\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/kuro-no-tsuki\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/kuro-no-tsuki\n    file: $install\n- task:\n    app: winxp\n    arch: win32\n    description: Setting Windows version to XP\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $patch\n- task:\n    arch: win32\n    executable: $CACHE/knt-patch-1[1].0.0.1.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    LC_ALL: ja_JP.UTF-8\nwine:\n  Desktop: true\n  WineDesktop: 800x600\n"
 }

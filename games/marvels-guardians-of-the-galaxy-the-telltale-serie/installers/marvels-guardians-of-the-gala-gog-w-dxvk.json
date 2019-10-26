@@ -21,29 +21,36 @@
   "gogslug": "guardians_of_the_galaxy",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
-      "exe": "drive_c/GOG Games/Guardians of The Galaxy/Guardians.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Guardians of The Galaxy/Guardians.exe"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "goginstaller": "N/A:Select the game's setup file"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      },
-      "pulse_latency": true
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -57,20 +64,13 @@
       },
       {
         "task": {
-          "description": "Installing Game",
           "prefix": "$GAMEDIR",
           "executable": "goginstaller",
+          "description": "Installing Game",
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Guardians of The Galaxy/Guardians.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Game\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
 }

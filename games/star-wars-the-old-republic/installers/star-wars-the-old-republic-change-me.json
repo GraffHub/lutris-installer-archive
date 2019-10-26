@@ -21,10 +21,23 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": "true",
+        "PBA_ENABLE": 1,
+        "__GL_THREADED_OPTIMIZATIONS": 1
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe"
+    },
+    "wine": {
+      "version": "esync-staging-pba-3.16-x86_64",
+      "esync": true
     },
     "files": [
       {
@@ -34,40 +47,31 @@
         "launcher": "https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/launcher.settings"
       }
     ],
-    "system": {
-      "env": {
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "PBA_ENABLE": 1
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing winetricks verbs",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing winetricks verbs",
           "name": "winetricks",
           "app": "msxml3 msls31 winhttp vcrun2008 d3dx9"
         }
       },
       {
         "task": {
-          "description": "Installing SWTOR",
           "prefix": "$GAMEDIR",
           "executable": "setup",
-          "name": "wineexec",
-          "args": "/S"
+          "args": "/S",
+          "description": "Installing SWTOR",
+          "name": "wineexec"
         }
       },
       {
@@ -93,11 +97,7 @@
           "src": "launcher"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "version": "esync-staging-pba-3.16-x86_64"
-    }
+    ]
   },
   "content": "files:\r\n- setup: https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe\r\n- launcher: https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/launcher.settings\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: msxml3 msls31 winhttp vcrun2008 d3dx9\r\n    arch: win64\r\n    description: Installing winetricks verbs\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /S\r\n    description: Installing SWTOR\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star\r\n      Wars - The Old Republic\"\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars -\r\n      The Old Republic\r\n    file: $GAMEDIR/drive_c/users/$USER/Temp/InstallSWTOR/swtor.rar\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars -\r\n      The Old Republic\r\n    src: launcher\r\nsystem:\r\n  env:\r\n    PBA_ENABLE: 1\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: 'true'\r\nwine:\r\n  esync: true\r\n  version: esync-staging-pba-3.16-x86_64"
 }

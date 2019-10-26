@@ -1,0 +1,78 @@
+{
+  "id": 15420,
+  "game_id": 2640,
+  "game_slug": "tex-murphy-martian-memorandum",
+  "name": "Tex Murphy: Martian Memorandum",
+  "year": null,
+  "user": "appoloin",
+  "runner": "dosbox",
+  "slug": "tex-murphy-martian-memorandum-gog-alt",
+  "version": "GOG ALT",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-09T15:10:21.356369Z",
+  "updated_at": "2019-09-09T15:10:21.356398Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 302340,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/martian.conf"
+    },
+    "files": [
+      {
+        "game": "N/A:Select GOG installer"
+      },
+      {
+        "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nfind \"$src\" -type f \\( -iname \"*.AP\" -o -iname  \"*.DRV\" -o -iname  \"*.LZ\" -o -iname \"*.SC\" -o -iname \"*.DAT\" -o -iname \"*.PDF\" -o -iname \"*.VID\" -o -iname \"*.COL\" -o -iname \"MM.EXE\" \\) -exec cp {} \"$dst\" \\;",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/selectcopy.sh"
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$inno"
+        }
+      },
+      {
+        "execute": {
+          "args": "-I app -d \"$CACHE\" \"$game\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/martian",
+          "file": "mkdir"
+        }
+      },
+      {
+        "execute": {
+          "args": "$CACHE/app $GAMEDIR/HDD/martian",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd martian\nmm.exe\nexit",
+          "file": "$GAMEDIR/martian.conf"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Select GOG installer\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  main_file: $GAMEDIR/martian.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      find \"$src\" -type f \\( -iname \"*.AP\" -o -iname  \"*.DRV\" -o -iname  \"*.LZ\" -o\n      -iname \"*.SC\" -o -iname \"*.DAT\" -o -iname \"*.PDF\" -o -iname \"*.VID\" -o -iname\n      \"*.COL\" -o -iname \"MM.EXE\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- extract:\n    dst: $CACHE\n    file: $inno\n- execute:\n    args: -I app -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/martian\n    file: mkdir\n- execute:\n    args: $CACHE/app $GAMEDIR/HDD/martian\n    file: $CACHE/selectcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd martian\n\n      mm.exe\n\n      exit'\n    file: $GAMEDIR/martian.conf\n"
+}

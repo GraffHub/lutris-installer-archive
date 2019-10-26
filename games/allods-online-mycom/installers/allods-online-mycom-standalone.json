@@ -21,10 +21,25 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "exclude_processes": "GameCenter.exe Launcher.exe",
+      "env": {
+        "__PBA_GEO_HEAP": "512",
+        "mesa_glthread": "true",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__PBA_CB_HEAP": "128",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "PBA_DISABLE": "0"
+      }
+    },
     "game": {
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe"
+    },
+    "wine": {
+      "version": "tkg-3.21-x86_64"
     },
     "files": [
       {
@@ -34,50 +49,38 @@
         "d3dcompiler": "https://lutris.net/files/tools/dll/d3dcompiler_47.dll"
       }
     ],
-    "system": {
-      "env": {
-        "PBA_DISABLE": "0",
-        "__GL_SHADER_DISK_CACHE": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_THREADED_OPTIMIZATIONS": "1",
-        "__PBA_GEO_HEAP": "512",
-        "__PBA_CB_HEAP": "128",
-        "mesa_glthread": "true"
-      },
-      "exclude_processes": "GameCenter.exe Launcher.exe"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating 32bit Wine prefix.",
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 32bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Install vcrun2005 with winetricks",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Install vcrun2005 with winetricks",
           "name": "winetricks",
           "app": "vcrun2005"
         }
       },
       {
         "task": {
-          "description": "Install d3dcompiler_43 with winetricks",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Install d3dcompiler_43 with winetricks",
           "name": "winetricks",
           "app": "d3dcompiler_43"
         }
       },
       {
         "task": {
-          "description": "Install d3dx11_42 with winetricks",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Install d3dx11_42 with winetricks",
           "name": "winetricks",
           "app": "d3dx11_42"
         }
@@ -96,26 +99,23 @@
       },
       {
         "task": {
-          "description": "Setting Wine to Windows 7 32-Bit",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Setting Wine to Windows 7 32-Bit",
           "name": "winetricks",
           "app": "win7"
         }
       },
       {
         "task": {
-          "description": "Installing Allods My.Com\n------------------------------\nLet Lutris installer finish first. Log in afterwards.",
-          "executable": "setup",
           "arch": "win32",
-          "exclude_processes": "GameCenter.exe Launcher.exe",
-          "name": "wineexec"
+          "executable": "setup",
+          "description": "Installing Allods My.Com\n------------------------------\nLet Lutris installer finish first. Log in afterwards.",
+          "name": "wineexec",
+          "exclude_processes": "GameCenter.exe Launcher.exe"
         }
       }
-    ],
-    "wine": {
-      "version": "tkg-3.21-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: http://static.gc.my.com/AllodsenLoader_en.exe\n- d3dcompiler: https://lutris.net/files/tools/dll/d3dcompiler_47.dll\ngame:\n  arch: win32\n  exe: drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005\n    arch: win32\n    description: Install vcrun2005 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43\n    arch: win32\n    description: Install d3dcompiler_43 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx11_42\n    arch: win32\n    description: Install d3dx11_42 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll.ORIG\n    src: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll\n    src: d3dcompiler\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: 'Installing Allods My.Com\n\n      ------------------------------\n\n      Let Lutris installer finish first. Log in afterwards.'\n    exclude_processes: GameCenter.exe Launcher.exe\n    executable: setup\n    name: wineexec\nsystem:\n  env:\n    PBA_DISABLE: '0'\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    __PBA_CB_HEAP: '128'\n    __PBA_GEO_HEAP: '512'\n    mesa_glthread: 'true'\n  exclude_processes: GameCenter.exe Launcher.exe\nwine:\n  version: tkg-3.21-x86_64\n"
 }

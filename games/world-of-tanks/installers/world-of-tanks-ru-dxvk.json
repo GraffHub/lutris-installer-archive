@@ -21,70 +21,70 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "disable_runtime": false
+    },
     "game": {
-      "exe": "drive_c/Games/World_of_Tanks/WoTLauncher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Games/World_of_Tanks/WoTLauncher.exe"
+    },
+    "wine": {
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true,
+      "Desktop": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "game": {
-          "filename": "WoT_internet_install_ru.exe",
-          "url": "https://wot.gcdn.co/ru/files/WoT_internet_install_ru.exe"
+          "url": "https://wot.gcdn.co/ru/files/WoT_internet_install_ru.exe",
+          "filename": "WoT_internet_install_ru.exe"
         }
       }
     ],
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
-          "description": "Installing World of Tanks",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe"
+          "description": "Installing World of Tanks",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
+          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "winekill"
         }
       },
       {
         "task": {
-          "description": "Setting Wine to Windows 10",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Setting Wine to Windows 10",
           "name": "winetricks",
           "app": "win10"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "WineDesktop": "1920x1080",
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- game:\n    filename: WoT_internet_install_ru.exe\n    url: https://wot.gcdn.co/ru/files/WoT_internet_install_ru.exe\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Tanks/WoTLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing World of Tanks\n    exclude_processes: explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe\n      WoTLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Wine to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
 }

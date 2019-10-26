@@ -21,25 +21,7 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Thandor/thandor.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "LUTRIS_RUNTIME": "0"
-      }
-    },
     "require-binaries": "7z",
-    "files": [
-      {
-        "patch105": "N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
-      },
-      {
-        "directx61": "https://archive.org/download/dx61sdkimage/dx61sdkimage.exe"
-      }
-    ],
     "wine": {
       "overrides": {
         "dinput.dll": "native"
@@ -47,34 +29,39 @@
       "dxvk": false,
       "version": "ge-faudio-protonified-4.8-x86_64"
     },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Thandor/thandor.exe"
+    },
     "installer": [
       {
         "insert-disc": {
-          "description": "WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop (in winecfg Registerkarte Grafiken) mit der gewählten Thandor-Auflösung aktivieren oder Thandor im Vollbildmodus mit der nativen Bildschirmauflösung laufen lassen (für manche neuere Auflösungen wie 1080p muss die thandor.dat manuell angepasst werden)!\n > Problem: Wenn Sie dies ignorieren, führt dies zu einem Mauszeiger, der während des Spiels an den oberen linken Rand springt.\n Weitere Informationen finden Sie nach der Installation in der Datei LinuxReadme im Verzeichnis des Spiels",
-          "requires": "Thandor/thandor.dat"
+          "requires": "Thandor/thandor.dat",
+          "description": "WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop (in winecfg Registerkarte Grafiken) mit der gewählten Thandor-Auflösung aktivieren oder Thandor im Vollbildmodus mit der nativen Bildschirmauflösung laufen lassen (für manche neuere Auflösungen wie 1080p muss die thandor.dat manuell angepasst werden)!\n > Problem: Wenn Sie dies ignorieren, führt dies zu einem Mauszeiger, der während des Spiels an den oberen linken Rand springt.\n Weitere Informationen finden Sie nach der Installation in der Datei LinuxReadme im Verzeichnis des Spiels"
         }
       },
       {
         "task": {
-          "description": "Erzeuge WINE Prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Erzeuge WINE Prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Bereite Prefix für das Ausführen des Setups vor (setze win95)",
           "prefix": "$GAMEDIR",
-          "app": "win95",
-          "name": "winetricks"
+          "description": "Bereite Prefix für das Ausführen des Setups vor (setze win95)",
+          "name": "winetricks",
+          "app": "win95"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$DISC/Setup.exe",
           "arch": "win95",
+          "executable": "$DISC/Setup.exe",
+          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
@@ -107,12 +94,25 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "N",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullscreen",
-          "arch": "win64"
+          "name": "set_regedit"
         }
+      }
+    ],
+    "system": {
+      "env": {
+        "LUTRIS_RUNTIME": "0"
+      }
+    },
+    "files": [
+      {
+        "patch105": "N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
+      },
+      {
+        "directx61": "https://archive.org/download/dx61sdkimage/dx61sdkimage.exe"
       }
     ]
   },

@@ -22,77 +22,77 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/GOG Games/Gangsters/gangsters.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Gangsters/gangsters.exe"
     },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "gogid": "gangsters_organized_crime",
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "ddr=gdi",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "glsl=disabled",
-          "name": "winetricks"
+          "app": "ddr=gdi"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
           "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "multisampling=disabled",
-          "name": "winetricks"
+          "app": "glsl=disabled"
         }
       },
       {
         "task": {
-          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "silent": true,
+          "app": "multisampling=disabled"
+        }
+      },
+      {
+        "task": {
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "description": "Installing...",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Disabling unused WINE features",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "sandbox",
-          "name": "winetricks"
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "silent": true,
+          "app": "sandbox"
         }
       }
-    ],
-    "gogid": "gangsters_organized_crime"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Gangsters/gangsters.exe\n  prefix: $GAMEDIR\ngogid: gangsters_organized_crime\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: ddr=gdi\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: glsl=disabled\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: multisampling=disabled\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

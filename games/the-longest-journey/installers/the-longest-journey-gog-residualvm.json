@@ -1,0 +1,111 @@
+{
+  "id": 13883,
+  "game_id": 1364,
+  "game_slug": "the-longest-journey",
+  "name": "The Longest Journey",
+  "year": 1999,
+  "user": "legluondunet",
+  "runner": "residualvm",
+  "slug": "the-longest-journey-gog-residualvm",
+  "version": "GOG + ResidualVM",
+  "description": "Play the first opus of \"The Longest Journey\" GOG version on Linux with ResidualVM.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- Multilanguage: you will be able to select others languages for menus and subtitles during install between french, spanish or italian. Credits: Legluondunet (fr), Danixu86 (sp), LiefLayer (it).\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-06-02T17:51:01.118000Z",
+  "updated_at": "2019-09-21T18:22:02.091639Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 6310,
+  "gogid": 1207658794,
+  "gogslug": "the_longest_journey",
+  "humblestoreid": "",
+  "script": {
+    "custom-name": "The Longest Journey - GOG - ResidualVM",
+    "game": {
+      "subtitles": true,
+      "path": "$GAMEDIR/GOG Games/The Longest Journey/",
+      "game_id": "tlj"
+    },
+    "residualvm": {
+      "fullscreen": true
+    },
+    "files": [
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh"
+      },
+      {
+        "multi5": {
+          "url": "https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1",
+          "filename": "tlj_4cd_gog_menus_sub_multi5.zip"
+        }
+      },
+      {
+        "rvmengine": "https://lutris.nyc3.digitaloceanspaces.com/games/the-longest-journey/engines-stark.tar.xz"
+      },
+      {
+        "setup": "N/A:Select the EXE downloaded from GOG"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/innoextract",
+          "file": "inno"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $setup --output-dir \"$GAMEDIR/The Longest Journey\"",
+          "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/tmp",
+          "file": "multi5"
+        }
+      },
+      {
+        "input_menu": {
+          "preselect": "keep",
+          "id": "LANG",
+          "description": "Do you want to use another language for menus and subtitles:",
+          "options": [
+            {
+              "keep": "I prefer to keep default install language for menus and subtitles"
+            },
+            {
+              "fr": "French"
+            },
+            {
+              "it": "Italian"
+            },
+            {
+              "sp": "Spanish"
+            }
+          ]
+        }
+      },
+      {
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "$INPUT_LANG",
+          "file": "script"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/GOG Games/The Longest Journey/engines",
+          "file": "rvmengine"
+        }
+      }
+    ]
+  },
+  "content": "custom-name: The Longest Journey - GOG - ResidualVM\nfiles:\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh\n- multi5:\n    filename: tlj_4cd_gog_menus_sub_multi5.zip\n    url: https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1\n- rvmengine: https://lutris.nyc3.digitaloceanspaces.com/games/the-longest-journey/engines-stark.tar.xz\n- setup: N/A:Select the EXE downloaded from GOG\ngame:\n  game_id: tlj\n  path: $GAMEDIR/GOG Games/The Longest Journey/\n  subtitles: true\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $setup --output-dir \"$GAMEDIR/The Longest Journey\"\n    file: $CACHE/innoextract/innoextract\n- extract:\n    dst: $GAMEDIR/tmp\n    file: multi5\n- input_menu:\n    description: 'Do you want to use another language for menus and subtitles:'\n    id: LANG\n    options:\n    - keep: I prefer to keep default install language for menus and subtitles\n    - fr: French\n    - it: Italian\n    - sp: Spanish\n    preselect: keep\n- chmodx: script\n- execute:\n    args: $INPUT_LANG\n    file: script\n- extract:\n    dst: $GAMEDIR/GOG Games/The Longest Journey/engines\n    file: rvmengine\nresidualvm:\n  fullscreen: true\n"
+}

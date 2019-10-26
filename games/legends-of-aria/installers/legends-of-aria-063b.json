@@ -21,45 +21,45 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
-    },
     "script": {
+      "system": {
+        "terminal": true,
+        "env": {
+          "WINEDLLOVERRIDES": "d3d11=",
+          "SOMEENV": true
+        }
+      },
       "game": {
-        "exe": "drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe",
         "arch": "win64",
         "prefix": "$GAMEDIR",
-        "working_dir": "$GAMEDIR"
+        "working_dir": "$GAMEDIR",
+        "exe": "drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe"
+      },
+      "wine": {
+        "WineDesktop": "1024x768",
+        "overrides": {
+          "ddraw.dll": "n"
+        },
+        "Desktop": true
       },
       "files": [
         {
           "installer": "http://cdn.legendsofaria.com/LegendsOfAria-07.1.exe"
         }
       ],
-      "system": {
-        "env": {
-          "WINEDLLOVERRIDES": "d3d11=",
-          "SOMEENV": true
-        },
-        "terminal": true
-      },
       "installer": [
         {
-          "task": null,
-          "prefix": "$GAMEDIR",
-          "executable": "$installer",
           "arch": "win64",
-          "name": "wineexec"
+          "executable": "$installer",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "task": null
         }
-      ],
-      "wine": {
-        "Desktop": true,
-        "overrides": {
-          "ddraw.dll": "n"
-        },
-        "WineDesktop": "1024x768"
-      }
+      ]
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
     }
   },
   "content": "game:\n  arch: win32\n  prefix: $GAMEDIR\nscript:\n  files:\n  - installer: http://cdn.legendsofaria.com/LegendsOfAria-07.1.exe\n  game:\n    arch: win64\n    exe: drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR\n  installer:\n  - arch: win64\n    executable: $installer\n    name: wineexec\n    prefix: $GAMEDIR\n    task: null\n  system:\n    env:\n      SOMEENV: true\n      WINEDLLOVERRIDES: d3d11=\n    terminal: true\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n    overrides:\n      ddraw.dll: n\n"

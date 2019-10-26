@@ -22,18 +22,18 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE"
+    },
+    "wine": {
+      "version": "3.6-i386"
     },
     "files": [
       {
         "patch": "http://kapitanpazur.piasta.pl/dl/claw13.zip"
       }
     ],
-    "wine": {
-      "version": "3.6-i386"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -42,38 +42,38 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix...",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Claw...",
-          "prefix": "$GAMEDIR",
-          "executable": "$DISC/SETUP.EXE",
           "arch": "win32",
+          "executable": "$DISC/SETUP.EXE",
+          "prefix": "$GAMEDIR",
+          "description": "Installing Claw...",
           "name": "wineexec"
         }
       },
       {
         "extract": {
-          "description": "Patching Claw...",
           "dst": "$GAMEDIR/drive_c/games/claw/",
+          "description": "Patching Claw...",
           "src": "patch"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0",
+          "description": "Setting registry keys...",
           "value": 1,
           "arch": "win32",
-          "type": "REG_DWORD",
-          "description": "Setting registry keys...",
-          "prefix": "$GAMEDIR",
-          "key": "Disable DVD Movies"
+          "key": "Disable DVD Movies",
+          "name": "set_regedit"
         }
       }
     ]

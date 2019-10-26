@@ -8,13 +8,13 @@
   "runner": "wine",
   "slug": "the-lord-of-the-rings-the-bat-cd",
   "version": "CD",
-  "description": null,
-  "notes": "",
+  "description": "Please be sure to install the game in English when prompted. After the initial installer finishes do not run the game, the patches and HD Edition need the game closed to run install properly.",
+  "notes": "The resolution in: $GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth Files/Options.ini needs to be set manually. For example the Resolution line should be set as follows:\r\nResolution = 1920 1080",
   "created_at": "2018-10-26T04:15:06.667000Z",
-  "updated_at": "2018-10-31T01:27:59.394167Z",
+  "updated_at": "2019-09-08T23:37:33.188517Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
@@ -22,27 +22,40 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/EA GAMES/The Battle for Middle-earth (tm)/lotrbfme.exe",
+      "prefix": "$GAMEDIR",
+      "version": "lutris-4.13-x86_64",
+      "wine": null,
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "args": "-mod \"$GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth Files/HDEditionv1.0.big\"",
+      "exe": "$GAMEDIR/drive_c/Program Files/EA GAMES/The Battle for Middle-earth (tm)/lotrbfme.exe"
     },
     "files": [
       {
-        "official_patch": {
-          "referer": "https://www.moddb.com/mods/bfme-patch-105",
-          "filename": "1.3_patch.exe",
-          "url": "https://www.moddb.com/downloads/mirror/49688/101/503d0a8da0b150d82034f107549c2fbb/"
+        "patch103": {
+          "url": "https://www.moddb.com/downloads/mirror/35515/114/8bbf8b446714cd14972d743587497db8/",
+          "filename": "patch103.exe",
+          "referer": "https://duckduckgo.com"
+        }
+      },
+      {
+        "patch106": {
+          "url": "http://server.cnc-online.net/downloads/patch/T3AOnlineBFME1_Patch1.06_AIO.exe",
+          "filename": "patch106AIO.exe"
+        }
+      },
+      {
+        "hdmod": {
+          "url": "https://www.moddb.com/downloads/mirror/127233/112/249735ed278c725f969e979f94bb72f3/",
+          "filename": "hd.exe",
+          "referer": "https://duckduckgo.com"
         }
       }
     ],
-    "wine": {
-      "version": "staging-3.17-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -53,24 +66,51 @@
       },
       {
         "task": {
-          "description": "Installing official patch version 1.03",
-          "prefix": "$GAMEDIR",
-          "executable": "official_patch",
           "arch": "win32",
+          "executable": "$DISC/setup.exe",
+          "prefix": "$GAMEDIR",
+          "description": "Run Installer",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "patch103",
+          "prefix": "$GAMEDIR",
+          "description": "Installing official patch version 1.03",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "patch106",
+          "prefix": "$GAMEDIR",
+          "description": "Installing patch 1.06",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "hdmod",
+          "prefix": "$GAMEDIR",
+          "description": "Installing hd mod",
           "name": "wineexec"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting OS as Windows XP.",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "winxp",
-          "key": "Version"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "key": "Version",
+          "name": "set_regedit"
         }
       }
     ]
   },
-  "content": "files:\n- official_patch:\n    filename: 1.3_patch.exe\n    referer: https://www.moddb.com/mods/bfme-patch-105\n    url: https://www.moddb.com/downloads/mirror/49688/101/503d0a8da0b150d82034f107549c2fbb/\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/EA GAMES/The Battle for Middle-earth (tm)/lotrbfme.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Installing official patch version 1.03\n    executable: official_patch\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows XP.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\nwine:\n  version: staging-3.17-x86_64\n"
+  "content": "files:\n- patch103:\n    filename: patch103.exe\n    referer: https://duckduckgo.com\n    url: https://www.moddb.com/downloads/mirror/35515/114/8bbf8b446714cd14972d743587497db8/\n- patch106:\n    filename: patch106AIO.exe\n    url: http://server.cnc-online.net/downloads/patch/T3AOnlineBFME1_Patch1.06_AIO.exe\n- hdmod:\n    filename: hd.exe\n    referer: https://duckduckgo.com\n    url: https://www.moddb.com/downloads/mirror/127233/112/249735ed278c725f969e979f94bb72f3/\ngame:\n  arch: win32\n  args: -mod \"$GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth\n    Files/HDEditionv1.0.big\"\n  exe: $GAMEDIR/drive_c/Program Files/EA GAMES/The Battle for Middle-earth (tm)/lotrbfme.exe\n  prefix: $GAMEDIR\n  version: lutris-4.13-x86_64\n  wine: null\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Run Installer\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing official patch version 1.03\n    executable: patch103\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing patch 1.06\n    executable: patch106\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing hd mod\n    executable: hdmod\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows XP.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n"
 }

@@ -21,10 +21,6 @@
   "gogslug": "the_witcher",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 20900
-    },
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
@@ -32,29 +28,33 @@
         "__GL_THREADED_OPTIMIZATIONS": "1"
       }
     },
+    "winesteam": {
+      "version": "tkg-3.21-x86_64",
+      "esync": "true"
+    },
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "appid": 20900
+    },
     "installer": [
       {
         "task": {
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "d3dx9_35",
-          "name": "winetricks"
+          "name": "winetricks",
+          "silent": true,
+          "app": "d3dx9_35"
         }
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "prefix": "$GAMEDIR",
-          "key": "CheckFloatConstants",
           "name": "set_regedit",
+          "key": "CheckFloatConstants",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "value": "enabled"
         }
       }
-    ],
-    "winesteam": {
-      "esync": "true",
-      "version": "tkg-3.21-x86_64"
-    }
+    ]
   },
   "content": "game:\r\n  appid: 20900\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    app: d3dx9_35\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    key: CheckFloatConstants\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\r\n    prefix: $GAMEDIR\r\n    value: enabled\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: '1'\r\n    mesa_glthread: 'true'\r\nwinesteam:\r\n  esync: 'true'\r\n  version: tkg-3.21-x86_64"
 }

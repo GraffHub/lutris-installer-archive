@@ -1,0 +1,208 @@
+{
+  "id": 15422,
+  "game_id": 2424,
+  "game_slug": "league-of-legends",
+  "name": "League of Legends",
+  "year": 2009,
+  "user": "uwos",
+  "runner": "wine",
+  "slug": "league-of-legends-d9vk-arch",
+  "version": "D9VK Arch",
+  "description": "wine-lol & wine-lol-glibc are required",
+  "notes": "",
+  "created_at": "2019-09-09T16:06:07.998550Z",
+  "updated_at": "2019-09-09T16:06:07.998573Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 20590,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Riot Games/League of Legends/LeagueClient.exe"
+    },
+    "wine": {
+      "overrides": {
+        "msvcp140": "native"
+      },
+      "MouseWarpOverride": "enable",
+      "d9vk": true,
+      "version": "/opt/wine-lol/bin/wine"
+    },
+    "files": [
+      {
+        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
+      }
+    ],
+    "installer": [
+      {
+        "input_menu": {
+          "preselect": "en_US",
+          "id": "LOCALE",
+          "description": "Choose the game's language:",
+          "options": [
+            {
+              "cs_CZ": "Čeština"
+            },
+            {
+              "en_AU": "English AUS"
+            },
+            {
+              "en_GB": "English U.K."
+            },
+            {
+              "en_US": "English U.S."
+            },
+            {
+              "fr_FR": "Français"
+            },
+            {
+              "de_DE": "Deutsch"
+            },
+            {
+              "es_ES": "Español"
+            },
+            {
+              "es_MX": "Español Mexicano"
+            },
+            {
+              "it_IT": "Italiano"
+            },
+            {
+              "ja_JP": "日本語"
+            },
+            {
+              "hu_HU": "Magyar"
+            },
+            {
+              "pl_PL": "Polski"
+            },
+            {
+              "pt_BR": "Português do Brasil"
+            },
+            {
+              "ro_RO": "Romanian"
+            },
+            {
+              "ru_RU": "русский"
+            },
+            {
+              "tr_TR": "Türkçe"
+            }
+          ]
+        }
+      },
+      {
+        "input_menu": {
+          "preselect": "NA",
+          "id": "REGION",
+          "description": "Choose the game's server region:",
+          "options": [
+            {
+              "BR": "Brazil"
+            },
+            {
+              "EUNE": "Europe Nordic & East"
+            },
+            {
+              "EUW": "Europe West"
+            },
+            {
+              "LAN": "Latin America North"
+            },
+            {
+              "LAS": "Latin America South"
+            },
+            {
+              "NA": "North America"
+            },
+            {
+              "OCE": "Oceania"
+            },
+            {
+              "RU": "Russia"
+            },
+            {
+              "TR": "Turkey"
+            },
+            {
+              "JP": "Japan"
+            },
+            {
+              "SEA": "South East Asia"
+            }
+          ]
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "d3dcompiler_43 d3dx9"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "lol_installer",
+          "description": "Installing League of Legends",
+          "args": "--mode unattended",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "Y",
+          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "key": "GrabFullScreen",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "write_file": {
+          "content": "install:\n    globals:\n        locale: \"$INPUT_LOCALE\"\n        region: \"$INPUT_REGION\"\n",
+          "file": "$GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- lol_installer: https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe\ngame:\n  exe: drive_c/Riot Games/League of Legends/LeagueClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LOCALE\n    options:\n    - cs_CZ: \"\\u010Ce\\u0161tina\"\n    - en_AU: English AUS\n    - en_GB: English U.K.\n    - en_US: English U.S.\n    - fr_FR: \"Fran\\xE7ais\"\n    - de_DE: Deutsch\n    - es_ES: \"Espa\\xF1ol\"\n    - es_MX: \"Espa\\xF1ol Mexicano\"\n    - it_IT: Italiano\n    - ja_JP: \"\\u65E5\\u672C\\u8A9E\"\n    - hu_HU: Magyar\n    - pl_PL: Polski\n    - pt_BR: \"Portugu\\xEAs do Brasil\"\n    - ro_RO: Romanian\n    - ru_RU: \"\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439\"\n    - tr_TR: \"T\\xFCrk\\xE7e\"\n    preselect: en_US\n- input_menu:\n    description: 'Choose the game''s server region:'\n    id: REGION\n    options:\n    - BR: Brazil\n    - EUNE: Europe Nordic & East\n    - EUW: Europe West\n    - LAN: Latin America North\n    - LAS: Latin America South\n    - NA: North America\n    - OCE: Oceania\n    - RU: Russia\n    - TR: Turkey\n    - JP: Japan\n    - SEA: South East Asia\n    preselect: NA\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: --mode unattended\n    description: Installing League of Legends\n    executable: lol_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- write_file:\n    content: \"install:\\n    globals:\\n        locale: \\\"$INPUT_LOCALE\\\"\\n        region:\\\n      \\ \\\"$INPUT_REGION\\\"\\n\"\n    file: $GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  MouseWarpOverride: enable\n  d9vk: true\n  overrides:\n    msvcp140: native\n  version: /opt/wine-lol/bin/wine\n"
+}

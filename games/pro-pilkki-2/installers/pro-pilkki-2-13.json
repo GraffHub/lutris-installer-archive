@@ -21,49 +21,56 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/ProPilkki2/ProPilkki2.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "files": [
-      {
-        "pilkki_installer": {
-          "filename": "P2Installer_v1.3.exe",
-          "url": "http://propilkki.ddns.net/propilkki2/download/PP2_download.php?id=0"
-        }
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       }
     },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/ProPilkki2/ProPilkki2.exe"
+    },
+    "wine": {
+      "overrides": {
+        "mscoree,mshtml": "disabled"
+      },
+      "dxvk": true,
+      "version": "tkg-4.0-x86_64"
+    },
+    "files": [
+      {
+        "pilkki_installer": {
+          "url": "http://propilkki.ddns.net/propilkki2/download/PP2_download.php?id=0",
+          "filename": "P2Installer_v1.3.exe"
+        }
+      }
+    ],
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Windows 7 mode for Wine",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win7",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing Pro Pilkki 2...",
           "prefix": "$GAMEDIR",
           "executable": "pilkki_installer",
+          "description": "Installing Pro Pilkki 2...",
           "name": "wineexec",
           "exclude_processes": "ProPilkki2.exe"
         }
@@ -74,14 +81,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "overrides": {
-        "mscoree,mshtml": "disabled"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- pilkki_installer:\n    filename: P2Installer_v1.3.exe\n    url: http://propilkki.ddns.net/propilkki2/download/PP2_download.php?id=0\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/ProPilkki2/ProPilkki2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: Installing Pro Pilkki 2...\n    exclude_processes: ProPilkki2.exe\n    executable: pilkki_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    mscoree,mshtml: disabled\n  version: tkg-4.0-x86_64\n"
 }

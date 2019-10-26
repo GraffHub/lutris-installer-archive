@@ -11,46 +11,39 @@
   "description": null,
   "notes": "",
   "created_at": "2017-12-01T17:14:33.992000Z",
-  "updated_at": "2017-12-07T13:20:55.286603Z",
+  "updated_at": "2019-09-09T01:54:48.064407Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 1,
   "rating": "",
   "steamid": 391540,
   "gogid": 1456487183,
   "gogslug": "undertale",
   "humblestoreid": "",
   "script": {
-    "exe": "Game/start.sh",
+    "game": {
+      "exe": "start.sh"
+    },
     "files": [
       {
-        "game": "N/A: Plese select the GOG.com Linux installer"
-      },
-      {
-        "unzip": "https://lutris.net/files/tools/unzip.tar.gz"
+        "goginstaller": "N/A:Please select the GOG.com Linux installer"
       }
     ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE/GOG",
+          "format": "zip",
+          "file": "goginstaller"
         }
       },
       {
-        "execute": {
-          "description": "Extracting game data, it will take a while...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/data/noarch"
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/GOG/data/noarch/"
         }
       }
     ]
   },
-  "content": "exe: Game/start.sh\nfiles:\n- game: 'N/A: Plese select the GOG.com Linux installer'\n- unzip: https://lutris.net/files/tools/unzip.tar.gz\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data, it will take a while...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n"
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Linux installer\ngame:\n  exe: start.sh\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/GOG/data/noarch/\n"
 }

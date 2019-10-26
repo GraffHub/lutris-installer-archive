@@ -1,68 +1,81 @@
 {
-  "id": 12313,
+  "id": 15775,
   "game_id": 5826,
   "game_slug": "diablo",
   "name": "Diablo",
   "year": 1996,
-  "user": "citrusalex",
+  "user": "legluondunet",
   "runner": "wine",
   "slug": "diablo-gog",
   "version": "GOG",
-  "description": null,
-  "notes": "Diablo option is working\r\nDiablo Classic option crashes\r\nMenus are not refreshing properly but it is still possible to get into the game and the game works well.",
-  "created_at": "2019-03-09T14:23:36.164000Z",
-  "updated_at": "2019-03-09T18:21:10.505905Z",
+  "description": "This script will install \"Diablo\" and his extension \"Hellfire\" GOG edition.During install please let all options by default.Thanks to the people who contributed to play this game in the best conditions.",
+  "notes": "- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-09-24T22:15:58.119000Z",
+  "updated_at": "2019-09-25T14:31:55.516465Z",
   "draft": false,
-  "published": true,
-  "published_by": 51687,
+  "published": false,
+  "published_by": 494,
   "rating": "",
   "steamid": null,
   "gogid": 1412601690,
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
+    "custom-name": "Diablo - GOG",
     "game": {
-      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
+    },
+    "wine": {
+      "Desktop": true
     },
     "files": [
       {
-        "installer": "N/A:Select the EXE downloaded from GOG"
+        "installer": "N/A:Select the game's setup file"
       }
     ],
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "ddraw.dll": "n"
-      },
-      "WineDesktop": "1024x768",
-      "version": "4.3-x86_64"
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating WINE prefix",
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "arch": "win32",
+          "description": "Creating WINE prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Running Setup, please wait...",
+          "prefix": "$GAMEDIR",
           "executable": "installer",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES"
+          "args": "/SILENT /SUPPRESSMSGBOXES",
+          "description": "Running Setup, please wait...",
+          "name": "wineexec"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "background",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "key": "ddraw",
+          "name": "set_regedit"
         }
       }
     ]
   },
-  "content": "files:\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  overrides:\n    ddraw.dll: n\n  version: 4.3-x86_64\n"
+  "content": "custom-name: Diablo - GOG\r\nfiles:\r\n- installer: N/A:Select the game's setup file\r\ngame:\r\n  arch: win64\r\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating WINE prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SILENT /SUPPRESSMSGBOXES\r\n    description: Running Setup, please wait...\r\n    executable: installer\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: background\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: 0 0 0\r\n- task:\r\n    arch: win64\r\n    key: ddraw\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: native,builtin\r\nwine:\r\n  Desktop: true"
 }

@@ -21,37 +21,42 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "pulse_latency": true,
+      "reset_pulse": true,
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online (Preview)/DNDLauncher.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online (Preview)/DNDLauncher.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "tkg-4.0-x86_64"
     },
     "files": [
       {
         "setup": "http://live.ddo.com/sites/clientdl/ddo/preview/ddopreview.exe"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      },
-      "pulse_latency": true,
-      "reset_pulse": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "app": "win7",
-          "name": "winetricks"
+          "name": "winetricks",
+          "app": "win7"
         }
       },
       {
@@ -62,18 +67,13 @@
       },
       {
         "task": {
-          "description": "Installing Dungeons & Dragons Online (Preview)",
           "prefix": "$GAMEDIR",
           "executable": "setup",
+          "description": "Installing Dungeons & Dragons Online (Preview)",
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: http://live.ddo.com/sites/clientdl/ddo/preview/ddopreview.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online (Preview)/DNDLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons\n      Online (Preview)\n    src: setup\n- task:\n    description: Installing Dungeons & Dragons Online (Preview)\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\n  reset_pulse: true\nwine:\n  dxvk: true\n  esync: true\n  version: tkg-4.0-x86_64\n"
 }

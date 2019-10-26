@@ -21,48 +21,48 @@
   "gogslug": "dungeon_keeper_2",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "single_cpu": true
+    },
     "game": {
-      "exe": "drive_c/game/DKII-DX.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/DKII-DX.exe"
+    },
+    "wine": {
+      "version": "3.0-x86_64"
     },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
-    "system": {
-      "single_cpu": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "windowmanagermanaged=n",
-          "name": "winetricks"
+          "name": "winetricks",
+          "silent": true,
+          "app": "windowmanagermanaged=n"
         }
       }
-    ],
-    "wine": {
-      "version": "3.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/DKII-DX.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  single_cpu: true\nwine:\n  version: 3.0-x86_64\n"
 }

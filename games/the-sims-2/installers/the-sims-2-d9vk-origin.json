@@ -21,16 +21,25 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "WINE_LARGE_ADDRESS_AWARE": 1
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files/Origin/Origin.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Origin/Origin.exe"
+    },
+    "wine": {
+      "version": "tkg-4.0-x86_64",
+      "dxvk_version": "d9vk-b25eaf65"
     },
     "files": [
       {
         "d9vk": {
-          "filename": "d9vk-master.b25eaf65e7731d42263b78d091de672cdc791e05.zip",
-          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/750/artifacts/download"
+          "url": "https://git.froggi.es/joshua/d9vk/-/jobs/750/artifacts/download",
+          "filename": "d9vk-master.b25eaf65e7731d42263b78d091de672cdc791e05.zip"
         }
       },
       {
@@ -40,17 +49,12 @@
         "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
       }
     ],
-    "system": {
-      "env": {
-        "WINE_LARGE_ADDRESS_AWARE": 1
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix"
         }
       },
@@ -68,31 +72,31 @@
       },
       {
         "task": {
-          "description": "Installing dependencies...",
           "prefix": "$GAMEDIR",
-          "app": "d3dcompiler_43 d3dx9",
-          "name": "winetricks"
+          "description": "Installing dependencies...",
+          "name": "winetricks",
+          "app": "d3dcompiler_43 d3dx9"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Disabling crash dialogs...",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\WineDbg",
           "value": 0,
+          "type": "REG_DWORD",
           "key": "ShowCrashDialog",
-          "type": "REG_DWORD"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting version to xp...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "winxp",
-          "key": "Version"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "key": "Version",
+          "name": "set_regedit"
         }
       },
       {
@@ -103,20 +107,20 @@
       },
       {
         "task": {
-          "description": "Installing Vcrun 2013",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "vcrun2013",
-          "name": "winetricks"
+          "description": "Installing Vcrun 2013",
+          "name": "winetricks",
+          "silent": true,
+          "app": "vcrun2013"
         }
       },
       {
         "task": {
-          "description": "Installing Vcrun 2010",
-          "silent": true,
           "prefix": "$GAMEDIR",
-          "app": "vcrun2010",
-          "name": "winetricks"
+          "description": "Installing Vcrun 2010",
+          "name": "winetricks",
+          "silent": true,
+          "app": "vcrun2010"
         }
       },
       {
@@ -139,9 +143,9 @@
       },
       {
         "task": {
-          "description": "Installing Origin...",
           "prefix": "$GAMEDIR",
           "executable": "origin",
+          "description": "Installing Origin...",
           "name": "wineexec",
           "exclude_processes": "Origin.exe OriginClientService.exe"
         }
@@ -152,11 +156,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "wine": {
-      "dxvk_version": "d9vk-b25eaf65",
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\n- d9vk:\n    filename: d9vk-master.b25eaf65e7731d42263b78d091de672cdc791e05.zip\n    url: https://git.froggi.es/joshua/d9vk/-/jobs/750/artifacts/download\n- fixes: https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: d9vk\n- copy:\n    dst: $HOME/.local/share/lutris/runtime/dxvk/d9vk-b25eaf65/\n    src: $CACHE/dxvk-release/\n- task:\n    app: d3dcompiler_43 d3dx9\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Disabling crash dialogs...\n    key: ShowCrashDialog\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\WineDbg\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 0\n- task:\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    description: Installing Vcrun 2013\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2010\n    description: Installing Vcrun 2010\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- extract:\n    dst: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\n      \\ Collection/Downloads\"\n    file: fixes\n- write_file:\n    content: boolprop useshaders true\n    file: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\n      \\ Collection/Config/userstartup.cheat\"\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Installing Origin...\n    exclude_processes: Origin.exe OriginClientService.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    WINE_LARGE_ADDRESS_AWARE: 1\nwine:\n  dxvk_version: d9vk-b25eaf65\n  version: tkg-4.0-x86_64\n"
 }

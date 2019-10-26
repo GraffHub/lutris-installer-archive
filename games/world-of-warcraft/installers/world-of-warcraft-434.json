@@ -21,53 +21,35 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/LauncherWarSages/Launcher WarSages.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "STAGING_SHARED_MEMORY": 1,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "script": null,
-    "files": [
-      {
-        "setup": {
-          "filename": "Launcher WarSages Installer.exe",
-          "url": "https://1drv.ms/u/s!AmwFOkxMfn6WgYZhgL7hhsXpH6xMpA?e=ztfiD1&download=1"
-        }
-      }
-    ],
     "wine": {
-      "esync": true,
       "overrides": {
         "nvapi64": "disabled",
         "nvapi": "disabled",
         "d3d12": "disabled"
       },
       "dxvk": true,
+      "esync": true,
       "version": "ge-protonified-nofshack-4.9-x86_64"
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/LauncherWarSages/Launcher WarSages.exe"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating 64bit Wine prefix.",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating 64bit Wine prefix.",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Arial font",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Installing Arial font",
           "name": "winetricks",
           "app": "arial"
         }
@@ -75,23 +57,23 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Setting Windows 10 mode for Wine",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "description": "Wine Staging: Enabling DXVA2",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "value": "va",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "key": "backend",
-          "arch": "win64"
+          "name": "set_regedit"
         }
       },
       {
@@ -102,9 +84,9 @@
       },
       {
         "task": {
-          "description": "Installing Warsages Lancher",
-          "executable": "Launcher WarSages.exe",
           "arch": "win64",
+          "executable": "Launcher WarSages.exe",
+          "description": "Installing Warsages Lancher",
           "name": "wineexec"
         }
       },
@@ -112,6 +94,24 @@
         "task": {
           "prefix": "$GAMEDIR",
           "name": "winekill"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "script": null,
+    "files": [
+      {
+        "setup": {
+          "url": "https://1drv.ms/u/s!AmwFOkxMfn6WgYZhgL7hhsXpH6xMpA?e=ztfiD1&download=1",
+          "filename": "Launcher WarSages Installer.exe"
         }
       }
     ]

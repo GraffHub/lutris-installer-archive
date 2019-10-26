@@ -21,25 +21,7 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/JoWood/Thandor/thandor.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "LUTRIS_RUNTIME": "0"
-      }
-    },
     "require-binaries": "7z",
-    "files": [
-      {
-        "patch105": "N/A:Download patch 1.05 from http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
-      },
-      {
-        "directx61": "https://archive.org/download/dx61sdkimage/dx61sdkimage.exe"
-      }
-    ],
     "wine": {
       "overrides": {
         "dinput.dll": "native"
@@ -47,34 +29,39 @@
       "dxvk": false,
       "version": "ge-faudio-protonified-4.8-x86_64"
     },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/JoWood/Thandor/thandor.exe"
+    },
     "installer": [
       {
         "insert-disc": {
-          "description": "WARN: Make sure to either activate virtual desktop with the selected thandor resolution (in winecfg - Tab Graphics) or run thandor in full screen with the native display resolution (for some resolutions thandor.dat must be edited manually)!\n > Issue: Ignoring this will lead to a mouse cursor that jumps to the top left edge while playing\n Also see LinuxReadme in the game directory for additional informations",
-          "requires": "Thandor/thandor.dat"
+          "requires": "Thandor/thandor.dat",
+          "description": "WARN: Make sure to either activate virtual desktop with the selected thandor resolution (in winecfg - Tab Graphics) or run thandor in full screen with the native display resolution (for some resolutions thandor.dat must be edited manually)!\n > Issue: Ignoring this will lead to a mouse cursor that jumps to the top left edge while playing\n Also see LinuxReadme in the game directory for additional informations"
         }
       },
       {
         "task": {
-          "description": "Creating WINE prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating WINE prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Using Windows 95 for setup",
           "prefix": "$GAMEDIR",
-          "app": "win95",
-          "name": "winetricks"
+          "description": "Using Windows 95 for setup",
+          "name": "winetricks",
+          "app": "win95"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$DISC/Setup.exe",
           "arch": "win95",
+          "executable": "$DISC/Setup.exe",
+          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
@@ -107,12 +94,25 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "N",
+          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullscreen",
-          "arch": "win64"
+          "name": "set_regedit"
         }
+      }
+    ],
+    "system": {
+      "env": {
+        "LUTRIS_RUNTIME": "0"
+      }
+    },
+    "files": [
+      {
+        "patch105": "N/A:Download patch 1.05 from http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
+      },
+      {
+        "directx61": "https://archive.org/download/dx61sdkimage/dx61sdkimage.exe"
       }
     ]
   },

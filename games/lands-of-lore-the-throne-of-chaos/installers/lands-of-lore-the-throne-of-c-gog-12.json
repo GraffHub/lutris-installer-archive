@@ -1,0 +1,80 @@
+{
+  "id": 15545,
+  "game_id": 21475,
+  "game_slug": "lands-of-lore-the-throne-of-chaos",
+  "name": "Lands of Lore: The Throne of Chaos",
+  "year": 1993,
+  "user": "appoloin",
+  "runner": "scummvm",
+  "slug": "lands-of-lore-the-throne-of-c-gog-12",
+  "version": "GOG 1+2",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-14T17:57:43.636053Z",
+  "updated_at": "2019-09-14T17:57:43.636080Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207662513,
+  "gogslug": "lands_of_lore_the_throne_of_chaos",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "lol"
+    },
+    "files": [
+      {
+        "game": "N/A:Select GOG installer."
+      },
+      {
+        "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "xcopy": "https://github.com/appoloin/WfW/raw/master/XCOPY.EXE"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$inno"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$xcopy"
+        }
+      },
+      {
+        "execute": {
+          "args": "-I app -d \"$CACHE\" \"$game\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR\" -t dir\nimgmount D \"$CACHE/app/Lands of Lore 1/GAME.DAT\" -t iso\nver set 6.22\nD:\nC:\\xcopy.exe  D:\\data\\*.ADL C:\\\nC:\\xcopy.exe  D:\\data\\*.PAK C:\\\nC:\\xcopy.exe  D:\\data\\*.TLK C:\\\nC:\\xcopy.exe  D:\\data\\FILEDATA.FDT C:\\\nmd C:\\ENG\nC:\\xcopy.exe D:\\data\\eng\\*.*  C:\\ENG\nmd C:\\FRE\nC:\\xcopy.exe D:\\data\\fre\\*.*  C:\\FRE\nmd C:\\GER\nC:\\xcopy.exe D:\\data\\ger\\*.* C:\\GER\nexit",
+          "file": "$CACHE/lore.conf"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$CACHE/lore.conf",
+          "working_dir": "$GAMEDIR",
+          "name": "dosbox.dosexec"
+        }
+      },
+      {
+        "execute": {
+          "args": "-r $GAMEDIR/XCOPY.EXE",
+          "file": "/bin/rm"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Select GOG installer.\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- xcopy: https://github.com/appoloin/WfW/raw/master/XCOPY.EXE\ngame:\n  game_id: lol\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $inno\n- copy:\n    dst: $GAMEDIR\n    src: $xcopy\n- execute:\n    args: -I app -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR\" -t dir\n\n      imgmount D \"$CACHE/app/Lands of Lore 1/GAME.DAT\" -t iso\n\n      ver set 6.22\n\n      D:\n\n      C:\\xcopy.exe  D:\\data\\*.ADL C:\\\n\n      C:\\xcopy.exe  D:\\data\\*.PAK C:\\\n\n      C:\\xcopy.exe  D:\\data\\*.TLK C:\\\n\n      C:\\xcopy.exe  D:\\data\\FILEDATA.FDT C:\\\n\n      md C:\\ENG\n\n      C:\\xcopy.exe D:\\data\\eng\\*.*  C:\\ENG\n\n      md C:\\FRE\n\n      C:\\xcopy.exe D:\\data\\fre\\*.*  C:\\FRE\n\n      md C:\\GER\n\n      C:\\xcopy.exe D:\\data\\ger\\*.* C:\\GER\n\n      exit'\n    file: $CACHE/lore.conf\n- task:\n    config_file: $CACHE/lore.conf\n    name: dosbox.dosexec\n    working_dir: $GAMEDIR\n- execute:\n    args: -r $GAMEDIR/XCOPY.EXE\n    file: /bin/rm\n"
+}

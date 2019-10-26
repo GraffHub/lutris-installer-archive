@@ -21,10 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": 0
+      },
+      "disable_runtime": false
+    },
+    "winesteam": {
+      "dxvk": true,
+      "esync": true,
+      "version": "tkg-4.0-x86_64"
+    },
     "game": {
+      "arch": "win64",
       "prefix": "$GAMEDIR/prefix",
-      "appid": 488790,
-      "arch": "win64"
+      "appid": 488790
     },
     "files": [
       {
@@ -34,27 +46,20 @@
         "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
     ],
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_HUD": 0
-      }
-    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
           "name": "create_prefix"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dxvk.conf",
           "section": "Max feature level",
-          "value": "10_1",
           "key": "d3d11.maxFeatureLevel",
-          "file": "$GAMEDIR/dxvk.conf"
+          "value": "10_1"
         }
       },
       {
@@ -65,11 +70,11 @@
       },
       {
         "task": {
-          "args": "/silent",
-          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR/prefix",
           "name": "wineexec",
-          "arch": "win64"
+          "args": "/silent"
         }
       },
       {
@@ -82,26 +87,21 @@
       },
       {
         "task": {
-          "args": "/S",
-          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "executable": "uplay",
+          "prefix": "$GAMEDIR/prefix",
           "name": "wineexec",
-          "arch": "win64"
+          "args": "/S"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
           "name": "winekill"
         }
       }
-    ],
-    "winesteam": {
-      "esync": true,
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    }
+    ]
   },
   "content": "files:\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\ngame:\r\n  appid: 488790\r\n  arch: win64\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- write_config:\r\n    file: $GAMEDIR/dxvk.conf\r\n    key: d3d11.maxFeatureLevel\r\n    section: Max feature level\r\n    value: '10_1'\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: vcrun2010 vcrun2012 corefonts win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win64\r\n    args: /S\r\n    executable: uplay\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_runtime: false\r\n  env:\r\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\r\n    DXVK_HUD: 0\r\nwinesteam:\r\n  dxvk: true\r\n  esync: true\r\n  version: tkg-4.0-x86_64"
 }

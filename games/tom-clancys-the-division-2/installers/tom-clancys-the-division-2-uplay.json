@@ -21,35 +21,43 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "env": {
+        "DXVK_HUD": "0"
+      }
+    },
     "game": {
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
       "arch": "win64",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    },
+    "wine": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true,
+      "esync": true,
+      "version": "tkg-4.3-x86_64"
     },
     "files": [
       {
         "client": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "0"
-      }
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Please wait while we install .NET 4.7.2",
           "arch": "win64",
           "prefix": "$GAMEDIR",
+          "description": "Please wait while we install .NET 4.7.2",
           "name": "winetricks",
           "app": "dotnet472"
         }
@@ -64,23 +72,15 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "args": "/S",
-          "description": "Installing client",
           "prefix": "$GAMEDIR",
           "executable": "client",
-          "arch": "win64"
+          "description": "Installing client",
+          "args": "/S",
+          "arch": "win64",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "version": "tkg-4.3-x86_64"
-    }
+    ]
   },
   "content": "files:\r\n- client: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet472\r\n    arch: win64\r\n    description: Please wait while we install .NET 4.7.2\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: corefonts win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /S\r\n    description: Installing client\r\n    executable: client\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: '0'\r\nwine:\r\n  dxvk: true\r\n  esync: true\r\n  overrides:\r\n    nvapi,nvapi64: disabled\r\n  version: tkg-4.3-x86_64"
 }

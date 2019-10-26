@@ -1,0 +1,134 @@
+{
+  "id": 16412,
+  "game_id": 17407,
+  "game_slug": "surviving-mars",
+  "name": "Surviving Mars",
+  "year": 2018,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "surviving-mars-epic-games-store",
+  "version": "Epic Games Store",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-10-26T01:03:17.509785Z",
+  "updated_at": "2019-10-26T01:03:28.178053Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 464920,
+  "gogid": 2129244347,
+  "gogslug": "surviving_mars",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler"
+      }
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "args": "-opengl",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-4.16-x86_64"
+    },
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "mfinstaller": "https://github.com/z0z0z/mf-install/archive/master.zip"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "audio"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/mfinstaller",
+          "file": "mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "terminal": true,
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "command": "$CACHE/mfinstaller/install-mf.sh"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "app": "arial dotnet48"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "msiexec",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "arch": "win64",
+          "exclude_processes": "EpicGamesLauncher.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\n- mfinstaller: https://github.com/z0z0z/mf-install/archive/master.zip\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  version: lutris-4.16-x86_64\n"
+}

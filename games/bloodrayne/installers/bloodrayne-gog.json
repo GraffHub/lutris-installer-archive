@@ -7,14 +7,14 @@
   "user": "q__",
   "runner": "wine",
   "slug": "bloodrayne-gog",
-  "version": "gog",
+  "version": "GOG",
   "description": null,
   "notes": "",
-  "created_at": "2019-06-22T13:48:29.269875Z",
-  "updated_at": "2019-06-22T13:48:29.269899Z",
+  "created_at": "2019-06-22T13:48:29.269000Z",
+  "updated_at": "2019-10-14T02:04:24.431109Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": 3810,
   "gogid": 1207658808,
@@ -23,34 +23,31 @@
   "script": {
     "game": {
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/GOG.com/BloodRayne 1/rayne.exe",
-      "appid": 3810,
       "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/Program Files/GOG.com/BloodRayne 1/"
+      "exe": "drive_c/GOG Games/BloodRayne/rayne.exe"
+    },
+    "wine": {
+      "overrides": {
+        "quartz": "n",
+        "dinput8": "n",
+        "devenum": "n",
+        "xinput1_3": "n",
+        "dinput": "n",
+        "winegstreamer": "disabled"
+      },
+      "Audio": "alsa"
     },
     "files": [
       {
-        "installer": "N/A:Please select the GOG.com Windows installer"
+        "setup": "N/A:Please select the GOG.com Windows installer"
       }
     ],
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "quartz": "n",
-        "devenum": "n",
-        "dinput": "n",
-        "xinput1_3": "n",
-        "winegstreamer": "disabled",
-        "dinput8": "n"
-      },
-      "Audio": "alsa",
-      "WineDesktop": "${INPUT_RESOLUTIONX}x${INPUT_RESOLUTIONY}"
-    },
     "installer": [
       {
         "input_menu": {
-          "description": "Choose horizontal resolution",
+          "preselect": "1920",
           "id": "RESOLUTIONX",
+          "description": "Choose horizontal resolution",
           "options": [
             {
               "1920": "1920"
@@ -61,14 +58,14 @@
             {
               "2560": "2560"
             }
-          ],
-          "preselect": "1920"
+          ]
         }
       },
       {
         "input_menu": {
-          "description": "Choose vertical resolution",
+          "preselect": "1080",
           "id": "RESOLUTIONY",
+          "description": "Choose vertical resolution",
           "options": [
             {
               "1080": "1080"
@@ -79,8 +76,7 @@
             {
               "1440": "1440"
             }
-          ],
-          "preselect": "1080"
+          ]
         }
       },
       {
@@ -93,24 +89,25 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "installer",
           "arch": "win32",
-          "name": "wineexec"
+          "executable": "setup",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
         }
       },
       {
         "write_config": {
           "data": {
             "Graphics": {
-              "gamePIXY": "$INPUT_RESOLUTIONY",
-              "gamePIXX": "$INPUT_RESOLUTIONX"
+              "gamePIXX": "$INPUT_RESOLUTIONX",
+              "gamePIXY": "$INPUT_RESOLUTIONY"
             }
           },
-          "file": "$GAMEDIR/drive_c/Program Files/GOG.com/BloodRayne 1/system/rayne.ini"
+          "file": "$GAMEDIR/drive_c/GOG Games/BloodRayne/system/rayne.ini"
         }
       }
     ]
   },
-  "content": "files:\n- installer: N/A:Please select the GOG.com Windows installer\ngame:\n  appid: 3810\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/GOG.com/BloodRayne 1/rayne.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/GOG.com/BloodRayne 1/\ninstaller:\n- input_menu:\n    description: Choose horizontal resolution\n    id: RESOLUTIONX\n    options:\n    - '1920': '1920'\n    - '1600': '1600'\n    - '2560': '2560'\n    preselect: '1920'\n- input_menu:\n    description: Choose vertical resolution\n    id: RESOLUTIONY\n    options:\n    - '1080': '1080'\n    - '1600': '1600'\n    - '1440': '1440'\n    preselect: '1080'\n- task:\n    app: quartz devenum dinput dinput8 xinput1_3\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    data:\n      Graphics:\n        gamePIXX: $INPUT_RESOLUTIONX\n        gamePIXY: $INPUT_RESOLUTIONY\n    file: $GAMEDIR/drive_c/Program Files/GOG.com/BloodRayne 1/system/rayne.ini\nwine:\n  Audio: alsa\n  Desktop: true\n  WineDesktop: ${INPUT_RESOLUTIONX}x${INPUT_RESOLUTIONY}\n  overrides:\n    devenum: n\n    dinput: n\n    dinput8: n\n    quartz: n\n    winegstreamer: disabled\n    xinput1_3: n\n"
+  "content": "files:\n- setup: N/A:Please select the GOG.com Windows installer\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/BloodRayne/rayne.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: Choose horizontal resolution\n    id: RESOLUTIONX\n    options:\n    - '1920': '1920'\n    - '1600': '1600'\n    - '2560': '2560'\n    preselect: '1920'\n- input_menu:\n    description: Choose vertical resolution\n    id: RESOLUTIONY\n    options:\n    - '1080': '1080'\n    - '1600': '1600'\n    - '1440': '1440'\n    preselect: '1080'\n- task:\n    app: quartz devenum dinput dinput8 xinput1_3\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    data:\n      Graphics:\n        gamePIXX: $INPUT_RESOLUTIONX\n        gamePIXY: $INPUT_RESOLUTIONY\n    file: $GAMEDIR/drive_c/GOG Games/BloodRayne/system/rayne.ini\nwine:\n  Audio: alsa\n  overrides:\n    devenum: n\n    dinput: n\n    dinput8: n\n    quartz: n\n    winegstreamer: disabled\n    xinput1_3: n\n"
 }

@@ -1,0 +1,148 @@
+{
+  "id": 16253,
+  "game_id": 16435,
+  "game_slug": "magic-the-gathering-online",
+  "name": "Magic The Gathering Online",
+  "year": null,
+  "user": "xatrekak",
+  "runner": "wine",
+  "slug": "magic-the-gathering-online-latest",
+  "version": "LATEST",
+  "description": "New installer that automatically accounts for the randomly generated path names.\r\n\r\nIt also correctly uses the setup.exe to launch the game and not MTGO.exe so it actually works and should install much quicker.",
+  "notes": "",
+  "created_at": "2019-10-17T05:58:07.548000Z",
+  "updated_at": "2019-10-17T06:12:27.279094Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "system": {
+      "single_cpu": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/MTGO/setup.exe"
+    },
+    "wine": {
+      "version": "lutris-4.16-x86_64"
+    },
+    "files": [
+      {
+        "setup": {
+          "url": "http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe",
+          "filename": "setup.exe"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "wineboot",
+          "prefix": "$GAMEDIR",
+          "description": "Simulating Windows reboot.",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "sound=pulse winegstreamer=builtin"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "dotnet46"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win7"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "gdiplus"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "gdiplus=native"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "ddr=gdi"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "wineboot",
+          "description": "Simulating Windows reboot.",
+          "args": "-s",
+          "arch": "win32",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "setup",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "dfsvc.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "execute": {
+          "command": "find $GAMEDIR/drive_c/ -name 'MTGO.exe' -exec sh -c 'ln -vs \"$(dirname \"$0\")\" \"$1\" | cut -c 2-' {} $GAMEDIR/drive_c/MTGO \\;"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/MTGO",
+          "src": "setup"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: setup.exe\n    url: http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe\ngame:\n  exe: $GAMEDIR/drive_c/MTGO/setup.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sound=pulse winegstreamer=builtin\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet46\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus=native\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ddr=gdi\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: -s\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    exclude_processes: dfsvc.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: find $GAMEDIR/drive_c/ -name 'MTGO.exe' -exec sh -c 'ln -vs \"$(dirname\n      \"$0\")\" \"$1\" | cut -c 2-' {} $GAMEDIR/drive_c/MTGO \\;\n- merge:\n    dst: $GAMEDIR/drive_c/MTGO\n    src: setup\nsystem:\n  single_cpu: true\nwine:\n  version: lutris-4.16-x86_64\n"
+}

@@ -10,32 +10,32 @@
   "version": "Retail DVD",
   "description": "Installer for the DVD Retail Version",
   "notes": "",
-  "created_at": "2019-07-06T11:42:33.308541Z",
-  "updated_at": "2019-07-06T11:42:33.308572Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-07-06T11:42:33.308000Z",
+  "updated_at": "2019-09-09T01:01:15.632471Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": 6060,
   "gogid": 1421404701,
   "gogslug": "star_wars_battlefront_ii",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "wine": {
       "version": "tkg-4.5-x86_64"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/LucasArts/Star Wars Battlefront II/LaunchBFII.exe"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Bottle, please wait...",
-          "prefix": "$GAMEDIR",
-          "install_mono": false,
           "arch": "win32",
+          "install_mono": false,
+          "prefix": "$GAMEDIR",
+          "description": "Creating Wine Bottle, please wait...",
           "name": "create_prefix"
         }
       },
@@ -49,11 +49,18 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 1",
-          "requires": "LaunchBFII.exe"
+          "requires": "LaunchBFII.exe",
+          "description": "Insert disc 1"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/LaunchBFII.exe",
+          "name": "wineexec"
         }
       }
     ]
   },
-  "content": "game:\n  arch: win32\n  exe: $GAMEDIR\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: LaunchBFII.exe\nwine:\n  version: tkg-4.5-x86_64\n"
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/LucasArts/Star Wars Battlefront II/LaunchBFII.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: LaunchBFII.exe\n- task:\n    executable: $DISC/LaunchBFII.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: tkg-4.5-x86_64\n"
 }

@@ -22,9 +22,9 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "appid": 7660,
       "config_file": "$GAMEDIR/dosbox_xcomapoc.conf",
-      "main_file": "$GAMEDIR/dosbox_xcomapoc_single.conf"
+      "main_file": "$GAMEDIR/dosbox_xcomapoc_single.conf",
+      "appid": 7660
     },
     "files": [
       {
@@ -34,64 +34,64 @@
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "wine.create_prefix"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "name": "wine.set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
+          "type": "REG_SZ",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "wine.set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing ...",
           "prefix": "$GAMEDIR",
           "executable": "game",
-          "name": "wine.wineexec",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing ...",
+          "name": "wine.wineexec"
         }
       },
       {
         "execute": {
-          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false,
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "terminal": false,
-          "file": "/bin/sh"
+          "description": "cleaning..."
         }
       },
       {
         "execute": {
-          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false,
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "terminal": false,
-          "file": "/bin/sh"
+          "description": "cleaning..."
         }
       },
       {
         "execute": {
+          "terminal": false,
           "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosbox_xcomapoc_single.conf",
-          "terminal": false,
           "file": "/bin/sed"
         }
       },
       {
         "execute": {
+          "terminal": false,
           "args": "-i '/^imgmount/ {N; s|imgmount D \"..\\\\CD\\\\xcom.cue\" -t iso.*c:|c:\\nimgmount D \".\\\\CD\\\\xcom.cue\" -t iso|g}' $GAMEDIR/dosbox_xcomapoc_single.conf",
-          "terminal": false,
           "file": "/bin/sed"
         }
       },
       {
         "execute": {
-          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "terminal": false,
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "file": "/bin/sh"
         }
       }

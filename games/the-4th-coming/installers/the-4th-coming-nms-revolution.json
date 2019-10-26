@@ -21,33 +21,37 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "system": {
+      "disable_runtime": true
+    },
     "game": {
-      "exe": "drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe",
       "arch": "win32",
       "prefix": "$GAMEDIR",
-      "args": "--waitforpreload --nologo --nodx9ex --gc2"
+      "args": "--waitforpreload --nologo --nodx9ex --gc2",
+      "exe": "drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe"
+    },
+    "wine": {
+      "version": "tkg-4.4-x86_64",
+      "esync": true
     },
     "files": [
       {
         "setup": "http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe"
       }
     ],
-    "system": {
-      "disable_runtime": true
-    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Setting Wine to Windows 7 32-Bit",
           "arch": "win32",
           "prefix": "$GAMEDIR",
+          "description": "Setting Wine to Windows 7 32-Bit",
           "name": "winetricks",
           "app": "win7"
         }
@@ -65,11 +69,7 @@
           "src": "$CACHE"
         }
       }
-    ],
-    "wine": {
-      "esync": true,
-      "version": "tkg-4.4-x86_64"
-    }
+    ]
   },
   "content": "files:\n- setup: http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe\ngame:\n  arch: win32\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  exe: drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/The4Coming\n    src: $CACHE\nsystem:\n  disable_runtime: true\nwine:\n  esync: true\n  version: tkg-4.4-x86_64\n"
 }

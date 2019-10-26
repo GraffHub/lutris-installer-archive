@@ -21,14 +21,18 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Need For Speed III/nfs3.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Need For Speed III"
-    },
     "system": {
       "prefix_command": "taskset --cpu-list 0-1"
+    },
+    "wine": {
+      "WineDesktop": "1024x768",
+      "Desktop": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Need For Speed III",
+      "exe": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Need For Speed III/nfs3.exe"
     },
     "installer": [
       {
@@ -38,8 +42,8 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
@@ -58,11 +62,7 @@
           "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "1024x768"
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Electronic Arts/Need For Speed III/nfs3.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/Electronic Arts/Need For Speed III\ninstaller:\n- insert-disc:\n    requires: AUTORUN.EXE\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/AUTORUN.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  prefix_command: taskset --cpu-list 0-1\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
 }

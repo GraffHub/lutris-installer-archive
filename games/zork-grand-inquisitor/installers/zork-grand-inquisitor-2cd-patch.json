@@ -1,0 +1,136 @@
+{
+  "id": 15679,
+  "game_id": 11636,
+  "game_slug": "zork-grand-inquisitor",
+  "name": "Zork: Grand Inquisitor",
+  "year": null,
+  "user": "appoloin",
+  "runner": "wine",
+  "slug": "zork-grand-inquisitor-2cd-patch",
+  "version": "2CD + Patch",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-18T23:45:04.273806Z",
+  "updated_at": "2019-09-18T23:45:04.273830Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 570680,
+  "gogid": 1207658948,
+  "gogslug": "zork_grand_inquisitor",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "zvision"
+    },
+    "files": [
+      {
+        "patch": "http://www.thezorklibrary.com/installguides/Zpatch.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "install_mono": false,
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "setup.exe",
+          "description": "Please insert disc 1"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/setup.exe",
+          "name": "wine.wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$patch",
+          "name": "wine.wineexec"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/zassets1 $GAMEDIR/zassets1  $GAMEDIR/zgi_mx",
+          "file": "mkdir"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/zassets1",
+          "src": "$DISC/zassets1"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/zgi_mx",
+          "src": "$DISC/zgi/zgi_mx"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/cursor.zfs"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/death.zfs"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/inquis.str"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/inquis.zix"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/r.svr"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/scripts.zfs"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/zgi/subtitle.zfs"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/zassets2",
+          "src": "$DISC/zassets2"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: http://www.thezorklibrary.com/installguides/Zpatch.exe\ngame:\n  game_id: zvision\n  path: $GAMEDIR\ninstaller:\n- task:\n    install_mono: false\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Please insert disc 1\n    requires: setup.exe\n- task:\n    executable: $DISC/setup.exe\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: $patch\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: $GAMEDIR/zassets1 $GAMEDIR/zassets1  $GAMEDIR/zgi_mx\n    file: mkdir\n- copy:\n    dst: $GAMEDIR/zassets1\n    src: $DISC/zassets1\n- copy:\n    dst: $GAMEDIR/zgi_mx\n    src: $DISC/zgi/zgi_mx\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/cursor.zfs\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/death.zfs\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/inquis.str\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/inquis.zix\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/r.svr\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/scripts.zfs\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/subtitle.zfs\n- copy:\n    dst: $GAMEDIR/zassets2\n    src: $DISC/zassets2\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
+}

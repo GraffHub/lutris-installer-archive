@@ -21,6 +21,7 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "require-binaries": "mono, cabextract, curl",
     "game": {
       "exe": "$GAMEDIR/FreeSO/freeso.command"
     },
@@ -43,8 +44,8 @@
       },
       {
         "execute": {
-          "command": "curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/911:id/client-648.zip --create-dirs -o $GAMEDIR/tmp/client/client.zip",
-          "terminal": true
+          "terminal": true,
+          "command": "curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/911:id/client-648.zip --create-dirs -o $GAMEDIR/tmp/client/client.zip"
         }
       },
       {
@@ -92,8 +93,7 @@
           "command": "rm -r $GAMEDIR/tmp"
         }
       }
-    ],
-    "require-binaries": "mono, cabextract, curl"
+    ]
   },
   "content": "files:\n- tso: https://ia801903.us.archive.org/tarview.php?tar=/33/items/Fileplanet_dd_042006/Fileplanet_dd_042006.tar&file=042006/TSO_Installer_v1.1239.1.0.zip\n- macextras: https://freeso.org/stuff/macextras.zip\n- tsopatcher: https://github.com/riperiperi/TSO-Version-Patcher/releases/download/v1.0/Release.zip\ngame:\n  exe: $GAMEDIR/FreeSO/freeso.command\ninstaller:\n- execute:\n    command: curl --cookie-jar $CACHE/cookies https://servo.freeso.org/?guest=1\n- execute:\n    command: curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/911:id/client-648.zip\n      --create-dirs -o $GAMEDIR/tmp/client/client.zip\n    terminal: true\n- extract:\n    dst: $GAMEDIR/FreeSO\n    file: $GAMEDIR/tmp/client/client.zip\n- extract:\n    dst: $GAMEDIR/FreeSO\n    file: $macextras\n- extract:\n    dst: $GAMEDIR/tmp/tso\n    file: $tso\n- execute:\n    command: cabextract -d $GAMEDIR/FreeSO/game $GAMEDIR/tmp/tso/Data1.cab\n- extract:\n    dst: $GAMEDIR/tmp/tsopatcher\n    file: $tsopatcher\n- execute:\n    command: mono $GAMEDIR/tmp/tsopatcher/TSOVersionPatcherF.exe $GAMEDIR/tmp/tsopatcher/1239toNI.tsop\n      $GAMEDIR/FreeSO/game\n- chmodx: $GAMEDIR/FreeSO/freeso.command\n- chmodx: $GAMEDIR/FreeSO/freeso3d.command\n- execute:\n    command: rm -r $GAMEDIR/tmp\nrequire-binaries: mono, cabextract, curl\n"
 }
