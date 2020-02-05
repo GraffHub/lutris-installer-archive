@@ -1,0 +1,107 @@
+{
+  "id": 18099,
+  "game_id": 29770,
+  "game_slug": "legends-of-runeterra",
+  "name": "Legends of Runeterra",
+  "year": 2020,
+  "user": "bobpoulet01",
+  "runner": "wine",
+  "slug": "legends-of-runeterra-change-me-5",
+  "version": "Change Me",
+  "description": "THERE ARE SOME ISSUES, PLEASE READ THE DETAILS BELOW. Dxvk enabled.",
+  "notes": "- Running the game straight after installation (from the Riot launcher) is buggy and might not work. CLOSE THE RIOT LAUNCHER BEFORE LOGGING IN to finish the installation, then start the game normally.\r\n- Due to an issue  in wine, sometimes the game will freeze or disconnect. IF YOUR GAME DISCONNECTS, SOMETIMES YOU CAN MAKE IT RECONNECT BY SPAMMING THE EMOTE MENU OPEN/CLOSED.\r\n- If the game crashes or you have experienced connection error, LoR may not shut down completely (eg, Riot Client still open in the background). This might prevent you from starting the game again; IF YOU CANNOT START THE GAME, TRY SELECTING \"KILL ALL WINE PROCESSES\" FROM THE RIGHT CLICK MENU OR LEFT PANEL.",
+  "created_at": "2020-01-27T16:13:32.200254Z",
+  "updated_at": "2020-01-31T03:02:35.008922Z",
+  "draft": false,
+  "published": false,
+  "published_by": 64834,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "lor_installer": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "GrabFullScreen",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "UseXVidMode",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "N"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Legends of Runeterra",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "lor_installer",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dcompiler_43 d3dx9 wininet dotnet48"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      }
+    ],
+    "game": {
+      "args": "--launch-product=bacon --launch-patchline=live",
+      "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "MouseWarpOverride": "disable",
+      "dxvk": true,
+      "Desktop": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- lor_installer: https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe\ngame:\n  args: --launch-product=bacon --launch-patchline=live\n  exe: $GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win64\n    key: UseXVidMode\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    arch: win64\n    description: Installing Legends of Runeterra\n    executable: lor_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9 wininet dotnet48\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  MouseWarpOverride: disable\n  dxvk: true\n  esync: true\n"
+}

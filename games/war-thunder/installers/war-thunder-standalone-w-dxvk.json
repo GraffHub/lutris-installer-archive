@@ -11,7 +11,7 @@
   "description": "This is the windows standalone version with DXVK. Try this if you have problems with the linux version of the game.",
   "notes": "Instructions for DXVK support: <a href=\"https://github.com/lutris/lutris/wiki/How-to:-DXVK\">https://github.com/lutris/lutris/wiki/How-to:-DXVK</a>\r\n\r\nChange to \"full screen (window mode)\" If you have multiple monitors and the mouse doesn't stay in the game window.\r\n\r\nSometimes the game doesn't quit completely. You need to close it with a right click on the wine system tray icon or by stopping the game with lutris.",
   "created_at": "2018-10-20T23:09:32.585000Z",
-  "updated_at": "2019-06-13T08:07:04.940717Z",
+  "updated_at": "2020-01-23T02:57:20.102976Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,55 +21,54 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    },
     "files": [
       {
         "game": {
-          "url": "https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher",
-          "filename": "wt_launcher.exe"
+          "filename": "wt_launcher.exe",
+          "url": "https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher"
         }
       }
     ],
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating 32bit Wine prefix.",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Installing Arial font",
           "name": "winetricks",
-          "app": "arial"
+          "arch": "win32",
+          "app": "arial",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "description": "Installing the game.\n------------------------------\nLet Lutris installer finish first. UNCHECK launch WarThunder before you close the installer!",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "game",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
   },
-  "content": "files:\n- game:\n    filename: wt_launcher.exe\n    url: https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher\ngame:\n  arch: win32\n  exe: drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win32\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing the game.\n\n      ------------------------------\n\n      Let Lutris installer finish first. UNCHECK launch WarThunder before you close\n      the installer!'\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
+  "content": "files:\n- game:\n    filename: wt_launcher.exe\n    url: https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher\ngame:\n  arch: win32\n  exe: drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win32\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing the game.\n\n      ------------------------------\n\n      Let Lutris installer finish first. UNCHECK launch WarThunder before you close\n      the installer!'\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

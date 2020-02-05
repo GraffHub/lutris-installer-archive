@@ -11,84 +11,76 @@
   "description": null,
   "notes": "",
   "created_at": "2017-07-20T01:47:45.978000Z",
-  "updated_at": "2019-06-12T05:13:29.830253Z",
+  "updated_at": "2019-12-28T21:57:16.428762Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": 339340,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "xboxdrv": "--trigger-as-button"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 339340
-    },
     "files": [
       {
         "codecs": "https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe"
       }
     ],
+    "game": {
+      "appid": 339340,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing Windows Media Player 10",
+          "description": "Installing needed libraries",
           "name": "winetricks",
-          "app": "wmp10"
-        }
-      },
-      {
-        "task": {
           "arch": "win32",
+          "silent": true,
           "prefix": "$GAMEDIR/prefix",
-          "description": "Installing DirectX components",
-          "name": "winetricks",
-          "app": "d3dcompiler_43"
+          "app": "wmp10 d3dcompiler_43 d3dx9"
         }
       },
       {
         "task": {
+          "description": "Changing to Windows XP to install video codec (otherwise it will fail)",
+          "name": "winetricks",
           "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing DirectX components",
-          "name": "winetricks",
-          "app": "d3dx9"
+          "app": "winxp",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing Xact",
-          "name": "winetricks",
-          "app": "xact_jun2010"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "executable": "codecs",
           "description": "Installing video codecs",
-          "args": "/q",
+          "name": "wineexec",
           "arch": "win32",
-          "name": "wineexec"
+          "executable": "codecs",
+          "args": "/q",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Changing to Windows 7",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
-    ]
+    ],
+    "system": {
+      "xboxdrv": "--trigger-as-button"
+    }
   },
-  "content": "files:\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\ngame:\n  appid: 339340\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: wmp10\n    arch: win32\n    description: Installing Windows Media Player 10\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win32\n    description: Installing DirectX components\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9\n    arch: win32\n    description: Installing DirectX components\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact_jun2010\n    arch: win32\n    description: Installing Xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    args: /q\n    description: Installing video codecs\n    executable: codecs\n    name: wineexec\n    prefix: $GAMEDIR/prefix\nsystem:\n  xboxdrv: --trigger-as-button\n"
+  "content": "files:\r\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\r\ngame:\r\n  appid: 339340\r\n  arch: win32\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: wmp10 d3dcompiler_43 d3dx9\r\n    arch: win32\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: winxp\r\n    arch: win32\r\n    description: Changing to Windows XP to install video codec (otherwise it will\r\n      fail)\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    args: /q\r\n    description: Installing video codecs\r\n    executable: codecs\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win7\r\n    arch: win32\r\n    description: Changing to Windows 7\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  xboxdrv: --trigger-as-button"
 }

@@ -1,0 +1,92 @@
+{
+  "id": 2274,
+  "game_id": 3942,
+  "game_slug": "revolver360-reactor",
+  "name": "REVOLVER360 RE:ACTOR",
+  "year": 2014,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "revolver360-reactor-gogcom",
+  "version": "GOG.com",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-07-06T15:00:11.802078Z",
+  "updated_at": "2016-09-07T16:37:40.589935Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 313400,
+  "gogid": 1427964976,
+  "gogslug": "revolver360_reactor",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/game/REVOLVER360REACTOR.exe"
+    },
+    "gogid": "revolver360_reactor",
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "description": "Installing .net",
+          "name": "winetricks",
+          "app": "dotnet40",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "description": "Installing xna",
+          "name": "winetricks",
+          "app": "xna40",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "name": "wineexec",
+          "executable": "game",
+          "description": "Installing...",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/REVOLVER360REACTOR.exe\n  prefix: $GAMEDIR\ngogid: revolver360_reactor\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: dotnet40\n    description: Installing .net\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    app: xna40\n    description: Installing xna\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

@@ -1,0 +1,69 @@
+{
+  "id": 8469,
+  "game_id": 19014,
+  "game_slug": "dark-souls-remastered",
+  "name": "DARK SOULS™: REMASTERED",
+  "year": 2018,
+  "user": "cxf",
+  "runner": "winesteam",
+  "slug": "dark-soulstm-remastered-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": null,
+  "notes": "Only works for AMD users.",
+  "created_at": "2018-05-30T02:38:21.789000Z",
+  "updated_at": "2020-01-31T02:38:35.579766Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 570940,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 570940,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2017 win7"
+        }
+      },
+      {
+        "write_config": {
+          "key": "d3d11.maxFeatureLevel",
+          "file": "$GAMEDIR/dxvk.conf",
+          "section": "maxfeaturelevel",
+          "value": "11_1"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    }
+  },
+  "content": "game:\n  appid: 570940\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- write_config:\n    file: $GAMEDIR/dxvk.conf\n    key: d3d11.maxFeatureLevel\n    section: maxfeaturelevel\n    value: '11_1'\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
+}

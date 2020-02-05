@@ -21,26 +21,6 @@
   "gogslug": "fallout_3_game_of_the_year_edition",
   "humblestoreid": "fallout-3-game-of-the-year-edition",
   "script": {
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
-      }
-    },
-    "wine": {
-      "WineDesktop": "1280x720",
-      "overrides": {
-        "winegstreamer": "disabled"
-      },
-      "Desktop": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Fallout 3/launch.bat"
-    },
     "files": [
       {
         "setup": "N/A:Please select file setup_fallout_3_1.7.0.3_(12034).exe from GOG"
@@ -61,12 +41,29 @@
         "modpack": "https://djazz.se/nas/games/fallout3/modpack.tar.xz"
       }
     ],
+    "wine": {
+      "WineDesktop": "1280x720",
+      "Desktop": true,
+      "overrides": {
+        "winegstreamer": "disabled"
+      }
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Fallout 3/launch.bat"
+    },
+    "system": {
+      "env": {
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true"
+      }
+    },
     "installer": [
       {
         "input_menu": {
-          "preselect": "true",
-          "id": "CONFIG_LOCATION",
-          "description": "Do you want to store saves in ~/Documents/My Games/Fallout3/Saves ?",
           "options": [
             {
               "true": "Yes, store them in home"
@@ -74,37 +71,40 @@
             {
               "false": "No, store them inside the wineprefix"
             }
-          ]
+          ],
+          "description": "Do you want to store saves in ~/Documents/My Games/Fallout3/Saves ?",
+          "preselect": "true",
+          "id": "CONFIG_LOCATION"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "description": "Creating 64-bit Wine prefix",
-          "install_gecko": false,
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
           "install_mono": false,
-          "name": "create_prefix"
+          "install_gecko": false
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Disabling virtual desktop",
-          "value": "",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
           "key": "WineDesktop",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
+          "value": ""
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "description": "winetricks: winxp quartz",
           "name": "winetricks",
-          "app": "winxp quartz"
+          "arch": "win64",
+          "app": "winxp quartz",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -115,129 +115,129 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting wallpaper",
-          "value": "0 0 0",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors",
           "key": "Background",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors",
+          "value": "0 0 0"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting wallpaper",
-          "value": "c:\\\\wallpaper.bmp",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
           "key": "Wallpaper",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
+          "value": "c:\\\\wallpaper.bmp"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Enabling GrabFullscreen for Fallout3.exe",
-          "value": "Y",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Fallout3.exe\\X11 Driver",
           "key": "GrabFullscreen",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Fallout3.exe\\X11 Driver",
+          "value": "Y"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "description": "Forcing Nvidia VideoPci",
-          "value": "402",
-          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "key": "VideoPciDeviceID",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "value": "402"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "description": "Forcing Nvidia VideoPci",
-          "value": "10de",
-          "arch": "win64",
-          "key": "VideoPciVendorID",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Disabling AlwaysOffscreen",
-          "value": "disabled",
-          "arch": "win64",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "key": "VideoPciVendorID",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "value": "10de"
+        }
+      },
+      {
+        "task": {
+          "description": "Disabling AlwaysOffscreen",
+          "name": "set_regedit",
+          "arch": "win64",
           "key": "AlwaysOffscreen",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "value": "disabled"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Console",
           "description": "Configuring console",
-          "value": "202e0e",
-          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Console",
           "key": "ColorTable02",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "value": "202e0e"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Console",
           "description": "Configuring console",
-          "value": "74f014",
-          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Console",
           "key": "ColorTable10",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "value": "74f014"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Configuring console",
-          "value": "Fixedsys",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Console",
           "key": "FaceName",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Console",
+          "value": "Fixedsys"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Console",
           "description": "Configuring console",
-          "value": "2a",
-          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Console",
           "key": "ScreenColors",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "value": "2a"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Console",
           "description": "Configuring console",
-          "value": "0190",
-          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Console",
           "key": "FontWeight",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_DWORD",
+          "value": "0190"
         }
       },
       {
@@ -253,9 +253,9 @@
       },
       {
         "execute": {
-          "description": "Extracting game files",
           "args": "--gog --exclude-temp --output-dir \"$CACHE/extract\" \"$setup\"",
-          "file": "$CACHE/innoextract/innoextract"
+          "file": "$CACHE/innoextract/innoextract",
+          "description": "Extracting game files"
         }
       },
       {
@@ -267,208 +267,208 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "arch": "win64",
           "name": "set_regedit_file",
+          "arch": "win64",
           "filename": "$CACHE/fallout3.reg"
         }
       },
       {
         "write_config": {
+          "key": "bUseThreadedAI",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "General",
-          "key": "bUseThreadedAI",
           "value": 1
         }
       },
       {
         "write_config": {
+          "key": "iNumHWThreads",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "General",
-          "key": "iNumHWThreads",
           "value": 2
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "General",
           "key": "bUseThreadedBlood",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "General",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "General",
           "key": "bUseThreadedMorpher",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "General",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "General",
           "key": "bUseThreadedTempEffects",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "General",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "General",
           "key": "bUseThreadedParticleSystem",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "General",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "General",
           "key": "bUseMultiThreadedFaceGen",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "General",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "General",
           "key": "bUseMultiThreadedTrees",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "General",
           "value": 1
         }
       },
       {
         "write_config": {
+          "key": "iPreloadSizeLimit",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "General",
-          "key": "iPreloadSizeLimit",
           "value": 104857600
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Display",
           "key": "fDefaultFOV",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Display",
           "value": 85
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Display",
           "key": "fDefaultWorldFOV",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Display",
           "value": 85
         }
       },
       {
         "write_config": {
+          "key": "fDefault1stPersonFOV",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Display",
-          "key": "fDefault1stPersonFOV",
           "value": 65
         }
       },
       {
         "write_config": {
+          "key": "fPipboy1stPersonFOV",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Display",
-          "key": "fPipboy1stPersonFOV",
           "value": 50
         }
       },
       {
         "write_config": {
+          "key": "iPresentInterval",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Display",
-          "key": "iPresentInterval",
           "value": 0
         }
       },
       {
         "write_config": {
+          "key": "bFull Screen",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Display",
-          "key": "bFull Screen",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Audio",
           "key": "bMultiThreadAudio",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Audio",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Audio",
           "key": "bEnableAudioCache",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Audio",
           "value": 1
         }
       },
       {
         "write_config": {
+          "key": "iAudioCacheSize",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Audio",
-          "key": "iAudioCacheSize",
           "value": 4096
         }
       },
       {
         "write_config": {
+          "key": "iMaxSizeForCachedSound",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Audio",
-          "key": "iMaxSizeForCachedSound",
           "value": 256
         }
       },
       {
         "write_config": {
+          "key": "iRadioUpdateInterval",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Audio",
-          "key": "iRadioUpdateInterval",
           "value": 1024
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Controls",
           "key": "fForegroundMouseMult",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Controls",
           "value": 0
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Controls",
           "key": "fForegroundMouseAccelBase",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Controls",
           "value": 0
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Controls",
           "key": "fForegroundMouseAccelTop",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Controls",
           "value": 0
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
-          "section": "Controls",
           "key": "fForegroundMouseBase",
+          "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
+          "section": "Controls",
           "value": 0
         }
       },
       {
         "write_config": {
+          "key": "bBackground Mouse",
           "file": "$GAMEDIR/drive_c/Fallout 3/Fallout_default.ini",
           "section": "Controls",
-          "key": "bBackground Mouse",
           "value": 1
         }
       },
@@ -487,51 +487,51 @@
       {
         "extract": {
           "dst": "$CACHE/laa-patcher",
-          "description": "Patching Fallout3.exe with Large Address Aware support",
-          "file": "laa-patcher"
+          "file": "laa-patcher",
+          "description": "Patching Fallout3.exe with Large Address Aware support"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/laa-patcher/EDITBIN.EXE",
+          "working_dir": "$GAMEDIR/drive_c/Fallout 3",
           "description": "Patching Fallout3.exe with Large Address Aware support",
-          "args": "/LARGEADDRESSAWARE Fallout3.exe",
-          "arch": "win64",
           "name": "wineexec",
-          "working_dir": "$GAMEDIR/drive_c/Fallout 3"
+          "arch": "win64",
+          "executable": "$CACHE/laa-patcher/EDITBIN.EXE",
+          "args": "/LARGEADDRESSAWARE Fallout3.exe",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/Fallout 3/boss.exe",
           "description": "Sorting modlist with BOSS",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "$GAMEDIR/drive_c/Fallout 3/boss.exe",
           "args": "--update --silent --game Fallout3",
-          "arch": "win64",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Enabling virtual desktop",
-          "value": "1280x720",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
           "key": "WineDesktop",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops",
+          "value": "1280x720"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Enabling virtual desktop",
-          "value": "WineDesktop",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer",
           "key": "Desktop",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer",
+          "value": "WineDesktop"
         }
       },
       {
@@ -547,11 +547,11 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/Fallout 3/FalloutLauncher.exe",
           "description": "Configure data files (DLCs), video settings and exit the launcher.\nDon't forget to set your native resolution!\n",
-          "arch": "win64",
           "name": "wineexec",
+          "arch": "win64",
+          "executable": "$GAMEDIR/drive_c/Fallout 3/FalloutLauncher.exe",
+          "prefix": "$GAMEDIR",
           "exclude_processes": "Fallout3.exe",
           "env": {
             "WINEDEBUG": "-all"
@@ -561,8 +561,8 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       }
     ]

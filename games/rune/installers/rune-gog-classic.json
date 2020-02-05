@@ -18,17 +18,9 @@
   "rating": "",
   "steamid": null,
   "gogid": null,
-  "gogslug": "",
+  "gogslug": "rune_classic",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "use_us_layout": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Rune Classic/System/Rune.exe"
-    },
-    "custom-name": "RUNE Classic - GOG",
     "files": [
       {
         "setup": "N/A:Select the EXE downloaded from GOG"
@@ -43,28 +35,29 @@
         "gppsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_steam.sccprofile"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Rune Classic/System/Rune.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
           "args": "/SILENT /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "setup",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "input_menu": {
-          "preselect": "int",
-          "id": "lang",
-          "description": "Select your preferred language",
           "options": [
             {
               "int": "English"
@@ -84,41 +77,41 @@
             {
               "rut": "russian"
             }
-          ]
+          ],
+          "description": "Select your preferred language",
+          "preselect": "int",
+          "id": "lang"
         }
       },
       {
         "write_config": {
-          "merge": true,
           "data": {
-            "IpServer.UdpServerUplink": {
-              "MasterServerAddress": "master.333networks.com"
-            },
             "Engine.Engine": {
               "Language": "$INPUT_lang"
             },
-            "WinDrv.WindowsClient": {
-              "FullscreenViewportY": "$RESOLUTION_HEIGHT",
-              "FullscreenColorBits": 32,
-              "UseDirectDraw": true,
-              "FullscreenViewportX": "$RESOLUTION_WIDTH",
-              "UseJoystick": false
-            },
             "Engine.GameEngine": {
               "ServerActors": "IpServer.UdpServerUplink MasterServerAddress=master.333networks.com MasterServerPort=27900"
+            },
+            "IpServer.UdpServerUplink": {
+              "MasterServerAddress": "master.333networks.com"
+            },
+            "WinDrv.WindowsClient": {
+              "FullscreenColorBits": 32,
+              "FullscreenViewportY": "$RESOLUTION_HEIGHT",
+              "FullscreenViewportX": "$RESOLUTION_WIDTH",
+              "UseDirectDraw": true,
+              "UseJoystick": false
             },
             "UBrowserAll": {
               "ListFactories[0]": "UBrowser.UBrowserGSpyFact,MasterServerAddress=master.333networks.com,MasterServerTCPPort=28900,ServerRegion=0,GameName=rune"
             }
           },
-          "file": "$GAMEDIR/drive_c/GOG Games/Rune Classic/System/Default.ini"
+          "file": "$GAMEDIR/drive_c/GOG Games/Rune Classic/System/Default.ini",
+          "merge": true
         }
       },
       {
         "input_menu": {
-          "preselect": 91,
-          "id": "fov",
-          "description": "What is your screen ratio:",
           "options": [
             {
               "91": "16/9"
@@ -129,27 +122,30 @@
             {
               "autre": "other or do not know"
             }
-          ]
+          ],
+          "description": "What is your screen ratio:",
+          "preselect": 91,
+          "id": "fov"
         }
       },
       {
         "write_config": {
-          "merge": true,
           "data": {
             "Engine.Input": {
-              "MouseWheelUp": null,
               "Shift": null,
+              "B": "Look",
+              "MouseWheelUp": null,
               "V": "ZTargetToggle",
-              "J": "TurnRight",
               "H": "TurnLeft",
-              "B": "Look"
+              "J": "TurnRight"
             },
             "Engine.PlayerPawn": {
-              "DefaultFOV": "$INPUT_fov.000000",
-              "DesiredFOV": "$INPUT_fov.000000"
+              "DesiredFOV": "$INPUT_fov.000000",
+              "DefaultFOV": "$INPUT_fov.000000"
             }
           },
-          "file": "$GAMEDIR/drive_c/GOG Games/Rune Classic/System/DefUser.ini"
+          "file": "$GAMEDIR/drive_c/GOG Games/Rune Classic/System/DefUser.ini",
+          "merge": true
         }
       },
       {
@@ -172,35 +168,35 @@
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
-          "arch": "win64",
-          "type": "REG_DWORD",
-          "key": "csmt",
-          "name": "set_regedit"
+          "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "EAXEnabled",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
           "value": "Y",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "EAXEnabled",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "background",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
@@ -208,7 +204,11 @@
           "command": "cd \"$GAMEDIR/drive_c/GOG Games/Rune Gold\"; rm -f -r System/User.ini System/Rune.ini System/OpenAL32.dll gog* Launch* Support* unins* webcache.zip redist ;"
         }
       }
-    ]
+    ],
+    "system": {
+      "use_us_layout": true
+    },
+    "custom-name": "RUNE Classic - GOG"
   },
   "content": "custom-name: RUNE Classic - GOG\nfiles:\n- setup: N/A:Select the EXE downloaded from GOG\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_gamepad_readme.html\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_x360.gamecontroller.amgp\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_steam.sccprofile\ngame:\n  exe: drive_c/GOG Games/Rune Classic/System/Rune.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- input_menu:\n    description: Select your preferred language\n    id: lang\n    options:\n    - int: English\n    - frt: French\n    - itt: Italian\n    - det: german\n    - est: spanish\n    - rut: russian\n    preselect: int\n- write_config:\n    data:\n      Engine.Engine:\n        Language: $INPUT_lang\n      Engine.GameEngine:\n        ServerActors: IpServer.UdpServerUplink MasterServerAddress=master.333networks.com\n          MasterServerPort=27900\n      IpServer.UdpServerUplink:\n        MasterServerAddress: master.333networks.com\n      UBrowserAll:\n        ListFactories[0]: UBrowser.UBrowserGSpyFact,MasterServerAddress=master.333networks.com,MasterServerTCPPort=28900,ServerRegion=0,GameName=rune\n      WinDrv.WindowsClient:\n        FullscreenColorBits: 32\n        FullscreenViewportX: $RESOLUTION_WIDTH\n        FullscreenViewportY: $RESOLUTION_HEIGHT\n        UseDirectDraw: true\n        UseJoystick: false\n    file: $GAMEDIR/drive_c/GOG Games/Rune Classic/System/Default.ini\n    merge: true\n- input_menu:\n    description: 'What is your screen ratio:'\n    id: fov\n    options:\n    - 91: 16/9\n    - 85: 16/10\n    - autre: other or do not know\n    preselect: 91\n- write_config:\n    data:\n      Engine.Input:\n        B: Look\n        H: TurnLeft\n        J: TurnRight\n        MouseWheelUp: null\n        Shift: null\n        V: ZTargetToggle\n      Engine.PlayerPawn:\n        DefaultFOV: $INPUT_fov.000000\n        DesiredFOV: $INPUT_fov.000000\n    file: $GAMEDIR/drive_c/GOG Games/Rune Classic/System/DefUser.ini\n    merge: true\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Rune Classic/gamepad profiles/\n    src: gppx360\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Rune Classic/gamepad profiles/\n    src: gppsteam\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Rune Classic/gamepad profiles/\n    src: gppreadme\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: EAXEnabled\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Rune Gold\"; rm -f -r System/User.ini System/Rune.ini\n      System/OpenAL32.dll gog* Launch* Support* unins* webcache.zip redist ;\nsystem:\n  use_us_layout: true\n"
 }

@@ -11,23 +11,16 @@
   "description": "Using the GOG windows version and HoMM3 HD Mod to support modern screen resolutions and many UI improvements.",
   "notes": "Press \"Create HD exe\" button in the launcher to unlock \"Play\" button.",
   "created_at": "2019-03-26T04:43:25.808000Z",
-  "updated_at": "2019-04-12T02:45:46.486120Z",
+  "updated_at": "2020-01-23T02:57:12.096842Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 51687,
   "rating": "",
   "steamid": null,
   "gogid": 1207658787,
   "gogslug": "heroes_of_might_and_magic_3_complete_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe"
-    },
-    "wine": {
-      "version": "4.3-x86_64"
-    },
     "files": [
       {
         "installer": "N/A:Select the game's setup file"
@@ -36,31 +29,53 @@
         "hd_mod": "http://ih875403.vds.myihor.ru/HoMM3_HD_Latest_setup.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe"
+    },
     "installer": [
       {
+        "input_menu": {
+          "options": [
+            {
+              "en": "English"
+            },
+            {
+              "pl": "Polish"
+            },
+            {
+              "value and": "label can be anything, surround them with quotes to avoid issues"
+            }
+          ],
+          "description": "Choose the game's language:",
+          "preselect": "pl",
+          "id": "LANG"
+        }
+      },
+      {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating WINE prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "executable": "installer",
           "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
-          "description": "Running Setup, please wait…",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "installer",
+          "description": "Running Setup, please wait…"
         }
       },
       {
         "task": {
-          "executable": "hd_mod",
           "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"",
-          "description": "Running HD mod setup, please wait…",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "hd_mod",
+          "description": "Running HD mod setup, please wait…"
         }
       }
     ]
   },
-  "content": "files:\n- installer: N/A:Select the game's setup file\n- hd_mod: http://ih875403.vds.myihor.ru/HoMM3_HD_Latest_setup.exe\ngame:\n  exe: drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    description: \"Running Setup, please wait\\u2026\"\n    executable: installer\n    name: wineexec\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"\n    description: \"Running HD mod setup, please wait\\u2026\"\n    executable: hd_mod\n    name: wineexec\nwine:\n  version: 4.3-x86_64\n"
+  "content": "files:\n- installer: N/A:Select the game's setup file\n- hd_mod: http://ih875403.vds.myihor.ru/HoMM3_HD_Latest_setup.exe\ngame:\n  exe: drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LANG\n    options:\n    - en: English\n    - pl: Polish\n    - value and: label can be anything, surround them with quotes to avoid issues\n    preselect: pl\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    description: \"Running Setup, please wait\\u2026\"\n    executable: installer\n    name: wineexec\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"\n    description: \"Running HD mod setup, please wait\\u2026\"\n    executable: hd_mod\n    name: wineexec\n"
 }

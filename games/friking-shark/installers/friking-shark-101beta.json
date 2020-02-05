@@ -21,58 +21,58 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe"
-    },
     "files": [
       {
         "game": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/friking-shark/FrikingSharkSetup-v1.01-Beta.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true,
           "app": "corefonts"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/silent",
+          "name": "wineexec",
+          "executable": "game",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Disabling unused WINE features",
           "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
         }
       }
     ]

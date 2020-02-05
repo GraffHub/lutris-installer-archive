@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/sonic3air_game/Sonic3AIR.exe"
-    },
     "files": [
       {
         "steaminstall": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
@@ -38,38 +33,43 @@
       },
       {
         "sonic3air": {
-          "url": "http://sonic3air.org/downloadgame.php",
+          "referer": "sonic3air.org",
           "filename": "sonic3air_game.zip",
-          "referer": "sonic3air.org"
+          "url": "http://sonic3air.org/downloadgame.php"
         }
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/sonic3air_game/Sonic3AIR.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Setting Windows version to 10",
           "name": "winetricks",
-          "app": "win10"
+          "arch": "win32",
+          "app": "win10",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "steaminstall",
           "description": "Installing Steam Client",
-          "args": "/s /v /qb",
+          "name": "wineexec",
           "arch": "win32",
-          "name": "wineexec"
+          "executable": "steaminstall",
+          "args": "/s /v /qb",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -80,19 +80,19 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c",
           "description": "Extracting and Installing Sonic 3 Angel Island Revisited files",
           "nomerge": true,
-          "file": "sonic3air"
+          "file": "sonic3air",
+          "dst": "$GAMEDIR/drive_c"
         }
       },
       {
         "task": {
+          "description": "Installing Sonic 3 and Knuckles - SEGA Megadrive & Genesis Classics",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "s3andkhelper",
-          "prefix": "$GAMEDIR",
-          "description": "Installing Sonic 3 and Knuckles - SEGA Megadrive & Genesis Classics",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {

@@ -21,23 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "pulse_latency": true,
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_HUD": 0
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix"
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
     "files": [
       {
         "file1": "N/A:Select the game's setup file"
@@ -46,36 +29,53 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks",
+          "arch": "win64",
           "app": "vcrun2017 win7"
         }
       },
       {
         "write_config": {
+          "key": "d3d11.maxFeatureLevel",
           "file": "$GAMEDIR/dxvk.conf",
           "section": "maxfeaturelevel",
-          "key": "d3d11.maxFeatureLevel",
           "value": "11_1"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "file1",
           "description": "Installing Dark Souls Remastered",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "file1",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    }
   },
   "content": "files:\n- file1: N/A:Select the game's setup file\ngame:\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- write_config:\n    file: $GAMEDIR/dxvk.conf\n    key: d3d11.maxFeatureLevel\n    section: maxfeaturelevel\n    value: '11_1'\n- task:\n    description: Installing Dark Souls Remastered\n    executable: file1\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

@@ -11,7 +11,7 @@
   "description": "Download required: <a href=\"https://www.deltarune.com/\">https://www.deltarune.com/</a>",
   "notes": "Press Alt+Enter for fullscreen.",
   "created_at": "2018-11-02T00:05:31.900000Z",
-  "updated_at": "2019-04-20T18:43:55.372836Z",
+  "updated_at": "2020-01-23T02:56:48.257659Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,36 +21,30 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "fps_limit": "30"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe"
-    },
-    "wine": {
-      "version": "tkg-4.0-x86_64"
-    },
     "files": [
       {
         "installer": "https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win32",
           "app": "vcrun2015 win7"
         }
       },
@@ -65,7 +59,10 @@
           "command": "7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\" -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\""
         }
       }
-    ]
+    ],
+    "system": {
+      "fps_limit": "30"
+    }
   },
-  "content": "files:\n- installer: https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: '$PLUGINSDIR\n\n      $TEMP'\n    file: $CACHE/exclude.txt\n- execute:\n    command: 7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\"\n      -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\"\nsystem:\n  fps_limit: '30'\nwine:\n  version: tkg-4.0-x86_64\n"
+  "content": "files:\n- installer: https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: '$PLUGINSDIR\n\n      $TEMP'\n    file: $CACHE/exclude.txt\n- execute:\n    command: 7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\"\n      -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\"\nsystem:\n  fps_limit: '30'\n"
 }

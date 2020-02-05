@@ -1,5 +1,5 @@
 {
-  "id": 10302,
+  "id": 13204,
   "game_id": 1599,
   "game_slug": "spore",
   "name": "Spore",
@@ -8,10 +8,10 @@
   "runner": "wine",
   "slug": "spore-gog",
   "version": "GOG",
-  "description": null,
-  "notes": "",
-  "created_at": "2018-09-23T03:33:16.361000Z",
-  "updated_at": "2019-05-13T10:56:38.777012Z",
+  "description": "Runs much faster and fixes terrain issues.",
+  "notes": "**CONFIGURE AND INSTALL THE DEPENDENCIES FIRST**\r\nInstructions for D9VK support: <a href=\"https://github.com/lutris/lutris/wiki/Installing-drivers\">https://github.com/lutris/lutris/wiki/Installing-drivers</a>",
+  "created_at": "2019-04-29T01:31:08.494000Z",
+  "updated_at": "2020-01-23T15:53:19.205780Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,13 +21,6 @@
   "gogslug": "spore_collection",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe"
-    },
-    "wine": {
-      "version": "tkg-protonified-4.1-x86_64"
-    },
     "files": [
       {
         "installer": "N/A:Select the .exe installer:"
@@ -36,18 +29,25 @@
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "d3dcompiler_43 d3dx9"
+        }
+      },
+      {
+        "task": {
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "executable": "installer",
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
           "description": "Installing Spore...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -56,7 +56,22 @@
           "name": "winekill"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe"
+    },
+    "system": {
+      "env": {
+        "DXVK_LOG_LEVEL": "none",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
   },
-  "content": "files:\n- installer: 'N/A:Select the .exe installer:'\ngame:\n  exe: $GAMEDIR/drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Installing Spore...\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  version: tkg-protonified-4.1-x86_64\n"
+  "content": "files:\n- installer: 'N/A:Select the .exe installer:'\ngame:\n  exe: drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    description: Installing Spore...\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

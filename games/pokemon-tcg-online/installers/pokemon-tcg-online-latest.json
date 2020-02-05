@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2017-12-11T09:20:31.510000Z",
-  "updated_at": "2019-04-18T04:32:00.879943Z",
+  "updated_at": "2020-01-23T02:57:15.547327Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,37 +21,31 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
-    },
-    "wine": {
-      "overrides": {
-        "d3d11": "disabled"
-      },
-      "version": "tkg-3.21-x86_64"
-    },
     "files": [
       {
         "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "msiexec",
           "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
+          "name": "wineexec",
+          "executable": "msiexec",
           "description": "Installing Pokemon TCG Online",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -60,7 +54,12 @@
           "name": "winekill"
         }
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled"
+      }
+    }
   },
-  "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win32\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    description: Installing Pokemon TCG Online\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    d3d11: disabled\n  version: tkg-3.21-x86_64\n"
+  "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win32\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    description: Installing Pokemon TCG Online\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    d3d11: disabled\n"
 }

@@ -1,0 +1,114 @@
+{
+  "id": 18018,
+  "game_id": 5581,
+  "game_slug": "assassins-creed-syndicate",
+  "name": "Assassin's Creed Syndicate",
+  "year": 2015,
+  "user": "CochainComplex",
+  "runner": "wine",
+  "slug": "assassins-creed-syndicate-uplay",
+  "version": "UPlay",
+  "description": "Only installs Uplay and settings. The game will be installed on first launch.",
+  "notes": "When launching the game, it will ask if you want to start without the overlay. Please do *not* enable the overlay there and just launch it.",
+  "created_at": "2020-01-23T17:13:13.081000Z",
+  "updated_at": "2020-02-04T12:42:34.200845Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 368500,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      },
+      {
+        "acunity": "https://github.com/tannisroot/dxvk-caches/raw/master/ACU.tar.xz"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "install_mono": false,
+          "install_gecko": false
+        }
+      },
+      {
+        "write_file": {
+          "content": "overlay: \n  enabled: false\n",
+          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
+        }
+      },
+      {
+        "write_file": {
+          "content": "dxgi.maxFrameLatency = 1",
+          "file": "$GAMEDIR/dxvk.conf"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting DXVK state cache",
+          "file": "acunity",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "arial win7 d3dcompiler_43 faudio"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "uplay",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "args": "uplay://launch/1875/0",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\n- acunity: https://github.com/tannisroot/dxvk-caches/raw/master/ACU.tar.xz\ngame:\n  arch: win64\n  args: uplay://launch/1875/0\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: \"overlay: \\n  enabled: false\\n\"\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game\n      Launcher/settings.yml\n- write_file:\n    content: dxgi.maxFrameLatency = 1\n    file: $GAMEDIR/dxvk.conf\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- extract:\n    description: Extracting DXVK state cache\n    dst: $GAMEDIR\n    file: acunity\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial win7 d3dcompiler_43 faudio\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

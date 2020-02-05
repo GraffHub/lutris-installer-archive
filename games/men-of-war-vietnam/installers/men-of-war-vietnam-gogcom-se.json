@@ -21,41 +21,41 @@
   "gogslug": "men_of_war_vietnam",
   "humblestoreid": "",
   "script": {
-    "requires": "men-of-war-vietnam-gogcom",
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/game",
-      "exe": "$GAMEDIR/drive_c/game/vietnam.exe"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows Special Edition installer."
       }
     ],
+    "requires": "men-of-war-vietnam-gogcom",
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/game/vietnam.exe"
+    },
     "gogid": "men_of_war_vietnam_special_edition_upgrade",
     "installer": [
       {
         "execute": {
-          "terminal": false,
           "args": "-c 'ln -s $game $GAMEDIR/drive_c/se.exe'",
-          "file": "/bin/sh"
+          "file": "/bin/sh",
+          "terminal": false
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/se.exe",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/se.exe",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "execute": {
-          "terminal": false,
           "args": "-c 'rm -f $GAMEDIR/drive_c/se.exe'",
-          "file": "/bin/sh"
+          "file": "/bin/sh",
+          "terminal": false
         }
       }
     ]

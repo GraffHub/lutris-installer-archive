@@ -1,0 +1,74 @@
+{
+  "id": 10901,
+  "game_id": 1316,
+  "game_slug": "command-and-conquer-3-tiberium-wars",
+  "name": "Command & Conquer 3: Tiberium Wars",
+  "year": 2007,
+  "user": "dmsun",
+  "runner": "wine",
+  "slug": "command-conquer-3-tiberium-wa-retail-dvd",
+  "version": "Retail DVD",
+  "description": null,
+  "notes": "This will install C&C3 Tiberium Wars from a DVD. Copy the contents of the DVD to a folder in your home directory and run 'setup.exe' from that copy.\r\n\r\nDownload the v1.09 patch and execute that from the wineprefix after install has completed.\r\n\r\nSubsequently, you may wish to download a NO-CD crack.",
+  "created_at": "2018-11-18T05:46:08.810000Z",
+  "updated_at": "2020-01-23T02:57:19.351630Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 24790,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files (x86)/Electronic Arts/Command & Conquer 3/CNC3.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "nocrashdialog win7"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting OS as Windows 7.",
+          "name": "set_regedit",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win7"
+        }
+      }
+    ],
+    "wine": {
+      "WineDesktop": "1280x720",
+      "Desktop": true
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files (x86)/Electronic Arts/Command & Conquer 3/CNC3.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows 7.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\nwine:\n  Desktop: true\n  WineDesktop: 1280x720\n"
+}

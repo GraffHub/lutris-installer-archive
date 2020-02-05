@@ -8,27 +8,19 @@
   "runner": "linux",
   "slug": "rune-cd-hov-108",
   "version": "CD + HOV 1.08",
-  "description": "This script will install \"Rune\" Linux CD edition.\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "description": "This script will install \"Rune\" Linux CD edition.Thanks to the people who contributed to play this game in the best conditions.",
   "notes": "- 1.08 HOV update\r\n- Multiplayer OK\r\n- Known issues:\r\n- Multiplayer, join button, miss the \"j\" of \"join\"\r\n- Multiplayer, join, tab news is empty\r\n- When joining servers, sometimes the game crashes and complains: \"The file '..\\Textures\\Drgnkeep.utx' contains unrecognizable data free(): invalid pointer\". Same result with Decap1.utx and Galleon.utx files.\r\n- If you obtain \"maps mismatch\" error message, just erase the maps then the game will automatically upload the right map.\r\n- Gamepad: Rune Classic has bad controller support. Instead I invite you to use a keymapper like Antimicro or sc-controller. You will find profiles for x360 and Steam Controller in the \"gamepad profiles\" folder.\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2019-06-17T21:09:24.576000Z",
-  "updated_at": "2019-09-09T00:23:53.983191Z",
+  "updated_at": "2020-01-06T02:59:59.441190Z",
   "draft": false,
   "published": true,
   "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": null,
-  "gogslug": "",
+  "gogslug": "rune_classic",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "use_us_layout": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "RUNECDL/rune"
-    },
-    "custom-name": "RUNE - CD - Linux",
     "files": [
       {
         "gppreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_gamepad_readme.html"
@@ -49,18 +41,22 @@
         "patch3": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune_patch_hov_1.08_linux.zip"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "RUNECDL/rune"
+    },
     "installer": [
       {
         "insert-disc": {
-          "requires": "System/rune-bin",
-          "description": "Please insert \"RUNE\" Linux CD and press autodetect"
+          "description": "Please insert \"RUNE\" Linux CD and press autodetect",
+          "requires": "System/rune-bin"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/RUNECDL",
           "description": "Copying data from \"RUNE\" Linux CD, please wait",
-          "src": "$DISC/"
+          "src": "$DISC/",
+          "dst": "$GAMEDIR/RUNECDL"
         }
       },
       {
@@ -76,40 +72,37 @@
       },
       {
         "write_config": {
-          "merge": true,
           "data": {
-            "ALAudio.ALAudioSubsystem": {
-              "Channels": 32,
-              "OutputRate": "44100Hz"
-            },
-            "Engine.GameEngine": {
-              "ServerActors": "IpServer.UdpServerUplink MasterServerAddress=master.333networks.com MasterServerPort=27900"
-            },
             "Engine.Engine": {
               "GameRenderDevice": "OpenGLDrv.OpenGLRenderDevice",
               "WindowedRenderDevice": "OpenGLDrv.OpenGLRenderDevice"
             },
-            "IpServer.UdpServerUplink": {
-              "MasterServerAddress": "master.333networks.com"
+            "UBrowserAll": {
+              "ListFactories[0]": "UBrowser.UBrowserGSpyFact,MasterServerAddress=master.333networks.com,MasterServerTCPPort=28900,ServerRegion=0,GameName=rune"
             },
             "SDLDrv.SDLClient": {
-              "FullscreenViewportY": "$RESOLUTION_HEIGHT",
               "FullscreenColorBits": 32,
+              "FullscreenViewportY": "$RESOLUTION_HEIGHT",
               "FullscreenViewportX": "$RESOLUTION_WIDTH",
               "UseJoystick": false
             },
-            "UBrowserAll": {
-              "ListFactories[0]": "UBrowser.UBrowserGSpyFact,MasterServerAddress=master.333networks.com,MasterServerTCPPort=28900,ServerRegion=0,GameName=rune"
+            "Engine.GameEngine": {
+              "ServerActors": "IpServer.UdpServerUplink MasterServerAddress=master.333networks.com MasterServerPort=27900"
+            },
+            "ALAudio.ALAudioSubsystem": {
+              "OutputRate": "44100Hz",
+              "Channels": 32
+            },
+            "IpServer.UdpServerUplink": {
+              "MasterServerAddress": "master.333networks.com"
             }
           },
-          "file": "$GAMEDIR/RUNECDL/System/Default.ini"
+          "file": "$GAMEDIR/RUNECDL/System/Default.ini",
+          "merge": true
         }
       },
       {
         "input_menu": {
-          "preselect": 91,
-          "id": "fov",
-          "description": "What is your screen ratio:",
           "options": [
             {
               "91": "16/9"
@@ -120,27 +113,30 @@
             {
               "autre": "other or do not know"
             }
-          ]
+          ],
+          "description": "What is your screen ratio:",
+          "preselect": 91,
+          "id": "fov"
         }
       },
       {
         "write_config": {
-          "merge": true,
           "data": {
             "Engine.Input": {
-              "MouseWheelUp": null,
               "Shift": null,
+              "B": "Look",
+              "MouseWheelUp": null,
               "V": "ZTargetToggle",
-              "J": "TurnRight",
               "H": "TurnLeft",
-              "B": "Look"
+              "J": "TurnRight"
             },
             "Engine.PlayerPawn": {
-              "DefaultFOV": "$INPUT_fov.000000",
-              "DesiredFOV": "$INPUT_fov.000000"
+              "DesiredFOV": "$INPUT_fov.000000",
+              "DefaultFOV": "$INPUT_fov.000000"
             }
           },
-          "file": "$GAMEDIR/RUNECDL/System/DefUser.ini"
+          "file": "$GAMEDIR/RUNECDL/System/DefUser.ini",
+          "merge": true
         }
       },
       {
@@ -184,7 +180,11 @@
           "command": "cd $GAMEDIR/RUNECDL/; mv bin/x86/rune . ;chmod +x rune System/rune-bin System/ucc System/ucc-bin ; rm -f -r DEMOS lok* setup* win32 data.tar.gz autorun.inf bin System/libSDL-1.2.so.0 System/User.ini.bak Maps/DM-Alcohol.run ;"
         }
       }
-    ]
+    ],
+    "system": {
+      "use_us_layout": true
+    },
+    "custom-name": "RUNE - CD - Linux"
   },
-  "content": "custom-name: RUNE - CD - Linux\nfiles:\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_gamepad_readme.html\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_x360.gamecontroller.amgp\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_steam.sccprofile\n- patch1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune_hov_linux.zip\n- patch2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune-107-fix_linux.tar.bz2\n- patch3: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune_patch_hov_1.08_linux.zip\ngame:\n  exe: RUNECDL/rune\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: Please insert \"RUNE\" Linux CD and press autodetect\n    requires: System/rune-bin\n- merge:\n    description: Copying data from \"RUNE\" Linux CD, please wait\n    dst: $GAMEDIR/RUNECDL\n    src: $DISC/\n- extract:\n    dst: $GAMEDIR/RUNECDL/\n    src: $DISC/data.tar.gz\n- execute:\n    command: cd $GAMEDIR/RUNECDL/; chmod -R u-x,g-x,o-x,u+X,u+w,g+r * ;\n- write_config:\n    data:\n      ALAudio.ALAudioSubsystem:\n        Channels: 32\n        OutputRate: 44100Hz\n      Engine.Engine:\n        GameRenderDevice: OpenGLDrv.OpenGLRenderDevice\n        WindowedRenderDevice: OpenGLDrv.OpenGLRenderDevice\n      Engine.GameEngine:\n        ServerActors: IpServer.UdpServerUplink MasterServerAddress=master.333networks.com\n          MasterServerPort=27900\n      IpServer.UdpServerUplink:\n        MasterServerAddress: master.333networks.com\n      SDLDrv.SDLClient:\n        FullscreenColorBits: 32\n        FullscreenViewportX: $RESOLUTION_WIDTH\n        FullscreenViewportY: $RESOLUTION_HEIGHT\n        UseJoystick: false\n      UBrowserAll:\n        ListFactories[0]: UBrowser.UBrowserGSpyFact,MasterServerAddress=master.333networks.com,MasterServerTCPPort=28900,ServerRegion=0,GameName=rune\n    file: $GAMEDIR/RUNECDL/System/Default.ini\n    merge: true\n- input_menu:\n    description: 'What is your screen ratio:'\n    id: fov\n    options:\n    - 91: 16/9\n    - 85: 16/10\n    - autre: other or do not know\n    preselect: 91\n- write_config:\n    data:\n      Engine.Input:\n        B: Look\n        H: TurnLeft\n        J: TurnRight\n        MouseWheelUp: null\n        Shift: null\n        V: ZTargetToggle\n      Engine.PlayerPawn:\n        DefaultFOV: $INPUT_fov.000000\n        DesiredFOV: $INPUT_fov.000000\n    file: $GAMEDIR/RUNECDL/System/DefUser.ini\n    merge: true\n- extract:\n    dst: $GAMEDIR/RUNECDL/\n    src: patch1\n- extract:\n    dst: $GAMEDIR/RUNECDL/System/\n    src: patch2\n- extract:\n    dst: $GAMEDIR/RUNECDL/\n    src: patch3\n- merge:\n    dst: $GAMEDIR/RUNECDL/gamepad profiles/\n    src: gppx360\n- copy:\n    dst: $GAMEDIR/RUNECDL/gamepad profiles/\n    src: gppsteam\n- copy:\n    dst: $GAMEDIR/RUNECDL/gamepad profiles/\n    src: gppreadme\n- execute:\n    command: cd $GAMEDIR/RUNECDL/; mv bin/x86/rune . ;chmod +x rune System/rune-bin\n      System/ucc System/ucc-bin ; rm -f -r DEMOS lok* setup* win32 data.tar.gz autorun.inf\n      bin System/libSDL-1.2.so.0 System/User.ini.bak Maps/DM-Alcohol.run ;\nsystem:\n  use_us_layout: true\n"
+  "content": "custom-name: RUNE - CD - Linux\r\nfiles:\r\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_gamepad_readme.html\r\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_x360.gamecontroller.amgp\r\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/gamepad%20profiles/rune_steam.sccprofile\r\n- patch1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune_hov_linux.zip\r\n- patch2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune-107-fix_linux.tar.bz2\r\n- patch3: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rune/rune_patch_hov_1.08_linux.zip\r\ngame:\r\n  exe: RUNECDL/rune\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- insert-disc:\r\n    description: Please insert \"RUNE\" Linux CD and press autodetect\r\n    requires: System/rune-bin\r\n- merge:\r\n    description: Copying data from \"RUNE\" Linux CD, please wait\r\n    dst: $GAMEDIR/RUNECDL\r\n    src: $DISC/\r\n- extract:\r\n    dst: $GAMEDIR/RUNECDL/\r\n    src: $DISC/data.tar.gz\r\n- execute:\r\n    command: cd $GAMEDIR/RUNECDL/; chmod -R u-x,g-x,o-x,u+X,u+w,g+r * ;\r\n- write_config:\r\n    data:\r\n      ALAudio.ALAudioSubsystem:\r\n        Channels: 32\r\n        OutputRate: 44100Hz\r\n      Engine.Engine:\r\n        GameRenderDevice: OpenGLDrv.OpenGLRenderDevice\r\n        WindowedRenderDevice: OpenGLDrv.OpenGLRenderDevice\r\n      Engine.GameEngine:\r\n        ServerActors: IpServer.UdpServerUplink MasterServerAddress=master.333networks.com\r\n          MasterServerPort=27900\r\n      IpServer.UdpServerUplink:\r\n        MasterServerAddress: master.333networks.com\r\n      SDLDrv.SDLClient:\r\n        FullscreenColorBits: 32\r\n        FullscreenViewportX: $RESOLUTION_WIDTH\r\n        FullscreenViewportY: $RESOLUTION_HEIGHT\r\n        UseJoystick: false\r\n      UBrowserAll:\r\n        ListFactories[0]: UBrowser.UBrowserGSpyFact,MasterServerAddress=master.333networks.com,MasterServerTCPPort=28900,ServerRegion=0,GameName=rune\r\n    file: $GAMEDIR/RUNECDL/System/Default.ini\r\n    merge: true\r\n- input_menu:\r\n    description: 'What is your screen ratio:'\r\n    id: fov\r\n    options:\r\n    - 91: 16/9\r\n    - 85: 16/10\r\n    - autre: other or do not know\r\n    preselect: 91\r\n- write_config:\r\n    data:\r\n      Engine.Input:\r\n        B: Look\r\n        H: TurnLeft\r\n        J: TurnRight\r\n        MouseWheelUp: null\r\n        Shift: null\r\n        V: ZTargetToggle\r\n      Engine.PlayerPawn:\r\n        DefaultFOV: $INPUT_fov.000000\r\n        DesiredFOV: $INPUT_fov.000000\r\n    file: $GAMEDIR/RUNECDL/System/DefUser.ini\r\n    merge: true\r\n- extract:\r\n    dst: $GAMEDIR/RUNECDL/\r\n    src: patch1\r\n- extract:\r\n    dst: $GAMEDIR/RUNECDL/System/\r\n    src: patch2\r\n- extract:\r\n    dst: $GAMEDIR/RUNECDL/\r\n    src: patch3\r\n- merge:\r\n    dst: $GAMEDIR/RUNECDL/gamepad profiles/\r\n    src: gppx360\r\n- copy:\r\n    dst: $GAMEDIR/RUNECDL/gamepad profiles/\r\n    src: gppsteam\r\n- copy:\r\n    dst: $GAMEDIR/RUNECDL/gamepad profiles/\r\n    src: gppreadme\r\n- execute:\r\n    command: cd $GAMEDIR/RUNECDL/; mv bin/x86/rune . ;chmod +x rune System/rune-bin\r\n      System/ucc System/ucc-bin ; rm -f -r DEMOS lok* setup* win32 data.tar.gz autorun.inf\r\n      bin System/libSDL-1.2.so.0 System/User.ini.bak Maps/DM-Alcohol.run ;\r\nsystem:\r\n  use_us_layout: true"
 }

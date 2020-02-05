@@ -1,0 +1,64 @@
+{
+  "id": 16329,
+  "game_id": 5826,
+  "game_slug": "diablo",
+  "name": "Diablo",
+  "year": 1996,
+  "user": "FoggyLane",
+  "runner": "wine",
+  "slug": "diablo-gog-hellfire-vanilla",
+  "version": "GOG - Hellfire - Vanilla",
+  "description": "The GOG version of Diablo, with both the classic option and Hellfire expansion working.",
+  "notes": "",
+  "created_at": "2019-10-20T18:01:06.669000Z",
+  "updated_at": "2020-01-23T02:57:12.289846Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1412601690,
+  "gogslug": "diablo",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Setup, please wait...",
+          "name": "wineexec",
+          "executable": "installer"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "ddraw.dll": "n"
+      }
+    }
+  },
+  "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    ddraw.dll: n\n"
+}

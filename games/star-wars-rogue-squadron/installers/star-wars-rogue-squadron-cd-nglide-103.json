@@ -21,30 +21,30 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "GAMEDIR",
-      "exe": "drive_c/Program Files/LucasArts/ROGUE/ROGUE.EXE"
-    },
     "files": [
       {
         "rogue-installer": "http://github.com/medfreeman/RogueSquadron3DInstaller/raw/master/RS3DInstaller-0.96_nglide_103.exe"
       }
     ],
+    "game": {
+      "prefix": "GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/LucasArts/ROGUE/ROGUE.EXE"
+    },
     "installer": [
       {
         "insert-disc": {
-          "requires": "rogue",
-          "message": "Insert the Rogue Squadron CD to continue"
+          "message": "Insert the Rogue Squadron CD to continue",
+          "requires": "rogue"
         }
       },
       {
         "task": {
-          "prefix": "GAMEDIR",
-          "executable": "${rogue-installer}",
           "args": "/nocdprompt",
+          "name": "wineexec",
+          "executable": "${rogue-installer}",
           "description": "Installing Rogue Squadron",
-          "name": "wineexec"
+          "prefix": "GAMEDIR"
         }
       },
       {
@@ -56,12 +56,12 @@
       },
       {
         "task": {
-          "prefix": "GAMEDIR",
           "description": "Enable Windows 98 compatibility mode",
-          "value": "win98",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "name": "set_regedit",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win98"
         }
       }
     ]

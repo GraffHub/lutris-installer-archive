@@ -21,10 +21,6 @@
   "gogslug": "edna_harvey_the_breakout",
   "humblestoreid": "edna-harvey-the-breakout",
   "script": {
-    "game": {
-      "working_dir": "$GAMEDIR/drive_c/game",
-      "args": "-jar -Xms256M -Xmx512M -Djava.library.path=\"lib:native/linux:jar/\" -XX:-UseSplitVerifier Edna.jar -w"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
@@ -37,40 +33,44 @@
       }
     ],
     "exe": "drive_c/game/jre7/bin/java",
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "args": "-jar -Xms256M -Xmx512M -Djava.library.path=\"lib:native/linux:jar/\" -XX:-UseSplitVerifier Edna.jar -w"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "wine.create_prefix"
+          "name": "wine.create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "value": "",
-          "type": "REG_SZ",
+          "name": "wine.set_regedit",
           "key": "winemenubuilder.exe",
-          "name": "wine.set_regedit"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "jre-7u40-windows-i586.exe",
-          "name": "wine.set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "wine.set_regedit",
+          "key": "jre-7u40-windows-i586.exe",
           "prefix": "$GAMEDIR",
-          "executable": "game",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
           "args": "/verysilent /RESTARTEXITCODE=0 /SP- /NORESTART /NOICONS /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES  '/DIR=C:/game'",
-          "name": "wine.wineexec"
+          "name": "wine.wineexec",
+          "executable": "game",
+          "prefix": "$GAMEDIR"
         }
       },
       {

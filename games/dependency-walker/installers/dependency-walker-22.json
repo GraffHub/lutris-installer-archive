@@ -21,22 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "depends.exe"
-    },
     "files": [
       {
         "tool": "http://dependencywalker.com/depends22_x86.zip"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "depends.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -47,12 +47,12 @@
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       }
     ]

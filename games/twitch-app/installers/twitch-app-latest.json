@@ -11,76 +11,70 @@
   "description": null,
   "notes": "",
   "created_at": "2018-07-03T23:31:38.030000Z",
-  "updated_at": "2019-10-21T03:32:28.207139Z",
+  "updated_at": "2020-01-23T02:57:15.692865Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "terminal": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/$USER/Application Data/Twitch/Bin/Twitch.exe"
-    },
-    "wine": {
-      "version": "lutris-4.16-x86_64"
-    },
     "files": [
       {
         "app": "https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/users/$USER/Application Data/Twitch/Bin/Twitch.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "Y",
-          "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "name": "set_regedit",
+          "arch": "win32",
           "key": "ShowDotFiles",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Installing .NET 4.8 will take a while...",
           "name": "winetricks",
-          "app": "dotnet48"
+          "arch": "win32",
+          "app": "dotnet48",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Setting Windows to Win10",
           "name": "winetricks",
-          "app": "win10"
+          "arch": "win32",
+          "app": "win10",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "arch": "win32",
           "executable": "app",
           "args": "/silent",
-          "arch": "win64",
-          "exclude_processes": "mscorsvw.exe Twitch.exe TwitchUI.exe",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "mscorsvw.exe Twitch.exe TwitchUI.exe"
         }
       },
       {
@@ -95,7 +89,10 @@
           "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Twitch/ElectronSettings.json"
         }
       }
-    ]
+    ],
+    "system": {
+      "terminal": true
+    }
   },
-  "content": "files:\n- app: https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe\ngame:\n  arch: win64\n  exe: drive_c/users/$USER/Application Data/Twitch/Bin/Twitch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: ShowDotFiles\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    app: dotnet48\n    arch: win64\n    description: Installing .NET 4.8 will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Windows to Win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    exclude_processes: mscorsvw.exe Twitch.exe TwitchUI.exe\n    executable: app\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_file:\n    content: '{\"closeOption\": \"close\"}'\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Twitch/ElectronSettings.json\nsystem:\n  terminal: true\nwine:\n  version: lutris-4.16-x86_64\n"
+  "content": "files:\n- app: https://desktop.twitchsvc.net/installer/windows/TwitchSetup.exe\ngame:\n  arch: win32\n  exe: drive_c/users/$USER/Application Data/Twitch/Bin/Twitch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: ShowDotFiles\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    app: dotnet48\n    arch: win32\n    description: Installing .NET 4.8 will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win32\n    description: Setting Windows to Win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    exclude_processes: mscorsvw.exe Twitch.exe TwitchUI.exe\n    executable: app\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_file:\n    content: '{\"closeOption\": \"close\"}'\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Twitch/ElectronSettings.json\nsystem:\n  terminal: true\n"
 }

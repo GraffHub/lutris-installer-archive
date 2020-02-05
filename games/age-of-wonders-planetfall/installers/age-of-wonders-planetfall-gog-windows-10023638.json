@@ -11,7 +11,7 @@
   "description": null,
   "notes": "\"Saving settings failed\" message shown when game starts if used on OS with active non-latin locale: \r\nhttps://forum.paradoxplaza.com/forum/index.php?threads/aow-planetfall-saving-settings-failed.1230093/\r\nBug was reproduced in 1.002.36388 build\r\n\r\n### Workaround:\r\ncd $your_game_wineprefix/drive_c/users/$your_username/\r\nls -l\r\n# Locate the folder with gibberish name like 'РњРѕРё РґРѕРєСѓРјРµРЅС‚С‹'\r\n# Copy that name\r\n\r\n# Create symlinks in proper localized 'My Documents' directory\r\n# (be sure to replace fake variable names with actual values)\r\n# For example:\r\ngibberish_name='РњРѕРё РґРѕРєСѓРјРµРЅС‚С‹'\r\nlocalized_my_documents='Мои документы'\r\nfind \"$gibberish_name\"/Paradox\\ Interactive/Age\\ of\\ Wonders\\ Planetfall/ -mindepth 1 -type d  -exec ln -s $(readlink -f {}) \"$localized_my_documents\"/Paradox\\ Interactive/Age\\ of\\ Wonders\\ Planetfall/ \\;",
   "created_at": "2019-08-08T14:17:26.189000Z",
-  "updated_at": "2019-09-09T00:19:29.920667Z",
+  "updated_at": "2020-01-31T03:02:35.254033Z",
   "draft": false,
   "published": true,
   "published_by": 1,
@@ -21,39 +21,37 @@
   "gogslug": "age_of_wonders_planetfall",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/GOG Games/Age of Wonders Planetfall",
-      "exe": "drive_c/GOG Games/Age of Wonders Planetfall/AowPF.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "version": "ge-protonified-nofshack-4.9-x86_64",
-      "dxvk_version": "1.3.2",
-      "esync": false
-    },
     "files": [
       {
         "goginstaller": "N/A:Please select the GOG installer for this game"
       }
     ],
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/GOG Games/Age of Wonders Planetfall",
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/GOG Games/Age of Wonders Planetfall/AowPF.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "goginstaller",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "goginstaller"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": false
+    }
   },
-  "content": "files:\n- goginstaller: N/A:Please select the GOG installer for this game\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Age of Wonders Planetfall/AowPF.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/GOG Games/Age of Wonders Planetfall\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  dxvk_version: 1.3.2\n  esync: false\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+  "content": "files:\n- goginstaller: N/A:Please select the GOG installer for this game\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Age of Wonders Planetfall/AowPF.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/GOG Games/Age of Wonders Planetfall\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: false\n"
 }

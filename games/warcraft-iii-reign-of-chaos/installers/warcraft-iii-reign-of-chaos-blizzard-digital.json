@@ -1,0 +1,190 @@
+{
+  "id": 17509,
+  "game_id": 1458,
+  "game_slug": "warcraft-iii-reign-of-chaos",
+  "name": "Warcraft III: Reign of Chaos",
+  "year": 2002,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "warcraft-iii-reign-of-chaos-blizzard-digital",
+  "version": "Blizzard digital",
+  "description": "This script will install \"Warcraft III\" Blizzard digital edition.During install please let all options by default.Thanks to the people who helped us play this game in the best conditions.",
+  "notes": "- The game will ask you a valid key at first launch. You only need a Reign of Chaos CD Key, as blizzard now gifts everybody The Frozen Throne.\r\n- This game needs DXVK to launch, it is enabled by default. Verify you installed Vulkan libraries before to launch this installer script.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-12-23T06:26:25.244000Z",
+  "updated_at": "2020-02-03T14:58:29.522235Z",
+  "draft": false,
+  "published": false,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "regfile": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraftiii_utf8.reg"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/resolution.sh"
+      },
+      {
+        "w3": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/Warcraft-III-Setup.exe"
+      },
+      {
+        "wppa": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iiia.bmp"
+      },
+      {
+        "wppb": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iiib.bmp"
+      },
+      {
+        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iii.bat"
+      }
+    ],
+    "game": {
+      "args": "c:\\\\Program Files\\\\Warcraft III\\\\warcraft_iii.bat",
+      "exe": "drive_c/windows/syswow64/wineconsole.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "install_mono": false,
+          "install_gecko": false
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "CSMT",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "value": "00000000",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 7 mode for Wine",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "winxp"
+        }
+      },
+      {
+        "task": {
+          "args": "/desktop=WarcraftIII,1024x780 $w3",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/tmp",
+          "src": "regfile"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "src": "script"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/tmp/resolution.sh"
+      },
+      {
+        "execute": {
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
+          "file": "$GAMEDIR/drive_c/tmp/resolution.sh"
+        }
+      },
+      {
+        "task": {
+          "args": "$GAMEDIR/drive_c/tmp/warcraftiii.reg",
+          "name": "wineexec",
+          "executable": "regedit",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "win7"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "wallpaper",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
+          "value": "c:\\\\warcraft_iii.bmp",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "ActiveTitle",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Warcraft III/",
+          "src": "menu"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c",
+          "src": "wppa"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c",
+          "src": "wppb"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR/drive_c; cp warcraft_iiia.bmp warcraft_iii.bmp; rm -f -r tmp;"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "custom-name": "Warcraft III - Blizzard digital edtion"
+  },
+  "content": "custom-name: Warcraft III - Blizzard digital edtion\r\nfiles:\r\n- regfile: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraftiii_utf8.reg\r\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/resolution.sh\r\n- w3: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/Warcraft-III-Setup.exe\r\n- wppa: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iiia.bmp\r\n- wppb: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iiib.bmp\r\n- menu: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iii.bat\r\ngame:\r\n  args: c:\\\\Program Files\\\\Warcraft III\\\\warcraft_iii.bat\r\n  exe: drive_c/windows/syswow64/wineconsole.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    install_gecko: false\r\n    install_mono: false\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: CSMT\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: '00000000'\r\n- task:\r\n    arch: win64\r\n    key: background\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: 0 0 0\r\n- task:\r\n    arch: win64\r\n    description: Setting Windows 7 mode for Wine\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    value: winxp\r\n- task:\r\n    args: /desktop=WarcraftIII,1024x780 $w3\r\n    description: Running setup of the game. Just proceed and keep all settings at\r\n      their defaults\r\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/tmp\r\n    src: regfile\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/tmp/\r\n    src: script\r\n- chmodx: $GAMEDIR/drive_c/tmp/resolution.sh\r\n- execute:\r\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\r\n    file: $GAMEDIR/drive_c/tmp/resolution.sh\r\n- task:\r\n    args: $GAMEDIR/drive_c/tmp/warcraftiii.reg\r\n    executable: regedit\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win7\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: wallpaper\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: c:\\\\warcraft_iii.bmp\r\n- task:\r\n    arch: win64\r\n    key: ActiveTitle\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: 0 0 0\r\n- copy:\r\n    dst: $GAMEDIR/drive_c/Program Files/Warcraft III/\r\n    src: menu\r\n- copy:\r\n    dst: $GAMEDIR/drive_c\r\n    src: wppa\r\n- copy:\r\n    dst: $GAMEDIR/drive_c\r\n    src: wppb\r\n- execute:\r\n    command: cd $GAMEDIR/drive_c; cp warcraft_iiia.bmp warcraft_iii.bmp; rm -f -r\r\n      tmp;\r\nwine:\r\n  Desktop: true\r\n  dxvk: true"
+}

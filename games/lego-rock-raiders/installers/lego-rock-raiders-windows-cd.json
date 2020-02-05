@@ -1,0 +1,105 @@
+{
+  "id": 16503,
+  "game_id": 15018,
+  "game_slug": "lego-rock-raiders",
+  "name": "Lego Rock Raiders",
+  "year": 1999,
+  "user": "PolishWine",
+  "runner": "wine",
+  "slug": "lego-rock-raiders-windows-cd",
+  "version": "Windows CD",
+  "description": "This game needs a copy protection patch to work. It may be illegal in your country to patch copy protection. You must patch the game yourself.",
+  "notes": "When the game ask to install DirectX Media click yes. Click no when it ask for DirectX 6. When installing Indeo codecs you must choose custom installation type. Then uncheck download DirectShow filter and Indeo 5 Netscape Browser Extension or else the installer will crash.",
+  "created_at": "2019-10-31T11:03:50.006000Z",
+  "updated_at": "2020-01-22T02:21:38.035265Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "codec": "http://rrubucket.s3.amazonaws.com/RockRaidersCodec_490085.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/LEGO Media/Games/Rock Raiders/LegoRR.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "amstream"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "quartz"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "devenum"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "d3drm"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "RRicon5.ico"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Game",
+          "name": "wineexec",
+          "executable": "$DISC/Setup.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/RockRaidersCodec",
+          "file": "codec"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Indeo codecs",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/RockRaidersCodec/iv5setup.exe",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- codec: http://rrubucket.s3.amazonaws.com/RockRaidersCodec_490085.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/LEGO Media/Games/Rock Raiders/LegoRR.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: amstream\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: devenum\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3drm\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: RRicon5.ico\n- task:\n    description: Installing Game\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/RockRaidersCodec\n    file: codec\n- task:\n    description: Installing Indeo codecs\n    executable: $GAMEDIR/drive_c/RockRaidersCodec/iv5setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

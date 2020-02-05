@@ -21,49 +21,49 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "custom-name": "Lucas Simpsons Hit & Run Multiplayer",
-      "exe": "drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons Hit & Run Multiplayer Launcher/Launch.exe"
-    },
     "files": [
       {
         "multiplayer-launcher-archive": "http://multiplayer.donutteam.com/game/sharmp/downloads/sharmp16.zip"
       }
     ],
+    "game": {
+      "exe": "drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons Hit & Run Multiplayer Launcher/Launch.exe",
+      "custom-name": "Lucas Simpsons Hit & Run Multiplayer"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing .NET 3.5 Service Pack 1 runtime",
           "name": "winetricks",
-          "app": "dotnet35sp1"
+          "app": "dotnet35sp1",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "dst": "drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons Hit & Run Multiplayer Launcher/",
           "description": "Extracting mod launcher archive",
-          "file": "multiplayer-launcher-archive"
+          "file": "multiplayer-launcher-archive",
+          "dst": "drive_c/Program Files/Lucas Stuff/Lucas' Simpsons Hit & Run Tools/Lucas' Simpsons Hit & Run Multiplayer Launcher/"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting mod launcher game EXE path registry key",
-          "value": "$GAMEDIR/Simpsons.exe",
-          "path": "HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\",
+          "name": "set_regedit",
           "key": "Game EXE Path",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\",
+          "value": "$GAMEDIR/Simpsons.exe"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting mod launcher game directory path registry key",
-          "value": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\",
+          "name": "set_regedit",
           "key": "Game Path",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Lucas Stuff\\Lucas' Simpsons Hit & Run Tools\\",
+          "value": "$GAMEDIR"
         }
       }
     ]

@@ -21,85 +21,85 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Microsoft Games/Allegiance 1.2/Launcher.exe"
-    },
     "files": [
       {
         "game": "http://www.german-borg.de/files/allegsetup_302.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Microsoft Games/Allegiance 1.2/Launcher.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Installing...",
           "name": "winetricks",
-          "silent": true,
-          "app": "vcrun2010"
+          "app": "vcrun2010",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Installing...",
           "name": "winetricks",
-          "silent": true,
-          "app": "dotnet35"
+          "app": "dotnet35",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "wineboot",
           "description": "Rebooting...",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "wineboot",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/S",
+          "name": "wineexec",
+          "executable": "game",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Installing...",
           "name": "winetricks",
-          "silent": true,
-          "app": "directplay"
+          "app": "directplay",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Disabling unused WINE features",
           "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
         }
       }
     ]

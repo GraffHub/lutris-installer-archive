@@ -21,18 +21,6 @@
   "gogslug": "crusaders_of_might_and_magic",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "restore_gamma": true,
-      "reset_desktop": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Crusaders of Might and Magic/crusaders.exe"
-    },
-    "wine": {
-      "MouseWarpOverride": "force"
-    },
     "files": [
       {
         "installer": "N/A:Select the game's setup file"
@@ -41,29 +29,41 @@
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win32",
           "app": "vcrun2008 win7"
         }
       },
       {
         "task": {
+          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "installer",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Crusaders of Might and Magic/crusaders.exe"
+    },
+    "system": {
+      "restore_gamma": true,
+      "reset_desktop": true
+    },
+    "wine": {
+      "MouseWarpOverride": "force"
+    }
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Crusaders of Might and Magic/crusaders.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /LANG=en /SP- /SUPPRESSMSGBOXES\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  reset_desktop: true\n  restore_gamma: true\nwine:\n  MouseWarpOverride: force\n"
 }

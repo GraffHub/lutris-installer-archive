@@ -21,57 +21,57 @@
   "gogslug": "hearts_of_iron_iii",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "disable_runtime": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/game",
-      "exe": "$GAMEDIR/drive_c/game/Run/hoigame.exe"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/game/Run/hoigame.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "name": "wineexec",
+          "executable": "game",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Disabling unused WINE features",
           "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "disable_runtime": true
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Run/hoigame.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: true\n"
 }

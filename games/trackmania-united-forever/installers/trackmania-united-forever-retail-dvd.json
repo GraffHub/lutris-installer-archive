@@ -21,16 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/TmUnitedForever/TmForeverLauncher.exe"
-    },
     "files": [
       {
         "update": "http://files2.trackmaniaforever.com/TmUnitedForever_Update_2010-03-15_Setup.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/TmUnitedForever/TmForeverLauncher.exe"
+    },
     "installer": [
       {
         "insert-disc": {
@@ -39,47 +39,47 @@
       },
       {
         "task": {
-          "install_mono": false,
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "install_mono": false,
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/silent",
+          "name": "wineexec",
           "executable": "$DISC/TmUnitedForeverSetup.exe",
-          "args": "/silent",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "update",
           "args": "/silent",
+          "name": "wineexec",
+          "executable": "update",
           "description": "Updating...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Disabling unused WINE features",
           "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
         }
       }
     ]

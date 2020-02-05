@@ -1,0 +1,125 @@
+{
+  "id": 14576,
+  "game_id": 28462,
+  "game_slug": "ni-shui-han",
+  "name": "逆水寒",
+  "year": 2018,
+  "user": "卤铁肉",
+  "runner": "wine",
+  "slug": "ni-shui-han-205724",
+  "version": "2.0.5724",
+  "description": "从官方下载安装包进行安装。\r\n请先安装：wine（https://github.com/lutris/lutris/wiki/Wine-Dependencies） 和 驱动（https://github.com/lutris/lutris/wiki/Installing-drivers）",
+  "notes": "已知问题：\r\n　　1. 性能消耗过高。推荐咸鱼版或者超高性能服务器使用。\r\n　　2. 卡顿。任何场景下都会出现卡顿的情况，转向时更严重。\r\n　　3. 无法截图。游戏内截图和拍照无效。\r\n　　4. shift 按键冲突。游戏内使用 shift 键使出闪避动作会调出桌面状态栏（深度桌面环境）。\r\n　　5. 某些驱动会导致丢失材质（如：水）。\r\n　　6. 退出游戏后可能要手动停止进程。",
+  "created_at": "2019-07-15T02:59:47.049000Z",
+  "updated_at": "2020-02-04T12:42:46.931381Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://nsh.gdl.netease.com/NGP/NGP_NSH_2.0.5724.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "创建 64bit Wine prefix.",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Arial font...",
+          "name": "winetricks",
+          "arch": "win64",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 10 mode for Wine",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Wine Staging: Enabling DXVA2",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "backend",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "value": "va"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "开始安装逆水寒 NGP 平台\n------------------------------",
+          "name": "wineexec",
+          "arch": "win64",
+          "exclude_processes": "LootHoarder.exe \"LootHoarder.exe\"",
+          "executable": "setup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Netease/逆水寒（NGP游戏平台）/out/Release/LootHoarder.exe"
+    },
+    "system": {
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi64": "disabled",
+        "nvapi": "disabled",
+        "ucrtbase": "n,b",
+        "api-ms-win-crt-private-l1-1-0": "n,b",
+        "d3d12": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- setup: https://nsh.gdl.netease.com/NGP/NGP_NSH_2.0.5724.exe\ngame:\n  arch: win64\n  exe: \"drive_c/Netease/\\u9006\\u6C34\\u5BD2\\uFF08NGP\\u6E38\\u620F\\u5E73\\u53F0\\uFF09\\\n    /out/Release/LootHoarder.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: \"\\u521B\\u5EFA 64bit Wine prefix.\"\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: \"\\u5F00\\u59CB\\u5B89\\u88C5\\u9006\\u6C34\\u5BD2 NGP \\u5E73\\u53F0\\n------------------------------\"\n    exclude_processes: LootHoarder.exe \"LootHoarder.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    api-ms-win-crt-private-l1-1-0: n,b\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n    ucrtbase: n,b\n"
+}

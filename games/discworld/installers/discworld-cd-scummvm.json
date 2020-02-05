@@ -1,0 +1,102 @@
+{
+  "id": 17903,
+  "game_id": 11826,
+  "game_slug": "discworld",
+  "name": "Discworld",
+  "year": 1995,
+  "user": "legluondunet",
+  "runner": "scummvm",
+  "slug": "discworld-cd-scummvm",
+  "version": "CD + ScummVM",
+  "description": "This script will install \"Discworld\" CD edition for ScummVM.\r\nDuring install please let all options by default.\r\nThis script uses remastered soundtracks from James Woodcock. Visit his site to find more adventure games quality soundtracks replacement for ScummVM: http://scummvm.jameswoodcock.co.uk/\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "notes": "- You will need the Discworld CD only one time during install.\r\n- This script is compatible with US and European CD version.\r\n- Press F1 for main menu (load, save, quit...).\r\n- Multilanguage: during install you will be able to choose your preferred menus and subtitles game language between English (default), Italian, French, Spanish and German, whatever the Discworld CD version you use.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2020-01-14T18:21:49.762000Z",
+  "updated_at": "2020-01-18T16:33:59.535063Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "music": "https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip"
+      },
+      {
+        "multi5": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip"
+      }
+    ],
+    "scummvm": {
+      "fullscreen": true
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "description": "Please insert Discworld disc",
+          "requires": "dwu.exe"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/discwld"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/lang",
+          "src": "multi5"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "src": "music"
+        }
+      },
+      {
+        "input_menu": {
+          "options": [
+            {
+              "english": "English"
+            },
+            {
+              "french": "French"
+            },
+            {
+              "spanish": "Spanish"
+            },
+            {
+              "italian": "Italian"
+            },
+            {
+              "german": "German"
+            }
+          ],
+          "description": "Choose your preferred game's language for game menus and subtitles:",
+          "preselect": "english",
+          "id": "LANG"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR; rm -f -r drivers dwu.exe dwb.exe french.txt german.txt english.txt italian.txt spanish.txt; cp lang/$INPUT_LANG.txt english.txt ;"
+        }
+      }
+    ],
+    "custom-name": "Discworld - CD - ScummVM",
+    "game": {
+      "subtitles": true,
+      "path": "$GAMEDIR",
+      "game_id": "dw"
+    },
+    "copy": {
+      "dst": "$GAMEDIR",
+      "src": "$GAMEDIR/lang/$INPUT_LANG.txt"
+    }
+  },
+  "content": "copy:\n  dst: $GAMEDIR\n  src: $GAMEDIR/lang/$INPUT_LANG.txt\ncustom-name: Discworld - CD - ScummVM\nfiles:\n- music: https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip\ngame:\n  game_id: dw\n  path: $GAMEDIR\n  subtitles: true\ninstaller:\n- insert-disc:\n    description: Please insert Discworld disc\n    requires: dwu.exe\n- merge:\n    dst: $GAMEDIR\n    src: $DISC/discwld\n- extract:\n    dst: $GAMEDIR/lang\n    src: multi5\n- extract:\n    dst: $GAMEDIR\n    src: music\n- input_menu:\n    description: 'Choose your preferred game''s language for game menus and subtitles:'\n    id: LANG\n    options:\n    - english: English\n    - french: French\n    - spanish: Spanish\n    - italian: Italian\n    - german: German\n    preselect: english\n- execute:\n    command: cd $GAMEDIR; rm -f -r drivers dwu.exe dwb.exe french.txt german.txt english.txt\n      italian.txt spanish.txt; cp lang/$INPUT_LANG.txt english.txt ;\nscummvm:\n  fullscreen: true\n"
+}

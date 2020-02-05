@@ -21,39 +21,39 @@
   "gogslug": "paper_sorcerer",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/game/PaperSorcererPC.exe"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/game/PaperSorcererPC.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "name": "wineexec",
+          "executable": "game",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
+          "silent": true,
           "description": "Installing MSVC 2010",
           "name": "winetricks",
-          "silent": true,
-          "app": "vcrun2010"
+          "app": "vcrun2010",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
     ]

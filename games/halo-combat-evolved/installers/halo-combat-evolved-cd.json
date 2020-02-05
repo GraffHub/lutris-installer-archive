@@ -22,46 +22,46 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Microsoft Games/Halo/halo.exe"
     },
     "installer": [
       {
         "insert-disc": {
-          "requires": "Setup.Exe",
-          "message": "Mount the Halo Combat Evolved CD to continue"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "message": "Mount the Halo Combat Evolved CD to continue",
+          "requires": "Setup.Exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
           "description": "Installing mfc42",
           "name": "winetricks",
-          "app": "mfc42"
+          "app": "mfc42",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$DISC/Setup.Exe",
           "description": "Running setup. Use Express install, and close when it asks if you want to launch.",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$DISC/Setup.Exe",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Halo/haloupdate.exe",
           "description": "Installing No-CD official patch from drive_c/Program Files/Microsoft Games/Halo/haloupdate.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Halo/haloupdate.exe",
+          "prefix": "$GAMEDIR"
         }
       }
     ]

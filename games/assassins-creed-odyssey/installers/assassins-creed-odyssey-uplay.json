@@ -1,0 +1,65 @@
+{
+  "id": 12555,
+  "game_id": 22090,
+  "game_slug": "assassins-creed-odyssey",
+  "name": "Assassin's Creed Odyssey",
+  "year": 2018,
+  "user": "Alexithymia",
+  "runner": "wine",
+  "slug": "assassins-creed-odyssey-uplay",
+  "version": "Uplay",
+  "description": "This should install UPlay to allow you to download Assassin's Creed Odyssey and play.",
+  "notes": "1440p has black bars at the top and bottom after having to specify this in the game's setting if you're not in virtual window mode. The game starts at 640x480 so be sure to change this.",
+  "created_at": "2019-03-28T23:20:14.115000Z",
+  "updated_at": "2020-01-23T02:57:21.616997Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 812140,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts vcrun2017 win7"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "uplay",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "WineDesktop": "1920x1080",
+      "Desktop": true
+    }
+  },
+  "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2017 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n"
+}

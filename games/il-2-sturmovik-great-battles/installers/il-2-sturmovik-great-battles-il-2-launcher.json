@@ -21,41 +21,41 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game/Launcher.exe"
-    },
     "files": [
       {
         "installer": "http://cdn.il2sturmovik.net/x64/IL2_setup_Great_Battles.exe"
       }
     ],
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game/Launcher.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "dxvk corefonts vcrun2015 remove_mono win10"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "ShowDotFiles",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "Y",
-          "type": "REG_SZ",
-          "key": "ShowDotFiles",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "installer",
           "args": "/VERYSILENT /SUPPRESSMSGBOXES",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "installer",
+          "prefix": "$GAMEDIR"
         }
       },
       {

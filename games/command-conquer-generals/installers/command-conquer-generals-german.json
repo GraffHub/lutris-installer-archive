@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "files": [
       {
         "patch1": "https://lutris.net/files/games/command-conquer-generals/Generals-108-german.exe"
@@ -37,45 +33,49 @@
       }
     ],
     "exe": "drive_c/Program Files/EA Games/Command and Conquer Generals/generals.exe",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
     "installer": [
       {
         "insert-disc": {
-          "requires": "setup.exe",
-          "message": "Insert disc 1"
+          "message": "Insert disc 1",
+          "requires": "setup.exe"
         }
       },
       {
         "merge": {
-          "dst": "$CACHE/cdrom",
           "description": "Copying disc 1 to cache",
-          "src": "$DISC"
+          "src": "$DISC",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "insert-disc": {
-          "requires": "Data2.cab",
-          "message": "Insert disc 2"
+          "message": "Insert disc 2",
+          "requires": "Data2.cab"
         }
       },
       {
         "merge": {
-          "dst": "$CACHE/cdrom",
           "description": "Copying disc 2 to cache",
-          "src": "$DISC/Data2.cab"
+          "src": "$DISC/Data2.cab",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$CACHE/cdrom/setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$CACHE/cdrom/setup.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "patch1",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "patch1"
         }
       },
       {

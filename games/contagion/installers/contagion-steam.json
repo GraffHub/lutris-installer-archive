@@ -21,41 +21,41 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
-      }
-    },
     "game": {
+      "appid": 238430,
       "prefix": "$GAMEDIR/prefix",
-      "arch": "win64",
-      "appid": 238430
+      "arch": "win64"
     },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Setting Windows XP 64-bit (2003) mode for Wine",
           "name": "winetricks",
-          "app": "win2k3"
+          "arch": "win64",
+          "app": "win2k3",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Wine: Disable UseXVidMode",
-          "value": "N",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\",
           "key": "UseXVidMode",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\",
+          "value": "N"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true"
+      }
+    }
   },
   "content": "game:\r\n  appid: 238430\r\n  prefix: $GAMEDIR/prefix\r\n  arch: win64\r\ninstaller:\r\n- task:\r\n    app: win2k3\r\n    arch: win64\r\n    description: Setting Windows XP 64-bit (2003) mode for Wine\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: 'Wine: Disable UseXVidMode'\r\n    key: UseXVidMode\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\\r\n    prefix: $GAMEDIR\r\n    value: N\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: '1'\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: '1'\r\n    mesa_glthread: 'true'"
 }

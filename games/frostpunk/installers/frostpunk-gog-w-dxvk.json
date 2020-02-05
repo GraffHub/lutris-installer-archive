@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2018-06-12T03:08:17.509000Z",
-  "updated_at": "2019-05-18T06:17:41.153995Z",
+  "updated_at": "2020-01-23T02:57:14.322461Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,25 +21,6 @@
   "gogslug": "frostpunk",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Frostpunk/Frostpunk.exe"
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "esync": true,
-      "version": "tkg-4.6-x86_64"
-    },
     "files": [
       {
         "setup": "N/A:Select the game's setup file"
@@ -48,28 +29,46 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "vcrun2013 vcrun2017 win7"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
           "description": "Installing Frostpunk",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/GOG Games/Frostpunk/Frostpunk.exe"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
+      }
+    }
   },
-  "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Frostpunk/Frostpunk.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Frostpunk\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Frostpunk/Frostpunk.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Frostpunk\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

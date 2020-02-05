@@ -8,92 +8,99 @@
   "runner": "wine",
   "slug": "playstation-now-latest",
   "version": "Latest",
-  "description": null,
-  "notes": "",
+  "description": "Play Playstation games on Linux.",
+  "notes": "-Known issues: \r\n-- \"PlayStation Now\" does not exit cleanly with Wine, you have to force application exit with Lutris \"Stop\" button or \"Kill all wine process\".\r\n-- White rectangular window at the right bottom. Click on it and type F4 to close it.\r\n-- not very stable,  make regularly saves of your game.",
   "created_at": "2018-06-18T21:19:20.940000Z",
-  "updated_at": "2019-10-14T09:40:39.044900Z",
+  "updated_at": "2020-01-21T21:32:23.928029Z",
   "draft": false,
   "published": true,
-  "published_by": 51687,
+  "published_by": 494,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/PlayStation Now/psnowlauncher.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "version": "lutris-4.16-x86_64"
-    },
     "files": [
       {
         "psnow": "https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "arial"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "vcrun2013"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "windowmanagerdecorated=n"
+        }
+      },
+      {
+        "task": {
+          "args": "/extract \"c:\"",
+          "name": "wineexec",
           "arch": "win64",
           "executable": "psnow",
-          "prefix": "$GAMEDIR",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\"",
           "name": "wineexec",
-          "args": "/extract"
+          "arch": "win64",
+          "executable": "msiexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
-        "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now",
-          "src": "$CACHE/psnow/294C619"
-        }
-      },
-      {
-        "write_config": {
-          "file": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.ini",
-          "section": "config",
-          "key": "URL",
-          "value": "https://1update-psnow.playstation.com/downloads/psnow/pc/meta"
-        }
-      },
-      {
-        "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe.bak",
-          "src": "$GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe"
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "type": "REG_SZ"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "move": {
+      "dst": "$CACHE",
+      "src": "$GAMEDIR/drive_c/294C619"
+    }
   },
-  "content": "files:\n- psnow: https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStation Now/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /extract\n    executable: psnow\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now\n    src: $CACHE/psnow/294C619\n- write_config:\n    file: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.ini\n    key: URL\n    section: config\n    value: https://1update-psnow.playstation.com/downloads/psnow/pc/meta\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe.bak\n    src: $GAMEDIR/drive_c/Program Files (x86)/PlayStation Now/unidater.exe\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  version: lutris-4.16-x86_64\n"
+  "content": "files:\n- psnow: https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagerdecorated=n\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /extract \"c:\"\n    executable: psnow\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\"\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nmove:\n  dst: $CACHE\n  src: $GAMEDIR/drive_c/294C619\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

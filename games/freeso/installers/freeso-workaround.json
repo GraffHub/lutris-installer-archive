@@ -1,0 +1,91 @@
+{
+  "id": 5165,
+  "game_id": 12352,
+  "game_slug": "freeso",
+  "name": "FreeSO",
+  "year": 2017,
+  "user": "bacera",
+  "runner": "wine",
+  "slug": "freeso-workaround",
+  "version": "Workaround",
+  "description": "A (buggy) manual installation, avoiding the need to use the non-runnable FreeSO launcher. Expect to relog often, with the occasional crash.",
+  "notes": "http://forum.freeso.org/threads/freeso-on-linux-using-wine.3007/#post-26639\r\n\r\nCurrently uses a pomf.cat mirror of http://servo.freeso.org/repository/download/FreeSO_TsoClient/673:id/client-515.zip, as that link requires a browser to be downloaded. This is not a permanent solution and should be fixed later. The version downloaded should not matter as it is updated when run anyway.",
+  "created_at": "2017-07-23T00:05:43.431000Z",
+  "updated_at": "2017-07-26T07:16:15.143735Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "tsosetup": "http://largedownloads.ea.com/pub/misc/tso/Setup%20The%20Sims%20Online.exe"
+      },
+      {
+        "freesoclient": "http://a.pomf.cat/xyidmg.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/FreeSO/FreeSO.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.5, this could take a while...",
+          "name": "winetricks",
+          "app": "dotnet45",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing WinINet",
+          "name": "winetricks",
+          "app": "wininet",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Running The Sims Online installer.\nAccept the license, leave the default installation directory. You can uncheck the desktop shortcut option.\nWhen the installation bar is full and says Installation Complete, press cancel, then yes, then no. Close the now frozen installation window.",
+          "name": "wineexec",
+          "executable": "$tsosetup",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/FreeSO",
+          "file": "$freesoclient"
+        }
+      },
+      {
+        "task": {
+          "description": "Running FreeSO. Log in to your account. It will ask you to download an update. Let it update, and close the window when you get an error that says Waiting for Content/...",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/FreeSO/FreeSO.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/FreeSO/",
+          "file": "$GAMEDIR/drive_c/FreeSO/PatchFiles/patch.zip"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- tsosetup: http://largedownloads.ea.com/pub/misc/tso/Setup%20The%20Sims%20Online.exe\n- freesoclient: http://a.pomf.cat/xyidmg.zip\ngame:\n  exe: drive_c/FreeSO/FreeSO.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet45\n    description: Installing .NET 4.5, this could take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wininet\n    description: Installing WinINet\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Running The Sims Online installer.\n\n      Accept the license, leave the default installation directory. You can uncheck\n      the desktop shortcut option.\n\n      When the installation bar is full and says Installation Complete, press cancel,\n      then yes, then no. Close the now frozen installation window.'\n    executable: $tsosetup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/FreeSO\n    file: $freesoclient\n- task:\n    description: Running FreeSO. Log in to your account. It will ask you to download\n      an update. Let it update, and close the window when you get an error that says\n      Waiting for Content/...\n    executable: $GAMEDIR/drive_c/FreeSO/FreeSO.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/FreeSO/\n    file: $GAMEDIR/drive_c/FreeSO/PatchFiles/patch.zip\n"
+}

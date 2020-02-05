@@ -21,12 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/dosbox_wc4.conf",
-      "main_file": "$GAMEDIR/WC4/WC4.EXE",
-      "args": "-noconsole",
-      "working_dir": "$GAMEDIR"
-    },
     "files": [
       {
         "wing4dos": "N/A:Please select the GOG.com Wing Commander 4 Archive wing_commander_4_dos_english.zip"
@@ -35,6 +29,12 @@
         "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
       }
     ],
+    "game": {
+      "working_dir": "$GAMEDIR",
+      "args": "-noconsole",
+      "config_file": "$GAMEDIR/dosbox_wc4.conf",
+      "main_file": "$GAMEDIR/WC4/WC4.EXE"
+    },
     "installer": [
       {
         "extract": {
@@ -74,9 +74,6 @@
       },
       {
         "input_menu": {
-          "preselect": "1920x1080",
-          "id": "RES",
-          "description": "Choose your desktop resolution",
           "options": [
             {
               "3840x2160": "3840x2160"
@@ -117,46 +114,49 @@
             {
               "1280x720": "1280x720"
             }
-          ]
+          ],
+          "description": "Choose your desktop resolution",
+          "preselect": "1920x1080",
+          "id": "RES"
         }
       },
       {
         "write_config": {
+          "key": "output",
           "file": "$GAMEDIR/dosbox_wc4.conf",
           "section": "sdl",
-          "key": "output",
           "value": "openglnb"
         }
       },
       {
         "write_config": {
+          "key": "scaler",
           "file": "$GAMEDIR/dosbox_wc4.conf",
           "section": "render",
-          "key": "scaler",
           "value": "none"
         }
       },
       {
         "write_config": {
+          "key": "aspect",
           "file": "$GAMEDIR/dosbox_wc4.conf",
           "section": "render",
-          "key": "aspect",
           "value": true
         }
       },
       {
         "write_config": {
+          "key": "fullresolution",
           "file": "$GAMEDIR/dosbox_wc4.conf",
           "section": "sdl",
-          "key": "fullresolution",
           "value": "$INPUT_RES"
         }
       },
       {
         "write_file": {
           "content": "[autoexec]\n@echo off\ncls\t\nmount c \"$GAMEDIR\"\nmount d \"$GAMEDIR/CD1\" -t cdrom\nc:\ncd WC4\ncls\nWC4.exe\nexit\n",
-          "file": "$GAMEDIR/dosbox_wc4.conf",
-          "mode": "a"
+          "mode": "a",
+          "file": "$GAMEDIR/dosbox_wc4.conf"
         }
       }
     ]

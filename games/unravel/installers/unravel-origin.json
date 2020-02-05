@@ -11,7 +11,7 @@
   "description": "Install Unravel with Origin",
   "notes": "* Requires gst-plugins-good to run.\r\n* Installs vcrun2012 with winetricks\r\n* Disables Origin in-game overlay (required or game won't launch)\r\n* Enables DXVK",
   "created_at": "2019-01-04T23:00:22.594000Z",
-  "updated_at": "2019-03-08T18:50:19.021616Z",
+  "updated_at": "2020-01-23T02:56:48.803522Z",
   "draft": false,
   "published": true,
   "published_by": 2045,
@@ -21,28 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "ondemand_command": "$GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh",
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      },
-      "disable_runtime": false
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "version": "tkg-protonified-3.21-x86_64"
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "args": "/StartClientMinimized origin://launchgame/Origin.OFR.50.0000823",
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
-    },
     "files": [
       {
         "client": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
@@ -54,54 +32,54 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Installing vcrun2012 with winetricks",
           "name": "winetricks",
-          "app": "vcrun2012 win10"
+          "arch": "win64",
+          "app": "vcrun2012 win10",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "client",
           "description": "Installing Origin",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "client",
           "args": "/silent",
-          "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/Program Files (x86)/Origin/Origin.exe",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
           "description": "Log in to Origin, install Unravel, and then exit Origin. Do not launch the game!",
-          "args": "origin2://library/open",
+          "name": "wineexec",
           "arch": "win64",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/drive_c/Program Files (x86)/Origin/Origin.exe",
+          "args": "origin2://library/open",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       },
       {
@@ -116,7 +94,28 @@
           "src": "updater"
         }
       }
-    ]
+    ],
+    "game": {
+      "args": "/StartClientMinimized origin://launchgame/Origin.OFR.50.0000823",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "ondemand_command": "$GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh",
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": "1"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
+      }
+    }
   },
-  "content": "game:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\r\n  args: /StartClientMinimized origin://launchgame/Origin.OFR.50.0000823\r\n  prefix: $GAMEDIR\r\n\r\nwine:\r\n  dxvk: true\r\n  overrides:\r\n    nvapi,nvapi64: disabled\r\n    xaudio2_7: native,builtin\r\n  version: tkg-protonified-3.21-x86_64\r\nsystem:\r\n  disable_runtime: false\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: '1'\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n  ondemand_command: $GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh\r\n\r\nfiles:\r\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\r\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\r\n\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2012 win10\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    description: Installing vcrun2012 with winetricks\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    description: Installing Origin\r\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\r\n      QtWebEngineProcess.exe\r\n    executable: client\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n\r\n- task:\r\n    name: wineexec\r\n    arch: win64\r\n    prefix: $GAMEDIR\r\n    executable: $GAMEDIR/drive_c/Program Files (x86)/Origin/Origin.exe\r\n    args: origin2://library/open\r\n    description: Log in to Origin, install Unravel, and then exit Origin. Do not launch the game!\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n\r\n# Disables Origin in-game overlay\r\n- execute: |\r\n    echo '<?xml version=\"1.0\"?>\r\n    <Settings>\r\n      <Setting type=\"10\" key=\"DefaultTab\" value=\"mygames\"/>\r\n      <Setting type=\"1\" value=\"false\" key=\"EnableIgo\"/>\r\n    </Settings>\r\n    ' | tee \"$GAMEDIR/drive_c/users/$USER/Application Data/Origin/local_\"*\".xml\"\r\n- chmodx: updater\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\r\n    src: updater"
+  "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  args: /StartClientMinimized origin://launchgame/Origin.OFR.50.0000823\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 win10\n    arch: win64\n    description: Installing vcrun2012 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: origin2://library/open\n    description: Log in to Origin, install Unravel, and then exit Origin. Do not launch\n      the game!\n    executable: $GAMEDIR/drive_c/Program Files (x86)/Origin/Origin.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- execute: \"echo '<?xml version=\\\"1.0\\\"?>\\n<Settings>\\n  <Setting type=\\\"10\\\" key=\\\"\\\n    DefaultTab\\\" value=\\\"mygames\\\"/>\\n  <Setting type=\\\"1\\\" value=\\\"false\\\" key=\\\"\\\n    EnableIgo\\\"/>\\n</Settings>\\n' | tee \\\"$GAMEDIR/drive_c/users/$USER/Application\\\n    \\ Data/Origin/local_\\\"*\\\".xml\\\"\\n\"\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  disable_runtime: false\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  ondemand_command: $GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh\nwine:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

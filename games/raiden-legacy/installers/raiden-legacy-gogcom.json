@@ -21,57 +21,57 @@
   "gogslug": "raiden_legacy",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Raiden Legacy/raidenlegacy.exe"
-    },
     "files": [
       {
         "game": "N/A:Please select the Windows installer provided by GOG"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Raiden Legacy/raidenlegacy.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": false,
           "description": "Installing vcrun2012",
           "name": "winetricks",
-          "silent": false,
-          "app": "vcrun2012"
+          "app": "vcrun2012",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/verysilent /suppressmsgboxes",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "game",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Disabling unused WINE features",
           "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
         }
       }
     ]

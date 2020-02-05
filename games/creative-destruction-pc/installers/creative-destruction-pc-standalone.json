@@ -11,56 +11,55 @@
   "description": "Facebook login only, Google login doesn't work.",
   "notes": "",
   "created_at": "2019-02-10T14:39:27.420000Z",
-  "updated_at": "2019-03-11T06:00:39.020885Z",
+  "updated_at": "2019-10-28T21:12:34.289360Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 51687,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Creative Destruction/client.exe"
-    },
-    "wine": {
-      "overrides": {
-        "wininet": "builtin,native"
-      },
-      "version": "4.3-x86_64"
-    },
     "files": [
       {
         "installer": "https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Creative Destruction/client.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating the wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting the prefix",
           "name": "winetricks",
-          "app": "vcrun2010 wininet"
+          "app": "vcrun2010 wininet",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "installer",
           "description": "Installing game (WARNING: Uncheck Launch Creative Destruction)",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "installer",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
+    }
   },
-  "content": "files:\n- installer: https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe\ngame:\n  exe: $GAMEDIR/drive_c/Creative Destruction/client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating the wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet\n    description: Setting the prefix\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing game (WARNING: Uncheck Launch Creative Destruction)'\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n  version: 4.3-x86_64\n"
+  "content": "files:\n- installer: https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe\ngame:\n  exe: $GAMEDIR/drive_c/Creative Destruction/client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating the wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet\n    description: Setting the prefix\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing game (WARNING: Uncheck Launch Creative Destruction)'\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

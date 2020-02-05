@@ -1,0 +1,91 @@
+{
+  "id": 17812,
+  "game_id": 85,
+  "game_slug": "world-of-tanks",
+  "name": "World of Tanks",
+  "year": 2010,
+  "user": "fontant1979",
+  "runner": "wine",
+  "slug": "world-of-tanks-change-me-7",
+  "version": "Change Me",
+  "description": "Version for installing the Wargaming Center under Windows 7, to fix the start problems under Windows 10.",
+  "notes": "",
+  "created_at": "2020-01-08T15:13:10.200526Z",
+  "updated_at": "2020-01-23T02:56:59.204678Z",
+  "draft": false,
+  "published": false,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "game": {
+          "filename": "WoT_internet_install_eu.exe",
+          "url": "https://wot.gcdn.co/eu/files/WoT_internet_install_eu.exe"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing World of Tanks",
+          "name": "wineexec",
+          "executable": "game",
+          "prefix": "$GAMEDIR",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
+          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Wine to win7",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "corefonts win7",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Games/World_of_Tanks/WoTLauncher.exe"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "WineDesktop": "1920x1080",
+      "Desktop": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    }
+  },
+  "content": "files:\n- game:\n    filename: WoT_internet_install_eu.exe\n    url: https://wot.gcdn.co/eu/files/WoT_internet_install_eu.exe\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Tanks/WoTLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing World of Tanks\n    exclude_processes: explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe\n      WoTLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win7\n    arch: win64\n    description: Setting Wine to win7\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
+}

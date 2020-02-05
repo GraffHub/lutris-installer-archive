@@ -11,58 +11,54 @@
   "description": "Dieser Installer benötigt auch einen Patch, der Link ist im Installer.\r\nPatch MD5 ist 4133020e5a7c9f74a633f586d231dc6b.\r\nVirustotal Link: https://www.virustotal.com/gui/file/a6cd7445cd2ab6d36e00664b9b02d99d912704ad3fdfb98233b2705599437cf3/details",
   "notes": "WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop (in winecfg Registerkarte Grafiken) mit der gewählten Thandor-Auflösung aktivieren oder\r\n      Thandor im Vollbildmodus mit der nativen Bildschirmauflösung laufen lassen (für manche neuere Auflösungen wie 1080p muss die thandor.dat manuell angepasst werden, fertige Dateien gibt es im Spielverzeichnis (Ordner customConfigs_Tools))!\r\n       > Problem: Wenn Sie dies ignorieren, führt dies zu einem Mauszeiger, der während des Spiels an den oberen linken Rand springt.",
   "created_at": "2019-06-17T15:07:50.836000Z",
-  "updated_at": "2019-06-21T04:37:16.761266Z",
+  "updated_at": "2019-10-28T20:51:34.310932Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 51687,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "require-binaries": "7z",
-    "wine": {
-      "overrides": {
-        "dinput.dll": "native"
+    "files": [
+      {
+        "patch105": "N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
       },
-      "dxvk": false,
-      "version": "ge-faudio-protonified-4.8-x86_64"
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Thandor/thandor.exe"
-    },
+      {
+        "directx61": "https://archive.org/download/dx61sdkimage/dx61sdkimage.exe"
+      }
+    ],
+    "require-binaries": "7z",
     "installer": [
       {
         "insert-disc": {
-          "requires": "Thandor/thandor.dat",
-          "description": "WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop (in winecfg Registerkarte Grafiken) mit der gewählten Thandor-Auflösung aktivieren oder Thandor im Vollbildmodus mit der nativen Bildschirmauflösung laufen lassen (für manche neuere Auflösungen wie 1080p muss die thandor.dat manuell angepasst werden)!\n > Problem: Wenn Sie dies ignorieren, führt dies zu einem Mauszeiger, der während des Spiels an den oberen linken Rand springt.\n Weitere Informationen finden Sie nach der Installation in der Datei LinuxReadme im Verzeichnis des Spiels"
+          "description": "WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop (in winecfg Registerkarte Grafiken) mit der gewählten Thandor-Auflösung aktivieren oder Thandor im Vollbildmodus mit der nativen Bildschirmauflösung laufen lassen (für manche neuere Auflösungen wie 1080p muss die thandor.dat manuell angepasst werden)!\n > Problem: Wenn Sie dies ignorieren, führt dies zu einem Mauszeiger, der während des Spiels an den oberen linken Rand springt.\n Weitere Informationen finden Sie nach der Installation in der Datei LinuxReadme im Verzeichnis des Spiels",
+          "requires": "Thandor/thandor.dat"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Erzeuge WINE Prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Bereite Prefix für das Ausführen des Setups vor (setze win95)",
           "name": "winetricks",
-          "app": "win95"
+          "app": "win95",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win95",
-          "executable": "$DISC/Setup.exe",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "arch": "win95",
+          "executable": "$DISC/Setup.exe"
         }
       },
       {
@@ -85,20 +81,20 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "winxp"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "N",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullscreen",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "N"
         }
       }
     ],
@@ -107,14 +103,17 @@
         "LUTRIS_RUNTIME": "0"
       }
     },
-    "files": [
-      {
-        "patch105": "N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
-      },
-      {
-        "directx61": "https://archive.org/download/dx61sdkimage/dx61sdkimage.exe"
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Thandor/thandor.exe"
+    },
+    "wine": {
+      "dxvk": false,
+      "overrides": {
+        "dinput.dll": "native"
       }
-    ]
+    }
   },
-  "content": "files:\n- patch105: N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937\n    (md5 4133020e5a7c9f74a633f586d231dc6b)\n- directx61: https://archive.org/download/dx61sdkimage/dx61sdkimage.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Thandor/thandor.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: \"WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop\\\n      \\ (in winecfg Registerkarte Grafiken) mit der gew\\xE4hlten Thandor-Aufl\\xF6\\\n      sung aktivieren oder Thandor im Vollbildmodus mit der nativen Bildschirmaufl\\xF6\\\n      sung laufen lassen (f\\xFCr manche neuere Aufl\\xF6sungen wie 1080p muss die thandor.dat\\\n      \\ manuell angepasst werden)!\\n > Problem: Wenn Sie dies ignorieren, f\\xFChrt\\\n      \\ dies zu einem Mauszeiger, der w\\xE4hrend des Spiels an den oberen linken Rand\\\n      \\ springt.\\n Weitere Informationen finden Sie nach der Installation in der Datei\\\n      \\ LinuxReadme im Verzeichnis des Spiels\"\n    requires: Thandor/thandor.dat\n- task:\n    arch: win64\n    description: Erzeuge WINE Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win95\n    description: \"Bereite Prefix f\\xFCr das Ausf\\xFChren des Setups vor (setze win95)\"\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win95\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: e $directx61 -o$CACHE/tmp/dx6\n    file: 7z\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/\n    src: $CACHE/tmp/dx6/dinput.dll\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/\n    file: patch105\n- task:\n    app: winxp\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\nrequire-binaries: 7z\nsystem:\n  env:\n    LUTRIS_RUNTIME: '0'\nwine:\n  dxvk: false\n  overrides:\n    dinput.dll: native\n  version: ge-faudio-protonified-4.8-x86_64\n"
+  "content": "files:\n- patch105: N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937\n    (md5 4133020e5a7c9f74a633f586d231dc6b)\n- directx61: https://archive.org/download/dx61sdkimage/dx61sdkimage.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Thandor/thandor.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: \"WARN: Stellen Sie sicher, dass Sie entweder den virtuellen Desktop\\\n      \\ (in winecfg Registerkarte Grafiken) mit der gew\\xE4hlten Thandor-Aufl\\xF6\\\n      sung aktivieren oder Thandor im Vollbildmodus mit der nativen Bildschirmaufl\\xF6\\\n      sung laufen lassen (f\\xFCr manche neuere Aufl\\xF6sungen wie 1080p muss die thandor.dat\\\n      \\ manuell angepasst werden)!\\n > Problem: Wenn Sie dies ignorieren, f\\xFChrt\\\n      \\ dies zu einem Mauszeiger, der w\\xE4hrend des Spiels an den oberen linken Rand\\\n      \\ springt.\\n Weitere Informationen finden Sie nach der Installation in der Datei\\\n      \\ LinuxReadme im Verzeichnis des Spiels\"\n    requires: Thandor/thandor.dat\n- task:\n    arch: win64\n    description: Erzeuge WINE Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win95\n    description: \"Bereite Prefix f\\xFCr das Ausf\\xFChren des Setups vor (setze win95)\"\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win95\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: e $directx61 -o$CACHE/tmp/dx6\n    file: 7z\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/\n    src: $CACHE/tmp/dx6/dinput.dll\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/\n    file: patch105\n- task:\n    app: winxp\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\nrequire-binaries: 7z\nsystem:\n  env:\n    LUTRIS_RUNTIME: '0'\nwine:\n  dxvk: false\n  overrides:\n    dinput.dll: native\n"
 }

@@ -21,38 +21,38 @@
   "gogslug": "oddworld_abes_oddysee",
   "humblestoreid": "oddworld-abes-oddysee",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Abes Oddysee/AbeWin.exe"
-    },
-    "wine": {
-      "WineDesktop": "640x480",
-      "Desktop": true
-    },
     "files": [
       {
         "goginstaller": "N/A:Please select the GOG.com Windows installer"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Abes Oddysee/AbeWin.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
+          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "goginstaller",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "WineDesktop": "640x480",
+      "Desktop": true
+    }
   },
   "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Abes Oddysee/AbeWin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /LANG=English /SP- /SUPPRESSMSGBOXES\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 640x480\n"
 }

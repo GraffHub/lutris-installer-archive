@@ -21,39 +21,39 @@
   "gogslug": "sid_meiers_civilization_iii_complete",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/game/Conquests/Civ3Conquests.exe"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/game/Conquests/Civ3Conquests.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "name": "wineexec",
+          "executable": "game",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true,
           "app": "directplay"
         }
       }

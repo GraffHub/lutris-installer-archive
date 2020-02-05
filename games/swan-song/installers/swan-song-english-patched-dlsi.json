@@ -21,16 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "LC_ALL": "ja_JP.UTF-8"
-      }
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/flyingshine/swan_dl/SWANSONG.exe"
-    },
     "files": [
       {
         "file1": "N/A:Please select the DLsite archive"
@@ -39,6 +29,11 @@
         "file2": "N/A:Please select the patch installer"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/flyingshine/swan_dl/SWANSONG.exe"
+    },
     "installer": [
       {
         "extract": {
@@ -48,34 +43,39 @@
       },
       {
         "task": {
-          "arch": "win32",
-          "executable": "$CACHE/swan_install.exe",
           "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "arch": "win32",
           "env": {
             "LC_ALL": "ja_JP.UTF-8"
           },
-          "name": "wineexec"
+          "executable": "$CACHE/swan_install.exe"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "executable": "$file2",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$file2"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "description": "Installing Windows Media Player 9",
-          "app": "wmp9",
-          "arch": "win32",
           "name": "winetricks",
-          "silent": true
+          "arch": "win32",
+          "silent": true,
+          "prefix": "$GAMEDIR/prefix",
+          "app": "wmp9"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "LC_ALL": "ja_JP.UTF-8"
+      }
+    }
   },
   "content": "files:\n- file1: N/A:Please select the DLsite archive\n- file2: N/A:Please select the patch installer\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/flyingshine/swan_dl/SWANSONG.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file1\n- task:\n    arch: win32\n    env:\n      LC_ALL: ja_JP.UTF-8\n    executable: $CACHE/swan_install.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: $file2\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    arch: win32\n    description: Installing Windows Media Player 9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n    silent: true\nsystem:\n  env:\n    LC_ALL: ja_JP.UTF-8\n"
 }

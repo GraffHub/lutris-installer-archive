@@ -21,15 +21,6 @@
   "gogslug": "lands_of_lore_the_throne_of_chaos",
   "humblestoreid": "",
   "script": {
-    "scummvm": {
-      "gfx-mode": "3x",
-      "aspect": true,
-      "fullscreen": true
-    },
-    "game": {
-      "path": "$GAMEDIR/game-data/DATA",
-      "game_id": "lol-cd"
-    },
     "files": [
       {
         "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/lands_of_lore_the_throne_of_chaos/en1installer0"
@@ -41,33 +32,42 @@
         "isoextract": "https://lutris.net/files/tools/p7zip-16.02-x86_64.tar.gz"
       }
     ],
+    "scummvm": {
+      "fullscreen": true,
+      "gfx-mode": "3x",
+      "aspect": true
+    },
+    "game": {
+      "path": "$GAMEDIR/game-data/DATA",
+      "game_id": "lol-cd"
+    },
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
           "description": "Extracting innoextract application",
-          "file": "$fileextract"
+          "file": "$fileextract",
+          "dst": "$CACHE"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
           "description": "Extracting 7zip application",
-          "file": "$isoextract"
+          "file": "$isoextract",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "description": "Extracting game data",
           "args": "-d \"$CACHE/game\" \"$installer\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "description": "Extracting game data"
         }
       },
       {
         "execute": {
-          "description": "Extracting iso game data",
           "args": "x \"$CACHE/game/GAME.DAT\" -ogame-data",
-          "file": "$CACHE/7z"
+          "file": "$CACHE/7z",
+          "description": "Extracting iso game data"
         }
       },
       {

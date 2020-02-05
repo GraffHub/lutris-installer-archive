@@ -1,0 +1,86 @@
+{
+  "id": 16840,
+  "game_id": 1857,
+  "game_slug": "anno-1404",
+  "name": "Anno 1404",
+  "year": 2009,
+  "user": "suspectoss",
+  "runner": "wine",
+  "slug": "anno-1404-anno-1404-beta",
+  "version": "Anno 1404 Beta",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-11-16T04:36:06.003553Z",
+  "updated_at": "2020-01-23T02:59:35.496850Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 33250,
+  "gogid": 1440426004,
+  "gogslug": "anno_1404_gold_edition",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the EXE downloaded from GOG"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Setup, please wait...",
+          "name": "wineexec",
+          "executable": "installer"
+        }
+      },
+      {
+        "write_file": {
+          "content": "<InitFile>\n<RefreshRate>1024MB</RefreshRate>\n<DirectXVersion>9</DirectXVersion>\n</InitFile>\n",
+          "file": "/tmp/Engine.ini"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying user config for base game...",
+          "src": "/tmp/Engine.ini",
+          "dst": "$GAMEDIR/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying user config for addon...",
+          "src": "/tmp/Engine.ini",
+          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Anno 1404 Gold Edition/Addon.exe"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "D9VK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    }
+  },
+  "content": "files:\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Anno 1404 Gold Edition/Addon.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- write_file:\n    content: '<InitFile>\n\n      <RefreshRate>1024MB</RefreshRate>\n\n      <DirectXVersion>9</DirectXVersion>\n\n      </InitFile>\n\n      '\n    file: /tmp/Engine.ini\n- merge:\n    description: Copying user config for base game...\n    dst: $GAMEDIR/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/\n    src: /tmp/Engine.ini\n- merge:\n    description: Copying user config for addon...\n    dst: $GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/\n    src: /tmp/Engine.ini\nsystem:\n  disable_runtime: false\n  env:\n    D9VK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    xaudio2_7: native,builtin\n"
+}

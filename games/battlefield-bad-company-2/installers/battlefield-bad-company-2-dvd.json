@@ -1,0 +1,123 @@
+{
+  "id": 10811,
+  "game_id": 617,
+  "game_slug": "battlefield-bad-company-2",
+  "name": "Battlefield: Bad Company 2",
+  "year": 2010,
+  "user": "sbor",
+  "runner": "wine",
+  "slug": "battlefield-bad-company-2-dvd",
+  "version": "DVD",
+  "description": "BFBC2 installer using the DVD iso.",
+  "notes": "",
+  "created_at": "2018-11-08T21:06:32.117000Z",
+  "updated_at": "2018-11-09T06:18:15.006015Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 24960,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Battlefield Bad Company 2/BFBC2Updater.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "Setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Changing to Windows 7",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing d3dx9",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing VisualC++ Runtime vcrun2005",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2005",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing VisualC++ Runtime vcrun2008",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2008",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing VisualC++ Runtime vcrun2010",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2010",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "executable": "$DISC/Autorun.exe"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "wined3d",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "value": "wined3d-csmt.dll"
+        }
+      },
+      {
+        "write_config": {
+          "key": "bBackgroundMouse",
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini",
+          "section": "Controls",
+          "value": "1"
+        }
+      },
+      {
+        "write_config": {
+          "key": "DxVersion",
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini",
+          "section": "Graphics",
+          "value": 9
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Electronic Arts/Battlefield Bad Company 2/BFBC2Updater.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    arch: win32\n    description: Installing d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005\n    arch: win32\n    description: Installing VisualC++ Runtime vcrun2005\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win32\n    description: Installing VisualC++ Runtime vcrun2008\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win32\n    description: Installing VisualC++ Runtime vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- write_config:\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini\n    key: bBackgroundMouse\n    section: Controls\n    value: '1'\n- write_config:\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini\n    key: DxVersion\n    section: Graphics\n    value: 9\n"
+}

@@ -7,11 +7,11 @@
   "user": "legluondunet",
   "runner": "dosbox",
   "slug": "lighthouse-the-dark-being-cd-dosbox",
-  "version": "CD + Dosbox",
-  "description": "This script will install \"Lighthouse: The Dark Being\" CD edition for Dosbox.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
-  "notes": "- This script requires cdrdao and toc2cue to be installed. \r\nOn Debian and Ubuntu type in a terminal: \r\nsudo apt-get install cdrdao\r\n- You will need the 2 CD only during install\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "version": "CD + DOSBox",
+  "description": "This script will install \"Lighthouse: The Dark Being\" CD edition for DOSBox.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- You will need the 2 CD only during install\r\n- During gaming, type \"CTRL+F4\" to change CD1 to CD2\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2019-09-14T15:25:19.545000Z",
-  "updated_at": "2019-09-21T19:30:00.153755Z",
+  "updated_at": "2019-11-16T07:52:32.824539Z",
   "draft": false,
   "published": true,
   "published_by": 494,
@@ -21,11 +21,10 @@
   "gogslug": "lighthouse_the_dark_being",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/lighthouse_dosbox.conf"
-    },
-    "custom-name": "Lighthouse - The Dark Being - CD - Dosbox",
     "files": [
+      {
+        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
+      },
       {
         "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
       },
@@ -33,11 +32,20 @@
         "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Lighthouse%20-%20The%20Dark%20Being/lighthouse_dosbox.conf"
       }
     ],
+    "game": {
+      "main_file": "$GAMEDIR/lighthouse_dosbox.conf"
+    },
     "installer": [
       {
         "insert-disc": {
-          "requires": "9.CSC",
-          "description": "Please insert disc 1"
+          "description": "Please insert disc 1",
+          "requires": "9.CSC"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "src": "cdrtools"
         }
       },
       {
@@ -45,14 +53,14 @@
       },
       {
         "execute": {
-          "args": "VOL",
+          "args": "VOL 0",
           "file": "script"
         }
       },
       {
         "insert-disc": {
-          "requires": "movies/5.vmd",
-          "description": "Please insert disc 2"
+          "description": "Please insert disc 2",
+          "requires": "movies/5.vmd"
         }
       },
       {
@@ -63,29 +71,7 @@
       },
       {
         "execute": {
-          "command": "cd $GAMEDIR; rm -f -r *.toc; mv VOL.cue LIGHTHOUSE_CD1.cue; mv VOL.bin LIGHTHOUSE_CD1.bin; mv VOLU.cue LIGHTHOUSE_CD2.cue; mv VOLU.bin LIGHTHOUSE_CD2.bin; sed -i 's/VOL.bin/LIGHTHOUSE_CD1.bin/g' LIGHTHOUSE_CD1.cue; sed -i 's/VOLU.bin/LIGHTHOUSE_CD2.bin/g' LIGHTHOUSE_CD2.cue;"
-        }
-      },
-      {
-        "task": {
-          "name": "makeconfig",
-          "path": "$GAMEDIR/lighthouse_dosbox_install.conf",
-          "drives": {
-            "c": "."
-          },
-          "commands": [
-            "imgmount d \"LIGHTHOUSE_CD1.cue\" \"LIGHTHOUSE_CD2.cue\" -t iso",
-            "d:",
-            "call install.bat",
-            "exit"
-          ]
-        }
-      },
-      {
-        "task": {
-          "config_file": "$GAMEDIR/lighthouse_dosbox_install.conf",
-          "working_dir": "$GAMEDIR",
-          "name": "dosexec"
+          "command": "cd $GAMEDIR; mv VOL.cue LIGHTHOUSE_CD1.cue; mv VOL.bin LIGHTHOUSE_CD1.bin; mv VOLU.cue LIGHTHOUSE_CD2.cue; mv VOLU.bin LIGHTHOUSE_CD2.bin; sed -i 's/VOL.bin/LIGHTHOUSE_CD1.bin/g' LIGHTHOUSE_CD1.cue; sed -i 's/VOLU.bin/LIGHTHOUSE_CD2.bin/g' LIGHTHOUSE_CD2.cue;"
         }
       },
       {
@@ -94,7 +80,8 @@
           "src": "conf"
         }
       }
-    ]
+    ],
+    "custom-name": "Lighthouse - The Dark Being - CD - DOSBox"
   },
-  "content": "custom-name: Lighthouse - The Dark Being - CD - Dosbox\nfiles:\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Lighthouse%20-%20The%20Dark%20Being/lighthouse_dosbox.conf\ngame:\n  main_file: $GAMEDIR/lighthouse_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: 9.CSC\n- chmodx: script\n- execute:\n    args: VOL\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: movies/5.vmd\n- execute:\n    args: VOLU\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv VOL.cue LIGHTHOUSE_CD1.cue; mv VOL.bin\n      LIGHTHOUSE_CD1.bin; mv VOLU.cue LIGHTHOUSE_CD2.cue; mv VOLU.bin LIGHTHOUSE_CD2.bin;\n      sed -i 's/VOL.bin/LIGHTHOUSE_CD1.bin/g' LIGHTHOUSE_CD1.cue; sed -i 's/VOLU.bin/LIGHTHOUSE_CD2.bin/g'\n      LIGHTHOUSE_CD2.cue;\n- task:\n    commands:\n    - imgmount d \"LIGHTHOUSE_CD1.cue\" \"LIGHTHOUSE_CD2.cue\" -t iso\n    - 'd:'\n    - call install.bat\n    - exit\n    drives:\n      c: .\n    name: makeconfig\n    path: $GAMEDIR/lighthouse_dosbox_install.conf\n- task:\n    config_file: $GAMEDIR/lighthouse_dosbox_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
+  "content": "custom-name: Lighthouse - The Dark Being - CD - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Lighthouse%20-%20The%20Dark%20Being/lighthouse_dosbox.conf\ngame:\n  main_file: $GAMEDIR/lighthouse_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: 9.CSC\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: VOL 0\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: movies/5.vmd\n- execute:\n    args: VOLU\n    file: script\n- execute:\n    command: cd $GAMEDIR; mv VOL.cue LIGHTHOUSE_CD1.cue; mv VOL.bin LIGHTHOUSE_CD1.bin;\n      mv VOLU.cue LIGHTHOUSE_CD2.cue; mv VOLU.bin LIGHTHOUSE_CD2.bin; sed -i 's/VOL.bin/LIGHTHOUSE_CD1.bin/g'\n      LIGHTHOUSE_CD1.cue; sed -i 's/VOLU.bin/LIGHTHOUSE_CD2.bin/g' LIGHTHOUSE_CD2.cue;\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

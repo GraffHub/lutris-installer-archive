@@ -3,7 +3,7 @@
   "game_id": 8885,
   "game_slug": "obduction",
   "name": "Obduction",
-  "year": null,
+  "year": 2016,
   "user": "Jozua",
   "runner": "winesteam",
   "slug": "obduction-steam",
@@ -11,7 +11,7 @@
   "description": null,
   "notes": "On first launch, a Steam window will be stuck installing DirectX. When this comes up, wait a tad and close the window. Then, reopen Obduction.",
   "created_at": "2018-06-09T09:40:22.948000Z",
-  "updated_at": "2019-03-07T20:46:38.041815Z",
+  "updated_at": "2020-01-31T02:38:32.440404Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,37 +21,31 @@
   "gogslug": "obduction",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "winesteam": {
-      "overrides": {
-        "mfreadwrite": "native,builtin",
-        "xaudio2_7": "native,builtin",
-        "mf": "native,builtin",
-        "mfplat": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-protonified-4.1-x86_64"
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 306760
-    },
     "files": [
       {
         "mfplat_dll_64": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
       }
     ],
+    "game": {
+      "appid": 306760,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true,
+      "overrides": {
+        "mf": "native,builtin",
+        "mfplat": "native,builtin",
+        "mfreadwrite": "native,builtin",
+        "xaudio2_7": "native,builtin"
+      }
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
@@ -70,41 +64,41 @@
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "name": "install_cab_component",
           "component": "mediafoundation",
-          "name": "install_cab_component"
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "name": "install_cab_component",
           "component": "mf_",
-          "name": "install_cab_component"
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "name": "install_cab_component",
           "component": "mfreadwrite",
-          "name": "install_cab_component"
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "name": "install_cab_component",
           "component": "wmadmod",
-          "name": "install_cab_component"
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR/prefix",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe",
+          "name": "install_cab_component",
           "component": "wmvdecod",
-          "name": "install_cab_component"
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe"
         }
       },
       {
@@ -114,7 +108,12 @@
           "app": "xact"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    }
   },
-  "content": "files:\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  appid: 306760\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- merge:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: mfplat_dll_64\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    mf: native,builtin\n    mfplat: native,builtin\n    mfreadwrite: native,builtin\n    xaudio2_7: native,builtin\n  version: tkg-protonified-4.1-x86_64\n"
+  "content": "files:\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  appid: 306760\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- merge:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: mfplat_dll_64\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X86.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    mf: native,builtin\n    mfplat: native,builtin\n    mfreadwrite: native,builtin\n    xaudio2_7: native,builtin\n"
 }

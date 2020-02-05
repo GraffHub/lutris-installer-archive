@@ -8,10 +8,10 @@
   "runner": "winesteam",
   "slug": "resident-evil-revelations-2-b-steam",
   "version": "Steam",
-  "description": "Resident Evil Revelations 2 is the sequel to Resident Evil Revelations, a classic survival horror game, set up in a movie-like-style and delivered in challenging and thrilling episodes",
+  "description": null,
   "notes": "",
   "created_at": "2018-08-29T16:32:27.580000Z",
-  "updated_at": "2019-04-20T06:55:08.159660Z",
+  "updated_at": "2020-01-18T10:17:41.139543Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,92 +21,63 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "pulse_latency": true,
-      "reset_pulse": true
-    },
-    "winesteam": {
-      "overrides": {
-        "xaudio2_7": "native",
-        "xaudio2_6": "native"
-      }
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 287290
-    },
     "files": [
       {
         "codecs": "https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe"
       }
     ],
+    "game": {
+      "appid": 287290,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing needed libraries",
+          "name": "winetricks",
           "arch": "win32",
+          "silent": true,
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "app": "corefonts vcrun2008 wmp10 d3dcompiler_43 d3dx9"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Corefonts",
+          "description": "Changing to Windows XP to install video codec (otherwise it will fail)",
           "name": "winetricks",
-          "app": "corefonts"
+          "arch": "win32",
+          "app": "winxp",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "description": "vcrun",
-          "name": "winetricks",
-          "app": "vcrun2008"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing Windows Media Player 10",
-          "name": "winetricks",
-          "app": "wmp10"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing DirectX components",
-          "name": "winetricks",
-          "app": "d3dcompiler_43"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing DirectX components",
-          "name": "winetricks",
-          "app": "d3dx9"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing Xact",
-          "name": "winetricks",
-          "app": "xact_jun2010"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
+          "description": "Installing video codecs",
+          "name": "wineexec",
+          "arch": "win32",
           "executable": "codecs",
           "args": "/q",
-          "description": "Installing video codecs",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Changing to Windows 7",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
     ]
   },
-  "content": "files:\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\ngame:\n  appid: 287290\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: corefonts\n    description: Corefonts\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2008\n    description: vcrun\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: wmp10\n    description: Installing Windows Media Player 10\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    description: Installing DirectX components\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9\n    description: Installing DirectX components\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact_jun2010\n    description: Installing Xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /q\n    description: Installing video codecs\n    executable: codecs\n    name: wineexec\n    prefix: $GAMEDIR/prefix\nsystem:\n  pulse_latency: true\n  reset_pulse: true\nwinesteam:\n  overrides:\n    xaudio2_6: native\n    xaudio2_7: native\n"
+  "content": "files:\r\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\r\ngame:\r\n  appid: 287290\r\n  arch: win32\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: corefonts vcrun2008 wmp10 d3dcompiler_43 d3dx9\r\n    arch: win32\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: winxp\r\n    arch: win32\r\n    description: Changing to Windows XP to install video codec (otherwise it will\r\n      fail)\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    args: /q\r\n    description: Installing video codecs\r\n    executable: codecs\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win7\r\n    arch: win32\r\n    description: Changing to Windows 7\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix"
 }

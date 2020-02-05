@@ -21,25 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 1
-      }
-    },
-    "game": {
-      "prefix": "$GAMEDIR"
-    },
     "files": [
       {
         "file": "N/A:select the triangle"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine Prefix...",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -59,12 +54,17 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "file",
           "name": "wineexec",
+          "executable": "file",
           "include_processes": "d3d11-triangle.exe"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 1
+      }
+    }
   },
   "content": "files:\n- file: N/A:select the triangle\ngame:\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dxvk\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: file\n    include_processes: d3d11-triangle.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 1\n"
 }

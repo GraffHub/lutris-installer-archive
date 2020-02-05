@@ -21,15 +21,6 @@
   "gogslug": "tomb_raider_123",
   "humblestoreid": "",
   "script": {
-    "custom-name": "Tomb Raider II Gold - GOG",
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Tomb Raider 2/TR2M1.BAT"
-    },
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    },
     "files": [
       {
         "setup": "N/A:Select the installer downloaded from GOG"
@@ -71,13 +62,17 @@
         "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20II/tr2.bmp"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Tomb Raider 2/TR2M1.BAT"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating WINE prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -135,16 +130,16 @@
       {
         "write_config": {
           "data": {
-            "DirectX": {
-              "Resolution": "max_qhd_isf",
-              "dgVoodooWatermark": false,
-              "ForceVerticalSync": true,
-              "VRAM": 256
-            },
             "General": {
-              "FullScreenMode": false,
               "CaptureMouse": false,
+              "FullScreenMode": false,
               "ScalingMode": "stretched_ar"
+            },
+            "DirectX": {
+              "ForceVerticalSync": true,
+              "VRAM": 256,
+              "dgVoodooWatermark": false,
+              "Resolution": "max_qhd_isf"
             }
           },
           "file": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 2/dgVoodoo.conf"
@@ -188,35 +183,35 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "value": "native,builtin",
+          "name": "set_regedit",
           "arch": "win64",
-          "type": "REG_SZ",
           "key": "ddraw",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "winmm",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "winmm",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "InvBackgroundMode",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Core Design\\Tomb Raider II\\Game",
           "value": "00000002",
-          "arch": "win64",
-          "type": "REG_DWORD",
-          "key": "InvBackgroundMode",
-          "name": "set_regedit"
+          "type": "REG_DWORD"
         }
       },
       {
@@ -234,57 +229,57 @@
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "wallpaper",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
           "value": "c:\\\\tr2.bmp",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "wallpaper",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "91 0 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "background",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "ActiveTitle",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "ActiveTitle",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "GradientActiveTitle",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "204 51 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "GradientActiveTitle",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
-          "arch": "win64",
-          "type": "REG_DWORD",
-          "key": "csmt",
-          "name": "set_regedit"
+          "type": "REG_DWORD"
         }
       },
       {
@@ -301,7 +296,12 @@
           "src": "ext"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "custom-name": "Tomb Raider II Gold - GOG"
   },
   "content": "custom-name: Tomb Raider II Gold - GOG\nfiles:\n- setup: N/A:Select the installer downloaded from GOG\n- tr2main: https://github.com/Arsunt/TR2Main/releases/download/v0.8.2/TR2Main_v0.8.2.zip\n- ext: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20II/gold.zip\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- audiodll: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20II/zplaymm.zip\n- menu1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb Raider\n    II/TR2M1.BAT\n- menu2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb Raider\n    II/TR2M2.BAT\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb Raider\n    II/gamepad%20profiles/tr1-2_x360.gamecontroller.amgp\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb\n    Raider 2/gamepad%20profiles/tr1-2_steam.sccprofile\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb\n    Raider 2/gamepad%20profiles/tr1-2_gamepad_readme.html\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb Raider\n    II/clean.sh\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20II/tr2.bmp\ngame:\n  exe: drive_c/GOG Games/Tomb Raider 2/TR2M1.BAT\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$CACHE\" \"$setup\"\n    file: $CACHE/innoextract\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    src: $CACHE/app\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\"; mv Tomb2.exe Tomb2.gog\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    file: tr2main\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    src: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/MS/x86/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    src: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/MS/x86/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/dgVoodoo.conf\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    file: audiodll\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    src: menu1\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/\n    src: menu2\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/gamepad profiles/\n    src: gppx360\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/gamepad profiles/\n    src: gppsteam\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2/gamepad profiles/\n    src: gppreadme\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: winmm\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: InvBackgroundMode\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Core Design\\Tomb Raider II\\Game\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr2.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 91 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 204 51 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- chmodx: script\n- execute:\n    file: script\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 2 Golden Mask/data/\n    src: ext\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

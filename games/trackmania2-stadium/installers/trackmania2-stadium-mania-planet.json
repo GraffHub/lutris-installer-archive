@@ -10,73 +10,50 @@
   "version": "Mania Planet",
   "description": null,
   "notes": "",
-  "created_at": "2019-09-23T05:47:23.310190Z",
-  "updated_at": "2019-09-23T05:47:23.310217Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-09-23T05:47:23.310000Z",
+  "updated_at": "2019-10-27T08:51:48.929334Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": 232910,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/ManiaPlanet/TmStadium/TmStadiumLauncher.exe"
-    },
     "files": [
       {
-        "setup": "Maniaplanet_Setup_TMStadium.exe"
+        "setup": "N/A:Select Maniaplanet Setup TMStadium.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/ManiaPlanet/ManiaPlanetLauncher.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "description": "DirectX",
           "name": "winetricks",
-          "silent": true,
           "app": "d3dx9"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "game",
-          "args": "/silent",
-          "description": "Installing...",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "name": "wineexec",
+          "executable": "setup"
         }
       }
     ]
   },
-  "content": "files:\n- setup: Maniaplanet_Setup_TMStadium.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/ManiaPlanet/TmStadium/TmStadiumLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: d3dx9\n    description: DirectX\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /silent\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+  "content": "files:\n- setup: N/A:Select Maniaplanet Setup TMStadium.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/ManiaPlanet/ManiaPlanetLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

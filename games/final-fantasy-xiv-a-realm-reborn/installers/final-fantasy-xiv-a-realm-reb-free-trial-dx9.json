@@ -11,9 +11,9 @@
   "description": "FFXIV Free Trial Installer",
   "notes": "",
   "created_at": "2017-12-09T19:51:32.213000Z",
-  "updated_at": "2019-06-12T00:28:22.938392Z",
+  "updated_at": "2020-01-23T02:57:04.338025Z",
   "draft": false,
-  "published": true,
+  "published": false,
   "published_by": 51687,
   "rating": "",
   "steamid": 39210,
@@ -21,23 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "pulse_latency": true,
-      "env": {
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "version": "ge-protonified-4.9-x86_64"
-    },
     "files": [
       {
         "ffxivinstaller": "http://gdl.square-enix.com/ffxiv/inst/ffxivsetup_ft.exe"
@@ -46,32 +29,32 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Changing to Windows 7",
           "name": "winetricks",
-          "app": "win7"
+          "arch": "win64",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "description": "Running FFXIV Installer.",
+          "name": "wine.wineexec",
           "arch": "win64",
           "executable": "ffxivinstaller",
-          "prefix": "$GAMEDIR",
-          "description": "Running FFXIV Installer.",
-          "name": "wine.wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_SZ",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "description": "Adding Registry Entries for FFXIV Launcher",
-          "value": "Y",
-          "arch": "win64",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "HideWineExports",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win64",
+          "type": "REG_SZ",
+          "value": "Y"
         }
       },
       {
@@ -89,7 +72,23 @@
           "command": "echo -e \"<FINAL FANTASY XIV Boot Config File>\\n\\n<Version>\\nDX11Enabled 0\\nBrowserType 2\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\ FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV_BOOT.cfg"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
-  "content": "files:\r\n- ffxivinstaller: http://gdl.square-enix.com/ffxiv/inst/ffxivsetup_ft.exe\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    app: win7\r\n    arch: win64\r\n    description: Changing to Windows 7\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: Running FFXIV Installer.\r\n    executable: ffxivinstaller\r\n    name: wine.wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: Adding Registry Entries for FFXIV Launcher\r\n    key: HideWineExports\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: Y\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\r\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn\r\n- execute:\r\n    command: echo -e \"<FINAL FANTASY XIV Config File>\\n\\n<Cutscene Settings>\\nCutsceneMovieOpening\r\n      1\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\ FANTASY\\\r\n      XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV.cfg\r\n- execute:\r\n    command: echo -e \"<FINAL FANTASY XIV Boot Config File>\\n\\n<Version>\\nDX11Enabled\r\n      0\\nBrowserType 2\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\r\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV_BOOT.cfg\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n  pulse_latency: true\r\nwine:\r\n  dxvk: true\r\n  esync: true\r\n  version: ge-protonified-4.9-x86_64"
+  "content": "files:\n- ffxivinstaller: http://gdl.square-enix.com/ffxiv/inst/ffxivsetup_ft.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: win7\n    arch: win64\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running FFXIV Installer.\n    executable: ffxivinstaller\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Adding Registry Entries for FFXIV Launcher\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- execute:\n    command: mkdir -p \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn\n- execute:\n    command: echo -e \"<FINAL FANTASY XIV Config File>\\n\\n<Cutscene Settings>\\nCutsceneMovieOpening\n      1\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\ FANTASY\\\n      XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV.cfg\n- execute:\n    command: echo -e \"<FINAL FANTASY XIV Boot Config File>\\n\\n<Version>\\nDX11Enabled\n      0\\nBrowserType 2\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV_BOOT.cfg\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

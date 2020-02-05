@@ -2,7 +2,7 @@
   "id": 2503,
   "game_id": 5297,
   "game_slug": "gabriel-knight-sins-of-the-fathers",
-  "name": "Gabriel Knight - Sins of the Fathers",
+  "name": "Gabriel Knight: Sins of the Fathers",
   "year": 1993,
   "user": "ssf",
   "runner": "dosbox",
@@ -21,78 +21,78 @@
   "gogslug": "gabriel_knight_sins_of_the_fathers",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/dosboxGK.conf",
-      "main_file": "$GAMEDIR/dosboxGK_single.conf"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer"
       }
     ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxGK.conf",
+      "main_file": "$GAMEDIR/dosboxGK_single.conf"
+    },
     "gogid": "gabriel_knight_sins_of_the_fathers",
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "wine.create_prefix"
+          "name": "wine.create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "wine.set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "wine.set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "name": "wine.wineexec",
+          "executable": "game",
           "description": "Installing ...",
-          "name": "wine.wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "execute": {
-          "file": "/bin/sh",
-          "terminal": false,
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "description": "cleaning..."
-        }
-      },
-      {
-        "execute": {
           "file": "/bin/sh",
-          "terminal": false,
+          "description": "cleaning...",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "description": "cleaning..."
+          "file": "/bin/sh",
+          "description": "cleaning...",
+          "terminal": false
         }
       },
       {
         "execute": {
-          "terminal": false,
           "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxGK_single.conf",
-          "file": "/bin/sed"
+          "file": "/bin/sed",
+          "terminal": false
         }
       },
       {
         "execute": {
-          "terminal": false,
           "args": "-i 's|..\\GK1.gog|GK1.gog|g' $GAMEDIR/dosboxGK_single.conf",
-          "file": "/bin/sed"
+          "file": "/bin/sed",
+          "terminal": false
         }
       },
       {
         "execute": {
-          "terminal": false,
           "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
-          "file": "/bin/sh"
+          "file": "/bin/sh",
+          "terminal": false
         }
       }
     ]

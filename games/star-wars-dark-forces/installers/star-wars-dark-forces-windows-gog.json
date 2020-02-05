@@ -1,0 +1,94 @@
+{
+  "id": 15097,
+  "game_id": 577,
+  "game_slug": "star-wars-dark-forces",
+  "name": "Star Wars: Dark Forces",
+  "year": 1995,
+  "user": "appoloin",
+  "runner": "dosbox",
+  "slug": "star-wars-dark-forces-windows-gog",
+  "version": "Windows GOG",
+  "description": "Setup window will open during install use this to configure sound card.  To alter dosbox settings edit file named star_wars_dark_forces_play in game folder.",
+  "notes": "",
+  "created_at": "2019-08-22T17:00:56.372000Z",
+  "updated_at": "2019-09-09T00:07:16.513308Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 32400,
+  "gogid": 1421404433,
+  "gogslug": "star_wars_dark_forces",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Select GOG installer."
+      },
+      {
+        "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/star_wars_dark_forces_play.conf"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$inno"
+        }
+      },
+      {
+        "execute": {
+          "args": "-I app -d \"$CACHE\" \"$game\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD",
+          "file": "mkdir"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD/dark",
+          "file": "mkdir"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/HDD/dark",
+          "src": "$CACHE/app"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nfullscreen=false\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd dark\nsetup.exe\nexit",
+          "file": "$GAMEDIR/star_wars_dark_forces_setup.conf"
+        }
+      },
+      {
+        "task": {
+          "working_dir": "$GAMEDIR/HDD/dark",
+          "name": "dosexec",
+          "config_file": "$GAMEDIR/star_wars_dark_forces_setup.conf"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/HDD",
+          "src": "$GAMEDIR/HDD/dark/CD.ID"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[cpu]\ncore=auto\ncycles=auto\n[sdl]\nfullscreen=true\nfulldouble = true\noutput=opengl\nsensitivity=20\n[render]\naspect=true\nscaler=hq3x\n[dosbox]\nmemsize=32\n[ipx]\nipx=false\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd dark\ncls\ndark.exe\nexit",
+          "file": "$GAMEDIR/star_wars_dark_forces_play.conf"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Select GOG installer.\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  main_file: $GAMEDIR/star_wars_dark_forces_play.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $inno\n- execute:\n    args: -I app -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- execute:\n    args: $GAMEDIR/HDD\n    file: mkdir\n- execute:\n    args: $GAMEDIR/HDD/dark\n    file: mkdir\n- merge:\n    dst: $GAMEDIR/HDD/dark\n    src: $CACHE/app\n- write_file:\n    content: '[sdl]\n\n      fullscreen=false\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd dark\n\n      setup.exe\n\n      exit'\n    file: $GAMEDIR/star_wars_dark_forces_setup.conf\n- task:\n    config_file: $GAMEDIR/star_wars_dark_forces_setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/dark\n- copy:\n    dst: $GAMEDIR/HDD\n    src: $GAMEDIR/HDD/dark/CD.ID\n- write_file:\n    content: '[cpu]\n\n      core=auto\n\n      cycles=auto\n\n      [sdl]\n\n      fullscreen=true\n\n      fulldouble = true\n\n      output=opengl\n\n      sensitivity=20\n\n      [render]\n\n      aspect=true\n\n      scaler=hq3x\n\n      [dosbox]\n\n      memsize=32\n\n      [ipx]\n\n      ipx=false\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd dark\n\n      cls\n\n      dark.exe\n\n      exit'\n    file: $GAMEDIR/star_wars_dark_forces_play.conf\n"
+}

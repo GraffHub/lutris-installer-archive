@@ -8,10 +8,10 @@
   "runner": "dosbox",
   "slug": "rayman-cd-dos",
   "version": "CD DOS",
-  "description": "This script will install \"Rayman\" DOS CD edition for Dosbox.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
-  "notes": "- This script requires cdrdao and toc2cue to be installed. \r\nOn Debian and Ubuntu type in a terminal: \r\nsudo apt-get install cdrdao\r\n- You will need the CD only one time during install\r\n- x360 gamepad support\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "description": "This script will install \"Rayman\" DOS CD edition for DOSBox.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- You will need the CD only one time during install\r\n- x360 gamepad support\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2019-08-04T20:57:33.374000Z",
-  "updated_at": "2019-09-21T21:01:19.630013Z",
+  "updated_at": "2019-11-15T19:32:12.797566Z",
   "draft": false,
   "published": true,
   "published_by": 494,
@@ -21,11 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/rayman_dosbox.conf"
-    },
-    "custom-name": "Rayman - CD DOS - DOSBOX",
     "files": [
+      {
+        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
+      },
       {
         "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
       },
@@ -33,11 +32,20 @@
         "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rayman/rayman_dosbox.conf"
       }
     ],
+    "game": {
+      "main_file": "$GAMEDIR/rayman_dosbox.conf"
+    },
     "installer": [
       {
         "insert-disc": {
-          "requires": "rayman/rayman.exe",
-          "description": "Please insert disc 1"
+          "description": "Please insert disc 1",
+          "requires": "rayman/rayman.exe"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "src": "cdrtools"
         }
       },
       {
@@ -45,30 +53,8 @@
       },
       {
         "execute": {
-          "args": "RAYMAN",
+          "args": "rayman",
           "file": "script"
-        }
-      },
-      {
-        "task": {
-          "name": "makeconfig",
-          "path": "$GAMEDIR/rayman_dosbox_install.conf",
-          "drives": {
-            "c": "."
-          },
-          "commands": [
-            "imgmount d \"RAYMAN.cue\" -t iso",
-            "d:",
-            "call D:\\install.bat",
-            "exit"
-          ]
-        }
-      },
-      {
-        "task": {
-          "config_file": "$GAMEDIR/rayman_dosbox_install.conf",
-          "working_dir": "$GAMEDIR",
-          "name": "dosexec"
         }
       },
       {
@@ -77,7 +63,8 @@
           "src": "conf"
         }
       }
-    ]
+    ],
+    "custom-name": "Rayman - CD DOS - DOSBox"
   },
-  "content": "custom-name: Rayman - CD DOS - DOSBOX\nfiles:\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rayman/rayman_dosbox.conf\ngame:\n  main_file: $GAMEDIR/rayman_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: rayman/rayman.exe\n- chmodx: script\n- execute:\n    args: RAYMAN\n    file: script\n- task:\n    commands:\n    - imgmount d \"RAYMAN.cue\" -t iso\n    - 'd:'\n    - call D:\\install.bat\n    - exit\n    drives:\n      c: .\n    name: makeconfig\n    path: $GAMEDIR/rayman_dosbox_install.conf\n- task:\n    config_file: $GAMEDIR/rayman_dosbox_install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
+  "content": "custom-name: Rayman - CD DOS - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Rayman/rayman_dosbox.conf\ngame:\n  main_file: $GAMEDIR/rayman_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: rayman/rayman.exe\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: rayman\n    file: script\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

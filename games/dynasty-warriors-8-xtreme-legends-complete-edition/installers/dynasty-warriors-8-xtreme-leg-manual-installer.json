@@ -21,25 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "xboxdrv": "--type xbox360"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Dynasty Warriors 8 Xtreme Legends/Launch.exe"
-    },
     "files": [
       {
         "installer": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Dynasty Warriors 8 Xtreme Legends/Launch.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
@@ -51,40 +48,43 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing devenum",
           "name": "winetricks",
-          "app": "devenum"
+          "app": "devenum",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Installing xact",
           "name": "winetricks",
-          "app": "xact"
+          "arch": "win32",
+          "app": "xact",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Installing WMP9",
           "name": "winetricks",
-          "app": "wmp9"
+          "arch": "win32",
+          "app": "wmp9",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "description": "Installing game",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "installer",
-          "prefix": "$GAMEDIR",
-          "description": "Installing game",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "xboxdrv": "--type xbox360"
+    }
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Dynasty Warriors 8 Xtreme Legends/Launch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: devenum\n    description: Installing devenum\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win32\n    description: Installing xact\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    arch: win32\n    description: Installing WMP9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing game\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  xboxdrv: --type xbox360\n"
 }

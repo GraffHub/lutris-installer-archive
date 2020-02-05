@@ -1,0 +1,85 @@
+{
+  "id": 12168,
+  "game_id": 11850,
+  "game_slug": "anno-1503",
+  "name": "Anno 1503 A.D.",
+  "year": 2003,
+  "user": "citiroller",
+  "runner": "wine",
+  "slug": "anno-1503-ad-dvd",
+  "version": "DVD",
+  "description": "Installs the game with the DVD-ROM",
+  "notes": "Does not include the latest patches for version 1.05 as I could only find them for German language. If your Disc is not already on this version, its recommended to install the patches manually.",
+  "created_at": "2019-02-25T11:04:35.502000Z",
+  "updated_at": "2020-01-23T02:57:01.167531Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/game/ANNO 1503/1503Startup.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "install_mono": false,
+          "install_gecko": false
+        }
+      },
+      {
+        "write_file": {
+          "content": "[InstallShield Silent]\nVersion=v7.00\nFile=Response File\n[File Transfer]\nOverwrittenReadOnly=NoToAll\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-DlgOrder]\nDlg0={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdWelcome-0\nCount=9\nDlg1={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdLicense2-0\nDlg2={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdAskDestPath-0\nDlg3={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdSelectFolder-0\nDlg4={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-0\nDlg5={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-1\nDlg6={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-2\nDlg7={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdStartCopy-0\nDlg8={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdFinish-0\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdWelcome-0]\nResult=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdLicense2-0]\nResult=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdAskDestPath-0]\nszDir=C:\\game\\ANNO 1503\nResult=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdSelectFolder-0]\nszFolder=ANNO 1503\nResult=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-0]\nResult=1\nSel-0=0\nSel-1=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-1]\nResult=1\nSel-0=0\nSel-1=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-2]\nResult=1\nSel-0=0\nSel-1=1\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdStartCopy-0]\nResult=1\n[Application]\nName=ANNO 1503\nVersion=1.05\nCompany=Sunflowers\nLang=0007\n[{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdFinish-0]\nResult=1\nbOpt1=0\nbOpt2=0\n",
+          "file": "$GAMEDIR/drive_c/setup.iss",
+          "description": "Creating installer config file"
+        }
+      },
+      {
+        "task": {
+          "args": "/s /f1\"C:\\setup.iss\"",
+          "name": "wineexec",
+          "executable": "$DISC/setup.exe",
+          "description": "Installing...",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Setting up winetricks...",
+          "name": "winetricks",
+          "app": "windowmanagermanaged=n",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Setting up winetricks...",
+          "name": "winetricks",
+          "app": "directmusic",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "reset_desktop": true
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/game/ANNO 1503/1503Startup.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: '[InstallShield Silent]\n\n      Version=v7.00\n\n      File=Response File\n\n      [File Transfer]\n\n      OverwrittenReadOnly=NoToAll\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-DlgOrder]\n\n      Dlg0={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdWelcome-0\n\n      Count=9\n\n      Dlg1={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdLicense2-0\n\n      Dlg2={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdAskDestPath-0\n\n      Dlg3={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdSelectFolder-0\n\n      Dlg4={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-0\n\n      Dlg5={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-1\n\n      Dlg6={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-2\n\n      Dlg7={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdStartCopy-0\n\n      Dlg8={EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdFinish-0\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdWelcome-0]\n\n      Result=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdLicense2-0]\n\n      Result=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdAskDestPath-0]\n\n      szDir=C:\\game\\ANNO 1503\n\n      Result=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdSelectFolder-0]\n\n      szFolder=ANNO 1503\n\n      Result=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-0]\n\n      Result=1\n\n      Sel-0=0\n\n      Sel-1=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-1]\n\n      Result=1\n\n      Sel-0=0\n\n      Sel-1=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-AskOptions-2]\n\n      Result=1\n\n      Sel-0=0\n\n      Sel-1=1\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdStartCopy-0]\n\n      Result=1\n\n      [Application]\n\n      Name=ANNO 1503\n\n      Version=1.05\n\n      Company=Sunflowers\n\n      Lang=0007\n\n      [{EBBB1DEF-8878-4CB8-BC0D-1196B30E7527}-SdFinish-0]\n\n      Result=1\n\n      bOpt1=0\n\n      bOpt2=0\n\n      '\n    description: Creating installer config file\n    file: $GAMEDIR/drive_c/setup.iss\n- task:\n    args: /s /f1\"C:\\setup.iss\"\n    description: Installing...\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: directmusic\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  reset_desktop: true\n"
+}

@@ -21,10 +21,6 @@
   "gogslug": "normality",
   "humblestoreid": "",
   "script": {
-    "main_file": "Game/dosbox_normal_single.conf",
-    "game": {
-      "config_file": "$GAMEDIR/Game/dosbox_normal.conf"
-    },
     "files": [
       {
         "game": "N/A:Select the Linux installer downloaded from GOG"
@@ -33,6 +29,9 @@
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
     ],
+    "game": {
+      "config_file": "$GAMEDIR/Game/dosbox_normal.conf"
+    },
     "installer": [
       {
         "extract": {
@@ -42,9 +41,9 @@
       },
       {
         "execute": {
-          "description": "Extracting game data...",
           "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "description": "Extracting game data..."
         }
       },
       {
@@ -55,13 +54,14 @@
       },
       {
         "write_config": {
+          "key": "aspect",
           "file": "$GAMEDIR/Game/dosbox_normal.conf",
           "section": "render",
-          "key": "aspect",
           "value": true
         }
       }
-    ]
+    ],
+    "main_file": "Game/dosbox_normal_single.conf"
   },
   "content": "files:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  config_file: $GAMEDIR/Game/dosbox_normal.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n- write_config:\n    file: $GAMEDIR/Game/dosbox_normal.conf\n    key: aspect\n    section: render\n    value: true\nmain_file: Game/dosbox_normal_single.conf\n"
 }

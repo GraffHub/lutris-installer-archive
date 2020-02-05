@@ -8,10 +8,10 @@
   "runner": "dosbox",
   "slug": "disneys-aladdin-ms-dos",
   "version": "MS-DOS",
-  "description": "",
+  "description": null,
   "notes": "",
   "created_at": "2017-09-07T19:42:54.551000Z",
-  "updated_at": "2017-09-17T19:23:58.079820Z",
+  "updated_at": "2020-01-09T09:26:00.210060Z",
   "draft": false,
   "published": true,
   "published_by": null,
@@ -21,18 +21,16 @@
   "gogslug": "disney_aladdin",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "file1": "N/A:Select the game's archive file"
+      }
+    ],
     "game": {
       "config_file": "$GAMEDIR/dosbox_aladdin.conf",
       "main_file": "ALADDIN.EXE"
     },
-    "files": [
-      {
-        "file1": "N/A:Select the game's archive file"
-      },
-      {
-        "file2": "https://lutris.net/files/tools/p7zip-16.02-i686.tar.gz"
-      }
-    ],
+    "require-binaries": "7z",
     "installer": [
       {
         "extract": {
@@ -41,23 +39,17 @@
         }
       },
       {
-        "extract": {
-          "dst": "$CACHE/p7z",
-          "file": "$file2"
-        }
-      },
-      {
         "execute": {
-          "description": "Extracting the data files...",
           "args": "x \"$CACHE/game/DISK1.DAT\"",
-          "file": "$CACHE/p7z/7z"
+          "file": "7z",
+          "description": "Extracting the data files..."
         }
       },
       {
         "execute": {
-          "description": "Extracting more data files...",
           "args": "x \"$CACHE/game/DISK2.DAT\"",
-          "file": "$CACHE/p7z/7z"
+          "file": "7z",
+          "description": "Extracting more data files..."
         }
       },
       {
@@ -68,44 +60,44 @@
       },
       {
         "write_config": {
+          "key": "aspect",
           "file": "$GAMEDIR/dosbox_aladdin.conf",
           "section": "render",
-          "key": "aspect",
           "value": true
         }
       },
       {
         "write_config": {
+          "key": "fullscreen",
           "file": "$GAMEDIR/dosbox_aladdin.conf",
           "section": "sdl",
-          "key": "fullscreen",
           "value": false
         }
       },
       {
         "write_config": {
+          "key": "sbtype",
           "file": "$GAMEDIR/dosbox_aladdin.conf",
           "section": "sblaster",
-          "key": "sbtype",
           "value": "sb16"
         }
       },
       {
         "write_config": {
+          "key": "cycles",
           "file": "$GAMEDIR/dosbox_aladdin.conf",
           "section": "cpu",
-          "key": "cycles",
           "value": "max"
         }
       },
       {
         "task": {
-          "executable": "SETSND.EXE",
           "description": "Setting sound. just type Y and Enter directly.",
-          "name": "dosexec"
+          "name": "dosexec",
+          "executable": "SETSND.EXE"
         }
       }
     ]
   },
-  "content": "files:\n- file1: N/A:Select the game's archive file\n- file2: https://lutris.net/files/tools/p7zip-16.02-i686.tar.gz\ngame:\n  config_file: $GAMEDIR/dosbox_aladdin.conf\n  main_file: ALADDIN.EXE\ninstaller:\n- extract:\n    dst: $CACHE/game\n    file: $file1\n- extract:\n    dst: $CACHE/p7z\n    file: $file2\n- execute:\n    args: x \"$CACHE/game/DISK1.DAT\"\n    description: Extracting the data files...\n    file: $CACHE/p7z/7z\n- execute:\n    args: x \"$CACHE/game/DISK2.DAT\"\n    description: Extracting more data files...\n    file: $CACHE/p7z/7z\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/game\n- write_config:\n    file: $GAMEDIR/dosbox_aladdin.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosbox_aladdin.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- write_config:\n    file: $GAMEDIR/dosbox_aladdin.conf\n    key: sbtype\n    section: sblaster\n    value: sb16\n- write_config:\n    file: $GAMEDIR/dosbox_aladdin.conf\n    key: cycles\n    section: cpu\n    value: max\n- task:\n    description: Setting sound. just type Y and Enter directly.\n    executable: SETSND.EXE\n    name: dosexec\n"
+  "content": "files:\r\n- file1: N/A:Select the game's archive file\r\ngame:\r\n  config_file: $GAMEDIR/dosbox_aladdin.conf\r\n  main_file: ALADDIN.EXE\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/game\r\n    file: $file1\r\n- execute:\r\n    args: x \"$CACHE/game/DISK1.DAT\"\r\n    description: Extracting the data files...\r\n    file: 7z\r\n- execute:\r\n    args: x \"$CACHE/game/DISK2.DAT\"\r\n    description: Extracting more data files...\r\n    file: 7z\r\n- merge:\r\n    dst: $GAMEDIR\r\n    src: $CACHE/game\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: aspect\r\n    section: render\r\n    value: true\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: fullscreen\r\n    section: sdl\r\n    value: false\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: sbtype\r\n    section: sblaster\r\n    value: sb16\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: cycles\r\n    section: cpu\r\n    value: max\r\n- task:\r\n    description: Setting sound. just type Y and Enter directly.\r\n    executable: SETSND.EXE\r\n    name: dosexec\r\nrequire-binaries: 7z"
 }

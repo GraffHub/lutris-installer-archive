@@ -11,7 +11,7 @@
   "description": "Uses ELAC by samyuu and lybxlpsv.\r\nThe \"songfix\" must be installed manually.\r\nDisable \"Reduce PulseAudio latency\" if you get no sound.\r\nThe installer will set the resolution to 1080p by default. To set it to 720p, remove \"-hd1080\" from the arguments. To use a custom resolution, edit graphics.ini (don't remove \"-hd1080\" from the arguments).",
   "notes": "- An NVIDIA GPU is required. On Turing-based GPUs, you may experience some glitches. A custom shader may be used to mitigate the issue, but it must be installed manually;\r\n- WMV playback may not work (32-bit codecs required). Converting all WMVs to MP4 and then changing the entries in pv_db.txt might fix it.",
   "created_at": "2019-05-06T14:41:05.545000Z",
-  "updated_at": "2019-06-12T04:47:11.558117Z",
+  "updated_at": "2020-01-23T02:56:54.037653Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,64 +21,47 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "pulse_latency": "true",
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
-      }
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "args": "\"diva.exe -hdtv1080\"",
-      "exe": "$GAMEDIR/drive_c/PDA/elac.exe"
-    },
-    "wine": {
-      "single_cpu": true,
-      "version": "tkg-4.6-x86_64"
-    },
     "files": [
       {
         "gamedata": "N/A:Select the archive containing the game"
       },
       {
         "elac": {
-          "url": "https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental",
-          "filename": "elac.zip"
+          "filename": "elac.zip",
+          "url": "https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental"
         }
       }
     ],
     "installer": [
       {
         "task": {
-          "install_mono": false,
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix...",
           "name": "create_prefix",
+          "install_mono": false,
+          "prefix": "$GAMEDIR",
           "install_gecko": false
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing quartz...",
           "name": "winetricks",
-          "app": "quartz"
+          "app": "quartz",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/PDA",
           "description": "Extracting game data...",
-          "file": "gamedata"
+          "file": "gamedata",
+          "dst": "$GAMEDIR/drive_c/PDA"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/PDA",
           "description": "Extracting ELAC...",
-          "file": "elac"
+          "file": "elac",
+          "dst": "$GAMEDIR/drive_c/PDA"
         }
       },
       {
@@ -89,13 +72,29 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/PDA/prepatch.exe",
           "args": "diva.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/PDA/prepatch.exe",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "args": "\"diva.exe -hdtv1080\"",
+      "exe": "$GAMEDIR/drive_c/PDA/elac.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true"
+      },
+      "pulse_latency": "true"
+    },
+    "wine": {
+      "single_cpu": true
+    }
   },
-  "content": "files:\n- gamedata: N/A:Select the archive containing the game\n- elac:\n    filename: elac.zip\n    url: https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental\ngame:\n  args: '\"diva.exe -hdtv1080\"'\n  exe: $GAMEDIR/drive_c/PDA/elac.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    description: Installing quartz...\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting game data...\n    dst: $GAMEDIR/drive_c/PDA\n    file: gamedata\n- extract:\n    description: Extracting ELAC...\n    dst: $GAMEDIR/drive_c/PDA\n    file: elac\n- merge:\n    dst: $GAMEDIR/drive_c/PDA/bak/\n    src: $GAMEDIR/drive_c/PDA/diva.exe\n- task:\n    args: diva.exe\n    executable: $GAMEDIR/drive_c/PDA/prepatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\n  pulse_latency: 'true'\nwine:\n  single_cpu: true\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- gamedata: N/A:Select the archive containing the game\n- elac:\n    filename: elac.zip\n    url: https://ci.appveyor.com/api/projects/lybxlpsv/evenmorelegitarcadecontroller/artifacts/release.zip?branch=experimental\ngame:\n  args: '\"diva.exe -hdtv1080\"'\n  exe: $GAMEDIR/drive_c/PDA/elac.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    description: Installing quartz...\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting game data...\n    dst: $GAMEDIR/drive_c/PDA\n    file: gamedata\n- extract:\n    description: Extracting ELAC...\n    dst: $GAMEDIR/drive_c/PDA\n    file: elac\n- merge:\n    dst: $GAMEDIR/drive_c/PDA/bak/\n    src: $GAMEDIR/drive_c/PDA/diva.exe\n- task:\n    args: diva.exe\n    executable: $GAMEDIR/drive_c/PDA/prepatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\n  pulse_latency: 'true'\nwine:\n  single_cpu: true\n"
 }

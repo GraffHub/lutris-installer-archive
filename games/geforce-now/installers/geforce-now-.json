@@ -1,0 +1,76 @@
+{
+  "id": 17834,
+  "game_id": 23560,
+  "game_slug": "geforce-now",
+  "name": "GeForce NOW",
+  "year": 2015,
+  "user": "Spurlos",
+  "runner": "wine",
+  "slug": "geforce-now-",
+  "version": "-",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-01-10T12:05:22.815167Z",
+  "updated_at": "2020-01-23T02:56:50.988503Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "gfn": "http://download.nvidia.com/gfnpc/GeForceNOW-release.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "gfn"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing needed libraries",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "corefonts msxml3",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Users/user/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe"
+    },
+    "system": {
+      "restore_gamma": true,
+      "env": {
+        "PROTON_FSHACK_INTEGER_SCALING": "1",
+        "DXVK_HUD": "compiler",
+        "WINE_LARGE_ADDRESS_AWARE": "1",
+        "WINEFSYNC": "1",
+        "STAGING_SHARED_MEMORY": "1"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- gfn: http://download.nvidia.com/gfnpc/GeForceNOW-release.exe\ngame:\n  arch: win64\n  exe: drive_c/Users/user/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: gfn\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: corefonts msxml3\n    arch: win64\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    PROTON_FSHACK_INTEGER_SCALING: '1'\n    STAGING_SHARED_MEMORY: '1'\n    WINEFSYNC: '1'\n    WINE_LARGE_ADDRESS_AWARE: '1'\n  restore_gamma: true\nwine:\n  dxvk: true\n  esync: true\n"
+}

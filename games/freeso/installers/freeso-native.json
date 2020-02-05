@@ -10,21 +10,17 @@
   "version": "Native",
   "description": "This installer uses the \"macextras\" provided by the developer to run the game on Linux. The download of the main game can take a very long time.",
   "notes": "Requires cabextract and curl during installation\r\nRequires sdl2 and mono at runtime",
-  "created_at": "2018-10-22T18:33:35.925617Z",
-  "updated_at": "2018-10-24T06:48:29.407108Z",
+  "created_at": "2018-10-22T18:33:35.925000Z",
+  "updated_at": "2019-12-23T20:04:26.057023Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "require-binaries": "mono, cabextract, curl",
-    "game": {
-      "exe": "$GAMEDIR/FreeSO/freeso.command"
-    },
     "files": [
       {
         "tso": "https://ia801903.us.archive.org/tarview.php?tar=/33/items/Fileplanet_dd_042006/Fileplanet_dd_042006.tar&file=042006/TSO_Installer_v1.1239.1.0.zip"
@@ -36,6 +32,10 @@
         "tsopatcher": "https://github.com/riperiperi/TSO-Version-Patcher/releases/download/v1.0/Release.zip"
       }
     ],
+    "game": {
+      "exe": "$GAMEDIR/FreeSO/freeso.command"
+    },
+    "require-binaries": "mono, cabextract, curl",
     "installer": [
       {
         "execute": {
@@ -45,7 +45,7 @@
       {
         "execute": {
           "terminal": true,
-          "command": "curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/911:id/client-648.zip --create-dirs -o $GAMEDIR/tmp/client/client.zip"
+          "command": "curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/1275:id/client-843.zip --create-dirs -o $GAMEDIR/tmp/client/client.zip"
         }
       },
       {
@@ -95,5 +95,5 @@
       }
     ]
   },
-  "content": "files:\n- tso: https://ia801903.us.archive.org/tarview.php?tar=/33/items/Fileplanet_dd_042006/Fileplanet_dd_042006.tar&file=042006/TSO_Installer_v1.1239.1.0.zip\n- macextras: https://freeso.org/stuff/macextras.zip\n- tsopatcher: https://github.com/riperiperi/TSO-Version-Patcher/releases/download/v1.0/Release.zip\ngame:\n  exe: $GAMEDIR/FreeSO/freeso.command\ninstaller:\n- execute:\n    command: curl --cookie-jar $CACHE/cookies https://servo.freeso.org/?guest=1\n- execute:\n    command: curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/911:id/client-648.zip\n      --create-dirs -o $GAMEDIR/tmp/client/client.zip\n    terminal: true\n- extract:\n    dst: $GAMEDIR/FreeSO\n    file: $GAMEDIR/tmp/client/client.zip\n- extract:\n    dst: $GAMEDIR/FreeSO\n    file: $macextras\n- extract:\n    dst: $GAMEDIR/tmp/tso\n    file: $tso\n- execute:\n    command: cabextract -d $GAMEDIR/FreeSO/game $GAMEDIR/tmp/tso/Data1.cab\n- extract:\n    dst: $GAMEDIR/tmp/tsopatcher\n    file: $tsopatcher\n- execute:\n    command: mono $GAMEDIR/tmp/tsopatcher/TSOVersionPatcherF.exe $GAMEDIR/tmp/tsopatcher/1239toNI.tsop\n      $GAMEDIR/FreeSO/game\n- chmodx: $GAMEDIR/FreeSO/freeso.command\n- chmodx: $GAMEDIR/FreeSO/freeso3d.command\n- execute:\n    command: rm -r $GAMEDIR/tmp\nrequire-binaries: mono, cabextract, curl\n"
+  "content": "files:\n- tso: https://ia801903.us.archive.org/tarview.php?tar=/33/items/Fileplanet_dd_042006/Fileplanet_dd_042006.tar&file=042006/TSO_Installer_v1.1239.1.0.zip\n- macextras: https://freeso.org/stuff/macextras.zip\n- tsopatcher: https://github.com/riperiperi/TSO-Version-Patcher/releases/download/v1.0/Release.zip\ngame:\n  exe: $GAMEDIR/FreeSO/freeso.command\ninstaller:\n- execute:\n    command: curl --cookie-jar $CACHE/cookies https://servo.freeso.org/?guest=1\n- execute:\n    command: curl --cookie $CACHE/cookies https://servo.freeso.org/repository/download/FreeSO_TsoClient/1275:id/client-843.zip\n      --create-dirs -o $GAMEDIR/tmp/client/client.zip\n    terminal: true\n- extract:\n    dst: $GAMEDIR/FreeSO\n    file: $GAMEDIR/tmp/client/client.zip\n- extract:\n    dst: $GAMEDIR/FreeSO\n    file: $macextras\n- extract:\n    dst: $GAMEDIR/tmp/tso\n    file: $tso\n- execute:\n    command: cabextract -d $GAMEDIR/FreeSO/game $GAMEDIR/tmp/tso/Data1.cab\n- extract:\n    dst: $GAMEDIR/tmp/tsopatcher\n    file: $tsopatcher\n- execute:\n    command: mono $GAMEDIR/tmp/tsopatcher/TSOVersionPatcherF.exe $GAMEDIR/tmp/tsopatcher/1239toNI.tsop\n      $GAMEDIR/FreeSO/game\n- chmodx: $GAMEDIR/FreeSO/freeso.command\n- chmodx: $GAMEDIR/FreeSO/freeso3d.command\n- execute:\n    command: rm -r $GAMEDIR/tmp\nrequire-binaries: mono, cabextract, curl\n"
 }

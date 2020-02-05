@@ -21,23 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "dosbox": {
-      "scaler": "hq3x"
-    },
-    "main_file": "SEEK.EXE",
-    "game": {
-      "config_file": "$GAMEDIR/dosbox.conf",
-      "working_dir": "$GAMEDIR"
-    },
     "files": [
       {
         "gamearchive": {
-          "url": "https://dos.retropc.se/games/shooter/seeksw1.zip",
+          "referer": "image.dosgamesarchive.com",
           "filename": "seek.zip",
-          "referer": "image.dosgamesarchive.com"
+          "url": "https://dos.retropc.se/games/shooter/seeksw1.zip"
         }
       }
     ],
+    "game": {
+      "working_dir": "$GAMEDIR",
+      "config_file": "$GAMEDIR/dosbox.conf"
+    },
+    "dosbox": {
+      "scaler": "hq3x"
+    },
     "installer": [
       {
         "extract": {
@@ -61,28 +60,29 @@
       {
         "write_config": {
           "data": {
-            "sdl": {
-              "fullscreen": false,
-              "output": "overlay"
-            },
             "speaker": {
-              "pcspeaker": true,
               "disney": false,
-              "tandy": false
+              "tandy": false,
+              "pcspeaker": true
+            },
+            "sdl": {
+              "output": "overlay",
+              "fullscreen": false
             },
             "sblaster": {
+              "dma": 1,
+              "irq": 7,
+              "sbtype": "sb16",
               "sbmixer": true,
               "sbbase": 220,
-              "irq": 7,
-              "dma": 1,
-              "hdma": 5,
-              "sbtype": "sb16"
+              "hdma": 5
             }
           },
           "file": "$GAMEDIR/dosbox.conf"
         }
       }
-    ]
+    ],
+    "main_file": "SEEK.EXE"
   },
   "content": "dosbox:\n  scaler: hq3x\nfiles:\n- gamearchive:\n    filename: seek.zip\n    referer: image.dosgamesarchive.com\n    url: https://dos.retropc.se/games/shooter/seeksw1.zip\ngame:\n  config_file: $GAMEDIR/dosbox.conf\n  working_dir: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR/\n    file: gamearchive\n    format: zip\n- write_file:\n    content: 'Forward                        200 UP ARROW\n\n      Back                           208 DOWN ARROW\n\n      Left                           203 LEFT ARROW\n\n      Right                          205 RIGHT ARROW\n\n      Land                            57 SPACE\n\n      Strafe                          44 Z\n\n      Turn_Turret_Left                42 LEFT SHIFT\n\n      Turn_Turret_Right               44 Z\n\n      Select_Weapon                   29 LEFT CTRL\n\n      Fire                            56 LEFT ALT\n\n      Autozoom                        67 F9\n\n      0 0 1 2 3'\n    file: $GAMEDIR/SEEK.CFG\n- write_file:\n    content: '4          card (0=sb,1=sbpro,2=gus,3=pas(not),4=sb16,5=awe32(not),678,9=none\n\n      0x220      port # in decimal (0x220=544) (0x240=576) (0x210=528)\n\n      7          irq number\n\n      0          low (8-bit) dma # (for cards that need it)\n\n      5          high (16-bit) dma # (ditto)\n\n      1          Sound Quality. 3=ultra(20), 2=high(16-def), 1=good(12), 0=low(8)\n\n      9          music card (0=OPL2, 1=OPL3, 5=GM, 6=GUS)\n\n      0x340      music port (0x388=904, 0x330=816, 0x340=832)\n\n\n      ^          ^\n\n      data here  comments no earlier than here!\n\n\n      --------------------------------------------------------------------------\n\n      VISION SOUND LIBRARY (C)1995 VISION SOFTWARE, ALL RIGHTS RESERVED.\n\n      WRITTEN BY PAUL ANDREWS.'\n    file: $GAMEDIR/SOUND.CFG\n- write_config:\n    data:\n      sblaster:\n        dma: 1\n        hdma: 5\n        irq: 7\n        sbbase: 220\n        sbmixer: true\n        sbtype: sb16\n      sdl:\n        fullscreen: false\n        output: overlay\n      speaker:\n        disney: false\n        pcspeaker: true\n        tandy: false\n    file: $GAMEDIR/dosbox.conf\nmain_file: SEEK.EXE\n"
 }

@@ -1,0 +1,127 @@
+{
+  "id": 9190,
+  "game_id": 4275,
+  "game_slug": "elite-dangerous",
+  "name": "Elite: Dangerous",
+  "year": 2014,
+  "user": "VortexAcherontic",
+  "runner": "winesteam",
+  "slug": "elite-dangerous-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": "Elite Dangerous, Arena and Training work flawlessly\r\nElite Dangerous HORIZON with AMD gpu does not work yet. System freeze during Planet Shader generation (+-19%) (Update: Now working on AMD as of Linux 5.0.x, tested on Arch)",
+  "notes": "If you are having CRC error please copy the value of the following key from your registry\r\n[HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Cryptography]\r\n\"MachineGuid\"=\"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx\"\r\n\r\nand replace the value of \r\n[HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Cryptography]\r\n\"MachineGuid\"=\"yyyyyyyy-yyyy-yyyy-yyyy-yyyyyyyyyyyy\" with de value previously copied.\r\nIn the end, both keys must have the same value.",
+  "created_at": "2018-07-12T20:07:26.240000Z",
+  "updated_at": "2020-01-31T02:38:35.809666Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 359320,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 359320,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine Prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Internet Explorer 8 (necessary!))",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "ie8",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Dot.NET 4.7.2",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "dotnet472",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2010 vcrun2012 vcrun2015",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2010 vcrun2012 vcrun2015",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing MS Line Services",
+          "name": "winetricks",
+          "app": "msls31",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Quartz",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "quartz",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Arial",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Set Windows version to Windows 7",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "execute": {
+          "description": "Generating registry patch",
+          "command": "printf 'Windows Registry Editor Version 5.00\\n\\n[HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Cryptography]\\n' > \"$GAMEDIR/prefix/fix.reg\"; grep 'MachineGuid' \"$GAMEDIR/prefix/fix.reg\" | head -n1 >> \"$GAMEDIR/prefix/fix.reg\""
+        }
+      },
+      {
+        "task": {
+          "description": "Patching registry to prevent cryptography errors",
+          "name": "set_regedit_file",
+          "arch": "win64",
+          "filename": "$GAMEDIR/prefix/fix.reg",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$CACHE",
+          "src": "$GAMEDIR/prefix/fix.reg"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  appid: 359320\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: ie8\n    arch: win64\n    description: Installing Internet Explorer 8 (necessary!))\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing Dot.NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010 vcrun2012 vcrun2015\n    arch: win64\n    description: Installing vcrun2010 vcrun2012 vcrun2015\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: msls31\n    description: Installing MS Line Services\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: quartz\n    arch: win64\n    description: Installing Quartz\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win7\n    arch: win64\n    description: Set Windows version to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- execute:\n    command: printf 'Windows Registry Editor Version 5.00\\n\\n[HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Microsoft\\Cryptography]\\n'\n      > \"$GAMEDIR/prefix/fix.reg\"; grep 'MachineGuid' \"$GAMEDIR/prefix/fix.reg\" |\n      head -n1 >> \"$GAMEDIR/prefix/fix.reg\"\n    description: Generating registry patch\n- task:\n    arch: win64\n    description: Patching registry to prevent cryptography errors\n    filename: $GAMEDIR/prefix/fix.reg\n    name: set_regedit_file\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $CACHE\n    src: $GAMEDIR/prefix/fix.reg\nwinesteam:\n  dxvk: true\n"
+}

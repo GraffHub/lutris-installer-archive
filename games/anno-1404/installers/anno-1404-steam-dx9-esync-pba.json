@@ -1,0 +1,121 @@
+{
+  "id": 10586,
+  "game_id": 1857,
+  "game_slug": "anno-1404",
+  "name": "Anno 1404",
+  "year": 2009,
+  "user": "bumba",
+  "runner": "winesteam",
+  "slug": "anno-1404-steam-dx9-esync-pba",
+  "version": "Steam DX9 Esync-PBA",
+  "description": null,
+  "notes": "Executable is set to \"Anno1404.exe\" (base game) by default. Set it to \"Addon.exe\" to play the Anno 1404: Venice expansion.",
+  "created_at": "2018-10-21T14:39:20.491000Z",
+  "updated_at": "2020-01-31T02:38:33.417888Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 33250,
+  "gogid": 1440426004,
+  "gogslug": "anno_1404_gold_edition",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 33350,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "esync": true,
+      "overrides": {
+        "xaudio2_7": "native"
+      }
+    },
+    "installer": [
+      {
+        "input_menu": {
+          "options": [
+            {
+              "60": "60 hz"
+            },
+            {
+              "75": "75 hz"
+            },
+            {
+              "120": "120 hz"
+            },
+            {
+              "144": "144 hz"
+            }
+          ],
+          "description": "Select your display refresh rate:",
+          "preselect": "60",
+          "id": "REFRESHRATE"
+        }
+      },
+      {
+        "input_menu": {
+          "options": [
+            {
+              "256": "256MB"
+            },
+            {
+              "512": "512MB"
+            },
+            {
+              "1024": "1024MB"
+            },
+            {
+              "2048": "2048MB"
+            },
+            {
+              "4096": "4096MB"
+            }
+          ],
+          "description": "Select how much VRAM (GPU memory) you want to allocate:",
+          "preselect": "1024",
+          "id": "MEM"
+        }
+      },
+      {
+        "task": {
+          "description": "winetricks for Steam (corefonts) and d3d9",
+          "name": "winetricks",
+          "app": "corefonts d3dx9",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "write_file": {
+          "content": "<InitFile>\n<RefreshRate>$INPUT_REFRESHRATE</RefreshRate>\n<DirectXVersion>9</DirectXVersion>\n</InitFile>\n",
+          "file": "/tmp/Engine.ini"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying user config for base game...",
+          "src": "/tmp/Engine.ini",
+          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying user config for addon...",
+          "src": "/tmp/Engine.ini",
+          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_THREADED_OPTIMIZATION": "1",
+        "__PBA_GEO_HEAP": "$INPUT_MEM",
+        "run_without_steam": true,
+        "PBA_ENABLE": "1",
+        "__GL_SHADER_DISK_CACHE": "1"
+      }
+    }
+  },
+  "content": "game:\n  appid: 33350\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- input_menu:\n    description: 'Select your display refresh rate:'\n    id: REFRESHRATE\n    options:\n    - '60': 60 hz\n    - '75': 75 hz\n    - '120': 120 hz\n    - '144': 144 hz\n    preselect: '60'\n- input_menu:\n    description: 'Select how much VRAM (GPU memory) you want to allocate:'\n    id: MEM\n    options:\n    - '256': 256MB\n    - '512': 512MB\n    - '1024': 1024MB\n    - '2048': 2048MB\n    - '4096': 4096MB\n    preselect: '1024'\n- task:\n    app: corefonts d3dx9\n    description: winetricks for Steam (corefonts) and d3d9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- write_file:\n    content: '<InitFile>\n\n      <RefreshRate>$INPUT_REFRESHRATE</RefreshRate>\n\n      <DirectXVersion>9</DirectXVersion>\n\n      </InitFile>\n\n      '\n    file: /tmp/Engine.ini\n- merge:\n    description: Copying user config for base game...\n    dst: $GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/\n    src: /tmp/Engine.ini\n- merge:\n    description: Copying user config for addon...\n    dst: $GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/\n    src: /tmp/Engine.ini\nsystem:\n  env:\n    PBA_ENABLE: '1'\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATION: '1'\n    __PBA_GEO_HEAP: $INPUT_MEM\n    run_without_steam: true\nwinesteam:\n  esync: true\n  overrides:\n    xaudio2_7: native\n"
+}

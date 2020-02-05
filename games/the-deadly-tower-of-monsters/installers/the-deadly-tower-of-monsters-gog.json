@@ -1,0 +1,127 @@
+{
+  "id": 17250,
+  "game_id": 7856,
+  "game_slug": "the-deadly-tower-of-monsters",
+  "name": "The Deadly Tower of Monsters",
+  "year": 2016,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "the-deadly-tower-of-monsters-gog",
+  "version": "GOG",
+  "description": "This script will install \"The Deadly Tower of Monsters\" GOG edition.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-12-10T04:08:26.992000Z",
+  "updated_at": "2019-12-10T18:39:16.532979Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 353700,
+  "gogid": 1458826738,
+  "gogslug": "the_deadly_tower_of_monsters",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "gog": "N/A:Please select the Humble archive 1"
+      }
+    ],
+    "execute": {
+      "command": "cd $GAMEDIR; rm -f -r __support goggame-1458826738.* language_setup.* webcache.zip"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "install_mono": false,
+          "install_gecko": false
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "src": "gog"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/The Deadly Tower of Monsters",
+          "src": "$CACHE/app"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "csmt",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "value": "00000000",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "input_menu": {
+          "options": [
+            {
+              "INT": "English"
+            },
+            {
+              "FRA": "French"
+            },
+            {
+              "DEU": "German"
+            },
+            {
+              "CHN": "Chinese"
+            },
+            {
+              "ITA": "Italian"
+            },
+            {
+              "RUS": "Russian"
+            },
+            {
+              "ESN": "Spanish"
+            }
+          ],
+          "description": "Please choose your preferred language for subtitles:",
+          "preselect": "INT",
+          "id": "LANG"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/The Deadly Tower of Monsters\"; rm -f -r __support goggame-1458826738.* language_setup.* webcache.zip;"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/The Deadly Tower of Monsters\"; sed -i \"s/^Language=.*/Language=$INPUT_LANG/\" Engine/Config/BaseEngine.ini; sed -i -e \"s/ResX=.*/ResX=$RESOLUTION_WIDTH/\" -e \"s/ResY=.*/ResY=$RESOLUTION_HEIGTH/\" -e \"s/Fullscreen=.*/Fullscreen=True/\" -e \"s/UseVsync=.*/UseVsync=True/\" Engine/Config/BaseSystemSettings.ini;"
+        }
+      }
+    ],
+    "custom-name": "The Deadly Tower of Monsters - GOG - Wine",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/The Deadly Tower of Monsters/Binaries/Win32/TS.exe"
+    },
+    "wine": {
+      "Desktop": true
+    }
+  },
+  "content": "custom-name: The Deadly Tower of Monsters - GOG - Wine\nexecute:\n  command: cd $GAMEDIR; rm -f -r __support goggame-1458826738.* language_setup.* webcache.zip\nfiles:\n- gog: N/A:Please select the Humble archive 1\ngame:\n  exe: drive_c/GOG Games/The Deadly Tower of Monsters/Binaries/Win32/TS.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    src: gog\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/The Deadly Tower of Monsters\n    src: $CACHE/app\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- input_menu:\n    description: 'Please choose your preferred language for subtitles:'\n    id: LANG\n    options:\n    - INT: English\n    - FRA: French\n    - DEU: German\n    - CHN: Chinese\n    - ITA: Italian\n    - RUS: Russian\n    - ESN: Spanish\n    preselect: INT\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/The Deadly Tower of Monsters\"; rm -f -r\n      __support goggame-1458826738.* language_setup.* webcache.zip;\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/The Deadly Tower of Monsters\"; sed -i\n      \"s/^Language=.*/Language=$INPUT_LANG/\" Engine/Config/BaseEngine.ini; sed -i\n      -e \"s/ResX=.*/ResX=$RESOLUTION_WIDTH/\" -e \"s/ResY=.*/ResY=$RESOLUTION_HEIGTH/\"\n      -e \"s/Fullscreen=.*/Fullscreen=True/\" -e \"s/UseVsync=.*/UseVsync=True/\" Engine/Config/BaseSystemSettings.ini;\nwine:\n  Desktop: true\n"
+}

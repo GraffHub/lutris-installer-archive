@@ -8,34 +8,19 @@
   "runner": "wine",
   "slug": "rockstar-games-launcher-standalone",
   "version": "Standalone",
-  "description": "Ignore the update error",
-  "notes": "",
+  "description": null,
+  "notes": "Might crash on first launch after logging-in - ignore that and just restart it.",
   "created_at": "2019-09-18T23:50:09.703000Z",
-  "updated_at": "2019-10-17T00:54:50.080225Z",
+  "updated_at": "2020-01-23T02:57:19.928297Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 51687,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "version": "lutris-rockstar-4.16-x86_64"
-    },
     "files": [
       {
         "launcher": "https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe"
@@ -44,40 +29,56 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine 64-bit Prefix",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
+          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "description": "Installing Arial Font",
-          "name": "winetricks",
-          "app": "arial"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "launcher",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial win10"
+        }
+      },
+      {
+        "task": {
           "description": "Installing the launcher (Don't login, close the window)",
+          "name": "wineexec",
           "arch": "win64",
-          "exclude_processes": "RockstarService.exe",
-          "name": "wineexec"
+          "executable": "launcher",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "RockstarService.exe Launcher.exe LauncherPatcher.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "description": "Setting Windows 10 mode for Wine",
-          "name": "winetricks",
-          "app": "win10"
+          "name": "winekill"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    }
   },
-  "content": "files:\n- launcher: https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial Font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing the launcher (Don't login, close the window)\n    exclude_processes: RockstarService.exe\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    description: Setting Windows 10 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n  esync: true\n  version: lutris-rockstar-4.16-x86_64\n"
+  "content": "files:\n- launcher: https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing the launcher (Don't login, close the window)\n    exclude_processes: RockstarService.exe Launcher.exe LauncherPatcher.exe\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n"
 }

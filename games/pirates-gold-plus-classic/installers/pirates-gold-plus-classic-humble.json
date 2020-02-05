@@ -21,22 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "main_file": "dosbox_smpiratesgold_launch_windows.conf",
-    "game": {
-      "config_file": "$GAMEDIR/dosbox_smpiratesgold.conf"
-    },
     "files": [
       {
         "file1": "N/A:Please select the Humble installer"
       }
     ],
+    "game": {
+      "config_file": "$GAMEDIR/dosbox_smpiratesgold.conf"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$CACHE",
-          "executable": "$file1",
           "args": "/S",
-          "name": "wine.wineexec"
+          "name": "wine.wineexec",
+          "executable": "$file1",
+          "prefix": "$CACHE"
         }
       },
       {
@@ -47,21 +46,22 @@
       },
       {
         "write_config": {
+          "key": "aspect",
           "file": "$GAMEDIR/dosbox_smpiratesgold.conf",
           "section": "render",
-          "key": "aspect",
           "value": true
         }
       },
       {
         "write_config": {
+          "key": "fullscreen",
           "file": "$GAMEDIR/dosbox_smpiratesgold.conf",
           "section": "sdl",
-          "key": "fullscreen",
           "value": false
         }
       }
-    ]
+    ],
+    "main_file": "dosbox_smpiratesgold_launch_windows.conf"
   },
   "content": "files:\n- file1: N/A:Please select the Humble installer\ngame:\n  config_file: $GAMEDIR/dosbox_smpiratesgold.conf\ninstaller:\n- task:\n    args: /S\n    executable: $file1\n    name: wine.wineexec\n    prefix: $CACHE\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/drive_c/Games/Retroism/Pirates and Pirates Gold\n- write_config:\n    file: $GAMEDIR/dosbox_smpiratesgold.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosbox_smpiratesgold.conf\n    key: fullscreen\n    section: sdl\n    value: false\nmain_file: dosbox_smpiratesgold_launch_windows.conf\n"
 }

@@ -1,0 +1,91 @@
+{
+  "id": 10989,
+  "game_id": 4974,
+  "game_slug": "rocket-league",
+  "name": "Rocket League",
+  "year": 2015,
+  "user": "cxf",
+  "runner": "winesteam",
+  "slug": "rocket-league-steam-dxvk-bakkesmod",
+  "version": "Steam DXVK + BakkesMod",
+  "description": "Installs DXVK w/ BakkesMod",
+  "notes": "You'll need to run BakkesMod.exe manually every time you launch Rocket League.\r\n\r\nBakkesMod GUI doesn't open but works otherwise.\r\n\r\n<b>Warning: Crashes when using DXVK. We don't reccommend you play competitive currently.</b>",
+  "created_at": "2018-11-25T21:46:00.630000Z",
+  "updated_at": "2020-01-31T02:38:33.664416Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 252950,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "bakke": "http://bakkesmod.com/static/BakkesModInjector.zip"
+      }
+    ],
+    "game": {
+      "appid": 252950,
+      "nolaunch": true,
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "winesteam": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Please select RocketLeague.exe through the setup prompt to install BakkesMod.",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$GAMEDIR/BakkesMod.exe",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winekill",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "ShowDotFiles",
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winekill",
+          "arch": "win32"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_LOG_LEVEL": "none",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "DXVK_HUD": "compiler",
+        "mesa_glthread": "true"
+      }
+    }
+  },
+  "content": "files:\n- bakke: http://bakkesmod.com/static/BakkesModInjector.zip\ngame:\n  appid: 252950\n  arch: win32\n  nolaunch: true\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    description: Please select RocketLeague.exe through the setup prompt to install\n      BakkesMod.\n    executable: $GAMEDIR/BakkesMod.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: ShowDotFiles\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: Y\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_LOG_LEVEL: none\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\nwinesteam:\n  Desktop: true\n  dxvk: true\n"
+}

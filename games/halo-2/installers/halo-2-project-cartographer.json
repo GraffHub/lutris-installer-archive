@@ -7,36 +7,23 @@
   "user": "money123451",
   "runner": "wine",
   "slug": "halo-2-project-cartographer",
-  "version": "Project Cartographer | d9vk",
-  "description": "I will just take this bit from the Project Cartographer webpage\r\nBY DOWNLOADING THE FILES\r\nYOU AGREE TO OWNING\r\nHALO 2 FOR WINDOWS VISTA",
-  "notes": "test version",
-  "created_at": "2019-09-25T22:17:28.930767Z",
-  "updated_at": "2019-09-25T22:17:28.930797Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "version": "Project Cartographer w/ dxvk",
+  "description": "sets up Halo 2 Project Cartographer full bring your own zip",
+  "notes": "after first launch update with the project cartographer settings in the menu and restart",
+  "created_at": "2019-09-25T22:17:28.930000Z",
+  "updated_at": "2020-01-23T02:57:19.118720Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "disable_compositor": "true"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "/drive_c/Games/Halo 2 Project Cartographer/halo2.exe"
-    },
-    "wine": {
-      "d9vk": true,
-      "esync": true,
-      "version": "lutris-4.16-x86_64"
-    },
     "files": [
       {
-        "H2install": "http://www.h2maps.net/Cartographer/Installer/h2pc_installer_1.8.1.zip"
+        "H2install": "N/A:Please select the zip archive for the Project Cartographer installer"
       }
     ],
     "installer": [
@@ -48,28 +35,61 @@
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Installing Halo 2 just click through with the default settings. Do not run the game at the end.",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$CACHE/H2/h2pc_setup_1.8.1.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
           "description": "Installing wmp9",
           "name": "winetricks",
-          "app": "wmp9"
+          "arch": "win32",
+          "app": "wmp9",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/H2/h2pc_setup_1.8.1.exe",
-          "description": "Installing Halo 2 just click through with the default settings.",
-          "name": "wineexec"
+          "description": "Setting Windows 7 mode for Wine",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting video memory size",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "videomemorysize=1024",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "args": "-hiresfix",
+      "arch": "win32",
+      "exe": "drive_c/Games/Halo 2 Project Cartographer/halo2.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_compositor": "true"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
-  "content": "files:\n- H2install: http://www.h2maps.net/Cartographer/Installer/h2pc_installer_1.8.1.zip\ngame:\n  arch: win32\n  exe: /drive_c/Games/Halo 2 Project Cartographer/halo2.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/H2/\n    file: H2install\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    description: Installing wmp9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Halo 2 just click through with the default settings.\n    executable: $CACHE/H2/h2pc_setup_1.8.1.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: 'true'\nwine:\n  d9vk: true\n  esync: true\n  version: lutris-4.16-x86_64\n"
+  "content": "files:\n- H2install: N/A:Please select the zip archive for the Project Cartographer installer\ngame:\n  arch: win32\n  args: -hiresfix\n  exe: drive_c/Games/Halo 2 Project Cartographer/halo2.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/H2/\n    file: H2install\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Halo 2 just click through with the default settings. Do\n      not run the game at the end.\n    executable: $CACHE/H2/h2pc_setup_1.8.1.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    arch: win32\n    description: Installing wmp9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Windows 7 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: videomemorysize=1024\n    arch: win32\n    description: Setting video memory size\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: 'true'\nwine:\n  dxvk: true\n  esync: true\n"
 }

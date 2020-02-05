@@ -1,0 +1,75 @@
+{
+  "id": 12740,
+  "game_id": 11162,
+  "game_slug": "tom-clancys-ghost-recon-wildlands",
+  "name": "Tom Clancy's Ghost Recon® Wildlands",
+  "year": 2017,
+  "user": "LONEWOLF",
+  "runner": "wine",
+  "slug": "tom-clancys-ghost-recon-wildl-uplay-w-dxvk",
+  "version": "Uplay w/ DXVK",
+  "description": "Uplay installer. Just download the game from the Uplay menu.",
+  "notes": "",
+  "created_at": "2019-04-12T00:10:53.927000Z",
+  "updated_at": "2020-01-23T02:57:22.043634Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 460930,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2010 vcrun2012 vcrun2015 win10"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
+      }
+    }
+  },
+  "content": "files:\n- setup: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 vcrun2012 vcrun2015 win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
+}

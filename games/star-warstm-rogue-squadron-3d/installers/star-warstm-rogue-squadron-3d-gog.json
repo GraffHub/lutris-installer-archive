@@ -21,51 +21,51 @@
   "gogslug": "star_wars_rogue_squadron_3d",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Star Wars - Rogue Squadron 3D/ROGUE/ROGUE.EXE"
-    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Star Wars - Rogue Squadron 3D/ROGUE/ROGUE.EXE"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "game",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "GAMEDIR",
           "name": "winetricks",
+          "arch": "win32",
           "app": "dsound"
         }
       },
       {
         "task": {
-          "prefix": "GAMEDIR",
           "description": "Enable Windows 98 compatibility mode",
-          "value": "win98",
+          "name": "set_regedit",
           "arch": "win32",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win98"
         }
       }
     ]

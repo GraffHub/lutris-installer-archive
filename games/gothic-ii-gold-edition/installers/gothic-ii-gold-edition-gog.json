@@ -21,27 +21,22 @@
   "gogslug": "gothic_2_gold_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Gothic 2 Gold/System/Gothic2.exe"
-    },
-    "wine": {
-      "overrides": {
-        "dsound": "b"
-      }
-    },
     "files": [
       {
         "install": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Gothic 2 Gold/System/Gothic2.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
@@ -53,86 +48,91 @@
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Setting Wine to Windows 7 32-Bit",
           "name": "winetricks",
-          "app": "win7"
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "install",
           "description": "Installing Gothic",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "install",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "write_config": {
+          "key": "zVidResFullscreenX",
           "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
           "section": "VIDEO",
-          "key": "zVidResFullscreenX",
           "value": 1920
         }
       },
       {
         "write_config": {
+          "key": "zVidResFullscreenY",
           "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
           "section": "VIDEO",
-          "key": "zVidResFullscreenY",
           "value": 1080
         }
       },
       {
         "write_config": {
+          "key": "zVidResFullscreenBPP",
           "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
           "section": "VIDEO",
-          "key": "zVidResFullscreenBPP",
           "value": 32
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
-          "section": "GAME",
           "key": "subTitles",
+          "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
+          "section": "GAME",
           "value": 1
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
-          "section": "GAME",
           "key": "scaleVideos",
+          "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
+          "section": "GAME",
           "value": 1
         }
       },
       {
         "write_config": {
+          "key": "bloodDetail",
           "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
           "section": "GAME",
-          "key": "bloodDetail",
           "value": 3
         }
       },
       {
         "write_config": {
+          "key": "modelDetail",
           "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
           "section": "PERFORMANCE",
-          "key": "modelDetail",
           "value": 1
         }
       },
       {
         "write_config": {
+          "key": "sightValue",
           "file": "$GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI",
           "section": "PERFORMANCE",
-          "key": "sightValue",
           "value": 14
         }
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "dsound": "b"
+      }
+    }
   },
   "content": "files:\n- install: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Gothic 2 Gold/System/Gothic2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: directmusic\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Gothic\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: zVidResFullscreenX\n    section: VIDEO\n    value: 1920\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: zVidResFullscreenY\n    section: VIDEO\n    value: 1080\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: zVidResFullscreenBPP\n    section: VIDEO\n    value: 32\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: subTitles\n    section: GAME\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: scaleVideos\n    section: GAME\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: bloodDetail\n    section: GAME\n    value: 3\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: modelDetail\n    section: PERFORMANCE\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/GOG Games/Gothic 2 Gold/System/GOTHIC.INI\n    key: sightValue\n    section: PERFORMANCE\n    value: 14\nwine:\n  overrides:\n    dsound: b\n"
 }

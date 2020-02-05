@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2019-03-11T01:40:01.182000Z",
-  "updated_at": "2019-03-13T01:50:10.361607Z",
+  "updated_at": "2019-11-04T04:58:03.455930Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,43 +21,31 @@
   "gogslug": "assassins_creed_directors_cut",
   "humblestoreid": "assassins-creed-directors-cut",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/GOG.com/Assassins Creed/$INPUT_API"
-    },
-    "wine": {
-      "dxvk": false
-    },
     "files": [
       {
         "install": "N/A:Select the Windows setup file downloaded from GOG"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Assassins Creed/AssassinsCreed_Game.exe"
+    },
     "installer": [
       {
-        "input_menu": {
-          "preselect": "AssassinsCreed_Dx9.exe",
-          "id": "API",
-          "description": "Choose the DirectX version for the game:",
-          "options": [
-            {
-              "AssassinsCreed_Dx9.exe": "DirectX 9"
-            },
-            {
-              "AssassinsCreed_Dx10.exe": "DirectX 10"
-            }
-          ]
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "executable": "install",
-          "description": "Installing the Game (WARNING: Do not run the game when the installation is complete)",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       }
     ]
   },
-  "content": "files:\n- install: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  exe: $GAMEDIR/drive_c/Program Files (x86)/GOG.com/Assassins Creed/$INPUT_API\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Choose the DirectX version for the game:'\n    id: API\n    options:\n    - AssassinsCreed_Dx9.exe: DirectX 9\n    - AssassinsCreed_Dx10.exe: DirectX 10\n    preselect: AssassinsCreed_Dx9.exe\n- task:\n    description: 'Installing the Game (WARNING: Do not run the game when the installation\n      is complete)'\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: false\n"
+  "content": "files:\n- install: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Assassins Creed/AssassinsCreed_Game.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

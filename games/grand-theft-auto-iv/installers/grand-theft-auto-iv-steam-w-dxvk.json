@@ -1,0 +1,67 @@
+{
+  "id": 13478,
+  "game_id": 391,
+  "game_slug": "grand-theft-auto-iv",
+  "name": "Grand Theft Auto IV",
+  "year": 2008,
+  "user": "maltahl",
+  "runner": "winesteam",
+  "slug": "grand-theft-auto-iv-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": "Includes xlive patch to circumvent GFWL.",
+  "notes": "Online play is disabled due to xlive patch.\r\n**CONFIGURE AND INSTALL THE DEPENDENCIES FIRST**\r\nInstructions for Vulkan drivers (for D9VK support): https://github.com/lutris/lutris/wiki/Installing-drivers",
+  "created_at": "2019-05-12T13:38:58.275000Z",
+  "updated_at": "2020-01-21T15:01:43.439315Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 12210,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "grand-theft-auto-iv",
+  "script": {
+    "files": [
+      {
+        "xlive": "https://github.com/AccountOneOff/lutris_files/raw/master/xlive.dll"
+      }
+    ],
+    "game": {
+      "appid": 12210,
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "winesteam": {
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/GTAIV",
+          "src": "xlive"
+        }
+      },
+      {
+        "task": {
+          "key": "GrabFullScreen",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    }
+  },
+  "content": "files:\r\n- xlive: https://github.com/AccountOneOff/lutris_files/raw/master/xlive.dll\r\ngame:\r\n  appid: 12210\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- merge:\r\n    dst: $GAMEDIR/GTAIV\r\n    src: xlive\r\n- task:\r\n    key: GrabFullScreen\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\r\n    prefix: $GAMEDIR/prefix\r\n    value: Y\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwinesteam:\r\n  dxvk: true"
+}

@@ -1,0 +1,78 @@
+{
+  "id": 9729,
+  "game_id": 15754,
+  "game_slug": "halo-online",
+  "name": "Halo Online",
+  "year": 2015,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "halo-online-0610-w-dxvk",
+  "version": "0.6.1.0 w/ DXVK",
+  "description": "Requires already patched (eldewrito 0.6.0) cert_ms23 archive",
+  "notes": "",
+  "created_at": "2018-08-14T08:14:30.676000Z",
+  "updated_at": "2019-12-23T19:41:56.936015Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "archive": "N/A:Halo Online archive needed to proceed"
+      },
+      {
+        "upgrade": "https://cdn.discordapp.com/attachments/287361838767800320/459847345526407178/dist_0.6.0_to_0.6.1_changeset_r2_2.7z"
+      }
+    ],
+    "game": {
+      "args": "--no-sandbox",
+      "arch": "win64",
+      "exe": "drive_c/Program Files/Halo Online/eldorado.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR/drive_c/Program Files/Halo Online\""
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Halo Online",
+          "src": "archive"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Halo Online",
+          "src": "upgrade"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "corefonts win7"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\r\n- archive: N/A:Halo Online archive needed to proceed\r\n- upgrade: https://cdn.discordapp.com/attachments/287361838767800320/459847345526407178/dist_0.6.0_to_0.6.1_changeset_r2_2.7z\r\ngame:\r\n  arch: win64\r\n  args: --no-sandbox\r\n  exe: drive_c/Program Files/Halo Online/eldorado.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Halo Online\"\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/Halo Online\r\n    src: archive\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/Halo Online\r\n    src: upgrade\r\n- task:\r\n    app: corefonts win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\nwine:\r\n  dxvk: true\r\n  esync: true"
+}

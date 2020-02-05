@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2018-05-01T22:27:42.922000Z",
-  "updated_at": "2019-10-13T08:18:36.495295Z",
+  "updated_at": "2020-01-31T02:38:32.719219Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,59 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 447040,
-      "args": "-eac_launcher -nosplash"
-    },
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "description": "Installing prerequisites...",
-          "args": "/silent",
-          "arch": "win64",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "arial vcrun2010 vcrun2012 win7 d3dcompiler_43"
-        }
-      }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": "compiler"
-      }
-    },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true,
-      "version": "tkg-4.0-x86_64"
-    },
-    "custom-name": "Watch Dogs 2",
     "files": [
       {
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
@@ -84,7 +31,59 @@
       {
         "cache": "https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz"
       }
-    ]
+    ],
+    "winesteam": {
+      "dxvk": true,
+      "esync": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing prerequisites...",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "args": "/silent",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial vcrun2010 vcrun2012 win7 d3dcompiler_43"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "custom-name": "Watch Dogs 2",
+    "game": {
+      "appid": 447040,
+      "args": "-eac_launcher -nosplash",
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
+    }
   },
-  "content": "custom-name: Watch Dogs 2\nfiles:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- steam: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\n- cache: https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz\ngame:\n  appid: 447040\n  arch: win64\n  args: -eac_launcher -nosplash\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    description: Installing prerequisites...\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2010 vcrun2012 win7 d3dcompiler_43\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwinesteam:\n  dxvk: true\n  esync: true\n  version: tkg-4.0-x86_64\n"
+  "content": "custom-name: Watch Dogs 2\nfiles:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- steam: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\n- cache: https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz\ngame:\n  appid: 447040\n  arch: win64\n  args: -eac_launcher -nosplash\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    description: Installing prerequisites...\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2010 vcrun2012 win7 d3dcompiler_43\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwinesteam:\n  dxvk: true\n  esync: true\n"
 }

@@ -11,7 +11,7 @@
   "description": "The game does not work due to Easy Anti Cheat. Please let know Epic Games that you are interested in playing on Linux. Epic Games has released Fortnite on 7 different platforms and is currently the most wealthy video game company and yet they have made the decision not to support Linux. Make your voice heard and demand native support!",
   "notes": "If the <a href=\"https://cdn.discordapp.com/attachments/288951868082749441/476766447381512202/unknown.png\">BattlEye Launcher opens</a> when launching Fortnite follow these steps:\r\n\r\n1. Quit the Epic Games Launcher and make sure no Wine processes are running.\r\n2. Open regedit (right-click Fortnite > Wine registry) and navigate to <b>HKEY_CURRENT_USER\\Software\\Epic Games\\Unreal Engine\\Identifiers</b>\r\n3. Delete the <b>MachineId</b> key\r\n4. Launch Fortnite\r\n\r\nIf the BattlEye Launcher still opens repeat steps 1-4 until Fortnite opens.\r\n\r\nOptional: After installing Fortnite add \"com.epicgames.launcher://apps/Fortnite?action=launch&silent=true\" (without quotes) to the arguments field in Game options after \"-SkipBuildPatchPrereq\" to have Fortnite boot directly.",
   "created_at": "2018-01-28T22:34:02.039000Z",
-  "updated_at": "2019-04-19T07:14:37.051413Z",
+  "updated_at": "2020-01-23T02:56:50.123442Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,22 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "args": "-SkipBuildPatchPrereq -opengl",
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "version": "tkg-4.6-x86_64"
-    },
     "files": [
       {
         "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
@@ -54,68 +38,83 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
+          "args": "/silent",
+          "name": "wineexec",
           "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/silent"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "arial"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "faudio"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "arch": "win64",
           "executable": "epic",
           "args": "/q",
-          "arch": "win64",
-          "exclude_processes": "EpicGamesLauncher.exe",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "EpicGamesLauncher.exe"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       }
-    ]
+    ],
+    "game": {
+      "args": "-SkipBuildPatchPrereq -opengl",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
-  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  args: -SkipBuildPatchPrereq -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: faudio\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: epic\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\nwine:\n  dxvk: true\n  esync: true\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  args: -SkipBuildPatchPrereq -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: faudio\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: epic\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\nwine:\n  dxvk: true\n  esync: true\n"
 }

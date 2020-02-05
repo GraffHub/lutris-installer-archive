@@ -1,0 +1,72 @@
+{
+  "id": 18207,
+  "game_id": 27341,
+  "game_slug": "mod-organizer-2",
+  "name": "Mod Organizer 2",
+  "year": null,
+  "user": "7hr08ik",
+  "runner": "wine",
+  "slug": "mod-organizer-2-11",
+  "version": "1.1",
+  "description": "This is a personal setup for installing MO2.\r\n\r\nIts simple as hell, but this way we can have MO2, and all the bits we need for all the additional tools. i.e FNIS",
+  "notes": "Download MO2 from Nexus or Github.\r\nThis script is version independent.\r\nKeep all install options as default.",
+  "created_at": "2020-02-03T21:30:07.319000Z",
+  "updated_at": "2020-02-05T12:51:59.146496Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "N/A:Download and select the ModOrganizer2 setup file"
+      }
+    ],
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/Modding/MO2/",
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Modding/MO2/ModOrganizer.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2019 dxvk dotnet40"
+        }
+      },
+      {
+        "task": {
+          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
+          "name": "wineexec",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "Copy the installed game files in here.",
+          "file": "$GAMEDIR/drive_c/Modding/Game/Copy-game-in-here.txt"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "version": "lutris-5.0-x86_64"
+    }
+  },
+  "content": "files:\n- setup: N/A:Download and select the ModOrganizer2 setup file\ngame:\n  arch: win64\n  exe: drive_c/Modding/MO2/ModOrganizer.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Modding/MO2/\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2019 dxvk dotnet40\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- write_file:\n    content: Copy the installed game files in here.\n    file: $GAMEDIR/drive_c/Modding/Game/Copy-game-in-here.txt\nwine:\n  dxvk: true\n  version: lutris-5.0-x86_64\n"
+}

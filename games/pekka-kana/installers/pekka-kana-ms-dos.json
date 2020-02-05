@@ -21,12 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "disable_runtime": false
-    },
-    "game": {
-      "main_file": "$GAMEDIR/dosbox.conf"
-    },
     "files": [
       {
         "game": "https://www.pistegamez.net/PK/pkanv08b.zip"
@@ -35,25 +29,28 @@
         "patch": "https://www.pistegamez.net/PK/Pk_fixed.zip"
       }
     ],
+    "game": {
+      "main_file": "$GAMEDIR/dosbox.conf"
+    },
     "installer": [
       {
         "extract": {
-          "dst": "$GAMEDIR/PKANA",
           "description": "Installing Pekka Kana...",
-          "src": "game"
+          "src": "game",
+          "dst": "$GAMEDIR/PKANA"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/PKANA",
           "description": "Installing Pekka Kana...",
-          "src": "patch"
+          "src": "patch",
+          "dst": "$GAMEDIR/PKANA"
         }
       },
       {
         "task": {
-          "name": "makeconfig",
           "path": "$GAMEDIR/dosbox.conf",
+          "name": "makeconfig",
           "drives": {
             "c": "$GAMEDIR"
           },
@@ -68,11 +65,14 @@
       {
         "write_file": {
           "content": "[cpu]\ncore=auto\ncputype=auto\ncycles=max 105%\ncycleup=10\ncycledown=20\n",
-          "file": "$GAMEDIR/dosbox.conf",
-          "mode": "a"
+          "mode": "a",
+          "file": "$GAMEDIR/dosbox.conf"
         }
       }
-    ]
+    ],
+    "system": {
+      "disable_runtime": false
+    }
   },
   "content": "files:\n- game: https://www.pistegamez.net/PK/pkanv08b.zip\n- patch: https://www.pistegamez.net/PK/Pk_fixed.zip\ngame:\n  main_file: $GAMEDIR/dosbox.conf\ninstaller:\n- extract:\n    description: Installing Pekka Kana...\n    dst: $GAMEDIR/PKANA\n    src: game\n- extract:\n    description: Installing Pekka Kana...\n    dst: $GAMEDIR/PKANA\n    src: patch\n- task:\n    commands:\n    - 'C:'\n    - cd PKANA\n    - PKANA.EXE\n    - exit\n    drives:\n      c: $GAMEDIR\n    name: makeconfig\n    path: $GAMEDIR/dosbox.conf\n- write_file:\n    content: '[cpu]\n\n      core=auto\n\n      cputype=auto\n\n      cycles=max 105%\n\n      cycleup=10\n\n      cycledown=20\n\n      '\n    file: $GAMEDIR/dosbox.conf\n    mode: a\nsystem:\n  disable_runtime: false\n"
 }

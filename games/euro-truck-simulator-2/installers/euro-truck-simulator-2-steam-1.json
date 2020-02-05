@@ -1,0 +1,77 @@
+{
+  "id": 17112,
+  "game_id": 488,
+  "game_slug": "euro-truck-simulator-2",
+  "name": "Euro Truck Simulator 2",
+  "year": 2012,
+  "user": "etovai",
+  "runner": "winesteam",
+  "slug": "euro-truck-simulator-2-steam-1",
+  "version": "Steam",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-11-30T11:36:23.709613Z",
+  "updated_at": "2020-01-31T02:38:32.632463Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 227300,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 227300,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "msvcr120": "n,b"
+      }
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "dxgi.nvapiHack = False",
+          "file": "$GAMEDIR/prefix/dxvk.conf"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2017 xact"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "STAGING_SHARED_MEMORY": 0
+      },
+      "pulse_latency": true
+    }
+  },
+  "content": "game:\n  appid: 227300\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/prefix/dxvk.conf\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2017 xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/prefix/dxvk.conf\n    DXVK_HUD: compiler\n    STAGING_SHARED_MEMORY: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    msvcr120: n,b\n    nvapi,nvapi64: disabled\n"
+}

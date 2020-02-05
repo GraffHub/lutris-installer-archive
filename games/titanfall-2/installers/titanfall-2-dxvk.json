@@ -9,44 +9,18 @@
   "slug": "titanfall-2-dxvk",
   "version": "DXVK",
   "description": "Installs 10.5.40.26928 version of Origin with Titanfall 2 specific tweaks. Multiplayer now works.",
-  "notes": "Please read before installing: <a href=\"https://github.com/lutris/lutris/wiki/Game:-Origin\">https://github.com/lutris/lutris/wiki/Game:-Origin</a>\r\n\r\n-<b>Comes with a DXVK cache for a stutter free experience!</b>\r\n-Ignore messages about new version of Origin - they don't work. It's also recommended to turn off auto-updating of Origin in the application settings.\r\n-Origin in-game overlay does not work with this game, disable it in the application settings.\r\n-Origin client is mildly buggy, just keep trying and force-quitting if needed until it works.\r\n-Crackling sound can be fixed by adding <a href=\"https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting#Glitches.2C_skips_or_crackling\">tsched=0</a> to /etc/pulse/default.pa",
+  "notes": "Please read before installing: <a href=\"https://github.com/lutris/lutris/wiki/Game:-Origin\">https://github.com/lutris/lutris/wiki/Game:-Origin</a>\r\n\r\n-<b>Comes with a DXVK cache for a stutter free experience!</b>\r\n-Origin in-game overlay does not work with this game, disable it in the application settings.\r\n-Origin client is mildly buggy, just keep trying and force-quitting if needed until it works.\r\n-Crackling sound can be fixed by adding <a href=\"https://wiki.archlinux.org/index.php/PulseAudio/Troubleshooting#Glitches.2C_skips_or_crackling\">tsched=0</a> to /etc/pulse/default.pa",
   "created_at": "2018-06-09T01:06:18.778000Z",
-  "updated_at": "2019-10-13T01:48:52.520251Z",
+  "updated_at": "2020-01-23T02:57:01.670741Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_HUD": "compiler",
-        "STAGING_SHARED_MEMORY": 0,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "OriginThinSetupInternal.exe": "disabled",
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "esync": true,
-      "version": "lutris-4.16-x86_64"
-    },
     "files": [
       {
         "client": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/OriginSetup.exe"
@@ -61,10 +35,10 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -86,21 +60,21 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win64",
           "app": "nocrashdialog arial faudio vcrun2010 vcrun2013 vcrun2015 win7"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "client",
           "description": "Installing Origin... Login window will pop-up and close.",
-          "args": "/silent",
+          "name": "wineexec",
           "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
-          "name": "wineexec"
+          "executable": "client",
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
         }
       },
       {
@@ -118,7 +92,31 @@
           "src": "updater"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "system": {
+      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
+      "env": {
+        "STAGING_SHARED_MEMORY": 0,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
+      }
+    }
   },
-  "content": "files:\n- client: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/OriginSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\n- cache: https://github.com/Cervoxx/DXVKCACHE/raw/master/Titanfall2-cache.tar.xz\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir \"$GAMEDIR/nv-shaders\"\n- extract:\n    dst: $GAMEDIR\n    file: cache\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: nocrashdialog arial faudio vcrun2010 vcrun2013 vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    OriginThinSetupInternal.exe: disabled\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n  version: lutris-4.16-x86_64\n"
+  "content": "files:\n- client: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/OriginSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\n- cache: https://github.com/Cervoxx/DXVKCACHE/raw/master/Titanfall2-cache.tar.xz\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir \"$GAMEDIR/nv-shaders\"\n- extract:\n    dst: $GAMEDIR\n    file: cache\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: nocrashdialog arial faudio vcrun2010 vcrun2013 vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

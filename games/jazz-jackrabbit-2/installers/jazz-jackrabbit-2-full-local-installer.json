@@ -21,12 +21,6 @@
   "gogslug": "jazz_jackrabbit_2_collection",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "args": "-menu -windowed -nolog -nospy",
-      "exe": "$GAMEDIR/drive_c/Games/Jazz2/Jazz2+.exe"
-    },
     "files": [
       {
         "game": "N/A:Select JJ2 installer exe"
@@ -44,12 +38,18 @@
         "patch": "http://www.jazz2online.com/J2Ov2/upload/misc/j2patch_123r.exe"
       }
     ],
+    "game": {
+      "args": "-menu -windowed -nolog -nospy",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Games/Jazz2/Jazz2+.exe",
+      "prefix": "$GAMEDIR"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
@@ -67,15 +67,15 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "game",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "game"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "patch",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "patch"
         }
       },
       {
@@ -86,11 +86,11 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "cmd",
+          "working_dir": "$GAMEDIR/drive_c/Games/Jazz2",
           "args": "/C $GAMEDIR/drive_c/helper/plusify.bat",
           "name": "wineexec",
-          "working_dir": "$GAMEDIR/drive_c/Games/Jazz2"
+          "executable": "cmd",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -102,33 +102,33 @@
       },
       {
         "write_config": {
+          "key": "GameInfo",
           "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
           "section": "General",
-          "key": "GameInfo",
           "value": 1
         }
       },
       {
         "write_config": {
+          "key": "PlayerListSort",
           "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
           "section": "General",
-          "key": "PlayerListSort",
           "value": 2
         }
       },
       {
         "write_config": {
+          "key": "MouseAim",
           "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
           "section": "General",
-          "key": "MouseAim",
           "value": false
         }
       },
       {
         "write_config": {
+          "key": "AllowSpectating",
           "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
           "section": "Server",
-          "key": "AllowSpectating",
           "value": true
         }
       },

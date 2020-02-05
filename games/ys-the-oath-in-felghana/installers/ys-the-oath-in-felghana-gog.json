@@ -1,0 +1,114 @@
+{
+  "id": 13087,
+  "game_id": 2230,
+  "game_slug": "ys-the-oath-in-felghana",
+  "name": "Ys: The Oath in Felghana",
+  "year": null,
+  "user": "dugan-c",
+  "runner": "wine",
+  "slug": "ys-the-oath-in-felghana-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-04-25T03:22:36.726000Z",
+  "updated_at": "2019-04-25T03:29:51.321454Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 207320,
+  "gogid": 1422357788,
+  "gogslug": "ys_the_oath_in_felghana",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Ys The Oath in Felghana/ysf_win_dx9.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2008"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Quartz.",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "quartz",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Amstream.",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "amstream",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Xvid.",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "xvid win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Simulating Windows reboot.",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "wineboot",
+          "args": "-u",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing The Oath in Felghana",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "setup",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting game options.",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$GAMEDIR/drive_c/GOG Games/Ys The Oath in Felghana/config_dx9.exe",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "winegstreamer": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Ys The Oath in Felghana/ysf_win_dx9.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    arch: win32\n    description: Installing Quartz.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: amstream\n    arch: win32\n    description: Installing Amstream.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xvid win7\n    arch: win32\n    description: Installing Xvid.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: -u\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    description: Installing The Oath in Felghana\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Setting game options.\n    executable: $GAMEDIR/drive_c/GOG Games/Ys The Oath in Felghana/config_dx9.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    winegstreamer: disabled\n"
+}

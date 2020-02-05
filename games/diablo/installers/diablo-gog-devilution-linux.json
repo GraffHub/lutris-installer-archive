@@ -8,29 +8,25 @@
   "runner": "linux",
   "slug": "diablo-gog-devilution-linux",
   "version": "GOG + Devilution (Linux native)",
-  "description": "extracts the game files from the GOG installer and runs the game using the linux version of devilution. Requires innoextract to be installed.",
+  "description": "extracts the game files from the GOG installer and runs the game using the linux version of devilution.",
   "notes": "",
   "created_at": "2019-06-15T20:29:06.302000Z",
-  "updated_at": "2019-09-09T01:04:40.755097Z",
-  "draft": false,
-  "published": true,
-  "published_by": 1,
+  "updated_at": "2020-01-11T08:24:03.030632Z",
+  "draft": true,
+  "published": false,
+  "published_by": 494,
   "rating": "",
   "steamid": null,
   "gogid": 1412601690,
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "i386",
-      "exe": "$GAMEDIR/devilution.sh"
-    },
     "files": [
       {
         "installer": "N/A:Please select the GOG installer"
       },
       {
-        "devilution": "https://github.com/diasurgical/devilutionX/releases/download/0.4.0/devilutionx-linux-i386.tar.xz"
+        "devilution": "https://github.com/diasurgical/devilutionX/releases/download/1.0.0/devilutionx-linux-x86_64.7z"
       },
       {
         "inno": "https://github.com/NickZ/misc/raw/master/innobin.zip"
@@ -39,39 +35,41 @@
         "steamsdl": "https://github.com/NickZ/misc/raw/master/steamsdl.zip"
       }
     ],
+    "game": {
+      "exe": "$GAMEDIR/devilution.sh"
+    },
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/thing",
-          "format": "zip",
+          "dst": "$CACHE/",
           "file": "inno"
         }
       },
       {
         "execute": {
           "description": "extracting game data",
-          "command": "innoextract --gog -d $CACHE/diabloinstaller \"$installer\"; exit 0"
+          "command": "$CACHE/innoextract -d $CACHE/diabloinstaller \"$installer\";"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/devilution",
           "description": "extracting devilution",
-          "file": "devilution"
+          "file": "$devilutionx",
+          "dst": "$GAMEDIR/devilution"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/steamsdl",
           "description": "extracting dsl",
-          "file": "steamsdl"
+          "file": "steamsdl",
+          "dst": "$GAMEDIR/steamsdl"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/devilution/diabdat.mpq",
           "description": "moving the game files",
-          "src": "$CACHE/diabloinstaller/DIABDAT.MPQ"
+          "src": "$CACHE/diabloinstaller/DIABDAT.MPQ",
+          "dst": "$GAMEDIR/devilution/diabdat.mpq"
         }
       },
       {
@@ -83,8 +81,8 @@
       {
         "write_file": {
           "content": "LD_LIBRARY_PATH=$GAMEDIR/steamsdl $GAMEDIR/devilution/devilutionx",
-          "file": "$GAMEDIR/devilution.sh",
-          "mode": "a"
+          "mode": "a",
+          "file": "$GAMEDIR/devilution.sh"
         }
       },
       {
@@ -92,5 +90,5 @@
       }
     ]
   },
-  "content": "files:\n- installer: N/A:Please select the GOG installer\n- devilution: https://github.com/diasurgical/devilutionX/releases/download/0.4.0/devilutionx-linux-i386.tar.xz\n- inno: https://github.com/NickZ/misc/raw/master/innobin.zip\n- steamsdl: https://github.com/NickZ/misc/raw/master/steamsdl.zip\ngame:\n  arch: i386\n  exe: $GAMEDIR/devilution.sh\ninstaller:\n- extract:\n    dst: $CACHE/thing\n    file: inno\n    format: zip\n- execute:\n    command: innoextract --gog -d $CACHE/diabloinstaller \"$installer\"; exit 0\n    description: extracting game data\n- extract:\n    description: extracting devilution\n    dst: $GAMEDIR/devilution\n    file: devilution\n- extract:\n    description: extracting dsl\n    dst: $GAMEDIR/steamsdl\n    file: steamsdl\n- move:\n    description: moving the game files\n    dst: $GAMEDIR/devilution/diabdat.mpq\n    src: $CACHE/diabloinstaller/DIABDAT.MPQ\n- write_file:\n    content: '#!/bin/sh\n\n      '\n    file: $GAMEDIR/devilution.sh\n- write_file:\n    content: LD_LIBRARY_PATH=$GAMEDIR/steamsdl $GAMEDIR/devilution/devilutionx\n    file: $GAMEDIR/devilution.sh\n    mode: a\n- chmodx: $GAMEDIR/devilution.sh\n"
+  "content": "files:\r\n- installer: N/A:Please select the GOG installer\r\n- devilution: https://github.com/diasurgical/devilutionX/releases/download/1.0.0/devilutionx-linux-x86_64.7z\r\n- inno: https://github.com/NickZ/misc/raw/master/innobin.zip\r\n- steamsdl: https://github.com/NickZ/misc/raw/master/steamsdl.zip\r\ngame:\r\n  exe: $GAMEDIR/devilution.sh\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/\r\n    file: inno\r\n- execute:\r\n    command: $CACHE/innoextract -d $CACHE/diabloinstaller \"$installer\";\r\n    description: extracting game data\r\n- extract:\r\n    description: extracting devilution\r\n    dst: $GAMEDIR/devilution\r\n    file: $devilutionx\r\n- extract:\r\n    description: extracting dsl\r\n    dst: $GAMEDIR/steamsdl\r\n    file: steamsdl\r\n- move:\r\n    description: moving the game files\r\n    dst: $GAMEDIR/devilution/diabdat.mpq\r\n    src: $CACHE/diabloinstaller/DIABDAT.MPQ\r\n- write_file:\r\n    content: '#!/bin/sh\r\n\r\n      '\r\n    file: $GAMEDIR/devilution.sh\r\n- write_file:\r\n    content: LD_LIBRARY_PATH=$GAMEDIR/steamsdl $GAMEDIR/devilution/devilutionx\r\n    file: $GAMEDIR/devilution.sh\r\n    mode: a\r\n- chmodx: $GAMEDIR/devilution.sh"
 }

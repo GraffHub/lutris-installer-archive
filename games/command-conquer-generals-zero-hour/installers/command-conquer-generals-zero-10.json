@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "files": [
       {
         "patch1": "driver_c/GeneralsZH-104-english.exe"
@@ -38,45 +34,49 @@
       "crack"
     ],
     "exe": "drive_c/Program Files/EA Games/Command & Conquer Generals Zero Hour/generals.exe",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
     "installer": [
       {
         "insert-disc": {
-          "requires": "setup.exe",
-          "message": "Insert disc 1"
+          "message": "Insert disc 1",
+          "requires": "setup.exe"
         }
       },
       {
         "merge": {
-          "dst": "$CACHE/cdrom",
           "description": "Copying disc 1 to cache",
-          "src": "$DISC"
+          "src": "$DISC",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "insert-disc": {
-          "requires": "Language.cab",
-          "message": "Insert disc 2"
+          "message": "Insert disc 2",
+          "requires": "Language.cab"
         }
       },
       {
         "merge": {
-          "dst": "$CACHE/cdrom",
           "description": "Copying disc 2 to cache",
-          "src": "$DISC/Language.cab"
+          "src": "$DISC/Language.cab",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$CACHE/cdrom/setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$CACHE/cdrom/setup.exe"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "patch1",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "patch1"
         }
       },
       {

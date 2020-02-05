@@ -1,0 +1,65 @@
+{
+  "id": 15005,
+  "game_id": 28840,
+  "game_slug": "nin-online",
+  "name": "Nin Online",
+  "year": 2015,
+  "user": "HyrumGraff",
+  "runner": "wine",
+  "slug": "nin-online-wine",
+  "version": "Wine",
+  "description": null,
+  "notes": "Uses a custom build from the developer that has been tweaked to work with wine.",
+  "created_at": "2019-08-14T10:45:28.342796Z",
+  "updated_at": "2019-08-14T10:45:28.342826Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "ninonline": "https://www.silverdalegame.com/ninonline.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/game/Client.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "dotnet40 dx8vb"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/game/",
+          "file": "ninonline"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "rundll32.exe": "disabled",
+        "msacm32": "n"
+      }
+    }
+  },
+  "content": "files:\n- ninonline: https://www.silverdalegame.com/ninonline.zip\ngame:\n  arch: win32\n  exe: drive_c/game/Client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40 dx8vb\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/game/\n    file: ninonline\nwine:\n  overrides:\n    msacm32: n\n    rundll32.exe: disabled\n"
+}

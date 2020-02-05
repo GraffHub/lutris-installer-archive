@@ -1,0 +1,104 @@
+{
+  "id": 17283,
+  "game_id": 21093,
+  "game_slug": "croc-legend-of-the-gobbos",
+  "name": "Croc: Legend of the Gobbos",
+  "year": 1997,
+  "user": "88ba5c922429f0e25d96ed0b85fb0db9",
+  "runner": "wine",
+  "slug": "croc-legend-of-the-gobbos-cd-rom",
+  "version": "CD-ROM",
+  "description": "Creates a Wine prefix and installs Croc: Legend of the Gobbos from a CD-ROM for Microsoft Windows. Sets some registry keys necessary to properly run the game using Direct3D.",
+  "notes": "Manual tasks:\r\n- You must manually proceed through the installation.\r\n\r\n- You will be required to set the resolution near the end of the script, as it was not possible to get a hexadecimal representation of screen resolution values using the script.\r\n\r\n- When first starting the game, you may need to set key bindings (Options > Customize Controls > Redefine Controls).\r\n\r\nKnown issues:\r\n- Game music does not play, even with disc mounted or inserted.\r\n- Alt-tabbing will cause the application to go black.",
+  "created_at": "2019-12-12T10:25:54.069000Z",
+  "updated_at": "2019-12-22T11:31:26.664258Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Fox/Croc/CrocD3D.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix...",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Waiting for game installer...",
+          "message": "Insert the Croc CD-ROM disc.",
+          "requires": "autorun.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Executing setup from disc. Select \"Install Croc\" and follow the prompts. Do not change the default installation directory. Select a full installation. Click \"No\" when asked to install DirectX. Exit the application.",
+          "name": "wineexec",
+          "executable": "$DISC/autorun.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "D3D Device",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
+          "value": "DirectDraw HAL"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "D3D Mode",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
+          "value": "DirectDraw HAL $RESOLUTION, 16 bit"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "D3D Resoloution",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
+          "value": "$RESOLUTION, 16 bit"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "Driver name",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
+          "value": "d3drend"
+        }
+      },
+      {
+        "task": {
+          "description": "Select \"Change driver settings\". Use the dropdown menu under \"Screen Resolution\" to set resolution. Click \"OK\" when done. Exit the application.",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/Program Files/Fox/Croc/CrocRun.exe",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Fox/Croc/CrocD3D.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Waiting for game installer...\n    message: Insert the Croc CD-ROM disc.\n    requires: autorun.exe\n- task:\n    description: Executing setup from disc. Select \"Install Croc\" and follow the prompts.\n      Do not change the default installation directory. Select a full installation.\n      Click \"No\" when asked to install DirectX. Exit the application.\n    executable: $DISC/autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: D3D Device\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc\n    prefix: $GAMEDIR\n    value: DirectDraw HAL\n- task:\n    arch: win32\n    key: D3D Mode\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc\n    prefix: $GAMEDIR\n    value: DirectDraw HAL $RESOLUTION, 16 bit\n- task:\n    arch: win32\n    key: D3D Resoloution\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc\n    prefix: $GAMEDIR\n    value: $RESOLUTION, 16 bit\n- task:\n    arch: win32\n    key: Driver name\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc\n    prefix: $GAMEDIR\n    value: d3drend\n- task:\n    description: Select \"Change driver settings\". Use the dropdown menu under \"Screen\n      Resolution\" to set resolution. Click \"OK\" when done. Exit the application.\n    executable: $GAMEDIR/drive_c/Program Files/Fox/Croc/CrocRun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

@@ -21,12 +21,6 @@
   "gogslug": "stalker_shadow_of_chernobyl",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "args": "-nointro",
-      "exe": "drive_c/GOG Games/S.T.A.L.K.E.R. Shadow of Chernobyl/bin/XR_3DA.exe"
-    },
     "files": [
       {
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
@@ -35,12 +29,18 @@
         "setup": "N/A:Select the GOG setup exe"
       }
     ],
+    "game": {
+      "args": "-nointro",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/S.T.A.L.K.E.R. Shadow of Chernobyl/bin/XR_3DA.exe",
+      "prefix": "$GAMEDIR"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
@@ -51,28 +51,28 @@
       },
       {
         "task": {
+          "args": "/silent",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/silent"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win32",
           "app": "vcrun2003 vcrun2005"
         }
       },
       {
         "task": {
+          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "setup",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES"
+          "prefix": "$GAMEDIR"
         }
       }
     ]

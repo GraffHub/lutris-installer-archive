@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2019-04-17T23:45:49.487000Z",
-  "updated_at": "2019-04-18T04:31:41.970425Z",
+  "updated_at": "2020-01-23T02:57:16.079167Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,45 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "version": "tkg-4.6-x86_64"
-    },
     "files": [
       {
         "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
+          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
+          "name": "wineexec",
           "arch": "win64",
           "executable": "msiexec",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true
+    }
   },
-  "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win64\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win64\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

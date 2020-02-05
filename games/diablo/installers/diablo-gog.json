@@ -21,61 +21,61 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "custom-name": "Diablo - GOG",
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
-    },
-    "wine": {
-      "Desktop": true
-    },
     "files": [
       {
         "installer": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating WINE prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "installer",
           "args": "/SILENT /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "installer",
           "description": "Running Setup, please wait...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "background",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "ddraw",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "ddraw",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "custom-name": "Diablo - GOG"
   },
   "content": "custom-name: Diablo - GOG\r\nfiles:\r\n- installer: N/A:Select the game's setup file\r\ngame:\r\n  arch: win64\r\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating WINE prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SILENT /SUPPRESSMSGBOXES\r\n    description: Running Setup, please wait...\r\n    executable: installer\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: background\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: 0 0 0\r\n- task:\r\n    arch: win64\r\n    key: ddraw\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: native,builtin\r\nwine:\r\n  Desktop: true"
 }

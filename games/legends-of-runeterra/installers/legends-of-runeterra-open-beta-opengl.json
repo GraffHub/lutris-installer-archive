@@ -1,0 +1,104 @@
+{
+  "id": 18189,
+  "game_id": 29770,
+  "game_slug": "legends-of-runeterra",
+  "name": "Legends of Runeterra",
+  "year": 2020,
+  "user": "Pheoxy",
+  "runner": "wine",
+  "slug": "legends-of-runeterra-open-beta-opengl",
+  "version": "Open Beta - OpenGL",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-02T12:32:05.035415Z",
+  "updated_at": "2020-02-02T12:32:05.035440Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "lor_installer": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "GrabFullScreen",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "UseXVidMode",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "N"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Legends of Runeterra",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "lor_installer",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dcompiler_43 d3dx9 wininet dotnet48"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      }
+    ],
+    "game": {
+      "args": "--launch-product=bacon --launch-patchline=live",
+      "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "MouseWarpOverride": "disable",
+      "Desktop": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- lor_installer: https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe\ngame:\n  args: --launch-product=bacon --launch-patchline=live\n  exe: $GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win64\n    key: UseXVidMode\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    arch: win64\n    description: Installing Legends of Runeterra\n    executable: lor_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9 wininet dotnet48\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    STAGING_SHARED_MEMORY: 1\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  MouseWarpOverride: disable\n  esync: true\n"
+}

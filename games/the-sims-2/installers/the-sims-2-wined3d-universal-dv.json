@@ -11,9 +11,9 @@
   "description": "Installs DVD version of The Sims 2. It's universal for all editions and offline installers.",
   "notes": "<b>IMPORTANT: READ THE MANUAL AND INSTALL DEPENDENCIES!</b>\r\nSee <a href=\"https://github.com/lutris/lutris/wiki/Game:-The-Sims-2\">https://github.com/lutris/lutris/wiki/Game:-The-Sims-2</a>\r\n\r\n- <b>Please select the executable in the Lutris configuration after installing the game.</b>\r\n\r\n- <b>To fix various issues with the game</b> (broken family thumbnails, models exploding), start the game once, exit when it enters the town selection menu, then <b>Stop</b> the game in the Lutris client. Next time you launch it, the fixes will already be applied.\r\n\r\n- As this installer has only been tested with the Ultimate Collection, correct functionality of other editions is not guaranteed.\r\n\r\n- For support, contact @Tannis Root on Linux Gamers Group server.",
   "created_at": "2018-06-23T22:17:31.934000Z",
-  "updated_at": "2019-08-06T15:42:25.977808Z",
+  "updated_at": "2020-01-22T02:21:18.730039Z",
   "draft": false,
-  "published": true,
+  "published": false,
   "published_by": 51687,
   "rating": "3",
   "steamid": null,
@@ -21,19 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "prelaunch_command": "$GAMEDIR/sims2fix.sh",
-      "env": {
-        "WINE_LARGE_ADDRESS_AWARE": 1
-      }
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "version": "lutris-sims2-4.12.1-x86_64"
-    },
     "files": [
       {
         "fixes": "https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz"
@@ -45,58 +32,62 @@
         "file": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine Prefix...",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing dependencies...",
-          "app": "mfc42",
-          "arch": "win32",
           "name": "winetricks",
-          "silent": "true"
+          "arch": "win32",
+          "silent": "true",
+          "prefix": "$GAMEDIR",
+          "app": "mfc42"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting version to xp...",
-          "value": "winxp",
+          "name": "set_regedit",
           "arch": "win32",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "winxp"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "description": "Setting Vertex Shader Model to 2...",
-          "value": "00000002",
-          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "key": "MaxShaderModelVS",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win32",
+          "type": "REG_DWORD",
+          "value": "00000002"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "type": "REG_DWORD",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "description": "Setting Pixel Shader Model to 2...",
-          "value": "00000002",
-          "arch": "win32",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "key": "MaxShaderModelPS",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "arch": "win32",
+          "type": "REG_DWORD",
+          "value": "00000002"
         }
       },
       {
@@ -128,11 +119,11 @@
       },
       {
         "task": {
+          "description": "Installing The Sims 2...",
+          "name": "wineexec",
           "arch": "win32",
           "executable": "file",
-          "prefix": "$GAMEDIR",
-          "description": "Installing The Sims 2...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -141,7 +132,13 @@
           "name": "winekill"
         }
       }
-    ]
+    ],
+    "system": {
+      "prelaunch_command": "$GAMEDIR/sims2fix.sh",
+      "env": {
+        "WINE_LARGE_ADDRESS_AWARE": 1
+      }
+    }
   },
-  "content": "files:\n- fixes: https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz\n- script: https://raw.githubusercontent.com/tannisroot/installer-fixes/master/sims2fix.sh\n- file: N/A:Select the game's setup file\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mfc42\n    arch: win32\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: 'true'\n- task:\n    arch: win32\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    arch: win32\n    description: Setting Vertex Shader Model to 2...\n    key: MaxShaderModelVS\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- task:\n    arch: win32\n    description: Setting Pixel Shader Model to 2...\n    key: MaxShaderModelPS\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- copy:\n    dst: $GAMEDIR\n    src: script\n- chmodx: $GAMEDIR/sims2fix.sh\n- extract:\n    dst: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\n      \\ Collection/Downloads\"\n    file: fixes\n- write_file:\n    content: 'boolprop useshaders true\n\n      boolProp   createNVidiaWorkaroundTexture false\n\n      '\n    file: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\n      \\ Collection/Config/userstartup.cheat\"\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing The Sims 2...\n    executable: file\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    WINE_LARGE_ADDRESS_AWARE: 1\n  prelaunch_command: $GAMEDIR/sims2fix.sh\nwine:\n  version: lutris-sims2-4.12.1-x86_64\n"
+  "content": "files:\r\n- fixes: https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz\r\n- script: https://raw.githubusercontent.com/tannisroot/installer-fixes/master/sims2fix.sh\r\n- file: N/A:Select the game's setup file\r\ngame:\r\n  arch: win32\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine Prefix...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: mfc42\r\n    arch: win32\r\n    description: Installing dependencies...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: 'true'\r\n- task:\r\n    arch: win32\r\n    description: Setting version to xp...\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    value: winxp\r\n- task:\r\n    arch: win32\r\n    description: Setting Vertex Shader Model to 2...\r\n    key: MaxShaderModelVS\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: '00000002'\r\n- task:\r\n    arch: win32\r\n    description: Setting Pixel Shader Model to 2...\r\n    key: MaxShaderModelPS\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: '00000002'\r\n- copy:\r\n    dst: $GAMEDIR\r\n    src: script\r\n- chmodx: $GAMEDIR/sims2fix.sh\r\n- extract:\r\n    dst: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\r\n      \\ Collection/Downloads\"\r\n    file: fixes\r\n- write_file:\r\n    content: 'boolprop useshaders true\r\n\r\n      boolProp   createNVidiaWorkaroundTexture false\r\n\r\n      '\r\n    file: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\r\n      \\ Collection/Config/userstartup.cheat\"\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: Installing The Sims 2...\r\n    executable: file\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    WINE_LARGE_ADDRESS_AWARE: 1\r\n  prelaunch_command: $GAMEDIR/sims2fix.sh"
 }

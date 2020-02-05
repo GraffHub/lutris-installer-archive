@@ -1,0 +1,77 @@
+{
+  "id": 16511,
+  "game_id": 28346,
+  "game_slug": "subtitle-edit",
+  "name": "Subtitle Edit",
+  "year": 2019,
+  "user": "Lulu",
+  "runner": "wine",
+  "slug": "subtitle-edit-se3511",
+  "version": "SE3.5.11",
+  "description": "Subtitle Edit 3.5.11 installer",
+  "notes": "Note: After you install this, go to Options->Settings->Video Player->Download mpv lib, download it and set the video to direct3d, then choose mpv as your Video engine.",
+  "created_at": "2019-10-31T21:16:11.643000Z",
+  "updated_at": "2020-01-23T02:57:19.675601Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "subeditzip": "https://github.com/SubtitleEdit/subtitleedit/releases/download/3.5.11/SE3511.zip"
+      },
+      {
+        "vlc": "https://get.videolan.org/vlc/3.0.8/win32/vlc-3.0.8-win32.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/subtitleedit/SubtitleEdit.exe"
+    },
+    "installer": [
+      {
+        "extract": {
+          "description": "Unzipping subtitle edit",
+          "src": "subeditzip",
+          "dst": "$GAMEDIR/drive_c/subtitleedit"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "vlc",
+          "description": "Installing VLC",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Direct3D 9",
+          "name": "winetricks",
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .NET 4.6.1 runtime",
+          "name": "winetricks",
+          "app": "dotnet461",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- subeditzip: https://github.com/SubtitleEdit/subtitleedit/releases/download/3.5.11/SE3511.zip\n- vlc: https://get.videolan.org/vlc/3.0.8/win32/vlc-3.0.8-win32.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/subtitleedit/SubtitleEdit.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    description: Unzipping subtitle edit\n    dst: $GAMEDIR/drive_c/subtitleedit\n    src: subeditzip\n- task:\n    args: /S\n    description: Installing VLC\n    executable: vlc\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing Direct3D 9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet461\n    description: Installing .NET 4.6.1 runtime\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

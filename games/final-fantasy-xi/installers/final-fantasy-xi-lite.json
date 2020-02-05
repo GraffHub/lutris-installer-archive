@@ -21,35 +21,31 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "require-binaries": "7z",
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/PlayOnline/SquareEnix/FINAL FANTASY XI/polboot.exe"
-    },
-    "wine": {
-      "WineDesktop": "800x600",
-      "Desktop": true
-    },
     "files": [
       {
         "installer-01": {
-          "url": "http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.001",
-          "filename": "FINALFANTASYXI.Data.001"
+          "filename": "FINALFANTASYXI.Data.001",
+          "url": "http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.001"
         }
       },
       {
         "installer-02": {
-          "url": "http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.002",
-          "filename": "FINALFANTASYXI.Data.002"
+          "filename": "FINALFANTASYXI.Data.002",
+          "url": "http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.002"
         }
       },
       {
         "installer-03": {
-          "url": "http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.003",
-          "filename": "FINALFANTASYXI.Data.003"
+          "filename": "FINALFANTASYXI.Data.003",
+          "url": "http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.003"
         }
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/PlayOnline/SquareEnix/FINAL FANTASY XI/polboot.exe"
+    },
+    "require-binaries": "7z",
     "installer": [
       {
         "execute": {
@@ -65,44 +61,48 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing .NET Framework 3.5",
           "name": "winetricks",
-          "app": "dotnet35"
+          "app": "dotnet35",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing DirectX 9",
           "name": "winetricks",
-          "app": "d3dx9"
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Changing to Windows 7",
           "name": "winetricks",
-          "app": "win7"
+          "app": "win7",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/extracted/PlayOnline/setup.exe",
           "description": "Installing PlayOnline Viewer",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$CACHE/extracted/PlayOnline/setup.exe",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$CACHE/extracted/INST1/setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$CACHE/extracted/INST1/setup.exe"
         }
       }
-    ]
+    ],
+    "wine": {
+      "WineDesktop": "800x600",
+      "Desktop": true
+    }
   },
   "content": "files:\r\n- installer-01:\r\n    filename: FINALFANTASYXI.Data.001\r\n    url: http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.001\r\n- installer-02:\r\n    filename: FINALFANTASYXI.Data.002\r\n    url: http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.002\r\n- installer-03:\r\n    filename: FINALFANTASYXI.Data.003\r\n    url: http://gdl.square-enix.com/ffxi/download/us/FINALFANTASYXI.Data.003\r\ngame:\r\n  exe: drive_c/Program Files (x86)/PlayOnline/SquareEnix/FINAL FANTASY XI/polboot.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- execute:\r\n    command: 7z x \"$CACHE/FINALFANTASYXI.Data*\" -o\"$CACHE/extracted\" -bso1 -y\r\n    description: Extracting game data\r\n- execute:\r\n    command: rm $CACHE/FINALFANTASYXI.Data.00*\r\n    description: Extracting game data\r\n- task:\r\n    app: dotnet35\r\n    description: Installing .NET Framework 3.5\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9\r\n    description: Installing DirectX 9\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win7\r\n    description: Changing to Windows 7\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    description: Installing PlayOnline Viewer\r\n    executable: $CACHE/extracted/PlayOnline/setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    executable: $CACHE/extracted/INST1/setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nrequire-binaries: 7z\r\nwine:\r\n  Desktop: true\r\n  WineDesktop: 800x600"
 }

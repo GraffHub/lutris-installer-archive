@@ -21,11 +21,6 @@
   "gogslug": "journeyman_project_1_pegasus_prime_the",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "working_dir": "$GAMEDIR/app",
-      "appid": 359420,
-      "exe": "$GAMEDIR/app/PegasusPrime"
-    },
     "files": [
       {
         "installer": "N/A:Please select the GOG.com Windows installer."
@@ -37,6 +32,11 @@
         "innoextract": "http://lutris.net/files/tools/innoextract.tar.gz"
       }
     ],
+    "game": {
+      "appid": 359420,
+      "working_dir": "$GAMEDIR/app",
+      "exe": "$GAMEDIR/app/PegasusPrime"
+    },
     "installer": [
       {
         "extract": {
@@ -52,25 +52,25 @@
       },
       {
         "execute": {
-          "description": "Extracting game data (empty output means it's working, please be patient)...",
           "args": "--gog -I \"/app\" -d \"$GAMEDIR\" -ms \"$installer\"",
           "disable_runtime": true,
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "description": "Extracting game data (empty output means it's working, please be patient)..."
         }
       },
       {
         "execute": {
-          "description": "Extracting ScummVM source...",
           "args": "\"$GAMEDIR/app/docs/ScummVM Documentation/Source.zip\" -d \"$CACHE\"",
           "disable_runtime": true,
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "description": "Extracting ScummVM source..."
         }
       },
       {
         "execute": {
           "description": "Compiling custom ScummVM...",
-          "command": "cd \"$CACHE/Source\" && ./configure --datadir=. --disable-all-engines --enable-engine=pegasus && make && strip --strip-unneeded PegasusPrime",
-          "disable_runtime": true
+          "disable_runtime": true,
+          "command": "cd \"$CACHE/Source\" && ./configure --datadir=. --disable-all-engines --enable-engine=pegasus && make && strip --strip-unneeded PegasusPrime"
         }
       },
       {

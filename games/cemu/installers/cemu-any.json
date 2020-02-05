@@ -1,0 +1,118 @@
+{
+  "id": 17222,
+  "game_id": 16449,
+  "game_slug": "cemu",
+  "name": "Cemu",
+  "year": 2015,
+  "user": "IceAmaura",
+  "runner": "wine",
+  "slug": "cemu-any",
+  "version": "Any",
+  "description": "Allows user to install their own version of Cemu and Cemuhook (for Patreon, etc.)",
+  "notes": "",
+  "created_at": "2019-12-07T19:48:13.609000Z",
+  "updated_at": "2020-01-22T02:04:07.212089Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "cemu": "N/A:Select downloaded Cemu zip file:"
+      },
+      {
+        "fonts": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz"
+      },
+      {
+        "hook": "N/A:Select downloaded Cemuhook zip file:"
+      },
+      {
+        "config": "https://raw.githubusercontent.com/dnmodder/cemu_lutris_files/master/cemuhook.ini"
+      },
+      {
+        "controller": "https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/Xbox_Controller.txt"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Cemu/Cemu.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Cemu",
+          "file": "cemu"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/sharedFonts",
+          "file": "fonts"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Cemu",
+          "src": "$CACHE/sharedFonts"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/hook",
+          "file": "hook"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Cemu",
+          "src": "$CACHE/hook"
+        }
+      },
+      {
+        "write_file": {
+          "content": "bleh",
+          "file": "$GAMEDIR/drive_c/Cemu/controllerProfiles/Xbox_Controller.txt"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Cemu/controllerProfiles",
+          "src": "controller"
+        }
+      },
+      {
+        "write_file": {
+          "content": "bleh",
+          "file": "$GAMEDIR/drive_c/Cemu/cemuhook.ini"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Cemu/cemuhook.ini",
+          "src": "config"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "dbghelp": "native,builtin",
+        "mscoree": "disabled",
+        "mshtml": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- cemu: 'N/A:Select downloaded Cemu zip file:'\n- fonts: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz\n- hook: 'N/A:Select downloaded Cemuhook zip file:'\n- config: https://raw.githubusercontent.com/dnmodder/cemu_lutris_files/master/cemuhook.ini\n- controller: https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/Xbox_Controller.txt\ngame:\n  arch: win64\n  exe: drive_c/Cemu/Cemu.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Cemu\n    file: cemu\n- extract:\n    dst: $CACHE/sharedFonts\n    file: fonts\n- move:\n    dst: $GAMEDIR/drive_c/Cemu\n    src: $CACHE/sharedFonts\n- extract:\n    dst: $CACHE/hook\n    file: hook\n- merge:\n    dst: $GAMEDIR/drive_c/Cemu\n    src: $CACHE/hook\n- write_file:\n    content: bleh\n    file: $GAMEDIR/drive_c/Cemu/controllerProfiles/Xbox_Controller.txt\n- merge:\n    dst: $GAMEDIR/drive_c/Cemu/controllerProfiles\n    src: controller\n- write_file:\n    content: bleh\n    file: $GAMEDIR/drive_c/Cemu/cemuhook.ini\n- merge:\n    dst: $GAMEDIR/drive_c/Cemu/cemuhook.ini\n    src: config\nwine:\n  overrides:\n    dbghelp: native,builtin\n    mscoree: disabled\n    mshtml: disabled\n"
+}

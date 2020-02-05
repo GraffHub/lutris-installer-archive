@@ -1,0 +1,75 @@
+{
+  "id": 17049,
+  "game_id": 28531,
+  "game_slug": "total-lockdown",
+  "name": "Total Lockdown",
+  "year": 2019,
+  "user": "l8li",
+  "runner": "wine",
+  "slug": "total-lockdown-dxvk",
+  "version": "DXVK",
+  "description": null,
+  "notes": "Game doesn't run yet.\r\nPnzWebWrapper.exe crashes.",
+  "created_at": "2019-11-27T10:29:12.990000Z",
+  "updated_at": "2019-12-15T18:52:01.670685Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://download.totallockdown.ru/api/is/installer"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Games/Total LockDown/start.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 10 mode for Wine",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Total LockDown",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "setup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- setup: https://download.totallockdown.ru/api/is/installer\ngame:\n  arch: win64\n  exe: drive_c/Games/Total LockDown/start.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    arch: win64\n    description: Installing Total LockDown\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

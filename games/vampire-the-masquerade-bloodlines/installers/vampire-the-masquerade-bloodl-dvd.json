@@ -1,0 +1,72 @@
+{
+  "id": 17773,
+  "game_id": 382,
+  "game_slug": "vampire-the-masquerade-bloodlines",
+  "name": "Vampire: The Masquerade - Bloodlines",
+  "year": 2004,
+  "user": "gto",
+  "runner": "wine",
+  "slug": "vampire-the-masquerade-bloodl-dvd",
+  "version": "DVD",
+  "description": "DVD version + 1.2 Official Patch",
+  "notes": "This installer automatically download and install the official 1.2 patch (It is strongly suggested to manually download and install the last unofficial patch)",
+  "created_at": "2020-01-05T23:35:31.270000Z",
+  "updated_at": "2020-01-14T19:04:29.255200Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 2600,
+  "gogid": 1207659240,
+  "gogslug": "vampire_the_masquerade_bloodlines",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "patch12": "https://www.moddb.com/downloads/mirror/14702/124/50e14552857b9c9a4301631f8763fba8/?referer=https%3A%2F%2Fwww.google.com%2F"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Activision/Vampire - Bloodlines/vampire.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "executable": "$DISC/setup.exe"
+        }
+      },
+      {
+        "move": {
+          "description": "Moving the patch",
+          "src": "patch12",
+          "dst": "$GAMEDIR/drive_c/VTMB_1_2.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Running the Patch.",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/VTMB_1_2.exe",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch12: https://www.moddb.com/downloads/mirror/14702/124/50e14552857b9c9a4301631f8763fba8/?referer=https%3A%2F%2Fwww.google.com%2F\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Activision/Vampire - Bloodlines/vampire.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc\n    requires: setup.exe\n- task:\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    description: Moving the patch\n    dst: $GAMEDIR/drive_c/VTMB_1_2.exe\n    src: patch12\n- task:\n    description: Running the Patch.\n    executable: $GAMEDIR/drive_c/VTMB_1_2.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

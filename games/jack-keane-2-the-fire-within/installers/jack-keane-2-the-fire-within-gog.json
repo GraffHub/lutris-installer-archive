@@ -21,40 +21,40 @@
   "gogslug": "jack_keane_2_the_fire_within",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "appid": 236970,
-      "exe": "drive_c/GOG Games/Jacke Keane 2/JackKeane2.exe"
-    },
-    "wine": {
-      "dxvk": false
-    },
     "files": [
       {
         "goginstaller": "N/A:Please select the GOG.com Windows installer"
       }
     ],
+    "game": {
+      "appid": 236970,
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Jacke Keane 2/JackKeane2.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Create 32-bit wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "goginstaller,",
           "description": "Run GOG installer",
-          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "arch": "win32",
-          "name": "wineexec"
+          "executable": "goginstaller,",
+          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": false
+    }
   },
   "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\ngame:\n  appid: 236970\n  arch: win32\n  exe: drive_c/GOG Games/Jacke Keane 2/JackKeane2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Create 32-bit wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /LANG=English /SP- /SUPPRESSMSGBOXES\n    description: Run GOG installer\n    executable: goginstaller,\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: false\n"
 }

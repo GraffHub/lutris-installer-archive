@@ -10,11 +10,11 @@
   "version": "4CD",
   "description": null,
   "notes": "",
-  "created_at": "2019-09-06T20:53:28.046756Z",
-  "updated_at": "2019-09-06T20:53:28.046782Z",
+  "created_at": "2019-09-06T20:53:28.046000Z",
+  "updated_at": "2019-10-27T09:34:10.692823Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": 302350,
   "gogid": 1207658767,
@@ -42,8 +42,8 @@
       },
       {
         "insert-disc": {
-          "requires": "mastertx",
-          "description": "Please insert disc 1"
+          "description": "Please insert disc 1",
+          "requires": "mastertx"
         }
       },
       {
@@ -60,8 +60,8 @@
       },
       {
         "insert-disc": {
-          "requires": "mastertx",
-          "description": "Please insert disc 2"
+          "description": "Please insert disc 2",
+          "requires": "mastertx"
         }
       },
       {
@@ -78,8 +78,8 @@
       },
       {
         "insert-disc": {
-          "requires": "mastertx",
-          "description": "Please insert disc 3"
+          "description": "Please insert disc 3",
+          "requires": "mastertx"
         }
       },
       {
@@ -96,8 +96,8 @@
       },
       {
         "insert-disc": {
-          "requires": "mastertx",
-          "description": "Please insert disc 4"
+          "description": "Please insert disc 4",
+          "requires": "mastertx"
         }
       },
       {
@@ -114,24 +114,24 @@
       },
       {
         "write_file": {
-          "content": "[sdl]\nsensitivity=12\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD/DISC1\" -t -label DISK1 -t cdrom\nmount E \"$GAMEDIR/CDD/DISC2\" -t -label DISK2 -t cdrom\nmount F \"$GAMEDIR/CDD/DISC3\" -t -label DISK3 -t cdrom\nmount G \"$GAMEDIR/CDD/DISC4\" -t -label DISK4 -t cdrom\nD:\ninstall\nexit",
+          "content": "[sdl]\nsensitivity=12\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD/DISC1\" -label DISK1 -t cdrom\nmount E \"$GAMEDIR/CDD/DISC2\" -label DISK2 -t cdrom\nmount F \"$GAMEDIR/CDD/DISC3\" -label DISK3 -t cdrom\nmount G \"$GAMEDIR/CDD/DISC4\" -label DISK4 -t cdrom\nD:\ninstall\nexit",
           "file": "$GAMEDIR/moon_setup.conf"
         }
       },
       {
         "task": {
-          "config_file": "$GAMEDIR/moon_setup.conf",
           "working_dir": "$GAMEDIR/HDD/",
-          "name": "dosexec"
+          "name": "dosexec",
+          "config_file": "$GAMEDIR/moon_setup.conf"
         }
       },
       {
         "write_file": {
-          "content": "[sdl]\nsensitivity=12\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD/DISC1\" -t -label DISK1 -t cdrom\nmount E \"$GAMEDIR/CDD/DISC2\" -t -label DISK2 -t cdrom\nmount F \"$GAMEDIR/CDD/DISC3\" -t -label DISK3 -t cdrom\nmount G \"$GAMEDIR/CDD/DISC4\" -t -label DISK4 -t cdrom\nC:\ncd moon\ntex3\nexit",
+          "content": "[sdl]\nsensitivity=12\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD/DISC1\" -label DISK1 -t cdrom\nmount E \"$GAMEDIR/CDD/DISC2\" -label DISK2 -t cdrom\nmount F \"$GAMEDIR/CDD/DISC3\" -label DISK3 -t cdrom\nmount G \"$GAMEDIR/CDD/DISC4\" -label DISK4 -t cdrom\nC:\ncd moon\ntex3\nexit",
           "file": "$GAMEDIR/moon.conf"
         }
       }
     ]
   },
-  "content": "game:\n  main_file: $GAMEDIR/moon.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      cp -avr \"$src/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1 $GAMEDIR/CDD/DISC2 $GAMEDIR/CDD/DISC3\n      $GAMEDIR/CDD/DISC4\n    file: mkdir\n- insert-disc:\n    description: Please insert disc 1\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC1\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC1\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 2\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC2\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC2\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 3\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC3\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC3\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 4\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC4\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC4\"\n    file: /bin/chmod\n- write_file:\n    content: '[sdl]\n\n      sensitivity=12\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t -label DISK1 -t cdrom\n\n      mount E \"$GAMEDIR/CDD/DISC2\" -t -label DISK2 -t cdrom\n\n      mount F \"$GAMEDIR/CDD/DISC3\" -t -label DISK3 -t cdrom\n\n      mount G \"$GAMEDIR/CDD/DISC4\" -t -label DISK4 -t cdrom\n\n      D:\n\n      install\n\n      exit'\n    file: $GAMEDIR/moon_setup.conf\n- task:\n    config_file: $GAMEDIR/moon_setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[sdl]\n\n      sensitivity=12\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t -label DISK1 -t cdrom\n\n      mount E \"$GAMEDIR/CDD/DISC2\" -t -label DISK2 -t cdrom\n\n      mount F \"$GAMEDIR/CDD/DISC3\" -t -label DISK3 -t cdrom\n\n      mount G \"$GAMEDIR/CDD/DISC4\" -t -label DISK4 -t cdrom\n\n      C:\n\n      cd moon\n\n      tex3\n\n      exit'\n    file: $GAMEDIR/moon.conf\n"
+  "content": "game:\n  main_file: $GAMEDIR/moon.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      cp -avr \"$src/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1 $GAMEDIR/CDD/DISC2 $GAMEDIR/CDD/DISC3\n      $GAMEDIR/CDD/DISC4\n    file: mkdir\n- insert-disc:\n    description: Please insert disc 1\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC1\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC1\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 2\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC2\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC2\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 3\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC3\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC3\"\n    file: /bin/chmod\n- insert-disc:\n    description: Please insert disc 4\n    requires: mastertx\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC4\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC4\"\n    file: /bin/chmod\n- write_file:\n    content: '[sdl]\n\n      sensitivity=12\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -label DISK1 -t cdrom\n\n      mount E \"$GAMEDIR/CDD/DISC2\" -label DISK2 -t cdrom\n\n      mount F \"$GAMEDIR/CDD/DISC3\" -label DISK3 -t cdrom\n\n      mount G \"$GAMEDIR/CDD/DISC4\" -label DISK4 -t cdrom\n\n      D:\n\n      install\n\n      exit'\n    file: $GAMEDIR/moon_setup.conf\n- task:\n    config_file: $GAMEDIR/moon_setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[sdl]\n\n      sensitivity=12\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -label DISK1 -t cdrom\n\n      mount E \"$GAMEDIR/CDD/DISC2\" -label DISK2 -t cdrom\n\n      mount F \"$GAMEDIR/CDD/DISC3\" -label DISK3 -t cdrom\n\n      mount G \"$GAMEDIR/CDD/DISC4\" -label DISK4 -t cdrom\n\n      C:\n\n      cd moon\n\n      tex3\n\n      exit'\n    file: $GAMEDIR/moon.conf\n"
 }

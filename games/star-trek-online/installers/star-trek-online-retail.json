@@ -11,7 +11,7 @@
   "description": "Uses the old Cryptic Launcher (No Arc, No Steam)",
   "notes": "- Starting the game for the first time can need very long, please be patient\r\n- Short freezes when going to a map or seeing effects the first time, this will get better after playing a while",
   "created_at": "2016-08-21T19:10:15.016000Z",
-  "updated_at": "2019-09-09T00:55:18.547133Z",
+  "updated_at": "2020-01-23T02:57:19.335448Z",
   "draft": false,
   "published": true,
   "published_by": 1,
@@ -21,66 +21,65 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Star Trek Online.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "version": "ge-protonified-nofshack-4.9-x86_64"
-    },
     "files": [
       {
         "game": "http://files.startrekonline.com/launcher/Star%20Trek%20Online.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Star Trek Online.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting required Windows version (Win10)",
-          "value": "win10",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "name": "set_regedit",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "description": "Disabling unused WINE features",
           "name": "winetricks",
-          "silent": true,
-          "app": "sandbox"
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Star Trek Online.exe",
           "description": "Moving launcher into place",
-          "src": "$game"
+          "src": "$game",
+          "dst": "$GAMEDIR/drive_c/Star Trek Online.exe"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
-  "content": "files:\n- game: http://files.startrekonline.com/launcher/Star%20Trek%20Online.exe\ngame:\n  arch: win64\n  exe: drive_c/Star Trek Online.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    description: Setting required Windows version (Win10)\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- move:\n    description: Moving launcher into place\n    dst: $GAMEDIR/drive_c/Star Trek Online.exe\n    src: $game\nwine:\n  dxvk: true\n  esync: true\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+  "content": "files:\n- game: http://files.startrekonline.com/launcher/Star%20Trek%20Online.exe\ngame:\n  arch: win64\n  exe: drive_c/Star Trek Online.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    description: Setting required Windows version (Win10)\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- move:\n    description: Moving launcher into place\n    dst: $GAMEDIR/drive_c/Star Trek Online.exe\n    src: $game\nwine:\n  dxvk: true\n  esync: true\n"
 }

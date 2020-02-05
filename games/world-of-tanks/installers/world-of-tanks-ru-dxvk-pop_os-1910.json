@@ -1,0 +1,82 @@
+{
+  "id": 18001,
+  "game_id": 85,
+  "game_slug": "world-of-tanks",
+  "name": "World of Tanks",
+  "year": 2010,
+  "user": "fulminantprince@protonmail.com",
+  "runner": "wine",
+  "slug": "world-of-tanks-ru-dxvk-pop_os-1910",
+  "version": "RU DXVK Pop!_OS 19.10",
+  "description": null,
+  "notes": "Uses wine version lutris-4.21-x86_64 to fix blank black screen issue at starup which occures on Pop!_OS 19.10",
+  "created_at": "2020-01-22T10:08:06.575983Z",
+  "updated_at": "2020-01-23T02:57:19.651674Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "wgcinstaller": {
+          "filename": "Wargaming_Game_Center_Install_RU.exe",
+          "url": "http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_RU.exe"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Wargaming Launcher",
+          "name": "wineexec",
+          "executable": "wgcinstaller",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Wine to Windows 7",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
+  },
+  "content": "files:\n- wgcinstaller:\n    filename: Wargaming_Game_Center_Install_RU.exe\n    url: http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_RU.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Wargaming Launcher\n    executable: wgcinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Wine to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
+}

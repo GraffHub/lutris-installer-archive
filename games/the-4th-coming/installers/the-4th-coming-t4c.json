@@ -1,0 +1,73 @@
+{
+  "id": 6761,
+  "game_id": 15234,
+  "game_slug": "the-4th-coming",
+  "name": "The 4th Coming",
+  "year": 1999,
+  "user": "Todaug",
+  "runner": "wine",
+  "slug": "the-4th-coming-t4c",
+  "version": "T4C",
+  "description": null,
+  "notes": "",
+  "created_at": "2017-12-22T22:28:35.250000Z",
+  "updated_at": "2020-01-23T02:57:21.301069Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "http://webpatch.net/download/the4thcoming.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Wine to Windows 7 32-Bit",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "executable": "$setup"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files/The4Coming",
+          "src": "$CACHE"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/The4ThComing/t4c.exe"
+    },
+    "system": {
+      "disable_runtime": true
+    },
+    "wine": {
+      "esync": true
+    }
+  },
+  "content": "files:\n- setup: http://webpatch.net/download/the4thcoming.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/The4ThComing/t4c.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/The4Coming\n    src: $CACHE\nsystem:\n  disable_runtime: true\nwine:\n  esync: true\n"
+}

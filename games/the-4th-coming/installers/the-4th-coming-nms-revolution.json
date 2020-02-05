@@ -11,7 +11,7 @@
   "description": "The 4th coming nms revolutions",
   "notes": "",
   "created_at": "2018-05-06T20:45:57.601000Z",
-  "updated_at": "2019-04-05T06:02:58.024157Z",
+  "updated_at": "2020-01-23T02:57:16.914716Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,19 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "disable_runtime": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "args": "--waitforpreload --nologo --nodx9ex --gc2",
-      "exe": "drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe"
-    },
-    "wine": {
-      "version": "tkg-4.4-x86_64",
-      "esync": true
-    },
     "files": [
       {
         "setup": "http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe"
@@ -42,25 +29,25 @@
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Setting Wine to Windows 7 32-Bit",
           "name": "winetricks",
-          "app": "win7"
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$setup",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$setup"
         }
       },
       {
@@ -69,7 +56,19 @@
           "src": "$CACHE"
         }
       }
-    ]
+    ],
+    "game": {
+      "args": "--waitforpreload --nologo --nodx9ex --gc2",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_runtime": true
+    },
+    "wine": {
+      "esync": true
+    }
   },
-  "content": "files:\n- setup: http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe\ngame:\n  arch: win32\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  exe: drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/The4Coming\n    src: $CACHE\nsystem:\n  disable_runtime: true\nwine:\n  esync: true\n  version: tkg-4.4-x86_64\n"
+  "content": "files:\n- setup: http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe\ngame:\n  arch: win32\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  exe: drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/The4Coming\n    src: $CACHE\nsystem:\n  disable_runtime: true\nwine:\n  esync: true\n"
 }

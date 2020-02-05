@@ -11,7 +11,7 @@
   "description": "This installer is for the retail version of the game with 2 DVDs.\r\nThis installer will copy the content of the first DVD to your Disk and run the setup from there. This is made to make the installer working as expected when changing disks.",
   "notes": "",
   "created_at": "2019-07-06T09:26:37.207000Z",
-  "updated_at": "2019-09-09T00:19:37.771922Z",
+  "updated_at": "2020-01-23T02:56:53.427348Z",
   "draft": false,
   "published": true,
   "published_by": 1,
@@ -21,35 +21,32 @@
   "gogslug": "star_wars_the_force_unleashed_ultimate_sith_edition",
   "humblestoreid": "",
   "script": {
-    "wine": {
-      "version": "tkg-4.5-x86_64"
-    },
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "$GAMEDIR/drive_c/Program Files/Activision/Star Wars The Force Unleashed/SWTFU Launcher.exe"
     },
     "installer": [
       {
         "task": {
           "arch": "win32",
-          "install_mono": false,
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine Bottle, please wait...",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "install_mono": false,
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "insert-disc": {
-          "requires": "setup.exe",
-          "description": "Insert disc 1"
+          "description": "Insert disc 1",
+          "requires": "setup.exe"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/swsetup",
           "description": "Extracting installation data from disc, please wait ...",
-          "src": "$DISC"
+          "src": "$DISC",
+          "dst": "$GAMEDIR/drive_c/swsetup"
         }
       },
       {
@@ -62,36 +59,36 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/swsetup/setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/swsetup/setup.exe"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Installing Dot.Net 3.6 Service Pack 1",
           "name": "winetricks",
-          "app": "dotnet35sp1"
+          "arch": "win32",
+          "app": "dotnet35sp1",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win32",
           "app": "vcrun2005 win7"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
+          "arch": "win32",
           "app": "xact"
         }
       }
     ]
   },
-  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Activision/Star Wars The Force Unleashed/SWTFU\n    Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Extracting installation data from disc, please wait ...\n    dst: $GAMEDIR/drive_c/swsetup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/swsetup\n    descritpion: Set proper file permissions for extracted data, please wait...\n    file: chmod\n- task:\n    executable: $GAMEDIR/drive_c/swsetup/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win32\n    description: Installing Dot.Net 3.6 Service Pack 1\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  version: tkg-4.5-x86_64\n"
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Activision/Star Wars The Force Unleashed/SWTFU\n    Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Extracting installation data from disc, please wait ...\n    dst: $GAMEDIR/drive_c/swsetup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/swsetup\n    descritpion: Set proper file permissions for extracted data, please wait...\n    file: chmod\n- task:\n    executable: $GAMEDIR/drive_c/swsetup/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win32\n    description: Installing Dot.Net 3.6 Service Pack 1\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n"
 }

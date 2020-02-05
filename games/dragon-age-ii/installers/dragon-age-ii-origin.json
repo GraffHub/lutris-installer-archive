@@ -1,0 +1,114 @@
+{
+  "id": 17662,
+  "game_id": 1844,
+  "game_slug": "dragon-age-ii",
+  "name": "Dragon Age II",
+  "year": 2011,
+  "user": "twonk",
+  "runner": "wine",
+  "slug": "dragon-age-ii-origin",
+  "version": "Origin",
+  "description": "Only sets up Origin you'll need to download Dragon Age II manually from the Origin Client.",
+  "notes": "Please read before installing: <a href=\"https://github.com/lutris/lutris/wiki/Game:-Origin\">https://github.com/lutris/lutris/wiki/Game:-Origin</a>\r\n\r\n\r\nDisable Origin in game, (top left corner press Origin>Application Settings>Origin In Game )\r\n\r\nI also went to My Library, right clicked on Dragon Age II and went into Game Properties and unchecked \"Enable Origin In Game for Dragon Age II\"\r\n\r\nGame loads in windows mode, havent found a way to get it to load Full Screen without crashing though... might be a lutris thing??...???",
+  "created_at": "2019-12-31T01:45:42.516000Z",
+  "updated_at": "2020-01-23T02:57:18.718092Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 47900,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "updater": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh"
+      },
+      {
+        "client": "https://download.dm.origin.com/origin/live/OriginThinSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir \"$GAMEDIR/nv-shaders\""
+        }
+      },
+      {
+        "write_file": {
+          "content": "dxgi.nvapiHack = False",
+          "file": "$GAMEDIR/dxvk.conf"
+        }
+      },
+      {
+        "chmodx": "updater"
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Origin",
+          "src": "updater"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial d3dcompiler_43 d3dcompiler_47 d3dx9 win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "client",
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "system": {
+      "manual_command": "$GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh",
+      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
+      "env": {
+        "STAGING_SHARED_MEMORY": 0,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "WINE_LARGE_ADDRESS_AWARE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "openal32": "builtin"
+      }
+    }
+  },
+  "content": "files:\n- updater: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh\n- client: https://download.dm.origin.com/origin/live/OriginThinSetup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir \"$GAMEDIR/nv-shaders\"\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\n- task:\n    app: arial d3dcompiler_43 d3dcompiler_47 d3dx9 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: 0\n    STAGING_SHARED_MEMORY: 0\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\n  manual_command: $GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    openal32: builtin\n"
+}

@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2019-08-09T09:16:27.355000Z",
-  "updated_at": "2019-08-09T09:34:17.507765Z",
+  "updated_at": "2020-01-23T02:56:51.998145Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,43 +21,40 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe"
-    },
-    "wine": {
-      "version": "lutris-4.12.1-x86_64"
-    },
     "files": [
       {
         "installer": "https://secure-appldnld.apple.com/itunes12/091-81934-20180529-DAFCAAD0-5F77-11E8-99A3-4F9A897FD268/iTunes64Setup.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine Prefix...",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing dependencies...",
           "name": "winetricks",
-          "app": "gdiplus tahoma"
+          "app": "gdiplus tahoma",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "installer",
           "description": "Installing iTunes...",
           "name": "wineexec",
-          "exclude_processes": "iTunesHelper.exe iPodService.exe"
+          "executable": "installer",
+          "exclude_processes": "iTunesHelper.exe iPodService.exe",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -68,5 +65,5 @@
       }
     ]
   },
-  "content": "files:\n- installer: https://secure-appldnld.apple.com/itunes12/091-81934-20180529-DAFCAAD0-5F77-11E8-99A3-4F9A897FD268/iTunes64Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus tahoma\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing iTunes...\n    exclude_processes: iTunesHelper.exe iPodService.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  version: lutris-4.12.1-x86_64\n"
+  "content": "files:\n- installer: https://secure-appldnld.apple.com/itunes12/091-81934-20180529-DAFCAAD0-5F77-11E8-99A3-4F9A897FD268/iTunes64Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus tahoma\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing iTunes...\n    exclude_processes: iTunesHelper.exe iPodService.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

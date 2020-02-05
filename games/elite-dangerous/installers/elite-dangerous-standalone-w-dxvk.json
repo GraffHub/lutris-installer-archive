@@ -11,31 +11,16 @@
   "description": null,
   "notes": "Download the setup exe by signing in to your Frontier account and visiting the <a href=\"https://www.frontierstore.net/downloadable/customer/products/\">My Downloadable Products</a> page of the Frontier Store.",
   "created_at": "2018-11-14T05:42:57.248000Z",
-  "updated_at": "2019-04-25T03:52:37.565722Z",
+  "updated_at": "2020-01-23T02:57:20.165717Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": 359320,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "pulse_latency": true,
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "version": "tkg-4.6-x86_64"
-    },
     "files": [
       {
         "setup": "N/A:Select setup exe for Elite Dangerous"
@@ -44,29 +29,82 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "description": "Installing stuff with winetricks. This will take a while.",
+          "description": "Installing Internet Explorer 8 (necessary!))",
           "name": "winetricks",
-          "app": "corefonts vcrun2012 dotnet472 win7"
+          "arch": "win64",
+          "app": "ie8",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
-          "description": "Installing Elite Dangerous",
-          "args": "/silent",
+          "description": "Installing Dot.NET 4.7.2",
+          "name": "winetricks",
           "arch": "win64",
-          "name": "wineexec"
+          "app": "dotnet472",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2010 vcrun2012 vcrun2015",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2010 vcrun2012 vcrun2015",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing MS Line Services",
+          "name": "winetricks",
+          "app": "msls31",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Quartz",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "quartz",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Arial",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Set Windows version to Windows 7",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Elite Dangerous",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "setup",
+          "args": "/silent",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -75,7 +113,21 @@
           "name": "winekill"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true
+    }
   },
-  "content": "files:\n- setup: N/A:Select setup exe for Elite Dangerous\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2012 dotnet472 win7\n    arch: win64\n    description: Installing stuff with winetricks. This will take a while.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Elite Dangerous\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- setup: N/A:Select setup exe for Elite Dangerous\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: ie8\n    arch: win64\n    description: Installing Internet Explorer 8 (necessary!))\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing Dot.NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 vcrun2012 vcrun2015\n    arch: win64\n    description: Installing vcrun2010 vcrun2012 vcrun2015\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: msls31\n    description: Installing MS Line Services\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    arch: win64\n    description: Installing Quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Set Windows version to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Elite Dangerous\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n"
 }

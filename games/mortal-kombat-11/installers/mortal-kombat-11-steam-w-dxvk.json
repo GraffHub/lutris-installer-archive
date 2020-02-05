@@ -1,0 +1,78 @@
+{
+  "id": 13157,
+  "game_id": 26995,
+  "game_slug": "mortal-kombat-11",
+  "name": "Mortal Kombat 11",
+  "year": 2019,
+  "user": "OsamaBinlada",
+  "runner": "winesteam",
+  "slug": "mortal-kombat-11-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-04-27T16:09:44.135000Z",
+  "updated_at": "2020-01-31T02:38:34.504202Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 976310,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      }
+    ],
+    "game": {
+      "appid": 976310,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true,
+      "esync": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/mfinstaller",
+          "file": "mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "terminal": true,
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "command": "$CACHE/mfinstaller/install-mf.sh"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "WINE_LOW_USER_SPACE_LIMIT": 1
+      }
+    }
+  },
+  "content": "files:\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  appid: 976310\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    app: arial\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    WINE_LOW_USER_SPACE_LIMIT: 1\nwinesteam:\n  dxvk: true\n  esync: true\n"
+}

@@ -1,0 +1,172 @@
+{
+  "id": 18058,
+  "game_id": 31232,
+  "game_slug": "staxrip",
+  "name": "StaxRip",
+  "year": 2019,
+  "user": "Helg1980",
+  "runner": "wine",
+  "slug": "staxrip-classic",
+  "version": "Classic",
+  "description": "StaxRip",
+  "notes": "",
+  "created_at": "2020-01-25T12:17:03.550000Z",
+  "updated_at": "2020-01-31T16:13:12.281797Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "StaxRip-x64-2.0.6.0-stable": "https://github.com/staxrip/staxrip/releases/download/2.0.6.0/StaxRip-x64-2.0.6.0-stable.7z"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/StaxRip-x64-2.0.6.0-stable/StaxRip.exe"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/StaxRip-x64-2.0.6.0-stable/",
+          "file": "StaxRip-x64-2.0.6.0-stable"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating 64-bit Wine prefix.",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 7 mode for Wine",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win7"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing atmlib",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "atmlib",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing msxml3",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "msxml3",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing msxml6",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "msxml6",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2008",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2008",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2010",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2010",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2012",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2012",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2013",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2013",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2019",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2019",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dotnet40",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "dotnet40",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dotnet48",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "dotnet48",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing corefonts",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "corefonts",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- StaxRip-x64-2.0.6.0-stable: https://github.com/staxrip/staxrip/releases/download/2.0.6.0/StaxRip-x64-2.0.6.0-stable.7z\ngame:\n  arch: win64\n  exe: drive_c/StaxRip-x64-2.0.6.0-stable/StaxRip.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/StaxRip-x64-2.0.6.0-stable/\n    file: StaxRip-x64-2.0.6.0-stable\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: atmlib\n    arch: win64\n    description: Installing atmlib\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: msxml3\n    arch: win64\n    description: Installing msxml3\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: msxml6\n    arch: win64\n    description: Installing msxml6\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win64\n    description: Installing vcrun2008\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Installing vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012\n    arch: win64\n    description: Installing vcrun2012\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    description: Installing vcrun2013\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2019\n    arch: win64\n    description: Installing vcrun2019\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40\n    arch: win64\n    description: Installing dotnet40\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet48\n    arch: win64\n    description: Installing dotnet48\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win64\n    description: Installing corefonts\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

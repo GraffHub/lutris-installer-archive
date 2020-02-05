@@ -11,21 +11,16 @@
   "description": "Requires CD-ROM.",
   "notes": "Games starts...\r\n\r\nIssues:\r\n - Backscreen in MainMenu\r\n - Press \"Enter\" in MainMenu, start game, skip Cutscene -> Game crushes",
   "created_at": "2019-05-15T02:10:37.711000Z",
-  "updated_at": "2019-06-17T02:18:47.161827Z",
+  "updated_at": "2019-10-28T21:21:09.642406Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 51687,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "wine": {
-      "WineDesktop": "1024x768",
-      "version": "staging-3.17-x86_64",
-      "Desktop": true
-    },
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/Program Files/TechnoMage/Technomage.EXE"
@@ -38,27 +33,31 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Using Windows 98",
           "name": "winetricks",
-          "app": "win98"
+          "app": "win98",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "$DISC/Setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$DISC/Setup.exe"
         }
       }
-    ]
+    ],
+    "wine": {
+      "WineDesktop": "1024x768",
+      "Desktop": true
+    }
   },
-  "content": "game:\n  exe: drive_c/Program Files/TechnoMage/Technomage.EXE\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: data1.cab\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    description: Using Windows 98\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  version: staging-3.17-x86_64\n"
+  "content": "game:\n  exe: drive_c/Program Files/TechnoMage/Technomage.EXE\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: data1.cab\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    description: Using Windows 98\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
 }

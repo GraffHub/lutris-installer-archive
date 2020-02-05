@@ -11,89 +11,73 @@
   "description": null,
   "notes": "",
   "created_at": "2017-08-07T00:50:57.097000Z",
-  "updated_at": "2019-10-26T08:11:16.921079Z",
+  "updated_at": "2020-01-18T10:03:14.380971Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": 21690,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 21690
-    },
     "files": [
       {
         "codecs": "https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe"
       }
     ],
+    "game": {
+      "appid": 21690,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing d3dx9",
+          "description": "Installing needed libraries",
           "name": "winetricks",
-          "app": "d3dx9"
-        }
-      },
-      {
-        "task": {
           "arch": "win32",
+          "silent": true,
           "prefix": "$GAMEDIR/prefix",
-          "description": "Installing wmp10",
-          "name": "winetricks",
-          "app": "wmp10"
+          "app": "d3dx9 wmp10 d3dcompiler_43"
         }
       },
       {
         "task": {
+          "description": "Changing to Windows XP to install video codec (otherwise it will fail)",
+          "name": "winetricks",
           "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing d3dcompiler_43",
-          "name": "winetricks",
-          "app": "d3dcompiler_43"
+          "app": "winxp",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
+          "description": "Installing video codecs",
+          "name": "wineexec",
           "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing xact_jun2010",
-          "name": "winetricks",
-          "app": "xact_jun2010"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
           "executable": "codecs",
           "args": "/q",
-          "description": "Installing video codecs",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
           "description": "Changing to Windows 7",
           "name": "winetricks",
-          "app": "win7"
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
     ]
   },
-  "content": "files:\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\ngame:\n  appid: 21690\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9\n    arch: win32\n    description: Installing d3dx9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: wmp10\n    arch: win32\n    description: Installing wmp10\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win32\n    description: Installing d3dcompiler_43\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact_jun2010\n    arch: win32\n    description: Installing xact_jun2010\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /q\n    description: Installing video codecs\n    executable: codecs\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win7\n    arch: win32\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n"
+  "content": "files:\r\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\r\ngame:\r\n  appid: 21690\r\n  arch: win32\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx9 wmp10 d3dcompiler_43\r\n    arch: win32\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: winxp\r\n    arch: win32\r\n    description: Changing to Windows XP to install video codec (otherwise it will\r\n      fail)\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    args: /q\r\n    description: Installing video codecs\r\n    executable: codecs\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win7\r\n    arch: win32\r\n    description: Changing to Windows 7\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix"
 }

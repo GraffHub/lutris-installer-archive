@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2017-11-22T18:38:05.939000Z",
-  "updated_at": "2019-03-12T06:53:05.657307Z",
+  "updated_at": "2020-01-23T02:57:08.735033Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,38 +21,46 @@
   "gogslug": "swat_4_gold_edition",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "setup": "N/A:Please select the GOG installer"
+      },
+      {
+        "sba": {
+          "referer": "https://www.moddb.com/games/swat-4/downloads/swat-4-server-browser-alternative",
+          "filename": "SWAT4SBA_v180.exe",
+          "url": "https://www.moddb.com/downloads/start/78621/all"
+        }
+      }
+    ],
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/GOG Games/SWAT 4/Content/System/Swat4.exe"
     },
-    "files": [
-      {
-        "setup_swat4": "N/A:Please select the GOG installer"
-      },
-      {
-        "sba": {
-          "url": "https://www.moddb.com/downloads/start/78621/all",
-          "filename": "SWAT4SBA_v180.exe",
-          "referer": "https://www.moddb.com/games/swat-4/downloads/swat-4-server-browser-alternative"
-        }
-      }
-    ],
     "installer": [
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "setup_swat4",
-          "name": "wineexec"
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "setup",
+          "description": "Installing the Game",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "sba",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "sba"
         }
       }
     ]
   },
-  "content": "files:\n- setup_swat4: N/A:Please select the GOG installer\n- sba:\n    filename: SWAT4SBA_v180.exe\n    referer: https://www.moddb.com/games/swat-4/downloads/swat-4-server-browser-alternative\n    url: https://www.moddb.com/downloads/start/78621/all\ngame:\n  exe: drive_c/GOG Games/SWAT 4/Content/System/Swat4.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    executable: setup_swat4\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: sba\n    name: wineexec\n    prefix: $GAMEDIR\n"
+  "content": "files:\n- setup: N/A:Please select the GOG installer\n- sba:\n    filename: SWAT4SBA_v180.exe\n    referer: https://www.moddb.com/games/swat-4/downloads/swat-4-server-browser-alternative\n    url: https://www.moddb.com/downloads/start/78621/all\ngame:\n  exe: drive_c/GOG Games/SWAT 4/Content/System/Swat4.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    description: Installing the Game\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: sba\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

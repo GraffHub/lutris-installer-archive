@@ -1,0 +1,91 @@
+{
+  "id": 17858,
+  "game_id": 31108,
+  "game_slug": "caliber",
+  "name": "Caliber",
+  "year": 2019,
+  "user": "Floumen",
+  "runner": "wine",
+  "slug": "caliber-wine",
+  "version": "Wine",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-01-11T16:03:00.021045Z",
+  "updated_at": "2020-01-23T02:57:24.200209Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "game": {
+          "filename": "caliber_install_ru_bzt2v7062gk3.exe",
+          "url": "https://wds.gcdn.co/wgc/releases_tTrHgLCKHBRiaL/wgc_19.08.00.7992_ru/caliber_install_ru.exe?enctid=bzt2v7062gk3&pub_id=WGC&lpurl=https%3A%2F%2Fredirect.wargaming.net%2FWGC%2Finternal%2FWargaming_Game_Center_Install_CLBR_RU.exe&sid=SIDyy6F1XdxanM9t7QMIn2z6vmDN0aVzr7UN1apBRvQxJ_YoCxybiZBJJyVGsKmd7CKgLBcYGrNzNXkit9GtH8h-Uba_jr6chpddSrShh_0sdVtDkNljzrSK9V05lX-EWRa0m-grfsTQiRZF0vXm-LI3HU3&enctid=bzt2v7062gk3&lpsn=Caliber_prem_shop_test&utm_source=wg_web_site&utm_medium=organic&utm_campaign=wgc-install-clbr-ru-2&utm_content=wgc"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Caliber",
+          "name": "wineexec",
+          "executable": "game",
+          "prefix": "$GAMEDIR",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
+          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Wine to Windows 10",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "corefonts win10",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Games/Caliber/Caliber.exe"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "WineDesktop": "1920x1080",
+      "Desktop": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    }
+  },
+  "content": "files:\n- game:\n    filename: caliber_install_ru_bzt2v7062gk3.exe\n    url: https://wds.gcdn.co/wgc/releases_tTrHgLCKHBRiaL/wgc_19.08.00.7992_ru/caliber_install_ru.exe?enctid=bzt2v7062gk3&pub_id=WGC&lpurl=https%3A%2F%2Fredirect.wargaming.net%2FWGC%2Finternal%2FWargaming_Game_Center_Install_CLBR_RU.exe&sid=SIDyy6F1XdxanM9t7QMIn2z6vmDN0aVzr7UN1apBRvQxJ_YoCxybiZBJJyVGsKmd7CKgLBcYGrNzNXkit9GtH8h-Uba_jr6chpddSrShh_0sdVtDkNljzrSK9V05lX-EWRa0m-grfsTQiRZF0vXm-LI3HU3&enctid=bzt2v7062gk3&lpsn=Caliber_prem_shop_test&utm_source=wg_web_site&utm_medium=organic&utm_campaign=wgc-install-clbr-ru-2&utm_content=wgc\ngame:\n  arch: win64\n  exe: drive_c/Games/Caliber/Caliber.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing Caliber\n    exclude_processes: explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe\n      WoTLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win10\n    arch: win64\n    description: Setting Wine to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
+}

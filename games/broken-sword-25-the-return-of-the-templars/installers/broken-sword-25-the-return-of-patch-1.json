@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "path": "$GAMEDIR",
-      "game_id": "sword25"
-    },
     "files": [
       {
         "game": "http://server.c-otto.de/baphometsfluch/bs25setup.zip"
@@ -33,6 +29,10 @@
         "game2": "http://baphometsfluch25.de/downloads/sonstiges/BS25_patch000_multilingual.zip"
       }
     ],
+    "game": {
+      "path": "$GAMEDIR",
+      "game_id": "sword25"
+    },
     "installer": [
       {
         "extract": {
@@ -42,51 +42,51 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "wine.create_prefix"
+          "name": "wine.create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "name": "wine.set_regedit",
+          "key": "winemenubuilder.exe",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "value": "",
-          "type": "REG_SZ",
-          "key": "winemenubuilder.exe",
-          "name": "wine.set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/bs25-setup.exe",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "name": "wine.wineexec",
+          "executable": "$CACHE/bs25-setup.exe",
           "description": "Installing ...",
-          "name": "wine.wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/game",
           "description": "Installing ...",
-          "file": "$game2"
+          "file": "$game2",
+          "dst": "$GAMEDIR/drive_c/game"
         }
       },
       {
         "execute": {
-          "file": "/bin/sh",
-          "terminal": false,
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "description": "cleaning..."
+          "file": "/bin/sh",
+          "description": "cleaning...",
+          "terminal": false
         }
       },
       {
         "execute": {
-          "file": "/bin/sh",
-          "terminal": false,
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "description": "cleaning..."
+          "file": "/bin/sh",
+          "description": "cleaning...",
+          "terminal": false
         }
       }
     ]

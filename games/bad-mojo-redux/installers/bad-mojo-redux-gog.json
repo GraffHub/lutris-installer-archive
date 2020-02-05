@@ -1,0 +1,88 @@
+{
+  "id": 15357,
+  "game_id": 3392,
+  "game_slug": "bad-mojo-redux",
+  "name": "Bad Mojo Redux",
+  "year": 2004,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "bad-mojo-redux-gog",
+  "version": "GOG",
+  "description": "This script will install \"Bad Mojo Redux\" Gog edition with support for modern computer config.\r\nDuring install please let all options by default.\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "notes": "- Kown issue: this game has a 640x480 resolution. If you launch it in a virtual Wine desktop, the Wine window will be resized to  640x480 resolution. The only workaround, for the moment, is to disable Wine virtual desktop. Before trying this workaround, verify your screen can support 640x480 resolution. \r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-09-07T10:00:28.059000Z",
+  "updated_at": "2019-09-21T21:31:15.774153Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 255960,
+  "gogid": 1207664623,
+  "gogslug": "bad_mojo_redux",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "install": "N/A:Please select the GOG installer"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Preparing Wineprefix...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/SP- /SUPPRESSMSGBOXES /SILENT",
+          "name": "wineexec",
+          "executable": "install",
+          "description": "Installing...",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "value": "0 0 0",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "csmt",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "value": "00000000",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/Bad Mojo/\" ; rm -f -r unins000.* \"Launch Bad Mojo.lnk\" webcache.zip Support.ico gog* GameuxInstallHelper.dll;"
+        }
+      }
+    ],
+    "system": {
+      "reset_desktop": true
+    },
+    "custom-name": "Bad Mojo Redux - GOG",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Bad Mojo/launcher.exe"
+    },
+    "wine": {
+      "Desktop": false
+    }
+  },
+  "content": "custom-name: Bad Mojo Redux - GOG\nfiles:\n- install: N/A:Please select the GOG installer\ngame:\n  exe: drive_c/GOG Games/Bad Mojo/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing Wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /SILENT\n    description: Installing...\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Bad Mojo/\" ; rm -f -r unins000.* \"Launch\n      Bad Mojo.lnk\" webcache.zip Support.ico gog* GameuxInstallHelper.dll;\nsystem:\n  reset_desktop: true\nwine:\n  Desktop: false\n"
+}

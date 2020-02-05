@@ -30,9 +30,6 @@
     "installer": [
       {
         "input_menu": {
-          "preselect": "en",
-          "id": "LANG",
-          "description": "Choose the game's language:",
           "options": [
             {
               "en": "English"
@@ -43,7 +40,10 @@
             {
               "fr": "French"
             }
-          ]
+          ],
+          "description": "Choose the game's language:",
+          "preselect": "en",
+          "id": "LANG"
         }
       },
       {
@@ -55,17 +55,17 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/data",
           "description": "Installing binaries and executables",
-          "file": "$GAMEDIR/data/bins.and.libs_LINUX_X86_32.tar.xz"
+          "file": "$GAMEDIR/data/bins.and.libs_LINUX_X86_32.tar.xz",
+          "dst": "$GAMEDIR/data"
         }
       },
       {
         "execute": {
           "description": "Setting language",
           "env": {
-            "INPUT_LANG": "$INPUT_LANG",
-            "GAMEDIR": "$GAMEDIR"
+            "GAMEDIR": "$GAMEDIR",
+            "INPUT_LANG": "$INPUT_LANG"
           },
           "command": "if [ \"$INPUT_LANG\" = \"de\" ]; then mv $GAMEDIR/data/1036 $GAMEDIR/data/disabled_1036 && mv $GAMEDIR/data/2047 $GAMEDIR/data/disabled_2047; elif [ \"$INPUT_LANG\" = \"fr\" ]; then mv $GAMEDIR/data/1031 $GAMEDIR/data/disabled_1031 && mv $GAMEDIR/data/2047 $GAMEDIR/data/disabled_2047; else mv $GAMEDIR/data/1031 $GAMEDIR/data/disabled_1031 && mv $GAMEDIR/data/1036 $GAMEDIR/data/disabled_1036; fi"
         }

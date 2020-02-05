@@ -3,18 +3,18 @@
   "game_id": 11637,
   "game_slug": "zork-nemesis-the-forbidden-lands",
   "name": "Zork Nemesis: The Forbidden Lands",
-  "year": null,
+  "year": 1996,
   "user": "appoloin",
   "runner": "scummvm",
   "slug": "zork-nemesis-the-forbidden-la-2cd",
   "version": "2CD",
   "description": null,
   "notes": "",
-  "created_at": "2019-09-18T23:38:03.055083Z",
-  "updated_at": "2019-09-18T23:38:03.055108Z",
+  "created_at": "2019-09-18T23:38:03.055000Z",
+  "updated_at": "2019-10-27T09:33:42.908465Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": 571060,
   "gogid": 1207658913,
@@ -27,81 +27,63 @@
     },
     "installer": [
       {
-        "insert-disc": {
-          "requires": "ZGI",
-          "description": "Please insert disc 1"
-        }
-      },
-      {
         "execute": {
-          "args": "$GAMEDIR/zassets1 $GAMEDIR/zassets1  $GAMEDIR/zgi_mx",
+          "args": "$GAMEDIR/znemmx $GAMEDIR/znemscr $GAMEDIR/zassets",
           "file": "mkdir"
         }
       },
       {
-        "copy": {
-          "dst": "$GAMEDIR/zassets1",
-          "src": "$DISC/zassets1"
+        "insert-disc": {
+          "description": "Please insert disc 1",
+          "requires": "zassets"
         }
       },
       {
-        "copy": {
-          "dst": "$GAMEDIR/zgi_mx",
-          "src": "$DISC/zgi/zgi_mx"
+        "execute": {
+          "args": "-r $DISC/nemesis/znemmx $GAMEDIR",
+          "file": "/bin/cp"
         }
       },
       {
-        "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/cursor.zfs"
+        "execute": {
+          "args": "-r $DISC/nemesis/znemscr $GAMEDIR",
+          "file": "/bin/cp"
         }
       },
       {
-        "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/death.zfs"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/inquis.str"
+        "execute": {
+          "args": "-r $DISC/zassets $GAMEDIR",
+          "file": "/bin/cp"
         }
       },
       {
         "copy": {
           "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/inquis.zix"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/r.svr"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/scripts.zfs"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$DISC/zgi/subtitle.zfs"
+          "src": "$DISC/nemesis/nemesis.str"
         }
       },
       {
         "insert-disc": {
-          "requires": "zassets2",
-          "description": "Please insert disc 2"
+          "description": "Please insert disc 2",
+          "requires": "zassets"
         }
       },
       {
-        "copy": {
-          "dst": "$GAMEDIR/zassets2",
-          "src": "$DISC/zassets2"
+        "execute": {
+          "args": "-r $DISC/zassets $GAMEDIR",
+          "file": "/bin/cp"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc 3",
+          "requires": "zassets"
+        }
+      },
+      {
+        "execute": {
+          "args": "-r $DISC/zassets $GAMEDIR",
+          "file": "/bin/cp"
         }
       },
       {
@@ -112,5 +94,5 @@
       }
     ]
   },
-  "content": "game:\n  game_id: zvision\n  path: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: ZGI\n- execute:\n    args: $GAMEDIR/zassets1 $GAMEDIR/zassets1  $GAMEDIR/zgi_mx\n    file: mkdir\n- copy:\n    dst: $GAMEDIR/zassets1\n    src: $DISC/zassets1\n- copy:\n    dst: $GAMEDIR/zgi_mx\n    src: $DISC/zgi/zgi_mx\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/cursor.zfs\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/death.zfs\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/inquis.str\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/inquis.zix\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/r.svr\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/scripts.zfs\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/zgi/subtitle.zfs\n- insert-disc:\n    description: Please insert disc 2\n    requires: zassets2\n- copy:\n    dst: $GAMEDIR/zassets2\n    src: $DISC/zassets2\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
+  "content": "game:\n  game_id: zvision\n  path: $GAMEDIR\ninstaller:\n- execute:\n    args: $GAMEDIR/znemmx $GAMEDIR/znemscr $GAMEDIR/zassets\n    file: mkdir\n- insert-disc:\n    description: Please insert disc 1\n    requires: zassets\n- execute:\n    args: -r $DISC/nemesis/znemmx $GAMEDIR\n    file: /bin/cp\n- execute:\n    args: -r $DISC/nemesis/znemscr $GAMEDIR\n    file: /bin/cp\n- execute:\n    args: -r $DISC/zassets $GAMEDIR\n    file: /bin/cp\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/nemesis/nemesis.str\n- insert-disc:\n    description: Please insert disc 2\n    requires: zassets\n- execute:\n    args: -r $DISC/zassets $GAMEDIR\n    file: /bin/cp\n- insert-disc:\n    description: Please insert disc 3\n    requires: zassets\n- execute:\n    args: -r $DISC/zassets $GAMEDIR\n    file: /bin/cp\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
 }

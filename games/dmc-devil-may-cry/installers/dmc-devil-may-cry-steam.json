@@ -11,7 +11,7 @@
   "description": "Disable joysticks in the joystick controller panel. This is only possible with Lutris 0.4.20 and above. This prevents the game from crashing after the AMD logo when a controller is plugged in. This won't prevent controllers from working in-game.",
   "notes": "",
   "created_at": "2017-01-26T18:48:10.057000Z",
-  "updated_at": "2019-01-18T03:31:46.901532Z",
+  "updated_at": "2020-01-31T02:38:31.671666Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,44 +21,43 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "winesteam": {
-      "version": "tkg-protonified-3.21-x86_64",
-      "autoconf_joypad": false
-    },
     "game": {
-      "arch": "win32",
+      "appid": 220440,
       "prefix": "$GAMEDIR/prefix",
-      "appid": 220440
+      "arch": "win32"
+    },
+    "winesteam": {
+      "autoconf_joypad": false
     },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "description": "Installing components",
-          "app": "dotnet40",
-          "arch": "win32",
           "name": "winetricks",
-          "silent": false
+          "arch": "win32",
+          "silent": false,
+          "prefix": "$GAMEDIR/prefix",
+          "app": "dotnet40"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
           "description": "Changing system version",
           "name": "winetricks",
-          "app": "win7"
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
     ]
   },
-  "content": "game:\n  appid: 220440\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet40\n    arch: win32\n    description: Installing components\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n    silent: false\n- task:\n    app: win7\n    arch: win32\n    description: Changing system version\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nwinesteam:\n  autoconf_joypad: false\n  version: tkg-protonified-3.21-x86_64\n"
+  "content": "game:\n  appid: 220440\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet40\n    arch: win32\n    description: Installing components\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n    silent: false\n- task:\n    app: win7\n    arch: win32\n    description: Changing system version\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nwinesteam:\n  autoconf_joypad: false\n"
 }

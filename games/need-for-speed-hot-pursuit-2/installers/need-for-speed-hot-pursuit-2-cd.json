@@ -1,0 +1,68 @@
+{
+  "id": 14605,
+  "game_id": 8231,
+  "game_slug": "need-for-speed-hot-pursuit-2",
+  "name": "Need for Speed: Hot Pursuit 2",
+  "year": 2002,
+  "user": "dsmanneke",
+  "runner": "wine",
+  "slug": "need-for-speed-hot-pursuit-2-cd",
+  "version": "CD",
+  "description": "CD version.",
+  "notes": "I can play the game with some modifications: In my case: I need to update to Patch v242 with the No Cd-crack.\r\n\r\nNo-cd crack is required for solving the error: \"A debugger has been detected. Unload the debugger and try again\"\r\n\r\nThe working directory must point to the CD-drive instead of the installation folder ex: $GAMEDIR/dosdevices/h:",
+  "created_at": "2019-07-17T18:09:14.660000Z",
+  "updated_at": "2019-09-09T00:44:46.220268Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "AutoRun.EXE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win98"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "executable": "$DISC/AutoRun.EXE"
+        }
+      }
+    ],
+    "game": {
+      "working_dir": "$GAMEDIR/dosdevices/h",
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Program Files/EA Games/Need For Speed Hot Pursuit 2/nfshp2.exe"
+    },
+    "system": {
+      "prefix_command": "taskset --cpu-list 0-1"
+    },
+    "wine": {
+      "WineDesktop": "1024x768",
+      "Desktop": true
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/EA Games/Need For Speed Hot Pursuit 2/nfshp2.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/dosdevices/h\ninstaller:\n- insert-disc:\n    requires: AutoRun.EXE\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/AutoRun.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  prefix_command: taskset --cpu-list 0-1\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
+}

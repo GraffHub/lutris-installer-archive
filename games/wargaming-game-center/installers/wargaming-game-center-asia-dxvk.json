@@ -8,76 +8,75 @@
   "runner": "wine",
   "slug": "wargaming-game-center-asia-dxvk",
   "version": "Asia DXVK",
-  "description": null,
+  "description": "Works perfectly on Linux Mint 19.3. Make sure to install latest driver, Vulkan API (reboot after installation!) and other dependencies before installing Game Center. https://github.com/lutris/lutris/wiki/Installing-drivers",
   "notes": "When you install this launcher be sure to install it with dx11.\r\n\r\nWhen the Launcher opens you need to end the WGC.exe process so that the install will finish.\r\n\r\nI advise not running this under proton, because proton is a bit funky with multiple windows.",
   "created_at": "2019-05-31T09:42:44.911000Z",
-  "updated_at": "2019-06-13T08:19:04.986707Z",
+  "updated_at": "2020-01-31T16:20:18.015163Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      },
-      "disable_runtime": false
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe"
-    },
-    "wine": {
-      "DXVK": true,
-      "version": "tkg-4.6-x86_64"
-    },
     "files": [
       {
         "wgcinstaller": {
-          "url": "http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_Asia.exe",
-          "filename": "Wargaming_Game_Center_Install_Asia.exe"
+          "filename": "Wargaming_Game_Center_Install_Asia.exe",
+          "url": "http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_Asia.exe"
         }
       }
     ],
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "wgcinstaller",
           "description": "Installing Wargaming Launcher",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "wgcinstaller",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "description": "Setting Wine to Windows 10",
+          "description": "Setting Wine to Windows 7",
           "name": "winetricks",
-          "app": "win10"
+          "arch": "win64",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "DXVK": true
+    }
   },
-  "content": "files:\n- wgcinstaller:\n    filename: Wargaming_Game_Center_Install_Asia.exe\n    url: http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_Asia.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Wargaming Launcher\n    executable: wgcinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Wine to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  DXVK: true\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- wgcinstaller:\n    filename: Wargaming_Game_Center_Install_Asia.exe\n    url: http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_Asia.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Wargaming Launcher\n    executable: wgcinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Wine to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  DXVK: true\n"
 }

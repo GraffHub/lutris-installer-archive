@@ -1,0 +1,142 @@
+{
+  "id": 16739,
+  "game_id": 30163,
+  "game_slug": "3dmark-1999",
+  "name": "3DMark 1999",
+  "year": 1999,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "3dmark-1999-max-pro-complete",
+  "version": "Max Pro, complete",
+  "description": "* License: Legacy,\r\n* Hardware acceleration benchmark software,\r\n* Legacy key: 78TR2-8DBDU-BMXXS,\r\n* Legacy user: Futuremark,\r\n* MP3codec DirectShow,\r\n* Ddraw.dll: 4.08.01 \r\n* DirectX: 6,1.",
+  "notes": "",
+  "created_at": "2019-11-10T03:52:49.536000Z",
+  "updated_at": "2019-12-23T20:12:13.935265Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "ddraw": "https://download.game155.com/zip/ddraw.dll.zip"
+      },
+      {
+        "setup": "https://benchmarks.ul.com/downloads/3dmark99.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "MP3codec DirectShow ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "l3codecx",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Windows version 98 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win98",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "setup"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/3dmark99",
+          "file": "$GAMEDIR/3dmark99.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "3DMark 1999 ...",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/3dmark99/Setup.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "ddraw"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/3dmark99",
+          "file": "$GAMEDIR/ddraw.dll.zip"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/windows/system32/ddraw.dll",
+          "src": "$GAMEDIR/3dmark99/DDRAW.DLL"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/windows/syswow64/ddraw.dll",
+          "src": "$GAMEDIR/3dmark99/DDRAW.DLL"
+        }
+      },
+      {
+        "task": {
+          "description": "Register KeyCode ...",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "RegKey",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark Corporation\\3DMark Registration",
+          "value": "78TR2-8DBDU-BMXXS",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "description": "Register KeyCode ...",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "RegName",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark Corporation\\3DMark Registration",
+          "value": "Futuremark",
+          "type": "REG_SZ"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/3DMark 99 Max/3dmark.exe"
+    },
+    "system": {
+      "disable_compositor": true
+    },
+    "wine": {
+      "Desktop": true,
+      "overrides": {
+        "msvcirt.dll": "n"
+      }
+    }
+  },
+  "content": "files:\n- ddraw: https://download.game155.com/zip/ddraw.dll.zip\n- setup: https://benchmarks.ul.com/downloads/3dmark99.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/3DMark 99 Max/3dmark.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: l3codecx\n    arch: win64\n    description: MP3codec DirectShow ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    arch: win64\n    description: Windows version 98 ...\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR\n    src: setup\n- extract:\n    dst: $GAMEDIR/3dmark99\n    file: $GAMEDIR/3dmark99.exe\n- task:\n    description: 3DMark 1999 ...\n    executable: $GAMEDIR/3dmark99/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR\n    src: ddraw\n- extract:\n    dst: $GAMEDIR/3dmark99\n    file: $GAMEDIR/ddraw.dll.zip\n- merge:\n    dst: $GAMEDIR/drive_c/windows/system32/ddraw.dll\n    src: $GAMEDIR/3dmark99/DDRAW.DLL\n- merge:\n    dst: $GAMEDIR/drive_c/windows/syswow64/ddraw.dll\n    src: $GAMEDIR/3dmark99/DDRAW.DLL\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: RegKey\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark Corporation\\3DMark Registration\n    type: REG_SZ\n    value: 78TR2-8DBDU-BMXXS\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: RegName\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark Corporation\\3DMark Registration\n    type: REG_SZ\n    value: Futuremark\nsystem:\n  disable_compositor: true\nwine:\n  Desktop: true\n  overrides:\n    msvcirt.dll: n\n"
+}

@@ -21,38 +21,38 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/EA Games/Battlefield 1942/BF1942.exe"
-    },
     "files": [
       {
         "archive": "N/A:Please select unzipped game archive"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/EA Games/Battlefield 1942/BF1942.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/BF1942/",
           "description": "Extracting archive",
-          "file": "$archive"
+          "file": "$archive",
+          "dst": "$CACHE/BF1942/"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$CACHE/BF1942/Battlefield 1942/bf1942-setup.exe",
           "args": "/silent",
+          "name": "wineexec",
+          "executable": "$CACHE/BF1942/Battlefield 1942/bf1942-setup.exe",
           "description": "Installing Battlefield 1942",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       }
     ]

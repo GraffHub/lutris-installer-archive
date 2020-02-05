@@ -1,0 +1,82 @@
+{
+  "id": 16883,
+  "game_id": 30404,
+  "game_slug": "garena-launcher-id",
+  "name": "Garena Launcher ID",
+  "year": null,
+  "user": "dev0buzz",
+  "runner": "wine",
+  "slug": "garena-launcher-id-001",
+  "version": "0.0.1",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-11-18T08:44:39.051827Z",
+  "updated_at": "2020-01-23T02:59:35.414675Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "garena_installer": "http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "d3dcompiler_43 d3dx9"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Garena Launcher",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "garena_installer",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win32"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Garena/Garena/Garena.exe"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "DXVK_LOG_LEVEL": "none",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "MouseWarpOverride": "enable",
+      "dxvk": true
+    }
+  },
+  "content": "files:\n- garena_installer: http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0.exe\ngame:\n  exe: $GAMEDIR/drive_c/Program Files/Garena/Garena/Garena.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Garena Launcher\n    executable: garena_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  MouseWarpOverride: enable\n  dxvk: true\n"
+}

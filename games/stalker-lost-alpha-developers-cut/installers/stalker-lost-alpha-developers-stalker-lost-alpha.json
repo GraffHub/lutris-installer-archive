@@ -1,0 +1,75 @@
+{
+  "id": 16297,
+  "game_id": 29777,
+  "game_slug": "stalker-lost-alpha-developers-cut",
+  "name": "S.T.A.L.K.E.R. Lost Alpha Developers Cut",
+  "year": 2018,
+  "user": "7hr08ik",
+  "runner": "wine",
+  "slug": "stalker-lost-alpha-developers-stalker-lost-alpha",
+  "version": "S.T.A.L.K.E.R. - Lost Alpha",
+  "description": "-During install -- SKIP \"Visual C++ 2013\" -- SKIP \"DirectX\" -- SKIP \"Xvid\" --\r\n (included in script).\r\n-DO INSTALL OpenAL.\r\n\r\n-DX9 lighting works as of lutris-nofshack-4.18",
+  "notes": "=-- DX9 only. Medium preset then alter. Setting to High crashes game --=\r\n\r\n-Tested with v1.4007\r\n-Tested with extensive mod list",
+  "created_at": "2019-10-19T21:53:17.659000Z",
+  "updated_at": "2019-12-23T20:06:08.806769Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC",
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC/bins/XR_3DA.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2013 xvid d3dx9"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Installer",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$DISC/setup.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC/bins/",
+          "src": "$GAMEDIR/drive_c/windows/system32/msvcp120.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC/bins/",
+          "src": "$GAMEDIR/drive_c/windows/system32/msvcr120.dll"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC/bins/XR_3DA.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 xvid d3dx9\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Running Installer\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- copy:\n    dst: $GAMEDIR/drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC/bins/\n    src: $GAMEDIR/drive_c/windows/system32/msvcp120.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Program Files/S.T.A.L.K.E.R. - Lost Alpha DC/bins/\n    src: $GAMEDIR/drive_c/windows/system32/msvcr120.dll\n"
+}

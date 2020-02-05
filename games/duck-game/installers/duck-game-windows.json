@@ -1,0 +1,83 @@
+{
+  "id": 5112,
+  "game_id": 5383,
+  "game_slug": "duck-game",
+  "name": "Duck Game",
+  "year": null,
+  "user": "Doktor_Mandrake",
+  "runner": "winesteam",
+  "slug": "duck-game-windows",
+  "version": "Windows",
+  "description": null,
+  "notes": "",
+  "created_at": "2017-07-20T12:57:01.690000Z",
+  "updated_at": "2020-01-23T02:57:23.738000Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 312530,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 312530,
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "install_mono": true,
+          "install_gecko": false
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .net",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "dotnet40",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing xna",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "xna40",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Dinput",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "dinput",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting version to XP for default...",
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "Version",
+          "prefix": "$CACHE/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "winxp"
+        }
+      }
+    ],
+    "system": {
+      "disable_monitoring": true
+    }
+  },
+  "content": "game:\n  appid: 312530\n  arch: win32\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    install_gecko: false\n    install_mono: true\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40\n    arch: win32\n    description: Installing .net\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xna40\n    arch: win32\n    description: Installing xna\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dinput\n    arch: win32\n    description: Installing Dinput\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Setting version to XP for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $CACHE/prefix\n    value: winxp\nsystem:\n  disable_monitoring: true\n"
+}

@@ -1,0 +1,146 @@
+{
+  "id": 11247,
+  "game_id": 24273,
+  "game_slug": "renegade-x",
+  "name": "Renegade X",
+  "year": 2014,
+  "user": "SonnyX",
+  "runner": "wine",
+  "slug": "renegade-x-release",
+  "version": "Release",
+  "description": "Changed some things that unnecessarily bloated the installation directory.\r\nChange installer version to \"Release\", because Linux is not officially supported by Renegade X developers.",
+  "notes": "- removed specific WINE version, because it was outdated\r\n- left in dxvk: true because D9VK is now merged into DXKVK (if it was not, installer would specify D9VK to be enabled)\r\n- changed .NET version to 4.5.2, because that's the minimum requirement, no need to install higher versions",
+  "created_at": "2018-12-17T14:23:43.407000Z",
+  "updated_at": "2020-01-19T10:11:02.867594Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "renx": "https://renxdownloads.nyc3.cdn.digitaloceanspaces.com/Renegade_X_Installer-d3c8456.msi"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing corefonts",
+          "name": "winetricks",
+          "app": "corefonts",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing visual code 2008",
+          "name": "winetricks",
+          "app": "vcrun2008",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing visual code 2010",
+          "name": "winetricks",
+          "app": "vcrun2010",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing xact",
+          "name": "winetricks",
+          "app": "xact",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing xact_64",
+          "name": "winetricks",
+          "app": "xact_x64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing d3dx9",
+          "name": "winetricks",
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing d3dx9_43.dll",
+          "name": "winetricks",
+          "app": "d3dx9_43",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing msxml3",
+          "name": "winetricks",
+          "app": "msxml3",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing .net 4.5.2",
+          "name": "winetricks",
+          "app": "dotnet452",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting environment to Windows7",
+          "name": "winetricks",
+          "app": "win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/i \"$CACHE/renx/Renegade_X_Installer-d3c8456.msi\" /q",
+          "name": "wineexec",
+          "executable": "msiexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Renegade X/Launcher/Renegade X Launcher.exe"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- renx: https://renxdownloads.nyc3.cdn.digitaloceanspaces.com/Renegade_X_Installer-d3c8456.msi\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Renegade X/Launcher/Renegade X Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    description: Installing visual code 2008\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    description: Installing visual code 2010\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    description: Installing xact\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact_x64\n    description: Installing xact_64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9_43\n    description: Installing d3dx9_43.dll\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: msxml3\n    description: Installing msxml3\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet452\n    description: Installing .net 4.5.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    description: Setting environment to Windows7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/renx/Renegade_X_Installer-d3c8456.msi\" /q\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
+}

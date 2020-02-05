@@ -1,17 +1,17 @@
 {
-  "id": 3564,
+  "id": 13601,
   "game_id": 954,
   "game_slug": "the-sims-3",
   "name": "The Sims 3",
   "year": 2009,
-  "user": "tyo100",
+  "user": "citrusalex",
   "runner": "wine",
   "slug": "the-sims-3-dvd",
   "version": "DVD",
-  "description": "Install Sims 3 DVD-Version, requires real DVD",
-  "notes": "Please check the installation path is \"c:\\Program Files\\Electronic Arts\\The Sims 3\\\" if you have the multilang version the last folder change for you localization, for example \"Los Sims 3\" for spanish countries, \"Leis Sims 3\" for french countries and lancher not work.",
-  "created_at": "2017-04-25T06:06:21.295000Z",
-  "updated_at": "2019-06-16T22:21:59.263250Z",
+  "description": null,
+  "notes": "- It is highly suggested to install ErrorTrap, Traveler and Overwatch mods by nRaas to improve game's stability.",
+  "created_at": "2019-05-18T10:48:05.089000Z",
+  "updated_at": "2020-01-23T02:57:01.223935Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,79 +21,65 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "restore_gamma": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/TS3.exe"
-    },
-    "wine": {
-      "UseXVidMode": true,
-      "version": "tkg-oldnvidia-sims3-4.1-x86_64",
-      "esync": true
-    },
     "files": [
       {
-        "file1": "N/A:Please select the Sims 3 setup file"
+        "setup": "N/A:Please select the setup file for The Sims 3"
       }
     ],
     "installer": [
       {
         "task": {
+          "description": "Creating Wine prefix...",
+          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "dxgi.nvapiHack = False",
+          "file": "$GAMEDIR/dxvk.conf"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Installing .Net 2.0",
-          "app": "dotnet20",
-          "arch": "win32",
+          "description": "Installing dependencies...",
           "name": "winetricks",
-          "silent": true
+          "arch": "win32",
+          "silent": true,
+          "prefix": "$GAMEDIR",
+          "app": "dotnet20 mfc42 d3dx9 vcrun2005 vcrun2010"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Installing MFC42",
-          "app": "mfc42",
+          "description": "Setting version to XP for Sims3LauncherW...",
+          "name": "set_regedit",
           "arch": "win32",
-          "name": "winetricks",
-          "silent": true
-        }
-      },
-      {
-        "task": {
+          "key": "Version",
           "prefix": "$GAMEDIR",
-          "description": "Setting version to xp for Sims3LauncherW...",
-          "value": "winxp",
-          "arch": "win32",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe",
-          "key": "Version",
-          "name": "set_regedit"
+          "value": "winxp"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting version to 7 for default...",
-          "value": "win7",
+          "name": "set_regedit",
           "arch": "win32",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win7"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "file1",
-          "name": "wineexec"
+          "description": "Installing The Sims 3 from setup...",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -102,7 +88,29 @@
           "name": "winekill"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/Sims3LauncherW.exe"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      }
+    }
   },
-  "content": "files:\n- file1: N/A:Please select the Sims 3 setup file\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/TS3.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20\n    arch: win32\n    description: Installing .Net 2.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: mfc42\n    arch: win32\n    description: Installing MFC42\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to xp for Sims3LauncherW...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    arch: win32\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    executable: file1\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  restore_gamma: true\nwine:\n  UseXVidMode: true\n  esync: true\n  version: tkg-oldnvidia-sims3-4.1-x86_64\n"
+  "content": "files:\n- setup: N/A:Please select the setup file for The Sims 3\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/Sims3LauncherW.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: dotnet20 mfc42 d3dx9 vcrun2005 vcrun2010\n    arch: win32\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to XP for Sims3LauncherW...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    arch: win32\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    arch: win32\n    description: Installing The Sims 3 from setup...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
 }

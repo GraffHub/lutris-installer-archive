@@ -1,0 +1,111 @@
+{
+  "id": 17904,
+  "game_id": 357,
+  "game_slug": "medal-of-honortm-single-player",
+  "name": "Medal of Honor(TM) Single Player",
+  "year": null,
+  "user": "soredake",
+  "runner": "wine",
+  "slug": "medal-of-honortm-single-playe-origin",
+  "version": "Origin",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-01-14T18:55:51.495865Z",
+  "updated_at": "2020-01-18T09:49:32.808951Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 47790,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "updater": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh"
+      },
+      {
+        "client": "https://download.dm.origin.com/origin/live/OriginThinSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir \"$GAMEDIR/nv-shaders\""
+        }
+      },
+      {
+        "write_file": {
+          "content": "dxgi.nvapiHack = False",
+          "file": "$GAMEDIR/dxvk.conf"
+        }
+      },
+      {
+        "chmodx": "updater"
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Origin",
+          "src": "updater"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial d3dcompiler_43 d3dcompiler_47 d3dx9 win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "client",
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
+    },
+    "system": {
+      "manual_command": "$GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh",
+      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "STAGING_SHARED_MEMORY": "0"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      }
+    }
+  },
+  "content": "files:\r\n- updater: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh\r\n- client: https://download.dm.origin.com/origin/live/OriginThinSetup.exe\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir \"$GAMEDIR/nv-shaders\"\r\n- write_file:\r\n    content: dxgi.nvapiHack = False\r\n    file: $GAMEDIR/dxvk.conf\r\n- chmodx: updater\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\r\n    src: updater\r\n- task:\r\n    app: arial d3dcompiler_43 d3dcompiler_47 d3dx9 win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    description: Installing Origin... Login window will pop-up and close.\r\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\r\n      QtWebEngineProcess.exe\r\n    executable: client\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\r\n    STAGING_SHARED_MEMORY: '0'\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\r\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\r\n  manual_command: $GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh\r\nwine:\r\n  dxvk: true\r\n  esync: true\r\n  overrides:\r\n    nvapi,nvapi64: disabled"
+}

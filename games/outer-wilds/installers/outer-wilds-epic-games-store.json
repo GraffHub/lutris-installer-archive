@@ -1,0 +1,116 @@
+{
+  "id": 17724,
+  "game_id": 27592,
+  "game_slug": "outer-wilds",
+  "name": "Outer Wilds",
+  "year": 2019,
+  "user": "smt",
+  "runner": "wine",
+  "slug": "outer-wilds-epic-games-store",
+  "version": "Epic Games Store",
+  "description": "Installs the Epic Games Store launcher and sets tweaks up so that Outer Wilds will run, but the game will have to be downloaded and installed manually from within the EGS launcher",
+  "notes": "If you experience issues with alt tabbing freezes/lockups this can be solved by using wine's virtual desktop mode",
+  "created_at": "2020-01-03T17:00:09.288000Z",
+  "updated_at": "2020-01-22T02:16:05.895977Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 753640,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/mfinstaller",
+          "file": "mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "command": "$CACHE/mfinstaller/install-mf.sh"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9 win7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "msiexec",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "EpicGamesLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      }
+    ],
+    "game": {
+      "args": "-opengl -SkipBuildPatchPrereq",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "dumbxinputemu": true,
+      "esync": true,
+      "x360ce-xinput9": true
+    }
+  },
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  arch: win64\n  args: -opengl -SkipBuildPatchPrereq\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9 win7\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dumbxinputemu: true\n  dxvk: true\n  esync: true\n  x360ce-xinput9: true\n"
+}

@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "custom-name": "Tomb Raider IV - The Times exclusive level",
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb Raider Level/TR4TIMESM1.BAT"
-    },
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    },
     "files": [
       {
         "setup": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/tomb_raider_4_times_bonus_level.zip"
@@ -59,13 +50,17 @@
         "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Last%20Revelation/TombRaider234_Patch.zip"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb Raider Level/TR4TIMESM1.BAT"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Preparing wineprefix...",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -76,11 +71,11 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
           "args": "/desktop=TombRaider4Times,1024x780 $CACHE/Setup.exe",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
           "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -109,16 +104,16 @@
       {
         "write_config": {
           "data": {
-            "DirectX": {
-              "Resolution": "max_qhd_isf",
-              "dgVoodooWatermark": false,
-              "ForceVerticalSync": true,
-              "VRAM": 256
-            },
             "General": {
-              "FullScreenMode": false,
               "CaptureMouse": false,
+              "FullScreenMode": false,
               "ScalingMode": "stretched_ar"
+            },
+            "DirectX": {
+              "ForceVerticalSync": true,
+              "VRAM": 256,
+              "dgVoodooWatermark": false,
+              "Resolution": "max_qhd_isf"
             }
           },
           "file": "$GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb Raider Level/dgVoodoo.conf"
@@ -168,71 +163,76 @@
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "wallpaper",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
           "value": "c:\\\\tr4times.bmp",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "wallpaper",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "background",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
-          "arch": "win64",
-          "type": "REG_DWORD",
-          "key": "csmt",
-          "name": "set_regedit"
+          "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "ActiveTitle",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "ActiveTitle",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "GradientActiveTitle",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "255 255 255",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "GradientActiveTitle",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "ddraw",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "ddraw",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "custom-name": "Tomb Raider IV - The Times exclusive level"
   },
   "content": "custom-name: Tomb Raider IV - The Times exclusive level\nfiles:\n- setup: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/tomb_raider_4_times_bonus_level.zip\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- menu1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/TR4TIMESM1.BAT\n- menu2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/TR4TIMESM2.BAT\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/gamepad%20profiles/tr4_x360.gamecontroller.amgp\n- gpsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/gamepad%20profiles/tr4_steam.sccprofile\n- gpreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/gamepad%20profiles/tr4_gamepad_readme.html\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Times%20exclusive%20level/tr4times.bmp\n- patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Last%20Revelation/TombRaider234_Patch.zip\ngame:\n  exe: drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb Raider Level/TR4TIMESM1.BAT\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: setup\n- task:\n    args: /desktop=TombRaider4Times,1024x780 $CACHE/Setup.exe\n    description: Running setup of the game. Just proceed and keep all settings at\n      their defaults\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/\n    src: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/MS/x86/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/\n    src: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/MS/x86/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive\n      Tomb Raider Level/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/dgVoodoo.conf\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/\n    src: patch\n- copy:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/\n    src: menu1\n- copy:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/\n    src: menu2\n- copy:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/gamepad profiles/\n    src: gpreadme\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/gamepad profiles/\n    src: gpx360\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Core Design/The Times - Exclusive Tomb\n      Raider Level/gamepad profiles/\n    src: gpsteam\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr4times.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 255 255 255\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

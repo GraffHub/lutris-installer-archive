@@ -1,0 +1,87 @@
+{
+  "id": 18066,
+  "game_id": 31295,
+  "game_slug": "chronicles-of-the-sword",
+  "name": "Chronicles of the Sword",
+  "year": 1996,
+  "user": "legluondunet",
+  "runner": "dosbox",
+  "slug": "chronicles-of-the-sword-cd",
+  "version": "CD",
+  "description": "This script will install \"Chronicles of Sword\" DOS CD edition for DOSBox.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- You will need the 2 CD only during install\r\n- During gaming, type \"CTRL+F4\" to change CD1 to CD2",
+  "created_at": "2020-01-25T17:36:26.277000Z",
+  "updated_at": "2020-01-25T19:04:01.487350Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
+      },
+      {
+        "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Chronicles%20of%20Sword/cos_dosbox.conf"
+      }
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/cos_dosbox.conf"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "description": "Please insert disc 1",
+          "requires": "cots.exe"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "src": "cdrtools"
+        }
+      },
+      {
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "VOLUME_ID 0",
+          "file": "script"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc 2",
+          "requires": "disk2"
+        }
+      },
+      {
+        "execute": {
+          "args": "1996",
+          "file": "script"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd $GAMEDIR; rm -f -r *.toc; mv VOLUME_ID.cue COS_CD1.cue; mv VOLUME_ID.bin COS_CD1.bin; mv \"1996.cue\" COS_CD2.cue; mv \"1996.bin\" COS_CD2.bin; sed -i 's/VOLUME_ID.bin/COS_CD1.bin/g' COS_CD1.cue; sed -i 's/1996.bin/COS_CD2.bin/g' COS_CD2.cue"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "conf"
+        }
+      }
+    ],
+    "custom-name": "Chronicles of Sword - CD - DOSBox"
+  },
+  "content": "custom-name: Chronicles of Sword - CD - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Chronicles%20of%20Sword/cos_dosbox.conf\ngame:\n  main_file: $GAMEDIR/cos_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: cots.exe\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: VOLUME_ID 0\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: disk2\n- execute:\n    args: '1996'\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv VOLUME_ID.cue COS_CD1.cue; mv VOLUME_ID.bin\n      COS_CD1.bin; mv \"1996.cue\" COS_CD2.cue; mv \"1996.bin\" COS_CD2.bin; sed -i 's/VOLUME_ID.bin/COS_CD1.bin/g'\n      COS_CD1.cue; sed -i 's/1996.bin/COS_CD2.bin/g' COS_CD2.cue\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
+}

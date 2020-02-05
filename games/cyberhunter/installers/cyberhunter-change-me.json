@@ -1,0 +1,66 @@
+{
+  "id": 17995,
+  "game_id": 28778,
+  "game_slug": "cyberhunter",
+  "name": "Cyberhunter",
+  "year": 2019,
+  "user": "blixzard",
+  "runner": "wine",
+  "slug": "cyberhunter-change-me",
+  "version": "Change Me",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-01-22T02:21:45.849373Z",
+  "updated_at": "2020-01-22T02:21:45.849399Z",
+  "draft": false,
+  "published": false,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "file1": "https://g94na.gdl.netease.com/cyber_hunter_20190729.exe"
+      }
+    ],
+    "game": {
+      "args": "-arg",
+      "exe": "drive_c/CyberHunter/launcher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "vcrun2010 wininet win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Please wait while we install Cyber Hunter",
+          "name": "wineexec",
+          "executable": "$CACHE/cyber_hunter_20190729.exe",
+          "prefix": "$GAMEDIR",
+          "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS",
+          "exclude_processes": "client.exe"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
+    }
+  },
+  "content": "files:\n- file1: https://g94na.gdl.netease.com/cyber_hunter_20190729.exe\ngame:\n  args: -arg\n  exe: drive_c/CyberHunter/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS\n    description: Please wait while we install Cyber Hunter\n    exclude_processes: client.exe\n    executable: $CACHE/cyber_hunter_20190729.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
+}

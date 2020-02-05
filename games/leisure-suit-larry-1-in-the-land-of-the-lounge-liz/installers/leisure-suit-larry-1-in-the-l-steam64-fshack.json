@@ -1,0 +1,105 @@
+{
+  "id": 17758,
+  "game_id": 16392,
+  "game_slug": "leisure-suit-larry-1-in-the-land-of-the-lounge-liz",
+  "name": "Leisure Suit Larry 1 - In the Land of the Lounge Lizards",
+  "year": 1987,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "leisure-suit-larry-1-in-the-l-steam64-fshack",
+  "version": "Steam64-fshack",
+  "description": "testing",
+  "notes": "",
+  "created_at": "2020-01-05T11:45:28.347185Z",
+  "updated_at": "2020-01-23T02:57:21.215318Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 763970,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "SteamSetup.exe"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/SteamSetup.exe"
+      },
+      {
+        "task": {
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d9vk",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/SteamSetup.exe",
+          "description": "Steam ...",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Windows version 10 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win10",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "-nojoy -applaunch 763970",
+      "appid": "763970",
+      "prefix": "$GAMEDIR/prefix",
+      "custom-name": "Leisure Suit Larry 1 - In the Land of the Lounge Lizards",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Steam/Steam.exe"
+    },
+    "system": {
+      "disable_compositor": true,
+      "xboxdrv": "xboxdrv",
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "Audio": "pulse",
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    }
+  },
+  "content": "files:\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\ngame:\n  appid: '763970'\n  arch: win64\n  args: -nojoy -applaunch 763970\n  custom-name: Leisure Suit Larry 1 - In the Land of the Lounge Lizards\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Steam/Steam.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: SteamSetup.exe\n- chmodx: $GAMEDIR/drive_c/SteamSetup.exe\n- task:\n    app: d9vk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /S\n    description: Steam ...\n    executable: $GAMEDIR/drive_c/SteamSetup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win10\n    arch: win64\n    description: Windows version 10 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  overrides:\n    winedbg.exe: d\n"
+}

@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2017-07-17T06:20:23.935000Z",
-  "updated_at": "2018-09-28T06:34:53.739580Z",
+  "updated_at": "2020-01-31T02:38:32.682588Z",
   "draft": false,
   "published": true,
   "published_by": null,
@@ -21,80 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "appid": 388750,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
     "winesteam": {
       "overrides": {
         "xaudio2_7": "native,builtin"
-      },
-      "version": "staging-3.16-i386"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 388750
+      }
     },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing Quartz",
+          "description": "Installing needed libraries",
           "name": "winetricks",
-          "app": "quartz"
+          "arch": "win32",
+          "app": "wmp9 quartz devenum quartz winxp",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
           "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing devenum",
-          "name": "winetricks",
-          "app": "devenum"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing Windows Media Player 9",
-          "name": "winetricks",
-          "app": "wmp9"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "description": "Installing xact",
-          "name": "winetricks",
-          "app": "xact"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "winxp"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "value": "win7",
-          "arch": "win32",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe",
+          "value": "win7"
         }
       }
     ]
   },
-  "content": "game:\n  appid: 388750\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: quartz\n    arch: win32\n    description: Installing Quartz\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: devenum\n    arch: win32\n    description: Installing devenum\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: wmp9\n    arch: win32\n    description: Installing Windows Media Player 9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    arch: win32\n    description: Installing xact\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: winxp\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe\n    prefix: $GAMEDIR/prefix\n    value: win7\nwinesteam:\n  overrides:\n    xaudio2_7: native,builtin\n  version: staging-3.16-i386\n"
+  "content": "game:\n  appid: 388750\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: wmp9 quartz devenum quartz winxp\n    arch: win32\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe\n    prefix: $GAMEDIR/prefix\n    value: win7\nwinesteam:\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

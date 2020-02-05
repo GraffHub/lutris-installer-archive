@@ -11,7 +11,7 @@
   "description": null,
   "notes": "They implemented EAC. Game no longer runs.",
   "created_at": "2018-06-07T08:29:49.184000Z",
-  "updated_at": "2019-02-16T04:27:11.436140Z",
+  "updated_at": "2020-01-31T02:38:28.063372Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,42 +21,41 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
+    "game": {
+      "appid": 813820,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
     },
     "winesteam": {
+      "dxvk": true,
       "overrides": {
         "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 813820
+      }
     },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "value": "Y",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "HideWineExports",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    }
   },
-  "content": "game:\n  appid: 813820\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n  version: tkg-4.0-x86_64\n"
+  "content": "game:\n  appid: 813820\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
 }

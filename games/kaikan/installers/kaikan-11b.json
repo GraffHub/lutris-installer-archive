@@ -21,24 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "use_us_layout": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "KAIKAN.EXE"
-    },
     "files": [
       {
         "game": "http://downloads.rgcd.co.uk/mirrored/kaikan1.1.zip"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "KAIKAN.EXE"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -49,13 +46,16 @@
       },
       {
         "task": {
+          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true,
           "app": "d3dx9"
         }
       }
-    ]
+    ],
+    "system": {
+      "use_us_layout": true
+    }
   },
   "content": "files:\n- game: http://downloads.rgcd.co.uk/mirrored/kaikan1.1.zip\ngame:\n  exe: KAIKAN.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR\n    file: game\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  use_us_layout: true\n"
 }

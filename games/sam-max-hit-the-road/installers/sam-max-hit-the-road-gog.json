@@ -8,46 +8,55 @@
   "runner": "scummvm",
   "slug": "sam-max-hit-the-road-gog",
   "version": "GOG",
-  "description": null,
-  "notes": "Requires the latest version of GOG's Linux installer.",
+  "description": "This script will install \"Sam & Max - Hit the Road\" GOG edition for ScummVM.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2014-11-17T10:53:11.824000Z",
-  "updated_at": "2019-05-11T00:07:02.287759Z",
+  "updated_at": "2020-01-25T21:31:28.416034Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 494,
   "rating": "",
   "steamid": 355170,
   "gogid": 1207666303,
   "gogslug": "sam_max_hit_the_road",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "gog": "N/A:Please select the \"Sam & Max Hit the Road\" GOG Windows setup file."
+      }
+    ],
     "scummvm": {
+      "fullscreen": true,
       "aspect": true
     },
     "game": {
       "path": "$GAMEDIR",
       "game_id": "samnmax"
     },
-    "files": [
-      {
-        "goginstaller": "N/A:Please select the GOG.com Linux installer"
-      }
-    ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/GOG",
-          "format": "zip",
-          "file": "goginstaller"
+          "dst": "$CACHE/innoextract",
+          "file": "inno"
         }
       },
       {
-        "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/GOG/data/noarch/data"
+        "execute": {
+          "args": "--extract $gog --output-dir \"$GAMEDIR\"",
+          "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR\" ; rm -f -r app commonappdata __redist scummvm __support tmp goggame-1207666303.* ;"
         }
       }
-    ]
+    ],
+    "custom-name": "Sam & Max Hit the Road - GOG - ScummVM"
   },
-  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Linux installer\ngame:\n  game_id: samnmax\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/GOG/data/noarch/data\nscummvm:\n  aspect: true\n"
+  "content": "custom-name: Sam & Max Hit the Road - GOG - ScummVM\nfiles:\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- gog: N/A:Please select the \"Sam & Max Hit the Road\" GOG Windows setup file.\ngame:\n  game_id: samnmax\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $gog --output-dir \"$GAMEDIR\"\n    file: $CACHE/innoextract/innoextract\n- execute:\n    command: cd \"$GAMEDIR\" ; rm -f -r app commonappdata __redist scummvm __support\n      tmp goggame-1207666303.* ;\nscummvm:\n  aspect: true\n  fullscreen: true\n"
 }

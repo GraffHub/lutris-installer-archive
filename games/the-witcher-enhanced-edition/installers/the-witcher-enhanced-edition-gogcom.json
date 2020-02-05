@@ -21,49 +21,49 @@
   "gogslug": "the_witcher",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe"
-    },
     "files": [
       {
         "game": "N/A:Select the Windows setup file downloaded from GOG"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "executable": "game",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "game"
         }
       },
       {
         "task": {
-          "arch": "win32",
+          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true,
+          "arch": "win32",
           "app": "d3dx9_35"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "enabled",
+          "name": "set_regedit",
           "arch": "win32",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "key": "CheckFloatConstants",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "value": "enabled"
         }
       }
     ]

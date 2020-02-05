@@ -21,19 +21,6 @@
   "gogslug": "my_friend_pedro",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/My Friend Pedro/My Friend Pedro - Blood Bullets Bananas.exe"
-    },
-    "wine": {
-      "dxvk": true
-    },
     "files": [
       {
         "setup": "N/A:Select the game's setup file"
@@ -42,21 +29,34 @@
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
           "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "setup",
           "description": "Installing My Friend Pedro",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/GOG Games/My Friend Pedro/My Friend Pedro - Blood Bullets Bananas.exe"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler"
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/My Friend Pedro/My Friend Pedro - Blood Bullets Bananas.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing My Friend Pedro\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n"
 }

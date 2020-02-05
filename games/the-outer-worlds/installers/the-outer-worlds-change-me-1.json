@@ -1,0 +1,169 @@
+{
+  "id": 16637,
+  "game_id": 29956,
+  "game_slug": "the-outer-worlds",
+  "name": "The Outer Worlds",
+  "year": 2019,
+  "user": "HailHydra",
+  "runner": "wine",
+  "slug": "the-outer-worlds-change-me-1",
+  "version": "Change Me",
+  "description": null,
+  "notes": "Installs mfplat dlls which The Outer Worlds requires along with epic games store dependencies.",
+  "created_at": "2019-11-05T00:49:44.321001Z",
+  "updated_at": "2020-01-23T02:57:00.421750Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 578650,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "mfplat_dll_64": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "audio"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "mf"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "install_cab_component",
+          "component": "mediafoundation",
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "install_cab_component",
+          "component": "mf_",
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "install_cab_component",
+          "component": "mfreadwrite",
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "install_cab_component",
+          "component": "wmadmod",
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "install_cab_component",
+          "component": "wmvdecod",
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial dotnet48",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "msiexec",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "EpicGamesLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      }
+    ],
+    "game": {
+      "args": "-opengl",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "mfplat": "native,builtin"
+      }
+    }
+  },
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    mfplat: native,builtin\n"
+}

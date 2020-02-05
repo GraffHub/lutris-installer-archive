@@ -1,0 +1,100 @@
+{
+  "id": 9872,
+  "game_id": 726,
+  "game_slug": "sleeping-dogstm",
+  "name": "Sleeping Dogs™",
+  "year": null,
+  "user": "CaptainSabatini",
+  "runner": "winesteam",
+  "slug": "sleeping-dogstm-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-08-24T17:43:50.510000Z",
+  "updated_at": "2020-01-31T02:38:33.907663Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 202170,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dumbxemu": "https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip"
+      },
+      {
+        "xreg": "https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg"
+      }
+    ],
+    "game": {
+      "appid": 202170,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true,
+      "WineDesktop": "1920x1080",
+      "Desktop": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "dumbxemu"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/windows/system32",
+          "src": "$CACHE/x64/xinput9_1_0_fake.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/windows/system32",
+          "src": "$CACHE/x64/xinput1_3_fake.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/windows/syswow64",
+          "src": "$CACHE/x32/xinput1_3_fake.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/windows/syswow64",
+          "src": "$CACHE/x32/xinput9_1_0_fake.dll"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit_file",
+          "arch": "win64",
+          "filename": "xreg"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    }
+  },
+  "content": "files:\n- dumbxemu: https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip\n- xreg: https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg\ngame:\n  appid: 202170\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE\n    file: dumbxemu\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: $CACHE/x64/xinput9_1_0_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: $CACHE/x64/xinput1_3_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64\n    src: $CACHE/x32/xinput1_3_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64\n    src: $CACHE/x32/xinput9_1_0_fake.dll\n- task:\n    arch: win64\n    filename: xreg\n    name: set_regedit_file\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
+}

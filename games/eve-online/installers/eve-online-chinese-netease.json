@@ -1,0 +1,74 @@
+{
+  "id": 12180,
+  "game_id": 1397,
+  "game_slug": "eve-online",
+  "name": "EVE Online",
+  "year": 2003,
+  "user": "530100644",
+  "runner": "wine",
+  "slug": "eve-online-chinese-netease",
+  "version": "中文/Chinese Netease",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-02-26T15:07:32.505000Z",
+  "updated_at": "2020-01-23T02:57:24.486559Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 8500,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": {
+          "filename": "EVE_Online_Launcher_1457536.exe",
+          "url": "https://ma79.gdl.netease.com/EVE_Online_Launcher_1457536.exe"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/EVE/eve.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 10 mode for Wine",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
+          "name": "wineexec",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: EVE_Online_Launcher_1457536.exe\n    url: https://ma79.gdl.netease.com/EVE_Online_Launcher_1457536.exe\ngame:\n  exe: $GAMEDIR/drive_c/EVE/eve.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running EVE Online Installer. Please do not run the game until this\n      script finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

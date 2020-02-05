@@ -11,7 +11,7 @@
   "description": null,
   "notes": "Please download Contra from itch.io before proceeding:\r\n\r\n<a href=\"https://contragon.itch.io/contra-2028\">https://contragon.itch.io/contra-2028</a>",
   "created_at": "2017-12-24T00:28:15.306000Z",
-  "updated_at": "2019-02-14T05:31:31.472021Z",
+  "updated_at": "2020-01-23T02:57:00.935891Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,41 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe"
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    },
     "files": [
       {
         "contra": "N/A:Please select the itch.io archive"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "xact"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
@@ -66,15 +47,21 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "Y",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "HideWineExports",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "Y"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    }
   },
-  "content": "files:\n- contra: N/A:Please select the itch.io archive\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Contra 2028\n    file: contra\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  version: tkg-4.0-x86_64\n"
+  "content": "files:\n- contra: N/A:Please select the itch.io archive\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Contra 2028\n    file: contra\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

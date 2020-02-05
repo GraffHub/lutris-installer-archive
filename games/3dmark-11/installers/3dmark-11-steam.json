@@ -1,0 +1,134 @@
+{
+  "id": 18072,
+  "game_id": 1929,
+  "game_slug": "3dmark-11",
+  "name": "3DMark 11",
+  "year": null,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "3dmark-11-steam",
+  "version": "Steam",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-01-25T22:02:22.633889Z",
+  "updated_at": "2020-01-31T02:38:32.902054Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 205270,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/",
+          "src": "SteamSetup.exe"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/prefix/drive_c/SteamSetup.exe"
+      },
+      {
+        "task": {
+          "description": "DirectX ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3drm",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dcompiler_43",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dx11_43",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX compiler ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dcompiler_47",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "dxvk",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/prefix/drive_c/SteamSetup.exe",
+          "description": "Steam ...",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Windows version 8 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win8",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "-nojoy -applaunch 205270",
+      "appid": "205270",
+      "prefix": "$GAMEDIR/prefix",
+      "custom-name": "3DMark 11",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe"
+    },
+    "system": {
+      "disable_compositor": true,
+      "xboxdrv": "xboxdrv",
+      "pulse_latency": true
+    },
+    "wine": {
+      "Audio": "pulse",
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    }
+  },
+  "content": "files:\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\ngame:\n  appid: '205270'\n  arch: win64\n  args: -nojoy -applaunch 205270\n  custom-name: 3DMark 11\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR/prefix/drive_c/\n    src: SteamSetup.exe\n- chmodx: $GAMEDIR/prefix/drive_c/SteamSetup.exe\n- task:\n    app: d3drm\n    arch: win64\n    description: DirectX ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_47\n    arch: win64\n    description: DirectX compiler ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /S\n    description: Steam ...\n    executable: $GAMEDIR/prefix/drive_c/SteamSetup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n"
+}

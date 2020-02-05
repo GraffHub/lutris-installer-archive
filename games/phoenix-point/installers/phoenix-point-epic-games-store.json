@@ -1,0 +1,114 @@
+{
+  "id": 17797,
+  "game_id": 30645,
+  "game_slug": "phoenix-point",
+  "name": "Phoenix Point",
+  "year": 2019,
+  "user": "Adval",
+  "runner": "wine",
+  "slug": "phoenix-point-epic-games-store",
+  "version": "Epic Games Store",
+  "description": "Gold: works flawlessly with some minor tweaking\r\n\r\nOnly sets up Epic Games Store, DXVK, MF Platform and corefonts, you'll need to download Phoenix Point manually from the launcher.",
+  "notes": "",
+  "created_at": "2020-01-08T00:26:56.728000Z",
+  "updated_at": "2020-01-22T02:15:03.099544Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/mfinstaller",
+          "file": "mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "command": "$CACHE/mfinstaller/install-mf.sh"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9 win7 corefonts",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "msiexec",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "EpicGamesLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win64"
+        }
+      }
+    ],
+    "game": {
+      "args": "-opengl -SkipBuildPatchPrereq",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  arch: win64\n  args: -opengl -SkipBuildPatchPrereq\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9 win7 corefonts\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

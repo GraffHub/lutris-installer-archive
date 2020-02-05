@@ -21,13 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "dosbox": {
-      "exit": true
-    },
-    "main_file": "Game/PX3.COM",
-    "game": {
-      "config_file": "$GAMEDIR/dosbox_PX3.conf"
-    },
     "files": [
       {
         "game": "N/A:Select the zip downloaded from the the8bitguy.com"
@@ -39,11 +32,15 @@
         "sample_config": "https://raw.githubusercontent.com/ioangogo/planet-x3-Lutris/master/planet-x3-dosbox.config"
       }
     ],
+    "game": {
+      "config_file": "$GAMEDIR/dosbox_PX3.conf"
+    },
+    "dosbox": {
+      "exit": true
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "SIZEMODE",
-          "description": "Choose the game's size:",
           "options": [
             {
               "DISTRO.720": "720K"
@@ -51,13 +48,13 @@
             {
               "DISTRO.360": "360K"
             }
-          ]
+          ],
+          "description": "Choose the game's size:",
+          "id": "SIZEMODE"
         }
       },
       {
         "input_menu": {
-          "id": "MACHINE",
-          "description": "Choose the type of graphics hardware:",
           "options": [
             {
               "cga": "CGA"
@@ -74,7 +71,9 @@
             {
               "svga_s3": "VGA(720K ONLY)"
             }
-          ]
+          ],
+          "description": "Choose the type of graphics hardware:",
+          "id": "MACHINE"
         }
       },
       {
@@ -85,9 +84,9 @@
       },
       {
         "execute": {
-          "description": "Extracting game data...",
           "args": "$game 'Planet X3 Digital Download/$INPUT_SIZEMODE/*' -d \"$CACHE/Game\"",
-          "file": "$CACHE/tools/unzip"
+          "file": "$CACHE/tools/unzip",
+          "description": "Extracting game data..."
         }
       },
       {
@@ -104,21 +103,22 @@
       },
       {
         "write_config": {
+          "key": "machine",
           "file": "$GAMEDIR/dosbox_PX3.conf",
           "section": "dosbox",
-          "key": "machine",
           "value": "$INPUT_MACHINE"
         }
       },
       {
         "write_config": {
+          "key": "tandy",
           "file": "$GAMEDIR/Game/dosbox_PX3.conf",
           "section": "speaker",
-          "key": "tandy",
           "value": "auto"
         }
       }
-    ]
+    ],
+    "main_file": "Game/PX3.COM"
   },
   "content": "dosbox:\n  exit: true\nfiles:\n- game: N/A:Select the zip downloaded from the the8bitguy.com\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\n- sample_config: https://raw.githubusercontent.com/ioangogo/planet-x3-Lutris/master/planet-x3-dosbox.config\ngame:\n  config_file: $GAMEDIR/dosbox_PX3.conf\ninstaller:\n- input_menu:\n    description: 'Choose the game''s size:'\n    id: SIZEMODE\n    options:\n    - DISTRO.720: 720K\n    - DISTRO.360: 360K\n- input_menu:\n    description: 'Choose the type of graphics hardware:'\n    id: MACHINE\n    options:\n    - cga: CGA\n    - Hercules: Hercules\n    - tandy: Tandy\n    - ega: EGA\n    - svga_s3: VGA(720K ONLY)\n- extract:\n    dst: $CACHE/tools\n    file: $unzip\n- execute:\n    args: $game 'Planet X3 Digital Download/$INPUT_SIZEMODE/*' -d \"$CACHE/Game\"\n    description: Extracting game data...\n    file: $CACHE/tools/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $CACHE/Game/Planet X3 Digital Download/$INPUT_SIZEMODE\n- rename:\n    dst: $GAMEDIR/dosbox_PX3.conf\n    src: $sample_config\n- write_config:\n    file: $GAMEDIR/dosbox_PX3.conf\n    key: machine\n    section: dosbox\n    value: $INPUT_MACHINE\n- write_config:\n    file: $GAMEDIR/Game/dosbox_PX3.conf\n    key: tandy\n    section: speaker\n    value: auto\nmain_file: Game/PX3.COM\n"
 }

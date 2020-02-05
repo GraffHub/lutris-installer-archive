@@ -1,0 +1,84 @@
+{
+  "id": 9386,
+  "game_id": 4168,
+  "game_slug": "grand-theft-auto-v",
+  "name": "Grand Theft Auto V",
+  "year": 2013,
+  "user": "Jompa",
+  "runner": "wine",
+  "slug": "grand-theft-auto-v-rockstar-games-launc",
+  "version": "Rockstar Games Launcher",
+  "description": null,
+  "notes": "Rockstar Launcher might crash on first launch after logging-in - ignore that and just restart it.\r\nOn first launch, resolution in Grand Theft Auto may be a bit borked. Switch game to borderless windowed mode in settings to workaround that.",
+  "created_at": "2018-07-25T22:33:17.972000Z",
+  "updated_at": "2020-01-23T02:56:48.903298Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "4",
+  "steamid": 271590,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "launcher": "https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine 64-bit Prefix",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial win10"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the launcher (Don't login, close the window)",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "launcher",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "RockstarService.exe Launcher.exe LauncherPatcher.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    }
+  },
+  "content": "files:\n- launcher: https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing the launcher (Don't login, close the window)\n    exclude_processes: RockstarService.exe Launcher.exe LauncherPatcher.exe\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n"
+}

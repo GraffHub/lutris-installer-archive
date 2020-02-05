@@ -11,7 +11,7 @@
   "description": "Windows version from Steam.",
   "notes": "- Requires cabextract and Python to install the Media Foundation libraries required for video playback\r\n- If you hear crackling, enable \"Reset PulseAudio\" (right-click on the game, select \"Configure\" → \"System options\")\r\n- Video playback may be sluggish and out of sync with the audio. Enabling DXVK fixes it (right-click on the game, select \"Configure\" → \"Runner options\", then check/tick \"Enable DXVK\"), but it may also make the game run slower and cause issues with certain video drivers",
   "created_at": "2018-05-22T07:45:12.038000Z",
-  "updated_at": "2018-06-05T05:04:21.105686Z",
+  "updated_at": "2020-01-31T02:38:31.714847Z",
   "draft": false,
   "published": true,
   "published_by": null,
@@ -21,35 +21,11 @@
   "gogslug": "legend_of_kay_anniversary",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
-      }
-    },
-    "winesteam": {
-      "overrides": {
-        "wmvdcod.dll": "n",
-        "xaudio2_7.dll": "n",
-        "mfplat.dll": "n",
-        "wmadmod.dll": "n",
-        "mfreadwrite.dll": "n",
-        "mf.dll": "n"
-      },
-      "version": "pba-firerat-3.9-x86_64"
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 313810
-    },
     "files": [
       {
         "instcab": {
-          "url": "https://codeload.github.com/nastys/python-installcab/zip/0b22cab6b88c4c97b63c9405040563f431ec66b3",
-          "filename": "python-installcab.zip"
+          "filename": "python-installcab.zip",
+          "url": "https://codeload.github.com/nastys/python-installcab/zip/0b22cab6b88c4c97b63c9405040563f431ec66b3"
         }
       },
       {
@@ -59,11 +35,24 @@
         "w7sp": "https://download.microsoft.com/download/0/A/F/0AFB5316-3062-494A-AB78-7FB0D4461357/windows6.1-KB976932-X64.exe"
       }
     ],
+    "game": {
+      "appid": 313810,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "overrides": {
+        "wmadmod.dll": "n",
+        "mfreadwrite.dll": "n",
+        "mfplat.dll": "n",
+        "mf.dll": "n",
+        "wmvdcod.dll": "n",
+        "xaudio2_7.dll": "n"
+      }
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "DECOR",
-          "description": "Allow the window manager to control and decorate the game window (disable if you use DXVK and the game hangs):",
           "options": [
             {
               "Y": "Yes"
@@ -71,22 +60,24 @@
             {
               "N": "No"
             }
-          ]
+          ],
+          "description": "Allow the window manager to control and decorate the game window (disable if you use DXVK and the game hangs):",
+          "id": "DECOR"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix",
           "description": "Creating Wine prefix...",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/prefix",
           "description": "Unpacking python-installcab...",
-          "file": "instcab"
+          "file": "instcab",
+          "dst": "$GAMEDIR/prefix"
         }
       },
       {
@@ -98,71 +89,79 @@
       {
         "execute": {
           "args": "w7sp",
-          "description": "Installing Media Foundation libraries...",
+          "file": "$GAMEDIR/prefix/install-mf.sh",
           "env": {
             "WINEPREFIX": "$GAMEDIR/prefix"
           },
-          "file": "$GAMEDIR/prefix/install-mf.sh"
+          "description": "Installing Media Foundation libraries..."
         }
       },
       {
         "execute": {
-          "description": "Installing DirectX Audio libraries...",
           "args": "-F Jun2010_XAudio_x??.cab $dx -d /tmp",
-          "file": "cabextract"
+          "file": "cabextract",
+          "description": "Installing DirectX Audio libraries..."
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll.bak",
           "description": "Backing up fake DirectX Audio libraries...",
-          "src": "$GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll"
+          "src": "$GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll",
+          "dst": "$GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll.bak"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll.bak",
           "description": "Backing up fake DirectX Audio libraries...",
-          "src": "$GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll"
+          "src": "$GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll",
+          "dst": "$GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll.bak"
         }
       },
       {
         "execute": {
-          "description": "Installing DirectX Audio libraries...",
           "args": "-F xaudio2_7.dll /tmp/Jun2010_XAudio_x64.cab -d $GAMEDIR/prefix/drive_c/windows/system32",
-          "file": "cabextract"
+          "file": "cabextract",
+          "description": "Installing DirectX Audio libraries..."
         }
       },
       {
         "execute": {
-          "description": "Installing DirectX Audio libraries...",
           "args": "-F xaudio2_7.dll /tmp/Jun2010_XAudio_x86.cab -d $GAMEDIR/prefix/drive_c/windows/syswow64",
-          "file": "cabextract"
+          "file": "cabextract",
+          "description": "Installing DirectX Audio libraries..."
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "description": "Setting registry keys...",
-          "value": "$INPUT_DECOR",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\",
           "key": "Decorated",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\",
+          "value": "$INPUT_DECOR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "description": "Setting registry keys...",
-          "value": "$INPUT_DECOR",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\",
           "key": "Managed",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\",
+          "value": "$INPUT_DECOR"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true"
+      }
+    }
   },
-  "content": "files:\n- instcab:\n    filename: python-installcab.zip\n    url: https://codeload.github.com/nastys/python-installcab/zip/0b22cab6b88c4c97b63c9405040563f431ec66b3\n- dx: https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe\n- w7sp: https://download.microsoft.com/download/0/A/F/0AFB5316-3062-494A-AB78-7FB0D4461357/windows6.1-KB976932-X64.exe\ngame:\n  appid: 313810\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- input_menu:\n    description: 'Allow the window manager to control and decorate the game window\n      (disable if you use DXVK and the game hangs):'\n    id: DECOR\n    options:\n    - Y: 'Yes'\n    - N: 'No'\n- task:\n    arch: win64\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    description: Unpacking python-installcab...\n    dst: $GAMEDIR/prefix\n    file: instcab\n- chmodx: $GAMEDIR/prefix/installcab.py\n- chmodx: $GAMEDIR/prefix/install-mf.sh\n- execute:\n    args: w7sp\n    description: Installing Media Foundation libraries...\n    env:\n      WINEPREFIX: $GAMEDIR/prefix\n    file: $GAMEDIR/prefix/install-mf.sh\n- execute:\n    args: -F Jun2010_XAudio_x??.cab $dx -d /tmp\n    description: Installing DirectX Audio libraries...\n    file: cabextract\n- move:\n    description: Backing up fake DirectX Audio libraries...\n    dst: $GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll.bak\n    src: $GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll\n- move:\n    description: Backing up fake DirectX Audio libraries...\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll.bak\n    src: $GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll\n- execute:\n    args: -F xaudio2_7.dll /tmp/Jun2010_XAudio_x64.cab -d $GAMEDIR/prefix/drive_c/windows/system32\n    description: Installing DirectX Audio libraries...\n    file: cabextract\n- execute:\n    args: -F xaudio2_7.dll /tmp/Jun2010_XAudio_x86.cab -d $GAMEDIR/prefix/drive_c/windows/syswow64\n    description: Installing DirectX Audio libraries...\n    file: cabextract\n- task:\n    arch: win64\n    description: Setting registry keys...\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\\n    prefix: $GAMEDIR/prefix\n    value: $INPUT_DECOR\n- task:\n    arch: win64\n    description: Setting registry keys...\n    key: Managed\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\\n    prefix: $GAMEDIR/prefix\n    value: $INPUT_DECOR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwinesteam:\n  overrides:\n    mf.dll: n\n    mfplat.dll: n\n    mfreadwrite.dll: n\n    wmadmod.dll: n\n    wmvdcod.dll: n\n    xaudio2_7.dll: n\n  version: pba-firerat-3.9-x86_64\n"
+  "content": "files:\n- instcab:\n    filename: python-installcab.zip\n    url: https://codeload.github.com/nastys/python-installcab/zip/0b22cab6b88c4c97b63c9405040563f431ec66b3\n- dx: https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe\n- w7sp: https://download.microsoft.com/download/0/A/F/0AFB5316-3062-494A-AB78-7FB0D4461357/windows6.1-KB976932-X64.exe\ngame:\n  appid: 313810\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- input_menu:\n    description: 'Allow the window manager to control and decorate the game window\n      (disable if you use DXVK and the game hangs):'\n    id: DECOR\n    options:\n    - Y: 'Yes'\n    - N: 'No'\n- task:\n    arch: win64\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    description: Unpacking python-installcab...\n    dst: $GAMEDIR/prefix\n    file: instcab\n- chmodx: $GAMEDIR/prefix/installcab.py\n- chmodx: $GAMEDIR/prefix/install-mf.sh\n- execute:\n    args: w7sp\n    description: Installing Media Foundation libraries...\n    env:\n      WINEPREFIX: $GAMEDIR/prefix\n    file: $GAMEDIR/prefix/install-mf.sh\n- execute:\n    args: -F Jun2010_XAudio_x??.cab $dx -d /tmp\n    description: Installing DirectX Audio libraries...\n    file: cabextract\n- move:\n    description: Backing up fake DirectX Audio libraries...\n    dst: $GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll.bak\n    src: $GAMEDIR/prefix/drive_c/windows/system32/xaudio2_7.dll\n- move:\n    description: Backing up fake DirectX Audio libraries...\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll.bak\n    src: $GAMEDIR/prefix/drive_c/windows/syswow64/xaudio2_7.dll\n- execute:\n    args: -F xaudio2_7.dll /tmp/Jun2010_XAudio_x64.cab -d $GAMEDIR/prefix/drive_c/windows/system32\n    description: Installing DirectX Audio libraries...\n    file: cabextract\n- execute:\n    args: -F xaudio2_7.dll /tmp/Jun2010_XAudio_x86.cab -d $GAMEDIR/prefix/drive_c/windows/syswow64\n    description: Installing DirectX Audio libraries...\n    file: cabextract\n- task:\n    arch: win64\n    description: Setting registry keys...\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\\n    prefix: $GAMEDIR/prefix\n    value: $INPUT_DECOR\n- task:\n    arch: win64\n    description: Setting registry keys...\n    key: Managed\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\\\n    prefix: $GAMEDIR/prefix\n    value: $INPUT_DECOR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwinesteam:\n  overrides:\n    mf.dll: n\n    mfplat.dll: n\n    mfreadwrite.dll: n\n    wmadmod.dll: n\n    wmvdcod.dll: n\n    xaudio2_7.dll: n\n"
 }

@@ -21,10 +21,30 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/pbe/installer/deploy/League%20of%20Legends%20installer%20PBE.exe"
+      },
+      {
+        "appimage_ci": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/lol-wine/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+      },
+      {
+        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.20/d9vk-0.20.tar.gz"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
     "require-binaries": "wine",
-    "game": {
-      "args": "wine \"$GAMEDIR/drive_c/Riot Games/PBE/LeagueClient.exe\"",
-      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+    "system": {
+      "env": {
+        "WINEARCH": "win32",
+        "DXVK_HUD": "compiler",
+        "WINEOVERRIDES": "msvcp140=native",
+        "WINEDEBUG": "-all",
+        "WINEPREFIX": "$GAMEDIR",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
     },
     "installer": [
       {
@@ -51,19 +71,16 @@
       {
         "execute": {
           "args": "wine wineboot",
-          "description": "Setting up wine prefix",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "env": {
-            "WINEPREFIX": "$GAMEDIR",
-            "WINEARCH": "win32"
+            "WINEARCH": "win32",
+            "WINEPREFIX": "$GAMEDIR"
           },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+          "description": "Setting up wine prefix"
         }
       },
       {
         "input_menu": {
-          "preselect": "en_US",
-          "id": "LOCALE",
-          "description": "Choose the game's language:",
           "options": [
             {
               "cs_CZ": "Čeština"
@@ -113,14 +130,14 @@
             {
               "tr_TR": "Türkçe"
             }
-          ]
+          ],
+          "description": "Choose the game's language:",
+          "preselect": "en_US",
+          "id": "LOCALE"
         }
       },
       {
         "input_menu": {
-          "preselect": "NA",
-          "id": "REGION",
-          "description": "Choose the game's server region:",
           "options": [
             {
               "BR": "Brazil"
@@ -155,47 +172,50 @@
             {
               "SEA": "South East Asia"
             }
-          ]
+          ],
+          "description": "Choose the game's server region:",
+          "preselect": "NA",
+          "id": "REGION"
         }
       },
       {
         "execute": {
           "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent",
-          "description": "Installing Directx9",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+          "description": "Installing Directx9"
         }
       },
       {
         "execute": {
           "args": "wine lol_installer --mode unattended",
-          "description": "Installing League of Legends",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+          "description": "Installing League of Legends"
         }
       },
       {
         "execute": {
           "args": "install",
-          "description": "Setting up d9vk",
+          "file": "$CACHE/d9vk-0.20/setup_dxvk.sh",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "file": "$CACHE/d9vk-0.20/setup_dxvk.sh"
+          "description": "Setting up d9vk"
         }
       },
       {
         "execute": {
           "args": "wine wineboot -u",
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "env": {
-            "WINEPREFIX": "$GAMEDIR",
-            "WINEARCH": "win32"
-          },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+            "WINEARCH": "win32",
+            "WINEPREFIX": "$GAMEDIR"
+          }
         }
       },
       {
@@ -205,31 +225,11 @@
         }
       }
     ],
-    "system": {
-      "env": {
-        "WINEPREFIX": "$GAMEDIR",
-        "WINEARCH": "win32",
-        "DXVK_HUD": "compiler",
-        "WINEDEBUG": "-all",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "WINEOVERRIDES": "msvcp140=native"
-      }
-    },
     "custom-name": "PBE - AppImage + D9VK",
-    "files": [
-      {
-        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/pbe/installer/deploy/League%20of%20Legends%20installer%20PBE.exe"
-      },
-      {
-        "appimage_ci": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/lol-wine/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
-      },
-      {
-        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.20/d9vk-0.20.tar.gz"
-      },
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      }
-    ]
+    "game": {
+      "args": "wine \"$GAMEDIR/drive_c/Riot Games/PBE/LeagueClient.exe\"",
+      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+    }
   },
   "content": "custom-name: PBE - AppImage + D9VK\nfiles:\n- lol_installer: https://riotgamespatcher-a.akamaihd.net/releases/pbe/installer/deploy/League%20of%20Legends%20installer%20PBE.exe\n- appimage_ci: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/lol-wine/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- d9vk: https://github.com/Joshua-Ashton/d9vk/releases/download/0.20/d9vk-0.20.tar.gz\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  args: wine \"$GAMEDIR/drive_c/Riot Games/PBE/LeagueClient.exe\"\n  exe: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\ninstaller:\n- extract:\n    dst: $CACHE/d9vk-0.20/\n    file: d9vk\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- chmodx: appimage_ci\n- move:\n    dst: $GAMEDIR\n    src: appimage_ci\n- execute:\n    args: wine wineboot\n    description: Setting up wine prefix\n    env:\n      WINEARCH: win32\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LOCALE\n    options:\n    - cs_CZ: \"\\u010Ce\\u0161tina\"\n    - en_AU: English AUS\n    - en_GB: English U.K.\n    - en_US: English U.S.\n    - fr_FR: \"Fran\\xE7ais\"\n    - de_DE: Deutsch\n    - es_ES: \"Espa\\xF1ol\"\n    - es_MX: \"Espa\\xF1ol Mexicano\"\n    - it_IT: Italiano\n    - ja_JP: \"\\u65E5\\u672C\\u8A9E\"\n    - hu_HU: Magyar\n    - pl_PL: Polski\n    - pt_BR: \"Portugu\\xEAs do Brasil\"\n    - ro_RO: Romanian\n    - ru_RU: \"\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439\"\n    - tr_TR: \"T\\xFCrk\\xE7e\"\n    preselect: en_US\n- input_menu:\n    description: 'Choose the game''s server region:'\n    id: REGION\n    options:\n    - BR: Brazil\n    - EUNE: Europe Nordic & East\n    - EUW: Europe West\n    - LAN: Latin America North\n    - LAS: Latin America South\n    - NA: North America\n    - OCE: Oceania\n    - RU: Russia\n    - TR: Turkey\n    - JP: Japan\n    - SEA: South East Asia\n    preselect: NA\n- execute:\n    args: wine $CACHE/dxsetup/DXSETUP.exe /silent\n    description: Installing Directx9\n    env:\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- execute:\n    args: wine lol_installer --mode unattended\n    description: Installing League of Legends\n    env:\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- execute:\n    args: install\n    description: Setting up d9vk\n    env:\n      WINEPREFIX: $GAMEDIR\n    file: $CACHE/d9vk-0.20/setup_dxvk.sh\n- execute:\n    args: wine wineboot -u\n    env:\n      WINEARCH: win32\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- write_file:\n    content: \"install:\\n    globals:\\n        locale: \\\"$INPUT_LOCALE\\\"\\n        region:\\\n      \\ \\\"$INPUT_REGION\\\"\\n\"\n    file: $GAMEDIR/drive_c/Riot Games/PBE/Config/LeagueClientSettings.yaml\nrequire-binaries: wine\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    WINEARCH: win32\n    WINEDEBUG: -all\n    WINEOVERRIDES: msvcp140=native\n    WINEPREFIX: $GAMEDIR\n"
 }

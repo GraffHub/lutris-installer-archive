@@ -1,0 +1,79 @@
+{
+  "id": 12417,
+  "game_id": 26293,
+  "game_slug": "mystina",
+  "name": "Mystina",
+  "year": 2002,
+  "user": "iHad169",
+  "runner": "wine",
+  "slug": "mystina-windows",
+  "version": "Windows",
+  "description": "http://mo.lager.com.tw/intro/a_Story/Story-Page01.shtml",
+  "notes": "Please Install default Location on Game Installer",
+  "created_at": "2019-03-18T15:59:52.282000Z",
+  "updated_at": "2020-01-23T02:57:23.853781Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "http://files.lager.com.tw/mo/Mystina_20110530.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Lager/Mystina/login.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Setting up wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing CJK Fonts for proper Asian font display",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "cjkfonts",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Lager/Mystina/",
+          "src": "installer"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Mystina...\nPLEASE close the game after it opens to finish installation!",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$GAMEDIR/drive_c/Lager/Mystina/Mystina_20110530.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- installer: http://files.lager.com.tw/mo/Mystina_20110530.exe\ngame:\n  arch: win32\n  exe: drive_c/Lager/Mystina/login.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Setting up wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: cjkfonts\n    arch: win32\n    description: Installing CJK Fonts for proper Asian font display\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Lager/Mystina/\n    src: installer\n- task:\n    arch: win32\n    description: 'Installing Mystina...\n\n      PLEASE close the game after it opens to finish installation!'\n    executable: $GAMEDIR/drive_c/Lager/Mystina/Mystina_20110530.exe\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

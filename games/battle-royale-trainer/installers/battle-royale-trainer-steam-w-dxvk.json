@@ -1,0 +1,80 @@
+{
+  "id": 9823,
+  "game_id": 21039,
+  "game_slug": "battle-royale-trainer",
+  "name": "Battle Royale Trainer",
+  "year": 2018,
+  "user": "Holston",
+  "runner": "winesteam",
+  "slug": "battle-royale-trainer-steam-w-dxvk",
+  "version": "Steam w/ DXVK",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-08-20T17:02:23.669000Z",
+  "updated_at": "2020-01-31T02:38:34.773319Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 772540,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "game": {
+      "appid": 772540,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "audio"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2015 win7"
+        }
+      }
+    ],
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "pulse_latency": true
+    }
+  },
+  "content": "files:\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 772540\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n"
+}

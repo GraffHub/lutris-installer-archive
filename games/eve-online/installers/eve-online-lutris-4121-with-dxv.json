@@ -11,7 +11,7 @@
   "description": "- Sets DXVK and ESYNC\r\n- Installs the EveLauncher-version 1548102",
   "notes": "",
   "created_at": "2018-06-04T18:18:44.218000Z",
-  "updated_at": "2019-09-09T00:18:00.770638Z",
+  "updated_at": "2020-01-23T02:57:16.307909Z",
   "draft": false,
   "published": true,
   "published_by": 1,
@@ -21,41 +21,36 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "setup": {
+          "filename": "EveLauncher-1548102.exe",
+          "url": "https://binaries.eveonline.com/EveLauncher-1548102.exe"
+        }
+      }
+    ],
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "$GAMEDIR/drive_c/EVE/eve.exe"
     },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "version": "lutris-4.12.1-x86_64"
-    },
-    "files": [
-      {
-        "setup": {
-          "url": "https://binaries.eveonline.com/EveLauncher-1548102.exe",
-          "filename": "EveLauncher-1548102.exe"
-        }
-      }
-    ],
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
           "description": "Creating 64bit Wine prefix.",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting Windows 10 mode for Wine",
-          "value": "win10",
+          "name": "set_regedit",
           "arch": "win64",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10"
         }
       },
       {
@@ -67,13 +62,17 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "setup",
           "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
-  "content": "files:\n- setup:\n    filename: EveLauncher-1548102.exe\n    url: https://binaries.eveonline.com/EveLauncher-1548102.exe\ngame:\n  exe: $GAMEDIR/drive_c/EVE/eve.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running EVE Online Installer. Please do not run the game until this\n      script finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  version: lutris-4.12.1-x86_64\n"
+  "content": "files:\n- setup:\n    filename: EveLauncher-1548102.exe\n    url: https://binaries.eveonline.com/EveLauncher-1548102.exe\ngame:\n  exe: $GAMEDIR/drive_c/EVE/eve.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running EVE Online Installer. Please do not run the game until this\n      script finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

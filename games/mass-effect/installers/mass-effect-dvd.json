@@ -11,22 +11,19 @@
   "description": "During installation, the default installation folder may be different depending on the ISO file used, be careful to select the right folder.\r\n\r\nScreen resolution MUST BE configured in the launcher ( some resolutions are missing the game's options )",
   "notes": "Prefer to launch the game with \"MassEffectLauncher.exe\" than \"/Binaries/MassEffect.exe\" for avoid some screen glitch and missings resolutions for the game",
   "created_at": "2018-04-14T23:16:13.913000Z",
-  "updated_at": "2018-05-19T03:42:00.605225Z",
+  "updated_at": "2019-10-28T20:41:38.469329Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 51687,
   "rating": "",
   "steamid": 17460,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "wine": {
-      "version": "staging-3.3-i386"
-    },
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Mass Effect/MassEffectLauncher.exe"
     },
     "installer": [
@@ -37,105 +34,105 @@
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating 32bit Wine prefix.",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting OS as Windows 7.",
-          "value": "win7",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "name": "set_regedit",
           "key": "Version",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win7"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Allow DirectX apps to stop the mouse leaving their window.",
-          "value": "Y",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "name": "set_regedit",
           "key": "GrabFullScreen",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Deny the window manager to decorate the windows.",
-          "value": "N",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "name": "set_regedit",
           "key": "Decorated",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
-          "description": "Allow the window manager to control the windows.",
-          "value": "Y",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "N"
+        }
+      },
+      {
+        "task": {
+          "description": "Allow the window manager to control the windows.",
+          "name": "set_regedit",
           "key": "Managed",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Enabling CSMT for better graphic performance.",
-          "value": "wined3d-csmt.dll",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "name": "set_regedit",
           "key": "wined3d",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "value": "wined3d-csmt.dll"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Enabling VAAPI as backend for DXVA2 GPU decoding.",
-          "value": "va",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "name": "set_regedit",
           "key": "backend",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "value": "va"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing mfc42.",
           "name": "winetricks",
-          "app": "mfc42"
+          "app": "mfc42",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing DirectX 9.",
           "name": "winetricks",
-          "app": "d3dx9"
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing DirectSound.",
           "name": "winetricks",
-          "app": "dsound"
+          "app": "dsound",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "$DISC/setup.exe",
           "description": "The installing folder MUST BE \"C:\\Program Files\\Mass Effect\".\nIgnore the installating of DirectX.\n",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "$DISC/setup.exe",
+          "prefix": "$GAMEDIR"
         }
       }
     ]
   },
-  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Mass Effect/MassEffectLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows 7.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: Allow DirectX apps to stop the mouse leaving their window.\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Deny the window manager to decorate the windows.\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    description: Allow the window manager to control the windows.\n    key: Managed\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Enabling CSMT for better graphic performance.\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- task:\n    description: Enabling VAAPI as backend for DXVA2 GPU decoding.\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    app: mfc42\n    description: Installing mfc42.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing DirectX 9.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dsound\n    description: Installing DirectSound.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'The installing folder MUST BE \"C:\\Program Files\\Mass Effect\".\n\n      Ignore the installating of DirectX.\n\n      '\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: staging-3.3-i386\n"
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Mass Effect/MassEffectLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows 7.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: Allow DirectX apps to stop the mouse leaving their window.\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Deny the window manager to decorate the windows.\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    description: Allow the window manager to control the windows.\n    key: Managed\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Enabling CSMT for better graphic performance.\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- task:\n    description: Enabling VAAPI as backend for DXVA2 GPU decoding.\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    app: mfc42\n    description: Installing mfc42.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing DirectX 9.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dsound\n    description: Installing DirectSound.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'The installing folder MUST BE \"C:\\Program Files\\Mass Effect\".\n\n      Ignore the installating of DirectX.\n\n      '\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

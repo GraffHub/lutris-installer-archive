@@ -1,0 +1,90 @@
+{
+  "id": 17018,
+  "game_id": 27680,
+  "game_slug": "lego-island-2-the-bricksters-revenge",
+  "name": "Lego Island 2: The Brickster's Revenge",
+  "year": 2001,
+  "user": "JJK",
+  "runner": "wine",
+  "slug": "lego-island-2-the-bricksters-421",
+  "version": "4.21",
+  "description": null,
+  "notes": "Install the game in the default location.\r\nApply the patches \"load screen fix\" and \"skip intro\" in the patcher window.\r\nIf after installing the game the graphics are glitched (seethrough hills) you should make sure that you are using a wine version which includes this patch: https://source.winehq.org/git/wine.git/commit/8eab6d45020701b61cf2773305977b7b99b22e73",
+  "created_at": "2019-11-26T14:33:23.576000Z",
+  "updated_at": "2020-01-23T17:39:19.617731Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "patcher": {
+          "filename": "LI2.Mod.Manager.V1.2.3.zip",
+          "url": "https://github.com/JeffRuLz/LI2-Mod-Manager/releases/download/v1.2.3/LI2.Mod.Manager.V1.2.3.zip"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/LEGO Media/LEGO Island 2/LEGO Island 2.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "Setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "directmusic"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$DISC/Setup.exe"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/",
+          "file": "patcher"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/LI2ModManager.exe"
+        }
+      }
+    ],
+    "wine": {
+      "WineDesktop": "1280x1024",
+      "Desktop": true,
+      "overrides": {
+        "dsound": "b"
+      }
+    }
+  },
+  "content": "files:\r\n- patcher:\r\n    filename: LI2.Mod.Manager.V1.2.3.zip\r\n    url: https://github.com/JeffRuLz/LI2-Mod-Manager/releases/download/v1.2.3/LI2.Mod.Manager.V1.2.3.zip\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/LEGO Media/LEGO Island 2/LEGO Island 2.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- insert-disc:\r\n    requires: Setup.exe\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: directmusic\r\n    arch: win32\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    executable: $DISC/Setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/\r\n    file: patcher\r\n- task:\r\n    arch: win32\r\n    executable: $GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/LI2ModManager.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nwine:\r\n  Desktop: true\r\n  WineDesktop: 1280x1024\r\n  overrides:\r\n    dsound: b"
+}

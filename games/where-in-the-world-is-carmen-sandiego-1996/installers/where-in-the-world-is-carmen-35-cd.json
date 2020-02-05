@@ -21,19 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "xephyr": "16bpp",
-      "xephyr_resolution": "640x480"
-    },
-    "wine": {
-      "WineDesktop": "640x480",
-      "Desktop": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/Broderbund Software/Where in the World is Carmen Sandiego v3.5/CSWrld32.exe"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -48,47 +35,60 @@
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
           "description": "Sandboxing Wine prefix",
           "name": "winetricks",
-          "app": "sandbox"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "set_drive_path",
-          "letter": "x",
-          "path": "$GAMEDIR/disc"
-        }
-      },
-      {
-        "task": {
           "arch": "win32",
-          "prefix": "$GAMEDIR",
+          "app": "sandbox",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "letter": "x",
+          "name": "set_drive_path",
+          "path": "$GAMEDIR/disc",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
           "description": "Using Windows 95",
           "name": "winetricks",
-          "app": "win95"
+          "arch": "win32",
+          "app": "win95",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "executable": "$GAMEDIR/disc/setup32/is_setup.exe",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$GAMEDIR/disc/setup32/is_setup.exe"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Program Files/Broderbund Software/Where in the World is Carmen Sandiego v3.5/CSWrld32.exe"
+    },
+    "system": {
+      "xephyr": "16bpp",
+      "xephyr_resolution": "640x480"
+    },
+    "wine": {
+      "WineDesktop": "640x480",
+      "Desktop": true
+    }
   },
   "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Broderbund Software/Where in the World is Carmen\n    Sandiego v3.5/CSWrld32.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup32/is_setup.exe\n- merge:\n    dst: $GAMEDIR/disc\n    src: $DISC\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    arch: win32\n    description: Sandboxing Wine prefix\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    letter: x\n    name: set_drive_path\n    path: $GAMEDIR/disc\n    prefix: $GAMEDIR\n- task:\n    app: win95\n    arch: win32\n    description: Using Windows 95\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: $GAMEDIR/disc/setup32/is_setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  xephyr: 16bpp\n  xephyr_resolution: 640x480\nwine:\n  Desktop: true\n  WineDesktop: 640x480\n"
 }

@@ -11,7 +11,7 @@
   "description": "Installs Glyph and allows to install Trove afterwards.",
   "notes": "The installer requires manual intervention, as there is no known silent install option for Glyph.\r\nChanging window mode in-game is really wonky, you should probably stay with the default.",
   "created_at": "2019-04-26T22:50:25.628303Z",
-  "updated_at": "2019-04-27T05:50:43.580218Z",
+  "updated_at": "2020-01-23T02:57:04.462396Z",
   "draft": false,
   "published": true,
   "published_by": null,
@@ -21,20 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Glyph/GlyphClient.exe"
-    },
-    "wine": {
-      "version": "tkg-4.6-x86_64",
-      "esync": true
-    },
     "files": [
       {
         "glyphinstall": "http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe"
@@ -43,53 +29,66 @@
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "glyphinstall",
           "description": "Installing Glyph...\nDo not change the installation path!",
           "name": "wineexec",
-          "exclude_processes": "GlyphClientApp.exe"
+          "executable": "glyphinstall",
+          "exclude_processes": "GlyphClientApp.exe",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing Glyph...",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "execute": {
-          "description": "Fixing Glyph Library",
           "args": "-i 's/<MinOS>win.*<\\/MinOS>/<MinOS>winxp<\\/MinOS>/g' '$GAMEDIR/drive_c/Program Files (x86)/Glyph/Library/GlyphLibrary.xml'",
-          "file": "sed"
+          "file": "sed",
+          "description": "Fixing Glyph Library"
         }
       },
       {
         "execute": {
-          "description": "Fixing Glyph Library",
           "args": "a-w '$GAMEDIR/drive_c/Program Files (x86)/Glyph/Library/GlyphLibrary.xml'",
-          "file": "chmod"
+          "file": "chmod",
+          "description": "Fixing Glyph Library"
         }
       },
       {
         "write_config": {
+          "key": "AfterLaunch",
+          "description": "Configuring Glyph to exit after game launch",
           "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Glyph/GlyphClient.cfg",
           "section": "Glyph",
-          "description": "Configuring Glyph to exit after game launch",
-          "key": "AfterLaunch",
           "value": "Exit"
         }
       },
       {
         "write_config": {
+          "key": "Device",
+          "description": "Setting renderer for Trove to OpenGL",
           "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Trove/Trove.cfg",
           "section": "Rendering",
-          "description": "Setting renderer for Trove to OpenGL",
-          "key": "Device",
           "value": "opengl"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Glyph/GlyphClient.exe"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "esync": true
+    }
   },
-  "content": "files:\n- glyphinstall: http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe\ngame:\n  exe: drive_c/Program Files (x86)/Glyph/GlyphClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: 'Installing Glyph...\n\n      Do not change the installation path!'\n    exclude_processes: GlyphClientApp.exe\n    executable: glyphinstall\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing Glyph...\n    name: winekill\n    prefix: $GAMEDIR\n- execute:\n    args: -i 's/<MinOS>win.*<\\/MinOS>/<MinOS>winxp<\\/MinOS>/g' '$GAMEDIR/drive_c/Program\n      Files (x86)/Glyph/Library/GlyphLibrary.xml'\n    description: Fixing Glyph Library\n    file: sed\n- execute:\n    args: a-w '$GAMEDIR/drive_c/Program Files (x86)/Glyph/Library/GlyphLibrary.xml'\n    description: Fixing Glyph Library\n    file: chmod\n- write_config:\n    description: Configuring Glyph to exit after game launch\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Glyph/GlyphClient.cfg\n    key: AfterLaunch\n    section: Glyph\n    value: Exit\n- write_config:\n    description: Setting renderer for Trove to OpenGL\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Trove/Trove.cfg\n    key: Device\n    section: Rendering\n    value: opengl\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  esync: true\n  version: tkg-4.6-x86_64\n"
+  "content": "files:\n- glyphinstall: http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe\ngame:\n  exe: drive_c/Program Files (x86)/Glyph/GlyphClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: 'Installing Glyph...\n\n      Do not change the installation path!'\n    exclude_processes: GlyphClientApp.exe\n    executable: glyphinstall\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing Glyph...\n    name: winekill\n    prefix: $GAMEDIR\n- execute:\n    args: -i 's/<MinOS>win.*<\\/MinOS>/<MinOS>winxp<\\/MinOS>/g' '$GAMEDIR/drive_c/Program\n      Files (x86)/Glyph/Library/GlyphLibrary.xml'\n    description: Fixing Glyph Library\n    file: sed\n- execute:\n    args: a-w '$GAMEDIR/drive_c/Program Files (x86)/Glyph/Library/GlyphLibrary.xml'\n    description: Fixing Glyph Library\n    file: chmod\n- write_config:\n    description: Configuring Glyph to exit after game launch\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Glyph/GlyphClient.cfg\n    key: AfterLaunch\n    section: Glyph\n    value: Exit\n- write_config:\n    description: Setting renderer for Trove to OpenGL\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Trove/Trove.cfg\n    key: Device\n    section: Rendering\n    value: opengl\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  esync: true\n"
 }

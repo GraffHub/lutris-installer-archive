@@ -11,7 +11,7 @@
   "description": null,
   "notes": "Works only when replacing EAC dlls with Paladins' EAC dlls.\r\n\r\n<b>WARNING: Use Multiplayer at your own risk. You might get banned otherwise. Lutris is not responsible should you ignore this.</b>",
   "created_at": "2018-02-19T11:14:58.617000Z",
-  "updated_at": "2019-02-14T05:53:02.255284Z",
+  "updated_at": "2020-01-31T02:38:27.769768Z",
   "draft": false,
   "published": true,
   "published_by": 19464,
@@ -21,20 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "winesteam": {
-      "dxvk": true,
-      "version": "tkg-4.0-x86_64"
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "appid": 678950
-    },
     "files": [
       {
         "EAC64": "$WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x64.dll"
@@ -46,12 +32,20 @@
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ],
+    "game": {
+      "appid": 678950,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
@@ -62,18 +56,18 @@
       },
       {
         "task": {
+          "args": "/silent",
+          "name": "wineexec",
           "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec",
-          "args": "/silent"
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks",
+          "arch": "win64",
           "app": "vcrun2015 win7"
         }
       },
@@ -101,7 +95,12 @@
           "src": "EAC32"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    }
   },
-  "content": "files:\n- EAC64: $WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x64.dll\n- EAC32: $WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x86.dll\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 678950\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- rename:\n    dst: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll.bak\n    src: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll\n- rename:\n    dst: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll.bak\n    src: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll\n- move:\n    dst: $GAMEDIR/EasyAntiCheat\n    src: EAC64\n- move:\n    dst: $GAMEDIR/EasyAntiCheat\n    src: EAC32\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  version: tkg-4.0-x86_64\n"
+  "content": "files:\n- EAC64: $WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x64.dll\n- EAC32: $WINESTEAM:444090/Binaries/EasyAntiCheat/EasyAntiCheat_x86.dll\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 678950\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- rename:\n    dst: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll.bak\n    src: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x64.dll\n- rename:\n    dst: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll.bak\n    src: $GAMEDIR/EasyAntiCheat/EasyAntiCheat_x86.dll\n- move:\n    dst: $GAMEDIR/EasyAntiCheat\n    src: EAC64\n- move:\n    dst: $GAMEDIR/EasyAntiCheat\n    src: EAC32\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n"
 }

@@ -21,11 +21,6 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Diablo/Belzebub.exe"
-    },
     "files": [
       {
         "installer": "N/A:Select the installer downloaded from GOG"
@@ -34,21 +29,26 @@
         "belzebub": "https://lutris.net/files/games/diablo/belzebub-r1045.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Diablo/Belzebub.exe"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating WINE prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$CACHE",
-          "executable": "installer",
           "args": "/VERYSILENT /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "installer",
           "description": "Running Setup, please wait...",
-          "name": "wineexec"
+          "prefix": "$CACHE"
         }
       },
       {

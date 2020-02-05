@@ -11,7 +11,7 @@
   "description": "Draft",
   "notes": "",
   "created_at": "2019-05-17T23:53:04.049539Z",
-  "updated_at": "2019-05-17T23:53:04.049562Z",
+  "updated_at": "2020-01-23T02:56:51.105174Z",
   "draft": true,
   "published": false,
   "published_by": null,
@@ -21,28 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "system": {
-      "env": {
-        "DXVK_LOG_LEVEL": "none",
-        "mesa_glthread": "true",
-        "DXVK_HUD": 0,
-        "DXVK_STATE_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "args": "-maploadinfo",
-      "exe": "drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "version": "tkg-4.0-x86_64"
-    },
     "files": [
       {
         "launcher": "https://launcher.returnofreckoning.com/RoRLauncher.exe"
@@ -51,49 +29,49 @@
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Creating Wine prefix",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing fonts",
           "name": "winetricks",
-          "app": "corefonts"
+          "app": "corefonts",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing Visual C++ 2017",
           "name": "winetricks",
-          "app": "vcrun2017"
+          "app": "vcrun2017",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing DotNet 4.0",
           "name": "winetricks",
-          "app": "dotnet40"
+          "app": "dotnet40",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Installing Directx3D 9.0c",
           "name": "winetricks",
-          "app": "d3dx9"
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "description": "Setting Windows version to Windows 10",
           "name": "winetricks",
-          "app": "win10"
+          "app": "win10",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -110,11 +88,32 @@
       {
         "task": {
           "prefix": "$GAMEDIR",
-          "executable": "launcher",
-          "name": "wineexec"
+          "name": "wineexec",
+          "executable": "launcher"
         }
       }
-    ]
+    ],
+    "game": {
+      "args": "-maploadinfo",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE": 1,
+        "DXVK_HUD": 0,
+        "mesa_glthread": "true",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
-  "content": "files:\n- launcher: https://launcher.returnofreckoning.com/RoRLauncher.exe\ngame:\n  arch: win64\n  args: -maploadinfo\n  exe: drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Installing Visual C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40\n    description: Installing DotNet 4.0\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing Directx3D 9.0c\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    description: Setting Windows version to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files (x86)/Return of Reckoning/\"\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe\n    src: launcher\n- task:\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n  version: tkg-4.0-x86_64\n"
+  "content": "files:\n- launcher: https://launcher.returnofreckoning.com/RoRLauncher.exe\ngame:\n  arch: win64\n  args: -maploadinfo\n  exe: drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Installing Visual C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40\n    description: Installing DotNet 4.0\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing Directx3D 9.0c\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    description: Setting Windows version to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files (x86)/Return of Reckoning/\"\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe\n    src: launcher\n- task:\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n"
 }

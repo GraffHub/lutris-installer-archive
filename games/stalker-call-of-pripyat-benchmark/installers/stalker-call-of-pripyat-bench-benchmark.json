@@ -1,107 +1,136 @@
 {
-  "id": 16355,
+  "id": 16474,
   "game_id": 29897,
   "game_slug": "stalker-call-of-pripyat-benchmark",
-  "name": "S.T.A.L.K.E.R.: Call of Pripyat benchmark",
+  "name": "S.T.A.L.K.E.R.: Call of Pripyat Benchmark",
   "year": 2009,
   "user": "vanstaveren",
   "runner": "wine",
   "slug": "stalker-call-of-pripyat-bench-benchmark",
-  "version": "Benchmark",
+  "version": "benchmark",
   "description": null,
   "notes": "",
-  "created_at": "2019-10-22T18:24:56.122558Z",
-  "updated_at": "2019-10-22T18:24:56.122579Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2019-10-29T15:13:25.097000Z",
+  "updated_at": "2019-12-23T19:50:41.201701Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "setup": "https://files.gsc-game.com/st/bench/stkcop-bench-setup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Visual C++ 2017 libraries ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "vcrun2017",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Windows version 8.1 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win81",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 9 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dx9_31",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 9 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dx9_42",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "setup"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/stkcop-bench-setup.exe"
+      },
+      {
+        "task": {
+          "description": "S.T.A.L.K.E.R. Call Of Pripyat ...",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/stkcop-bench-setup.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "description": "Adding sound device option ...",
+          "command": "echo \"snd_volume_eff 0.\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\ Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg"
+        }
+      },
+      {
+        "execute": {
+          "description": "Adding sound device option ...",
+          "command": "echo \"snd_volume_music 0.\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\ Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg"
+        }
+      },
+      {
+        "execute": {
+          "description": "Adding video sync. option ...",
+          "command": "echo \"rs_v_sync on\" >> $$GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\ Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg"
+        }
+      },
+      {
+        "execute": {
+          "description": "Adding constant fps option ...",
+          "command": "echo \"rs_constant_fps on\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\ Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg"
+        }
+      },
+      {
+        "execute": {
+          "description": "Adding refresh 60hz option ...",
+          "command": "echo \"rs_refresh_60hz off\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\ Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Call Of Pripyat Benchmark/Benchmark.exe"
+    },
     "system": {
-      "xboxdrv": "xboxdrv"
+      "disable_compositor": true
     },
     "wine": {
       "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix64",
-      "custom-name": "S.T.A.L.K.E.R. Call of Pripyat benchmark",
-      "exe": "$HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/Program Files (x86)/.exe"
-    },
-    "installer": [
-      {
-        "execute": {
-          "description": "Removing any existing winesteam-prefixes ...",
-          "command": "mv -v $HOME/.local/share/lutris/runners/winesteam/prefix64 /tmp/dump"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix64",
-          "description": "Creating 64-bit prefix ...",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix64",
-          "description": "S.T.A.L.K.E.R. Call of Pripyat benchmark ...",
-          "name": "winetricks",
-          "app": "stalker_pripyat_bench"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix64",
-          "description": "Visual C++ 2017 libraries ...",
-          "name": "winetricks",
-          "app": "vcrun2017"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix64",
-          "description": "Windows version 8.1 ...",
-          "name": "winetricks",
-          "app": "win81"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix64",
-          "description": "Vulkan ...",
-          "name": "winetricks",
-          "app": "dxvk"
-        }
-      },
-      {
-        "write_file": {
-          "content": "cd $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c && WINEPREFIX=\"$HOME/.local/share/lutris/runners/winesteam/prefix64\" ./S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh",
-          "description": "Creating S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh with prefix ...",
-          "file": "$HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh"
-        }
-      },
-      {
-        "chmodx": "$HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh"
-      },
-      {
-        "execute": {
-          "description": "Clean-up ...",
-          "command": "rm $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/SteamSetup.exe"
-        }
-      }
-    ]
+      "esync": false
+    }
   },
-  "content": "game:\n  arch: win64\n  custom-name: S.T.A.L.K.E.R. Call of Pripyat benchmark\n  exe: $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/Program Files\n    (x86)/.exe\n  prefix: $HOME/.local/share/lutris/runners/winesteam/prefix64\ninstaller:\n- execute:\n    command: mv -v $HOME/.local/share/lutris/runners/winesteam/prefix64 /tmp/dump\n    description: Removing any existing winesteam-prefixes ...\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix64\n- task:\n    app: stalker_pripyat_bench\n    arch: win64\n    description: S.T.A.L.K.E.R. Call of Pripyat benchmark ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix64\n- task:\n    app: vcrun2017\n    arch: win64\n    description: Visual C++ 2017 libraries ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix64\n- task:\n    app: win81\n    arch: win64\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix64\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix64\n- write_file:\n    content: cd $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c && WINEPREFIX=\"$HOME/.local/share/lutris/runners/winesteam/prefix64\"\n      ./S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh\n    description: Creating S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh with prefix\n      ...\n    file: $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh\n- chmodx: $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/S.T.A.L.K.E.R.:_Call_of_Pripyat_benchmark.sh\n- execute:\n    command: rm $HOME/.local/share/lutris/runners/winesteam/prefix64/drive_c/SteamSetup.exe\n    description: Clean-up ...\nsystem:\n  xboxdrv: xboxdrv\nwine:\n  dxvk: true\n  esync: true\n"
+  "content": "files:\r\n- setup: https://files.gsc-game.com/st/bench/stkcop-bench-setup.exe\r\ngame:\r\n  arch: win64\r\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Call Of Pripyat Benchmark/Benchmark.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2017\r\n    arch: win64\r\n    description: Visual C++ 2017 libraries ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win81\r\n    arch: win64\r\n    description: Windows version 8.1 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9_31\r\n    arch: win64\r\n    description: DirectX 9 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9_42\r\n    arch: win64\r\n    description: DirectX 9 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- move:\r\n    dst: $GAMEDIR\r\n    src: setup\r\n- chmodx: $GAMEDIR/stkcop-bench-setup.exe\r\n- task:\r\n    description: S.T.A.L.K.E.R. Call Of Pripyat ...\r\n    executable: $GAMEDIR/stkcop-bench-setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: echo \"snd_volume_eff 0.\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding sound device option ...\r\n- execute:\r\n    command: echo \"snd_volume_music 0.\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding sound device option ...\r\n- execute:\r\n    command: echo \"rs_v_sync on\" >> $$GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding video sync. option ...\r\n- execute:\r\n    command: echo \"rs_constant_fps on\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding constant fps option ...\r\n- execute:\r\n    command: echo \"rs_refresh_60hz off\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding refresh 60hz option ...\r\nsystem:\r\n  disable_compositor: true\r\nwine:\r\n  dxvk: true\r\n  esync: false"
 }

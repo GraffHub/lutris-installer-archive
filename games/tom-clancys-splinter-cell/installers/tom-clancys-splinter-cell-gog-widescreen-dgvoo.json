@@ -21,15 +21,6 @@
   "gogslug": "splinter_cell",
   "humblestoreid": "",
   "script": {
-    "custom-name": "Tom Clancy's Splinter Cell - GOG",
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Splinter Cell/system/SplinterCell.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    },
     "files": [
       {
         "scg": "N/A:Please select the GOG installer"
@@ -41,12 +32,16 @@
         "scws": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/sc/SplinterCell.WidescreenFix.zip"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Splinter Cell/system/SplinterCell.exe"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "arch": "win64"
         }
       },
       {
@@ -58,11 +53,11 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "executable": "scg",
           "args": "/SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "scg",
           "description": "Installing...",
-          "name": "wineexec"
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -85,35 +80,35 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "value": "native,builtin",
+          "name": "set_regedit",
           "arch": "win64",
-          "type": "REG_SZ",
           "key": "d3d8",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "value": "native,builtin",
+          "name": "set_regedit",
           "arch": "win64",
-          "type": "REG_SZ",
           "key": "msacm32",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "value": "native,builtin",
+          "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "msvfw32",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
-          "arch": "win64",
-          "type": "REG_SZ",
-          "key": "msvfw32",
-          "name": "set_regedit"
+          "type": "REG_SZ"
         }
       },
       {
@@ -124,22 +119,27 @@
       {
         "write_config": {
           "data": {
+            "General": {
+              "CaptureMouse": false
+            },
             "DirectX": {
               "Resolution": "unforced",
               "dgVoodooWatermark": false,
+              "DisableAltEnterToToggleScreenMode": false,
               "ForceVerticalSync": true,
               "VRAM": 256,
-              "AppControlledScreenMode": false,
-              "DisableAltEnterToToggleScreenMode": false
-            },
-            "General": {
-              "CaptureMouse": false
+              "AppControlledScreenMode": false
             }
           },
           "file": "$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/dgVoodoo.conf"
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "custom-name": "Tom Clancy's Splinter Cell - GOG"
   },
   "content": "custom-name: Tom Clancy's Splinter Cell - GOG\nfiles:\n- scg: N/A:Please select the GOG installer\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- scws: https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/sc/SplinterCell.WidescreenFix.zip\ngame:\n  exe: drive_c/GOG Games/Splinter Cell/system/SplinterCell.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: scg\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Splinter Cell/\n    file: scws\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system/\n    src: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system/MS/x86/D3D8.dll\n- task:\n    arch: win64\n    key: d3d8\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: msacm32\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: msvfw32\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Splinter Cell/system/\"; mv dgVoodoo.conf\n      dgVoodoo_original.conf; cd scripts; mv modupdater.asi modupdater.asi.off;\n- write_config:\n    data:\n      DirectX:\n        AppControlledScreenMode: false\n        DisableAltEnterToToggleScreenMode: false\n        ForceVerticalSync: true\n        Resolution: unforced\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n    file: $GAMEDIR/drive_c/GOG Games/Splinter Cell/system/dgVoodoo.conf\nwine:\n  Desktop: true\n  dxvk: true\n"
 }
