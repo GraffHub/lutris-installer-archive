@@ -1,0 +1,119 @@
+{
+  "id": 18344,
+  "game_id": 399,
+  "game_slug": "prince-of-persia-the-forgotten-sands",
+  "name": "Prince of Persia: The Forgotten Sands",
+  "year": null,
+  "user": "IshiKuchiki",
+  "runner": "wine",
+  "slug": "prince-of-persia-the-forgotte-uplay",
+  "version": "UPlay",
+  "description": "Will launch installer on first boot.",
+  "notes": "",
+  "created_at": "2020-02-12T21:34:54.684541Z",
+  "updated_at": "2020-02-12T21:34:54.684567Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 33320,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "write_file": {
+          "content": "overlay: \n  enabled: false\n",
+          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
+        }
+      },
+      {
+        "input_menu": {
+          "options": [
+            {
+              "dxgi.maxFrameLatency = 1": "AMD"
+            },
+            {
+              "dxgi.customVendorId = 10de\ndxgi.nvapiHack = False\ndxgi.FrameLatency = 1": "Nvidia"
+            }
+          ],
+          "description": "Setting DXVK workarounds please choose your GPU:",
+          "preselect": "dxgi.maxFrameLatency = 1",
+          "id": "GPU"
+        }
+      },
+      {
+        "write_file": {
+          "content": "$INPUT_GPU",
+          "file": "$GAMEDIR/dxvk.conf"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "app": "arial win7 d3dcompiler_43"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "name": "wineexec",
+          "executable": "uplay",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "args": "uplay://launch/11/0",
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  args: uplay://launch/11/0\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: \"overlay: \\n  enabled: false\\n\"\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game\n      Launcher/settings.yml\n- input_menu:\n    description: 'Setting DXVK workarounds please choose your GPU:'\n    id: GPU\n    options:\n    - dxgi.maxFrameLatency = 1: AMD\n    - ? 'dxgi.customVendorId = 10de\n\n        dxgi.nvapiHack = False\n\n        dxgi.FrameLatency = 1'\n      : Nvidia\n    preselect: dxgi.maxFrameLatency = 1\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial win7 d3dcompiler_43\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
+}

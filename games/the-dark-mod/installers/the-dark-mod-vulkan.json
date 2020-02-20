@@ -1,0 +1,111 @@
+{
+  "id": 18398,
+  "game_id": 2039,
+  "game_slug": "the-dark-mod",
+  "name": "The Dark Mod",
+  "year": 2009,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "the-dark-mod-vulkan",
+  "version": "vulkan",
+  "description": null,
+  "notes": "xbox-drv package needs to be installed.",
+  "created_at": "2020-02-16T12:26:13.955966Z",
+  "updated_at": "2020-02-16T12:26:13.955991Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "TDM.zip": "https://darkmod.taaaki.za.net/release/tdm_update_win.zip"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/prefix/drive_c/Program Files/TDM/",
+          "src": "TDM.zip"
+        }
+      },
+      {
+        "task": {
+          "description": "The Dark Mod ...",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/prefix/drive_c/Program Files/TDM/tdm_update.exe",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dcompiler_43",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dx11_43",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "dxvk",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Windows version 8 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win8",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/TDM/TheDarkModx64.exe",
+      "custom-name": "The Dark Mod"
+    },
+    "system": {
+      "disable_compositor": true,
+      "xboxdrv": "xboxdrv",
+      "pulse_latency": true
+    },
+    "wine": {
+      "Audio": "pulse",
+      "dxvk": true,
+      "version": "ge-protonified-nofshack-4.9-x86_64",
+      "esync": true,
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    }
+  },
+  "content": "files:\n- TDM.zip: https://darkmod.taaaki.za.net/release/tdm_update_win.zip\ngame:\n  arch: win64\n  custom-name: The Dark Mod\n  exe: $GAMEDIR/prefix/drive_c/Program Files/TDM/TheDarkModx64.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $GAMEDIR/prefix/drive_c/Program Files/TDM/\n    src: TDM.zip\n- task:\n    description: The Dark Mod ...\n    executable: $GAMEDIR/prefix/drive_c/Program Files/TDM/tdm_update.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+}

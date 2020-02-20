@@ -1,0 +1,83 @@
+{
+  "id": 18464,
+  "game_id": 5624,
+  "game_slug": "resident-evil-0-biohazard-0-hd-remaster",
+  "name": "Resident Evil 0 / biohazard 0 HD REMASTER",
+  "year": 2016,
+  "user": "rubenss",
+  "runner": "winesteam",
+  "slug": "resident-evil-0-biohazard-0-h-change-me",
+  "version": "Change Me",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-19T17:59:17.372627Z",
+  "updated_at": "2020-02-19T17:59:17.372650Z",
+  "draft": false,
+  "published": false,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 339340,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "codecs": "https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe"
+      }
+    ],
+    "game": {
+      "appid": 339340,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing needed libraries",
+          "name": "winetricks",
+          "arch": "win32",
+          "silent": true,
+          "prefix": "$GAMEDIR/prefix",
+          "app": "wmp10 d3dcompiler_43 d3dx9"
+        }
+      },
+      {
+        "task": {
+          "description": "Changing to Windows XP to install video codec (otherwise it will fail)",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "winxp",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing video codecs",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "codecs",
+          "args": "/q",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Changing to Windows 7",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      }
+    ]
+  },
+  "content": "files:\r\n- codecs: https://lutris.net/files/tools/windowsmedia-kb942423-x86-intl.exe\r\ngame:\r\n  appid: 339340\r\n  arch: win32\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: wmp10 d3dcompiler_43 d3dx9\r\n    arch: win32\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: winxp\r\n    arch: win32\r\n    description: Changing to Windows XP to install video codec (otherwise it will\r\n      fail)\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win32\r\n    args: /q\r\n    description: Installing video codecs\r\n    executable: codecs\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win7\r\n    arch: win32\r\n    description: Changing to Windows 7\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix"
+}

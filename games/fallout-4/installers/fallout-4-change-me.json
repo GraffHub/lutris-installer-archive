@@ -1,0 +1,109 @@
+{
+  "id": 17787,
+  "game_id": 5339,
+  "game_slug": "fallout-4",
+  "name": "Fallout 4",
+  "year": 2015,
+  "user": "init1",
+  "runner": "winesteam",
+  "slug": "fallout-4-change-me",
+  "version": "Change Me",
+  "description": null,
+  "notes": "- The installer automatically disables god rays do not re-enable them. Doing so will crash the game.\r\n\r\n- Alt+tabbing out of game might cause the Tab button from functioning in-game.",
+  "created_at": "2020-01-07T15:59:38.819360Z",
+  "updated_at": "2020-01-31T02:38:28.429683Z",
+  "draft": false,
+  "published": false,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 377160,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 377160,
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64"
+    },
+    "winesteam": {
+      "overrides": {
+        "winegstreamer": "disabled"
+      },
+      "dumbxinputemu": true,
+      "Desktop": true,
+      "x360ce-path": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix",
+          "arch": "win64"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "GrabFullscreen",
+          "prefix": "$GAMEDIR/prefix",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y"
+        }
+      },
+      {
+        "write_config": {
+          "key": "sStartingConsoleCommand",
+          "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4.ini",
+          "section": "Display",
+          "value": "gr off"
+        }
+      },
+      {
+        "write_config": {
+          "key": "bNvGodraysEnable",
+          "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4.ini",
+          "section": "Display",
+          "value": "0"
+        }
+      },
+      {
+        "write_config": {
+          "key": "bNvGodraysEnable",
+          "file": "$GAMEDIR/Fallout4_Default.ini",
+          "section": "Display",
+          "value": "0"
+        }
+      },
+      {
+        "write_config": {
+          "key": "bVolumetricLightingEnable",
+          "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4Prefs.ini",
+          "section": "Display",
+          "value": "0"
+        }
+      },
+      {
+        "write_config": {
+          "key": "bBackgroundMouse",
+          "file": "$GAMEDIR/Fallout4_Default.ini",
+          "section": "Controls",
+          "value": "1"
+        }
+      },
+      {
+        "write_config": {
+          "key": "bBackgroundMouse",
+          "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4.ini",
+          "section": "Controls",
+          "value": "1"
+        }
+      }
+    ],
+    "system": {
+      "pulse_latency": true
+    }
+  },
+  "content": "game:\n  appid: 377160\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR/prefix\n    value: Y\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4.ini\n    key: sStartingConsoleCommand\n    section: Display\n    value: gr off\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4.ini\n    key: bNvGodraysEnable\n    section: Display\n    value: '0'\n- write_config:\n    file: $GAMEDIR/Fallout4_Default.ini\n    key: bNvGodraysEnable\n    section: Display\n    value: '0'\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4Prefs.ini\n    key: bVolumetricLightingEnable\n    section: Display\n    value: '0'\n- write_config:\n    file: $GAMEDIR/Fallout4_Default.ini\n    key: bBackgroundMouse\n    section: Controls\n    value: '1'\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout4/Fallout4.ini\n    key: bBackgroundMouse\n    section: Controls\n    value: '1'\nsystem:\n  pulse_latency: true\nwinesteam:\n  Desktop: true\n  dumbxinputemu: true\n  overrides:\n    winegstreamer: disabled\n  x360ce-path: $GAMEDIR\n"
+}

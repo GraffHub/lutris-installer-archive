@@ -1,0 +1,87 @@
+{
+  "id": 5894,
+  "game_id": 692,
+  "game_slug": "star-wars-battlefront-ii",
+  "name": "Star Wars: Battlefront II (2005)",
+  "year": 2005,
+  "user": "Trollwut",
+  "runner": "wine",
+  "slug": "star-wars-battlefront-ii-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2017-10-04T02:19:12.612000Z",
+  "updated_at": "2019-02-07T00:08:06.082853Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 6060,
+  "gogid": 1421404701,
+  "gogslug": "star_wars_battlefront_ii",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "goginstaller": "N/A:Please select the GOG.com Windows installer"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Star Wars - Battlefront 2/GameData/BattlefrontII.exe"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2013 win7"
+        }
+      },
+      {
+        "task": {
+          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "executable": "goginstaller",
+          "description": "Installing...",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Star Wars - Battlefront 2/GameData/BattlefrontII.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /LANG=English /SP- /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

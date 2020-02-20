@@ -1,0 +1,111 @@
+{
+  "id": 18283,
+  "game_id": 4046,
+  "game_slug": "sauerbraten-cube-2",
+  "name": "Cube 2: Sauerbraten",
+  "year": 2004,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "cube-2-sauerbraten-13-04-04-vulkan",
+  "version": "13-04-04-vulkan",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-08T22:46:32.183461Z",
+  "updated_at": "2020-02-08T22:46:32.183489Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "sauerbraten": "https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2013_01_04/sauerbraten_2013_04_04_collect_edition_windows.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/",
+          "src": "sauerbraten"
+        }
+      },
+      {
+        "task": {
+          "description": "Sauerbraten 2013-04-04 ...",
+          "name": "wineexec",
+          "executable": "$GAMEDIR/prefix/drive_c/sauerbraten_2013_04_04_collect_edition_windows.exe",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dcompiler_43",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "d3dx11_43",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "dxvk",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "description": "Windows version 8 ...",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "win8",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Sauerbraten/sauerbraten.bat",
+      "custom-name": "Sauerbraten"
+    },
+    "system": {
+      "disable_compositor": true,
+      "xboxdrv": "xboxdrv",
+      "pulse_latency": true
+    },
+    "wine": {
+      "Audio": "pulse",
+      "dxvk": true,
+      "version": "ge-protonified-nofshack-4.9-x86_64",
+      "esync": true,
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    }
+  },
+  "content": "files:\n- sauerbraten: https://sourceforge.net/projects/sauerbraten/files/sauerbraten/2013_01_04/sauerbraten_2013_04_04_collect_edition_windows.exe\ngame:\n  arch: win64\n  custom-name: Sauerbraten\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Sauerbraten/sauerbraten.bat\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR/prefix/drive_c/\n    src: sauerbraten\n- task:\n    description: Sauerbraten 2013-04-04 ...\n    executable: $GAMEDIR/prefix/drive_c/sauerbraten_2013_04_04_collect_edition_windows.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+}

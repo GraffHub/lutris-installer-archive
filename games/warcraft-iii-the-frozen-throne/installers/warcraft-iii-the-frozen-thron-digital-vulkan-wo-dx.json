@@ -1,0 +1,205 @@
+{
+  "id": 18391,
+  "game_id": 2925,
+  "game_slug": "warcraft-iii-the-frozen-throne",
+  "name": "Warcraft III: The Frozen Throne",
+  "year": 2003,
+  "user": "s4iya",
+  "runner": "wine",
+  "slug": "warcraft-iii-the-frozen-thron-digital-vulkan-wo-dx",
+  "version": "Digital (Vulkan w/o DXGI)",
+  "description": "- Post-Reforged installer\r\n- Installer for those who only have Warcraft III Classic associated to the Battle.net account. No Reforged key.\r\n- You need a valid Warcraft III Classic key associated to your Battle.Net account.\r\n- It will install the special Warcraft III launcher. Once it's done installing and configuring files, the installer will close. You can then launch the game from Lutris and it will automatically download Warcraft III Classic.\r\n- Fix crash on startup.",
+  "notes": "",
+  "created_at": "2020-02-15T18:35:04.975172Z",
+  "updated_at": "2020-02-15T18:35:04.975198Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dxvk_script": "https://github.com/doitsujin/dxvk/releases/download/v1.5.3/dxvk-1.5.3.tar.gz"
+      },
+      {
+        "setup": "https://github.com/s4iya/Warcraft-III-Classic-Linux/releases/download/1.0/wc3-setup.tar.gz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win64",
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "exe": "drive_c/Program Files (x86)/Warcraft III/Warcraft-III-Setup.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "arch": "win64",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Arial font",
+          "name": "winetricks",
+          "arch": "win64",
+          "app": "arial",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting Windows 10 mode for Wine",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10"
+        }
+      },
+      {
+        "write_json": {
+          "description": "Writing a Battle.Net config file",
+          "data": {
+            "w3": null,
+            "HardwareAcceleration": "false",
+            "AdditionalLaunchArguments": "-windowmode fullscreen",
+            "Streaming": {
+              "StreamingEnabled": "false"
+            },
+            "GameLaunchWindowBehavior": "2",
+            "GameSearch": {
+              "BackgroundSearch": "true"
+            },
+            "Client": null,
+            "Sound": {
+              "Enabled": "false"
+            }
+          },
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "src": "setup"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "file": "setup"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/tmp/setup_warcraft_iii.sh"
+      },
+      {
+        "execute": {
+          "prefix": "$GAMEDIR",
+          "command": "WINEPREFIX=$PWD bash $GAMEDIR/drive_c/tmp/setup_warcraft_iii.sh"
+        }
+      },
+      {
+        "task": {
+          "description": "Wine Staging: Enabling DXVA2",
+          "name": "set_regedit",
+          "arch": "win64",
+          "key": "backend",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "value": "va"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "write_json": {
+          "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
+          "data": {
+            "Client": {
+              "Sound": {
+                "Enabled": "false"
+              },
+              "HardwareAcceleration": "false",
+              "GameLaunchWindowBehavior": "2"
+            }
+          },
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Warcraft III: The Frozen Throne",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "src": "dxvk_script"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "file": "dxvk_script"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/tmp/setup_dxvk.sh"
+      },
+      {
+        "execute": {
+          "prefix": "$GAMEDIR",
+          "command": "WINEPREFIX=$PWD bash $GAMEDIR/drive_c/tmp/setup_dxvk.sh install --without-dxgi"
+        }
+      }
+    ],
+    "system": {
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      },
+      "wine": {
+        "dxvk_version": "Manual",
+        "dxvk": true,
+        "version": "lutris-5.0-x86_64",
+        "esync": true,
+        "overrides": {
+          "nvapi64": "disabled",
+          "nvapi": "disabled",
+          "ucrtbase": "n,b",
+          "api-ms-win-crt-private-l1-1-0": "n,b",
+          "d3d12": "disabled"
+        }
+      }
+    }
+  },
+  "content": "files:\n- dxvk_script: https://github.com/doitsujin/dxvk/releases/download/v1.5.3/dxvk-1.5.3.tar.gz\n- setup: https://github.com/s4iya/Warcraft-III-Classic-Linux/releases/download/1.0/wc3-setup.tar.gz\ngame:\n  arch: win64\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\n  exe: drive_c/Program Files (x86)/Warcraft III/Warcraft-III-Setup.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- write_json:\n    data:\n      AdditionalLaunchArguments: -windowmode fullscreen\n      Client: null\n      GameLaunchWindowBehavior: '2'\n      GameSearch:\n        BackgroundSearch: 'true'\n      HardwareAcceleration: 'false'\n      Sound:\n        Enabled: 'false'\n      Streaming:\n        StreamingEnabled: 'false'\n      w3: null\n    description: Writing a Battle.Net config file\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/tmp/\n    src: setup\n- extract:\n    dst: $GAMEDIR/drive_c/tmp/\n    file: setup\n- chmodx: $GAMEDIR/drive_c/tmp/setup_warcraft_iii.sh\n- execute:\n    command: WINEPREFIX=$PWD bash $GAMEDIR/drive_c/tmp/setup_warcraft_iii.sh\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n    description: Disabling Sound/Hardware Acceleration/Streaming in Blizzard App\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    arch: win64\n    description: 'Installing Warcraft III: The Frozen Throne'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/tmp/\n    src: dxvk_script\n- extract:\n    dst: $GAMEDIR/drive_c/tmp/\n    file: dxvk_script\n- chmodx: $GAMEDIR/drive_c/tmp/setup_dxvk.sh\n- execute:\n    command: WINEPREFIX=$PWD bash $GAMEDIR/drive_c/tmp/setup_dxvk.sh install --without-dxgi\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\n  wine:\n    dxvk: true\n    dxvk_version: Manual\n    esync: true\n    overrides:\n      api-ms-win-crt-private-l1-1-0: n,b\n      d3d12: disabled\n      nvapi: disabled\n      nvapi64: disabled\n      ucrtbase: n,b\n    version: lutris-5.0-x86_64\n"
+}

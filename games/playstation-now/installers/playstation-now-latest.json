@@ -11,7 +11,7 @@
   "description": "Play Playstation games on Linux.",
   "notes": "-Known issues: \r\n-- \"PlayStation Now\" does not exit cleanly with Wine, you have to force application exit with Lutris \"Stop\" button or \"Kill all wine process\".\r\n-- White rectangular window at the right bottom. Click on it and type F4 to close it.\r\n-- not very stable,  make regularly saves of your game.",
   "created_at": "2018-06-18T21:19:20.940000Z",
-  "updated_at": "2020-01-21T21:32:23.928029Z",
+  "updated_at": "2020-02-14T10:22:29.643376Z",
   "draft": false,
   "published": true,
   "published_by": 494,
@@ -85,6 +85,17 @@
         "task": {
           "name": "set_regedit",
           "arch": "win64",
+          "key": "csmt",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "value": "00000000",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win64",
           "key": "background",
           "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
@@ -102,5 +113,5 @@
       "src": "$GAMEDIR/drive_c/294C619"
     }
   },
-  "content": "files:\n- psnow: https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagerdecorated=n\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /extract \"c:\"\n    executable: psnow\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\"\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nmove:\n  dst: $CACHE\n  src: $GAMEDIR/drive_c/294C619\nwine:\n  Desktop: true\n  dxvk: true\n"
+  "content": "files:\n- psnow: https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagerdecorated=n\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /extract \"c:\"\n    executable: psnow\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\"\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nmove:\n  dst: $CACHE\n  src: $GAMEDIR/drive_c/294C619\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

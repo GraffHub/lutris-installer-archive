@@ -1,0 +1,63 @@
+{
+  "id": 18071,
+  "game_id": 29770,
+  "game_slug": "legends-of-runeterra",
+  "name": "Legends of Runeterra",
+  "year": 2020,
+  "user": "wereii",
+  "runner": "wine",
+  "slug": "legends-of-runeterra-change-me-1",
+  "version": "Change Me",
+  "description": "Downloads and launches the Riot's installer to allow installation of Legends Of Runettera. Dxvk enabled.",
+  "notes": "Script starts up the Riot launcher, user is required to login and manage launcher's installation of the Legends Of Runeterra.\r\n\r\n- Running the game straight after installation (from the Riot launcher) is buggy and might not work, close it to finish the installation and start the game normally.\r\n- If the game crashes or you have experienced connection error there might be stale processes left (even after closing  the game/lutris,  RiotClientCrash, LoRCrashHandler, ...). These processes might prevent you from starting the game again and have to be force killed.\r\n\r\n- Tested on Ubuntu 19.10, nVidia 1060 6G (driver 435.21), lutris-0.5.4.",
+  "created_at": "2020-01-25T21:48:01.236401Z",
+  "updated_at": "2020-01-31T02:38:29.022603Z",
+  "draft": false,
+  "published": false,
+  "published_by": 64834,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "launcher_exe": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Running launcher.",
+          "name": "wineexec",
+          "arch": "win64",
+          "executable": "launcher_exe",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "game": {
+      "args": "--launch-product=bacon --launch-patchline=live",
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    }
+  },
+  "content": "files:\n- launcher_exe: https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe\ngame:\n  arch: win64\n  args: --launch-product=bacon --launch-patchline=live\n  exe: $GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Running launcher.\n    executable: launcher_exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  dxvk: true\n"
+}

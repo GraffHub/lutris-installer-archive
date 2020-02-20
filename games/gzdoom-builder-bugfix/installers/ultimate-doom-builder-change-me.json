@@ -1,0 +1,116 @@
+{
+  "id": 18355,
+  "game_id": 27543,
+  "game_slug": "gzdoom-builder-bugfix",
+  "name": "Ultimate Doom Builder",
+  "year": 2019,
+  "user": "twonumbers",
+  "runner": "wine",
+  "slug": "ultimate-doom-builder-change-me",
+  "version": "Change Me",
+  "description": "Installs the git build from DRD Team.",
+  "notes": "This may take a while; the dotnet461 installer is buggy and stalls a lot.\r\n\r\nIf you are having video issues, try setting the environmental variable `__GL_MaxFramesAllowed` to 0 instead of 1. (Configure->System options->Show Advanced->Environment variables)",
+  "created_at": "2020-02-13T11:26:20.501278Z",
+  "updated_at": "2020-02-13T11:26:20.501303Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "gzdoom_installer": "https://devbuilds.drdteam.org/gzdbbf/GZDoom_Builder_Bugfix-r3097.7z"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "arch": "win32",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/gzdoom_builder",
+          "src": "gzdoom_installer"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Installing Core Fonts",
+          "name": "winetricks",
+          "app": "corefonts",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Installing Direct X 9",
+          "name": "winetricks",
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Installing Direct3D compiler 4.3",
+          "name": "winetricks",
+          "app": "d3dcompiler_43",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Installing .NET framework 4.6.1",
+          "name": "winetricks",
+          "app": "dotnet461",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "description": "Setting WINE version to WinXP",
+          "name": "winetricks",
+          "app": "winxp",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "textlabelfontname = \"Arial\";",
+          "mode": "a",
+          "file": "$GAMEDIR/drive_c/gzdoom_builder/GZBuilder.default.cfg"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/gzdoom_builder/Builder.exe"
+    },
+    "system": {
+      "env": {
+        "__GL_MaxFramesAllowed": 1
+      }
+    },
+    "wine": {
+      "dxvk": false,
+      "esync": false,
+      "overrides": {
+        "d3dcompiler_43": "native"
+      }
+    }
+  },
+  "content": "files:\n- gzdoom_installer: https://devbuilds.drdteam.org/gzdbbf/GZDoom_Builder_Bugfix-r3097.7z\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/gzdoom_builder/Builder.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/gzdoom_builder\n    src: gzdoom_installer\n- task:\n    app: corefonts\n    description: Installing Core Fonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dx9\n    description: Installing Direct X 9\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dcompiler_43\n    description: Installing Direct3D compiler 4.3\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dotnet461\n    description: Installing .NET framework 4.6.1\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: winxp\n    description: Setting WINE version to WinXP\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- write_file:\n    content: textlabelfontname = \"Arial\";\n    file: $GAMEDIR/drive_c/gzdoom_builder/GZBuilder.default.cfg\n    mode: a\nsystem:\n  env:\n    __GL_MaxFramesAllowed: 1\nwine:\n  dxvk: false\n  esync: false\n  overrides:\n    d3dcompiler_43: native\n"
+}

@@ -1,0 +1,80 @@
+{
+  "id": 12741,
+  "game_id": 5960,
+  "game_slug": "dragons-dogma-dark-arisen",
+  "name": "Dragon's Dogma: Dark Arisen",
+  "year": null,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "dragons-dogma-dark-arisen-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-04-12T00:42:02.653433Z",
+  "updated_at": "2019-04-12T00:42:07.746478Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 367500,
+  "gogid": 1242384383,
+  "gogslug": "dragons_dogma_dark_arisen",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "setup": "N/A:Select gog setup exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/DDDA/DDDA.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2010 win7"
+        }
+      },
+      {
+        "task": {
+          "args": "/SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "setup",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- setup: N/A:Select gog setup exe\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/DDDA/DDDA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- /SUPPRESSMSGBOXES\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

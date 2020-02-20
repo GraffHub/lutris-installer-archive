@@ -1,0 +1,156 @@
+{
+  "id": 18311,
+  "game_id": 17279,
+  "game_slug": "byond",
+  "name": "Byond",
+  "year": 2003,
+  "user": "Leo_Verto",
+  "runner": "wine",
+  "slug": "byond-change-me-1",
+  "version": "Change Me",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-10T17:00:15.787477Z",
+  "updated_at": "2020-02-10T17:00:15.787511Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "http://www.byond.com/download/build/512/512.1488_byond.exe"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32",
+      "exe": "drive_c/Program Files/BYOND/bin/byond.exe"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win32"
+        }
+      },
+      {
+        "task": {
+          "args": "/silent",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing wsh56 with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "wsh56",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing wsh57 with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "wsh57",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing jscript with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "jscript",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing mfc42 with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "mfc42",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing vcrun2013 with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "vcrun2013",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing ie7 with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "ie7",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing ie8 with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "ie8",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing fonts with winetricks",
+          "name": "winetricks",
+          "arch": "win32",
+          "app": "corefonts",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "arch": "win32",
+          "key": "MaxVersionGL",
+          "prefix": "$GAMEDIR",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "value": 30000,
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing BYOND",
+          "name": "wineexec",
+          "arch": "win32",
+          "executable": "installer",
+          "args": "/S",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: http://www.byond.com/download/build/512/512.1488_byond.exe\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/BYOND/bin/byond.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: wsh56\n    arch: win32\n    description: Installing wsh56 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wsh57\n    arch: win32\n    description: Installing wsh57 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: jscript\n    arch: win32\n    description: Installing jscript with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: mfc42\n    arch: win32\n    description: Installing mfc42 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win32\n    description: Installing vcrun2013 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ie7\n    arch: win32\n    description: Installing ie7 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ie8\n    arch: win32\n    description: Installing ie8 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    description: Installing fonts with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: MaxVersionGL\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 30000\n- task:\n    arch: win32\n    args: /S\n    description: Installing BYOND\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}
