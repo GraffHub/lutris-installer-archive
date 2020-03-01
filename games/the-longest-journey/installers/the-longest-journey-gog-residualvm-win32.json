@@ -21,62 +21,46 @@
   "gogslug": "the_longest_journey",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "rvm": "https://www.residualvm.org/downloads/residualvm-win32.exe"
-      },
-      {
-        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
-      },
-      {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh"
-      },
-      {
-        "multi5": {
-          "filename": "tlj_4cd_gog_menus_sub_multi5.zip",
-          "url": "https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1"
-        }
-      },
-      {
-        "install": "N/A:Please select the GOG installer"
-      }
-    ],
     "game": {
-      "args": "-p \"c:\\GOG Games\\The Longest Journey\" --auto-detect --game=tlj-win --fullscreen --subtitles",
       "exe": "drive_c/ResidualVM/residualvm.exe",
+      "args": "-p \"c:\\GOG Games\\The Longest Journey\" --auto-detect --game=tlj-win --fullscreen --subtitles",
       "prefix": "$GAMEDIR"
+    },
+    "custom-name": "The Longest Journey - GOG - ResidualVM win32",
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
-          "description": "Preparing Wineprefix...",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Preparing Wineprefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "inno"
+          "file": "inno",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$GAMEDIR/drive_c/The Longest Journey\" \"$install\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$GAMEDIR/drive_c/The Longest Journey\" \"$install\""
         }
       },
       {
         "execute": {
-          "args": "-d \"$GAMEDIR/drive_c/ResidualVM\" \"$rvm\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$GAMEDIR/drive_c/ResidualVM\" \"$rvm\""
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/tmp",
-          "file": "multi5"
+          "file": "multi5",
+          "dst": "$GAMEDIR/drive_c/tmp"
         }
       },
       {
@@ -98,9 +82,9 @@
               "ge": "German"
             }
           ],
-          "description": "Do you want to use another language for menus and subtitles:",
+          "id": "LANG",
           "preselect": "keep",
-          "id": "LANG"
+          "description": "Do you want to use another language for menus and subtitles:"
         }
       },
       {
@@ -108,37 +92,53 @@
       },
       {
         "execute": {
-          "args": "$INPUT_LANG",
-          "file": "script"
+          "file": "script",
+          "args": "$INPUT_LANG"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       }
     ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "The Longest Journey - GOG - ResidualVM win32"
+    "files": [
+      {
+        "rvm": "https://www.residualvm.org/downloads/residualvm-win32.exe"
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh"
+      },
+      {
+        "multi5": {
+          "filename": "tlj_4cd_gog_menus_sub_multi5.zip",
+          "url": "https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1"
+        }
+      },
+      {
+        "install": "N/A:Please select the GOG installer"
+      }
+    ]
   },
   "content": "custom-name: The Longest Journey - GOG - ResidualVM win32\nfiles:\n- rvm: https://www.residualvm.org/downloads/residualvm-win32.exe\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh\n- multi5:\n    filename: tlj_4cd_gog_menus_sub_multi5.zip\n    url: https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1\n- install: N/A:Please select the GOG installer\ngame:\n  args: -p \"c:\\GOG Games\\The Longest Journey\" --auto-detect --game=tlj-win --fullscreen\n    --subtitles\n  exe: drive_c/ResidualVM/residualvm.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing Wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$GAMEDIR/drive_c/The Longest Journey\" \"$install\"\n    file: $CACHE/innoextract\n- execute:\n    args: -d \"$GAMEDIR/drive_c/ResidualVM\" \"$rvm\"\n    file: $CACHE/innoextract\n- extract:\n    dst: $GAMEDIR/drive_c/tmp\n    file: multi5\n- input_menu:\n    description: 'Do you want to use another language for menus and subtitles:'\n    id: LANG\n    options:\n    - keep: I prefer to keep default install language for menus and subtitles\n    - fr: French\n    - it: Italian\n    - sp: Spanish\n    - ge: German\n    preselect: keep\n- chmodx: script\n- execute:\n    args: $INPUT_LANG\n    file: script\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\nwine:\n  Desktop: true\n"
 }

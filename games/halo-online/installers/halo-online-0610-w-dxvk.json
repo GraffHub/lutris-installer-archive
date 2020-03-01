@@ -21,26 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "archive": "N/A:Halo Online archive needed to proceed"
-      },
-      {
-        "upgrade": "https://cdn.discordapp.com/attachments/287361838767800320/459847345526407178/dist_0.6.0_to_0.6.1_changeset_r2_2.7z"
-      }
-    ],
     "game": {
-      "args": "--no-sandbox",
-      "arch": "win64",
       "exe": "drive_c/Program Files/Halo Online/eldorado.exe",
+      "arch": "win64",
+      "args": "--no-sandbox",
       "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
@@ -62,17 +58,21 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "corefonts win7",
           "arch": "win64",
-          "app": "corefonts win7"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    "files": [
+      {
+        "archive": "N/A:Halo Online archive needed to proceed"
+      },
+      {
+        "upgrade": "https://cdn.discordapp.com/attachments/287361838767800320/459847345526407178/dist_0.6.0_to_0.6.1_changeset_r2_2.7z"
+      }
+    ]
   },
   "content": "files:\r\n- archive: N/A:Halo Online archive needed to proceed\r\n- upgrade: https://cdn.discordapp.com/attachments/287361838767800320/459847345526407178/dist_0.6.0_to_0.6.1_changeset_r2_2.7z\r\ngame:\r\n  arch: win64\r\n  args: --no-sandbox\r\n  exe: drive_c/Program Files/Halo Online/eldorado.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Halo Online\"\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/Halo Online\r\n    src: archive\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/Halo Online\r\n    src: upgrade\r\n- task:\r\n    app: corefonts win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

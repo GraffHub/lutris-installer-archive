@@ -21,32 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "rev": "https://static.gc.my.com/RevelationOnlineLoader_en.exe"
+    "game": {
+      "exe": "drive_c/MyGames/Revelation Online/revelation-online/RevelationOnlineLoader_en.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "STAGING_SHARED_MEMORY": "1"
       }
-    ],
+    },
+    "wine": {
+      "esync": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "app": "win7",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "executable": "$rev",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$rev"
+          "name": "wineexec"
         }
       },
       {
@@ -56,23 +68,11 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/MyGames/Revelation Online/revelation-online/RevelationOnlineLoader_en.exe"
-    },
-    "system": {
-      "env": {
-        "STAGING_SHARED_MEMORY": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": "1",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
+    "files": [
+      {
+        "rev": "https://static.gc.my.com/RevelationOnlineLoader_en.exe"
       }
-    },
-    "wine": {
-      "esync": true
-    }
+    ]
   },
   "content": "files:\n- rev: https://static.gc.my.com/RevelationOnlineLoader_en.exe\ngame:\n  arch: win64\n  exe: drive_c/MyGames/Revelation Online/revelation-online/RevelationOnlineLoader_en.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $rev\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/MyGames/Revelation Online\n    src: $CACHE\nsystem:\n  env:\n    STAGING_SHARED_MEMORY: '1'\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwine:\n  esync: true\n"
 }

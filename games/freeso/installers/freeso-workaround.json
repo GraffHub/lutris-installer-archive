@@ -21,69 +21,69 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/FreeSO/FreeSO.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet45",
+          "description": "Installing .NET 4.5, this could take a while...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "wininet",
+          "description": "Installing WinINet",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "$tsosetup",
+          "description": "Running The Sims Online installer.\nAccept the license, leave the default installation directory. You can uncheck the desktop shortcut option.\nWhen the installation bar is full and says Installation Complete, press cancel, then yes, then no. Close the now frozen installation window.",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$freesoclient",
+          "dst": "$GAMEDIR/drive_c/FreeSO"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/FreeSO/FreeSO.exe",
+          "description": "Running FreeSO. Log in to your account. It will ask you to download an update. Let it update, and close the window when you get an error that says Waiting for Content/...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$GAMEDIR/drive_c/FreeSO/PatchFiles/patch.zip",
+          "dst": "$GAMEDIR/drive_c/FreeSO/"
+        }
+      }
+    ],
     "files": [
       {
         "tsosetup": "http://largedownloads.ea.com/pub/misc/tso/Setup%20The%20Sims%20Online.exe"
       },
       {
         "freesoclient": "http://a.pomf.cat/xyidmg.zip"
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/FreeSO/FreeSO.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .NET 4.5, this could take a while...",
-          "name": "winetricks",
-          "app": "dotnet45",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing WinINet",
-          "name": "winetricks",
-          "app": "wininet",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Running The Sims Online installer.\nAccept the license, leave the default installation directory. You can uncheck the desktop shortcut option.\nWhen the installation bar is full and says Installation Complete, press cancel, then yes, then no. Close the now frozen installation window.",
-          "name": "wineexec",
-          "executable": "$tsosetup",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/FreeSO",
-          "file": "$freesoclient"
-        }
-      },
-      {
-        "task": {
-          "description": "Running FreeSO. Log in to your account. It will ask you to download an update. Let it update, and close the window when you get an error that says Waiting for Content/...",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/drive_c/FreeSO/FreeSO.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/FreeSO/",
-          "file": "$GAMEDIR/drive_c/FreeSO/PatchFiles/patch.zip"
-        }
       }
     ]
   },

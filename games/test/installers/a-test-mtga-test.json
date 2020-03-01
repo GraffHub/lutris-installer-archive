@@ -21,12 +21,23 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Wizards of the Coast/MTGA/MTGA.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "pulse_latency": true
+    },
+    "wine": {
+      "esync": true,
+      "Desktop": true
+    },
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -41,35 +52,35 @@
       },
       {
         "task": {
+          "value": "Y",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullscreen",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "Y"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
+          "value": "N",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "UseTakeFocus",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "N"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing .NET 4.7.2. This will take a while...",
-          "name": "winetricks",
           "app": "dotnet472",
-          "prefix": "$GAMEDIR"
+          "description": "Installing .NET 4.7.2. This will take a while...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "faudio arial win10",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "faudio arial win10"
+          "name": "winetricks"
         }
       },
       {
@@ -86,11 +97,11 @@
       },
       {
         "task": {
-          "description": "Installing Magic the Gathering Arena",
-          "name": "wineexec",
           "executable": "msiexec",
-          "prefix": "$GAMEDIR",
+          "description": "Installing Magic the Gathering Arena",
           "args": "/i \"$CACHE/MTGAInstaller.msi\"",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR",
           "exclude_processes": "mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe"
         }
       },
@@ -100,18 +111,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Wizards of the Coast/MTGA/MTGA.exe"
-    },
-    "system": {
-      "pulse_latency": true
-    },
-    "wine": {
-      "Desktop": true,
-      "esync": true
-    }
+    ]
   },
   "content": "game:\n  exe: drive_c/Program Files (x86)/Wizards of the Coast/MTGA/MTGA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: cd $CACHE && wget \"$(curl --silent https://mtgarena-api.community.gl/forums/articles/58489/comments?page=1\n      2>&1 | grep -m 1 -oP https.*?[.]msi |tail -1 | tr -d \\\\\\\\)\"\n- execute:\n    command: cd $CACHE && find -name 'MTGAInstaller*.msi' -exec ln -s {} MTGAInstaller.msi\n      \\;\n- task:\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    key: UseTakeFocus\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    app: dotnet472\n    description: Installing .NET 4.7.2. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: faudio arial win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/mtg-arena/\n    src: setup\n- task:\n    args: /i \"$CACHE/MTGAInstaller.msi\"\n    description: Installing Magic the Gathering Arena\n    exclude_processes: mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  pulse_latency: true\nwine:\n  Desktop: true\n  esync: true\n"
 }

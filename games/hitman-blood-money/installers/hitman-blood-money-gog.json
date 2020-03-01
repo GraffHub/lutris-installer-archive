@@ -21,6 +21,56 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Hitman Blood Money/HitmanBloodMoney.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "arch": "win32",
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2003 win7",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "arch": "win32",
+          "description": "Running Setup, please wait...",
+          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
@@ -28,57 +78,7 @@
       {
         "installer": "N/A:Select the EXE downloaded from GOG"
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "drive_c/GOG Games/Hitman Blood Money/HitmanBloodMoney.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating WINE prefix",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "vcrun2003 win7"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "installer",
-          "description": "Running Setup, please wait..."
-        }
-      }
-    ],
-    "wine": {
-      "esync": true
-    }
+    ]
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Hitman Blood Money/HitmanBloodMoney.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2003 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\nwine:\n  esync: true\n"
 }

@@ -21,107 +21,99 @@
   "gogslug": "rayman_2_the_great_escape",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "glide": {
-          "referer": "www.zeus-software.com",
-          "filename": "nglide.exe",
-          "url": "http://www.zeus-software.com/downloads/nglide/d-1.html"
-        }
-      },
-      {
-        "widescreenzip": "N/A:Select the widescreen fix zip file\nhttps://raymanpc.com/forum/viewtopic.php?t=21665"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/UbiSoft/Rayman2/Rayman2.exe",
       "arch": "win32",
-      "exe": "drive_c/UbiSoft/Rayman2/Rayman2.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1024x768"
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "description": "Creating WINE prefix",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "executable": "glide",
+          "arch": "win32",
           "description": "Installing nGlide",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "glide"
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
           "name": "set_regedit",
+          "value": "0",
           "key": "Aspect",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "0",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
           "name": "set_regedit",
+          "value": "2",
           "key": "Backend",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "2",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
           "name": "set_regedit",
+          "value": "2",
           "key": "Gamma",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "2",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
           "name": "set_regedit",
+          "value": "2",
           "key": "Refresh",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "2",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "Resolution",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "21",
+          "key": "Resolution",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "Splash",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "0",
+          "key": "Splash",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "Vsync",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "1",
+          "key": "Vsync",
           "type": "REG_SZ"
         }
       },
@@ -132,10 +124,10 @@
       },
       {
         "task": {
-          "description": "Installing Rayman 2, don't change default settings.",
-          "name": "wineexec",
+          "executable": "$DISC/setup.exe",
           "arch": "win32",
-          "executable": "$DISC/setup.exe"
+          "description": "Installing Rayman 2, don't change default settings.",
+          "name": "wineexec"
         }
       },
       {
@@ -152,8 +144,8 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/widescreen",
-          "file": "widescreenzip"
+          "file": "widescreenzip",
+          "dst": "$GAMEDIR/widescreen"
         }
       },
       {
@@ -164,24 +156,32 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/UbiSoft/Rayman2/ubi.ini",
           "data": {
             "Rayman2": {
-              "GLI_DllFile": "GliVd1",
-              "Language": "English",
-              "GLI_Dll": "Glide2",
-              "GLI_Mode": "1 - 1920 x 1080 x 32",
+              "GLI_Driver": "",
               "GLI_Device": "",
-              "GLI_Driver": ""
+              "GLI_Dll": "Glide2",
+              "Language": "English",
+              "GLI_DllFile": "GliVd1",
+              "GLI_Mode": "1 - 1920 x 1080 x 32"
             }
-          },
-          "file": "$GAMEDIR/drive_c/UbiSoft/Rayman2/ubi.ini"
+          }
         }
       }
     ],
-    "wine": {
-      "WineDesktop": "1024x768",
-      "Desktop": true
-    }
+    "files": [
+      {
+        "glide": {
+          "filename": "nglide.exe",
+          "referer": "www.zeus-software.com",
+          "url": "http://www.zeus-software.com/downloads/nglide/d-1.html"
+        }
+      },
+      {
+        "widescreenzip": "N/A:Select the widescreen fix zip file\nhttps://raymanpc.com/forum/viewtopic.php?t=21665"
+      }
+    ]
   },
   "content": "files:\n- glide:\n    filename: nglide.exe\n    referer: www.zeus-software.com\n    url: http://www.zeus-software.com/downloads/nglide/d-1.html\n- widescreenzip: 'N/A:Select the widescreen fix zip file\n\n    https://raymanpc.com/forum/viewtopic.php?t=21665'\ngame:\n  arch: win32\n  exe: drive_c/UbiSoft/Rayman2/Rayman2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing nGlide\n    executable: glide\n    name: wineexec\n- task:\n    key: Aspect\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '0'\n- task:\n    key: Backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '2'\n- task:\n    key: Gamma\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '2'\n- task:\n    key: Refresh\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '2'\n- task:\n    key: Resolution\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '21'\n- task:\n    key: Splash\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '0'\n- task:\n    key: Vsync\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '1'\n- insert-disc:\n    requires: Rayman2.exe\n- task:\n    arch: win32\n    description: Installing Rayman 2, don't change default settings.\n    executable: $DISC/setup.exe\n    name: wineexec\n- copy:\n    dst: $GAMEDIR/drive_c/UbiSoft/Rayman2/Data/\n    src: $DISC/Data/Vignette.cnt\n- copy:\n    dst: $GAMEDIR/drive_c/UbiSoft/Rayman2/Data/World/Levels/\n    src: $DISC/Data/World/Levels/LEVELS0.dat\n- extract:\n    dst: $GAMEDIR/widescreen\n    file: widescreenzip\n- merge:\n    dst: $GAMEDIR/drive_c/UbiSoft/Rayman2\n    src: $GAMEDIR/widescreen/\n- write_config:\n    data:\n      Rayman2:\n        GLI_Device: ''\n        GLI_Dll: Glide2\n        GLI_DllFile: GliVd1\n        GLI_Driver: ''\n        GLI_Mode: 1 - 1920 x 1080 x 32\n        Language: English\n    file: $GAMEDIR/drive_c/UbiSoft/Rayman2/ubi.ini\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
 }

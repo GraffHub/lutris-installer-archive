@@ -21,31 +21,26 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "http://files.champions-online.com/launcher/Champions%20Online.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Champions Online.exe",
       "arch": "win32",
-      "exe": "drive_c/Champions Online.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
@@ -57,12 +52,17 @@
       },
       {
         "task": {
+          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "http://files.champions-online.com/launcher/Champions%20Online.exe"
       }
     ]
   },

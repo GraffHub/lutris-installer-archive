@@ -21,69 +21,75 @@
   "gogslug": "",
   "humblestoreid": "batman-arkham-asylum-goty-edition",
   "script": {
-    "files": [
-      {
-        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
-      },
-      {
-        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      },
-      {
-        "mfinstaller": "https://github.com/z0z0z/mf-install/archive/master.zip"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "arch": "win32",
+      "args": "-opengl",
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
       }
-    ],
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "audio"
+          "file": "audio",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win32"
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/mfinstaller",
-          "file": "mfinstaller"
+          "file": "mfinstaller",
+          "dst": "$CACHE/mfinstaller"
         }
       },
       {
         "execute": {
-          "terminal": true,
+          "command": "$CACHE/mfinstaller/install-mf.sh",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "command": "$CACHE/mfinstaller/install-mf.sh"
+          "terminal": true
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing dependencies",
-          "name": "winetricks",
           "arch": "win32",
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
           "app": "arial dotnet48",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -94,49 +100,43 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "msiexec",
-          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "arch": "win32",
           "prefix": "$GAMEDIR",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "name": "wineexec",
           "exclude_processes": "EpicGamesLauncher.exe"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win32"
+          "name": "winekill"
         }
       },
       {
         "task": {
-          "description": "Installing various fixes. This might take a while...",
-          "name": "winetricks",
+          "app": "winxp dotnet20 dotnet35 physx mdx d3dx9 d3dcompiler_43",
           "arch": "win32",
-          "silent": false,
+          "description": "Installing various fixes. This might take a while...",
           "prefix": "$GAMEDIR/prefix",
-          "app": "winxp dotnet20 dotnet35 physx mdx d3dx9 d3dcompiler_43"
+          "name": "winetricks",
+          "silent": false
         }
       }
     ],
-    "game": {
-      "args": "-opengl",
-      "arch": "win32",
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
-      "prefix": "$GAMEDIR/prefix"
-    },
-    "system": {
-      "env": {
-        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "mfinstaller": "https://github.com/z0z0z/mf-install/archive/master.zip"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    ]
   },
   "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\n- mfinstaller: https://github.com/z0z0z/mf-install/archive/master.zip\ngame:\n  arch: win32\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win32\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win32\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: winxp dotnet20 dotnet35 physx mdx d3dx9 d3dcompiler_43\n    arch: win32\n    description: Installing various fixes. This might take a while...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n    silent: false\nsystem:\n  env:\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

@@ -21,61 +21,61 @@
   "gogslug": "faces_of_war",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "N/A:Please select the GOG.com Windows installer."
-      }
-    ],
     "game": {
+      "exe": "$GAMEDIR/drive_c/game/facesofwar.exe",
       "working_dir": "$GAMEDIR/drive_c/game",
       "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/game/facesofwar.exe"
+      "arch": "win32"
     },
     "gogid": "faces_of_war",
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "name": "wineexec",
           "executable": "game",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
           "description": "Installing...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "app": "directx9",
           "silent": false,
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "directx9"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
       }
     ]
   },

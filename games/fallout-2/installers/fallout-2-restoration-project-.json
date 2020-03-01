@@ -21,56 +21,56 @@
   "gogslug": "fallout_2",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "restoration": "http://www.killap.net/fallout2/expansion/2.3.3/F2_Restoration_Project_2.3.3.exe"
-      }
-    ],
-    "requires": "fallout-2-gog",
-    "require-binaries": "sed, chmod",
-    "installer": [
-      {
-        "task": {
-          "working_dir": "$GAMEDIR/drive_c/GOG Games/Fallout 2/",
-          "description": "Installing the Restoration Project mod",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "restoration",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "working_dir": "$GAMEDIR/drive_c/GOG Games/Fallout 2/",
-          "description": "Configuring the Hi-res patch.\n Make sure you enable it before clicking Done",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "f2_res_Config.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "execute": {
-          "args": "sed -i 's/SingleCore=1/SingleCore=0/g' '$GAMEDIR/drive_c/GOG Games/Fallout 2/ddraw.ini'",
-          "file": "/usr/bin/env"
-        }
-      },
-      {
-        "execute": {
-          "args": "chmod 444 '$GAMEDIR/drive_c/GOG Games/Fallout 2/[dD]ata/[pP]roto/[iI]tems/*' '$GAMEDIR/drive_c/GOG Games/Fallout 2/[dD]ata/[pP]roto/[cC]ritters/*'",
-          "file": "/usr/bin/env"
-        }
-      }
-    ],
-    "custom-name": "Fallout 2 (Restoration Project)",
     "game": {
       "exe": "drive_c/GOG Games/Fallout 2/FALLOUT2.EXE"
     },
+    "custom-name": "Fallout 2 (Restoration Project)",
+    "installer": [
+      {
+        "task": {
+          "executable": "restoration",
+          "arch": "win64",
+          "description": "Installing the Restoration Project mod",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "working_dir": "$GAMEDIR/drive_c/GOG Games/Fallout 2/"
+        }
+      },
+      {
+        "task": {
+          "executable": "f2_res_Config.exe",
+          "arch": "win64",
+          "description": "Configuring the Hi-res patch.\n Make sure you enable it before clicking Done",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec",
+          "working_dir": "$GAMEDIR/drive_c/GOG Games/Fallout 2/"
+        }
+      },
+      {
+        "execute": {
+          "file": "/usr/bin/env",
+          "args": "sed -i 's/SingleCore=1/SingleCore=0/g' '$GAMEDIR/drive_c/GOG Games/Fallout 2/ddraw.ini'"
+        }
+      },
+      {
+        "execute": {
+          "file": "/usr/bin/env",
+          "args": "chmod 444 '$GAMEDIR/drive_c/GOG Games/Fallout 2/[dD]ata/[pP]roto/[iI]tems/*' '$GAMEDIR/drive_c/GOG Games/Fallout 2/[dD]ata/[pP]roto/[cC]ritters/*'"
+        }
+      }
+    ],
+    "requires": "fallout-2-gog",
     "wine": {
       "overrides": {
         "ddraw.dll": "n"
       }
-    }
+    },
+    "require-binaries": "sed, chmod",
+    "files": [
+      {
+        "restoration": "http://www.killap.net/fallout2/expansion/2.3.3/F2_Restoration_Project_2.3.3.exe"
+      }
+    ]
   },
   "content": "custom-name: Fallout 2 (Restoration Project)\r\nfiles:\r\n- restoration: http://www.killap.net/fallout2/expansion/2.3.3/F2_Restoration_Project_2.3.3.exe\r\ngame:\r\n  exe: drive_c/GOG Games/Fallout 2/FALLOUT2.EXE\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Installing the Restoration Project mod\r\n    executable: restoration\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n    working_dir: $GAMEDIR/drive_c/GOG Games/Fallout 2/\r\n- task:\r\n    arch: win64\r\n    description: \"Configuring the Hi-res patch.\\n Make sure you enable it before clicking\\\r\n      \\ Done\"\r\n    executable: f2_res_Config.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n    working_dir: $GAMEDIR/drive_c/GOG Games/Fallout 2/\r\n- execute:\r\n    args: sed -i 's/SingleCore=1/SingleCore=0/g' '$GAMEDIR/drive_c/GOG Games/Fallout\r\n      2/ddraw.ini'\r\n    file: /usr/bin/env\r\n- execute:\r\n    args: chmod 444 '$GAMEDIR/drive_c/GOG Games/Fallout 2/[dD]ata/[pP]roto/[iI]tems/*'\r\n      '$GAMEDIR/drive_c/GOG Games/Fallout 2/[dD]ata/[pP]roto/[cC]ritters/*'\r\n    file: /usr/bin/env\r\nrequire-binaries: sed, chmod\r\nrequires: fallout-2-gog\r\nwine:\r\n  overrides:\r\n    ddraw.dll: n"
 }

@@ -1,0 +1,112 @@
+{
+  "id": 18495,
+  "game_id": 17556,
+  "game_slug": "second-life",
+  "name": "Second Life",
+  "year": null,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "second-life-637-vulkan",
+  "version": "6.3.7-vulkan",
+  "description": null,
+  "notes": "SLVersionChecker script fails ... (not a problem)",
+  "created_at": "2020-02-21T23:06:57.592000Z",
+  "updated_at": "2020-02-23T13:03:41.194889Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "custom-name": "Second Life",
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/SecondLifeViewer/SecondLifeViewer.exe"
+    },
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true,
+      "xboxdrv": "xboxdrv"
+    },
+    "wine": {
+      "esync": true,
+      "Audio": "pulse",
+      "version": "ge-protonified-nofshack-4.9-x86_64",
+      "overrides": {
+        "winedbg.exe": "d"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/prefix/drive_c/",
+          "src": "Second_Life.exe"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/prefix/drive_c/Second_Life_6_3_7_535996_x86_64_Setup.exe",
+          "args": "/S",
+          "description": "Second Life ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43",
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx11_43",
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dxvk",
+          "arch": "win64",
+          "description": "Vulkan ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "win8",
+          "arch": "win64",
+          "description": "Windows version 8 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "files": [
+      {
+        "Second_Life.exe": "http://download.cloud.secondlife.com/Viewer_6/Second_Life_6_3_7_535996_x86_64_Setup.exe"
+      }
+    ]
+  },
+  "content": "files:\n- Second_Life.exe: http://download.cloud.secondlife.com/Viewer_6/Second_Life_6_3_7_535996_x86_64_Setup.exe\ngame:\n  arch: win64\n  custom-name: Second Life\n  exe: $GAMEDIR/prefix/drive_c/Program Files/SecondLifeViewer/SecondLifeViewer.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR/prefix/drive_c/\n    src: Second_Life.exe\n- task:\n    args: /S\n    description: Second Life ...\n    executable: $GAMEDIR/prefix/drive_c/Second_Life_6_3_7_535996_x86_64_Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+}

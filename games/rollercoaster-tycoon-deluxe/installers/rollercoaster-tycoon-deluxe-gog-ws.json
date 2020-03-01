@@ -21,40 +21,30 @@
   "gogslug": "rollercoaster_tycoon_deluxe",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Select the Windows installer downloaded from GOG"
-      },
-      {
-        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/rct_multi5_exe.zip"
-      },
-      {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/resolang.sh"
-      },
-      {
-        "config": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/Game.cfg"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/RollerCoaster Tycoon Deluxe/RCT.EXE"
+      "exe": "drive_c/GOG Games/RollerCoaster Tycoon Deluxe/RCT.EXE",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "RollerCoaster Tycoon Deluxe - GOG",
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
-          "description": "Preparing wineprefix...",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Preparing wineprefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "name": "wineexec",
           "executable": "setup",
+          "args": "/SP- /SUPPRESSMSGBOXES",
           "description": "Installing...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
@@ -82,9 +72,9 @@
               "sp": "Spanish"
             }
           ],
-          "description": "Choose the game's language:",
+          "id": "LANG",
           "preselect": "en",
-          "id": "LANG"
+          "description": "Choose the game's language:"
         }
       },
       {
@@ -92,8 +82,8 @@
       },
       {
         "execute": {
-          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT $INPUT_LANG",
-          "file": "script"
+          "file": "script",
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT $INPUT_LANG"
         }
       },
       {
@@ -104,31 +94,41 @@
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       }
     ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "RollerCoaster Tycoon Deluxe - GOG"
+    "files": [
+      {
+        "setup": "N/A:Select the Windows installer downloaded from GOG"
+      },
+      {
+        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/rct_multi5_exe.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/resolang.sh"
+      },
+      {
+        "config": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/Game.cfg"
+      }
+    ]
   },
   "content": "custom-name: RollerCoaster Tycoon Deluxe - GOG\nfiles:\n- setup: N/A:Select the Windows installer downloaded from GOG\n- patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/rct_multi5_exe.zip\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/resolang.sh\n- config: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/RollerCoaster%20Tycoon%20Deluxe/Game.cfg\ngame:\n  exe: drive_c/GOG Games/RollerCoaster Tycoon Deluxe/RCT.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/tmp\n    src: patch\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LANG\n    options:\n    - en: English\n    - fr: French\n    - ge: German\n    - it: Italian\n    - sp: Spanish\n    preselect: en\n- chmodx: script\n- execute:\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT $INPUT_LANG\n    file: script\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/RollerCoaster Tycoon Deluxe/Data\n    src: config\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

@@ -22,80 +22,80 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Fox/Croc/CrocD3D.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Fox/Croc/CrocD3D.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix...",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "insert-disc": {
-          "description": "Waiting for game installer...",
           "message": "Insert the Croc CD-ROM disc.",
+          "description": "Waiting for game installer...",
           "requires": "autorun.exe"
         }
       },
       {
         "task": {
-          "description": "Executing setup from disc. Select \"Install Croc\" and follow the prompts. Do not change the default installation directory. Select a full installation. Click \"No\" when asked to install DirectX. Exit the application.",
-          "name": "wineexec",
           "executable": "$DISC/autorun.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "arch": "win32",
-          "key": "D3D Device",
+          "description": "Executing setup from disc. Select \"Install Croc\" and follow the prompts. Do not change the default installation directory. Select a full installation. Click \"No\" when asked to install DirectX. Exit the application.",
           "prefix": "$GAMEDIR",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
-          "value": "DirectDraw HAL"
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
-          "key": "D3D Mode",
           "prefix": "$GAMEDIR",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
-          "value": "DirectDraw HAL $RESOLUTION, 16 bit"
-        }
-      },
-      {
-        "task": {
           "name": "set_regedit",
-          "arch": "win32",
-          "key": "D3D Resoloution",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
-          "value": "$RESOLUTION, 16 bit"
+          "value": "DirectDraw HAL",
+          "key": "D3D Device"
         }
       },
       {
         "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
           "name": "set_regedit",
-          "arch": "win32",
-          "key": "Driver name",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
-          "value": "d3drend"
+          "value": "DirectDraw HAL $RESOLUTION, 16 bit",
+          "key": "D3D Mode"
         }
       },
       {
         "task": {
-          "description": "Select \"Change driver settings\". Use the dropdown menu under \"Screen Resolution\" to set resolution. Click \"OK\" when done. Exit the application.",
-          "name": "wineexec",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
+          "value": "$RESOLUTION, 16 bit",
+          "key": "D3D Resoloution"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc",
+          "value": "d3drend",
+          "key": "Driver name"
+        }
+      },
+      {
+        "task": {
           "executable": "$GAMEDIR/drive_c/Program Files/Fox/Croc/CrocRun.exe",
-          "prefix": "$GAMEDIR"
+          "description": "Select \"Change driver settings\". Use the dropdown menu under \"Screen Resolution\" to set resolution. Click \"OK\" when done. Exit the application.",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ]

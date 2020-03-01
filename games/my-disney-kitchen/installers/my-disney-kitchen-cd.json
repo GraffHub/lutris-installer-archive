@@ -22,9 +22,13 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "640x480"
     },
     "installer": [
       {
@@ -34,12 +38,12 @@
       },
       {
         "task": {
-          "description": "Enable Windows 98 compatibility mode",
-          "name": "set_regedit",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win98"
+          "description": "Enable Windows 98 compatibility mode",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "value": "win98",
+          "key": "Version"
         }
       },
       {
@@ -56,16 +60,12 @@
       },
       {
         "task": {
+          "executable": "$DISC/SETUP.EXE",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$DISC/SETUP.EXE"
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "WineDesktop": "640x480",
-      "Desktop": true
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: SETUP.EXE\n- task:\n    description: Enable Windows 98 compatibility mode\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win98\n- merge:\n    dst: $GAMEDIR/drive_c/MDKitchen/Assets/\n    src: $DISC/MDKitchen/Assets/\n- write_file:\n    content: MDKitchen\n    file: $GAMEDIR/drive_c/.windows-label\n- task:\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 640x480\n"
 }

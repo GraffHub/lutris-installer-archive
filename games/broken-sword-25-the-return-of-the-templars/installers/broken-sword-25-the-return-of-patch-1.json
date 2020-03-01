@@ -21,73 +21,73 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "game_id": "sword25",
+      "path": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$game",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "wine.set_regedit",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/bs25-setup.exe",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing ...",
+          "prefix": "$GAMEDIR",
+          "name": "wine.wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$game2",
+          "dst": "$GAMEDIR/drive_c/game",
+          "description": "Installing ..."
+        }
+      },
+      {
+        "execute": {
+          "file": "/bin/sh",
+          "description": "cleaning...",
+          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "file": "/bin/sh",
+          "description": "cleaning...",
+          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
+          "terminal": false
+        }
+      }
+    ],
     "files": [
       {
         "game": "http://server.c-otto.de/baphometsfluch/bs25setup.zip"
       },
       {
         "game2": "http://baphometsfluch25.de/downloads/sonstiges/BS25_patch000_multilingual.zip"
-      }
-    ],
-    "game": {
-      "path": "$GAMEDIR",
-      "game_id": "sword25"
-    },
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$game"
-        }
-      },
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "name": "wine.create_prefix",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "name": "wine.set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "value": "",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "name": "wine.wineexec",
-          "executable": "$CACHE/bs25-setup.exe",
-          "description": "Installing ...",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing ...",
-          "file": "$game2",
-          "dst": "$GAMEDIR/drive_c/game"
-        }
-      },
-      {
-        "execute": {
-          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "file": "/bin/sh",
-          "description": "cleaning...",
-          "terminal": false
-        }
-      },
-      {
-        "execute": {
-          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "file": "/bin/sh",
-          "description": "cleaning...",
-          "terminal": false
-        }
       }
     ]
   },

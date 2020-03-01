@@ -21,17 +21,28 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
-      },
-      {
-        "mf_install": {
-          "filename": "master.zip",
-          "url": "https://github.com/z0z0z/mf-install/archive/master.zip"
-        }
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "arch": "win64",
+      "args": "-opengl",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0,
+        "__GL_THREADED_OPTIMIZATIONS": 1
       }
-    ],
+    },
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "d3dcompiler_47": "native,builtin"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "extract": {
@@ -41,35 +52,35 @@
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "execute": {
           "file": "$CACHE/mfinstall/mf-install.sh",
           "env": {
-            "WINEARCH": "win64",
-            "WINE64": "$HOME/.local/share/lutris/runners/wine/ge-protonified-4.10-x86_64/bin/wine64",
             "WINE": "$HOME/.local/share/lutris/runners/wine/ge-protonified-4.10-x86_64/bin/wine",
-            "WINEPREFIX": "$GAMEDIR"
+            "WINE64": "$HOME/.local/share/lutris/runners/wine/ge-protonified-4.10-x86_64/bin/wine64",
+            "WINEPREFIX": "$GAMEDIR",
+            "WINEARCH": "win64"
           }
         }
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
       },
       {
         "task": {
-          "description": "Installing dependencies",
-          "name": "winetricks",
           "app": "arial vcrun2015 dotnet48 win7",
-          "prefix": "$GAMEDIR"
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -80,44 +91,33 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "msiexec",
-          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "name": "wineexec",
           "exclude_processes": "EpicGamesLauncher.exe"
         }
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
       }
     ],
-    "game": {
-      "args": "-opengl",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "mf_install": {
+          "filename": "master.zip",
+          "url": "https://github.com/z0z0z/mf-install/archive/master.zip"
+        }
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "d3dcompiler_47": "native,builtin"
-      }
-    }
+    ]
   },
   "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- mf_install:\n    filename: master.zip\n    url: https://github.com/z0z0z/mf-install/archive/master.zip\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/mfinstall\n    src: mf_install\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    env:\n      WINE: $HOME/.local/share/lutris/runners/wine/ge-protonified-4.10-x86_64/bin/wine\n      WINE64: $HOME/.local/share/lutris/runners/wine/ge-protonified-4.10-x86_64/bin/wine64\n      WINEARCH: win64\n      WINEPREFIX: $GAMEDIR\n    file: $CACHE/mfinstall/mf-install.sh\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2015 dotnet48 win7\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3dcompiler_47: native,builtin\n    nvapi,nvapi64: disabled\n"
 }

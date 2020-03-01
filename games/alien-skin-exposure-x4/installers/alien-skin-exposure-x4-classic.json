@@ -21,34 +21,33 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Please select the setup.exe located on the installation DVD."
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Alien Skin/Exposure X4/",
       "arch": "win64",
-      "exe": "drive_c/Program Files/Alien Skin/Exposure X4/"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "description": "Creating 64-bit Wine prefix.",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Creating 64-bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Setting Windows 7 mode for Wine",
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "Version",
+          "description": "Setting Windows 7 mode for Wine",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win7"
+          "value": "win7",
+          "key": "Version"
         }
       },
       {
@@ -59,18 +58,19 @@
       },
       {
         "task": {
-          "description": "Running setup",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "installer",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "description": "Running setup",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    "files": [
+      {
+        "installer": "N/A:Please select the setup.exe located on the installation DVD."
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Alien Skin/Exposure X4/\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

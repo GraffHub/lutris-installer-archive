@@ -21,15 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "patch": "https://archive.org/download/tone131e/tone131e.zip"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Tone/float.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Tone/float.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -39,38 +34,43 @@
       },
       {
         "task": {
-          "args": "/Q",
-          "name": "wineexec",
           "executable": "$DISC/directx/dxsetup.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
           "args": "/Q",
-          "name": "wineexec",
-          "executable": "$DISC/setup/amovie.exe",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "args": null,
-          "name": "wineexec",
+          "executable": "$DISC/setup/amovie.exe",
+          "args": "/Q",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
           "executable": "$DISC/setup/setup.exe",
-          "prefix": "$GAMEDIR"
+          "args": null,
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Tone",
-          "file": "$patch"
+          "file": "$patch",
+          "dst": "$GAMEDIR/drive_c/Program Files/Tone"
         }
       },
       {
         "execute": {
           "command": "cd \"$GAMEDIR/drive_c/Program Files/Tone/\"; mv Float.exe float.exe; sed -i \"s/draw_method 2/draw_method 4/\" float.cfg"
         }
+      }
+    ],
+    "files": [
+      {
+        "patch": "https://archive.org/download/tone131e/tone131e.zip"
       }
     ]
   },

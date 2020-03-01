@@ -21,47 +21,47 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "contra": "N/A:Please select the itch.io archive"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe",
       "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Contra 2028",
-          "file": "contra"
+          "file": "contra",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Contra 2028"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "HideWineExports",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "Y"
+          "value": "Y",
+          "key": "HideWineExports"
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
+    "files": [
+      {
+        "contra": "N/A:Please select the itch.io archive"
       }
-    }
+    ]
   },
   "content": "files:\n- contra: N/A:Please select the itch.io archive\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Contra 2028/ContraReboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Contra 2028\n    file: contra\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: Y\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

@@ -21,72 +21,72 @@
   "gogslug": "xcom_terror_from_the_deep",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "N/A:Please select the GOG.com Windows installer"
-      }
-    ],
     "game": {
       "appid": 7650,
-      "config_file": "$GAMEDIR/dosbox_xcomtftd.conf",
-      "main_file": "$GAMEDIR/dosbox_xcomtftd_single.conf"
+      "main_file": "$GAMEDIR/dosbox_xcomtftd_single.conf",
+      "config_file": "$GAMEDIR/dosbox_xcomtftd.conf"
     },
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "wine.create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
         }
       },
       {
         "task": {
-          "name": "wine.set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "wine.set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "name": "wine.wineexec",
           "executable": "game",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
           "description": "Installing ...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wine.wineexec"
         }
       },
       {
         "execute": {
+          "file": "/bin/sh",
+          "description": "cleaning...",
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "file": "/bin/sh",
-          "description": "cleaning...",
           "terminal": false
         }
       },
       {
         "execute": {
+          "file": "/bin/sh",
+          "description": "cleaning...",
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "file": "/bin/sh",
-          "description": "cleaning...",
           "terminal": false
         }
       },
       {
         "execute": {
-          "args": "-i 's|mount C \"..\" -freesize 1024|mount C \".\" -freesize 1024|g' $GAMEDIR/dosbox_xcomtftd_single.conf",
           "file": "/bin/sed",
+          "args": "-i 's|mount C \"..\" -freesize 1024|mount C \".\" -freesize 1024|g' $GAMEDIR/dosbox_xcomtftd_single.conf",
           "terminal": false
         }
       },
       {
         "execute": {
-          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "file": "/bin/sh",
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "terminal": false
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer"
       }
     ]
   },

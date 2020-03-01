@@ -21,47 +21,53 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "client": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
-      },
-      {
-        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Origin Games/Battlefield 2 Complete Collection/BF2.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_runtime": false
+    },
+    "wine": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
       }
-    ],
+    },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "nocrashdialog win7"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Origin... Login window will pop-up and close.",
-          "name": "wineexec",
+          "app": "nocrashdialog win7",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "client",
+          "arch": "win64",
+          "description": "Installing Origin... Login window will pop-up and close.",
           "args": "/silent",
+          "name": "wineexec",
           "prefix": "$GAMEDIR",
           "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
         }
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
       },
       {
@@ -75,28 +81,22 @@
       },
       {
         "task": {
+          "app": "dotnet20 dotnet40 wmp9 d3dx10 d3dx10_43 d3dx11_42 d3dx11_43 d3dx9 d3dx9_26 d3dx9_28 d3dx9_31 d3dx9_35 d3dx9_36 d3dx9_39 d3dx9_42 d3dx9_43 xinput",
           "silent": true,
           "description": "Installing winetricks components.",
-          "name": "winetricks",
-          "app": "dotnet20 dotnet40 wmp9 d3dx10 d3dx10_43 d3dx11_42 d3dx11_43 d3dx9 d3dx9_26 d3dx9_28 d3dx9_31 d3dx9_35 d3dx9_36 d3dx9_39 d3dx9_42 d3dx9_43 xinput",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Origin Games/Battlefield 2 Complete Collection/BF2.exe"
-    },
-    "system": {
-      "disable_runtime": false
-    },
-    "wine": {
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "xaudio2_7": "native,builtin"
+    "files": [
+      {
+        "client": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
+      },
+      {
+        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
-    }
+    ]
   },
   "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin Games/Battlefield 2 Complete Collection/BF2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\n- task:\n    app: dotnet20 dotnet40 wmp9 d3dx10 d3dx10_43 d3dx11_42 d3dx11_43 d3dx9 d3dx9_26\n      d3dx9_28 d3dx9_31 d3dx9_35 d3dx9_36 d3dx9_39 d3dx9_42 d3dx9_43 xinput\n    description: Installing winetricks components.\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: false\nwine:\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

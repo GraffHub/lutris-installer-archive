@@ -21,15 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "patch": "http://kapitanpazur.piasta.pl/dl/claw13.zip"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -39,39 +34,44 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix...",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Claw...",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "$DISC/SETUP.EXE",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing Claw...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "description": "Patching Claw...",
           "src": "patch",
-          "dst": "$GAMEDIR/drive_c/games/claw/"
+          "dst": "$GAMEDIR/drive_c/games/claw/",
+          "description": "Patching Claw..."
         }
       },
       {
         "task": {
-          "description": "Setting registry keys...",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0",
-          "key": "Disable DVD Movies",
           "prefix": "$GAMEDIR",
           "name": "set_regedit",
-          "arch": "win32",
           "type": "REG_DWORD",
-          "value": 1
+          "arch": "win32",
+          "description": "Setting registry keys...",
+          "value": 1,
+          "key": "Disable DVD Movies"
         }
+      }
+    ],
+    "files": [
+      {
+        "patch": "http://kapitanpazur.piasta.pl/dl/claw13.zip"
       }
     ]
   },

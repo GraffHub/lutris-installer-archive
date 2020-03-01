@@ -21,17 +21,15 @@
   "gogslug": "",
   "humblestoreid": "grand-theft-auto-iv",
   "script": {
-    "files": [
-      {
-        "xlive": "https://github.com/AccountOneOff/lutris_files/raw/master/xlive.dll"
-      }
-    ],
     "game": {
       "appid": 12210,
       "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
     },
     "installer": [
       {
@@ -48,20 +46,22 @@
       },
       {
         "task": {
+          "value": "Y",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullScreen",
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "Y"
+          "name": "set_regedit"
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
+    "winesteam": {
+      "dxvk": true
+    },
+    "files": [
+      {
+        "xlive": "https://github.com/AccountOneOff/lutris_files/raw/master/xlive.dll"
       }
-    }
+    ]
   },
   "content": "files:\r\n- xlive: https://github.com/AccountOneOff/lutris_files/raw/master/xlive.dll\r\ngame:\r\n  appid: 12210\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- merge:\r\n    dst: $GAMEDIR/GTAIV\r\n    src: xlive\r\n- task:\r\n    key: GrabFullScreen\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\r\n    prefix: $GAMEDIR/prefix\r\n    value: Y\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwinesteam:\r\n  dxvk: true"
 }

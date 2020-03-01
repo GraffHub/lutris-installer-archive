@@ -21,15 +21,21 @@
   "gogslug": "bloodrayne",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Please select the GOG.com Windows installer"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/BloodRayne/rayne.exe",
       "arch": "win32",
-      "exe": "drive_c/GOG Games/BloodRayne/rayne.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Audio": "alsa",
+      "overrides": {
+        "quartz": "n",
+        "winegstreamer": "disabled",
+        "devenum": "n",
+        "dinput": "n",
+        "xinput1_3": "n",
+        "dinput8": "n"
+      }
     },
     "installer": [
       {
@@ -45,9 +51,9 @@
               "2560": "2560"
             }
           ],
-          "description": "Choose horizontal resolution",
+          "id": "RESOLUTIONX",
           "preselect": "1920",
-          "id": "RESOLUTIONX"
+          "description": "Choose horizontal resolution"
         }
       },
       {
@@ -63,51 +69,45 @@
               "1440": "1440"
             }
           ],
-          "description": "Choose vertical resolution",
+          "id": "RESOLUTIONY",
           "preselect": "1080",
-          "id": "RESOLUTIONY"
+          "description": "Choose vertical resolution"
         }
       },
       {
         "task": {
+          "app": "quartz devenum dinput dinput8 xinput1_3",
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "quartz devenum dinput dinput8 xinput1_3"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "setup",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/GOG Games/BloodRayne/system/rayne.ini",
           "data": {
             "Graphics": {
               "gamePIXY": "$INPUT_RESOLUTIONY",
               "gamePIXX": "$INPUT_RESOLUTIONX"
             }
-          },
-          "file": "$GAMEDIR/drive_c/GOG Games/BloodRayne/system/rayne.ini"
+          }
         }
       }
     ],
-    "wine": {
-      "Audio": "alsa",
-      "overrides": {
-        "devenum": "n",
-        "xinput1_3": "n",
-        "winegstreamer": "disabled",
-        "dinput8": "n",
-        "dinput": "n",
-        "quartz": "n"
+    "files": [
+      {
+        "setup": "N/A:Please select the GOG.com Windows installer"
       }
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Please select the GOG.com Windows installer\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/BloodRayne/rayne.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: Choose horizontal resolution\n    id: RESOLUTIONX\n    options:\n    - '1920': '1920'\n    - '1600': '1600'\n    - '2560': '2560'\n    preselect: '1920'\n- input_menu:\n    description: Choose vertical resolution\n    id: RESOLUTIONY\n    options:\n    - '1080': '1080'\n    - '1600': '1600'\n    - '1440': '1440'\n    preselect: '1080'\n- task:\n    app: quartz devenum dinput dinput8 xinput1_3\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    data:\n      Graphics:\n        gamePIXX: $INPUT_RESOLUTIONX\n        gamePIXY: $INPUT_RESOLUTIONY\n    file: $GAMEDIR/drive_c/GOG Games/BloodRayne/system/rayne.ini\nwine:\n  Audio: alsa\n  overrides:\n    devenum: n\n    dinput: n\n    dinput8: n\n    quartz: n\n    winegstreamer: disabled\n    xinput1_3: n\n"
 }

@@ -21,6 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "launch.sh",
+      "args": "-ConfigFile mlkconfig.ini"
+    },
     "files": [
       {
         "downloader": {
@@ -35,40 +39,35 @@
         }
       }
     ],
-    "requires": "ultrastar-deluxe",
-    "game": {
-      "args": "-ConfigFile mlkconfig.ini",
-      "exe": "launch.sh"
-    },
     "installer": [
       {
         "write_config": {
+          "file": "$GAMEDIR/mlkconfig.ini",
+          "value": "MyLittleKaraoke",
           "key": "Theme",
-          "file": "$GAMEDIR/mlkconfig.ini",
-          "section": "Themes",
-          "value": "MyLittleKaraoke"
+          "section": "Themes"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/mlkconfig.ini",
+          "value": "MyLittleKaraoke",
           "key": "Skin",
-          "file": "$GAMEDIR/mlkconfig.ini",
-          "section": "Themes",
-          "value": "MyLittleKaraoke"
+          "section": "Themes"
         }
       },
       {
         "write_config": {
-          "key": "Color",
           "file": "$GAMEDIR/mlkconfig.ini",
-          "section": "Themes",
-          "value": "Blue"
+          "value": "Blue",
+          "key": "Color",
+          "section": "Themes"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/data/avatars",
-          "file": "avatars"
+          "file": "avatars",
+          "dst": "$GAMEDIR/data/avatars"
         }
       },
       {
@@ -76,13 +75,14 @@
       },
       {
         "execute": {
-          "args": "$GAMEDIR/data",
           "file": "downloader",
           "description": "Updating My Little Karaoke",
+          "args": "$GAMEDIR/data",
           "terminal": true
         }
       }
-    ]
+    ],
+    "requires": "ultrastar-deluxe"
   },
   "content": "files:\n- downloader:\n    filename: downloader.sh\n    url: http://djazz.se/nas/games/?dl=my-little-karaoke-songs\n- avatars:\n    filename: avatars.tar.xz\n    url: http://djazz.se/nas/games/?dl=my-little-karaoke-avatars\ngame:\n  args: -ConfigFile mlkconfig.ini\n  exe: launch.sh\ninstaller:\n- write_config:\n    file: $GAMEDIR/mlkconfig.ini\n    key: Theme\n    section: Themes\n    value: MyLittleKaraoke\n- write_config:\n    file: $GAMEDIR/mlkconfig.ini\n    key: Skin\n    section: Themes\n    value: MyLittleKaraoke\n- write_config:\n    file: $GAMEDIR/mlkconfig.ini\n    key: Color\n    section: Themes\n    value: Blue\n- extract:\n    dst: $GAMEDIR/data/avatars\n    file: avatars\n- chmodx: downloader\n- execute:\n    args: $GAMEDIR/data\n    description: Updating My Little Karaoke\n    file: downloader\n    terminal: true\nrequires: ultrastar-deluxe\n"
 }

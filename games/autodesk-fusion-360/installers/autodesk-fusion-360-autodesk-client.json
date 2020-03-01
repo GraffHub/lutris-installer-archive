@@ -21,21 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "fusion_installer": {
-          "filename": "Fusion%20360%20Client%20Downloader.exe",
-          "url": "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe"
-        }
-      },
-      {
-        "platform_py": "https://raw.githubusercontent.com/python/cpython/master/Lib/platform.py"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe",
       "arch": "win64",
-      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -45,24 +34,24 @@
               "wait": "Wait a bit, your connection might be slow"
             }
           ],
-          "description": "Is the 'Fusion 360 Client Downloader.exe' in your $CACHE (default: ~/.cache/lutris/installer/autodesk_fusion_360/)?",
+          "id": "download",
           "preselect": "wait",
-          "id": "download"
+          "description": "Is the 'Fusion 360 Client Downloader.exe' in your $CACHE (default: ~/.cache/lutris/installer/autodesk_fusion_360/)?"
         }
       },
       {
         "extract": {
-          "description": "extracting installer",
-          "dst": "$CACHE/fusion_installer/",
           "file": "fusion_installer",
+          "dst": "$CACHE/fusion_installer/",
+          "description": "extracting installer",
           "extractor": "exe"
         }
       },
       {
         "move": {
-          "description": "moving installer",
           "src": "platform_py",
-          "dst": "$CACHE/fusion_installer/"
+          "dst": "$CACHE/fusion_installer/",
+          "description": "moving installer"
         }
       },
       {
@@ -91,19 +80,30 @@
       },
       {
         "task": {
-          "description": "doing the winetrickery",
-          "name": "winetricks",
           "app": "vcrun2017 corefonts wininet winhttp dxvk atmlib gdiplus iertutil msxml3 msxml6 urlmon win7",
-          "prefix": "$GAMEDIR"
+          "description": "doing the winetrickery",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "running the installer (After Login, please change the Graphics driver to DirectX 9 in the preferences, apply and choose 'Not Now' and close it manually (you might need to kill the wine processes if Fusion isn't closing!) to complete the installer)",
-          "name": "wineexec",
           "executable": "$CACHE/fusion_installer/streamer.exe",
-          "prefix": "$GAMEDIR"
+          "description": "running the installer (After Login, please change the Graphics driver to DirectX 9 in the preferences, apply and choose 'Not Now' and close it manually (you might need to kill the wine processes if Fusion isn't closing!) to complete the installer)",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
+      }
+    ],
+    "files": [
+      {
+        "fusion_installer": {
+          "filename": "Fusion%20360%20Client%20Downloader.exe",
+          "url": "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe"
+        }
+      },
+      {
+        "platform_py": "https://raw.githubusercontent.com/python/cpython/master/Lib/platform.py"
       }
     ]
   },

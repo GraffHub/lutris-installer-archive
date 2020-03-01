@@ -22,44 +22,44 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
     },
     "script": {
+      "game": {
+        "exe": "drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe",
+        "working_dir": "$GAMEDIR",
+        "prefix": "$GAMEDIR",
+        "arch": "win64"
+      },
+      "system": {
+        "env": {
+          "WINEDLLOVERRIDES": "d3d11=",
+          "SOMEENV": true
+        },
+        "terminal": true
+      },
+      "wine": {
+        "Desktop": true,
+        "WineDesktop": "1024x768",
+        "overrides": {
+          "ddraw.dll": "n"
+        }
+      },
+      "installer": [
+        {
+          "executable": "$installer",
+          "task": null,
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      ],
       "files": [
         {
           "installer": "http://cdn.legendsofaria.com/LegendsOfAria-07.1.exe"
         }
-      ],
-      "installer": [
-        {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "$installer",
-          "task": null
-        }
-      ],
-      "game": {
-        "working_dir": "$GAMEDIR",
-        "prefix": "$GAMEDIR",
-        "arch": "win64",
-        "exe": "drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe"
-      },
-      "system": {
-        "terminal": true,
-        "env": {
-          "SOMEENV": true,
-          "WINEDLLOVERRIDES": "d3d11="
-        }
-      },
-      "wine": {
-        "WineDesktop": "1024x768",
-        "Desktop": true,
-        "overrides": {
-          "ddraw.dll": "n"
-        }
-      }
+      ]
     }
   },
   "content": "game:\n  arch: win32\n  prefix: $GAMEDIR\nscript:\n  files:\n  - installer: http://cdn.legendsofaria.com/LegendsOfAria-07.1.exe\n  game:\n    arch: win64\n    exe: drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR\n  installer:\n  - arch: win64\n    executable: $installer\n    name: wineexec\n    prefix: $GAMEDIR\n    task: null\n  system:\n    env:\n      SOMEENV: true\n      WINEDLLOVERRIDES: d3d11=\n    terminal: true\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n    overrides:\n      ddraw.dll: n\n"

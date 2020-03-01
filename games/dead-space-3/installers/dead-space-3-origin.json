@@ -21,21 +21,33 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "client": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
-      },
-      {
-        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
+        "STAGING_SHARED_MEMORY": 0
       }
-    ],
+    },
+    "wine": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -53,9 +65,9 @@
               "dxgi.nvapiHack = False\nd3d11.zeroInitWorkgroupMemory = True": "Nvidia"
             }
           ],
-          "description": "Setting DXVK workarounds please choose your GPU:",
+          "id": "GPU",
           "preselect": "#Not needed for AMD. Ignore this.",
-          "id": "GPU"
+          "description": "Setting DXVK workarounds please choose your GPU:"
         }
       },
       {
@@ -66,28 +78,28 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "nocrashdialog d3dcompiler_43 d3dcompiler_47 d3dx9 win7",
           "arch": "win64",
-          "app": "nocrashdialog d3dcompiler_43 d3dcompiler_47 d3dx9 win7"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing Origin... Login window will pop-up and close.",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "client",
+          "arch": "win64",
+          "description": "Installing Origin... Login window will pop-up and close.",
           "args": "/silent",
+          "name": "wineexec",
           "prefix": "$GAMEDIR",
           "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
         }
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
       },
       {
@@ -100,26 +112,14 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
-    },
-    "system": {
-      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "STAGING_SHARED_MEMORY": 0
+    "files": [
+      {
+        "client": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
+      },
+      {
+        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
-      }
-    }
+    ]
   },
   "content": "files:\r\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\r\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir \"$GAMEDIR/nv-shaders\"\r\n- input_menu:\r\n    description: 'Setting DXVK workarounds please choose your GPU:'\r\n    id: GPU\r\n    options:\r\n    - '#Not needed for AMD. Ignore this.': AMD\r\n    - ? 'dxgi.nvapiHack = False\r\n\r\n        d3d11.zeroInitWorkgroupMemory = True'\r\n      : Nvidia\r\n    preselect: '#Not needed for AMD. Ignore this.'\r\n- write_file:\r\n    content: $INPUT_GPU\r\n    file: $GAMEDIR/dxvk.conf\r\n- task:\r\n    app: nocrashdialog d3dcompiler_43 d3dcompiler_47 d3dx9 win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    description: Installing Origin... Login window will pop-up and close.\r\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\r\n      QtWebEngineProcess.exe\r\n    executable: client\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- chmodx: updater\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\r\n    src: updater\r\nsystem:\r\n  env:\r\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\r\n    STAGING_SHARED_MEMORY: 0\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\r\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\r\nwine:\r\n  dxvk: true\r\n  overrides:\r\n    nvapi,nvapi64: disabled"
 }

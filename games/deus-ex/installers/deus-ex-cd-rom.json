@@ -21,6 +21,51 @@
   "gogslug": "deus_ex",
   "humblestoreid": "deus-ex-game-of-the-year-edition",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR"
+    },
+    "exe": "drive_c/DeusEx/System/DeusEx.exe",
+    "installer": [
+      {
+        "insert_disc": {
+          "message": "Insert your Deus Ex CD-Rom",
+          "requires": "Setup.exe"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/Setup.exe",
+          "args": "/silent /nogui",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "patch",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "d3d9renderer",
+          "dst": "$GAMEDIR/drive_c/DeusEx/System/"
+        }
+      },
+      {
+        "extract": {
+          "file": "d3d10renderer",
+          "dst": "$GAMEDIR/drive_c/DeusEx/System/"
+        }
+      },
+      {
+        "extract": {
+          "file": "oglrenderer",
+          "dst": "$GAMEDIR/drive_c/DeusEx/System/"
+        }
+      }
+    ],
     "files": [
       {
         "patch": "https://lutris.net/files/games/deus-ex/DeusExMPPatch1112fm.exe"
@@ -33,51 +78,6 @@
       },
       {
         "oglrenderer": "https://lutris.net/files/games/deus-ex/dxglr20.zip"
-      }
-    ],
-    "exe": "drive_c/DeusEx/System/DeusEx.exe",
-    "game": {
-      "prefix": "$GAMEDIR"
-    },
-    "installer": [
-      {
-        "insert_disc": {
-          "message": "Insert your Deus Ex CD-Rom",
-          "requires": "Setup.exe"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent /nogui",
-          "name": "wineexec",
-          "executable": "$DISC/Setup.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "patch"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/DeusEx/System/",
-          "file": "d3d9renderer"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/DeusEx/System/",
-          "file": "d3d10renderer"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/DeusEx/System/",
-          "file": "oglrenderer"
-        }
       }
     ]
   },

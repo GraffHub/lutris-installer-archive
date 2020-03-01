@@ -21,14 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "patch1": "N/A:Provide path to 1.6 patch"
-      },
-      {
-        "patch2": "N/A:Provide path to 1.6-1.7 patch"
-      }
-    ],
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Activision/Call of Duty 4 - Modern Warfare/iw3mp.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "prefer_system_libs": false
+    },
+    "wine": {
+      "esync": true
+    },
     "installer": [
       {
         "insert-disc": {
@@ -38,43 +40,41 @@
       },
       {
         "merge": {
-          "description": "Copying disc 1 to cache",
           "src": "$DISC",
-          "dst": "$CACHE/cdrom"
+          "dst": "$CACHE/cdrom",
+          "description": "Copying disc 1 to cache"
         }
       },
       {
         "task": {
+          "executable": "$CACHE/cdrom/setup.exe",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$CACHE/cdrom/setup.exe"
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "executable": "patch1",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "patch1"
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "executable": "patch2",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "patch2"
+          "name": "wineexec"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Activision/Call of Duty 4 - Modern Warfare/iw3mp.exe"
-    },
-    "system": {
-      "prefer_system_libs": false
-    },
-    "wine": {
-      "esync": true
-    }
+    "files": [
+      {
+        "patch1": "N/A:Provide path to 1.6 patch"
+      },
+      {
+        "patch2": "N/A:Provide path to 1.6-1.7 patch"
+      }
+    ]
   },
   "content": "files:\n- patch1: N/A:Provide path to 1.6 patch\n- patch2: N/A:Provide path to 1.6-1.7 patch\ngame:\n  exe: drive_c/Program Files (x86)/Activision/Call of Duty 4 - Modern Warfare/iw3mp.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Copying disc 1 to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- task:\n    executable: $CACHE/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch1\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch2\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  prefer_system_libs: false\nwine:\n  esync: true\n"
 }

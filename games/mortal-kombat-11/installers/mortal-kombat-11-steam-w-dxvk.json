@@ -21,19 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
-      }
-    ],
     "game": {
       "appid": 976310,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "WINE_LOW_USER_SPACE_LIMIT": 1
+      }
     },
     "installer": [
       {
@@ -44,35 +41,38 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/mfinstaller",
-          "file": "mfinstaller"
+          "file": "mfinstaller",
+          "dst": "$CACHE/mfinstaller"
         }
       },
       {
         "execute": {
-          "terminal": true,
+          "command": "$CACHE/mfinstaller/install-mf.sh",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "command": "$CACHE/mfinstaller/install-mf.sh"
+          "terminal": true
         }
       },
       {
         "task": {
-          "description": "Installing dependencies",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "arial",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler",
-        "WINE_LOW_USER_SPACE_LIMIT": 1
+    "winesteam": {
+      "esync": true,
+      "dxvk": true
+    },
+    "files": [
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
       }
-    }
+    ]
   },
   "content": "files:\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  appid: 976310\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    app: arial\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    WINE_LOW_USER_SPACE_LIMIT: 1\nwinesteam:\n  dxvk: true\n  esync: true\n"
 }

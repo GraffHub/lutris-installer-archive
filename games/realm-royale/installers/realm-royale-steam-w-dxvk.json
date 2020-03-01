@@ -23,38 +23,38 @@
   "script": {
     "game": {
       "appid": 813820,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "HideWineExports",
           "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "Y"
+          "value": "Y",
+          "key": "HideWineExports"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
+    "winesteam": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 813820\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64: disabled\n"

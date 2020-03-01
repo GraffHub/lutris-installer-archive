@@ -21,6 +21,43 @@
   "gogslug": "medal_of_honor_allied_assault_war_chest",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Medal of Honor - Allied Assault War Chest/MOHAA.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "MESA_EXTENSION_MAX_YEAR": "2003",
+        "__GL_ExtensionStringVersion": "17700"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "filename": "$CACHE/regeditfile/mohaa_disabled_extenstions-v2.reg",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit_file"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "arch": "win32",
+          "description": "Installing Medal of Honor",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "game": "N/A:Select the game's setup file"
@@ -31,44 +68,7 @@
           "url": "http://bugs.winehq.org/attachment.cgi?id=44390"
         }
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "drive_c/GOG Games/Medal of Honor - Allied Assault War Chest/MOHAA.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit_file",
-          "filename": "$CACHE/regeditfile/mohaa_disabled_extenstions-v2.reg"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Medal of Honor",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "game",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
-    "system": {
-      "env": {
-        "MESA_EXTENSION_MAX_YEAR": "2003",
-        "__GL_ExtensionStringVersion": "17700"
-      }
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Select the game's setup file\n- regeditfile:\n    filename: mohaa_disabled_extenstions-v2.reg\n    url: http://bugs.winehq.org/attachment.cgi?id=44390\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Medal of Honor - Allied Assault War Chest/MOHAA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    filename: $CACHE/regeditfile/mohaa_disabled_extenstions-v2.reg\n    name: set_regedit_file\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Medal of Honor\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    MESA_EXTENSION_MAX_YEAR: '2003'\n    __GL_ExtensionStringVersion: '17700'\n"
 }

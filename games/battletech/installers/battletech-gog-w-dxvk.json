@@ -21,55 +21,10 @@
   "gogslug": "battletech_game",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "goginstaller": "N/A:Select the BATTLETECH setup file"
-      },
-      {
-        "CCCP": "http://www.cccp-project.net/public/Combined-Community-Codec-Pack-64bit-2015-10-18.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing dotnet472 with winetricks. This will take several minutes.",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "dotnet472",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing CCCP (Combined Community Codec Pack) else cutscenes can't play and the game can't launch. Please follow the installer prompts to select \"Full Installation\".",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "CCCP",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Please wait while the game installs. This will take several minutes.",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "goginstaller",
-          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "args": "-force-driver-type-warp",
-      "arch": "win64",
       "exe": "drive_c/GOG Games/BATTLETECH/BattleTechLauncher.exe",
+      "arch": "win64",
+      "args": "-force-driver-type-warp",
       "prefix": "$GAMEDIR"
     },
     "system": {
@@ -79,7 +34,52 @@
     },
     "wine": {
       "dxvk": true
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet472",
+          "arch": "win64",
+          "description": "Installing dotnet472 with winetricks. This will take several minutes.",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "CCCP",
+          "arch": "win64",
+          "description": "Installing CCCP (Combined Community Codec Pack) else cutscenes can't play and the game can't launch. Please follow the installer prompts to select \"Full Installation\".",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "goginstaller",
+          "arch": "win64",
+          "description": "Please wait while the game installs. This will take several minutes.",
+          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "files": [
+      {
+        "goginstaller": "N/A:Select the BATTLETECH setup file"
+      },
+      {
+        "CCCP": "http://www.cccp-project.net/public/Combined-Community-Codec-Pack-64bit-2015-10-18.exe"
+      }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the BATTLETECH setup file\n- CCCP: http://www.cccp-project.net/public/Combined-Community-Codec-Pack-64bit-2015-10-18.exe\ngame:\n  arch: win64\n  args: -force-driver-type-warp\n  exe: drive_c/GOG Games/BATTLETECH/BattleTechLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing dotnet472 with winetricks. This will take several minutes.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing CCCP (Combined Community Codec Pack) else cutscenes can't\n      play and the game can't launch. Please follow the installer prompts to select\n      \"Full Installation\".\n    executable: CCCP\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=en /SP- /SUPPRESSMSGBOXES\n    description: Please wait while the game installs. This will take several minutes.\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

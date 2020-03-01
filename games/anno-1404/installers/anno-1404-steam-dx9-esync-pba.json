@@ -23,13 +23,16 @@
   "script": {
     "game": {
       "appid": 33350,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "esync": true,
-      "overrides": {
-        "xaudio2_7": "native"
+    "system": {
+      "env": {
+        "run_without_steam": true,
+        "PBA_ENABLE": "1",
+        "__PBA_GEO_HEAP": "$INPUT_MEM",
+        "__GL_THREADED_OPTIMIZATION": "1",
+        "__GL_SHADER_DISK_CACHE": "1"
       }
     },
     "installer": [
@@ -49,9 +52,9 @@
               "144": "144 hz"
             }
           ],
-          "description": "Select your display refresh rate:",
+          "id": "REFRESHRATE",
           "preselect": "60",
-          "id": "REFRESHRATE"
+          "description": "Select your display refresh rate:"
         }
       },
       {
@@ -73,17 +76,17 @@
               "4096": "4096MB"
             }
           ],
-          "description": "Select how much VRAM (GPU memory) you want to allocate:",
+          "id": "MEM",
           "preselect": "1024",
-          "id": "MEM"
+          "description": "Select how much VRAM (GPU memory) you want to allocate:"
         }
       },
       {
         "task": {
-          "description": "winetricks for Steam (corefonts) and d3d9",
-          "name": "winetricks",
           "app": "corefonts d3dx9",
-          "prefix": "$GAMEDIR/prefix"
+          "description": "winetricks for Steam (corefonts) and d3d9",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       },
       {
@@ -94,26 +97,23 @@
       },
       {
         "merge": {
-          "description": "Copying user config for base game...",
           "src": "/tmp/Engine.ini",
-          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/"
+          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/",
+          "description": "Copying user config for base game..."
         }
       },
       {
         "merge": {
-          "description": "Copying user config for addon...",
           "src": "/tmp/Engine.ini",
-          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/"
+          "dst": "$GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/",
+          "description": "Copying user config for addon..."
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_THREADED_OPTIMIZATION": "1",
-        "__PBA_GEO_HEAP": "$INPUT_MEM",
-        "run_without_steam": true,
-        "PBA_ENABLE": "1",
-        "__GL_SHADER_DISK_CACHE": "1"
+    "winesteam": {
+      "esync": true,
+      "overrides": {
+        "xaudio2_7": "native"
       }
     }
   },

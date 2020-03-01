@@ -21,6 +21,61 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/talestune/ludesia/ludesia.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "LC_ALL": "ja_JP.UTF-8"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "app": "winxp",
+          "arch": "win32",
+          "description": "Setting to Windows XP",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "$setup",
+          "arch": "win32",
+          "env": {
+            "LC_ALL": "ja_JP.UTF-8"
+          },
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$bugfix",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/setup.exe",
+          "arch": "win32",
+          "env": {
+            "LC_ALL": "ja_JP.UTF-8"
+          },
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$patch",
+          "dst": "$GAMEDIR/drive_c/Program Files/talestune/ludesia"
+        }
+      }
+    ],
     "files": [
       {
         "setup": "N/A:Please select the setup.exe file"
@@ -31,62 +86,7 @@
       {
         "bugfix": "http://talestune.s53.coreserver.jp/download/ludesia_patch/lud_patch_ver1.1.zip"
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/talestune/ludesia/ludesia.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Setting to Windows XP",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "winxp",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win32",
-          "env": {
-            "LC_ALL": "ja_JP.UTF-8"
-          },
-          "executable": "$setup"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$bugfix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win32",
-          "env": {
-            "LC_ALL": "ja_JP.UTF-8"
-          },
-          "executable": "$CACHE/setup.exe"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/talestune/ludesia",
-          "file": "$patch"
-        }
-      }
-    ],
-    "system": {
-      "env": {
-        "LC_ALL": "ja_JP.UTF-8"
-      }
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Please select the setup.exe file\n- patch: N/A:Please select the patch archive from http://www.mediafire.com/file/zcdc1jvacc931d1/Ludesia+-+Spidering+and+Scraping+English+Patch+%28June+2017%29.7z\n- bugfix: http://talestune.s53.coreserver.jp/download/ludesia_patch/lud_patch_ver1.1.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/talestune/ludesia/ludesia.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: winxp\n    arch: win32\n    description: Setting to Windows XP\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    env:\n      LC_ALL: ja_JP.UTF-8\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $bugfix\n- task:\n    arch: win32\n    env:\n      LC_ALL: ja_JP.UTF-8\n    executable: $CACHE/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/talestune/ludesia\n    file: $patch\nsystem:\n  env:\n    LC_ALL: ja_JP.UTF-8\n"
 }

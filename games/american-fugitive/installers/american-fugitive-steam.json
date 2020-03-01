@@ -21,31 +21,32 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
-      }
-    ],
     "game": {
       "appid": 934780,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/prefix",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1"
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/mfinstaller",
-          "file": "mfinstaller"
+          "file": "mfinstaller",
+          "dst": "$CACHE/mfinstaller"
         }
       },
       {
@@ -57,15 +58,14 @@
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_THREADED_OPTIMIZATIONS": "1",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/prefix",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "mesa_glthread": "true"
+    "winesteam": {
+      "dxvk": true
+    },
+    "files": [
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
       }
-    }
+    ]
   },
   "content": "files:\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  appid: 934780\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: compiler\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/prefix\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwinesteam:\n  dxvk: true\n"
 }

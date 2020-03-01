@@ -22,43 +22,37 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "files": [
-        {
-          "setup": {
-            "filename": "Battle.net-Setup.exe",
-            "url": "https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP"
-          }
-        },
-        {
-          "d3dcompiler47": "https://lutris.net/files/tools/dll/d3dcompiler_47.dll"
-        }
-      ],
-      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe",
+      "game": null,
+      "prefix": "$GAMEDIR",
+      "wine": {
+        "esync": true,
+        "version": "ge-protonified-nofshack-4.9-x86_64"
+      },
       "installer": [
         {
           "task": {
+            "arch": "win64",
             "description": "Creating 64bit Wine prefix.",
-            "name": "create_prefix",
-            "arch": "win64",
-            "prefix": "$GAMEDIR"
+            "prefix": "$GAMEDIR",
+            "name": "create_prefix"
           }
         },
         {
           "task": {
-            "description": "Installing Arial font",
-            "name": "winetricks",
-            "arch": "win64",
             "app": "arial",
-            "prefix": "$GAMEDIR"
+            "arch": "win64",
+            "description": "Installing Arial font",
+            "prefix": "$GAMEDIR",
+            "name": "winetricks"
           }
         },
         {
           "task": {
-            "description": "Install d3dcompiler_43 with winetricks",
-            "name": "winetricks",
-            "arch": "win64",
             "app": "d3dcompiler_43",
-            "prefix": "$GAMEDIR"
+            "arch": "win64",
+            "description": "Install d3dcompiler_43 with winetricks",
+            "prefix": "$GAMEDIR",
+            "name": "winetricks"
           }
         },
         {
@@ -75,41 +69,41 @@
         },
         {
           "task": {
-            "description": "Setting Windows 10 mode for Wine",
-            "name": "set_regedit",
             "arch": "win64",
-            "key": "Version",
+            "description": "Setting Windows 10 mode for Wine",
             "prefix": "$GAMEDIR",
+            "name": "set_regedit",
             "path": "HKEY_CURRENT_USER\\Software\\Wine",
-            "value": "win10"
+            "value": "win10",
+            "key": "Version"
           }
         },
         {
           "write_json": {
             "Client": {
-              "StreamingEnabled": "false",
-              "HardwareAcceleration": "false",
-              "Sound": null,
               "Streaming": null,
               "Enabled": "false",
+              "HardwareAcceleration": "false",
+              "StreamingEnabled": "false",
+              "Sound": null,
               "GameLaunchWindowBehavior": "2"
             },
             "Games": {
-              "AdditionalLaunchArguments": "-Displaymode 1",
-              "s2": null
+              "s2": null,
+              "AdditionalLaunchArguments": "-Displaymode 1"
             },
             "data": null,
-            "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
-            "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App"
+            "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
+            "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
           }
         },
         {
           "task": {
-            "description": "Installing Blizzard App",
-            "name": "wineexec",
-            "arch": "win64",
+            "executable": "setup",
             "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
-            "executable": "setup"
+            "arch": "win64",
+            "description": "Installing Blizzard App",
+            "name": "wineexec"
           }
         },
         {
@@ -120,29 +114,35 @@
         },
         {
           "task": {
-            "description": "Wine Staging: Enabling DXVA2",
-            "name": "set_regedit",
             "arch": "win64",
-            "key": "backend",
+            "description": "Wine Staging: Enabling DXVA2",
             "prefix": "$GAMEDIR",
+            "name": "set_regedit",
             "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
-            "value": "va"
+            "value": "va",
+            "key": "backend"
           }
         }
       ],
-      "prefix": "$GAMEDIR",
-      "game": null,
       "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe",
       "system": null,
       "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
         "__GL_SHADER_DISK_CACHE": 1
       },
-      "wine": {
-        "version": "ge-protonified-nofshack-4.9-x86_64",
-        "esync": true
-      }
+      "files": [
+        {
+          "setup": {
+            "filename": "Battle.net-Setup.exe",
+            "url": "https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP"
+          }
+        },
+        {
+          "d3dcompiler47": "https://lutris.net/files/tools/dll/d3dcompiler_47.dll"
+        }
+      ]
     }
   },
   "content": "script:\n  arch: win64\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe\n  files:\n  - setup:\n      filename: Battle.net-Setup.exe\n      url: https://www.battle.net/download/getInstallerForGame?os=win&locale=enUS&version=LIVE&gameProgram=BATTLENET_APP\n  - d3dcompiler47: https://lutris.net/files/tools/dll/d3dcompiler_47.dll\n  game: null\n  installer:\n  - task:\n      arch: win64\n      description: Creating 64bit Wine prefix.\n      name: create_prefix\n      prefix: $GAMEDIR\n  - task:\n      app: arial\n      arch: win64\n      description: Installing Arial font\n      name: winetricks\n      prefix: $GAMEDIR\n  - task:\n      app: d3dcompiler_43\n      arch: win64\n      description: Install d3dcompiler_43 with winetricks\n      name: winetricks\n      prefix: $GAMEDIR\n  - move:\n      dst: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll.ORIG\n      src: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll\n  - merge:\n      dst: $GAMEDIR/drive_c/windows/system32\n      src: d3dcompiler47\n  - task:\n      arch: win64\n      description: Setting Windows 10 mode for Wine\n      key: Version\n      name: set_regedit\n      path: HKEY_CURRENT_USER\\Software\\Wine\n      prefix: $GAMEDIR\n      value: win10\n  - write_json:\n      Client:\n        Enabled: 'false'\n        GameLaunchWindowBehavior: '2'\n        HardwareAcceleration: 'false'\n        Sound: null\n        Streaming: null\n        StreamingEnabled: 'false'\n      Games:\n        AdditionalLaunchArguments: -Displaymode 1\n        s2: null\n      data: null\n      description: Disabling Sound/Hardware Acceleration/Streaming in Blizzard App\n      file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n  - task:\n      arch: win64\n      description: Installing Blizzard App\n      exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n      executable: setup\n      name: wineexec\n  - task:\n      name: winekill\n      prefix: $GAMEDIR\n  - task:\n      arch: win64\n      description: 'Wine Staging: Enabling DXVA2'\n      key: backend\n      name: set_regedit\n      path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n      prefix: $GAMEDIR\n      value: va\n  prefix: $GAMEDIR\n  system: null\n  wine:\n    esync: true\n    version: ge-protonified-nofshack-4.9-x86_64\n"

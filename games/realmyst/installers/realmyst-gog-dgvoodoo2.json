@@ -21,45 +21,39 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Select the EXE downloaded from GOG"
-      },
-      {
-        "dgv": "https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip"
-      },
-      {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/realMyst/resolution.sh"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/realMyst/RealMYST.exe"
+      "exe": "drive_c/GOG Games/realMyst/RealMYST.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "realMyst - GOG",
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "description": "Creating WINE prefix",
-          "name": "create_prefix",
+          "install_gecko": false,
           "arch": "win64",
+          "description": "Creating WINE prefix",
           "prefix": "$GAMEDIR",
-          "install_mono": false,
-          "install_gecko": false
+          "name": "create_prefix",
+          "install_mono": false
         }
       },
       {
         "task": {
-          "args": "/SUPPRESSMSGBOXES /SILENT",
-          "name": "wineexec",
           "executable": "setup",
+          "args": "/SUPPRESSMSGBOXES /SILENT",
           "description": "Installing...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/realMyst/",
-          "file": "dgv"
+          "file": "dgv",
+          "dst": "$GAMEDIR/drive_c/GOG Games/realMyst/"
         }
       },
       {
@@ -81,6 +75,7 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/GOG Games/realMyst/dgVoodoo.conf",
           "data": {
             "General": {
               "CaptureMouse": false,
@@ -88,59 +83,58 @@
               "ScalingMode": "stretched_ar"
             },
             "DirectX": {
+              "dgVoodooWatermark": false,
               "ForceVerticalSync": true,
               "VRAM": 256,
-              "dgVoodooWatermark": false,
               "Resolution": "max_qhd_isf"
             }
-          },
-          "file": "$GAMEDIR/drive_c/GOG Games/realMyst/dgVoodoo.conf"
+          }
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "ddraw",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "value": "native,builtin",
+          "key": "ddraw",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "app": "d3dcompiler_47",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "d3dcompiler_47"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "icodecs",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "icodecs"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
@@ -154,16 +148,22 @@
       },
       {
         "execute": {
-          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
-          "file": "script"
+          "file": "script",
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT"
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    },
-    "custom-name": "realMyst - GOG"
+    "files": [
+      {
+        "setup": "N/A:Select the EXE downloaded from GOG"
+      },
+      {
+        "dgv": "https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/realMyst/resolution.sh"
+      }
+    ]
   },
   "content": "custom-name: realMyst - GOG\nfiles:\n- setup: N/A:Select the EXE downloaded from GOG\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/realMyst/resolution.sh\ngame:\n  exe: drive_c/GOG Games/realMyst/RealMYST.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SUPPRESSMSGBOXES /SILENT\n    description: Installing...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/realMyst/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/realMyst/\n    src: $GAMEDIR/drive_c/GOG Games/realMyst/MS/x86/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/realMyst/\n    src: $GAMEDIR/drive_c/GOG Games/realMyst/MS/x86/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/realMyst/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/GOG Games/realMyst/dgVoodoo.conf\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: icodecs\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/realMyst\" ; rm -f -r 3Dfx* Doc MS ddraw.dll\n      webcache.zip glide* gog* Launch* nglide_* nGlideEULA.txt QuickGuide.html support.ico\n      unins000.* ;\n- chmodx: script\n- execute:\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: script\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

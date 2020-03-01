@@ -21,32 +21,31 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "http://files.lager.com.tw/mo/Mystina_20110530.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Lager/Mystina/login.exe",
       "arch": "win32",
-      "exe": "drive_c/Lager/Mystina/login.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "description": "Setting up wine prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Setting up wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing CJK Fonts for proper Asian font display",
-          "name": "winetricks",
-          "arch": "win32",
           "app": "cjkfonts",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing CJK Fonts for proper Asian font display",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -57,10 +56,10 @@
       },
       {
         "task": {
-          "description": "Installing Mystina...\nPLEASE close the game after it opens to finish installation!",
-          "name": "wineexec",
+          "executable": "$GAMEDIR/drive_c/Lager/Mystina/Mystina_20110530.exe",
           "arch": "win32",
-          "executable": "$GAMEDIR/drive_c/Lager/Mystina/Mystina_20110530.exe"
+          "description": "Installing Mystina...\nPLEASE close the game after it opens to finish installation!",
+          "name": "wineexec"
         }
       },
       {
@@ -70,10 +69,11 @@
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    "files": [
+      {
+        "installer": "http://files.lager.com.tw/mo/Mystina_20110530.exe"
+      }
+    ]
   },
   "content": "files:\n- installer: http://files.lager.com.tw/mo/Mystina_20110530.exe\ngame:\n  arch: win32\n  exe: drive_c/Lager/Mystina/login.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Setting up wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: cjkfonts\n    arch: win32\n    description: Installing CJK Fonts for proper Asian font display\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Lager/Mystina/\n    src: installer\n- task:\n    arch: win32\n    description: 'Installing Mystina...\n\n      PLEASE close the game after it opens to finish installation!'\n    executable: $GAMEDIR/drive_c/Lager/Mystina/Mystina_20110530.exe\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

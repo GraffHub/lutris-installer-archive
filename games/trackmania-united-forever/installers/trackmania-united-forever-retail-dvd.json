@@ -21,15 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "update": "http://files2.trackmaniaforever.com/TmUnitedForever_Update_2010-03-15_Setup.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/TmUnitedForever/TmForeverLauncher.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/TmUnitedForever/TmForeverLauncher.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -39,48 +34,53 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "install_mono": false,
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
           "executable": "$DISC/TmUnitedForeverSetup.exe",
-          "description": "Installing...",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
           "args": "/silent",
-          "name": "wineexec",
-          "executable": "update",
-          "description": "Updating...",
-          "prefix": "$GAMEDIR"
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "executable": "update",
+          "args": "/silent",
+          "description": "Updating...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
+      }
+    ],
+    "files": [
+      {
+        "update": "http://files2.trackmaniaforever.com/TmUnitedForever_Update_2010-03-15_Setup.exe"
       }
     ]
   },

@@ -21,6 +21,61 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe",
+      "working_dir": "$GAMEDIR/prefix",
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win32"
+    },
+    "system": {
+      "xephyr_fullscreen": false,
+      "xephyr": "16bpp"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "winxp csmt=off",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "directplay_patch",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "xppat_patch",
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "setup": "N/A:Select 'setup.exe' on the game disc"
@@ -31,62 +86,7 @@
       {
         "directplay_patch": "https://jacobspctuneup.tk/Midtown/directplayupdate.exe"
       }
-    ],
-    "game": {
-      "working_dir": "$GAMEDIR/prefix",
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win32",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe"
-    },
-    "installer": [
-      {
-        "insert-disc": {
-          "requires": "setup.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "winxp csmt=off"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "setup"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "directplay_patch"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "xppat_patch"
-        }
-      }
-    ],
-    "system": {
-      "xephyr": "16bpp",
-      "xephyr_fullscreen": false
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Select 'setup.exe' on the game disc\n- xppat_patch: https://jacobspctuneup.tk/Midtown/mm1xppat.EXE\n- directplay_patch: https://jacobspctuneup.tk/Midtown/directplayupdate.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $GAMEDIR/prefix\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: winxp csmt=off\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: directplay_patch\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: xppat_patch\n    name: wineexec\n    prefix: $GAMEDIR/prefix\nsystem:\n  xephyr: 16bpp\n  xephyr_fullscreen: false\n"
 }

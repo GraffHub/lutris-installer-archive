@@ -21,6 +21,35 @@
   "gogslug": "invisible_inc",
   "humblestoreid": "",
   "script": {
+    "exe": "Game/start.sh",
+    "installer": [
+      {
+        "extract": {
+          "file": "$unzip",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/unzip",
+          "description": "Extracting game data, it will take a while...",
+          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\""
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/unzip",
+          "description": "Extracting game data, it will take a while...",
+          "args": "$dlc -d \"$GAMEDIR\" \"data/noarch/*\""
+        }
+      },
+      {
+        "rename": {
+          "dst": "$GAMEDIR/Game",
+          "src": "$GAMEDIR/data/noarch"
+        }
+      }
+    ],
     "files": [
       {
         "game": "N/A: Plese select the GOG.com Linux installer"
@@ -30,35 +59,6 @@
       },
       {
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
-      }
-    ],
-    "exe": "Game/start.sh",
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
-        }
-      },
-      {
-        "execute": {
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip",
-          "description": "Extracting game data, it will take a while..."
-        }
-      },
-      {
-        "execute": {
-          "args": "$dlc -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip",
-          "description": "Extracting game data, it will take a while..."
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/data/noarch"
-        }
       }
     ]
   },

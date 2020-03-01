@@ -21,60 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": {
-          "filename": "WoWS_PublicTest.exe",
-          "url": "http://dl-wows-gc.wargaming.net/projects/PT/ru/files/oiu8123haqw/WoWS_PublicTest.exe"
-        }
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "nocrashdialog"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing World of Warships PTS. This could take a while...",
-          "name": "wineexec",
-          "executable": "game",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "corefonts"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting Wine to Windows 10",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "win10",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Games/World_of_Warships-PTS/WoWSLauncher.exe",
       "arch": "win64",
-      "exe": "drive_c/Games/World_of_Warships-PTS/WoWSLauncher.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
@@ -83,11 +33,61 @@
       "pulse_latency": false
     },
     "wine": {
-      "dxvk": true,
       "overrides": {
         "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "nocrashdialog",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "description": "Installing World of Warships PTS. This could take a while...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "win10",
+          "arch": "win64",
+          "description": "Setting Wine to Windows 10",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
       }
-    }
+    ],
+    "files": [
+      {
+        "game": {
+          "filename": "WoWS_PublicTest.exe",
+          "url": "http://dl-wows-gc.wargaming.net/projects/PT/ru/files/oiu8123haqw/WoWS_PublicTest.exe"
+        }
+      }
+    ]
   },
   "content": "files:\n- game:\n    filename: WoWS_PublicTest.exe\n    url: http://dl-wows-gc.wargaming.net/projects/PT/ru/files/oiu8123haqw/WoWS_PublicTest.exe\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Warships-PTS/WoWSLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing World of Warships PTS. This could take a while...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Wine to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: false\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

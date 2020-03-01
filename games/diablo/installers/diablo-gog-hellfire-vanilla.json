@@ -21,30 +21,30 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Select the game's setup file"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe",
       "arch": "win64",
-      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "ddraw.dll": "n"
+      }
     },
     "installer": [
       {
         "task": {
-          "description": "Creating WINE prefix",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "executable": "installer",
           "description": "Running Setup, please wait...",
-          "name": "wineexec",
-          "executable": "installer"
+          "name": "wineexec"
         }
       },
       {
@@ -54,11 +54,11 @@
         }
       }
     ],
-    "wine": {
-      "overrides": {
-        "ddraw.dll": "n"
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
       }
-    }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    ddraw.dll: n\n"
 }

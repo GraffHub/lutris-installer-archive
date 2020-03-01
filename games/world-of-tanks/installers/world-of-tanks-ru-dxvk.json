@@ -21,6 +21,63 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/Games/World_of_Tanks/WoTLauncher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "description": "Installing World of Tanks",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts win7",
+          "arch": "win32",
+          "description": "Setting Wine to Windows 7",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      }
+    ],
     "files": [
       {
         "game": {
@@ -28,64 +85,7 @@
           "url": "https://wot.gcdn.co/ru/files/WoT_internet_install_ru.exe"
         }
       }
-    ],
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing World of Tanks",
-          "name": "wineexec",
-          "executable": "game",
-          "prefix": "$GAMEDIR",
-          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
-          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting Wine to Windows 7",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "corefonts win7",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Games/World_of_Tanks/WoTLauncher.exe"
-    },
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
-      }
-    },
-    "wine": {
-      "dxvk": true,
-      "WineDesktop": "1920x1080",
-      "Desktop": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
-    }
+    ]
   },
   "content": "files:\n- game:\n    filename: WoT_internet_install_ru.exe\n    url: https://wot.gcdn.co/ru/files/WoT_internet_install_ru.exe\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Tanks/WoTLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing World of Tanks\n    exclude_processes: explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe\n      WoTLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win7\n    arch: win32\n    description: Setting Wine to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

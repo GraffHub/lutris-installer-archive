@@ -21,88 +21,88 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": {
-          "filename": "Battle.net-Setup.exe",
-          "url": "https://www.battle.net/download/getInstallerForGame?os=win&version=LIVE&gameProgram=BATTLENET_APP"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe",
       "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Creating 64bit Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Arial font",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "arial",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting fontsmooth=rbg",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "fontsmooth-rgb",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting Windows 10 mode for Wine",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "Version",
           "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "arch": "win64",
+          "description": "Installing Arial font",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "fontsmooth-rgb",
+          "arch": "win64",
+          "description": "Setting fontsmooth=rbg",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 10 mode for Wine",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win10"
+          "value": "win10",
+          "key": "Version"
         }
       },
       {
         "write_json": {
-          "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
           "data": {
             "Client": {
-              "Sound": {
-                "Enabled": "false"
-              },
               "HardwareAcceleration": "false",
               "Streaming": {
                 "StreamingEnabled": "false"
               },
+              "Sound": {
+                "Enabled": "false"
+              },
               "GameLaunchWindowBehavior": "2"
             }
           },
-          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
+          "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App"
         }
       },
       {
         "task": {
-          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
-          "name": "wineexec",
-          "arch": "win64",
+          "executable": "setup",
           "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
-          "executable": "setup"
+          "arch": "win64",
+          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
+          "name": "wineexec"
         }
       },
       {
         "task": {
           "prefix": "$GAMEDIR",
           "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "setup": {
+          "filename": "Battle.net-Setup.exe",
+          "url": "https://www.battle.net/download/getInstallerForGame?os=win&version=LIVE&gameProgram=BATTLENET_APP"
         }
       }
     ]

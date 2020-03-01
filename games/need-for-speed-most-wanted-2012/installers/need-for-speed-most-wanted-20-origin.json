@@ -21,37 +21,48 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       },
-      {
-        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
-      }
-    ],
+      "pulse_latency": true
+    },
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "nocrashdialog",
           "arch": "win64",
-          "app": "nocrashdialog"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing Origin... Login window will pop-up and close.",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "setup",
+          "arch": "win64",
+          "description": "Installing Origin... Login window will pop-up and close.",
           "args": "/silent",
+          "name": "wineexec",
           "prefix": "$GAMEDIR",
           "exclude_processes": "Origin.exe OriginClientService.exe QtWebEngineProcess.exe"
         }
@@ -72,25 +83,14 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "setup": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe"
       },
-      "pulse_latency": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "xaudio2_7": "native,builtin"
+      {
+        "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
-    }
+    ]
   },
   "content": "files:\n- setup: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe QtWebEngineProcess.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

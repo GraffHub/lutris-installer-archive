@@ -21,32 +21,24 @@
   "gogslug": "albion",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/albion/en1installer0\n"
-      },
-      {
-        "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
-      }
-    ],
     "game": {
-      "config_file": "$GAMEDIR/dosbox_albion.conf",
       "main_file": "$GAMEDIR/dosbox_albion_single.conf",
-      "game_id": "albion"
+      "game_id": "albion",
+      "config_file": "$GAMEDIR/dosbox_albion.conf"
     },
     "installer": [
       {
         "extract": {
-          "description": "Extracting innoextract application",
           "file": "$fileextract",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "description": "Extracting innoextract application"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE/game\" \"$installer\"",
           "file": "$CACHE/innoextract",
-          "description": "Extracting game data"
+          "description": "Extracting game data",
+          "args": "-d \"$CACHE/game\" \"$installer\""
         }
       },
       {
@@ -63,34 +55,34 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosbox_albion.conf",
+          "value": "opengl",
           "key": "output",
-          "file": "$GAMEDIR/dosbox_albion.conf",
-          "section": "sdl",
-          "value": "opengl"
+          "section": "sdl"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosbox_albion.conf",
+          "value": "desktop",
           "key": "fullresolution",
-          "file": "$GAMEDIR/dosbox_albion.conf",
-          "section": "sdl",
-          "value": "desktop"
+          "section": "sdl"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosbox_albion.conf",
+          "value": true,
           "key": "aspect",
-          "file": "$GAMEDIR/dosbox_albion.conf",
-          "section": "render",
-          "value": true
+          "section": "render"
         }
       },
       {
         "write_config": {
-          "key": "scaler",
           "file": "$GAMEDIR/dosbox_albion.conf",
-          "section": "render",
-          "value": "normal2x"
+          "value": "normal2x",
+          "key": "scaler",
+          "section": "render"
         }
       },
       {
@@ -98,6 +90,14 @@
           "content": "[ipx] ipx=false\n[autoexec]\n@echo off\nmount c .\nimgmount d game.ins -t iso -fs iso\nc:\nmd SAVES\nmd XLDLIBS\\CURRENT\nCOPY XLDLIBS\\INITIAL XLDLIBS\\CURRENT\ncls\nalbion.exe\nexit\n",
           "file": "$GAMEDIR/dosbox_albion_single.conf"
         }
+      }
+    ],
+    "files": [
+      {
+        "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/albion/en1installer0\n"
+      },
+      {
+        "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
       }
     ]
   },

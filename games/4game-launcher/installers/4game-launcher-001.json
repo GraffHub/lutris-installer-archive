@@ -1,0 +1,96 @@
+{
+  "id": 18594,
+  "game_id": 27191,
+  "game_slug": "4game-launcher",
+  "name": "4game launcher",
+  "year": 2018,
+  "user": "Regul",
+  "runner": "wine",
+  "slug": "4game-launcher-001",
+  "version": "0.0.1",
+  "description": "test",
+  "notes": "",
+  "created_at": "2020-02-29T11:26:10.992453Z",
+  "updated_at": "2020-02-29T11:26:10.992478Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/4 Game/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "arch": "win64",
+      "args": "-opengl -SkipBuildPatchPrereq",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler",
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
+      }
+    },
+    "wine": {
+      "esync": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "arch": "win64",
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/4game/",
+          "src": "4game"
+        }
+      },
+      {
+        "task": {
+          "executable": "msiexec",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "args": "/i \"$CACHE/4game/4game-Setup.exe\" /q",
+          "name": "wineexec",
+          "exclude_processes": "EpicGamesLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "4game": "https://cdn.4game.com/new4game/web-installer/4game-Setup.exe"
+      }
+    ]
+  },
+  "content": "files:\n- 4game: https://cdn.4game.com/new4game/web-installer/4game-Setup.exe\ngame:\n  arch: win64\n  args: -opengl -SkipBuildPatchPrereq\n  exe: drive_c/Program Files (x86)/4 Game/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/4game/\n    src: 4game\n- task:\n    arch: win64\n    args: /i \"$CACHE/4game/4game-Setup.exe\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  esync: true\n"
+}

@@ -21,39 +21,48 @@
   "gogslug": "stalker_call_of_pripyat",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer_file": "N/A:Select installer file from GOG"
+    "game": {
+      "exe": "drive_c/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/Stalker-COP.exe",
+      "working_dir": "$GAMEDIR/drive_c/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "fps"
       }
-    ],
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
-          "args": "/DIR=\"C:/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/\" /SP- /SILENT /VERYSILENT /NORESTART /CLOSEAPPLICATIONS",
-          "name": "wineexec",
           "executable": "installer_file",
-          "prefix": "$GAMEDIR"
+          "args": "/DIR=\"C:/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/\" /SP- /SILENT /VERYSILENT /NORESTART /CLOSEAPPLICATIONS",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "app": "d3dx9",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "d3dx9"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "d3dcompiler_43",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "d3dcompiler_43"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "d3dx11_43",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "d3dx11_43"
+          "name": "winetricks"
         }
       },
       {
@@ -69,20 +78,11 @@
         }
       }
     ],
-    "game": {
-      "working_dir": "$GAMEDIR/drive_c/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/Stalker-COP.exe"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": "fps"
+    "files": [
+      {
+        "installer_file": "N/A:Select installer file from GOG"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    ]
   },
   "content": "files:\n- installer_file: N/A:Select installer file from GOG\ngame:\n  exe: drive_c/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/Stalker-COP.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/\ninstaller:\n- task:\n    args: /DIR=\"C:/GOG Games/S.T.A.L.K.E.R. Call of Pripyat/\" /SP- /SILENT /VERYSILENT\n      /NORESTART /CLOSEAPPLICATIONS\n    executable: installer_file\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx11_43\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    command: sed -i '/vid_mode/c\\vid_mode $RESOLUTION' \"$GAMEDIR/drive_c/users/$USER/My\n      Documents/Stalker-COP/user.ltx\"\n    description: Set our desktop resolution in game config file.\n- execute:\n    command: sed -i '/renderer/c\\renderer renderer_r2' \"$GAMEDIR/drive_c/users/$USER/My\n      Documents/Stalker-COP/user.ltx\"\n    description: Enable dynamic renderer (DX9) in game config file\nsystem:\n  env:\n    DXVK_HUD: fps\nwine:\n  dxvk: true\n  esync: true\n"
 }

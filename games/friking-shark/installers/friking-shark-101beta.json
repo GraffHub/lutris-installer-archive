@@ -21,59 +21,59 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/friking-shark/FrikingSharkSetup-v1.01-Beta.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "app": "corefonts",
           "silent": true,
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "corefonts"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
           "executable": "game",
+          "args": "/silent",
           "description": "Installing...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/friking-shark/FrikingSharkSetup-v1.01-Beta.exe"
       }
     ]
   },

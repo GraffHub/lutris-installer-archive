@@ -21,24 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "archive": "$STEAM:1072150:gzdoom/Hedon.ipk3"
-      },
-      {
-        "config": "$STEAM:1072150:gzdoom/gzdoom.ini"
-      }
-    ],
     "game": {
-      "main_file": "archive",
-      "savedir": "$GAMEDIR"
+      "savedir": "$GAMEDIR",
+      "main_file": "archive"
+    },
+    "zdoom": {
+      "config": "$GAMEDIR/config.ini"
     },
     "installer": [
       {
         "merge": {
-          "description": "Copying configuration to installation directory...",
           "src": "config",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "description": "Copying configuration to installation directory..."
         }
       },
       {
@@ -55,31 +50,36 @@
       },
       {
         "write_config": {
-          "description": "First-time configuration...",
+          "file": "$GAMEDIR/config.ini",
           "data": {
             "Hedon.Bindings": {
               "f12": "screenshot"
             },
+            "GlobalSettings": {
+              "screenshot_dir": "$GAMEDIR/screenshots",
+              "saveloadconfirmation": false,
+              "vid_scale_customheight": "$RESOLUTION_HEIGHT",
+              "menu_resolution_custom_height": "$RESOLUTION_HEIGHT",
+              "menu_resolution_custom_width": "$RESOLUTION_WIDTH",
+              "vid_adapter": 0,
+              "vid_scale_customwidth": "$RESOLUTION_WIDTH"
+            },
             "Hedon.ConsoleVariables": {
               "am_rotate": 1
-            },
-            "GlobalSettings": {
-              "menu_resolution_custom_width": "$RESOLUTION_WIDTH",
-              "saveloadconfirmation": false,
-              "vid_scale_customwidth": "$RESOLUTION_WIDTH",
-              "vid_adapter": 0,
-              "menu_resolution_custom_height": "$RESOLUTION_HEIGHT",
-              "vid_scale_customheight": "$RESOLUTION_HEIGHT",
-              "screenshot_dir": "$GAMEDIR/screenshots"
             }
           },
-          "file": "$GAMEDIR/config.ini"
+          "description": "First-time configuration..."
         }
       }
     ],
-    "zdoom": {
-      "config": "$GAMEDIR/config.ini"
-    }
+    "files": [
+      {
+        "archive": "$STEAM:1072150:gzdoom/Hedon.ipk3"
+      },
+      {
+        "config": "$STEAM:1072150:gzdoom/gzdoom.ini"
+      }
+    ]
   },
   "content": "files:\n- archive: $STEAM:1072150:gzdoom/Hedon.ipk3\n- config: $STEAM:1072150:gzdoom/gzdoom.ini\ngame:\n  main_file: archive\n  savedir: $GAMEDIR\ninstaller:\n- merge:\n    description: Copying configuration to installation directory...\n    dst: $GAMEDIR\n    src: config\n- execute:\n    command: 'mv \"$GAMEDIR/gzdoom.ini\" \"$GAMEDIR/config.ini\" &&\n\n      mkdir \"$GAMEDIR/screenshots\"\n\n      '\n    description: Copying configuration to installation directory...\n- execute:\n    command: \"\\nif [ $RESOLUTION_HEIGHT -ge 1080 ]; then\\n  sed -i 's/con_scaletext=1/con_scaletext=2/g'\\\n      \\ \\\"$GAMEDIR/config.ini\\\"\\nfi\\n\"\n    description: Adjusting text scale to screen resolution...\n- write_config:\n    data:\n      GlobalSettings:\n        menu_resolution_custom_height: $RESOLUTION_HEIGHT\n        menu_resolution_custom_width: $RESOLUTION_WIDTH\n        saveloadconfirmation: false\n        screenshot_dir: $GAMEDIR/screenshots\n        vid_adapter: 0\n        vid_scale_customheight: $RESOLUTION_HEIGHT\n        vid_scale_customwidth: $RESOLUTION_WIDTH\n      Hedon.Bindings:\n        f12: screenshot\n      Hedon.ConsoleVariables:\n        am_rotate: 1\n    description: First-time configuration...\n    file: $GAMEDIR/config.ini\nzdoom:\n  config: $GAMEDIR/config.ini\n"
 }

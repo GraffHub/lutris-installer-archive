@@ -21,20 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "http://www.pro-linux.de/files/rollemup/Rollemup.tar.gz"
-      },
-      {
-        "libstdc++2.8_2.90.29-2.deb": "http://archive.debian.org/debian/dists/potato/main/binary-i386/oldlibs/libstdc++2.8_2.90.29-2.deb"
-      }
-    ],
     "exe": "start.sh",
     "installer": [
       {
         "extract": {
-          "dst": "$GAMEDIR",
-          "file": "$game"
+          "file": "$game",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -42,15 +34,15 @@
       },
       {
         "execute": {
-          "args": "-c \"cd $CACHE && ar x  libstdc++2.8_2.90.29-2.deb data.tar.gz\"",
           "file": "/bin/sh",
+          "args": "-c \"cd $CACHE && ar x  libstdc++2.8_2.90.29-2.deb data.tar.gz\"",
           "terminal": true
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$CACHE/data.tar.gz"
+          "file": "$CACHE/data.tar.gz",
+          "dst": "$CACHE"
         }
       },
       {
@@ -61,13 +53,21 @@
       },
       {
         "execute": {
-          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nLD_PRELOAD=lib/libstdc++.so.2.8.0 ./Rollemup \\\"$$@\\\"'>$GAMEDIR/start.sh\"",
           "file": "/bin/sh",
+          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nLD_PRELOAD=lib/libstdc++.so.2.8.0 ./Rollemup \\\"$$@\\\"'>$GAMEDIR/start.sh\"",
           "terminal": true
         }
       },
       {
         "chmodx": "$GAMEDIR/start.sh"
+      }
+    ],
+    "files": [
+      {
+        "game": "http://www.pro-linux.de/files/rollemup/Rollemup.tar.gz"
+      },
+      {
+        "libstdc++2.8_2.90.29-2.deb": "http://archive.debian.org/debian/dists/potato/main/binary-i386/oldlibs/libstdc++2.8_2.90.29-2.deb"
       }
     ]
   },

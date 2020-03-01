@@ -21,15 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "args": "-game rogue -rogue"
+    },
     "files": [
       {
         "game": "N/A:Select a file with *.PAK extension"
       }
     ],
-    "requires": "quake-cdrom-darkplaces",
-    "game": {
-      "args": "-game rogue -rogue"
-    },
     "installer": [
       {
         "write_file": {
@@ -42,17 +41,18 @@
       },
       {
         "execute": {
-          "args": "$GAMEDIR/rouge",
-          "file": "mkdir"
+          "file": "mkdir",
+          "args": "$GAMEDIR/rouge"
         }
       },
       {
         "execute": {
-          "args": "$game/ $GAMEDIR/rouge",
-          "file": "$CACHE/selectcopy.sh"
+          "file": "$CACHE/selectcopy.sh",
+          "args": "$game/ $GAMEDIR/rouge"
         }
       }
-    ]
+    ],
+    "requires": "quake-cdrom-darkplaces"
   },
   "content": "files:\n- game: N/A:Select a file with *.PAK extension\ngame:\n  args: -game rogue -rogue\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $GAMEDIR/rouge\n    file: mkdir\n- execute:\n    args: $game/ $GAMEDIR/rouge\n    file: $CACHE/selectcopy.sh\nrequires: quake-cdrom-darkplaces\n"
 }

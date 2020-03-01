@@ -21,29 +21,22 @@
   "gogslug": "",
   "humblestoreid": "assassins-creed-unity",
   "script": {
-    "files": [
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      },
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      }
-    ],
     "game": {
       "appid": 289650,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf"
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
@@ -60,40 +53,47 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
+          "arch": "win64",
+          "args": "/silent",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "arial d3dcompiler_43"
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "args": "/S",
-          "name": "wineexec",
+          "app": "arial d3dcompiler_43",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "uplay",
-          "prefix": "$GAMEDIR/prefix"
+          "args": "/S",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf"
+    "winesteam": {
+      "esync": true,
+      "dxvk": true
+    },
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
-    }
+    ]
   },
   "content": "files:\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\ngame:\r\n  appid: 289650\r\n  arch: win64\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- write_file:\r\n    content: \"overlay: \\n  enabled: false\\n\"\r\n    file: $GAMEDIR/prefix/drive_c/users/$USER/Local Settings/Application Data/Ubisoft\r\n      Game Launcher/settings.yml\r\n- write_file:\r\n    content: dxgi.maxFrameLatency = 1\r\n    file: $GAMEDIR/prefix/dxvk.conf\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: arial d3dcompiler_43 \r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    args: /S\r\n    executable: uplay\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  env:\r\n    DXVK_CONFIG_FILE: $GAMEDIR/prefix/dxvk.conf\r\nwinesteam:\r\n  dxvk: true\r\n  esync: true"
 }

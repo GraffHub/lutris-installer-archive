@@ -21,39 +21,29 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "dumbxemu": "https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip"
-      },
-      {
-        "xreg": "https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg"
-      }
-    ],
     "game": {
       "appid": 202170,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "WineDesktop": "1920x1080",
-      "Desktop": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "dumbxemu"
+          "file": "dumbxemu",
+          "dst": "$CACHE"
         }
       },
       {
@@ -82,19 +72,29 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit_file",
+          "filename": "xreg",
           "arch": "win64",
-          "filename": "xreg"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit_file"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "winesteam": {
+      "Desktop": true,
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
       },
-      "pulse_latency": true
-    }
+      "dxvk": true
+    },
+    "files": [
+      {
+        "dumbxemu": "https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip"
+      },
+      {
+        "xreg": "https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg"
+      }
+    ]
   },
   "content": "files:\n- dumbxemu: https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip\n- xreg: https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg\ngame:\n  appid: 202170\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE\n    file: dumbxemu\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: $CACHE/x64/xinput9_1_0_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: $CACHE/x64/xinput1_3_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64\n    src: $CACHE/x32/xinput1_3_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64\n    src: $CACHE/x32/xinput9_1_0_fake.dll\n- task:\n    arch: win64\n    filename: xreg\n    name: set_regedit_file\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

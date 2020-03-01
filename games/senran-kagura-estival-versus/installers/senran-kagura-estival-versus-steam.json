@@ -21,39 +21,39 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Wine Staging: Enabling CSMT",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "key": "csmt",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "arch": "win64",
-          "type": "REG_DWORD",
-          "value": 1
-        }
-      }
-    ],
     "game": {
       "appid": 502800,
-      "args": "-no-cef-sandbox",
-      "arch": "win64"
+      "arch": "win64",
+      "args": "-no-cef-sandbox"
+    },
+    "system": {
+      "disable_runtime": true
     },
     "steam": {
       "quit_steam_on_exit": true
     },
-    "system": {
-      "disable_runtime": true
-    }
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "type": "REG_DWORD",
+          "arch": "win64",
+          "description": "Wine Staging: Enabling CSMT",
+          "value": 1,
+          "key": "csmt"
+        }
+      }
+    ]
   },
   "content": "game:\n  appid: 502800\n  arch: win64\n  args: -no-cef-sandbox\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling CSMT'\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 1\nsteam:\n  quit_steam_on_exit: true\nsystem:\n  disable_runtime: true\n"
 }

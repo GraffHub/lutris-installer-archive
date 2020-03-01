@@ -21,32 +21,40 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Selecione o instalador (Setup.exe)"
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/NoLimite/NoLimite.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "single_cpu": true
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "800x600",
+      "overrides": {
+        "ddraw.dll": "n,b"
       },
-      {
-        "dxwrapper": "https://github.com/elishacloud/dxwrapper/releases/download/v1.0.6334.21/DxWrapper.zip"
-      }
-    ],
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Criando novo prefixo do wine...",
-          "name": "create_prefix",
+          "install_gecko": false,
           "arch": "win32",
+          "description": "Criando novo prefixo do wine...",
           "prefix": "$GAMEDIR",
-          "install_mono": false,
-          "install_gecko": false
+          "name": "create_prefix",
+          "install_mono": false
         }
       },
       {
         "task": {
-          "description": "IMPORTANTE! Após a instalação, clique em Sair, não em Jogar",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "installer",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "IMPORTANTE! Após a instalação, clique em Sair, não em Jogar",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
@@ -57,9 +65,9 @@
       },
       {
         "extract": {
+          "file": "dxwrapper",
           "dst": "$CACHE/dxwrapper",
-          "format": "zip",
-          "file": "dxwrapper"
+          "format": "zip"
         }
       },
       {
@@ -76,34 +84,26 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Program Files/NoLimite/dxwrapper.ini",
           "data": {
-            "Dd7to9": {
-              "AutoFrameSkip": 1
-            },
             "Compatibility": {
               "Dd7to9": 1
+            },
+            "Dd7to9": {
+              "AutoFrameSkip": 1
             }
-          },
-          "file": "$GAMEDIR/drive_c/Program Files/NoLimite/dxwrapper.ini"
+          }
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/NoLimite/NoLimite.exe"
-    },
-    "system": {
-      "single_cpu": true
-    },
-    "wine": {
-      "dxvk": true,
-      "WineDesktop": "800x600",
-      "Desktop": true,
-      "overrides": {
-        "ddraw.dll": "n,b"
+    "files": [
+      {
+        "installer": "N/A:Selecione o instalador (Setup.exe)"
+      },
+      {
+        "dxwrapper": "https://github.com/elishacloud/dxwrapper/releases/download/v1.0.6334.21/DxWrapper.zip"
       }
-    }
+    ]
   },
   "content": "files:\r\n- installer: N/A:Selecione o instalador (Setup.exe)\r\n- dxwrapper: https://github.com/elishacloud/dxwrapper/releases/download/v1.0.6334.21/DxWrapper.zip\r\ngame:\r\n  arch: win32\r\n  exe: $GAMEDIR/drive_c/Program Files/NoLimite/NoLimite.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Criando novo prefixo do wine...\r\n    install_gecko: false\r\n    install_mono: false\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: \"IMPORTANTE! Ap\\xF3s a instala\\xE7\\xE3o, clique em Sair, n\\xE3o em\\\r\n      \\ Jogar\"\r\n    executable: installer\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: printf \"%b\" \"\\x90\\x90\\x90\\x90\\x90\\x90\\x90\\xeb\" | dd \"of=$GAMEDIR/drive_c/Program\r\n      Files/NoLimite/NoLimite.exe\" conv=notrunc bs=1 seek=$((0x0128ae))\r\n    description: Aplicando patch No-CD...\r\n- extract:\r\n    dst: $CACHE/dxwrapper\r\n    file: dxwrapper\r\n    format: zip\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files/NoLimite/\r\n    src: $CACHE/dxwrapper/dxwrapper.dll\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files/NoLimite/\r\n    src: $CACHE/dxwrapper/Stub/ddraw.dll\r\n- write_config:\r\n    data:\r\n      Compatibility:\r\n        Dd7to9: 1\r\n      Dd7to9:\r\n        AutoFrameSkip: 1\r\n    file: $GAMEDIR/drive_c/Program Files/NoLimite/dxwrapper.ini\r\nsystem:\r\n  single_cpu: true\r\nwine:\r\n  Desktop: true\r\n  WineDesktop: 800x600\r\n  dxvk: true\r\n  overrides:\r\n    ddraw.dll: n,b"
 }

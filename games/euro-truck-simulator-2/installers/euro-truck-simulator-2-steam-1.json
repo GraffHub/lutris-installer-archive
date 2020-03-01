@@ -23,16 +23,16 @@
   "script": {
     "game": {
       "appid": 227300,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "msvcr120": "n,b"
-      }
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "STAGING_SHARED_MEMORY": 0
+      },
+      "pulse_latency": true
     },
     "installer": [
       {
@@ -43,34 +43,34 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winekill",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
           "arch": "win64",
-          "app": "vcrun2017 xact"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2017 xact",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
-        "DXVK_HUD": "compiler",
-        "STAGING_SHARED_MEMORY": 0
+    "winesteam": {
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "msvcr120": "n,b"
       },
-      "pulse_latency": true
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 227300\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/prefix/dxvk.conf\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2017 xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/prefix/dxvk.conf\n    DXVK_HUD: compiler\n    STAGING_SHARED_MEMORY: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    msvcr120: n,b\n    nvapi,nvapi64: disabled\n"

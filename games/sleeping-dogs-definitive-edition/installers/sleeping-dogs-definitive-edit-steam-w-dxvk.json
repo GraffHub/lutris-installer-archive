@@ -21,65 +21,52 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "dumbxemu": "https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip"
-      },
-      {
-        "xreg": "https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg"
-      },
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      }
-    ],
     "game": {
       "appid": 307690,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "WineDesktop": "1920x1080",
-      "Desktop": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
+          "app": "vcrun2010 win7",
           "arch": "win64",
-          "app": "vcrun2010 win7"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "dumbxemu"
+          "file": "dumbxemu",
+          "dst": "$CACHE"
         }
       },
       {
@@ -108,29 +95,42 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit_file",
+          "filename": "xreg",
           "arch": "win64",
-          "filename": "xreg"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit_file"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "GrabFullscreen",
           "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "Y"
+          "value": "Y",
+          "key": "GrabFullscreen"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "winesteam": {
+      "Desktop": true,
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
       },
-      "pulse_latency": true
-    }
+      "dxvk": true
+    },
+    "files": [
+      {
+        "dumbxemu": "https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip"
+      },
+      {
+        "xreg": "https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ]
   },
   "content": "files:\n- dumbxemu: https://gitlab.com/cxf_/lutris_files/raw/master/old-dumbxinputemu.zip\n- xreg: https://gitlab.com/cxf_/lutris_files/raw/master/xinput.reg\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 307690\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE\n    file: dumbxemu\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: $CACHE/x64/xinput9_1_0_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/system32\n    src: $CACHE/x64/xinput1_3_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64\n    src: $CACHE/x32/xinput1_3_fake.dll\n- move:\n    dst: $GAMEDIR/prefix/drive_c/windows/syswow64\n    src: $CACHE/x32/xinput9_1_0_fake.dll\n- task:\n    arch: win64\n    filename: xreg\n    name: set_regedit_file\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR/prefix\n    value: Y\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

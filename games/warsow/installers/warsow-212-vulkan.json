@@ -1,0 +1,121 @@
+{
+  "id": 18532,
+  "game_id": 49,
+  "game_slug": "warsow",
+  "name": "Warsow",
+  "year": 2012,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "warsow-212-vulkan",
+  "version": "2.1.2-vulkan",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-23T14:54:56.553044Z",
+  "updated_at": "2020-02-23T14:54:56.553070Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "custom-name": "Warsow",
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Warsow 2.1/warsow_x64.exe"
+    },
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true,
+      "xboxdrv": "xboxdrv"
+    },
+    "wine": {
+      "esync": true,
+      "Audio": "pulse",
+      "version": "ge-protonified-nofshack-4.9-x86_64",
+      "overrides": {
+        "winedbg.exe": "d"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "move": {
+          "src": "Warsow.exe",
+          "dst": "$GAMEDIR/prefix/drive_c/",
+          "description": "Moving Warsow ..."
+        }
+      },
+      {
+        "task": {
+          "app": "d3drm",
+          "arch": "win64",
+          "description": "DirectX ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43",
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx11_43",
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dxvk",
+          "arch": "win64",
+          "description": "Vulkan ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/prefix/drive_c/warsow-2.1.2-setup.exe",
+          "description": "Warsow 2.1.2 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "win8",
+          "arch": "win64",
+          "description": "Windows version 8 ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "files": [
+      {
+        "Warsow.exe": "http://warsow.net/warsow-2.1.2-setup.exe"
+      }
+    ]
+  },
+  "content": "files:\n- Warsow.exe: http://warsow.net/warsow-2.1.2-setup.exe\ngame:\n  arch: win64\n  custom-name: Warsow\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Warsow 2.1/warsow_x64.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- move:\n    description: Moving Warsow ...\n    dst: $GAMEDIR/prefix/drive_c/\n    src: Warsow.exe\n- task:\n    app: d3drm\n    arch: win64\n    description: DirectX ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    description: Warsow 2.1.2 ...\n    executable: $GAMEDIR/prefix/drive_c/warsow-2.1.2-setup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+}

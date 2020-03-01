@@ -21,51 +21,51 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/EVE/eve.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 10 mode for Wine",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "win10",
+          "key": "Version"
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "setup": {
           "filename": "EveLauncher-1602194.exe",
           "url": "https://binaries.eveonline.com/EveLauncher-1602194.exe"
-        }
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/EVE/eve.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating 64bit Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting Windows 10 mode for Wine",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win10"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "arial"
-        }
-      },
-      {
-        "task": {
-          "description": "Running EVE Online Installer. Please do not run the game until this script finishes installing.",
-          "name": "wineexec",
-          "executable": "setup",
-          "prefix": "$GAMEDIR"
         }
       }
     ]

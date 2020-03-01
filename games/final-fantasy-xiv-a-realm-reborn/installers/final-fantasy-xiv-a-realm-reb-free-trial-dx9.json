@@ -21,40 +21,51 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "ffxivinstaller": "http://gdl.square-enix.com/ffxiv/inst/ffxivsetup_ft.exe"
-      }
-    ],
+    "game": {
+      "exe": "drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Changing to Windows 7",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "win7",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Running FFXIV Installer.",
-          "name": "wine.wineexec",
           "arch": "win64",
-          "executable": "ffxivinstaller",
-          "prefix": "$GAMEDIR"
+          "description": "Changing to Windows 7",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Adding Registry Entries for FFXIV Launcher",
+          "executable": "ffxivinstaller",
+          "arch": "win64",
+          "description": "Running FFXIV Installer.",
+          "prefix": "$GAMEDIR",
+          "name": "wine.wineexec"
+        }
+      },
+      {
+        "task": {
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "key": "HideWineExports",
           "prefix": "$GAMEDIR",
           "name": "set_regedit",
-          "arch": "win64",
           "type": "REG_SZ",
-          "value": "Y"
+          "arch": "win64",
+          "description": "Adding Registry Entries for FFXIV Launcher",
+          "value": "Y",
+          "key": "HideWineExports"
         }
       },
       {
@@ -73,22 +84,11 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    "files": [
+      {
+        "ffxivinstaller": "http://gdl.square-enix.com/ffxiv/inst/ffxivsetup_ft.exe"
+      }
+    ]
   },
   "content": "files:\n- ffxivinstaller: http://gdl.square-enix.com/ffxiv/inst/ffxivsetup_ft.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/SquareEnix/FINAL FANTASY XIV - A Realm Reborn/boot/ffxivboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: win7\n    arch: win64\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running FFXIV Installer.\n    executable: ffxivinstaller\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Adding Registry Entries for FFXIV Launcher\n    key: HideWineExports\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- execute:\n    command: mkdir -p \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn\n- execute:\n    command: echo -e \"<FINAL FANTASY XIV Config File>\\n\\n<Cutscene Settings>\\nCutsceneMovieOpening\n      1\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\ FANTASY\\\n      XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV.cfg\n- execute:\n    command: echo -e \"<FINAL FANTASY XIV Boot Config File>\\n\\n<Version>\\nDX11Enabled\n      0\\nBrowserType 2\" > \"$GAMEDIR\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV_BOOT.cfg\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

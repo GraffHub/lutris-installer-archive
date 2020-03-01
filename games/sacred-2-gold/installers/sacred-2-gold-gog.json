@@ -21,14 +21,15 @@
   "gogslug": "sacred_2_gold",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Select the Windows installer downloaded from GOG"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe"
+      "exe": "drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
     },
     "installer": [
       {
@@ -39,26 +40,25 @@
       },
       {
         "task": {
+          "app": "vcrun2005 physx win7",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "vcrun2005 physx win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "name": "wineexec",
           "executable": "setup",
-          "prefix": "$GAMEDIR"
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "setup": "N/A:Select the Windows installer downloaded from GOG"
       }
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Select the Windows installer downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Sacred 2 Gold/system/sacred2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005 physx win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n"
 }

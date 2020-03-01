@@ -21,17 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "music": "https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip"
-      },
-      {
-        "multi5": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip"
-      }
-    ],
-    "scummvm": {
-      "fullscreen": true
+    "copy": {
+      "dst": "$GAMEDIR",
+      "src": "$GAMEDIR/lang/$INPUT_LANG.txt"
     },
+    "custom-name": "Discworld - CD - ScummVM",
     "installer": [
       {
         "insert-disc": {
@@ -76,9 +70,9 @@
               "german": "German"
             }
           ],
-          "description": "Choose your preferred game's language for game menus and subtitles:",
+          "id": "LANG",
           "preselect": "english",
-          "id": "LANG"
+          "description": "Choose your preferred game's language for game menus and subtitles:"
         }
       },
       {
@@ -87,16 +81,22 @@
         }
       }
     ],
-    "custom-name": "Discworld - CD - ScummVM",
     "game": {
-      "subtitles": true,
+      "game_id": "dw",
       "path": "$GAMEDIR",
-      "game_id": "dw"
+      "subtitles": true
     },
-    "copy": {
-      "dst": "$GAMEDIR",
-      "src": "$GAMEDIR/lang/$INPUT_LANG.txt"
-    }
+    "scummvm": {
+      "fullscreen": true
+    },
+    "files": [
+      {
+        "music": "https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip"
+      },
+      {
+        "multi5": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip"
+      }
+    ]
   },
   "content": "copy:\n  dst: $GAMEDIR\n  src: $GAMEDIR/lang/$INPUT_LANG.txt\ncustom-name: Discworld - CD - ScummVM\nfiles:\n- music: https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip\ngame:\n  game_id: dw\n  path: $GAMEDIR\n  subtitles: true\ninstaller:\n- insert-disc:\n    description: Please insert Discworld disc\n    requires: dwu.exe\n- merge:\n    dst: $GAMEDIR\n    src: $DISC/discwld\n- extract:\n    dst: $GAMEDIR/lang\n    src: multi5\n- extract:\n    dst: $GAMEDIR\n    src: music\n- input_menu:\n    description: 'Choose your preferred game''s language for game menus and subtitles:'\n    id: LANG\n    options:\n    - english: English\n    - french: French\n    - spanish: Spanish\n    - italian: Italian\n    - german: German\n    preselect: english\n- execute:\n    command: cd $GAMEDIR; rm -f -r drivers dwu.exe dwb.exe french.txt german.txt english.txt\n      italian.txt spanish.txt; cp lang/$INPUT_LANG.txt english.txt ;\nscummvm:\n  fullscreen: true\n"
 }

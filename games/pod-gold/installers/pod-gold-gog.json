@@ -21,6 +21,80 @@
   "gogslug": "pod_gold",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR"
+    },
+    "exe": "drive_c/GOG Games/POD GOLD/PODX3Dfx.exe",
+    "installer": [
+      {
+        "task": {
+          "executable": "$setup",
+          "args": "/silent /nogui /suppressmsgboxes",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$podhacks",
+          "dst": "$GAMEDIR/drive_c/GOG Games/POD GOLD"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/GOG Games/POD GOLD/PodHacks.exe",
+          "args": "--install",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$nglide",
+          "dst": "$GAMEDIR/drive_c/GOG Games/POD GOLD"
+        }
+      },
+      {
+        "task": {
+          "value": 1,
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide",
+          "key": "Aspect",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide",
+          "description": "Taking too long on setting registry",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "value": 1,
+          "key": "Resolution"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/GOG Games/POD GOLD/UBISOFT/ubi.ini",
+          "value": 0,
+          "key": "PlayIntroAtStart",
+          "section": "POD2_0"
+        }
+      },
+      {
+        "extract": {
+          "file": "$lame",
+          "dst": "$CACHE/lame"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/lame/lame",
+          "description": "Converting soundtrack to WAV",
+          "args": "--decode \"$GAMEDIR/drive_c/GOG Games/POD GOLD/Track02.mp3\" \"$GAMEDIR/drive_c/GOG Games/POD GOLD/Track02.wav\""
+        }
+      }
+    ],
     "files": [
       {
         "setup": "N/A:Select the Windows setup file provided by GOG"
@@ -33,80 +107,6 @@
       },
       {
         "lame": "https://lutris.net/files/runners/lame_x86.tar.gz"
-      }
-    ],
-    "exe": "drive_c/GOG Games/POD GOLD/PODX3Dfx.exe",
-    "game": {
-      "prefix": "$GAMEDIR"
-    },
-    "installer": [
-      {
-        "task": {
-          "args": "/silent /nogui /suppressmsgboxes",
-          "name": "wineexec",
-          "executable": "$setup",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/POD GOLD",
-          "file": "$podhacks"
-        }
-      },
-      {
-        "task": {
-          "args": "--install",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/drive_c/GOG Games/POD GOLD/PodHacks.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/POD GOLD",
-          "file": "$nglide"
-        }
-      },
-      {
-        "task": {
-          "key": "Aspect",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide",
-          "value": 1
-        }
-      },
-      {
-        "task": {
-          "description": "Taking too long on setting registry",
-          "name": "set_regedit",
-          "key": "Resolution",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide",
-          "value": 1
-        }
-      },
-      {
-        "write_config": {
-          "key": "PlayIntroAtStart",
-          "file": "$GAMEDIR/drive_c/GOG Games/POD GOLD/UBISOFT/ubi.ini",
-          "section": "POD2_0",
-          "value": 0
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/lame",
-          "file": "$lame"
-        }
-      },
-      {
-        "execute": {
-          "args": "--decode \"$GAMEDIR/drive_c/GOG Games/POD GOLD/Track02.mp3\" \"$GAMEDIR/drive_c/GOG Games/POD GOLD/Track02.wav\"",
-          "file": "$CACHE/lame/lame",
-          "description": "Converting soundtrack to WAV"
-        }
       }
     ]
   },

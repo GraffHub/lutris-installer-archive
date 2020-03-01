@@ -21,14 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      },
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      }
-    ],
     "game": {
       "appid": 260230,
       "prefix": "$GAMEDIR/prefix"
@@ -42,40 +34,48 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
+          "args": "/silent",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "vcrun2010 corefonts win7"
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "args": "/S",
-          "name": "wineexec",
-          "arch": "win64",
+          "app": "vcrun2010 corefonts win7",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "uplay",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "args": "/S",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
+      }
+    ],
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
     ]
   },

@@ -21,51 +21,51 @@
   "gogslug": "worms_2",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Please select the GOG.com Worms 2 installer executable"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Worms 2/frontend.exe",
       "arch": "win32",
-      "exe": "drive_c/GOG Games/Worms 2/frontend.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
-          "key": "VideoSetting",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Team17SoftwareLTD\\frontend\\Worms2",
           "value": 5,
+          "key": "VideoSetting",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win32",
+          "executable": "setup",
           "exclude_processes": "GOGLauncher.exe start.exe",
-          "executable": "setup"
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win32"
+          "name": "winekill"
         }
+      }
+    ],
+    "files": [
+      {
+        "setup": "N/A:Please select the GOG.com Worms 2 installer executable"
       }
     ]
   },

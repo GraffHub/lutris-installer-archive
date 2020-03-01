@@ -23,62 +23,62 @@
   "script": {
     "game": {
       "appid": 290790,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/prefix",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0,
+        "DXVK_STATE_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      },
+      "pulse_latency": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Creating wine prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Visual C++ 2010",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "vcrun2010",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "description": "Installing Visual C++ 2010",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing xact for solving sound issues",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "xact_x64",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "description": "Installing xact for solving sound issues",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Set Windows version to Windows 7",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "win7",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "description": "Set Windows version to Windows 7",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       }
     ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/prefix",
-        "DXVK_HUD": 0,
-        "DXVK_STATE_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
+    "winesteam": {
+      "esync": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
       },
-      "pulse_latency": true
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 290790\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Installing Visual C++ 2010\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact_x64\n    arch: win64\n    description: Installing xact for solving sound issues\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win7\n    arch: win64\n    description: Set Windows version to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/prefix\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    xaudio2_7: native,builtin\n"

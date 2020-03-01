@@ -21,40 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "fpball": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp_install.zip"
-      },
-      {
-        "regfile": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp.reg"
-      },
-      {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/resolution.sh"
-      },
-      {
-        "table1": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/back_to_the_future_ultimate_3_0_mod-table.zip"
-      },
-      {
-        "gpreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_gamepad_readme.html"
-      },
-      {
-        "gpx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_x360.gamecontroller.amgp"
-      },
-      {
-        "gpsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_steam.sccprofile"
-      }
-    ],
     "game": {
-      "args": "/open \"C:\\Future Pinball\\Tables\\back_to_the_future_ultimate_3_0_mod-table\\BTTFMOD.fpt\" /play",
       "exe": "drive_c/Future Pinball/Future Pinball.exe",
+      "args": "/open \"C:\\Future Pinball\\Tables\\back_to_the_future_ultimate_3_0_mod-table\\BTTFMOD.fpt\" /play",
       "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
@@ -86,16 +66,16 @@
       },
       {
         "execute": {
-          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
-          "file": "$GAMEDIR/drive_c/tmp/resolution.sh"
+          "file": "$GAMEDIR/drive_c/tmp/resolution.sh",
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT"
         }
       },
       {
         "task": {
-          "args": "$GAMEDIR/drive_c/tmp/fp2.reg",
-          "name": "wineexec",
           "executable": "regedit",
-          "prefix": "$GAMEDIR"
+          "args": "$GAMEDIR/drive_c/tmp/fp2.reg",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
@@ -118,62 +98,82 @@
       },
       {
         "task": {
+          "app": "oleaut32",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "oleaut32"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "vcrun6",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "vcrun6"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "wsh57",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "wsh57"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "EAXEnabled",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
           "value": "Y",
+          "key": "EAXEnabled",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       }
     ],
-    "wine": {
-      "Desktop": true
-    }
+    "files": [
+      {
+        "fpball": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp_install.zip"
+      },
+      {
+        "regfile": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp.reg"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/resolution.sh"
+      },
+      {
+        "table1": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/back_to_the_future_ultimate_3_0_mod-table.zip"
+      },
+      {
+        "gpreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_gamepad_readme.html"
+      },
+      {
+        "gpx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_x360.gamecontroller.amgp"
+      },
+      {
+        "gpsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_steam.sccprofile"
+      }
+    ]
   },
   "content": "files:\n- fpball: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp_install.zip\n- regfile: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp.reg\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/resolution.sh\n- table1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/back_to_the_future_ultimate_3_0_mod-table.zip\n- gpreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_gamepad_readme.html\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_x360.gamecontroller.amgp\n- gpsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_steam.sccprofile\ngame:\n  args: /open \"C:\\Future Pinball\\Tables\\back_to_the_future_ultimate_3_0_mod-table\\BTTFMOD.fpt\"\n    /play\n  exe: drive_c/Future Pinball/Future Pinball.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Future Pinball/\n    src: fpball\n- extract:\n    dst: $GAMEDIR/drive_c/Future Pinball/Tables/back_to_the_future_ultimate_3_0_mod-table/\n    src: table1\n- merge:\n    dst: $GAMEDIR/drive_c/tmp\n    src: regfile\n- merge:\n    dst: $GAMEDIR/drive_c/tmp/\n    src: script\n- chmodx: $GAMEDIR/drive_c/tmp/resolution.sh\n- execute:\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: $GAMEDIR/drive_c/tmp/resolution.sh\n- task:\n    args: $GAMEDIR/drive_c/tmp/fp2.reg\n    executable: regedit\n    name: wineexec\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Future Pinball/gamepad profiles/\n    src: gpreadme\n- merge:\n    dst: $GAMEDIR/drive_c/Future Pinball/gamepad profiles/\n    src: gpx360\n- merge:\n    dst: $GAMEDIR/drive_c/Future Pinball/gamepad profiles/\n    src: gpsteam\n- task:\n    app: oleaut32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun6\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wsh57\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: EAXEnabled\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

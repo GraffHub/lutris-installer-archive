@@ -21,6 +21,57 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe/ProjectUniverse.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": false,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating win64 prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "xact",
+          "arch": "win64",
+          "description": "Installing xact",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "file": "innoextract",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "description": "Extracting game data",
+          "args": "--extract $setup --output-dir $CACHE"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe",
+          "description": "Extracting game data"
+        }
+      }
+    ],
     "files": [
       {
         "setup": {
@@ -31,58 +82,7 @@
       {
         "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.7-rc1/innoextract-1.7-rc1-linux.tar.xz"
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe/ProjectUniverse.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating win64 prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing xact",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "xact",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "innoextract"
-        }
-      },
-      {
-        "execute": {
-          "args": "--extract $setup --output-dir $CACHE",
-          "file": "$CACHE/innoextract",
-          "description": "Extracting game data"
-        }
-      },
-      {
-        "move": {
-          "description": "Extracting game data",
-          "src": "$CACHE/app",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Project Universe"
-        }
-      }
-    ],
-    "wine": {
-      "dxvk": true,
-      "esync": false,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
-    }
+    ]
   },
   "content": "files:\n- setup:\n    filename: PU Installer.exe\n    url: N/A:Select the \"PU Installer.exe\" for game install\n- innoextract: http://constexpr.org/innoextract/files/snapshots/innoextract-1.7-rc1/innoextract-1.7-rc1-linux.tar.xz\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Project Universe/ProjectUniverse.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating win64 prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: xact\n    arch: win64\n    description: Installing xact\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: innoextract\n- execute:\n    args: --extract $setup --output-dir $CACHE\n    description: Extracting game data\n    file: $CACHE/innoextract\n- move:\n    description: Extracting game data\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Project Universe\n    src: $CACHE/app\nwine:\n  dxvk: true\n  esync: false\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

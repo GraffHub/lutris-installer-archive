@@ -23,42 +23,42 @@
   "script": {
     "game": {
       "appid": 321040,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win32"
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "dumbxinputemu": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "x360ce-path": "$GAMEDIR"
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "arch": "win32",
-          "key": "xinput9_1_0",
-          "prefix": "$GAMEDIR/prefix",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "value": "disabled",
-          "type": "REG_SZ"
-        }
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "pulse_latency": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "value": "disabled",
+          "key": "xinput9_1_0",
+          "type": "REG_SZ"
+        }
+      }
+    ],
+    "winesteam": {
+      "x360ce-path": "$GAMEDIR",
+      "dumbxinputemu": true,
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
     }
   },
   "content": "game:\n  appid: 321040\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: xinput9_1_0\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR/prefix\n    type: REG_SZ\n    value: disabled\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dumbxinputemu: true\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n  x360ce-path: $GAMEDIR\n"

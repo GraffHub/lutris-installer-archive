@@ -21,60 +21,60 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      }
-    ],
     "game": {
       "appid": 772540,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true
-    },
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "audio"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "vcrun2015 win7"
-        }
-      }
-    ],
     "system": {
       "disable_runtime": false,
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0
       },
       "pulse_latency": true
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "audio",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "arch": "win64",
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2015 win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "winesteam": {
+      "dxvk": true
+    },
+    "files": [
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ]
   },
   "content": "files:\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 772540\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n"
 }

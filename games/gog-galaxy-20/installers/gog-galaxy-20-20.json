@@ -21,42 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "galaxy": "N/A:Select the game's setup file"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "galaxy"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing needed libraries",
-          "name": "winetricks",
-          "arch": "win64",
-          "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 physx vcrun2015"
-        }
-      }
-    ],
     "game": {
-      "args": null,
-      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
+      "arch": "win64",
+      "args": null,
       "prefix": "$GAMEDIR"
     },
     "system": {
@@ -68,9 +36,41 @@
       }
     },
     "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "galaxy",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 physx vcrun2015",
+          "arch": "win64",
+          "description": "Installing needed libraries",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "silent": true
+        }
+      }
+    ],
+    "files": [
+      {
+        "galaxy": "N/A:Select the game's setup file"
+      }
+    ]
   },
   "content": "files:\n- galaxy: N/A:Select the game's setup file\ngame:\n  arch: win64\n  args: null\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: galaxy\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 physx vcrun2015\n    arch: win64\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  env:\n    STAGING_SHARED_MEMORY: '1'\n    WINEFSYNC: '1'\n  reset_desktop: true\n  restore_gamma: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

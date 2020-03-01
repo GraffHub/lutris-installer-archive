@@ -21,30 +21,25 @@
   "gogslug": "syndicate_wars",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "N/A:Please select the GOG.com Windows installer"
-      }
-    ],
     "game": {
-      "config_file": "$GAMEDIR/dosboxSWARS.conf",
-      "main_file": "$GAMEDIR/dosboxSWARS_single.conf"
+      "main_file": "$GAMEDIR/dosboxSWARS_single.conf",
+      "config_file": "$GAMEDIR/dosboxSWARS.conf"
     },
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "wine.create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
         }
       },
       {
         "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "name": "wine.wineexec",
           "executable": "game",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
           "description": "Installing ...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wine.wineexec"
         }
       },
       {
@@ -67,14 +62,14 @@
       },
       {
         "execute": {
-          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSWARS_single.conf",
-          "file": "/bin/sed"
+          "file": "/bin/sed",
+          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSWARS_single.conf"
         }
       },
       {
         "execute": {
-          "args": "-i 's|..\\swars\\game.ins|swars/game.ins|g' $GAMEDIR/dosboxSWARS_single.conf",
-          "file": "/bin/sed"
+          "file": "/bin/sed",
+          "args": "-i 's|..\\swars\\game.ins|swars/game.ins|g' $GAMEDIR/dosboxSWARS_single.conf"
         }
       },
       {
@@ -82,6 +77,11 @@
           "dst": "$CACHE",
           "src": "$GAMEDIR/DOSBOX"
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer"
       }
     ]
   },

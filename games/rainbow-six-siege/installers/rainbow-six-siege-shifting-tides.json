@@ -22,43 +22,43 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "files": [
-        {
-          "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-        }
-      ],
       "game": {
-        "prefix": "$GAMEDIR",
+        "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
         "arch": "win64",
-        "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+        "prefix": "$GAMEDIR"
+      },
+      "wine": {
+        "dxvk": true
       },
       "installer": [
         {
           "task": {
+            "arch": "win64",
             "prefix": "$GAMEDIR",
-            "name": "create_prefix",
-            "arch": "win64"
+            "name": "create_prefix"
           }
         },
         {
           "task": {
+            "app": "corefonts vcrun2017 win7",
             "prefix": "$GAMEDIR",
-            "name": "winetricks",
-            "app": "corefonts vcrun2017 win7"
+            "name": "winetricks"
           }
         },
         {
           "task": {
-            "args": "/S",
-            "name": "wineexec",
             "executable": "uplay",
-            "prefix": "$GAMEDIR"
+            "args": "/S",
+            "prefix": "$GAMEDIR",
+            "name": "wineexec"
           }
         }
       ],
-      "wine": {
-        "dxvk": true
-      }
+      "files": [
+        {
+          "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+        }
+      ]
     }
   },
   "content": "script:\r\n  files:\r\n  - uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\n  game:\r\n    arch: win64\r\n    exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\r\n    prefix: $GAMEDIR\r\n  installer:\r\n  - task:\r\n      arch: win64\r\n      name: create_prefix\r\n      prefix: $GAMEDIR\r\n  - task:\r\n      app: corefonts vcrun2017 win7\r\n      name: winetricks\r\n      prefix: $GAMEDIR\r\n  - task:\r\n      args: /S\r\n      executable: uplay\r\n      name: wineexec\r\n      prefix: $GAMEDIR\r\n  wine:\r\n    dxvk: true"

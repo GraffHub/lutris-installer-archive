@@ -21,52 +21,49 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": {
-          "filename": "itch-setup.exe",
-          "url": "https://nuts.itch.zone/download/windows"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Desktop/itch.lnk",
       "arch": "win64",
-      "exe": "drive_c/users/$USER/Desktop/itch.lnk"
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "Itch.io For Windows",
+    "wine": {
+      "esync": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
           "arch": "win64",
-          "app": "arial"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "app": "arial",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
           "name": "set_regedit",
-          "arch": "win64",
-          "key": "Decorated",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "N"
+          "value": "N",
+          "key": "Decorated"
         }
       },
       {
         "task": {
-          "description": "Installing Itch App...",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "installer",
+          "arch": "win64",
+          "description": "Installing Itch App...",
           "args": "--silent",
+          "name": "wineexec",
           "prefix": "$GAMEDIR",
           "exclude_processes": "itch.exe butler.exe"
         }
@@ -78,11 +75,14 @@
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "custom-name": "Itch.io For Windows"
+    "files": [
+      {
+        "installer": {
+          "filename": "itch-setup.exe",
+          "url": "https://nuts.itch.zone/download/windows"
+        }
+      }
+    ]
   },
   "content": "custom-name: Itch.io For Windows\nfiles:\n- installer:\n    filename: itch-setup.exe\n    url: https://nuts.itch.zone/download/windows\ngame:\n  arch: win64\n  exe: drive_c/users/$USER/Desktop/itch.lnk\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    arch: win64\n    args: --silent\n    description: Installing Itch App...\n    exclude_processes: itch.exe butler.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

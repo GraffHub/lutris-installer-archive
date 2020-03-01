@@ -21,48 +21,48 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      }
-    ],
     "game": {
       "appid": 582160,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "corefonts vcrun2017 win7"
-        }
-      },
-      {
-        "task": {
-          "args": "/S",
-          "name": "wineexec",
-          "executable": "uplay",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": "compiler"
       }
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts vcrun2017 win7",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "uplay",
+          "args": "/S",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "winesteam": {
+      "dxvk": true
+    },
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ]
   },
   "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  appid: 582160\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: corefonts vcrun2017 win7\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: compiler\nwinesteam:\n  dxvk: true\n"
 }

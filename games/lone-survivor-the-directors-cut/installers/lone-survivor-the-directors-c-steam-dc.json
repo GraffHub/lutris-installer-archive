@@ -22,11 +22,15 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "install_mono": false,
+      "install_gecko": false,
       "exe": "drive_c/Lone Survivor/LoneSurvivor.exe",
-      "install_gecko": false
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "install_mono": false
+    },
+    "custom-name": "Lone's Survivor - The Director's Cut - Steam - Wine",
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
@@ -43,31 +47,27 @@
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "Lone's Survivor - The Director's Cut - Steam - Wine"
+    ]
   },
   "content": "custom-name: Lone's Survivor - The Director's Cut - Steam - Wine\ngame:\n  arch: win64\n  exe: drive_c/Lone Survivor/LoneSurvivor.exe\n  install_gecko: false\n  install_mono: false\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: Please browse to the \"Lone Survirvor - Director's Cut - Steam Edition\"\n      game folder\n    requires: LoneSurvivor.exe\n- merge:\n    dst: $GAMEDIR/drive_c/Lone Survivor\n    src: $DISC/\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

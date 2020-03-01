@@ -21,63 +21,63 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "crossout": "N/A:Select the exe downloaded from https://yupmaster.gaijinent.com/launcher/current.php?id=CrossoutLauncher"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing corefonts, tahoma, d3dx9, gdiplus, Visual C++",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "corefonts tahoma d3dx9 gdiplus vcrun20xx",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .NET 4.0 (This takes a while, please wait)",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "dotnet40 win7",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Launcher. Close launcher after install!",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "crossout",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/\"Local Settings\"/Application Data/Crossout/launcher.exe",
       "arch": "win64",
-      "exe": "drive_c/users/$USER/\"Local Settings\"/Application Data/Crossout/launcher.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
-        "DXVK_LOG_LEVEL": "none",
-        "DXVK_HUD": 0
+        "DXVK_HUD": 0,
+        "DXVK_LOG_LEVEL": "none"
       },
       "pulse_latency": true
     },
     "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts tahoma d3dx9 gdiplus vcrun20xx",
+          "arch": "win64",
+          "description": "Installing corefonts, tahoma, d3dx9, gdiplus, Visual C++",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet40 win7",
+          "arch": "win64",
+          "description": "Installing .NET 4.0 (This takes a while, please wait)",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "crossout",
+          "arch": "win64",
+          "description": "Installing Launcher. Close launcher after install!",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "crossout": "N/A:Select the exe downloaded from https://yupmaster.gaijinent.com/launcher/current.php?id=CrossoutLauncher"
+      }
+    ]
   },
   "content": "files:\n- crossout: N/A:Select the exe downloaded from https://yupmaster.gaijinent.com/launcher/current.php?id=CrossoutLauncher\ngame:\n  arch: win64\n  exe: drive_c/users/$USER/\"Local Settings\"/Application Data/Crossout/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts tahoma d3dx9 gdiplus vcrun20xx\n    arch: win64\n    description: Installing corefonts, tahoma, d3dx9, gdiplus, Visual C++\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40 win7\n    arch: win64\n    description: Installing .NET 4.0 (This takes a while, please wait)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Launcher. Close launcher after install!\n    executable: crossout\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

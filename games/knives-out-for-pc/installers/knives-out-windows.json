@@ -21,14 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "https://g83.gdl.netease.com/427390-hyxd-1.0.20-overseas-setup.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/hyxd/Engine/Binaries/Win32/hyxd.exe"
+      "exe": "drive_c/Program Files (x86)/hyxd/Engine/Binaries/Win32/hyxd.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
     },
     "installer": [
       {
@@ -39,24 +39,24 @@
       },
       {
         "task": {
+          "app": "vcrun2010 wininet",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "vcrun2010 wininet"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "executable": "game",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "game"
+          "name": "wineexec"
         }
       }
     ],
-    "wine": {
-      "overrides": {
-        "wininet": "builtin,native"
+    "files": [
+      {
+        "game": "https://g83.gdl.netease.com/427390-hyxd-1.0.20-overseas-setup.exe"
       }
-    }
+    ]
   },
   "content": "files:\n- game: https://g83.gdl.netease.com/427390-hyxd-1.0.20-overseas-setup.exe\ngame:\n  exe: drive_c/Program Files (x86)/hyxd/Engine/Binaries/Win32/hyxd.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

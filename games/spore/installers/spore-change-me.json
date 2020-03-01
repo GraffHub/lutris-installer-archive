@@ -21,33 +21,43 @@
   "gogslug": "spore_collection",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Select the .exe installer:"
+    "game": {
+      "exe": "drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ],
+    },
+    "wine": {
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
           "description": "Creating prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "d3dcompiler_43 d3dx9"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
-          "name": "wineexec",
+          "app": "d3dcompiler_43 d3dx9",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "installer",
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
           "description": "Installing Spore...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
@@ -57,21 +67,11 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe"
-    },
-    "system": {
-      "env": {
-        "DXVK_LOG_LEVEL": "none",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "installer": "N/A:Select the .exe installer:"
       }
-    },
-    "wine": {
-      "dxvk": true
-    }
+    ]
   },
   "content": "files:\n- installer: 'N/A:Select the .exe installer:'\ngame:\n  exe: drive_c/GOG Games/SPORE/SporebinEP1/SporeApp.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    description: Installing Spore...\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

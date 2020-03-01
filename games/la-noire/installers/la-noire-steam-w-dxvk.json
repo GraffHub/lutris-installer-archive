@@ -23,52 +23,49 @@
   "script": {
     "game": {
       "appid": 110800,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win32"
-    },
-    "winesteam": {
-      "dxvk": true
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix"
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win32"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Hold tight while we install some winetricks",
-          "name": "winetricks",
-          "arch": "win32",
           "app": "d3dx9_42 d3dx9_43 vcrun2008 dotnet35sp1 win7",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
+          "arch": "win32",
+          "description": "Hold tight while we install some winetricks",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winekill",
-          "arch": "win32"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
           "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
           "executable": "$GAMEDIR/3rd/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win32",
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "args": "/Silent",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "$GAMEDIR/3rd/Social Club Setup.exe",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win32",
+          "args": "/Silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
         }
       },
       {
@@ -96,13 +93,16 @@
       },
       {
         "write_config": {
-          "key": "Renderer",
           "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/Rockstar Games/L.A. Noire/settings.ini",
-          "section": "LANSettings",
-          "value": "DirectX 11"
+          "value": "DirectX 11",
+          "key": "Renderer",
+          "section": "LANSettings"
         }
       }
-    ]
+    ],
+    "winesteam": {
+      "dxvk": true
+    }
   },
   "content": "game:\n  appid: 110800\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9_42 d3dx9_43 vcrun2008 dotnet35sp1 win7\n    arch: win32\n    description: Hold tight while we install some winetricks\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    args: /silent\n    executable: $GAMEDIR/3rd/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    args: /Silent\n    executable: $GAMEDIR/3rd/Social Club Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/3rd/Social Club Setup.exe\n- move:\n    dst: $CACHE\n    src: $GAMEDIR/3rd\n- execute:\n    command: mkdir \"$GAMEDIR/3rd\"\n- move:\n    dst: $GAMEDIR/3rd/\n    src: $GAMEDIR/Social Club Setup.exe\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/Rockstar Games/L.A. Noire/settings.ini\n    key: Renderer\n    section: LANSettings\n    value: DirectX 11\nwinesteam:\n  dxvk: true\n"
 }

@@ -21,21 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/X-Men%20Origins%20-%20Wolverine/wolv.zip"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Activision/X-Men Origins - Wolverine(TM)/Binaries/Wolverine.exe"
+      "exe": "drive_c/Program Files (x86)/Activision/X-Men Origins - Wolverine(TM)/Binaries/Wolverine.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "X-Men Origins - Wolverine - DVD",
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
@@ -45,10 +44,10 @@
       },
       {
         "task": {
-          "args": "/desktop=Wolverine,1024x780 $DISC/setup.exe",
-          "name": "wineexec",
           "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
-          "description": "Running setup of the game. Just proceed and keep all settings at their defaults"
+          "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
+          "args": "/desktop=Wolverine,1024x780 $DISC/setup.exe",
+          "name": "wineexec"
         }
       },
       {
@@ -59,38 +58,39 @@
       },
       {
         "task": {
+          "app": "xact",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "xact"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       }
     ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "X-Men Origins - Wolverine - DVD"
+    "files": [
+      {
+        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/X-Men%20Origins%20-%20Wolverine/wolv.zip"
+      }
+    ]
   },
   "content": "custom-name: X-Men Origins - Wolverine - DVD\nfiles:\n- patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/X-Men%20Origins%20-%20Wolverine/wolv.zip\ngame:\n  exe: drive_c/Program Files (x86)/Activision/X-Men Origins - Wolverine(TM)/Binaries/Wolverine.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: Setup/Data/Binaries/Wolverine.exe\n- task:\n    args: /desktop=Wolverine,1024x780 $DISC/setup.exe\n    description: Running setup of the game. Just proceed and keep all settings at\n      their defaults\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    name: wineexec\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Activision/X-Men Origins - Wolverine(TM)/Binaries/\n    src: patch\n- task:\n    app: xact\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

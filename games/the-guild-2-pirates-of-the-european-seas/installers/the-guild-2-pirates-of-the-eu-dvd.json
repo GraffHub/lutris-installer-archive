@@ -1,0 +1,61 @@
+{
+  "id": 18491,
+  "game_id": 24011,
+  "game_slug": "the-guild-2-pirates-of-the-european-seas",
+  "name": "The Guild 2: Pirates of the European Seas",
+  "year": 2007,
+  "user": "andriu",
+  "runner": "wine",
+  "slug": "the-guild-2-pirates-of-the-eu-dvd",
+  "version": "DVD",
+  "description": null,
+  "notes": "Not install Directx 9.0c from DVD. Use TAB if installer is in background.",
+  "created_at": "2020-02-21T20:21:17.476000Z",
+  "updated_at": "2020-02-25T14:22:11.641645Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207660753,
+  "gogslug": "the_guild_2_pirates_of_the_european_seas",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/The Guild 2 - Pirates of the European Seas/GuildII.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "directplay",
+          "description": "Installing WINE data",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/setup.exe",
+          "args": "/SILENT /NOGUI /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  exe: drive_c/Program Files (x86)/The Guild 2 - Pirates of the European Seas/GuildII.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: directplay\n    description: Installing WINE data\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc\n    requires: setup.exe\n- task:\n    args: /SILENT /NOGUI /SUPPRESSMSGBOXES\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

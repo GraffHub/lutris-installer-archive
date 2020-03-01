@@ -21,50 +21,50 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe"
+      "exe": "drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
+          "executable": "setup",
           "exclude_processes": "dfsvc.exe",
-          "executable": "setup"
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
+          "executable": "installer",
           "arch": "win64",
-          "executable": "installer"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "DXVK_LOG_LEVEL": "none",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "installer": "https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe"
       }
-    }
+    ]
   },
   "content": "files:\n- installer: https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe\ngame:\n  exe: drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    exclude_processes: dfsvc.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n"
 }

@@ -21,6 +21,40 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Ultima Online Outlands",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": false
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts dotnet472 d3dcompiler_47 dotnet48 vcrun2019",
+          "description": "Installing needed dependencies, including .NET.",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "description": "Running Outlands Installer/Patcher. Please do not run the game until this installer finishes installing.",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "setup": {
@@ -28,41 +62,7 @@
           "url": "https://uooutlands.com/Outlands.exe"
         }
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Ultima Online Outlands"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating 64bit Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing needed dependencies, including .NET.",
-          "name": "winetricks",
-          "app": "corefonts dotnet472 d3dcompiler_47 dotnet48 vcrun2019",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Running Outlands Installer/Patcher. Please do not run the game until this installer finishes installing.",
-          "name": "wineexec",
-          "executable": "setup",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
-    "wine": {
-      "dxvk": false,
-      "esync": true
-    }
+    ]
   },
   "content": "files:\n- setup:\n    filename: Outlands.exe\n    url: https://uooutlands.com/Outlands.exe\ngame:\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Ultima Online Outlands\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts dotnet472 d3dcompiler_47 dotnet48 vcrun2019\n    description: Installing needed dependencies, including .NET.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running Outlands Installer/Patcher. Please do not run the game until\n      this installer finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: false\n  esync: true\n"
 }

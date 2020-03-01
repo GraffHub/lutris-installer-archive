@@ -11,7 +11,7 @@
   "description": "DXVK + esync + fsync + game fixes",
   "notes": "Now work:\r\n- Crysis 1\r\n- Vampire: The Masquerade - Bloodlines\r\n- Dragon Age: Origins\r\n\r\nVA-11 Hall-A: Cyberpunk Bartender Action and Undertale crash with overlay in-game enabled.",
   "created_at": "2018-12-12T12:54:51.788000Z",
-  "updated_at": "2020-02-03T16:50:24.101156Z",
+  "updated_at": "2020-02-28T11:03:19.767597Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,108 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "galaxy": "https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "galaxy"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting wine version to xp for Crysis.exe",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis.exe",
-          "value": "winxp64"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting wine version to xp for Crysis64.exe",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe",
-          "value": "winxp64"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting ddraw to native for FALLOUT2.EXE (sfall)",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "ddraw",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides",
-          "value": "native"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting ddraw to native for FALLOUTW.exe (sfall)",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "ddraw",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUTW.exe\\DllOverrides",
-          "value": "native"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting dbghelp to native,builtin for Vampire.exe (Vampire The Masquerade - Bloodlines)",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "dbghelp",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Vampire.exe\\DllOverrides",
-          "value": "native,builtin"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting winegstreamer to null for Game.exe (Mafia 1)",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "winegstreamer",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides",
-          "value": null
-        }
-      },
-      {
-        "task": {
-          "description": "Installing needed libraries",
-          "name": "winetricks",
-          "arch": "win64",
-          "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 physx"
-        }
-      }
-    ],
     "game": {
-      "args": "/runWithoutUpdating /deelevated",
-      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
+      "arch": "win64",
+      "args": "/runWithoutUpdating /deelevated",
       "prefix": "$GAMEDIR"
     },
     "system": {
@@ -134,9 +36,107 @@
       }
     },
     "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "galaxy",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting wine version to xp for Crysis.exe",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis.exe",
+          "value": "winxp64",
+          "key": "Version"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting wine version to xp for Crysis64.exe",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe",
+          "value": "winxp64",
+          "key": "Version"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting ddraw to native for FALLOUT2.EXE (sfall)",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides",
+          "value": "native",
+          "key": "ddraw"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting ddraw to native for FALLOUTW.exe (sfall)",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUTW.exe\\DllOverrides",
+          "value": "native",
+          "key": "ddraw"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting dbghelp to native,builtin for Vampire.exe (Vampire The Masquerade - Bloodlines)",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Vampire.exe\\DllOverrides",
+          "value": "native,builtin",
+          "key": "dbghelp"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting winegstreamer to null for Game.exe (Mafia 1)",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides",
+          "value": null,
+          "key": "winegstreamer"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43 physx",
+          "arch": "win64",
+          "description": "Installing needed libraries",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "silent": true
+        }
+      }
+    ],
+    "files": [
+      {
+        "galaxy": "https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe"
+      }
+    ]
   },
-  "content": "files:\r\n- galaxy: https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe\r\ngame:\r\n  arch: win64\r\n  args: /runWithoutUpdating /deelevated\r\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    executable: galaxy\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: Setting wine version to xp for Crysis.exe\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis.exe\r\n    prefix: $GAMEDIR\r\n    value: winxp64\r\n- task:\r\n    arch: win64\r\n    description: Setting wine version to xp for Crysis64.exe\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe\r\n    prefix: $GAMEDIR\r\n    value: winxp64\r\n- task:\r\n    arch: win64\r\n    description: Setting ddraw to native for FALLOUT2.EXE (sfall)\r\n    key: ddraw\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: native\r\n- task:\r\n    arch: win64\r\n    description: Setting ddraw to native for FALLOUTW.exe (sfall)\r\n    key: ddraw\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUTW.exe\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: native\r\n- task:\r\n    arch: win64\r\n    description: Setting dbghelp to native,builtin for Vampire.exe (Vampire The Masquerade\r\n      - Bloodlines)\r\n    key: dbghelp\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Vampire.exe\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: native,builtin\r\n- task:\r\n    arch: win64\r\n    description: Setting winegstreamer to null for Game.exe (Mafia 1)\r\n    key: winegstreamer\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: null\r\n- task:\r\n    app: d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 physx\r\n    arch: win64\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    STAGING_SHARED_MEMORY: '1'\r\n    WINEFSYNC: '1'\r\n  reset_desktop: true\r\n  restore_gamma: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
+  "content": "files:\r\n- galaxy: https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe\r\ngame:\r\n  arch: win64\r\n  args: /runWithoutUpdating /deelevated\r\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    executable: galaxy\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: Setting wine version to xp for Crysis.exe\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis.exe\r\n    prefix: $GAMEDIR\r\n    value: winxp64\r\n- task:\r\n    arch: win64\r\n    description: Setting wine version to xp for Crysis64.exe\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Crysis64.exe\r\n    prefix: $GAMEDIR\r\n    value: winxp64\r\n- task:\r\n    arch: win64\r\n    description: Setting ddraw to native for FALLOUT2.EXE (sfall)\r\n    key: ddraw\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUT2.EXE\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: native\r\n- task:\r\n    arch: win64\r\n    description: Setting ddraw to native for FALLOUTW.exe (sfall)\r\n    key: ddraw\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FALLOUTW.exe\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: native\r\n- task:\r\n    arch: win64\r\n    description: Setting dbghelp to native,builtin for Vampire.exe (Vampire The Masquerade\r\n      - Bloodlines)\r\n    key: dbghelp\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Vampire.exe\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: native,builtin\r\n- task:\r\n    arch: win64\r\n    description: Setting winegstreamer to null for Game.exe (Mafia 1)\r\n    key: winegstreamer\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Game.exe\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    value: null\r\n- task:\r\n    app: d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43 physx\r\n    arch: win64\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    STAGING_SHARED_MEMORY: '1'\r\n    WINEFSYNC: '1'\r\n  reset_desktop: true\r\n  restore_gamma: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

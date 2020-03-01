@@ -1,0 +1,78 @@
+{
+  "id": 16943,
+  "game_id": 16313,
+  "game_slug": "injusticetm-2",
+  "name": "Injustice™ 2",
+  "year": null,
+  "user": "skibyte",
+  "runner": "winesteam",
+  "slug": "injusticetm-2-change-me",
+  "version": "Change Me",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-11-22T12:52:52.697548Z",
+  "updated_at": "2020-01-31T02:38:28.994408Z",
+  "draft": false,
+  "published": false,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 627270,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 976310,
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "WINE_LOW_USER_SPACE_LIMIT": 1
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "mfinstaller",
+          "dst": "$CACHE/mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "command": "$CACHE/mfinstaller/install-mf.sh",
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "terminal": true
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "arch": "win64",
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "winesteam": {
+      "esync": true,
+      "dxvk": true
+    },
+    "files": [
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      }
+    ]
+  },
+  "content": "files:\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  appid: 976310\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    app: arial\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    WINE_LOW_USER_SPACE_LIMIT: 1\nwinesteam:\n  dxvk: true\n  esync: true\n"
+}

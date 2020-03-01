@@ -21,25 +21,30 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      },
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      },
-      {
-        "acunity": "https://github.com/tannisroot/dxvk-caches/raw/master/ACU.tar.xz"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
+      "arch": "win64",
+      "args": "uplay://launch/1875/0",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ],
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "install_gecko": false,
+          "install_mono": false,
           "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "install_mono": false,
-          "install_gecko": false
+          "name": "create_prefix"
         }
       },
       {
@@ -56,58 +61,53 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
         "extract": {
-          "description": "Extracting DXVK state cache",
           "file": "acunity",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "description": "Extracting DXVK state cache"
         }
       },
       {
         "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
+          "arch": "win64",
+          "args": "/silent",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "arial d3dcompiler_43"
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "args": "/S",
-          "name": "wineexec",
+          "app": "arial d3dcompiler_43",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "uplay",
-          "prefix": "$GAMEDIR"
+          "args": "/S",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "game": {
-      "args": "uplay://launch/1875/0",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      },
+      {
+        "acunity": "https://github.com/tannisroot/dxvk-caches/raw/master/ACU.tar.xz"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    ]
   },
   "content": "files:\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\n- acunity: https://github.com/tannisroot/dxvk-caches/raw/master/ACU.tar.xz\r\ngame:\r\n  arch: win64\r\n  args: uplay://launch/1875/0\r\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    install_gecko: false\r\n    install_mono: false\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- write_file:\r\n    content: \"overlay: \\n  enabled: false\\n\"\r\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game\r\n      Launcher/settings.yml\r\n- write_file:\r\n    content: dxgi.maxFrameLatency = 1\r\n    file: $GAMEDIR/dxvk.conf\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- extract:\r\n    description: Extracting DXVK state cache\r\n    dst: $GAMEDIR\r\n    file: acunity\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial d3dcompiler_43\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /S\r\n    executable: uplay\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\r\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

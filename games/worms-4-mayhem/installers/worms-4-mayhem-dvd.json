@@ -21,17 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "patch_1_01": "N/A:Please download: ftp://ftp.team17.com/pub/t17/patches/pc/WormsMayhemPATCHv1.01.exe"
-      },
-      {
-        "patch_starforce": "N/A:Please download: https://www.gamecopyworld.com/games/pc_worms_mayhem.shtml#Worms 4 v1.01 [ENGLISH] No-DVD/Fixed EXE"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Codemasters/Worms 4 Mayhem/WORMS 4 MAYHEM.EXE"
+      "exe": "drive_c/Program Files (x86)/Codemasters/Worms 4 Mayhem/WORMS 4 MAYHEM.EXE",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
@@ -41,29 +36,34 @@
       },
       {
         "task": {
-          "args": "/s",
-          "name": "wineexec",
           "executable": "$DISC/setup.exe",
-          "prefix": "$GAMEDIR"
+          "args": "/s",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "executable": "patch_1_01",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "patch_1_01"
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Codemasters/Worms 4 Mayhem/",
-          "file": "patch_starforce"
+          "file": "patch_starforce",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Codemasters/Worms 4 Mayhem/"
         }
       }
     ],
-    "wine": {
-      "Desktop": true
-    }
+    "files": [
+      {
+        "patch_1_01": "N/A:Please download: ftp://ftp.team17.com/pub/t17/patches/pc/WormsMayhemPATCHv1.01.exe"
+      },
+      {
+        "patch_starforce": "N/A:Please download: https://www.gamecopyworld.com/games/pc_worms_mayhem.shtml#Worms 4 v1.01 [ENGLISH] No-DVD/Fixed EXE"
+      }
+    ]
   },
   "content": "files:\n- patch_1_01: 'N/A:Please download: ftp://ftp.team17.com/pub/t17/patches/pc/WormsMayhemPATCHv1.01.exe'\n- patch_starforce: 'N/A:Please download: https://www.gamecopyworld.com/games/pc_worms_mayhem.shtml#Worms\n    4 v1.01 [ENGLISH] No-DVD/Fixed EXE'\ngame:\n  exe: drive_c/Program Files (x86)/Codemasters/Worms 4 Mayhem/WORMS 4 MAYHEM.EXE\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: launcher.exe\n- task:\n    args: /s\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch_1_01\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Codemasters/Worms 4 Mayhem/\n    file: patch_starforce\nwine:\n  Desktop: true\n"
 }

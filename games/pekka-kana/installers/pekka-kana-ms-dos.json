@@ -21,45 +21,40 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "https://www.pistegamez.net/PK/pkanv08b.zip"
-      },
-      {
-        "patch": "https://www.pistegamez.net/PK/Pk_fixed.zip"
-      }
-    ],
     "game": {
       "main_file": "$GAMEDIR/dosbox.conf"
+    },
+    "system": {
+      "disable_runtime": false
     },
     "installer": [
       {
         "extract": {
-          "description": "Installing Pekka Kana...",
           "src": "game",
-          "dst": "$GAMEDIR/PKANA"
+          "dst": "$GAMEDIR/PKANA",
+          "description": "Installing Pekka Kana..."
         }
       },
       {
         "extract": {
-          "description": "Installing Pekka Kana...",
           "src": "patch",
-          "dst": "$GAMEDIR/PKANA"
+          "dst": "$GAMEDIR/PKANA",
+          "description": "Installing Pekka Kana..."
         }
       },
       {
         "task": {
-          "path": "$GAMEDIR/dosbox.conf",
-          "name": "makeconfig",
-          "drives": {
-            "c": "$GAMEDIR"
-          },
           "commands": [
             "C:",
             "cd PKANA",
             "PKANA.EXE",
             "exit"
-          ]
+          ],
+          "drives": {
+            "c": "$GAMEDIR"
+          },
+          "path": "$GAMEDIR/dosbox.conf",
+          "name": "makeconfig"
         }
       },
       {
@@ -70,9 +65,14 @@
         }
       }
     ],
-    "system": {
-      "disable_runtime": false
-    }
+    "files": [
+      {
+        "game": "https://www.pistegamez.net/PK/pkanv08b.zip"
+      },
+      {
+        "patch": "https://www.pistegamez.net/PK/Pk_fixed.zip"
+      }
+    ]
   },
   "content": "files:\n- game: https://www.pistegamez.net/PK/pkanv08b.zip\n- patch: https://www.pistegamez.net/PK/Pk_fixed.zip\ngame:\n  main_file: $GAMEDIR/dosbox.conf\ninstaller:\n- extract:\n    description: Installing Pekka Kana...\n    dst: $GAMEDIR/PKANA\n    src: game\n- extract:\n    description: Installing Pekka Kana...\n    dst: $GAMEDIR/PKANA\n    src: patch\n- task:\n    commands:\n    - 'C:'\n    - cd PKANA\n    - PKANA.EXE\n    - exit\n    drives:\n      c: $GAMEDIR\n    name: makeconfig\n    path: $GAMEDIR/dosbox.conf\n- write_file:\n    content: '[cpu]\n\n      core=auto\n\n      cputype=auto\n\n      cycles=max 105%\n\n      cycleup=10\n\n      cycledown=20\n\n      '\n    file: $GAMEDIR/dosbox.conf\n    mode: a\nsystem:\n  disable_runtime: false\n"
 }

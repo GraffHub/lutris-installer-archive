@@ -22,17 +22,21 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Giant/LEGO Star Wars Game/LegoStarwars.exe",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/Giant/LEGO Star Wars Game/LegoStarwars.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "dumbxinputemu": true
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Bottle, please wait...",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine Bottle, please wait...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -43,17 +47,13 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
+          "executable": "$DISC/setup.exe",
           "arch": "win32",
-          "executable": "$DISC/setup.exe"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "dumbxinputemu": true,
-      "Desktop": true
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Giant/LEGO Star Wars Game/LegoStarwars.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc\n    requires: setup.exe\n- task:\n    arch: win32\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  dumbxinputemu: true\n"
 }

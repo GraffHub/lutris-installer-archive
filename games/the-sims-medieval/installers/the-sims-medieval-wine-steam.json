@@ -23,23 +23,20 @@
   "script": {
     "game": {
       "appid": 102820,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win32"
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "UseXVidMode": true,
-      "overrides": {
-        "steamwebhelper.exe": "disabled"
-      }
+    "system": {
+      "restore_gamma": true
     },
     "installer": [
       {
         "task": {
+          "install_mono": false,
           "arch": "win32",
           "description": "Creating prefix",
-          "name": "create_prefix",
-          "install_mono": false,
-          "prefix": "$GAMEDIR/prefix"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
         }
       },
       {
@@ -54,34 +51,34 @@
       },
       {
         "task": {
+          "app": "dotnet20",
+          "arch": "win32",
           "description": "Installing .Net 2.0",
+          "prefix": "$CACHE/prefix",
           "name": "winetricks",
-          "arch": "win32",
-          "silent": true,
-          "prefix": "$CACHE/prefix",
-          "app": "dotnet20"
+          "silent": true
         }
       },
       {
         "task": {
+          "arch": "win32",
           "description": "Setting version to xp for SimsMedievalLauncher...",
-          "name": "set_regedit",
-          "arch": "win32",
-          "key": "Version",
           "prefix": "$CACHE/prefix",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\SimsMedievalLauncher.exe",
-          "value": "winxp"
+          "value": "winxp",
+          "key": "Version"
         }
       },
       {
         "task": {
-          "description": "Setting version to 7 for default...",
-          "name": "set_regedit",
           "arch": "win32",
-          "key": "Version",
+          "description": "Setting version to 7 for default...",
           "prefix": "$CACHE/prefix",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win7"
+          "value": "win7",
+          "key": "Version"
         }
       },
       {
@@ -91,8 +88,11 @@
         }
       }
     ],
-    "system": {
-      "restore_gamma": true
+    "winesteam": {
+      "UseXVidMode": true,
+      "overrides": {
+        "steamwebhelper.exe": "disabled"
+      }
     }
   },
   "content": "game:\n  appid: 102820\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- execute:\n    command: ln -s \"$GAMEDIR/prefix\" \"$CACHE/prefix\"\n- execute:\n    command: ln -s \"$HOME/.local/share/lutris\" \"$GAMEDIR/prefix/dosdevices/g:\"\n- task:\n    app: dotnet20\n    arch: win32\n    description: Installing .Net 2.0\n    name: winetricks\n    prefix: $CACHE/prefix\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to xp for SimsMedievalLauncher...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\SimsMedievalLauncher.exe\n    prefix: $CACHE/prefix\n    value: winxp\n- task:\n    arch: win32\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $CACHE/prefix\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  restore_gamma: true\nwinesteam:\n  UseXVidMode: true\n  overrides:\n    steamwebhelper.exe: disabled\n"

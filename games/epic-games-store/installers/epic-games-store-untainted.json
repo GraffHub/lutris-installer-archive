@@ -21,33 +21,45 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "arch": "win64",
+      "args": "-opengl -SkipBuildPatchPrereq",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler",
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
       }
-    ],
+    },
+    "wine": {
+      "esync": true
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing dependencies",
-          "name": "winetricks",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
           "app": "arial",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -58,39 +70,27 @@
       },
       {
         "task": {
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "msiexec",
-          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "name": "wineexec",
           "exclude_processes": "EpicGamesLauncher.exe"
         }
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
       }
     ],
-    "game": {
-      "args": "-opengl -SkipBuildPatchPrereq",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
       }
-    },
-    "wine": {
-      "esync": true
-    }
+    ]
   },
   "content": "files:\r\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\r\ngame:\r\n  arch: win64\r\n  args: -opengl -SkipBuildPatchPrereq\r\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial\r\n    arch: win64\r\n    description: Installing dependencies\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- copy:\r\n    dst: $CACHE/epic/\r\n    src: epic\r\n- task:\r\n    arch: win64\r\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\r\n    exclude_processes: EpicGamesLauncher.exe\r\n    executable: msiexec\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: compiler\r\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  esync: true"
 }

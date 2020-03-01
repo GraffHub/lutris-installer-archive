@@ -21,11 +21,19 @@
   "gogslug": "katana_zero",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "goginstaller": "N/A:Select the game's setup file"
+    "game": {
+      "exe": "drive_c/GOG Games/Katana ZERO/Katana ZERO.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ],
+    },
+    "wine": {
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
@@ -35,34 +43,26 @@
       },
       {
         "task": {
+          "app": "vcrun2015 win7",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "vcrun2015 win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "goginstaller",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "args": "/LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/GOG Games/Katana ZERO/Katana ZERO.exe"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "goginstaller": "N/A:Select the game's setup file"
       }
-    },
-    "wine": {
-      "dxvk": true
-    }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Katana ZERO/Katana ZERO.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

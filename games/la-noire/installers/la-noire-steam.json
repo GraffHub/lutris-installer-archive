@@ -1,0 +1,90 @@
+{
+  "id": 18531,
+  "game_id": 623,
+  "game_slug": "la-noire",
+  "name": "L.A. Noire",
+  "year": 2011,
+  "user": "TsPG",
+  "runner": "winesteam",
+  "slug": "la-noire-steam",
+  "version": "Steam",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-23T14:48:23.329615Z",
+  "updated_at": "2020-02-23T14:48:23.329640Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 110800,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "appid": 110800,
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx9_42 d3dx9_43 vcrun2008 dotnet35sp1 win7",
+          "arch": "win32",
+          "description": "Hold tight while we install some winetricks",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/3rd/DXSETUP.exe",
+          "arch": "win32",
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/3rd/Social Club Setup.exe",
+          "arch": "win32",
+          "args": "/Silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir \"$GAMEDIR/3rd\""
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/Rockstar Games/L.A. Noire/settings.ini",
+          "value": "DirectX 11",
+          "key": "Renderer",
+          "section": "LANSettings"
+        }
+      }
+    ],
+    "winesteam": {
+      "dxvk": true
+    }
+  },
+  "content": "game:\n  appid: 110800\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9_42 d3dx9_43 vcrun2008 dotnet35sp1 win7\n    arch: win32\n    description: Hold tight while we install some winetricks\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    args: /silent\n    executable: $GAMEDIR/3rd/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    args: /Silent\n    executable: $GAMEDIR/3rd/Social Club Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- execute:\n    command: mkdir \"$GAMEDIR/3rd\"\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/Rockstar Games/L.A. Noire/settings.ini\n    key: Renderer\n    section: LANSettings\n    value: DirectX 11\nwinesteam:\n  dxvk: true\n"
+}

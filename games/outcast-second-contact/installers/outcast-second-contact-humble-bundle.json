@@ -21,39 +21,10 @@
   "gogslug": "outcast_second_contact",
   "humblestoreid": "outcast-second-contact",
   "script": {
-    "files": [
-      {
-        "zip": "N/A:Select zip file downloaded from Humble Bundle \"Outcast-7693-DRMFREE.zip\""
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "vcrun2012 win7"
-        }
-      },
-      {
-        "extract": {
-          "description": "Extracting zip folder",
-          "src": "zip",
-          "dst": "$GAMEDIR/drive_c/Program Files/Outcast - Second Contact"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Outcast - Second Contact/outcast.exe",
       "arch": "win64",
-      "exe": "drive_c/Program Files/Outcast - Second Contact/outcast.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
@@ -61,9 +32,38 @@
       }
     },
     "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2012 win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "src": "zip",
+          "dst": "$GAMEDIR/drive_c/Program Files/Outcast - Second Contact",
+          "description": "Extracting zip folder"
+        }
+      }
+    ],
+    "files": [
+      {
+        "zip": "N/A:Select zip file downloaded from Humble Bundle \"Outcast-7693-DRMFREE.zip\""
+      }
+    ]
   },
   "content": "files:\n- zip: N/A:Select zip file downloaded from Humble Bundle \"Outcast-7693-DRMFREE.zip\"\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Outcast - Second Contact/outcast.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting zip folder\n    dst: $GAMEDIR/drive_c/Program Files/Outcast - Second Contact\n    src: zip\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n"
 }

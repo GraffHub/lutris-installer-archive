@@ -23,47 +23,47 @@
   "script": {
     "game": {
       "appid": 544920,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "overrides": {
-        "xaudio2_7,d3dcompiler_42,d3dcompiler_43": "native,builtin"
-      }
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing vcrun2010",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "vcrun2010",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing corefonts",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "corefonts win7",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "pulse_latency": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2010",
+          "arch": "win64",
+          "description": "Installing vcrun2010",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts win7",
+          "arch": "win64",
+          "description": "Installing corefonts",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7,d3dcompiler_42,d3dcompiler_43": "native,builtin"
+      },
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 544920\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Installing vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: corefonts win7\n    arch: win64\n    description: Installing corefonts\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  overrides:\n    xaudio2_7,d3dcompiler_42,d3dcompiler_43: native,builtin\n"

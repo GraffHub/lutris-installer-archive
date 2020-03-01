@@ -21,31 +21,31 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe",
       "arch": "win32",
-      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled"
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
-          "name": "wineexec",
           "executable": "msiexec",
+          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
           "description": "Installing Pokemon TCG Online",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
@@ -55,11 +55,11 @@
         }
       }
     ],
-    "wine": {
-      "overrides": {
-        "d3d11": "disabled"
+    "files": [
+      {
+        "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
       }
-    }
+    ]
   },
   "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win32\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    description: Installing Pokemon TCG Online\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    d3d11: disabled\n"
 }

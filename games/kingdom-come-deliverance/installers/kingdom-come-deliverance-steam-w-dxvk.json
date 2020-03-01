@@ -23,21 +23,20 @@
   "script": {
     "game": {
       "appid": 379430,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
@@ -59,10 +58,11 @@
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 379430\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- merge:\n    dst: $GAMEDIR/Bin/Win64\n    src: $GAMEDIR/Bin/Win64Shared/d3dcompiler_46.dll\n- merge:\n    dst: $GAMEDIR/Bin/Win64\n    src: $GAMEDIR/Bin/Win64Shared/d3dcompiler_47.dll\n- merge:\n    dst: $GAMEDIR/Bin/Win64\n    src: $GAMEDIR/Bin/Win64Shared/amd_ags_x64.dll\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"

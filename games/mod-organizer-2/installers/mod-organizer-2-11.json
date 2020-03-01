@@ -21,39 +21,38 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Download and select the ModOrganizer2 setup file"
-      }
-    ],
     "game": {
+      "exe": "drive_c/Modding/MO2/ModOrganizer.exe",
       "working_dir": "$GAMEDIR/drive_c/Modding/MO2/",
       "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Modding/MO2/ModOrganizer.exe"
+      "arch": "win64"
+    },
+    "wine": {
+      "version": "lutris-5.0-x86_64",
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
           "arch": "win64",
-          "app": "vcrun2019 dxvk dotnet40"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
-          "name": "wineexec",
+          "app": "vcrun2019 dxvk dotnet40",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "setup",
-          "prefix": "$GAMEDIR"
+          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
@@ -63,10 +62,11 @@
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "version": "lutris-5.0-x86_64"
-    }
+    "files": [
+      {
+        "setup": "N/A:Download and select the ModOrganizer2 setup file"
+      }
+    ]
   },
   "content": "files:\n- setup: N/A:Download and select the ModOrganizer2 setup file\ngame:\n  arch: win64\n  exe: drive_c/Modding/MO2/ModOrganizer.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Modding/MO2/\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2019 dxvk dotnet40\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- write_file:\n    content: Copy the installed game files in here.\n    file: $GAMEDIR/drive_c/Modding/Game/Copy-game-in-here.txt\nwine:\n  dxvk: true\n  version: lutris-5.0-x86_64\n"
 }

@@ -23,57 +23,57 @@
   "script": {
     "game": {
       "appid": 619910,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "requires": "just-cause-3-steam-w-dxvk",
-    "winesteam": {
-      "dxvk": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "xact"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "GrabFullscreen",
-          "prefix": "$GAMEDIR/prefix",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "Y"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "win7"
-        }
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "pulse_latency": true
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "xact",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "value": "Y",
+          "key": "GrabFullscreen"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "requires": "just-cause-3-steam-w-dxvk"
   },
   "content": "game:\n  appid: 619910\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR/prefix\n    value: Y\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nrequires: just-cause-3-steam-w-dxvk\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

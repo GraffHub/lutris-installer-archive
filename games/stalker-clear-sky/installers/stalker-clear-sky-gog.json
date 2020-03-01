@@ -21,46 +21,46 @@
   "gogslug": "stalker_clear_sky",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Select the GOG installer"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/S.T.A.L.K.E.R. Clear Sky/xrEngine.exe",
       "arch": "win32",
-      "exe": "drive_c/GOG Games/S.T.A.L.K.E.R. Clear Sky/xrEngine.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1920x1080"
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
-          "name": "wineexec",
           "executable": "setup",
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
           "description": "Running GOG Installer",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Installing d3dx9, this could take a while...",
-          "name": "winetricks",
           "app": "d3dx9",
-          "prefix": "$GAMEDIR"
+          "description": "Installing d3dx9, this could take a while...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       }
     ],
-    "wine": {
-      "WineDesktop": "1920x1080",
-      "Desktop": true
-    }
+    "files": [
+      {
+        "setup": "N/A:Select the GOG installer"
+      }
+    ]
   },
   "content": "files:\n- setup: N/A:Select the GOG installer\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/S.T.A.L.K.E.R. Clear Sky/xrEngine.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    description: Running GOG Installer\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing d3dx9, this could take a while...\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n"
 }

@@ -21,32 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "http://uscloud.6ft.com/DreadnoughtInstaller.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Dreadnought",
-          "name": "wineexec",
-          "executable": "game",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Grey Box/Dreadnought/DreadnoughtLauncher.exe",
       "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Grey Box/Dreadnought/DreadnoughtLauncher.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
@@ -55,7 +33,29 @@
     },
     "wine": {
       "dxvk": true
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "description": "Installing Dreadnought",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "game": "http://uscloud.6ft.com/DreadnoughtInstaller.exe"
+      }
+    ]
   },
   "content": "files:\n- game: http://uscloud.6ft.com/DreadnoughtInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Grey Box/Dreadnought/DreadnoughtLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Dreadnought\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

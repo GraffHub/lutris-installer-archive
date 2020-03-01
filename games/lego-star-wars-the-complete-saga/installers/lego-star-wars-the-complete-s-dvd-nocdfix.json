@@ -21,6 +21,67 @@
   "gogslug": "lego_star_wars_the_complete_saga",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/LEGOStarWarsSaga.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "xinput": true
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "LEGOStarWarsSaga.msi"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Windows File System (Wine Bottle)",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/setup.exe",
+          "args": "/L1033",
+          "description": "Please follow the instructions of the Installer",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "X360",
+          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/",
+          "description": "Installing x360 dinput8 for controller support"
+        }
+      },
+      {
+        "extract": {
+          "file": "NoCDfix",
+          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/",
+          "format": "tgz",
+          "description": "Installing NoCD fix"
+        }
+      },
+      {
+        "extract": {
+          "file": "GamepadSupportSettings",
+          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/",
+          "format": "tgz",
+          "description": "Setting up Gamepad support"
+        }
+      },
+      {
+        "execute": {
+          "file": "/bin/sh",
+          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/wine_custom_user.reg'\""
+        }
+      }
+    ],
     "files": [
       {
         "GamepadSupportSettings": "https://dl.dropboxusercontent.com/s/o1d6nndmczd2els/LutrisGamepadSupportSettings.tar.gz"
@@ -31,68 +92,7 @@
       {
         "X360": "https://lutris.net/files/tools/x360ce-dinput8.tar.gz"
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/LEGOStarWarsSaga.exe"
-    },
-    "installer": [
-      {
-        "insert-disc": {
-          "requires": "LEGOStarWarsSaga.msi"
-        }
-      },
-      {
-        "task": {
-          "description": "Creating Windows File System (Wine Bottle)",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "args": "/L1033",
-          "name": "wineexec",
-          "executable": "$DISC/setup.exe",
-          "description": "Please follow the instructions of the Installer",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing x360 dinput8 for controller support",
-          "file": "X360",
-          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing NoCD fix",
-          "format": "tgz",
-          "file": "NoCDfix",
-          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/"
-        }
-      },
-      {
-        "extract": {
-          "description": "Setting up Gamepad support",
-          "format": "tgz",
-          "file": "GamepadSupportSettings",
-          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/"
-        }
-      },
-      {
-        "execute": {
-          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/wine_custom_user.reg'\"",
-          "file": "/bin/sh"
-        }
-      }
-    ],
-    "wine": {
-      "xinput": true
-    }
+    ]
   },
   "content": "files:\n- GamepadSupportSettings: https://dl.dropboxusercontent.com/s/o1d6nndmczd2els/LutrisGamepadSupportSettings.tar.gz\n- NoCDfix: https://dl.dropboxusercontent.com/s/aha1vuhh4i0uu5k/LutrisLegoStarWarsNoCDfix.tar.gz\n- X360: https://lutris.net/files/tools/x360ce-dinput8.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/LEGOStarWarsSaga.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: LEGOStarWarsSaga.msi\n- task:\n    arch: win32\n    description: Creating Windows File System (Wine Bottle)\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /L1033\n    description: Please follow the instructions of the Installer\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing x360 dinput8 for controller support\n    dst: $GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/\n    file: X360\n- extract:\n    description: Installing NoCD fix\n    dst: $GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/\n    file: NoCDfix\n    format: tgz\n- extract:\n    description: Setting up Gamepad support\n    dst: $GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/\n    file: GamepadSupportSettings\n    format: tgz\n- execute:\n    args: -v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/LucasArts/LEGO\n      Star Wars - The Complete Saga/wine_custom_user.reg'\"\n    file: /bin/sh\nwine:\n  xinput: true\n"
 }

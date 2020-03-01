@@ -21,57 +21,57 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "corefonts win7"
-        }
-      },
-      {
-        "task": {
-          "args": "/S",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "uplay",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
       "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
-        "DXVK_STATE_CACHE": 0,
         "DXVK_HUD": 0,
-        "PYTHONIOENCODING": "utf8"
+        "PYTHONIOENCODING": "utf8",
+        "DXVK_STATE_CACHE": 0
       }
     },
     "wine": {
-      "dxvk": true,
       "esync": true,
       "overrides": {
         "nvapi,nvapi64": "disabled",
         "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "uplay",
+          "arch": "win64",
+          "args": "/S",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
       }
-    }
+    ],
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ]
   },
   "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_STATE_CACHE: 0\n    PYTHONIOENCODING: utf8\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

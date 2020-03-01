@@ -21,73 +21,70 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "fixes": "https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz"
-      },
-      {
-        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Origin/Origin.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Origin/Origin.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "WINE_LARGE_ADDRESS_AWARE": 1
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "description": "Creating Wine Prefix...",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Disabling crash dialogs...",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\WineDbg",
-          "key": "ShowCrashDialog",
           "prefix": "$GAMEDIR",
           "name": "set_regedit",
-          "arch": "win32",
           "type": "REG_DWORD",
-          "value": 0
+          "arch": "win32",
+          "description": "Disabling crash dialogs...",
+          "value": 0,
+          "key": "ShowCrashDialog"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "description": "Setting version to xp...",
-          "name": "set_regedit",
-          "arch": "win32",
-          "key": "Version",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "winxp"
+          "value": "winxp",
+          "key": "Version"
         }
       },
       {
         "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "type": "REG_DWORD",
+          "arch": "win32",
           "description": "Setting Vertex Shader Model to 2...",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "key": "MaxShaderModelVS",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "arch": "win32",
-          "type": "REG_DWORD",
-          "value": "00000002"
+          "value": "00000002",
+          "key": "MaxShaderModelVS"
         }
       },
       {
         "task": {
-          "description": "Setting Pixel Shader Model to 2...",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "key": "MaxShaderModelPS",
           "prefix": "$GAMEDIR",
           "name": "set_regedit",
-          "arch": "win32",
           "type": "REG_DWORD",
-          "value": "00000002"
+          "arch": "win32",
+          "description": "Setting Pixel Shader Model to 2...",
+          "value": "00000002",
+          "key": "MaxShaderModelPS"
         }
       },
       {
@@ -98,28 +95,28 @@
       },
       {
         "task": {
-          "description": "Installing Vcrun 2013",
-          "name": "winetricks",
+          "app": "vcrun2013",
           "arch": "win32",
-          "silent": true,
+          "description": "Installing Vcrun 2013",
           "prefix": "$GAMEDIR",
-          "app": "vcrun2013"
+          "name": "winetricks",
+          "silent": true
         }
       },
       {
         "task": {
-          "description": "Installing Vcrun 2010",
-          "name": "winetricks",
+          "app": "vcrun2010",
           "arch": "win32",
-          "silent": true,
+          "description": "Installing Vcrun 2010",
           "prefix": "$GAMEDIR",
-          "app": "vcrun2010"
+          "name": "winetricks",
+          "silent": true
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims™ 2 Ultimate Collection/Downloads",
-          "file": "fixes"
+          "file": "fixes",
+          "dst": "$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims™ 2 Ultimate Collection/Downloads"
         }
       },
       {
@@ -136,11 +133,11 @@
       },
       {
         "task": {
-          "description": "Installing Origin...",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "origin",
+          "arch": "win32",
+          "description": "Installing Origin...",
           "prefix": "$GAMEDIR",
+          "name": "wineexec",
           "exclude_processes": "Origin.exe OriginClientService.exe"
         }
       },
@@ -151,11 +148,14 @@
         }
       }
     ],
-    "system": {
-      "env": {
-        "WINE_LARGE_ADDRESS_AWARE": 1
+    "files": [
+      {
+        "fixes": "https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz"
+      },
+      {
+        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
       }
-    }
+    ]
   },
   "content": "files:\r\n- fixes: https://github.com/tannisroot/installer-fixes/raw/master/sims2_fixes.tar.xz\r\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/Origin/Origin.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine Prefix...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: Disabling crash dialogs...\r\n    key: ShowCrashDialog\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\WineDbg\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: 0\r\n- task:\r\n    arch: win32\r\n    description: Setting version to xp...\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    value: winxp\r\n- task:\r\n    arch: win32\r\n    description: Setting Vertex Shader Model to 2...\r\n    key: MaxShaderModelVS\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: '00000002'\r\n- task:\r\n    arch: win32\r\n    description: Setting Pixel Shader Model to 2...\r\n    key: MaxShaderModelPS\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: '00000002'\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2013\r\n    arch: win32\r\n    description: Installing Vcrun 2013\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    app: vcrun2010\r\n    arch: win32\r\n    description: Installing Vcrun 2010\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- extract:\r\n    dst: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\r\n      \\ Collection/Downloads\"\r\n    file: fixes\r\n- write_file:\r\n    content: 'boolprop useshaders true\r\n\r\n      boolProp   createNVidiaWorkaroundTexture false\r\n\r\n      boolProp   bumpMapping false\r\n\r\n      '\r\n    file: \"$GAMEDIR/drive_c/users/$USER/My Documents/EA Games/The Sims\\u2122 2 Ultimate\\\r\n      \\ Collection/Config/userstartup.cheat\"\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: Installing Origin...\r\n    exclude_processes: Origin.exe OriginClientService.exe\r\n    executable: origin\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    WINE_LARGE_ADDRESS_AWARE: 1"
 }

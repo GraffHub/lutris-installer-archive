@@ -21,35 +21,46 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "launcher": "https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe"
+    "game": {
+      "exe": "drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler"
       }
-    ],
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Creating Wine 64-bit Prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "arial win10"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing the launcher (Don't login, close the window)",
-          "name": "wineexec",
+          "app": "arial win10",
           "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "launcher",
+          "arch": "win64",
+          "description": "Installing the launcher (Don't login, close the window)",
           "prefix": "$GAMEDIR",
+          "name": "wineexec",
           "exclude_processes": "RockstarService.exe Launcher.exe LauncherPatcher.exe"
         }
       },
@@ -60,22 +71,11 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "launcher": "https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    ]
   },
   "content": "files:\n- launcher: https://gamedownloads.rockstargames.com/public/installer/Rockstar-Games-Launcher.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Rockstar Games/Launcher/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing the launcher (Don't login, close the window)\n    exclude_processes: RockstarService.exe Launcher.exe LauncherPatcher.exe\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

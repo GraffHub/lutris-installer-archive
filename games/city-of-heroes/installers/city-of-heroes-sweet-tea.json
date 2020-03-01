@@ -1,0 +1,133 @@
+{
+  "id": 18613,
+  "game_id": 4300,
+  "game_slug": "city-of-heroes",
+  "name": "City of Heroes",
+  "year": null,
+  "user": "sunderkeenin",
+  "runner": "wine",
+  "slug": "city-of-heroes-sweet-tea",
+  "version": "Sweet Tea",
+  "description": "This installer is to install CoH using Sweet Tea, the main alternative CoH launcher, with fixed fonts and font smoothing. Mouse capture issues are fixed via WINE virtual desktop.",
+  "notes": "Select \"Validate\" to install a server's client. Select \"Launch\" to launch.\r\nIf you plan to play Homecoming, you will need to manually add the manifest.\r\nAfter loading the game you might need to hit \"Alt-Enter\" to change to windowed mode as the resolution may not be supported.",
+  "created_at": "2020-02-29T22:42:14.327527Z",
+  "updated_at": "2020-02-29T22:42:14.327552Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 29550,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "extract": {
+          "file": "launcher",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Sweet Tea",
+          "format": "zip"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
+          "silent": true,
+          "description": "Installing Corefonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "tahoma",
+          "silent": true,
+          "description": "Installing Tahoma",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet45",
+          "silent": true,
+          "description": "Installing MS .NET 4.5",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dinput8",
+          "silent": true,
+          "description": "Installing DirectInput",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
+          "value": "2",
+          "key": "FontSmoothing",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
+          "value": "00000001",
+          "key": "FontSmoothingOrientation",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
+          "value": "00000002",
+          "key": "FontSmoothingType",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop",
+          "value": "00000578",
+          "key": "FontSmoothingGamma",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "wine": {
+          "Desktop": true
+        }
+      }
+    ],
+    "files": [
+      {
+        "launcher": "http://files.thunderspygaming.net/sweet-tea/Sweet-Tea.zip"
+      }
+    ]
+  },
+  "content": "files:\n- launcher: http://files.thunderspygaming.net/sweet-tea/Sweet-Tea.zip\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Sweet Tea\n    file: launcher\n    format: zip\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: tahoma\n    description: Installing Tahoma\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dotnet45\n    description: Installing MS .NET 4.5\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dinput8\n    description: Installing DirectInput\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    key: FontSmoothing\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '2'\n- task:\n    arch: win64\n    key: FontSmoothingOrientation\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000001'\n- task:\n    arch: win64\n    key: FontSmoothingType\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- task:\n    arch: win64\n    key: FontSmoothingGamma\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 00000578\n- wine:\n    Desktop: true\n"
+}

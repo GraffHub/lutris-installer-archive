@@ -21,75 +21,75 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "H2install": "N/A:Please select the zip archive for the Project Cartographer installer"
-      }
-    ],
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/H2/",
-          "file": "H2install"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Halo 2 just click through with the default settings. Do not run the game at the end.",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "$CACHE/H2/h2pc_setup_1.8.1.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing wmp9",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "wmp9",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting Windows 7 mode for Wine",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "win7",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting video memory size",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "videomemorysize=1024",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "args": "-hiresfix",
-      "arch": "win32",
       "exe": "drive_c/Games/Halo 2 Project Cartographer/halo2.exe",
+      "arch": "win32",
+      "args": "-hiresfix",
       "prefix": "$GAMEDIR"
     },
     "system": {
       "disable_compositor": "true"
     },
     "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "H2install",
+          "dst": "$CACHE/H2/"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/H2/h2pc_setup_1.8.1.exe",
+          "arch": "win32",
+          "description": "Installing Halo 2 just click through with the default settings. Do not run the game at the end.",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "wmp9",
+          "arch": "win32",
+          "description": "Installing wmp9",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "arch": "win32",
+          "description": "Setting Windows 7 mode for Wine",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "videomemorysize=1024",
+          "arch": "win32",
+          "description": "Setting video memory size",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "files": [
+      {
+        "H2install": "N/A:Please select the zip archive for the Project Cartographer installer"
+      }
+    ]
   },
   "content": "files:\n- H2install: N/A:Please select the zip archive for the Project Cartographer installer\ngame:\n  arch: win32\n  args: -hiresfix\n  exe: drive_c/Games/Halo 2 Project Cartographer/halo2.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/H2/\n    file: H2install\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Halo 2 just click through with the default settings. Do\n      not run the game at the end.\n    executable: $CACHE/H2/h2pc_setup_1.8.1.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    arch: win32\n    description: Installing wmp9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Windows 7 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: videomemorysize=1024\n    arch: win32\n    description: Setting video memory size\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: 'true'\nwine:\n  dxvk: true\n  esync: true\n"
 }

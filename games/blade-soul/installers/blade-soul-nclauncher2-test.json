@@ -21,74 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "blade & soul": "http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe"
-      },
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      }
-    ],
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "vcrun2008 vcrun2013 physx corefonts"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .NET 4.7.2",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "dotnet472 win7",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "BnS"
-        }
-      }
-    ],
     "game": {
-      "args": "/GameID:BnS",
+      "exe": "drive_c/Program Files (x86)/NCSOFT/NC Launcher 2/Matryoshka.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files (x86)/NCSOFT/NC Launcher 2/Matryoshka.exe"
+      "args": "/GameID:BnS"
     },
     "system": {
       "env": {
@@ -98,7 +34,71 @@
     "wine": {
       "esync": true,
       "UseGLSL": "disabled"
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "arch": "win32",
+          "args": "/silent",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2008 vcrun2013 physx corefonts",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet472 win7",
+          "arch": "win32",
+          "description": "Installing .NET 4.7.2",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "BnS",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "blade & soul": "http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ]
   },
   "content": "files:\n- blade & soul: http://launcher.patcher.ncsoft.com/NCLauncher2_Installer.exe\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win32\n  args: /GameID:BnS\n  exe: drive_c/Program Files (x86)/NCSOFT/NC Launcher 2/Matryoshka.exe\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008 vcrun2013 physx corefonts\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win7\n    arch: win32\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: BnS\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    PBA_ENABLE: 1\nwine:\n  UseGLSL: disabled\n  esync: true\n"
 }

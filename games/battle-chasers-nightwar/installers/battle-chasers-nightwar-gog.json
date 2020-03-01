@@ -21,55 +21,55 @@
   "gogslug": "battle_chasers_nightwar",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Select the game's setup file"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "directx9 vcrun2005 vcrun2010 vcrun2013"
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "name": "wineexec",
-          "executable": "installer",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Battle Chasers Nightwar/BC.exe",
       "arch": "win64",
-      "exe": "drive_c/GOG Games/Battle Chasers Nightwar/BC.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
         "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0,
         "DXVK_LOG_LEVEL": "none",
         "DXVK_STATE_CACHE": 1,
-        "DXVK_HUD": 0,
         "mesa_glthread": "true",
         "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
     },
     "wine": {
       "dxvk": true
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "directx9 vcrun2005 vcrun2010 vcrun2013",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "args": "/SP- /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Battle Chasers Nightwar/BC.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: directx9 vcrun2005 vcrun2010 vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n"
 }

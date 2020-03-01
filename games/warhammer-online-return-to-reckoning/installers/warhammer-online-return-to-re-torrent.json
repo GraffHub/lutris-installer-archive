@@ -22,9 +22,22 @@
   "humblestoreid": "",
   "script": {
     "game": {
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe",
       "working_dir": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Return of Reckoning",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe"
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "system": {
+      "env": {
+        "STAGING_RT_PRIORITY_SERVER": 90,
+        "WINEARCH": "win64",
+        "WINEDEBUG": "-all",
+        "STAGING_SHARED_MEMORY": 1,
+        "WINEPREFIX": "$GAMEDIR/prefix",
+        "WINEDLLOVERRIDES": "winemenubuilder.exe=d d3d11=",
+        "STAGING_RT_PRIORITY_BASE": 90,
+        "CSMT": "enabled"
+      },
+      "terminal": false
     },
     "installer": [
       {
@@ -41,89 +54,76 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR/prefix"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "app": "corefonts",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "corefonts"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "comctl32ocx",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "comctl32ocx"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "comctl32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "comctl32"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "comdlg32ocx",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "comdlg32ocx"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "vcrun2012",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "vcrun2012"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "d3dx9",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "d3dx9"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "directx9",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "directx9"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "d3dx9_36",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "d3dx9_36"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "dotnet40",
           "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "app": "dotnet40"
+          "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "terminal": false,
-      "env": {
-        "WINEARCH": "win64",
-        "STAGING_RT_PRIORITY_BASE": 90,
-        "WINEPREFIX": "$GAMEDIR/prefix",
-        "CSMT": "enabled",
-        "STAGING_SHARED_MEMORY": 1,
-        "WINEDLLOVERRIDES": "winemenubuilder.exe=d d3d11=",
-        "STAGING_RT_PRIORITY_SERVER": 90,
-        "WINEDEBUG": "-all"
-      }
-    }
+    ]
   },
   "content": "game:\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Return of Reckoning/RoRLauncher.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $GAMEDIR/prefix/drive_c/Program Files (x86)/Return of Reckoning\ninstaller:\n- insert-disc:\n    message: Please provide a path to your game folder (it should contain RoRLauncher.exe).\n    requires: RoRLauncher.exe\n- merge:\n    dst: $GAMEDIR/prefix/drive_c/Program Files (x86)/Return of Reckoning\n    src: $DISC\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: comctl32ocx\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: comctl32\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: comdlg32ocx\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2012\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: directx9\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx9_36\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet40\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    CSMT: enabled\n    STAGING_RT_PRIORITY_BASE: 90\n    STAGING_RT_PRIORITY_SERVER: 90\n    STAGING_SHARED_MEMORY: 1\n    WINEARCH: win64\n    WINEDEBUG: -all\n    WINEDLLOVERRIDES: winemenubuilder.exe=d d3d11=\n    WINEPREFIX: $GAMEDIR/prefix\n  terminal: false\n"
 }

@@ -21,15 +21,13 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "glyph_installer": "http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClient.exe",
       "arch": "win64",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClient.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_runtime": true
     },
     "installer": [
       {
@@ -40,76 +38,78 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting Windows 7 mode for Wine",
-          "name": "winetricks",
           "arch": "win64",
-          "app": "win7",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "app": "win7",
+          "arch": "win64",
+          "description": "Setting Windows 7 mode for Wine",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
           "silent": true,
           "description": "Microsoft TrueType Fonts",
-          "name": "winetricks",
-          "app": "corefonts",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "d3dcompiler_43",
           "silent": true,
           "description": "Direct3D Compiler 43",
-          "name": "winetricks",
-          "app": "d3dcompiler_43",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "d3dx9_43",
           "silent": true,
           "description": "Direct3D DLL 43",
-          "name": "winetricks",
-          "app": "d3dx9_43",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "xact_jun2010",
           "silent": true,
           "description": "DirectX Audio DLL",
-          "name": "winetricks",
-          "app": "xact_jun2010",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "win7",
           "silent": true,
           "description": "Setting Windows version to 7",
-          "name": "winetricks",
-          "app": "win7",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "executable": "$GAMEDIR/drive_c/GlyphInstall-9999-1001.exe",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/drive_c/GlyphInstall-9999-1001.exe"
+          "name": "wineexec"
         }
       }
     ],
-    "system": {
-      "disable_runtime": true
-    }
+    "files": [
+      {
+        "glyph_installer": "http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe"
+      }
+    ]
   },
   "content": "files:\n- glyph_installer: http://download.dyn.triongames.com/GlyphInstall-9999-1001.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- merge:\n    dst: $GAMEDIR/drive_c\n    src: glyph_installer\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Microsoft TrueType Fonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dcompiler_43\n    description: Direct3D Compiler 43\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dx9_43\n    description: Direct3D DLL 43\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: xact_jun2010\n    description: DirectX Audio DLL\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: win7\n    description: Setting Windows version to 7\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    executable: $GAMEDIR/drive_c/GlyphInstall-9999-1001.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: true\n"
 }

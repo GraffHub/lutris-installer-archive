@@ -11,31 +11,27 @@
   "description": "Installer for the \"Sold Out\" (1.29W) version of the game. The original Windows+DOS CD might also work, but this installer will not patch the game to the latest version.",
   "notes": "- A MIDI device or synthesizer (e.g. Qsynth) is required for in-game music playback\r\n- Install DOSBOX if you want to play Montezuma's Revenge",
   "created_at": "2018-05-18T15:41:14.684000Z",
-  "updated_at": "2019-10-28T20:45:41.818981Z",
+  "updated_at": "2020-02-25T14:25:02.813370Z",
   "draft": false,
   "published": true,
-  "published_by": 51687,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "nglide": {
-          "filename": "nGlide_setup.exe",
-          "url": "http://www.zeus-software.com/downloads/nglide/d-1.html"
-        }
-      },
-      {
-        "smack": "http://www.zeus-software.com/files/nglide/montezuma_patch.zip"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/wmenu.exe",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/wmenu.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": false,
+      "overrides": {
+        "mss32.dll": "n,b",
+        "smackw32.dll": "n,b"
+      }
     },
     "installer": [
       {
@@ -53,9 +49,9 @@
               "1": "Preserve original"
             }
           ],
-          "description": "Aspect ratio (nGlide):",
+          "id": "ASPECT",
           "preselect": "1",
-          "id": "ASPECT"
+          "description": "Aspect ratio (nGlide):"
         }
       },
       {
@@ -68,148 +64,148 @@
               "Program Files/Utopia Technologies/Montezuma's Return/mwsetup-original.exe": "No"
             }
           ],
-          "description": "Replace Graphics Setup with nGlide Configurator:",
+          "id": "CONFMENU",
           "preselect": "windows/system32/nglide_config.exe",
-          "id": "CONFMENU"
+          "description": "Replace Graphics Setup with nGlide Configurator:"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "description": "Creating Wine prefix...",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing nGlide...",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "nglide",
-          "args": "/S",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "arch": "win32",
-          "key": "Aspect",
           "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "nglide",
+          "arch": "win32",
+          "description": "Installing nGlide...",
+          "args": "/S",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
           "value": "$INPUT_ASPECT",
+          "key": "Aspect",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "1",
           "key": "Backend",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "1",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "1",
           "key": "Resolution",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "1",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "1",
           "key": "Vsync",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "1",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
+          "value": "1",
           "key": "Splash",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
-          "value": "1",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
-          "key": "Gamma",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
           "value": "5",
+          "key": "Gamma",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win32",
-          "key": "Refresh",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2",
           "value": "0",
+          "key": "Refresh",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "description": "Installing Montezuma's Return (do not change the destination folder)...",
-          "name": "wineexec",
-          "arch": "win32",
           "executable": "$DISC/setup.exe",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing Montezuma's Return (do not change the destination folder)...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "move": {
-          "description": "Backing up Smackw32.dll...",
           "src": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Smackw32.dll",
-          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Smackw32.dll.bak"
+          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Smackw32.dll.bak",
+          "description": "Backing up Smackw32.dll..."
         }
       },
       {
         "move": {
-          "description": "Backing up Mss32.dll...",
           "src": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Mss32.dll",
-          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Mss32.dll.bak"
+          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Mss32.dll.bak",
+          "description": "Backing up Mss32.dll..."
         }
       },
       {
         "move": {
-          "description": "Backing up mwsetup.exe...",
           "src": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup.exe",
-          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup-original.exe"
+          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup-original.exe",
+          "description": "Backing up mwsetup.exe..."
         }
       },
       {
         "extract": {
-          "description": "Writing new smackw32.dll and mss32.dll...",
           "file": "smack",
-          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/"
+          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/",
+          "description": "Writing new smackw32.dll and mss32.dll..."
         }
       },
       {
         "move": {
-          "description": "Writing new mwsetup.exe...",
           "src": "$GAMEDIR/drive_c/$INPUT_CONFMENU",
-          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup.exe"
+          "dst": "$GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup.exe",
+          "description": "Writing new mwsetup.exe..."
         }
       },
       {
@@ -219,13 +215,17 @@
         }
       }
     ],
-    "wine": {
-      "Desktop": false,
-      "overrides": {
-        "mss32.dll": "n,b",
-        "smackw32.dll": "n,b"
+    "files": [
+      {
+        "nglide": {
+          "filename": "nGlide_setup.exe",
+          "url": "http://www.zeus-software.com/downloads/nglide/d-1.html"
+        }
+      },
+      {
+        "smack": "http://www.zeus-software.com/files/nglide/montezuma_patch.zip"
       }
-    }
+    ]
   },
   "content": "files:\n- nglide:\n    filename: nGlide_setup.exe\n    url: http://www.zeus-software.com/downloads/nglide/d-1.html\n- smack: http://www.zeus-software.com/files/nglide/montezuma_patch.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/wmenu.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: data/wmenu.exe\n- input_menu:\n    description: 'Aspect ratio (nGlide):'\n    id: ASPECT\n    options:\n    - '0': Fit to screen (Default)\n    - '1': Preserve original\n    preselect: '1'\n- input_menu:\n    description: 'Replace Graphics Setup with nGlide Configurator:'\n    id: CONFMENU\n    options:\n    - windows/system32/nglide_config.exe: Yes (Recommended)\n    - Program Files/Utopia Technologies/Montezuma's Return/mwsetup-original.exe: 'No'\n    preselect: windows/system32/nglide_config.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /S\n    description: Installing nGlide...\n    executable: nglide\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: Aspect\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: $INPUT_ASPECT\n- task:\n    arch: win32\n    key: Backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '1'\n- task:\n    arch: win32\n    key: Resolution\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '1'\n- task:\n    arch: win32\n    key: Vsync\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '1'\n- task:\n    arch: win32\n    key: Splash\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '1'\n- task:\n    arch: win32\n    key: Gamma\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '5'\n- task:\n    arch: win32\n    key: Refresh\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Zeus Software\\nGlide2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: '0'\n- task:\n    arch: win32\n    description: Installing Montezuma's Return (do not change the destination folder)...\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    description: Backing up Smackw32.dll...\n    dst: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Smackw32.dll.bak\n    src: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Smackw32.dll\n- move:\n    description: Backing up Mss32.dll...\n    dst: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Mss32.dll.bak\n    src: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Mss32.dll\n- move:\n    description: Backing up mwsetup.exe...\n    dst: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup-original.exe\n    src: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup.exe\n- extract:\n    description: Writing new smackw32.dll and mss32.dll...\n    dst: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/\n    file: smack\n- move:\n    description: Writing new mwsetup.exe...\n    dst: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/mwsetup.exe\n    src: $GAMEDIR/drive_c/$INPUT_CONFMENU\n- write_file:\n    content: 'R640x480x65536 1\n\n      V000x000x256 1\n\n      M9\n\n      S9\n\n      FMV=ON\n\n      PATH=\n\n      L0\n\n      '\n    file: $GAMEDIR/drive_c/Program Files/Utopia Technologies/Montezuma's Return/Monte.cfg\nwine:\n  Desktop: false\n  overrides:\n    mss32.dll: n,b\n    smackw32.dll: n,b\n"
 }

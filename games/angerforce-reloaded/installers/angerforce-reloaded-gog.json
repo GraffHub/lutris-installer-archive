@@ -21,14 +21,13 @@
   "gogslug": "angerforce_reloaded",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "gogsetup": "N/A:Select the game's setup file"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/AngerForce Reloaded/AngerForcePC.exe"
+      "exe": "drive_c/GOG Games/AngerForce Reloaded/AngerForcePC.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": false,
+      "dxvk": true
     },
     "installer": [
       {
@@ -39,23 +38,24 @@
       },
       {
         "task": {
-          "name": "winetricks",
-          "app": "mf_install_verb"
+          "app": "mf_install_verb",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "name": "wineexec",
           "executable": "gogsetup",
-          "description": "Installing game"
+          "description": "Installing game",
+          "args": "/SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec"
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": false
-    }
+    "files": [
+      {
+        "gogsetup": "N/A:Select the game's setup file"
+      }
+    ]
   },
   "content": "files:\n- gogsetup: N/A:Select the game's setup file\ngame:\n  exe: drive_c/GOG Games/AngerForce Reloaded/AngerForcePC.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mf_install_verb\n    name: winetricks\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    description: Installing game\n    executable: gogsetup\n    name: wineexec\nwine:\n  dxvk: true\n  esync: false\n"
 }

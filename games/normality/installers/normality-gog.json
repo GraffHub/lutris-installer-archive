@@ -21,29 +21,22 @@
   "gogslug": "normality",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "N/A:Select the Linux installer downloaded from GOG"
-      },
-      {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
-      }
-    ],
     "game": {
       "config_file": "$GAMEDIR/Game/dosbox_normal.conf"
     },
+    "main_file": "Game/dosbox_normal_single.conf",
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "file": "$unzip",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
           "file": "$CACHE/unzip",
-          "description": "Extracting game data..."
+          "description": "Extracting game data...",
+          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\""
         }
       },
       {
@@ -54,14 +47,21 @@
       },
       {
         "write_config": {
-          "key": "aspect",
           "file": "$GAMEDIR/Game/dosbox_normal.conf",
-          "section": "render",
-          "value": true
+          "value": true,
+          "key": "aspect",
+          "section": "render"
         }
       }
     ],
-    "main_file": "Game/dosbox_normal_single.conf"
+    "files": [
+      {
+        "game": "N/A:Select the Linux installer downloaded from GOG"
+      },
+      {
+        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  config_file: $GAMEDIR/Game/dosbox_normal.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n- write_config:\n    file: $GAMEDIR/Game/dosbox_normal.conf\n    key: aspect\n    section: render\n    value: true\nmain_file: Game/dosbox_normal_single.conf\n"
 }

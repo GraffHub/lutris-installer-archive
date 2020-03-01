@@ -21,31 +21,29 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "fps_limit": "30"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "vcrun2015 win7",
           "arch": "win32",
-          "app": "vcrun2015 win7"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -60,9 +58,11 @@
         }
       }
     ],
-    "system": {
-      "fps_limit": "30"
-    }
+    "files": [
+      {
+        "installer": "https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe"
+      }
+    ]
   },
   "content": "files:\n- installer: https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: '$PLUGINSDIR\n\n      $TEMP'\n    file: $CACHE/exclude.txt\n- execute:\n    command: 7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\"\n      -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\"\nsystem:\n  fps_limit: '30'\n"
 }

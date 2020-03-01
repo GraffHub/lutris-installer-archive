@@ -21,55 +21,55 @@
   "gogslug": "guardians_of_the_galaxy",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "goginstaller": "N/A:Select the game's setup file"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "vcrun2013 win7"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Game",
-          "name": "wineexec",
-          "executable": "goginstaller",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Guardians of The Galaxy/Guardians.exe",
       "arch": "win64",
-      "exe": "drive_c/GOG Games/Guardians of The Galaxy/Guardians.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0
       },
       "pulse_latency": true
     },
     "wine": {
-      "dxvk": true,
       "overrides": {
         "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2013 win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "goginstaller",
+          "description": "Installing Game",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
       }
-    }
+    ],
+    "files": [
+      {
+        "goginstaller": "N/A:Select the game's setup file"
+      }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Guardians of The Galaxy/Guardians.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Game\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

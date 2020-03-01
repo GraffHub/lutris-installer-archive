@@ -21,70 +21,70 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      }
-    ],
     "game": {
       "appid": 611800,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "vcrun2015 corefonts"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .NET 4.7.2",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "dotnet472 win7",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      }
-    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "pulse_latency": true
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating prefix",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "arch": "win64",
+          "args": "/silent",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2015 corefonts",
+          "arch": "win64",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet472 win7",
+          "arch": "win64",
+          "description": "Installing .NET 4.7.2",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ]
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 611800\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 corefonts\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet472 win7\n    arch: win64\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

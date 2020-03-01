@@ -21,56 +21,56 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "gfn": "http://download.nvidia.com/gfnpc/GeForceNOW-release.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
-          "executable": "gfn"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing needed libraries",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "corefonts msxml3",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Users/user/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe",
       "arch": "win64",
-      "exe": "drive_c/Users/user/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "restore_gamma": true,
       "env": {
-        "PROTON_FSHACK_INTEGER_SCALING": "1",
         "DXVK_HUD": "compiler",
-        "WINE_LARGE_ADDRESS_AWARE": "1",
+        "PROTON_FSHACK_INTEGER_SCALING": "1",
         "WINEFSYNC": "1",
-        "STAGING_SHARED_MEMORY": "1"
+        "STAGING_SHARED_MEMORY": "1",
+        "WINE_LARGE_ADDRESS_AWARE": "1"
       }
     },
     "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "gfn",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts msxml3",
+          "arch": "win64",
+          "description": "Installing needed libraries",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "files": [
+      {
+        "gfn": "http://download.nvidia.com/gfnpc/GeForceNOW-release.exe"
+      }
+    ]
   },
   "content": "files:\n- gfn: http://download.nvidia.com/gfnpc/GeForceNOW-release.exe\ngame:\n  arch: win64\n  exe: drive_c/Users/user/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: gfn\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: corefonts msxml3\n    arch: win64\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    PROTON_FSHACK_INTEGER_SCALING: '1'\n    STAGING_SHARED_MEMORY: '1'\n    WINEFSYNC: '1'\n    WINE_LARGE_ADDRESS_AWARE: '1'\n  restore_gamma: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

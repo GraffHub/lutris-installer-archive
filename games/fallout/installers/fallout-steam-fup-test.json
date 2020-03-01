@@ -21,19 +21,9 @@
   "gogslug": "fallout",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "fup": "N/A: Select file downloaded from https://www.mediafire.com/file/o7hm7dj8x2epoz0/Fallout_Update_Pack_%5B2.1.0%5D.exe/file"
-      }
-    ],
     "game": {
       "appid": 38400,
       "prefix": "$GAMEDIR/prefix"
-    },
-    "winesteam": {
-      "overrides": {
-        "ddraw.dll": "native"
-      }
     },
     "installer": [
       {
@@ -46,18 +36,18 @@
               "ru_RU.UTF-8": "Russian + English"
             }
           ],
-          "description": "Choose the desired language (russian language will be unavailable if you select english language):",
+          "id": "LANG",
           "preselect": "English",
-          "id": "LANG"
+          "description": "Choose the desired language (russian language will be unavailable if you select english language):"
         }
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR",
-          "description": "Installing the FUP mod, select game folder as install folder",
-          "name": "wineexec",
           "executable": "fup",
+          "description": "Installing the FUP mod, select game folder as install folder",
           "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec",
+          "working_dir": "$GAMEDIR",
           "env": {
             "LC_ALL": "$LANG"
           }
@@ -65,12 +55,22 @@
       },
       {
         "task": {
+          "executable": "f1_res_Config.exe",
           "working_dir": "$GAMEDIR",
           "description": "Configuring the Hi-res patch.\n Make sure you enable it before clicking Done",
-          "name": "wineexec",
-          "executable": "f1_res_Config.exe",
-          "prefix": "$GAMEDIR/prefix"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
         }
+      }
+    ],
+    "winesteam": {
+      "overrides": {
+        "ddraw.dll": "native"
+      }
+    },
+    "files": [
+      {
+        "fup": "N/A: Select file downloaded from https://www.mediafire.com/file/o7hm7dj8x2epoz0/Fallout_Update_Pack_%5B2.1.0%5D.exe/file"
       }
     ]
   },

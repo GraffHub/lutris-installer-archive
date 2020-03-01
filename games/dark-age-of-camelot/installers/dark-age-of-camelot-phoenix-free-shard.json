@@ -21,6 +21,59 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Electronic Arts/Dark Age of Camelot/Phoenix.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
+          "description": "Installing Corefonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "description": "Installing DAOC",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "phoenix",
+          "dst": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/camelot.exe",
+          "description": "Patch Game",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "setup": "http://darkageofcamelot.com/sites/daoc/files/downloads/DAoCSetup.exe"
@@ -29,59 +82,6 @@
         "phoenix": {
           "filename": "launcher.zip",
           "url": "https://forum.playphoenix.online/assets/launcher.zip"
-        }
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "drive_c/Program Files/Electronic Arts/Dark Age of Camelot/Phoenix.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "win7"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Corefonts",
-          "name": "winetricks",
-          "app": "corefonts",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing DAOC",
-          "name": "wineexec",
-          "executable": "setup",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/",
-          "file": "phoenix"
-        }
-      },
-      {
-        "task": {
-          "description": "Patch Game",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/camelot.exe",
-          "prefix": "$GAMEDIR"
         }
       }
     ]

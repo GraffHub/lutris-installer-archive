@@ -1,0 +1,65 @@
+{
+  "id": 18452,
+  "game_id": 1641,
+  "game_slug": "drakensang",
+  "name": "Drakensang",
+  "year": null,
+  "user": "andriu",
+  "runner": "wine",
+  "slug": "drakensang-dvd",
+  "version": "DVD",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-19T11:40:02.693567Z",
+  "updated_at": "2020-02-19T11:40:02.693597Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 12640,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Drakensang/drakensang.exe",
+      "args": "-fullscreen -novideo",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "version": "tkg-4.6-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx9 vcrun2005 xact",
+          "description": "Installing WINE data",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc",
+          "requires": "Autorun.exe"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/Autorun.exe",
+          "args": "/SILENT /NOGUI /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  args: -fullscreen -novideo\n  exe: drive_c/Program Files (x86)/Drakensang/drakensang.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9 vcrun2005 xact\n    description: Installing WINE data\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc\n    requires: Autorun.exe\n- task:\n    args: /SILENT /NOGUI /SUPPRESSMSGBOXES\n    executable: $DISC/Autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  version: tkg-4.6-x86_64\n"
+}

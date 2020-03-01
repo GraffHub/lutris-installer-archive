@@ -21,6 +21,55 @@
   "gogslug": "thief_gold",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files/GOG.com/Thief Gold/THIEF.EXE",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": null,
+    "Desktop": true,
+    "installer": [
+      {
+        "task": {
+          "install_mono": false,
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2008",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "directx9",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "$setup",
+          "description": "Installing Thief",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "$patch",
+          "description": "Installing NewDark",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "setup": "N/A:Select setup file from GOG"
@@ -28,56 +77,7 @@
       {
         "patch": "N/A:Select Patch EXE"
       }
-    ],
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "install_mono": false
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "vcrun2008"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "directx9"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Thief",
-          "name": "wineexec",
-          "executable": "$setup",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing NewDark",
-          "name": "wineexec",
-          "executable": "$patch",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/GOG.com/Thief Gold/THIEF.EXE"
-    },
-    "Desktop": true,
-    "wine": null
+    ]
   },
   "content": "Desktop: true\nfiles:\n- setup: N/A:Select setup file from GOG\n- patch: N/A:Select Patch EXE\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/GOG.com/Thief Gold/THIEF.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: directx9\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Thief\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing NewDark\n    executable: $patch\n    name: wineexec\n    prefix: $GAMEDIR\nwine: null\n"
 }

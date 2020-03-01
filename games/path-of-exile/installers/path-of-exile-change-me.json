@@ -1,0 +1,112 @@
+{
+  "id": 17055,
+  "game_id": 969,
+  "game_slug": "path-of-exile",
+  "name": "Path of Exile",
+  "year": 2013,
+  "user": "potatoria",
+  "runner": "wine",
+  "slug": "path-of-exile-change-me",
+  "version": "Change Me",
+  "description": "The game launches in DX11 mode.",
+  "notes": "",
+  "created_at": "2019-11-27T15:32:14.505725Z",
+  "updated_at": "2020-01-23T02:56:57.580069Z",
+  "draft": false,
+  "published": false,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 238960,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile/PathOfExile.exe",
+      "arch": "win64",
+      "args": "--waitforpreload --nologo --nodx9ex --gc2",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "DXVK_USE_PLACEHOLDER_SHADERS": 1,
+        "DXVK_HUD": 0,
+        "DXVK_USE_PIPECOMPILER": 1
+      },
+      "reset_pulse": true
+    },
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "d3dcompiler_47": "native"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile",
+          "src": "setup"
+        }
+      },
+      {
+        "task": {
+          "app": "riched20",
+          "silent": true,
+          "description": "Installing Rich Text Editor 2.0",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "usp10",
+          "silent": true,
+          "description": "Installing Uniscribe 1.0",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "description": "Installing Path Of Exile",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "value": 8192,
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "key": "VideoMemorySize",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit"
+        }
+      }
+    ],
+    "files": [
+      {
+        "setup": "https://www.pathofexile.com/downloads/PathOfExileInstaller.exe"
+      }
+    ]
+  },
+  "content": "files:\n- setup: https://www.pathofexile.com/downloads/PathOfExileInstaller.exe\ngame:\n  arch: win64\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile/PathOfExile.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile\n    src: setup\n- task:\n    app: riched20\n    description: Installing Rich Text Editor 2.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: usp10\n    description: Installing Uniscribe 1.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    description: Installing Path Of Exile\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    key: VideoMemorySize\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: 8192\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_USE_PIPECOMPILER: 1\n    DXVK_USE_PLACEHOLDER_SHADERS: 1\n  pulse_latency: true\n  reset_pulse: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3dcompiler_47: native\n    xaudio2_7: native,builtin\n"
+}

@@ -21,42 +21,53 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "dgvoodoo": "http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_61.zip"
-      },
-      {
-        "setup": "N/A:Select the game's setup file (RONSETUP.EXE)"
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/nations.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "PULSE_LATENCY_MSEC": "30"
       }
-    ],
+    },
+    "wine": {
+      "esync": false,
+      "overrides": {
+        "ddraw.dll": "n",
+        "d3dimm.dll": "n",
+        "d3d8.dll": "n",
+        "d3d9.dll": "n"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Creating 64bit Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "app": "mfc42 msxml4 directplay directmusic",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "mfc42 msxml4 directplay directmusic"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
+          "executable": "setup",
           "arch": "win64",
-          "executable": "setup"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "/tmp/dgvoodoo2/",
-          "file": "dgvoodoo"
+          "file": "dgvoodoo",
+          "dst": "/tmp/dgvoodoo2/"
         }
       },
       {
@@ -85,85 +96,74 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Microsoft Games/Rise of Nations/rise2.ini",
           "data": {
             "RISE OF NATIONS": {
-              "TestDelayRenderAMin": 0,
-              "CTWMapScroll": 35,
-              "ForceGDICursor": 0,
-              "MEM_grade_override(A-F or AUTO)": "AUTO",
-              "AllowAllResolutions": 1,
-              "ClickDragRightSensitive": 6,
-              "ForceHardwareCursor": 1,
-              "Console Name Mode": 2,
-              "DefaultScriptDirectory": ".\\scenario\\Scripts\\",
-              "TestDelayRenderAMax": 0,
-              "SkipIntroMovies": 1,
-              "DefaultScenarioDirectory": ".\\scenario\\Custom\\",
-              "SYS_grade_override(A-F or AUTO)": "AUTO",
-              "FullScreen": 1,
-              "RenderMinimap": 1,
-              "GameFrameTestDelayMin": 0,
-              "EnableGraphicsToggles": 0,
-              "GPU_grade_override(A-F or AUTO)": "AUTO",
-              "RebuildBalance": 0,
-              "TestDelayRenderBMax": 0,
-              "ConfigDatabase": "BHGVidCardConfig.txt",
-              "UseVTUNEDLL": 0,
-              "StartPaused": 0,
-              "UseAltColors": 0,
-              "ForceLowCPUBackgroundVid": 1,
-              "ForceBWCursor": 0,
-              "IgnoreMinimizeOnTabOut": 0,
-              "Force Profile Menu": 0,
-              "StartConsole": 0,
-              "TestDelayRenderBMin": 0,
-              "ESCKeyGoesToMenu": 1,
+              "ForceAGPVBs": 1,
+              "ClickDragLowSensitive": 20,
               "BackVidAsSlideShow": 1,
-              "ForceStaticCursor": 0,
+              "ForceLowCPUBackgroundVid": 1,
+              "UseVTUNEDLL": 0,
+              "SkipIntroMovies": 1,
+              "ClickDragTiming": 5,
               "VSync": 0,
               "StandaloneScriptsDirectory": "Stand-alone Scripts",
-              "Sound Enabled": 1,
-              "StartReveal": 0,
-              "ScenarioDirectory": "\\Scenarios",
-              "TPModsDirectory": ".\\Mods",
-              "Console Coord Mode": 0,
-              "Don't Allow Texture Compression": 0,
-              "ClickDragHighSensitive": 64,
-              "ClickDragLowSensitive": 20,
-              "ClickDragTiming": 5,
-              "UseNetworkSimulator": 0,
-              "TEXTURE_grade_override(FULL, HALF, QUARTER, AUTO)": "AUTO",
-              "ForceAGPVBs": 1,
+              "TestDelayRenderAMin": 0,
+              "TestDelayRenderBMax": 0,
               "GameFrameTestDelayMax": 0,
+              "UseAltColors": 0,
+              "ConfigDatabase": "BHGVidCardConfig.txt",
+              "ClickDragRightSensitive": 6,
+              "Windowed Height": "$RESOLUTION_HEIGHT",
+              "ClickDragHighSensitive": 64,
+              "TPModsDirectory": ".\\Mods",
+              "SYS_grade_override(A-F or AUTO)": "AUTO",
+              "GPU_grade_override(A-F or AUTO)": "AUTO",
+              "TestDelayRenderBMin": 0,
+              "AllowAllResolutions": 1,
+              "GameFrameTestDelayMin": 0,
+              "DefaultScriptDirectory": ".\\scenario\\Scripts\\",
+              "ForceHardwareCursor": 1,
+              "TEXTURE_grade_override(FULL, HALF, QUARTER, AUTO)": "AUTO",
               "CTWScrollInc": 7,
-              "CPU_grade_override(A-F or AUTO)": "AUTO",
+              "ScenarioDirectory": "\\Scenarios",
+              "StartReveal": 0,
+              "TestDelayRenderAMax": 0,
+              "Sound Enabled": 1,
+              "ForceBWCursor": 0,
+              "Console Coord Mode": 0,
+              "RenderMinimap": 1,
+              "ForceGDICursor": 0,
+              "Console Name Mode": 2,
+              "EnableGraphicsToggles": 0,
+              "CTWMapScroll": 35,
+              "UseNetworkSimulator": 0,
+              "StartConsole": 0,
+              "Don't Allow Texture Compression": 0,
+              "RebuildBalance": 0,
+              "MEM_grade_override(A-F or AUTO)": "AUTO",
+              "IgnoreMinimizeOnTabOut": 0,
+              "FullScreen": 1,
+              "ESCKeyGoesToMenu": 1,
+              "ForceStaticCursor": 0,
+              "DefaultScenarioDirectory": ".\\scenario\\Custom\\",
+              "Force Profile Menu": 0,
               "Windowed Width": "$RESOLUTION_WIDTH",
-              "Windowed Height": "$RESOLUTION_HEIGHT"
+              "StartPaused": 0,
+              "CPU_grade_override(A-F or AUTO)": "AUTO"
             }
-          },
-          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Microsoft Games/Rise of Nations/rise2.ini"
+          }
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/nations.exe"
-    },
-    "system": {
-      "env": {
-        "PULSE_LATENCY_MSEC": "30"
+    "files": [
+      {
+        "dgvoodoo": "http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_61.zip"
+      },
+      {
+        "setup": "N/A:Select the game's setup file (RONSETUP.EXE)"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": false,
-      "overrides": {
-        "d3dimm.dll": "n",
-        "d3d9.dll": "n",
-        "d3d8.dll": "n",
-        "ddraw.dll": "n"
-      }
-    }
+    ]
   },
   "content": "files:\n- dgvoodoo: http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_61.zip\n- setup: N/A:Select the game's setup file (RONSETUP.EXE)\ngame:\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/nations.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mfc42 msxml4 directplay directmusic\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: /tmp/dgvoodoo2/\n    file: dgvoodoo\n- move:\n    dst: $GAMEDIR/drive_c/windows/syswow64/d3d9.dll.old\n    src: $GAMEDIR/drive_c/windows/syswow64/d3d9.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/syswow64/d3d8.dll.old\n    src: $GAMEDIR/drive_c/windows/syswow64/d3d8.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/syswow64/ddraw.dll.old\n    src: $GAMEDIR/drive_c/windows/syswow64/ddraw.dll\n- merge:\n    dst: $GAMEDIR/drive_c/windows/syswow64\n    src: /tmp/dgvoodoo2/MS/x86\n- write_config:\n    data:\n      RISE OF NATIONS:\n        AllowAllResolutions: 1\n        BackVidAsSlideShow: 1\n        CPU_grade_override(A-F or AUTO): AUTO\n        CTWMapScroll: 35\n        CTWScrollInc: 7\n        ClickDragHighSensitive: 64\n        ClickDragLowSensitive: 20\n        ClickDragRightSensitive: 6\n        ClickDragTiming: 5\n        ConfigDatabase: BHGVidCardConfig.txt\n        Console Coord Mode: 0\n        Console Name Mode: 2\n        DefaultScenarioDirectory: .\\scenario\\Custom\\\n        DefaultScriptDirectory: .\\scenario\\Scripts\\\n        Don't Allow Texture Compression: 0\n        ESCKeyGoesToMenu: 1\n        EnableGraphicsToggles: 0\n        Force Profile Menu: 0\n        ForceAGPVBs: 1\n        ForceBWCursor: 0\n        ForceGDICursor: 0\n        ForceHardwareCursor: 1\n        ForceLowCPUBackgroundVid: 1\n        ForceStaticCursor: 0\n        FullScreen: 1\n        GPU_grade_override(A-F or AUTO): AUTO\n        GameFrameTestDelayMax: 0\n        GameFrameTestDelayMin: 0\n        IgnoreMinimizeOnTabOut: 0\n        MEM_grade_override(A-F or AUTO): AUTO\n        RebuildBalance: 0\n        RenderMinimap: 1\n        SYS_grade_override(A-F or AUTO): AUTO\n        ScenarioDirectory: \\Scenarios\n        SkipIntroMovies: 1\n        Sound Enabled: 1\n        StandaloneScriptsDirectory: Stand-alone Scripts\n        StartConsole: 0\n        StartPaused: 0\n        StartReveal: 0\n        TEXTURE_grade_override(FULL, HALF, QUARTER, AUTO): AUTO\n        TPModsDirectory: .\\Mods\n        TestDelayRenderAMax: 0\n        TestDelayRenderAMin: 0\n        TestDelayRenderBMax: 0\n        TestDelayRenderBMin: 0\n        UseAltColors: 0\n        UseNetworkSimulator: 0\n        UseVTUNEDLL: 0\n        VSync: 0\n        Windowed Height: $RESOLUTION_HEIGHT\n        Windowed Width: $RESOLUTION_WIDTH\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Microsoft Games/Rise of Nations/rise2.ini\nsystem:\n  env:\n    PULSE_LATENCY_MSEC: '30'\nwine:\n  dxvk: true\n  esync: false\n  overrides:\n    d3d8.dll: n\n    d3d9.dll: n\n    d3dimm.dll: n\n    ddraw.dll: n\n"
 }

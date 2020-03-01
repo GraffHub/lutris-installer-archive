@@ -1,0 +1,143 @@
+{
+  "id": 18602,
+  "game_id": 4587,
+  "game_slug": "osu",
+  "name": "osu!",
+  "year": 2007,
+  "user": "streed",
+  "runner": "wine",
+  "slug": "osu-change-me-3",
+  "version": "Change Me",
+  "description": null,
+  "notes": "How to lower audio latency: <a href=\"https://blog.thepoon.fr/osuLinuxAudioLatency/#adjusting-latency\">https://blog.thepoon.fr/osuLinuxAudioLatency/#adjusting-latency</a>",
+  "created_at": "2020-02-29T15:55:09.199203Z",
+  "updated_at": "2020-02-29T15:55:09.199234Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/osu/osu!.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "WINEDLLPATH": "$GAMEDIR/drive_c/osu/bin32"
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "version": "tkg-osu-4.6-x86_64",
+      "overrides": {
+        "discord-rpc": "builtin"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "install_gecko": false,
+          "arch": "win32",
+          "description": "Setting up wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "install_mono": false
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet45",
+          "arch": "win32",
+          "description": "Installing .NET 4.5...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "gdiplus",
+          "arch": "win32",
+          "description": "Installing gdiplus for graphical fixes",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "vlgothic",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "cjkfonts",
+          "arch": "win32",
+          "description": "Installing CJK Fonts for proper Asian font display",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "value": "512",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
+          "key": "HelBuflen",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "task": {
+          "value": "3",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
+          "key": "SndQueueMax",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit"
+        }
+      },
+      {
+        "extract": {
+          "file": "rpc",
+          "dst": "$GAMEDIR/drive_c/osu/"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/osu/",
+          "src": "installer"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/osu/osu!install.exe",
+          "exclude_processes": "osu!.exe",
+          "arch": "win32",
+          "description": "Installing Osu",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "installer": "https://m1.ppy.sh/r/osu!install.exe"
+      },
+      {
+        "rpc": "https://github.com/Marc3842h/rpc-wine/releases/download/1.0.0/rpc-wine.tar.gz"
+      }
+    ]
+  },
+  "content": "files:\n- installer: https://m1.ppy.sh/r/osu!install.exe\n- rpc: https://github.com/Marc3842h/rpc-wine/releases/download/1.0.0/rpc-wine.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/osu/osu!.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Setting up wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet45\n    arch: win32\n    description: Installing .NET 4.5...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus\n    arch: win32\n    description: Installing gdiplus for graphical fixes\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vlgothic\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: cjkfonts\n    arch: win32\n    description: Installing CJK Fonts for proper Asian font display\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    key: HelBuflen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    value: '512'\n- task:\n    key: SndQueueMax\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    value: '3'\n- extract:\n    dst: $GAMEDIR/drive_c/osu/\n    file: rpc\n- merge:\n    dst: $GAMEDIR/drive_c/osu/\n    src: installer\n- task:\n    arch: win32\n    description: Installing Osu\n    exclude_processes: osu!.exe\n    executable: $GAMEDIR/drive_c/osu/osu!install.exe\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    WINEDLLPATH: $GAMEDIR/drive_c/osu/bin32\n  pulse_latency: true\nwine:\n  overrides:\n    discord-rpc: builtin\n  version: tkg-osu-4.6-x86_64\n"
+}

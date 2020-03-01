@@ -21,25 +21,18 @@
   "gogslug": "wing_commander_privateer",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "privinstaller": "N/A:Select location of GOG executable (should be setup_wing_commander_privateer_2.x.x.x.exe)"
-      },
-      {
-        "innoextract": "http://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz"
-      }
-    ],
+    "main_file": "app/PRIV.EXE",
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/tmp/innoextract",
-          "file": "innoextract"
+          "file": "innoextract",
+          "dst": "$CACHE/tmp/innoextract"
         }
       },
       {
         "execute": {
-          "args": "--extract $privinstaller --output-dir $CACHE/tmp/priv --gog",
-          "file": "$CACHE/tmp/innoextract/innoextract"
+          "file": "$CACHE/tmp/innoextract/innoextract",
+          "args": "--extract $privinstaller --output-dir $CACHE/tmp/priv --gog"
         }
       },
       {
@@ -49,7 +42,14 @@
         }
       }
     ],
-    "main_file": "app/PRIV.EXE"
+    "files": [
+      {
+        "privinstaller": "N/A:Select location of GOG executable (should be setup_wing_commander_privateer_2.x.x.x.exe)"
+      },
+      {
+        "innoextract": "http://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz"
+      }
+    ]
   },
   "content": "files:\n- privinstaller: N/A:Select location of GOG executable (should be setup_wing_commander_privateer_2.x.x.x.exe)\n- innoextract: http://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz\ninstaller:\n- extract:\n    dst: $CACHE/tmp/innoextract\n    file: innoextract\n- execute:\n    args: --extract $privinstaller --output-dir $CACHE/tmp/priv --gog\n    file: $CACHE/tmp/innoextract/innoextract\n- move:\n    dst: $GAMEDIR\n    src: $CACHE/tmp/priv/app\nmain_file: app/PRIV.EXE\n"
 }

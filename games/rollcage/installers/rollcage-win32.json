@@ -22,9 +22,12 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Psygnosis/Rollcage/RollCage.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Psygnosis/Rollcage/RollCage.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
@@ -34,9 +37,9 @@
       },
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
+          "name": "create_prefix"
         }
       },
       {
@@ -52,15 +55,12 @@
       },
       {
         "task": {
+          "executable": "$GAMEDIR/dosdevices/d:/SETUP.EXE",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/dosdevices/d:/SETUP.EXE"
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Psygnosis/Rollcage/RollCage.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: SETUP.EXE\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: rm -f \"$GAMEDIR/dosdevices/d:\"\n- copy:\n    dst: $GAMEDIR/dosdevices/d:/\n    src: $DISC/\n- task:\n    executable: $GAMEDIR/dosdevices/d:/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n"
 }

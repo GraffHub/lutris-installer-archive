@@ -21,14 +21,18 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
-      },
-      {
-        "setup": "N/A:Select gog setup exe"
+    "game": {
+      "exe": "drive_c/GOG Games/",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ],
+    },
+    "wine": {
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
@@ -38,8 +42,8 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/mfinstaller",
-          "file": "mfinstaller"
+          "file": "mfinstaller",
+          "dst": "$CACHE/mfinstaller"
         }
       },
       {
@@ -52,31 +56,27 @@
       },
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "winekill"
         }
       },
       {
         "task": {
+          "app": "win7",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "win7"
+          "name": "winetricks"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      },
+      {
+        "setup": "N/A:Select gog setup exe"
       }
-    },
-    "wine": {
-      "dxvk": true
-    }
+    ]
   },
   "content": "files:\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\n- setup: N/A:Select gog setup exe\ngame:\n  exe: drive_c/GOG Games/\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

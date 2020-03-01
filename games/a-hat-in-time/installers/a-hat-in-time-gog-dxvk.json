@@ -21,11 +21,22 @@
   "gogslug": "a_hat_in_time",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "install": "N/A:Select the Windows setup file downloaded from GOG"
+    "game": {
+      "exe": "drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ],
+    },
+    "wine": {
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
@@ -35,31 +46,20 @@
       },
       {
         "task": {
-          "description": "Installing the Game",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "install",
+          "arch": "win64",
+          "description": "Installing the Game",
           "args": "/VERYSILENT /SUPPRESSMSGBOXES",
+          "name": "wineexec",
           "prefix": "$GAMEDIR"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "install": "N/A:Select the Windows setup file downloaded from GOG"
       }
-    },
-    "wine": {
-      "dxvk": true
-    }
+    ]
   },
   "content": "files:\n- install: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/A Hat in Time/Binaries/Win64/HatinTimeGame.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Installing the Game\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

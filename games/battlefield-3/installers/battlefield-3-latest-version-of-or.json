@@ -21,27 +21,38 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "directxweb": "https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe"
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "fps",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
+        "WINE_LARGE_ADDRESS_AWARE": 1
       },
-      {
-        "vc2008x64": "https://download.microsoft.com/download/d/2/4/d242c3fb-da5a-4542-ad66-f9661d0a8d19/vcredist_x64.exe"
-      },
-      {
-        "updater": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh"
-      },
-      {
-        "origin": "https://download.dm.origin.com/origin/live/OriginThinSetup.exe"
+      "manual_command": "$GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh"
+    },
+    "wine": {
+      "esync": true,
+      "Desktop": true,
+      "WineDesktop": "1366x768",
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "dxgi": "native, builtin"
       }
-    ],
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix...",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -66,37 +77,37 @@
       },
       {
         "task": {
+          "app": "win7",
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing DirectX...",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "directxweb",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "description": "Installing DirectX...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Installing VC...",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "vc2008x64",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "description": "Installing VC...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Installing Origin...",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "origin",
+          "arch": "win64",
+          "description": "Installing Origin...",
           "args": "/silent",
+          "name": "wineexec",
           "prefix": "$GAMEDIR",
           "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe"
         }
@@ -108,31 +119,20 @@
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/Origin/Origin.exe"
-    },
-    "system": {
-      "manual_command": "$GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh",
-      "exclude_processes": "QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe",
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
-        "DXVK_HUD": "fps",
-        "WINE_LARGE_ADDRESS_AWARE": 1,
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "directxweb": "https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe"
+      },
+      {
+        "vc2008x64": "https://download.microsoft.com/download/d/2/4/d242c3fb-da5a-4542-ad66-f9661d0a8d19/vcredist_x64.exe"
+      },
+      {
+        "updater": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh"
+      },
+      {
+        "origin": "https://download.dm.origin.com/origin/live/OriginThinSetup.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "WineDesktop": "1366x768",
-      "Desktop": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "dxgi": "native, builtin"
-      }
-    }
+    ]
   },
   "content": "files:\n- directxweb: https://download.microsoft.com/download/1/7/1/1718CCC4-6315-4D8E-9543-8E28A4E18C4C/dxwebsetup.exe\n- vc2008x64: https://download.microsoft.com/download/d/2/4/d242c3fb-da5a-4542-ad66-f9661d0a8d19/vcredist_x64.exe\n- updater: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/origin/updateorigin.sh\n- origin: https://download.dm.origin.com/origin/live/OriginThinSetup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- execute:\n    command: mkdir \"$GAMEDIR/nv-shaders\"\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing DirectX...\n    executable: directxweb\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing VC...\n    executable: vc2008x64\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin...\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: fps\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\n  exclude_processes: QtWebEngineProcess.exe ActivationUI.exe OriginWebHelperService.exe\n  manual_command: $GAMEDIR/drive_c/Program Files (x86)/Origin/updateorigin.sh\nwine:\n  Desktop: true\n  WineDesktop: 1366x768\n  esync: true\n  overrides:\n    dxgi: native, builtin\n    nvapi,nvapi64: disabled\n"
 }

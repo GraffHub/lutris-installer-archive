@@ -21,23 +21,18 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "patch": "https://paste.rs/Wdw"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -47,25 +42,30 @@
       },
       {
         "task": {
-          "description": "Installing Project Nomads. Do not install DirectX, check for upgrades, or launch the game.",
-          "name": "wineexec",
           "executable": "$DISC/Setup.exe",
-          "prefix": "$GAMEDIR"
+          "description": "Installing Project Nomads. Do not install DirectX, check for upgrades, or launch the game.",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "move": {
-          "description": "Backing up original executable",
           "src": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe",
-          "dst": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.bak.exe"
+          "dst": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.bak.exe",
+          "description": "Backing up original executable"
         }
       },
       {
         "move": {
-          "description": "Installing patch",
           "src": "patch",
-          "dst": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe"
+          "dst": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe",
+          "description": "Installing patch"
         }
+      }
+    ],
+    "files": [
+      {
+        "patch": "https://paste.rs/Wdw"
       }
     ]
   },

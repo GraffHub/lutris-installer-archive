@@ -22,51 +22,51 @@
   "humblestoreid": "",
   "script": {
     "script": {
+      "game": {
+        "exe": "$GAMEDIR/drive_c/Program Files (x86)/BF2Hub Client/bf2hub.exe",
+        "arch": "win64",
+        "prefix": "$GAMEDIR"
+      },
+      "installer": [
+        {
+          "task": {
+            "arch": "win64",
+            "description": "Creating Wine prefix",
+            "prefix": "$GAMEDIR",
+            "name": "create_prefix"
+          }
+        },
+        {
+          "extract": {
+            "file": "game",
+            "dst": "$GAMEDIR/bf2"
+          }
+        },
+        {
+          "task": {
+            "executable": "$GAMEDIR/bf2/Setup.exe",
+            "arch": "win64",
+            "description": "Running the setup",
+            "prefix": "$GAMEDIR",
+            "name": "wineexec"
+          }
+        },
+        {
+          "task": {
+            "executable": "bfhub",
+            "arch": "win64",
+            "description": "Running BF2Hub",
+            "prefix": "$GAMEDIR",
+            "name": "wineexec"
+          }
+        }
+      ],
       "files": [
         {
           "game": "https://download1640.mediafire.com/ocmt6iapjqvg/evnn10qka61e8ev/Battlefield+2+Complete+Collection.zip"
         },
         {
           "bfhub": "https://www.bf2hub.com/downloads/bf2hub-client-setup.exe"
-        }
-      ],
-      "game": {
-        "prefix": "$GAMEDIR",
-        "arch": "win64",
-        "exe": "$GAMEDIR/drive_c/Program Files (x86)/BF2Hub Client/bf2hub.exe"
-      },
-      "installer": [
-        {
-          "task": {
-            "description": "Creating Wine prefix",
-            "name": "create_prefix",
-            "arch": "win64",
-            "prefix": "$GAMEDIR"
-          }
-        },
-        {
-          "extract": {
-            "dst": "$GAMEDIR/bf2",
-            "file": "game"
-          }
-        },
-        {
-          "task": {
-            "description": "Running the setup",
-            "name": "wineexec",
-            "arch": "win64",
-            "executable": "$GAMEDIR/bf2/Setup.exe",
-            "prefix": "$GAMEDIR"
-          }
-        },
-        {
-          "task": {
-            "description": "Running BF2Hub",
-            "name": "wineexec",
-            "arch": "win64",
-            "executable": "bfhub",
-            "prefix": "$GAMEDIR"
-          }
         }
       ]
     }

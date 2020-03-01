@@ -21,44 +21,44 @@
   "gogslug": "fallout",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "fixt": "https://github.com/Sduibek/fixtsrc/releases/download/0.81alpha/Fallout_Fixt_0.81alpha_FULL_CUSTOM.exe"
-      }
-    ],
     "game": {
       "appid": 38400,
       "prefix": "$GAMEDIR/prefix"
     },
+    "installer": [
+      {
+        "task": {
+          "executable": "fixt",
+          "working_dir": "$GAMEDIR",
+          "description": "Installing the FIXT mod pack",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "f1_res_Config.exe",
+          "working_dir": "$GAMEDIR",
+          "description": "Configuring the Hi-res patch.\n Make sure you enable it before clicking Done, if you have problems with mouse movements click Manual edit config and change ALT_MOUSE_INPUT to 1",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "execute": {
+          "file": "/usr/bin/env",
+          "args": "sed -i 's/SingleCore=1/SingleCore=0/g' '$GAMEDIR/ddraw.ini'"
+        }
+      }
+    ],
     "winesteam": {
       "overrides": {
         "ddraw.dll": "native"
       }
     },
-    "installer": [
+    "files": [
       {
-        "task": {
-          "working_dir": "$GAMEDIR",
-          "description": "Installing the FIXT mod pack",
-          "name": "wineexec",
-          "executable": "fixt",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "working_dir": "$GAMEDIR",
-          "description": "Configuring the Hi-res patch.\n Make sure you enable it before clicking Done, if you have problems with mouse movements click Manual edit config and change ALT_MOUSE_INPUT to 1",
-          "name": "wineexec",
-          "executable": "f1_res_Config.exe",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "execute": {
-          "args": "sed -i 's/SingleCore=1/SingleCore=0/g' '$GAMEDIR/ddraw.ini'",
-          "file": "/usr/bin/env"
-        }
+        "fixt": "https://github.com/Sduibek/fixtsrc/releases/download/0.81alpha/Fallout_Fixt_0.81alpha_FULL_CUSTOM.exe"
       }
     ]
   },

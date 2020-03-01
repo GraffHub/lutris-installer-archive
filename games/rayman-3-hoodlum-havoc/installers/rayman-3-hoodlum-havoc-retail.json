@@ -22,24 +22,28 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Ubisoft/Rayman 3/Rayman3.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Ubisoft/Rayman 3/Rayman3.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1024x768"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating WINE prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "app": "winxp",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "winxp"
+          "name": "winetricks"
         }
       },
       {
@@ -49,17 +53,13 @@
       },
       {
         "task": {
-          "description": "Installing Rayman 3, don't change default settings.",
-          "name": "wineexec",
+          "executable": "$DISC/setup.exe",
           "arch": "win32",
-          "executable": "$DISC/setup.exe"
+          "description": "Installing Rayman 3, don't change default settings.",
+          "name": "wineexec"
         }
       }
-    ],
-    "wine": {
-      "WineDesktop": "1024x768",
-      "Desktop": true
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Ubisoft/Rayman 3/Rayman3.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: Rayman3.exe\n- task:\n    arch: win32\n    description: Installing Rayman 3, don't change default settings.\n    executable: $DISC/setup.exe\n    name: wineexec\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
 }

@@ -21,29 +21,28 @@
   "gogslug": "lone_survivor_directors_cut",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "install": "N/A:Please select the Windows game file downloaded from Humble Bundle."
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Lone Survivor/LoneSurvivor.exe"
+      "exe": "drive_c/Lone Survivor/LoneSurvivor.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "Lone's Survivor - The Director's Cut - Humble Bundle - Wine",
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
+          "install_gecko": true,
+          "install_mono": false,
           "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "install_mono": false,
-          "install_gecko": true
+          "name": "create_prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "install"
+          "file": "install",
+          "dst": "$CACHE"
         }
       },
       {
@@ -54,31 +53,32 @@
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       }
     ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "Lone's Survivor - The Director's Cut - Humble Bundle - Wine"
+    "files": [
+      {
+        "install": "N/A:Please select the Windows game file downloaded from Humble Bundle."
+      }
+    ]
   },
   "content": "custom-name: Lone's Survivor - The Director's Cut - Humble Bundle - Wine\nfiles:\n- install: N/A:Please select the Windows game file downloaded from Humble Bundle.\ngame:\n  exe: drive_c/Lone Survivor/LoneSurvivor.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    install_gecko: true\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: install\n- move:\n    dst: $GAMEDIR/drive_c/Lone Survivor\n    src: $CACHE/LoneSurvivor-PC/LoneSurvivor\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

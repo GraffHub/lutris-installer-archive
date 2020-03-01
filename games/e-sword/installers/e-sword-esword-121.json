@@ -21,39 +21,34 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "filename": "https://www.e-sword.net/files/e-sword_1201_setup.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/e-Sword/e-Sword.exe",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/e-Sword/e-Sword.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "description": "Creating 64bit Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "corefonts"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing winetricks verbs",
-          "name": "winetricks",
-          "arch": "win32",
+          "app": "corefonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "app": "mfc42 vcrun6 msls31 msxml3 msxml6 vb6run wsh57",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing winetricks verbs",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -64,11 +59,16 @@
       },
       {
         "task": {
-          "description": "Installing eSword...",
-          "name": "wineexec",
           "executable": "filename",
-          "prefix": "$GAMEDIR"
+          "description": "Installing eSword...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
+      }
+    ],
+    "files": [
+      {
+        "filename": "https://www.e-sword.net/files/e-sword_1201_setup.exe"
       }
     ]
   },

@@ -21,48 +21,48 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe"
+      "exe": "drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "STAGING_SHARED_MEMORY": 1
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "gdiplus",
           "arch": "win64",
-          "app": "gdiplus"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
+          "executable": "installer",
           "arch": "win64",
-          "executable": "installer"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "STAGING_SHARED_MEMORY": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
+    "files": [
+      {
+        "installer": "https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe"
       }
-    }
+    ]
   },
   "content": "files:\r\n- installer: https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe\r\ngame:\r\n  exe: drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: gdiplus\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    executable: installer\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  disable_compositor: true\r\n  env:\r\n    STAGING_SHARED_MEMORY: 1\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR"
 }

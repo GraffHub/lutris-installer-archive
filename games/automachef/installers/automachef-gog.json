@@ -21,44 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Select the game's setup file"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Automachef/Automachef.exe",
       "arch": "win64",
-      "exe": "drive_c/GOG Games/Automachef/Automachef.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "name": "wineexec",
           "arch": "win64",
-          "executable": "installer",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
+          "executable": "installer",
+          "arch": "win64",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
           "prefix": "$GAMEDIR",
-          "name": "winekill",
-          "arch": "win64"
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
         }
       }
     ],
-    "wine": {
-      "dxvk": true
-    }
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Automachef/Automachef.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

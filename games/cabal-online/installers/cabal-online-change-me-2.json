@@ -21,6 +21,58 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/Program Files/CABAL Online (NA)/CabalMain.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating 32-bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "winxp",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "vcredist",
+          "arch": "win32",
+          "description": "Install vcredist 2012",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "directx",
+          "arch": "win32",
+          "description": "Install directx 9.0c",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "game_setup",
+          "arch": "win32",
+          "description": "Installing Cabal Online NA",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "overrides": {
+      "msvcrt.dll": "n"
+    },
     "files": [
       {
         "game_setup": {
@@ -40,59 +92,7 @@
           "url": "https://download.microsoft.com/download/8/0/d/80d7e79d-c0e4-415a-bcca-e229eafe2679/dxwebsetup.exe"
         }
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "drive_c/Program Files/CABAL Online (NA)/CabalMain.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating 32-bit Wine prefix.",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "winxp"
-        }
-      },
-      {
-        "task": {
-          "description": "Install vcredist 2012",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "vcredist",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Install directx 9.0c",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "directx",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Cabal Online NA",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "game_setup",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
-    "overrides": {
-      "msvcrt.dll": "n"
-    }
+    ]
   },
   "content": "files:\n- game_setup:\n    filename: 11132014_US_Setup.exe\n    url: http://cdn2.playthisgame.com/Setup/11132014_US_Setup.exe\n- vcredist:\n    filename: vcredist_x86.exe\n    url: https://download.microsoft.com/download/C/6/D/C6D0FD4E-9E53-4897-9B91-836EBA2AACD3/vcredist_x86.exe\n- directx:\n    filename: dxwebsetup.exe\n    url: https://download.microsoft.com/download/8/0/d/80d7e79d-c0e4-415a-bcca-e229eafe2679/dxwebsetup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/CABAL Online (NA)/CabalMain.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Install vcredist 2012\n    executable: vcredist\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Install directx 9.0c\n    executable: directx\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Cabal Online NA\n    executable: game_setup\n    name: wineexec\n    prefix: $GAMEDIR\noverrides:\n  msvcrt.dll: n\n"
 }

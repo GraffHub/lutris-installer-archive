@@ -21,44 +21,44 @@
   "gogslug": "elex",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "goginstaller": "N/A:Select the game's setup file from GOG"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/ELEX/system/ELEX.exe",
       "arch": "win64",
-      "exe": "drive_c/GOG Games/ELEX/system/ELEX.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
           "arch": "win64",
-          "app": "vcrun2010 vcrun2012 win7"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Elex...",
-          "name": "wineexec",
+          "app": "vcrun2010 vcrun2012 win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
           "executable": "goginstaller",
-          "prefix": "$GAMEDIR"
+          "description": "Installing Elex...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "wine": {
-      "dxvk": true
-    }
+    "files": [
+      {
+        "goginstaller": "N/A:Select the game's setup file from GOG"
+      }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file from GOG\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/ELEX/system/ELEX.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Elex...\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

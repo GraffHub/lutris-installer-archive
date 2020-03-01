@@ -23,44 +23,44 @@
   "script": {
     "game": {
       "appid": 248140,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win32"
+      "arch": "win32",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing VC++ runtime 2010",
-          "name": "winetricks",
-          "app": "vcrun2010",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .NET 3.5",
-          "name": "winetricks",
-          "app": "dotnet35 d3dcompiler_43 win7",
-          "prefix": "$GAMEDIR/prefix"
-        }
-      }
-    ],
     "system": {
       "disable_compositor": "true",
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
         "DXVK_HUD": 0
       }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2010",
+          "description": "Installing VC++ runtime 2010",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet35 d3dcompiler_43 win7",
+          "description": "Installing .NET 3.5",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "winesteam": {
+      "esync": true,
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 248140\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010\n    description: Installing VC++ runtime 2010\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet35 d3dcompiler_43 win7\n    description: Installing .NET 3.5\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: 'true'\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwinesteam:\n  dxvk: true\n  esync: true\n"

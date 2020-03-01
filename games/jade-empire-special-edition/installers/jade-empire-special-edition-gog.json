@@ -21,49 +21,49 @@
   "gogslug": "jade_empire_special_edition",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "innoextract",
+          "dst": "$CACHE/tmp/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/tmp/innoextract/innoextract",
+          "description": "Extracting game data",
+          "args": "--gog -d \"$CACHE\" setup"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Jade Empire",
+          "description": "Moving game data"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "value": "00000000",
+          "key": "csmt",
+          "type": "REG_DWORD"
+        }
+      }
+    ],
     "files": [
       {
         "setup": "N/A:Select \"Jade Empire\" setup files"
       },
       {
         "innoextract": "https://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz"
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe"
-    },
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/tmp/innoextract",
-          "file": "innoextract"
-        }
-      },
-      {
-        "execute": {
-          "args": "--gog -d \"$CACHE\" setup",
-          "file": "$CACHE/tmp/innoextract/innoextract",
-          "description": "Extracting game data"
-        }
-      },
-      {
-        "move": {
-          "description": "Moving game data",
-          "src": "$CACHE/app",
-          "dst": "$GAMEDIR/drive_c/GOG Games/Jade Empire"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "csmt",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "value": "00000000",
-          "type": "REG_DWORD"
-        }
       }
     ]
   },

@@ -21,6 +21,51 @@
   "gogslug": "lands_of_lore_the_throne_of_chaos",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "game_id": "lol-cd",
+      "path": "$GAMEDIR/game-data/DATA"
+    },
+    "scummvm": {
+      "gfx-mode": "3x",
+      "fullscreen": true,
+      "aspect": true
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$fileextract",
+          "dst": "$CACHE",
+          "description": "Extracting innoextract application"
+        }
+      },
+      {
+        "extract": {
+          "file": "$isoextract",
+          "dst": "$CACHE",
+          "description": "Extracting 7zip application"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "description": "Extracting game data",
+          "args": "-d \"$CACHE/game\" \"$installer\""
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/7z",
+          "description": "Extracting iso game data",
+          "args": "x \"$CACHE/game/GAME.DAT\" -ogame-data"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/game"
+        }
+      }
+    ],
     "files": [
       {
         "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/lands_of_lore_the_throne_of_chaos/en1installer0"
@@ -30,51 +75,6 @@
       },
       {
         "isoextract": "https://lutris.net/files/tools/p7zip-16.02-x86_64.tar.gz"
-      }
-    ],
-    "scummvm": {
-      "fullscreen": true,
-      "gfx-mode": "3x",
-      "aspect": true
-    },
-    "game": {
-      "path": "$GAMEDIR/game-data/DATA",
-      "game_id": "lol-cd"
-    },
-    "installer": [
-      {
-        "extract": {
-          "description": "Extracting innoextract application",
-          "file": "$fileextract",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "extract": {
-          "description": "Extracting 7zip application",
-          "file": "$isoextract",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "execute": {
-          "args": "-d \"$CACHE/game\" \"$installer\"",
-          "file": "$CACHE/innoextract",
-          "description": "Extracting game data"
-        }
-      },
-      {
-        "execute": {
-          "args": "x \"$CACHE/game/GAME.DAT\" -ogame-data",
-          "file": "$CACHE/7z",
-          "description": "Extracting iso game data"
-        }
-      },
-      {
-        "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/game"
-        }
       }
     ]
   },

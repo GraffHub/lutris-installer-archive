@@ -21,11 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      }
-    ],
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
@@ -35,38 +40,33 @@
       },
       {
         "task": {
+          "app": "corefonts win7",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "corefonts win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing .NET 4.7.2",
-          "name": "winetricks",
           "app": "dotnet472",
-          "prefix": "$GAMEDIR"
+          "description": "Installing .NET 4.7.2",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/S",
-          "name": "wineexec",
           "executable": "uplay",
-          "prefix": "$GAMEDIR"
+          "args": "/S",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
-    },
-    "system": {
-      "pulse_latency": true
-    },
-    "wine": {
-      "dxvk": true
-    }
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ]
   },
   "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  pulse_latency: true\nwine:\n  dxvk: true\n"
 }

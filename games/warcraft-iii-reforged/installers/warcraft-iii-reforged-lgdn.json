@@ -21,78 +21,75 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iii.bmp"
-      },
-      {
-        "wiiir": "N/A:Please select Warcraft-III-Setup.exe file downloaded from Blizzard"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Warcraft III/Warcraft III Launcher.exe"
+      "exe": "drive_c/Program Files (x86)/Warcraft III/Warcraft III Launcher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "Warcraft III - Reforged - LGDN",
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
+          "install_gecko": false,
+          "install_mono": false,
           "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "install_mono": false,
-          "install_gecko": false
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "CSMT",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "CSMT",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "args": "/desktop=WarcraftIII,1200x900 $wiiir",
-          "name": "wineexec",
           "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "args": "/desktop=WarcraftIII,1200x900 $wiiir",
           "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "wallpaper",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
           "value": "c:\\\\warcraft_iii.bmp",
+          "key": "wallpaper",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "ActiveTitle",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "ActiveTitle",
           "type": "REG_SZ"
         }
       },
@@ -103,11 +100,14 @@
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    },
-    "custom-name": "Warcraft III - Reforged - LGDN"
+    "files": [
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iii.bmp"
+      },
+      {
+        "wiiir": "N/A:Please select Warcraft-III-Setup.exe file downloaded from Blizzard"
+      }
+    ]
   },
   "content": "custom-name: Warcraft III - Reforged - LGDN\r\nfiles:\r\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Warcraft%20III/warcraft_iii.bmp\r\n- wiiir: N/A:Please select Warcraft-III-Setup.exe file downloaded from Blizzard\r\ngame:\r\n  exe: drive_c/Program Files (x86)/Warcraft III/Warcraft III Launcher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    install_gecko: false\r\n    install_mono: false\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: CSMT\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: '00000000'\r\n- task:\r\n    arch: win64\r\n    key: background\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: 0 0 0\r\n- task:\r\n    args: /desktop=WarcraftIII,1200x900 $wiiir\r\n    description: Running setup of the game. Just proceed and keep all settings at\r\n      their defaults\r\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: wallpaper\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: c:\\\\warcraft_iii.bmp\r\n- task:\r\n    arch: win64\r\n    key: ActiveTitle\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: 0 0 0\r\n- copy:\r\n    dst: $GAMEDIR/drive_c\r\n    src: wpp\r\nwine:\r\n  Desktop: true\r\n  dxvk: true"
 }

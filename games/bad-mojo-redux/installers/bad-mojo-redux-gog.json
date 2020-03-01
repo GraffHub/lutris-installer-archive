@@ -21,48 +21,48 @@
   "gogslug": "bad_mojo_redux",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "install": "N/A:Please select the GOG installer"
-      }
-    ],
+    "game": {
+      "exe": "drive_c/GOG Games/Bad Mojo/launcher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "Bad Mojo Redux - GOG",
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Preparing Wineprefix...",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /SILENT",
-          "name": "wineexec",
-          "executable": "install",
-          "description": "Installing...",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "install",
+          "args": "/SP- /SUPPRESSMSGBOXES /SILENT",
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
@@ -75,14 +75,14 @@
     "system": {
       "reset_desktop": true
     },
-    "custom-name": "Bad Mojo Redux - GOG",
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Bad Mojo/launcher.exe"
-    },
     "wine": {
       "Desktop": false
-    }
+    },
+    "files": [
+      {
+        "install": "N/A:Please select the GOG installer"
+      }
+    ]
   },
   "content": "custom-name: Bad Mojo Redux - GOG\nfiles:\n- install: N/A:Please select the GOG installer\ngame:\n  exe: drive_c/GOG Games/Bad Mojo/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing Wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /SILENT\n    description: Installing...\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Bad Mojo/\" ; rm -f -r unins000.* \"Launch\n      Bad Mojo.lnk\" webcache.zip Support.ico gog* GameuxInstallHelper.dll;\nsystem:\n  reset_desktop: true\nwine:\n  Desktop: false\n"
 }

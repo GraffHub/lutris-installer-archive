@@ -21,12 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "wine": {
+      "arch": "win32"
+    },
     "appid": 301670,
-    "published": false,
     "script": {
       "game": {
-        "prefix": "$GAMEDIR",
-        "exe": "$GAMEDIR/drive_c/Program Files (x86)/The Adventure Company/Salammbô/Salammbo.exe"
+        "exe": "$GAMEDIR/drive_c/Program Files (x86)/The Adventure Company/Salammbô/Salammbo.exe",
+        "prefix": "$GAMEDIR"
       },
       "installer": [
         {
@@ -38,16 +40,16 @@
         {
           "task": {
             "description": "Création du préfixe Wine.",
-            "name": "create_prefix",
-            "prefix": "$GAMEDIR/"
+            "prefix": "$GAMEDIR/",
+            "name": "create_prefix"
           }
         },
         {
           "task": {
-            "description": "Installation du jeu.",
-            "name": "wineexec",
             "executable": "$DISC/Install.exe",
-            "prefix": "$GAMEDIR"
+            "description": "Installation du jeu.",
+            "prefix": "$GAMEDIR",
+            "name": "wineexec"
           }
         },
         {
@@ -70,9 +72,7 @@
         }
       ]
     },
-    "wine": {
-      "arch": "win32"
-    }
+    "published": false
   },
   "content": "appid: 301670\npublished: false\nscript:\n  game:\n    exe: \"$GAMEDIR/drive_c/Program Files (x86)/The Adventure Company/Salammb\\xF4/Salammbo.exe\"\n    prefix: $GAMEDIR\n  installer:\n  - insert_disc:\n      message: \"Veuillez ins\\xE9rer le CD No. 1\"\n      requires: Install.exe\n  - task:\n      description: \"Cr\\xE9ation du pr\\xE9fixe Wine.\"\n      name: create_prefix\n      prefix: $GAMEDIR/\n  - task:\n      description: Installation du jeu.\n      executable: $DISC/Install.exe\n      name: wineexec\n      prefix: $GAMEDIR\n  - insert_disc:\n      message: \"Veuillez ins\\xE9rer le CD No. 2\"\n      requires: Salammbo.cd2\n  - copy:\n      dst: $GAMEDIR/CD2\n      src: $DISC\n  - execute:\n      command: ln -s \"../CD2\" \"$GAMEDIR/dosdevices/d:\"\n      description: Lien au repertoire CD2.\nwine:\n  arch: win32\n"
 }

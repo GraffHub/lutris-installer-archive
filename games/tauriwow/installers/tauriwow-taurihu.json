@@ -21,57 +21,75 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "launcher": {
-          "filename": "tlauncherinstaller.exe",
-          "url": "http://launcherdata.tauri.hu/launcher/tlauncherinstaller.exe"
-        }
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Tauri Launcher/Launcher.exe",
+      "working_dir": "$GAMEDIR",
+      "prefix": "$GAMEDIR",
+      "arch": "win64"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1
       }
-    ],
+    },
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "ucrtbase": "n,b",
+        "nvapi64": "disabled",
+        "d3d12": "disabled",
+        "api-ms-win-crt-private-l1-1-0": "n,b",
+        "nvapi": "disabled"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing Arial font",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "arial",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
           "arch": "win64",
-          "app": "nocrashdialog vcrun2010 win7"
-        }
-      },
-      {
-        "task": {
+          "description": "Installing Arial font",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win64",
-          "app": "nocrashdialog vcrun2012 win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "nocrashdialog vcrun2010 win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "nocrashdialog vcrun2012 win7",
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
           "description": "Wine Staging: Enabling DXVA2",
-          "name": "set_regedit",
-          "arch": "win64",
-          "key": "backend",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
-          "value": "va"
+          "value": "va",
+          "key": "backend"
         }
       },
       {
@@ -82,41 +100,23 @@
       },
       {
         "task": {
-          "description": "Installing Origin... Login window will pop-up and close.",
-          "name": "wineexec",
-          "arch": "win64",
           "executable": "launcher",
+          "arch": "win64",
+          "description": "Installing Origin... Login window will pop-up and close.",
           "prefix": "$GAMEDIR",
+          "name": "wineexec",
           "exclude_processes": "Launcher.exe"
         }
       }
     ],
-    "game": {
-      "working_dir": "$GAMEDIR",
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "$GAMEDIR/drive_c/Tauri Launcher/Launcher.exe"
-    },
-    "system": {
-      "env": {
-        "STAGING_SHARED_MEMORY": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "launcher": {
+          "filename": "tlauncherinstaller.exe",
+          "url": "http://launcherdata.tauri.hu/launcher/tlauncherinstaller.exe"
+        }
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true,
-      "overrides": {
-        "nvapi64": "disabled",
-        "nvapi": "disabled",
-        "ucrtbase": "n,b",
-        "api-ms-win-crt-private-l1-1-0": "n,b",
-        "d3d12": "disabled"
-      }
-    }
+    ]
   },
   "content": "files:\n- launcher:\n    filename: tlauncherinstaller.exe\n    url: http://launcherdata.tauri.hu/launcher/tlauncherinstaller.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Tauri Launcher/Launcher.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog vcrun2010 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog vcrun2012 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Launcher.exe\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    api-ms-win-crt-private-l1-1-0: n,b\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n    ucrtbase: n,b\n"
 }

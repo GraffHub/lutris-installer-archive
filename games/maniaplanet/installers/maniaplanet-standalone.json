@@ -21,33 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "name": "wineexec",
-          "executable": "setup",
-          "description": "Installing Maniaplanet",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe",
       "arch": "win64",
-      "exe": "drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
@@ -55,12 +32,35 @@
       }
     },
     "wine": {
-      "dxvk": true,
       "esync": true,
       "overrides": {
         "dinput8": "n, b"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "args": "/silent",
+          "description": "Installing Maniaplanet",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
       }
-    }
+    ],
+    "files": [
+      {
+        "setup": "http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe"
+      }
+    ]
   },
   "content": "files:\n- setup: http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing Maniaplanet\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    dinput8: n, b\n"
 }

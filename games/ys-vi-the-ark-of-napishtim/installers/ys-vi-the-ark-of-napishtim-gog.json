@@ -21,6 +21,77 @@
   "gogslug": "ys_vi_the_ark_of_napishtim",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "drive_c/GOG Games/Ys VI - The Ark of Napishtim/ys6_win.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "winegstreamer": "disabled"
+      }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2008",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "quartz",
+          "arch": "win32",
+          "description": "Installing quartz",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "amstream",
+          "arch": "win32",
+          "description": "Installing amstream",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "lavf",
+          "arch": "win32",
+          "description": "Install LavFilter to have movies",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/GOG Games/Ys VI - The Ark of Napishtim/config.exe",
+          "arch": "win32",
+          "description": "Running config tool for first time launch...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "files": [
       {
         "lavf": "https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe"
@@ -28,78 +99,7 @@
       {
         "game": "N/A:Select the Ys VI installer provided by GOG."
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "drive_c/GOG Games/Ys VI - The Ark of Napishtim/ys6_win.exe"
-    },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "vcrun2008"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing quartz",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "quartz",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing amstream",
-          "name": "winetricks",
-          "arch": "win32",
-          "app": "amstream",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "game"
-        }
-      },
-      {
-        "task": {
-          "description": "Install LavFilter to have movies",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "lavf",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Running config tool for first time launch...",
-          "name": "wineexec",
-          "arch": "win32",
-          "executable": "$GAMEDIR/drive_c/GOG Games/Ys VI - The Ark of Napishtim/config.exe",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
-    "wine": {
-      "overrides": {
-        "winegstreamer": "disabled"
-      }
-    }
+    ]
   },
   "content": "files:\n- lavf: https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-Installer.exe\n- game: N/A:Select the Ys VI installer provided by GOG.\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Ys VI - The Ark of Napishtim/ys6_win.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    arch: win32\n    description: Installing quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: amstream\n    arch: win32\n    description: Installing amstream\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Install LavFilter to have movies\n    executable: lavf\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Running config tool for first time launch...\n    executable: $GAMEDIR/drive_c/GOG Games/Ys VI - The Ark of Napishtim/config.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    winegstreamer: disabled\n"
 }

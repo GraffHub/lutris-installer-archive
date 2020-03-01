@@ -21,11 +21,135 @@
   "gogslug": "tomb_raider_1",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "exe": "$GAMEDIR/drive_c/TOMBGOLD/Tombub.exe",
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "ddraw.dll": "n,b"
+      }
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "tomb.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "merge": {
+          "src": "$DISC",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD",
+          "description": "Copying game files..."
+        }
+      },
+      {
+        "extract": {
+          "src": "trati",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD",
+          "description": "Installing 3D Rage Pro patch..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/ATI.exe",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/ATI.zip",
+          "description": "Installing 3D Rage Pro patch..."
+        }
+      },
+      {
+        "extract": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/ATI.zip",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD",
+          "description": "Installing 3D Rage Pro patch..."
+        }
+      },
+      {
+        "extract": {
+          "src": "glrage",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD",
+          "description": "Installing GLRage..."
+        }
+      },
+      {
+        "extract": {
+          "src": "trub",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/CAT.TUB",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/cat.tub",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/CRED0.PCX",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/cred0.pcx",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/EGYPT.TUB",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/egypt.tub",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/END.TUB",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/end.tub",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/END2.TUB",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/end2.tub",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/TITLEH.PCX",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/titleh.pcx",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD/DATA_",
+          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat..."
+        }
+      },
+      {
+        "extract": {
+          "src": "tratiub",
+          "dst": "$GAMEDIR/drive_c/TOMBGOLD",
+          "description": "Installing 3D Rage Pro patch for Unfinished Business and Shadow of the Cat..."
+        }
+      }
+    ],
+    "script": null,
     "files": [
       {
         "trub": {
-          "referer": "http://tombraiders.net/",
           "filename": "trubsoft.zip",
+          "referer": "http://tombraiders.net/",
           "url": "http://tombraiders.net/stella/files/gamefiles/TR1files/trubsoft.exe"
         }
       },
@@ -38,131 +162,7 @@
       {
         "glrage": "https://github.com/ata4/glrage/releases/download/r10/glrage_r10.zip"
       }
-    ],
-    "installer": [
-      {
-        "insert-disc": {
-          "requires": "tomb.exe"
-        }
-      },
-      {
-        "task": {
-          "description": "Creating Wine prefix...",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "merge": {
-          "description": "Copying game files...",
-          "src": "$DISC",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing 3D Rage Pro patch...",
-          "src": "trati",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing 3D Rage Pro patch...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/ATI.exe",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/ATI.zip"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing 3D Rage Pro patch...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/ATI.zip",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing GLRage...",
-          "src": "glrage",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "trub",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/CAT.TUB",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/cat.tub"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/CRED0.PCX",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/cred0.pcx"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/EGYPT.TUB",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/egypt.tub"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/END.TUB",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/end.tub"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/END2.TUB",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/end2.tub"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA/TITLEH.PCX",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/data/titleh.pcx"
-        }
-      },
-      {
-        "move": {
-          "description": "Installing Tomb Raider Unfinished Business and Shadow of the Cat...",
-          "src": "$GAMEDIR/drive_c/TOMBGOLD/DATA",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD/DATA_"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing 3D Rage Pro patch for Unfinished Business and Shadow of the Cat...",
-          "src": "tratiub",
-          "dst": "$GAMEDIR/drive_c/TOMBGOLD"
-        }
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/TOMBGOLD/Tombub.exe"
-    },
-    "script": null,
-    "wine": {
-      "overrides": {
-        "ddraw.dll": "n,b"
-      }
-    }
+    ]
   },
   "content": "files:\n- trub:\n    filename: trubsoft.zip\n    referer: http://tombraiders.net/\n    url: http://tombraiders.net/stella/files/gamefiles/TR1files/trubsoft.exe\n- trati: https://web.archive.org/web/20081121063015if_/http://ftp.eidos-france.fr/pub/fr/tomb_raider/patches/tombatiragepro.zip\n- tratiub: https://web.archive.org/web/20081120212648if_/http://ftp.eidos-france.fr/pub/fr/tomb_raider/patches/tombati.zip\n- glrage: https://github.com/ata4/glrage/releases/download/r10/glrage_r10.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/TOMBGOLD/Tombub.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: tomb.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- merge:\n    description: Copying game files...\n    dst: $GAMEDIR/drive_c/TOMBGOLD\n    src: $DISC\n- extract:\n    description: Installing 3D Rage Pro patch...\n    dst: $GAMEDIR/drive_c/TOMBGOLD\n    src: trati\n- move:\n    description: Installing 3D Rage Pro patch...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/ATI.zip\n    src: $GAMEDIR/drive_c/TOMBGOLD/ATI.exe\n- extract:\n    description: Installing 3D Rage Pro patch...\n    dst: $GAMEDIR/drive_c/TOMBGOLD\n    src: $GAMEDIR/drive_c/TOMBGOLD/ATI.zip\n- extract:\n    description: Installing GLRage...\n    dst: $GAMEDIR/drive_c/TOMBGOLD\n    src: glrage\n- extract:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD\n    src: trub\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/data/cat.tub\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA/CAT.TUB\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/data/cred0.pcx\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA/CRED0.PCX\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/data/egypt.tub\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA/EGYPT.TUB\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/data/end.tub\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA/END.TUB\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/data/end2.tub\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA/END2.TUB\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/data/titleh.pcx\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA/TITLEH.PCX\n- move:\n    description: Installing Tomb Raider Unfinished Business and Shadow of the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD/DATA_\n    src: $GAMEDIR/drive_c/TOMBGOLD/DATA\n- extract:\n    description: Installing 3D Rage Pro patch for Unfinished Business and Shadow of\n      the Cat...\n    dst: $GAMEDIR/drive_c/TOMBGOLD\n    src: tratiub\nscript: null\nwine:\n  overrides:\n    ddraw.dll: n,b\n"
 }

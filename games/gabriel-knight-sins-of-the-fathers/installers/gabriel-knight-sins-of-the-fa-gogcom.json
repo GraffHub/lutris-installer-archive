@@ -21,79 +21,79 @@
   "gogslug": "gabriel_knight_sins_of_the_fathers",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "N/A:Please select the GOG.com Windows installer"
-      }
-    ],
     "game": {
-      "config_file": "$GAMEDIR/dosboxGK.conf",
-      "main_file": "$GAMEDIR/dosboxGK_single.conf"
+      "main_file": "$GAMEDIR/dosboxGK_single.conf",
+      "config_file": "$GAMEDIR/dosboxGK.conf"
     },
     "gogid": "gabriel_knight_sins_of_the_fathers",
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "wine.create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix"
         }
       },
       {
         "task": {
-          "name": "wine.set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "wine.set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "name": "wine.wineexec",
           "executable": "game",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
           "description": "Installing ...",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "wine.wineexec"
         }
       },
       {
         "execute": {
+          "file": "/bin/sh",
+          "description": "cleaning...",
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "file": "/bin/sh",
-          "description": "cleaning...",
           "terminal": false
         }
       },
       {
         "execute": {
+          "file": "/bin/sh",
+          "description": "cleaning...",
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "file": "/bin/sh",
-          "description": "cleaning...",
           "terminal": false
         }
       },
       {
         "execute": {
+          "file": "/bin/sed",
           "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxGK_single.conf",
-          "file": "/bin/sed",
           "terminal": false
         }
       },
       {
         "execute": {
+          "file": "/bin/sed",
           "args": "-i 's|..\\GK1.gog|GK1.gog|g' $GAMEDIR/dosboxGK_single.conf",
-          "file": "/bin/sed",
           "terminal": false
         }
       },
       {
         "execute": {
-          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "file": "/bin/sh",
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
           "terminal": false
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer"
       }
     ]
   },

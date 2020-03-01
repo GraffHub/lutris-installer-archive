@@ -1,0 +1,62 @@
+{
+  "id": 18560,
+  "game_id": 24357,
+  "game_slug": "minion",
+  "name": "Minion",
+  "year": 2016,
+  "user": "Nyffi",
+  "runner": "wine",
+  "slug": "minion-307",
+  "version": "3.0.7",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-02-26T19:10:35.441483Z",
+  "updated_at": "2020-02-26T19:10:35.441509Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Minion/",
+          "src": "client"
+        }
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/Minion/Minion3.0.5.exe",
+          "exclude_processes": "Minion.exe",
+          "arch": "win64",
+          "description": "Installing Minion",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "client": "https://cdn.mmoui.com/minion/v3/Minion3.0.5.exe"
+      }
+    ]
+  },
+  "content": "files:\n- client: https://cdn.mmoui.com/minion/v3/Minion3.0.5.exe\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Minion/\n    src: client\n- task:\n    arch: win64\n    description: Installing Minion\n    exclude_processes: Minion.exe\n    executable: $GAMEDIR/drive_c/Minion/Minion3.0.5.exe\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
+}

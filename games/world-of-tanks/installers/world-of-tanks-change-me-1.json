@@ -1,0 +1,163 @@
+{
+  "id": 17428,
+  "game_id": 85,
+  "game_slug": "world-of-tanks",
+  "name": "World of Tanks",
+  "year": 2010,
+  "user": "elebertus",
+  "runner": "wine",
+  "slug": "world-of-tanks-change-me-1",
+  "version": "Change Me",
+  "description": "DXVK  /  (EU) + ProMod",
+  "notes": "Wine 4.0 + FAudio + .NET 4.8 + DSound + DMusic + CoreFonts",
+  "created_at": "2019-12-19T08:05:34.549906Z",
+  "updated_at": "2020-01-23T02:57:00.285438Z",
+  "draft": false,
+  "published": false,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Games/World_of_Tanks/WoTLauncher.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "install_mono": false,
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "description": "Installing World of Tanks",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR",
+          "exclude_processes": "explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoTLauncher.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "app": "win10",
+          "arch": "win64",
+          "description": "Setting Wine to Windows 10",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "file": "modpack1",
+          "dst": "drive_c/Games/",
+          "format": "zip"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
+          "arch": "win64",
+          "description": "install MS core fonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet48",
+          "arch": "win64",
+          "description": "install .NET 4.8",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dsound",
+          "arch": "win64",
+          "description": "install DSound",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "dmusic",
+          "arch": "win64",
+          "description": "install DMusic",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "faudio",
+          "arch": "win64",
+          "description": "install FAudio",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "drive_c/Games/ProMod.exe",
+          "description": "Installing ProMod",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "game": {
+          "filename": "WoT_internet_install_eu.exe",
+          "url": "https://wot.gcdn.co/eu/files/WoT_internet_install_eu.exe"
+        }
+      },
+      {
+        "modpack1": {
+          "filename": "promod.zip",
+          "url": "http://www.oldskool.vip/promod/ProMod.zip"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game:\n    filename: WoT_internet_install_eu.exe\n    url: https://wot.gcdn.co/eu/files/WoT_internet_install_eu.exe\n- modpack1:\n    filename: promod.zip\n    url: http://www.oldskool.vip/promod/ProMod.zip\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Tanks/WoTLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing World of Tanks\n    exclude_processes: explorer.exe rpcss.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe\n      WoTLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Wine to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: drive_c/Games/\n    file: modpack1\n    format: zip\n- task:\n    app: corefonts\n    arch: win64\n    description: install MS core fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet48\n    arch: win64\n    description: install .NET 4.8\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dsound\n    arch: win64\n    description: install DSound\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dmusic\n    arch: win64\n    description: install DMusic\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: faudio\n    arch: win64\n    description: install FAudio\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing ProMod\n    executable: drive_c/Games/ProMod.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
+}

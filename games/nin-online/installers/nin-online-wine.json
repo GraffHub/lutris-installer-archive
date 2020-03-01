@@ -21,45 +21,45 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "ninonline": "https://www.silverdalegame.com/ninonline.zip"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/Client.exe",
       "arch": "win32",
-      "exe": "drive_c/game/Client.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "msacm32": "n",
+        "rundll32.exe": "disabled"
+      }
     },
     "installer": [
       {
         "task": {
+          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "dotnet40 dx8vb",
           "arch": "win32",
-          "app": "dotnet40 dx8vb"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/game/",
-          "file": "ninonline"
+          "file": "ninonline",
+          "dst": "$GAMEDIR/drive_c/game/"
         }
       }
     ],
-    "wine": {
-      "overrides": {
-        "rundll32.exe": "disabled",
-        "msacm32": "n"
+    "files": [
+      {
+        "ninonline": "https://www.silverdalegame.com/ninonline.zip"
       }
-    }
+    ]
   },
   "content": "files:\n- ninonline: https://www.silverdalegame.com/ninonline.zip\ngame:\n  arch: win32\n  exe: drive_c/game/Client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40 dx8vb\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/game/\n    file: ninonline\nwine:\n  overrides:\n    msacm32: n\n    rundll32.exe: disabled\n"
 }

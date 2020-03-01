@@ -22,17 +22,21 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/City Interactive/Combat Wings/game.exe",
       "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/Program Files/City Interactive/Combat Wings/game.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine Bottle, please wait...",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine Bottle, please wait...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -43,34 +47,30 @@
       },
       {
         "task": {
+          "executable": "$DISC/setup.exe",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$DISC/setup.exe"
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Installing Arial Font",
-          "name": "winetricks",
-          "arch": "win32",
           "app": "arial",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing Arial Font",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing Windows Media Player for codec reasons",
-          "name": "winetricks",
-          "arch": "win32",
           "app": "wmp9",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "description": "Installing Windows Media Player for codec reasons",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       }
-    ],
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    }
+    ]
   },
   "content": "game:\r\n  arch: win32\r\n  exe: $GAMEDIR/drive_c/Program Files/City Interactive/Combat Wings/game.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine Bottle, please wait...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- insert-disc:\r\n    description: Insert disc\r\n    requires: setup.exe\r\n- task:\r\n    executable: $DISC/setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial\r\n    arch: win32\r\n    description: Installing Arial Font\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: wmp9\r\n    arch: win32\r\n    description: Installing Windows Media Player for codec reasons\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\nwine:\r\n  Desktop: true\r\n  dxvk: true"
 }

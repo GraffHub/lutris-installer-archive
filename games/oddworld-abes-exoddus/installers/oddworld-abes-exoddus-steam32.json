@@ -21,14 +21,22 @@
   "gogslug": "oddworld_abes_exoddus",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "youtube-video": "https://www.youtube.com/watch?v=m_fVqIXIZ7k"
-      },
-      {
-        "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
-      }
-    ],
+    "game": {
+      "custom-name": "Oddworld: Abes Exoddus",
+      "arch": "win32",
+      "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+      "args": "-fullscreen -nojoy -applaunch 15710",
+      "exe": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program Files/Steam/Steam.exe",
+      "appid": "15710"
+    },
+    "system": {
+      "resolution": "640x480",
+      "reset_desktop": true,
+      "xboxdrv": "xboxdrv"
+    },
+    "wine": {
+      "esync": true
+    },
     "installer": [
       {
         "execute": {
@@ -38,10 +46,10 @@
       },
       {
         "task": {
-          "description": "Creating 32-bit prefix ...",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix"
+          "description": "Creating 32-bit prefix ...",
+          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+          "name": "create_prefix"
         }
       },
       {
@@ -55,27 +63,27 @@
       },
       {
         "task": {
-          "args": "/S",
-          "name": "wineexec",
           "executable": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe",
+          "args": "/S",
           "description": "Steam ...",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix"
+          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "description": "Windows version 8.1 ...",
-          "name": "winetricks",
-          "arch": "win32",
           "app": "win81",
-          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix"
+          "arch": "win32",
+          "description": "Windows version 8.1 ...",
+          "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
+          "name": "winetricks"
         }
       },
       {
         "write_file": {
           "content": "cd $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program\\ Files/Steam && WINEPREFIX=\"$HOME/.local/share/lutris/runners/winesteam/prefix\" wine Steam.exe -fullscreen -applaunch 15710",
-          "file": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh",
-          "description": "Creating Oddworld:_Abes_Exoddus.sh with prefix ..."
+          "description": "Creating Oddworld:_Abes_Exoddus.sh with prefix ...",
+          "file": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh"
         }
       },
       {
@@ -88,22 +96,14 @@
         }
       }
     ],
-    "game": {
-      "arch": "win32",
-      "args": "-fullscreen -nojoy -applaunch 15710",
-      "appid": "15710",
-      "prefix": "$HOME/.local/share/lutris/runners/winesteam/prefix",
-      "custom-name": "Oddworld: Abes Exoddus",
-      "exe": "$HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program Files/Steam/Steam.exe"
-    },
-    "system": {
-      "resolution": "640x480",
-      "reset_desktop": true,
-      "xboxdrv": "xboxdrv"
-    },
-    "wine": {
-      "esync": true
-    }
+    "files": [
+      {
+        "youtube-video": "https://www.youtube.com/watch?v=m_fVqIXIZ7k"
+      },
+      {
+        "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
+      }
+    ]
   },
   "content": "files:\n- youtube-video: https://www.youtube.com/watch?v=m_fVqIXIZ7k\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\ngame:\n  appid: '15710'\n  arch: win32\n  args: -fullscreen -nojoy -applaunch 15710\n  custom-name: 'Oddworld: Abes Exoddus'\n  exe: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program Files/Steam/Steam.exe\n  prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\ninstaller:\n- execute:\n    command: mv -v $HOME/.local/share/lutris/runners/winesteam/prefix /tmp/dump\n    description: Removing any existing winesteam-prefixes ...\n- task:\n    arch: win32\n    description: Creating 32-bit prefix ...\n    name: create_prefix\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\n- move:\n    dst: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/\n    src: SteamSetup.exe\n- chmodx: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe\n- task:\n    args: /S\n    description: Steam ...\n    executable: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe\n    name: wineexec\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\n- task:\n    app: win81\n    arch: win32\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $HOME/.local/share/lutris/runners/winesteam/prefix\n- write_file:\n    content: cd $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Program\\\n      Files/Steam && WINEPREFIX=\"$HOME/.local/share/lutris/runners/winesteam/prefix\"\n      wine Steam.exe -fullscreen -applaunch 15710\n    description: Creating Oddworld:_Abes_Exoddus.sh with prefix ...\n    file: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh\n- chmodx: $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/Oddworld:_Abe's_Exoddus.sh\n- execute:\n    command: rm $HOME/.local/share/lutris/runners/winesteam/prefix/drive_c/SteamSetup.exe\n    description: Clean-up ...\nsystem:\n  reset_desktop: true\n  resolution: 640x480\n  xboxdrv: xboxdrv\nwine:\n  esync: true\n"
 }

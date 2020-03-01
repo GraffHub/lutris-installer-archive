@@ -21,89 +21,89 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine Prefix...",
-          "name": "create_prefix",
-          "arch": "win32",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .Net 2.0",
-          "name": "winetricks",
-          "arch": "win32",
-          "silent": true,
-          "prefix": "$GAMEDIR",
-          "app": "dotnet20"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "description": "Hiding annoying dialogs...",
-          "name": "winetricks",
-          "app": "nocrashdialog",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting version to xp...",
-          "name": "set_regedit",
-          "arch": "win32",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "winxp"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Origin...",
-          "name": "wineexec",
-          "executable": "origin",
-          "exclude_processes": "Origin.exe",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Origin/Origin.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Origin/Origin.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "restore_gamma": true
     },
     "wine": {
       "UseXvidMode": true
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine Prefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet20",
+          "arch": "win32",
+          "description": "Installing .Net 2.0",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "app": "nocrashdialog",
+          "silent": true,
+          "description": "Hiding annoying dialogs...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Setting version to xp...",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "value": "winxp",
+          "key": "Version"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "executable": "origin",
+          "exclude_processes": "Origin.exe",
+          "description": "Installing Origin...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
+      }
+    ]
   },
   "content": "files:\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20\n    arch: win32\n    description: Installing .Net 2.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: nocrashdialog\n    description: Hiding annoying dialogs...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Installing Origin...\n    exclude_processes: Origin.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  restore_gamma: true\nwine:\n  UseXvidMode: true\n"
 }

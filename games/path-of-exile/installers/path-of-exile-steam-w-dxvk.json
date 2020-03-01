@@ -23,44 +23,44 @@
   "script": {
     "game": {
       "appid": 238960,
-      "args": "--waitforpreload --nologo --nodx9ex --gc2",
       "arch": "win64",
+      "args": "--waitforpreload --nologo --nodx9ex --gc2",
       "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "WineDesktop": "1920x1080",
-      "Desktop": false,
-      "overrides": {
-        "d3dcompiler_47": "native",
-        "xaudio2_7": "native,builtin"
-      }
+    "system": {
+      "pulse_latency": true,
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "reset_pulse": true
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR/prefix"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Setting Wine to Windows 10",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "win10",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "description": "Setting Wine to Windows 10",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "winesteam": {
+      "Desktop": false,
+      "WineDesktop": "1920x1080",
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "d3dcompiler_47": "native"
       },
-      "reset_pulse": true,
-      "pulse_latency": true
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 238960\n  arch: win64\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win10\n    arch: win64\n    description: Setting Wine to Windows 10\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\n  reset_pulse: true\nwinesteam:\n  Desktop: false\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    d3dcompiler_47: native\n    xaudio2_7: native,builtin\n"

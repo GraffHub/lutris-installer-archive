@@ -21,11 +21,22 @@
   "gogslug": "divinity_original_sin_2",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A: Please select the setup.exe downloaded from GOG.com"
+    "game": {
+      "exe": "drive_c/GOG Games/Divinity - Original Sin 2/DefEd/bin/EoCApp.exe",
+      "arch": "win64",
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler"
       }
-    ],
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
@@ -35,29 +46,18 @@
       },
       {
         "task": {
-          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES",
-          "name": "wineexec",
           "executable": "setup",
-          "prefix": "$GAMEDIR"
+          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win64",
-      "exe": "drive_c/GOG Games/Divinity - Original Sin 2/DefEd/bin/EoCApp.exe"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
+    "files": [
+      {
+        "setup": "N/A: Please select the setup.exe downloaded from GOG.com"
       }
-    },
-    "wine": {
-      "dxvk": true,
-      "overrides": {
-        "xaudio2_7": "native"
-      }
-    }
+    ]
   },
   "content": "files:\n- setup: 'N/A: Please select the setup.exe downloaded from GOG.com'\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Divinity - Original Sin 2/DefEd/bin/EoCApp.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n  overrides:\n    xaudio2_7: native\n"
 }

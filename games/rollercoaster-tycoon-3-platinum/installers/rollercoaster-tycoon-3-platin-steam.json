@@ -22,16 +22,20 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/RCT3/RCT3plus.exe"
+      "exe": "drive_c/RCT3/RCT3plus.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "custom-name": "RollerCoaster Tycoon 3 - Steam",
+    "wine": {
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
-          "description": "Preparing wineprefix...",
-          "name": "create_prefix",
           "arch": "win64",
-          "prefix": "$GAMEDIR"
+          "description": "Preparing wineprefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -47,23 +51,23 @@
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "csmt",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "value": "00000000",
+          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "arch": "win64",
-          "key": "background",
           "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "value": "0 0 0",
+          "key": "background",
           "type": "REG_SZ"
         }
       },
@@ -101,9 +105,9 @@
               "French": "French"
             }
           ],
-          "description": "Choose the game's language:",
+          "id": "LANG",
           "preselect": "English",
-          "id": "LANG"
+          "description": "Choose the game's language:"
         }
       },
       {
@@ -120,9 +124,9 @@
       },
       {
         "task": {
+          "executable": "$GAMEDIR/drive_c/config.bat",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/drive_c/config.bat"
+          "name": "wineexec"
         }
       },
       {
@@ -131,11 +135,7 @@
           "src": "$GAMEDIR/drive_c/config.bat"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "RollerCoaster Tycoon 3 - Steam"
+    ]
   },
   "content": "custom-name: RollerCoaster Tycoon 3 - Steam\ngame:\n  exe: drive_c/RCT3/RCT3plus.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: rct3plus.exe\n- merge:\n    dst: $GAMEDIR/drive_c/RCT3\n    src: $DISC\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LANG\n    options:\n    - Spanish: Spanish\n    - Swedish: Swedish\n    - Norwegian: Norwegian\n    - Italian: Italian\n    - German: German\n    - Finnish: Finnish\n    - English: English\n    - Dutch: Dutch\n    - Danish: Danish\n    - French: French\n    preselect: English\n- write_file:\n    content: 'Resolution $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n\n      Language \"$INPUT\"'\n    file: $GAMEDIR/drive_c/Options.txt\n- write_file:\n    content: 'c:\n\n      mkdir \"C:\\users\\romain\\Application Data\\Atari\\RCT3\\\"\n\n      move c:\\Options.txt \"%APPDATA%\\Atari\\RCT3\\\"'\n    file: $GAMEDIR/drive_c/config.bat\n- task:\n    executable: $GAMEDIR/drive_c/config.bat\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $CACHE\n    src: $GAMEDIR/drive_c/config.bat\nwine:\n  Desktop: true\n"
 }

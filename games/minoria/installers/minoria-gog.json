@@ -21,46 +21,46 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "installer": "N/A:Select the game's setup file"
-      }
-    ],
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64"
-        }
-      },
-      {
-        "task": {
-          "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:GOG Games/Minoria\"",
-          "name": "wineexec",
-          "executable": "installer",
-          "description": "Installing Minoria",
-          "prefix": "$GAMEDIR"
-        }
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Minoria/Minoria.exe",
       "arch": "win64",
-      "exe": "drive_c/GOG Games/Minoria/Minoria.exe"
+      "prefix": "$GAMEDIR"
     },
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0
       },
       "pulse_latency": false
     },
     "wine": {
-      "dxvk": true,
-      "esync": false
-    }
+      "esync": false,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:GOG Games/Minoria\"",
+          "description": "Installing Minoria",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Minoria/Minoria.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:GOG Games/Minoria\"\n    description: Installing Minoria\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: false\nwine:\n  dxvk: true\n  esync: false\n"
 }

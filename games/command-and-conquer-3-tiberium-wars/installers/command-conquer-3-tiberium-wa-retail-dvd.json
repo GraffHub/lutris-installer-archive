@@ -22,9 +22,13 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Electronic Arts/Command & Conquer 3/CNC3.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files (x86)/Electronic Arts/Command & Conquer 3/CNC3.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1280x720"
     },
     "installer": [
       {
@@ -34,18 +38,18 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
+          "app": "nocrashdialog win7",
           "arch": "win32",
-          "app": "nocrashdialog win7"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
@@ -56,19 +60,15 @@
       },
       {
         "task": {
-          "description": "Setting OS as Windows 7.",
-          "name": "set_regedit",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win7"
+          "description": "Setting OS as Windows 7.",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "value": "win7",
+          "key": "Version"
         }
       }
-    ],
-    "wine": {
-      "WineDesktop": "1280x720",
-      "Desktop": true
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: drive_c/Program Files (x86)/Electronic Arts/Command & Conquer 3/CNC3.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows 7.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\nwine:\n  Desktop: true\n  WineDesktop: 1280x720\n"
 }

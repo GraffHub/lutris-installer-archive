@@ -11,44 +11,60 @@
   "description": null,
   "notes": "The game works with no problems if you don't change the default installation path .",
   "created_at": "2018-06-13T21:03:06.117000Z",
-  "updated_at": "2019-09-08T23:32:04.045611Z",
+  "updated_at": "2020-02-25T14:21:44.089350Z",
   "draft": false,
   "published": true,
-  "published_by": 1,
+  "published_by": 20548,
   "rating": "",
   "steamid": 12120,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Select the installer for GTA San Andreas (setup.exe)"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/gta_sa.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/gta_sa.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
           "arch": "win32",
-          "prefix": "$GAMEDIR"
+          "description": "Creating Wine prefix...",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing GTA:SA...",
-          "name": "wineexec",
-          "executable": "setup",
-          "prefix": "$GAMEDIR"
+          "app": "d3dx9",
+          "arch": "win32",
+          "description": "Installing dependencies...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
+      },
+      {
+        "task": {
+          "executable": "setup",
+          "arch": "win32",
+          "description": "Installing GTA:SA...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "setup": "N/A:Please select the setup file for GTA San Andreas"
       }
     ]
   },
-  "content": "files:\n- setup: N/A:Select the installer for GTA San Andreas (setup.exe)\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rockstar Games/GTA San Andreas/gta_sa.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing GTA:SA...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
+  "content": "files:\n- setup: N/A:Please select the setup file for GTA San Andreas\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rockstar Games/GTA San Andreas/gta_sa.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    arch: win32\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing GTA:SA...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

@@ -23,39 +23,39 @@
   "script": {
     "game": {
       "appid": 323190,
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
+      "arch": "win64",
+      "prefix": "$GAMEDIR/prefix"
     },
-    "winesteam": {
-      "dxvk": true,
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "xaudio2_7": "native,builtin"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
     },
     "installer": [
       {
         "task": {
+          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix",
-          "arch": "win64"
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "description": "Installing .NET 4.7.2",
-          "name": "winetricks",
-          "arch": "win64",
           "app": "vcrun2015 dotnet472 win7",
-          "prefix": "$GAMEDIR/prefix"
+          "arch": "win64",
+          "description": "Installing .NET 4.7.2",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
         }
       }
     ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
+    "winesteam": {
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled",
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
     }
   },
   "content": "game:\n  appid: 323190\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015 dotnet472 win7\n    arch: win64\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"

@@ -21,17 +21,13 @@
   "gogslug": "bloodstained_ritual_of_the_night",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "gogsetup": "N/A:Select the game's setup file"
-      },
-      {
-        "mf_install_verb": "https://lutris.nyc3.digitaloceanspaces.com/tools/winetricks/mf_install.verb"
-      }
-    ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Bloodstained Ritual of the Night/BloodstainedRotN.exe"
+      "exe": "drive_c/GOG Games/Bloodstained Ritual of the Night/BloodstainedRotN.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "esync": false,
+      "dxvk": true
     },
     "installer": [
       {
@@ -42,23 +38,27 @@
       },
       {
         "task": {
-          "name": "winetricks",
-          "app": "mf_install_verb"
+          "app": "mf_install_verb",
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "name": "wineexec",
           "executable": "gogsetup",
-          "description": "Installing game"
+          "description": "Installing game",
+          "args": "/SP- /SUPPRESSMSGBOXES",
+          "name": "wineexec"
         }
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": false
-    }
+    "files": [
+      {
+        "gogsetup": "N/A:Select the game's setup file"
+      },
+      {
+        "mf_install_verb": "https://lutris.nyc3.digitaloceanspaces.com/tools/winetricks/mf_install.verb"
+      }
+    ]
   },
   "content": "files:\n- gogsetup: N/A:Select the game's setup file\n- mf_install_verb: https://lutris.nyc3.digitaloceanspaces.com/tools/winetricks/mf_install.verb\ngame:\n  exe: drive_c/GOG Games/Bloodstained Ritual of the Night/BloodstainedRotN.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mf_install_verb\n    name: winetricks\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    description: Installing game\n    executable: gogsetup\n    name: wineexec\nwine:\n  dxvk: true\n  esync: false\n"
 }

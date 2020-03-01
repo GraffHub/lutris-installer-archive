@@ -21,46 +21,46 @@
   "gogslug": "game_of_thrones_season_1",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "game": "N/A:Please select the GOG.com Windows installer."
-      }
-    ],
     "exe": "drive_c/GOG Games/Game of Thrones - Season 1/Thrones.exe",
     "installer": [
       {
         "task": {
           "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
           "value": "",
+          "key": "winemenubuilder.exe",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "args": "/verysilent /RESTARTEXITCODE=0 /SP- /NORESTART /NOICONS /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES",
-          "name": "wineexec",
           "executable": "game",
-          "prefix": "$GAMEDIR"
+          "args": "/verysilent /RESTARTEXITCODE=0 /SP- /NORESTART /NOICONS /CLOSEAPPLICATIONS /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
+          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
+      }
+    ],
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
       }
     ]
   },

@@ -21,12 +21,27 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "appid": 39210,
+      "prefix": "$GAMEDIR/prefix"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
           "description": "Setting up wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR/prefix"
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
         }
       },
       {
@@ -46,31 +61,16 @@
       },
       {
         "task": {
-          "description": "Adding Registry Entries for FFXIV Launcher",
-          "name": "set_regedit",
-          "key": "HideWineExports",
-          "prefix": "$GAMEDIR/prefix",
           "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "description": "Adding Registry Entries for FFXIV Launcher",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "set_regedit",
           "value": "Y",
+          "key": "HideWineExports",
           "type": "REG_SZ"
         }
       }
-    ],
-    "game": {
-      "appid": 39210,
-      "prefix": "$GAMEDIR/prefix"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    }
+    ]
   },
   "content": "game:\r\n  appid: 39210\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    description: Setting up wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/prefix\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\\r\n      FANTASY\\ XIV\\ -\\ A\\ Realm\\ Reborn\r\n- execute:\r\n    command: echo -e \"<FINAL FANTASY XIV Config File>\\n\\n<Cutscene Settings>\\nCutsceneMovieOpening\r\n      1\" > \"$GAMEDIR/prefix\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\ FANTASY\\\r\n      XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV.cfg\r\n- execute:\r\n    command: echo -e \"<FINAL FANTASY XIV Boot Config File>\\n\\n<Version>\\nBrowser 1\"\r\n      > \"$GAMEDIR/prefix\"/drive_c/users/$USER/My\\ Documents/My\\ Games/FINAL\\ FANTASY\\\r\n      XIV\\ -\\ A\\ Realm\\ Reborn/FFXIV_BOOT.cfg\r\n- task:\r\n    description: Adding Registry Entries for FFXIV Launcher\r\n    key: HideWineExports\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR/prefix\r\n    type: REG_SZ\r\n    value: Y\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n  pulse_latency: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

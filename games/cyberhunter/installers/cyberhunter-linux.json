@@ -21,15 +21,15 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "file1": "https://g94na.gdl.netease.com/cyber_hunter_20190729.exe"
-      }
-    ],
     "game": {
-      "args": "-arg",
       "exe": "drive_c/CyberHunter/launcher.exe",
+      "args": "-arg",
       "prefix": "$GAMEDIR"
+    },
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
     },
     "installer": [
       {
@@ -40,27 +40,27 @@
       },
       {
         "task": {
+          "app": "vcrun2010 wininet win7",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "app": "vcrun2010 wininet win7"
+          "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Please wait while we install Cyber Hunter",
-          "name": "wineexec",
           "executable": "$CACHE/cyber_hunter_20190729.exe",
-          "prefix": "$GAMEDIR",
+          "description": "Please wait while we install Cyber Hunter",
           "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR",
           "exclude_processes": "client.exe"
         }
       }
     ],
-    "wine": {
-      "overrides": {
-        "wininet": "builtin,native"
+    "files": [
+      {
+        "file1": "https://g94na.gdl.netease.com/cyber_hunter_20190729.exe"
       }
-    }
+    ]
   },
   "content": "files:\n- file1: https://g94na.gdl.netease.com/cyber_hunter_20190729.exe\ngame:\n  args: -arg\n  exe: drive_c/CyberHunter/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS\n    description: Please wait while we install Cyber Hunter\n    exclude_processes: client.exe\n    executable: $CACHE/cyber_hunter_20190729.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

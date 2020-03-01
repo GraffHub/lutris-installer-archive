@@ -21,14 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "s3": "https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1"
-      },
-      {
-        "sb16": "https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1"
-      }
-    ],
     "game": {
       "main_file": "$GAMEDIR/win31x.conf"
     },
@@ -40,13 +32,6 @@
       },
       {
         "task": {
-          "path": "$GAMEDIR/win31x-install.conf",
-          "name": "makeconfig",
-          "drives": {
-            "c": "$GAMEDIR/C",
-            "b": "$GAMEDIR/B",
-            "a": "$DISC"
-          },
           "commands": [
             "A:",
             "SETUP.EXE",
@@ -54,34 +39,41 @@
             "CD SB16",
             "INSTALL.EXE",
             "EXIT"
-          ]
+          ],
+          "drives": {
+            "c": "$GAMEDIR/C",
+            "a": "$DISC",
+            "b": "$GAMEDIR/B"
+          },
+          "path": "$GAMEDIR/win31x-install.conf",
+          "name": "makeconfig"
         }
       },
       {
         "execute": {
-          "args": "$GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E",
-          "file": "mkdir"
+          "file": "mkdir",
+          "args": "$GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E"
         }
       },
       {
         "extract": {
+          "file": "sb16",
           "dst": "$GAMEDIR/B/sb16",
-          "format": "zip",
-          "file": "sb16"
+          "format": "zip"
         }
       },
       {
         "extract": {
+          "file": "s3",
           "dst": "$GAMEDIR/B/s3",
-          "format": "zip",
-          "file": "s3"
+          "format": "zip"
         }
       },
       {
         "task": {
           "working_dir": "$GAMEDIR",
-          "name": "dosexec",
-          "config_file": "$GAMEDIR/win31x-install.conf"
+          "config_file": "$GAMEDIR/win31x-install.conf",
+          "name": "dosexec"
         }
       },
       {
@@ -89,6 +81,14 @@
           "content": "[dosbox]\nmemsize = 64\n[sblaster]\nirq=5\n[autoexec]\nmount a $GAMEDIR/A\nmount b $GAMEDIR/B\nmount c $GAMEDIR/C\nmount d $GAMEDIR/D\nmount d $GAMEDIR/E\nc:\ncd windows\nwin",
           "file": "$GAMEDIR/win31x.conf"
         }
+      }
+    ],
+    "files": [
+      {
+        "s3": "https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1"
+      },
+      {
+        "sb16": "https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1"
       }
     ]
   },

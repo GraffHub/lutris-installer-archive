@@ -22,18 +22,18 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/EA GAMES/NFS Underground/Speed.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/EA GAMES/NFS Underground/Speed.exe"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
+          "install_mono": false,
           "arch": "win32",
           "description": "Creating Wine Bottle, please wait...",
-          "name": "create_prefix",
-          "install_mono": false,
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
         }
       },
       {
@@ -44,23 +44,23 @@
       },
       {
         "merge": {
-          "description": "Extracting installation data from disc, please wait ...",
           "src": "$DISC",
-          "dst": "$GAMEDIR/drive_c/nfsusetup"
+          "dst": "$GAMEDIR/drive_c/nfsusetup",
+          "description": "Extracting installation data from disc, please wait ..."
         }
       },
       {
         "execute": {
-          "descritpion": "Set proper file permissions for extracted data, please wait...",
+          "file": "chmod",
           "args": "744 -R $GAMEDIR/drive_c/nfsusetup",
-          "file": "chmod"
+          "descritpion": "Set proper file permissions for extracted data, please wait..."
         }
       },
       {
         "task": {
+          "executable": "$GAMEDIR/drive_c/nfsusetup/setup.exe",
           "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "executable": "$GAMEDIR/drive_c/nfsusetup/setup.exe"
+          "name": "wineexec"
         }
       }
     ]

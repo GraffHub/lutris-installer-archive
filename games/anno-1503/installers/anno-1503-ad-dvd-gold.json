@@ -22,9 +22,12 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/ANNO 1503 GOLD/1503Startup.exe",
       "arch": "win32",
-      "exe": "drive_c/Program Files/ANNO 1503 GOLD/1503Startup.exe"
+      "prefix": "$GAMEDIR"
+    },
+    "system": {
+      "reset_desktop": true
     },
     "installer": [
       {
@@ -34,44 +37,41 @@
       },
       {
         "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
+          "install_gecko": false,
           "arch": "win32",
+          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "install_mono": false,
-          "install_gecko": false
+          "name": "create_prefix",
+          "install_mono": false
         }
       },
       {
         "task": {
-          "description": "Installing...",
-          "name": "wineexec",
           "executable": "$DISC/setup.exe",
-          "prefix": "$GAMEDIR"
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "silent": true,
-          "description": "Setting up winetricks...",
-          "name": "winetricks",
           "app": "windowmanagermanaged=n",
-          "prefix": "$GAMEDIR"
+          "silent": true,
+          "description": "Setting up winetricks...",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       },
       {
         "task": {
+          "app": "directmusic",
           "silent": true,
           "description": "Setting up winetricks...",
-          "name": "winetricks",
-          "app": "directmusic",
-          "prefix": "$GAMEDIR"
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "reset_desktop": true
-    }
+    ]
   },
   "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/ANNO 1503 GOLD/1503Startup.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing...\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: directmusic\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  reset_desktop: true\n"
 }

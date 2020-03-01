@@ -21,59 +21,59 @@
   "gogslug": "blitzkrieg_anthology",
   "humblestoreid": "",
   "script": {
-    "files": [
+    "game": {
+      "exe": "$GAMEDIR/drive_c/game/Run/game.exe",
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
+    "gogid": "blitzkrieg_burning_horizon_rolling_thunder",
+    "installer": [
       {
-        "game": "N/A:Please select the GOG.com Windows installer."
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "name": "set_regedit",
+          "value": "",
+          "key": "winemenubuilder.exe",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "executable": "game",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "silent": true,
+          "description": "Disabling unused WINE features",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
       }
     ],
     "system": {
       "disable_runtime": true
     },
     "game_slug": "blitzkrieg-rolling-thunder-burning-horizon-iron-division",
-    "installer": [
+    "files": [
       {
-        "task": {
-          "description": "Creating Wine prefix",
-          "name": "create_prefix",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "name": "set_regedit",
-          "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "value": "",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "name": "wineexec",
-          "executable": "game",
-          "description": "Installing...",
-          "prefix": "$GAMEDIR"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "description": "Disabling unused WINE features",
-          "name": "winetricks",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR"
-        }
+        "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ],
-    "game": {
-      "working_dir": "$GAMEDIR/drive_c/game",
-      "prefix": "$GAMEDIR",
-      "arch": "win32",
-      "exe": "$GAMEDIR/drive_c/game/Run/game.exe"
-    },
-    "gogid": "blitzkrieg_burning_horizon_rolling_thunder"
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Run/game.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ngame_slug: blitzkrieg-rolling-thunder-burning-horizon-iron-division\ngogid: blitzkrieg_burning_horizon_rolling_thunder\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: true\n"
 }
