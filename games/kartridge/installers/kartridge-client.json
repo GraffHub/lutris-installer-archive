@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/Kartridge/app-0.3.55/Kartridge.exe",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -59,14 +55,18 @@
     "files": [
       {
         "setup": {
-          "filename": "Kartridge.exe",
-          "url": "https://www.kongregate.com/klient/klient_releases/win32_installer"
+          "url": "https://www.kongregate.com/klient/klient_releases/win32_installer",
+          "filename": "Kartridge.exe"
         }
       },
       {
         "flash": "https://fpdownload.adobe.com/get/flashplayer/pdc/32.0.0.156/install_flash_player_ppapi.exe"
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/Kartridge/app-0.3.55/Kartridge.exe"
+    }
   },
   "content": "files:\n- setup:\n    filename: Kartridge.exe\n    url: https://www.kongregate.com/klient/klient_releases/win32_installer\n- flash: https://fpdownload.adobe.com/get/flashplayer/pdc/32.0.0.156/install_flash_player_ppapi.exe\ngame:\n  exe: drive_c/users/$USER/Local Settings/Application Data/Kartridge/app-0.3.55/Kartridge.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Follow the prompts and install Flash. Ignore file not found error.\n    executable: flash\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Kartridge will complain about not installing and Updater might crash.\n\n      Close both to finish installing.'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

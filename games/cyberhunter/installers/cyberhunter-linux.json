@@ -21,16 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/CyberHunter/launcher.exe",
-      "args": "-arg",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "wininet": "builtin,native"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -47,12 +37,12 @@
       },
       {
         "task": {
-          "executable": "$CACHE/cyber_hunter_20190729.exe",
-          "description": "Please wait while we install Cyber Hunter",
-          "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS",
-          "name": "wineexec",
           "prefix": "$GAMEDIR",
-          "exclude_processes": "client.exe"
+          "name": "wineexec",
+          "exclude_processes": "client.exe",
+          "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS",
+          "executable": "$CACHE/cyber_hunter_20190729.exe",
+          "description": "Please wait while we install Cyber Hunter"
         }
       }
     ],
@@ -60,7 +50,17 @@
       {
         "file1": "https://g94na.gdl.netease.com/cyber_hunter_20190729.exe"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
+    },
+    "game": {
+      "args": "-arg",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/CyberHunter/launcher.exe"
+    }
   },
   "content": "files:\n- file1: https://g94na.gdl.netease.com/cyber_hunter_20190729.exe\ngame:\n  args: -arg\n  exe: drive_c/CyberHunter/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS\n    description: Please wait while we install Cyber Hunter\n    exclude_processes: client.exe\n    executable: $CACHE/cyber_hunter_20190729.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

@@ -21,14 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/timequest.conf"
-    },
     "installer": [
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/time"
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/time",
+          "file": "mkdir"
         }
       },
       {
@@ -42,8 +39,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR/HDD/time"
+          "args": "$game $GAMEDIR/HDD/time",
+          "file": "$CACHE/bulkcopy.sh"
         }
       },
       {
@@ -57,7 +54,10 @@
       {
         "game": "N/A:Select the file TQ.EXE"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/timequest.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select the file TQ.EXE\ngame:\n  main_file: $GAMEDIR/timequest.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/time\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/HDD/time\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd time\n\n      tq.EXE mt32\n\n      exit'\n    file: $GAMEDIR/timequest.conf\n"
 }

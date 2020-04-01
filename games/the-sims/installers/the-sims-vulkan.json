@@ -21,34 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "args": "-r1024x768 -skip_intro -skip_verify",
-      "exe": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/Sims.exe",
-      "working_dir": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/",
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
-    },
-    "wine": {
-      "overrides": {
-        "winegstreamer": "disabled",
-        "ddraw": "native"
-      },
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
-          "install_mono": false,
           "arch": "win32",
           "description": "Creating prefix",
+          "install_mono": false,
           "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/Sims.exe",
-          "src": "nocd"
+          "src": "nocd",
+          "dst": "$GAMEDIR/Sims.exe"
         }
       },
       {
@@ -65,21 +51,21 @@
       },
       {
         "task": {
-          "app": "d3dcompiler_43 d3dcompiler_47 quartz",
           "arch": "win32",
           "description": "Installing d3dcompiler_43 and d3dcompiler_47...",
+          "app": "d3dcompiler_43 d3dcompiler_47 quartz",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "installer",
           "arch": "win32",
-          "description": "Installing The Sims...",
           "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "exclude_processes": "Start.exe start.exe"
+          "exclude_processes": "Start.exe start.exe",
+          "executable": "installer",
+          "description": "Installing The Sims..."
         }
       },
       {
@@ -90,22 +76,22 @@
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/",
-          "src": "$GAMEDIR/Sims.exe"
-        }
-      },
-      {
-        "extract": {
-          "file": "dgvoodoo",
+          "src": "$GAMEDIR/Sims.exe",
           "dst": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/"
         }
       },
       {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/",
+          "file": "dgvoodoo"
+        }
+      },
+      {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/dgVoodoo.conf",
-          "value": false,
+          "section": "DirectX",
           "key": "dgVoodooWatermark",
-          "section": "DirectX"
+          "file": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/dgVoodoo.conf",
+          "value": false
         }
       }
     ],
@@ -119,7 +105,21 @@
       {
         "installer": "N/A:Select the Setup executable (Setup.exe in Setup folder, NOT start.exe):"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "winegstreamer": "disabled",
+        "ddraw": "native"
+      },
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win32",
+      "args": "-r1024x768 -skip_intro -skip_verify",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Maxis/The Sims/Sims.exe"
+    }
   },
   "content": "files:\n- dgvoodoo: https://lutris.net/files/tools/dgvoodoo_2.55.4_dx1-7.tar.xz\n- nocd: 'N/A:Select the NoCD executable (Sims.exe):'\n- installer: 'N/A:Select the Setup executable (Setup.exe in Setup folder, NOT start.exe):'\ngame:\n  arch: win32\n  args: -r1024x768 -skip_intro -skip_verify\n  exe: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/Sims.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- copy:\n    dst: $GAMEDIR/Sims.exe\n    src: nocd\n- execute:\n    command: chmod 770 \"$GAMEDIR/Sims.exe\"\n    description: Changing permissions...\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dcompiler_47 quartz\n    arch: win32\n    description: Installing d3dcompiler_43 and d3dcompiler_47...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing The Sims...\n    exclude_processes: Start.exe start.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/\n    src: $GAMEDIR/Sims.exe\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/\n    file: dgvoodoo\n- write_config:\n    file: $GAMEDIR/drive_c/Program Files/Maxis/The Sims/dgVoodoo.conf\n    key: dgVoodooWatermark\n    section: DirectX\n    value: false\nwine:\n  dxvk: true\n  overrides:\n    ddraw: native\n    winegstreamer: disabled\n"
 }

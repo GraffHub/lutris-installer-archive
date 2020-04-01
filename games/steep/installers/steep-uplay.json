@@ -9,36 +9,23 @@
   "slug": "steep-uplay",
   "version": "Uplay",
   "description": null,
-  "notes": "Please note: The game runs in offline mode only! Meaning you can't do any challenges or progression.\r\nBlack screen unless run windowed.\r\nThis installer enables DXVK (with hud) and esync, wine version tkg-3.21.",
+  "notes": "Black screen unless run windowed. Press Alt+Enter to switch window mode.\r\nThis installer enables DXVK (with hud) and esync, wine version lutris-5.4.",
   "created_at": "2019-01-01T21:23:38.804000Z",
-  "updated_at": "2020-01-23T02:56:50.798062Z",
+  "updated_at": "2020-03-15T19:11:27.850991Z",
   "draft": false,
   "published": true,
-  "published_by": 51687,
-  "rating": "1",
+  "published_by": 2045,
+  "rating": "3",
   "steamid": 460920,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
-      "arch": "win64",
-      "args": "uplay://launch/3279",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "DXVK_HUD": "devinfo,fps,frametimes",
-        "__GL_SHADER_DISK_CACHE_SKIP_CLEANUP": "0"
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "ShowCrashDialog": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -50,8 +37,8 @@
       },
       {
         "task": {
-          "executable": "uplay",
           "args": "/S",
+          "executable": "uplay",
           "description": "Installing Uplay",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -59,26 +46,40 @@
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini",
-          "value": 0,
+          "section": "Display Settings",
           "key": "WindowMode",
-          "section": "Display Settings"
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini",
+          "value": 0
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini",
-          "value": 1,
+          "section": "Display Settings",
           "key": "WindowMaximised",
-          "section": "Display Settings"
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini",
+          "value": 1
         }
       }
     ],
-    "files": [
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+    "system": {
+      "env": {
+        "DXVK_HUD": "devinfo,fps,frametimes",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__GL_SHADER_DISK_CACHE_SKIP_CLEANUP": "0"
       }
-    ]
+    },
+    "wine": {
+      "ShowCrashDialog": true,
+      "dxvk": true,
+      "version": "lutris-5.4",
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "uplay://launch/3279",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    }
   },
-  "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  args: uplay://launch/3279\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    description: Installing Uplay\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini\n    key: WindowMode\n    section: Display Settings\n    value: 0\n- write_config:\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini\n    key: WindowMaximised\n    section: Display Settings\n    value: 1\nsystem:\n  env:\n    DXVK_HUD: devinfo,fps,frametimes\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP: '0'\nwine:\n  ShowCrashDialog: true\n  dxvk: true\n  esync: true\n"
+  "content": "files:\r\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\ngame:\r\n  arch: win64\r\n  args: uplay://launch/3279\r\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /S\r\n    description: Installing Uplay\r\n    executable: uplay\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini\r\n    key: WindowMode\r\n    section: Display Settings\r\n    value: 0\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/My Games/STEEP/Default/STEEP.ini\r\n    key: WindowMaximised\r\n    section: Display Settings\r\n    value: 1\r\nsystem:\r\n  env:\r\n    DXVK_HUD: devinfo,fps,frametimes\r\n    __GL_SHADER_DISK_CACHE: '1'\r\n    __GL_SHADER_DISK_CACHE_SKIP_CLEANUP: '0'\r\nwine:\r\n  ShowCrashDialog: true\r\n  dxvk: true\r\n  esync: true\r\n  version: lutris-5.4"
 }

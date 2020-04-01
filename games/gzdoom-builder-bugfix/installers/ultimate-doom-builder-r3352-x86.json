@@ -21,20 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/ultimate_doom_builder/Builder.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_MaxFramesAllowed": 1
+    "files": [
+      {
+        "udb_installer": "https://devbuilds.drdteam.org/ultimatedoombuilder/UltimateDoomBuilder-r3352-x86.7z"
       }
-    },
-    "wine": {
-      "esync": false,
-      "dxvk": false
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -46,43 +37,52 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/ultimate_doom_builder",
-          "src": "udb_installer"
+          "src": "udb_installer",
+          "dst": "$GAMEDIR/drive_c/ultimate_doom_builder"
         }
       },
       {
         "task": {
-          "app": "corefonts",
           "silent": true,
           "description": "Installing Core Fonts",
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "dotnet472",
           "silent": true,
           "description": "Installing .NET framework 4.7.2",
+          "app": "dotnet472",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "winxp",
           "silent": true,
           "description": "Setting WINE version to WinXP",
+          "app": "winxp",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       }
     ],
-    "files": [
-      {
-        "udb_installer": "https://devbuilds.drdteam.org/ultimatedoombuilder/UltimateDoomBuilder-r3352-x86.7z"
+    "system": {
+      "env": {
+        "__GL_MaxFramesAllowed": 1
       }
-    ]
+    },
+    "wine": {
+      "dxvk": false,
+      "esync": false
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/ultimate_doom_builder/Builder.exe"
+    }
   },
   "content": "files:\n- udb_installer: https://devbuilds.drdteam.org/ultimatedoombuilder/UltimateDoomBuilder-r3352-x86.7z\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/ultimate_doom_builder/Builder.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/ultimate_doom_builder\n    src: udb_installer\n- task:\n    app: corefonts\n    description: Installing Core Fonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dotnet472\n    description: Installing .NET framework 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: winxp\n    description: Setting WINE version to WinXP\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  env:\n    __GL_MaxFramesAllowed: 1\nwine:\n  dxvk: false\n  esync: false\n"
 }

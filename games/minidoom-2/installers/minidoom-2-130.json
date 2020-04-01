@@ -21,12 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/prefix/drive_c/miniDoom2/miniDoom2.exe",
-      "working_dir": "$GAMEDIR/prefix/drive_c/miniDoom2",
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win64"
-    },
     "installer": [
       {
         "task": {
@@ -38,14 +32,14 @@
       },
       {
         "extract": {
-          "file": "$unzip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$unzip"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
-          "args": "$zip -d \"$GAMEDIR/prefix/drive_c\""
+          "args": "$zip -d \"$GAMEDIR/prefix/drive_c\"",
+          "file": "$CACHE/unzip"
         }
       },
       {
@@ -66,7 +60,13 @@
       {
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win64",
+      "working_dir": "$GAMEDIR/prefix/drive_c/miniDoom2",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/miniDoom2/miniDoom2.exe"
+    }
   },
   "content": "files:\n- zip: N/A:Select the MiniDoom2 zip file downloaded from calaverastudio.itch.io\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  arch: win64\n  exe: $GAMEDIR/prefix/drive_c/miniDoom2/miniDoom2.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $GAMEDIR/prefix/drive_c/miniDoom2\ninstaller:\n- task:\n    arch: win64\n    description: Setting up wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $zip -d \"$GAMEDIR/prefix/drive_c\"\n    file: $CACHE/unzip\n- execute:\n    command: mv $GAMEDIR/prefix/drive_c/miniDoom* $GAMEDIR/prefix/drive_c/miniDoom2\n- execute:\n    command: mv $GAMEDIR/prefix/drive_c/miniDoom2/miniDoom2*.exe $GAMEDIR/prefix/drive_c/miniDoom2/miniDoom2.exe\n"
 }

@@ -21,58 +21,7 @@
   "gogslug": "dragonsphere",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/dosboxDragonsphere.conf"
-    },
     "main_file": "DOSBOX/dosboxDragonsphere_single.conf",
-    "installer": [
-      {
-        "extract": {
-          "file": "$file1",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "extract": {
-          "file": "$file2",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-d \"$CACHE\" \"$CACHE/setup_dragonsphere.exe\""
-        }
-      },
-      {
-        "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/app"
-        }
-      },
-      {
-        "merge": {
-          "dst": "$GAMEDIR/DOSBOX",
-          "src": "$GAMEDIR/dosboxDragonsphere_single.conf"
-        }
-      },
-      {
-        "write_config": {
-          "file": "$GAMEDIR/dosboxDragonsphere.conf",
-          "value": true,
-          "key": "aspect",
-          "section": "render"
-        }
-      },
-      {
-        "write_config": {
-          "file": "$GAMEDIR/dosboxDragonsphere.conf",
-          "value": false,
-          "key": "fullscreen",
-          "section": "sdl"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the Groupees archive"
@@ -80,7 +29,58 @@
       {
         "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
       }
-    ]
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file1"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file2"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE\" \"$CACHE/setup_dragonsphere.exe\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "merge": {
+          "src": "$GAMEDIR/dosboxDragonsphere_single.conf",
+          "dst": "$GAMEDIR/DOSBOX"
+        }
+      },
+      {
+        "write_config": {
+          "section": "render",
+          "key": "aspect",
+          "file": "$GAMEDIR/dosboxDragonsphere.conf",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "key": "fullscreen",
+          "file": "$GAMEDIR/dosboxDragonsphere.conf",
+          "value": false
+        }
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxDragonsphere.conf"
+    }
   },
   "content": "files:\n- file1: N/A:Please select the Groupees archive\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosboxDragonsphere.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file1\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$CACHE/setup_dragonsphere.exe\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxDragonsphere_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxDragonsphere.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxDragonsphere.conf\n    key: fullscreen\n    section: sdl\n    value: false\nmain_file: DOSBOX/dosboxDragonsphere_single.conf\n"
 }

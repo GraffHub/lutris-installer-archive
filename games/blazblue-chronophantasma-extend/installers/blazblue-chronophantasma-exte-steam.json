@@ -21,9 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      }
+    },
     "game": {
-      "appid": 388750,
       "arch": "win32",
+      "appid": 388750,
       "prefix": "$GAMEDIR/prefix"
     },
     "installer": [
@@ -36,29 +41,24 @@
       },
       {
         "task": {
-          "app": "wmp9 quartz devenum quartz winxp",
           "arch": "win32",
           "description": "Installing needed libraries",
+          "app": "wmp9 quartz devenum quartz winxp",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe",
           "value": "win7",
-          "key": "Version"
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe"
         }
       }
-    ],
-    "winesteam": {
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      }
-    }
+    ]
   },
   "content": "game:\n  appid: 388750\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: wmp9 quartz devenum quartz winxp\n    arch: win32\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Steam.exe\n    prefix: $GAMEDIR/prefix\n    value: win7\nwinesteam:\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

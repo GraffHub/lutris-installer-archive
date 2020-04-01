@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Microsoft/Skype for Desktop/Skype.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,12 +31,12 @@
       },
       {
         "task": {
-          "executable": "setup",
           "arch": "win64",
           "prefix": "$GAMEDIR",
-          "args": "/silent",
           "name": "wineexec",
-          "exclude_processes": "Skype.exe"
+          "exclude_processes": "Skype.exe",
+          "args": "/silent",
+          "executable": "setup"
         }
       },
       {
@@ -56,7 +51,12 @@
       {
         "setup": "https://download.skype.com/s4l/download/win/Skype-8.38.0.161.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Microsoft/Skype for Desktop/Skype.exe"
+    }
   },
   "content": "files:\n- setup: https://download.skype.com/s4l/download/win/Skype-8.38.0.161.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Microsoft/Skype for Desktop/Skype.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    exclude_processes: Skype.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

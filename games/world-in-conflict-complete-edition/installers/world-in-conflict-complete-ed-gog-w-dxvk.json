@@ -21,11 +21,43 @@
   "gogslug": "world_in_conflict_complete_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/GOG Games/World in Conflict/wic.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
+    "files": [
+      {
+        "installer": "N/A:Please select the GOG.com Windows installer"
+      },
+      {
+        "innoextract": "https://lutris.net/files/tools/innoextract.tar.gz"
+      }
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/tmp/innoextract",
+          "file": "innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $installer --gog --exclude-temp --output-dir $CACHE/tmp/wic/",
+          "file": "$CACHE/tmp/innoextract/innoextract"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/tmp/wic/game/",
+          "dst": "$GAMEDIR/drive_c/GOG Games/World in Conflict/"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing d3dx9",
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      }
+    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
@@ -34,43 +66,11 @@
     "wine": {
       "dxvk": true
     },
-    "installer": [
-      {
-        "extract": {
-          "file": "innoextract",
-          "dst": "$CACHE/tmp/innoextract"
-        }
-      },
-      {
-        "execute": {
-          "file": "$CACHE/tmp/innoextract/innoextract",
-          "args": "--extract $installer --gog --exclude-temp --output-dir $CACHE/tmp/wic/"
-        }
-      },
-      {
-        "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/World in Conflict/",
-          "src": "$CACHE/tmp/wic/game/"
-        }
-      },
-      {
-        "task": {
-          "app": "d3dx9",
-          "arch": "win32",
-          "description": "Installing d3dx9",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
-    "files": [
-      {
-        "installer": "N/A:Please select the GOG.com Windows installer"
-      },
-      {
-        "innoextract": "https://lutris.net/files/tools/innoextract.tar.gz"
-      }
-    ]
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/World in Conflict/wic.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Please select the GOG.com Windows installer\n- innoextract: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/World in Conflict/wic.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/tmp/innoextract\n    file: innoextract\n- execute:\n    args: --extract $installer --gog --exclude-temp --output-dir $CACHE/tmp/wic/\n    file: $CACHE/tmp/innoextract/innoextract\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/World in Conflict/\n    src: $CACHE/tmp/wic/game/\n- task:\n    app: d3dx9\n    arch: win32\n    description: Installing d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

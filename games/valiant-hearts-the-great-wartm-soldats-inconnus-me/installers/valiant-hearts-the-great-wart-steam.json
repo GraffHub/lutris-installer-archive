@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "appid": 260230,
-      "prefix": "$GAMEDIR/prefix"
-    },
     "installer": [
       {
         "task": {
@@ -34,14 +30,14 @@
       },
       {
         "extract": {
-          "file": "dx2010",
-          "dst": "$CACHE/dxsetup"
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
         }
       },
       {
         "task": {
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
@@ -55,9 +51,9 @@
       },
       {
         "task": {
-          "executable": "uplay",
           "arch": "win64",
           "args": "/S",
+          "executable": "uplay",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
@@ -77,7 +73,11 @@
       {
         "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
-    ]
+    ],
+    "game": {
+      "appid": 260230,
+      "prefix": "$GAMEDIR/prefix"
+    }
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  appid: 260230\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010 corefonts win7\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\n"
 }

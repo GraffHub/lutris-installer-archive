@@ -1,0 +1,71 @@
+{
+  "id": 18947,
+  "game_id": 27816,
+  "game_slug": "doom-eternal",
+  "name": "DOOM Eternal",
+  "year": 2019,
+  "user": "bigberny",
+  "runner": "winesteam",
+  "slug": "doom-eternal-doom-eternal",
+  "version": "Doom Eternal",
+  "description": "Steam version - PREDOWNLOAD",
+  "notes": "Atm just for predownloading steam version, will try running and changing script on release",
+  "created_at": "2020-03-18T23:31:31.930000Z",
+  "updated_at": "2020-03-19T02:30:51.540724Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 782330,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "app": "win7",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "app": "vcrun2015",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$chroma"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/CChromaEditorLibrary.dll",
+          "dst": "$GAMEDIR"
+        }
+      }
+    ],
+    "files": [
+      {
+        "chroma": "https://github.com/Riesi/CChromaEditor/files/2277158/CChromaEditorLibrary.zip"
+      }
+    ],
+    "system": {
+      "disable_runtime": true,
+      "pulse_latency": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "+r_renderapi 0",
+      "appid": 782330,
+      "prefix": "$GAMEDIR/prefix"
+    }
+  },
+  "content": "files:\n- chroma: https://github.com/Riesi/CChromaEditor/files/2277158/CChromaEditorLibrary.zip\ngame:\n  appid: 782330\n  arch: win64\n  args: +r_renderapi 0\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2015\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE\n    file: $chroma\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/CChromaEditorLibrary.dll\nsystem:\n  disable_runtime: true\n  pulse_latency: true\n"
+}

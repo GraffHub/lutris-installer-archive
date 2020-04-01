@@ -1,0 +1,106 @@
+{
+  "id": 19105,
+  "game_id": 26293,
+  "game_slug": "mystina",
+  "name": "Mystina",
+  "year": 2002,
+  "user": "iHad169",
+  "runner": "browser",
+  "slug": "mystina-hongkong",
+  "version": "HongKong",
+  "description": "https://mo.alta.hk/loginpage/",
+  "notes": "",
+  "created_at": "2020-03-24T02:53:11.876361Z",
+  "updated_at": "2020-03-24T02:53:11.876387Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting up wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing CJK Fonts for proper Asian font display",
+          "app": "cjkfonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "merge": {
+          "src": "browser",
+          "dst": "$GAMEDIR/drive_c/"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "$GAMEDIR/drive_c/GoogleChromePortable64_80.0.3987.149_online.paf.exe",
+          "description": "Installing Chrome...\nPLEASE close the Chrome after it opens to finish installation!",
+          "name": "wineexec"
+        }
+      },
+      {
+        "merge": {
+          "src": "installer",
+          "dst": "$GAMEDIR/drive_c/"
+        }
+      },
+      {
+        "extract": {
+          "format": "zip",
+          "dst": "$GAMEDIR/drive_c/MO_Setup/",
+          "file": "$GAMEDIR/drive_c/MO_Setup_20191206.zip"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "$GAMEDIR/drive_c/MO_Setup/Setup.exe",
+          "description": "Installing Mystina...\nPLEASE close the Mystina after it opens to finish installation!",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "browser": "https://nchc.dl.sourceforge.net/project/portableapps/Google%20Chrome%20Portable/GoogleChromePortable64_80.0.3987.149_online.paf.exe"
+      },
+      {
+        "installer": "http://dl.altamm.com.hk/mystina/MO_Setup_20191206.zip"
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-fshack-5.2-x86_64",
+      "d9vk": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-incognito --app=https://mo.alta.hk/loginpage/",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GoogleChromePortable64/GoogleChromePortable.exe"
+    }
+  },
+  "content": "files:\n- browser: https://nchc.dl.sourceforge.net/project/portableapps/Google%20Chrome%20Portable/GoogleChromePortable64_80.0.3987.149_online.paf.exe\n- installer: http://dl.altamm.com.hk/mystina/MO_Setup_20191206.zip\ngame:\n  arch: win64\n  args: -incognito --app=https://mo.alta.hk/loginpage/\n  exe: drive_c/GoogleChromePortable64/GoogleChromePortable.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Setting up wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: cjkfonts\n    arch: win64\n    description: Installing CJK Fonts for proper Asian font display\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/\n    src: browser\n- task:\n    arch: win64\n    description: 'Installing Chrome...\n\n      PLEASE close the Chrome after it opens to finish installation!'\n    executable: $GAMEDIR/drive_c/GoogleChromePortable64_80.0.3987.149_online.paf.exe\n    name: wineexec\n- merge:\n    dst: $GAMEDIR/drive_c/\n    src: installer\n- extract:\n    dst: $GAMEDIR/drive_c/MO_Setup/\n    file: $GAMEDIR/drive_c/MO_Setup_20191206.zip\n    format: zip\n- task:\n    arch: win64\n    description: 'Installing Mystina...\n\n      PLEASE close the Mystina after it opens to finish installation!'\n    executable: $GAMEDIR/drive_c/MO_Setup/Setup.exe\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  d9vk: true\n  dxvk: true\n  esync: true\n  version: lutris-fshack-5.2-x86_64\n"
+}

@@ -21,14 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Future Pinball/Future Pinball.exe",
-      "args": "/open \"C:\\Future Pinball\\Tables\\back_to_the_future_ultimate_3_0_mod-table\\BTTFMOD.fpt\" /play",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "Desktop": true
-    },
     "installer": [
       {
         "task": {
@@ -39,26 +31,26 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Future Pinball/",
-          "src": "fpball"
+          "src": "fpball",
+          "dst": "$GAMEDIR/drive_c/Future Pinball/"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Future Pinball/Tables/back_to_the_future_ultimate_3_0_mod-table/",
-          "src": "table1"
+          "src": "table1",
+          "dst": "$GAMEDIR/drive_c/Future Pinball/Tables/back_to_the_future_ultimate_3_0_mod-table/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/tmp",
-          "src": "regfile"
+          "src": "regfile",
+          "dst": "$GAMEDIR/drive_c/tmp"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/tmp/",
-          "src": "script"
+          "src": "script",
+          "dst": "$GAMEDIR/drive_c/tmp/"
         }
       },
       {
@@ -66,34 +58,34 @@
       },
       {
         "execute": {
-          "file": "$GAMEDIR/drive_c/tmp/resolution.sh",
-          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT"
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
+          "file": "$GAMEDIR/drive_c/tmp/resolution.sh"
         }
       },
       {
         "task": {
-          "executable": "regedit",
           "args": "$GAMEDIR/drive_c/tmp/fp2.reg",
+          "executable": "regedit",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Future Pinball/gamepad profiles/",
-          "src": "gpreadme"
+          "src": "gpreadme",
+          "dst": "$GAMEDIR/drive_c/Future Pinball/gamepad profiles/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Future Pinball/gamepad profiles/",
-          "src": "gpx360"
+          "src": "gpx360",
+          "dst": "$GAMEDIR/drive_c/Future Pinball/gamepad profiles/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Future Pinball/gamepad profiles/",
-          "src": "gpsteam"
+          "src": "gpsteam",
+          "dst": "$GAMEDIR/drive_c/Future Pinball/gamepad profiles/"
         }
       },
       {
@@ -119,34 +111,34 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "arch": "win64",
+          "key": "csmt",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
-          "value": "00000000",
-          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "Y",
+          "arch": "win64",
+          "key": "EAXEnabled",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
-          "value": "Y",
-          "key": "EAXEnabled",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "arch": "win64",
+          "key": "background",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "value": "0 0 0",
-          "key": "background",
           "type": "REG_SZ"
         }
       }
@@ -173,7 +165,15 @@
       {
         "gpsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_steam.sccprofile"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "game": {
+      "args": "/open \"C:\\Future Pinball\\Tables\\back_to_the_future_ultimate_3_0_mod-table\\BTTFMOD.fpt\" /play",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Future Pinball/Future Pinball.exe"
+    }
   },
   "content": "files:\n- fpball: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp_install.zip\n- regfile: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/fp.reg\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/resolution.sh\n- table1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/back_to_the_future_ultimate_3_0_mod-table.zip\n- gpreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_gamepad_readme.html\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_x360.gamecontroller.amgp\n- gpsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Future%20Pinball/gamepad%20profiles/fp_steam.sccprofile\ngame:\n  args: /open \"C:\\Future Pinball\\Tables\\back_to_the_future_ultimate_3_0_mod-table\\BTTFMOD.fpt\"\n    /play\n  exe: drive_c/Future Pinball/Future Pinball.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Future Pinball/\n    src: fpball\n- extract:\n    dst: $GAMEDIR/drive_c/Future Pinball/Tables/back_to_the_future_ultimate_3_0_mod-table/\n    src: table1\n- merge:\n    dst: $GAMEDIR/drive_c/tmp\n    src: regfile\n- merge:\n    dst: $GAMEDIR/drive_c/tmp/\n    src: script\n- chmodx: $GAMEDIR/drive_c/tmp/resolution.sh\n- execute:\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: $GAMEDIR/drive_c/tmp/resolution.sh\n- task:\n    args: $GAMEDIR/drive_c/tmp/fp2.reg\n    executable: regedit\n    name: wineexec\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Future Pinball/gamepad profiles/\n    src: gpreadme\n- merge:\n    dst: $GAMEDIR/drive_c/Future Pinball/gamepad profiles/\n    src: gpx360\n- merge:\n    dst: $GAMEDIR/drive_c/Future Pinball/gamepad profiles/\n    src: gpsteam\n- task:\n    app: oleaut32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun6\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wsh57\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: EAXEnabled\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

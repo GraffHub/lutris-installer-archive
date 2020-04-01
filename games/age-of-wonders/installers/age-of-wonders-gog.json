@@ -21,73 +21,7 @@
   "gogslug": "age_of_wonders",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR"
-    },
     "exe": "drive_c/GOG Games/Age of Wonders/AoW.exe",
-    "installer": [
-      {
-        "extract": {
-          "file": "$indeo_codec",
-          "dst": "$GAMEDIR/drive_c/windows/system32/"
-        }
-      },
-      {
-        "task": {
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\SharedDLLs",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "value": 1,
-          "key": "C:\\\\windows\\\\system32\\\\iac25_32.ax",
-          "type": "REG_DWORD"
-        }
-      },
-      {
-        "task": {
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\SharedDLLs",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "value": 1,
-          "key": "C:\\\\windows\\\\system32\\\\iacenc.dll",
-          "type": "REG_DWORD"
-        }
-      },
-      {
-        "task": {
-          "value": "C:\\\\windows\\\\system32\\\\iac25_32.ax",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32",
-          "key": "msacm.iac2",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
-          "value": "ir32_32.dll",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32",
-          "key": "vidc.iv31",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
-          "value": "ir32_32.dll",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32",
-          "key": "iv32",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
-          "executable": "aow",
-          "args": null,
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "aow": "N/A:Select the Windows installer downloaded from GOG"
@@ -95,7 +29,73 @@
       {
         "indeo_codec": "http://lutris.net/files/games/age-of-wonders/indeo_codec.tar.gz"
       }
-    ]
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/windows/system32/",
+          "file": "$indeo_codec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": 1,
+          "key": "C:\\\\windows\\\\system32\\\\iac25_32.ax",
+          "name": "set_regedit",
+          "type": "REG_DWORD",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\SharedDLLs"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": 1,
+          "key": "C:\\\\windows\\\\system32\\\\iacenc.dll",
+          "name": "set_regedit",
+          "type": "REG_DWORD",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\SharedDLLs"
+        }
+      },
+      {
+        "task": {
+          "key": "msacm.iac2",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32",
+          "prefix": "$GAMEDIR",
+          "value": "C:\\\\windows\\\\system32\\\\iac25_32.ax"
+        }
+      },
+      {
+        "task": {
+          "key": "vidc.iv31",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32",
+          "prefix": "$GAMEDIR",
+          "value": "ir32_32.dll"
+        }
+      },
+      {
+        "task": {
+          "key": "iv32",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32",
+          "prefix": "$GAMEDIR",
+          "value": "ir32_32.dll"
+        }
+      },
+      {
+        "task": {
+          "args": null,
+          "executable": "aow",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR"
+    }
   },
   "content": "exe: drive_c/GOG Games/Age of Wonders/AoW.exe\nfiles:\n- aow: N/A:Select the Windows installer downloaded from GOG\n- indeo_codec: http://lutris.net/files/games/age-of-wonders/indeo_codec.tar.gz\ngame:\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/windows/system32/\n    file: $indeo_codec\n- task:\n    key: C:\\\\windows\\\\system32\\\\iac25_32.ax\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\SharedDLLs\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 1\n- task:\n    key: C:\\\\windows\\\\system32\\\\iacenc.dll\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows\\CurrentVersion\\SharedDLLs\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 1\n- task:\n    key: msacm.iac2\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32\n    prefix: $GAMEDIR\n    value: C:\\\\windows\\\\system32\\\\iac25_32.ax\n- task:\n    key: vidc.iv31\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32\n    prefix: $GAMEDIR\n    value: ir32_32.dll\n- task:\n    key: iv32\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32\n    prefix: $GAMEDIR\n    value: ir32_32.dll\n- task:\n    args: null\n    executable: aow\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

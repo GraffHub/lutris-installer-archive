@@ -21,18 +21,6 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "1024x768",
-      "overrides": {
-        "ddraw.dll": "n"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -60,7 +48,19 @@
       {
         "installer": "N/A:Select the game's setup file"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "overrides": {
+        "ddraw.dll": "n"
+      },
+      "WineDesktop": "1024x768"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  overrides:\n    ddraw.dll: n\n"
 }

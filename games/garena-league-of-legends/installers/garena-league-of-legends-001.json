@@ -21,23 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/Garena/Garena/Garena.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_LOG_LEVEL": "none",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "setup": "http://cdn.garenanow.com/gxx/pc/gameinst/Garena-v2.0-LOLPH.exe"
       }
-    },
-    "wine": {
-      "MouseWarpOverride": "enable",
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -49,16 +37,16 @@
       },
       {
         "task": {
-          "app": "d3dcompiler_43 d3dx9",
           "arch": "win32",
+          "app": "d3dcompiler_43 d3dx9",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "setup",
           "arch": "win32",
+          "executable": "setup",
           "description": "Installing Garena",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -73,22 +61,22 @@
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "Y",
-          "key": "GrabFullScreen"
+          "arch": "win32",
+          "key": "GrabFullScreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "N",
-          "key": "UseXVidMode"
+          "arch": "win32",
+          "key": "UseXVidMode",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
@@ -99,11 +87,23 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup": "http://cdn.garenanow.com/gxx/pc/gameinst/Garena-v2.0-LOLPH.exe"
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
       }
-    ]
+    },
+    "wine": {
+      "MouseWarpOverride": "enable",
+      "dxvk": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Garena/Garena/Garena.exe"
+    }
   },
   "content": "files:\r\n- setup: http://cdn.garenanow.com/gxx/pc/gameinst/Garena-v2.0-LOLPH.exe\r\ngame:\r\n  exe: $GAMEDIR/drive_c/Program Files/Garena/Garena/Garena.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dcompiler_43 d3dx9\r\n    arch: win32\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: Installing Garena\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    key: GrabFullScreen\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\r\n    prefix: $GAMEDIR\r\n    value: Y\r\n- task:\r\n    arch: win32\r\n    key: UseXVidMode\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\r\n    prefix: $GAMEDIR\r\n    value: N\r\n- task:\r\n    arch: win32\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  disable_compositor: true\r\n  env:\r\n    DXVK_LOG_LEVEL: none\r\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  MouseWarpOverride: enable\r\n  dxvk: true"
 }

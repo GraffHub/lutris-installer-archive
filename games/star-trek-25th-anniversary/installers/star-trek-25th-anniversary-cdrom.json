@@ -21,14 +21,11 @@
   "gogslug": "star_trek_25th_anniversary",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/startrek.conf"
-    },
     "installer": [
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1"
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1",
+          "file": "mkdir"
         }
       },
       {
@@ -42,8 +39,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR/CDD/DISC1"
+          "args": "$game $GAMEDIR/CDD/DISC1",
+          "file": "$CACHE/bulkcopy.sh"
         }
       },
       {
@@ -60,15 +57,15 @@
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR/HDD",
           "config_file": "$GAMEDIR/startrek-setup.conf",
+          "working_dir": "$GAMEDIR/HDD",
           "name": "dosexec"
         }
       },
       {
         "execute": {
-          "file": "/bin/chmod",
-          "args": "-R 775  \"$GAMEDIR\""
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
         }
       }
     ],
@@ -76,7 +73,10 @@
       {
         "game": "N/A:Select the file Install.EXE"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/startrek.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select the file Install.EXE\ngame:\n  main_file: $GAMEDIR/startrek.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/CDD/DISC1\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t cdrom\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd TREKCD\n\n      STARTREK.exe\n\n      exit'\n    file: $GAMEDIR/startrek.conf\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t cdrom\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      D:\n\n      INSTALL.EXE\n\n      C:\n\n      cd TREKCD\n\n      Setup.exe\n\n      exit'\n    file: $GAMEDIR/startrek-setup.conf\n- task:\n    config_file: $GAMEDIR/startrek-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
 }

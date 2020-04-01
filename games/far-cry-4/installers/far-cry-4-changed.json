@@ -1,0 +1,110 @@
+{
+  "id": 19256,
+  "game_id": 3708,
+  "game_slug": "far-cry-4",
+  "name": "Far Cry 4",
+  "year": 2014,
+  "user": "shommy",
+  "runner": "wine",
+  "slug": "far-cry-4-changed",
+  "version": "Changed",
+  "description": "Only installs Uplay you must install Far Cry 4 manually.",
+  "notes": "Uncheck \"Enable in-game overlay for supported games\" in uplay settings!\r\nAdd \"FarCry4.exe\" in winecfg and set windows version to \"winexp\" to fix audio playback!",
+  "created_at": "2020-03-29T09:59:22.219000Z",
+  "updated_at": "2020-03-29T17:03:18.559301Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 298110,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "input_menu": {
+          "id": "GPU",
+          "options": [
+            {
+              "dxgi.maxFrameLatency = 1": "AMD"
+            },
+            {
+              "dxgi.customVendorId = 10de\ndxgi.nvapiHack = False\ndxgi.FrameLatency = 1": "Nvidia"
+            }
+          ],
+          "description": "Setting DXVK workarounds please choose your GPU:",
+          "preselect": "dxgi.maxFrameLatency = 1"
+        }
+      },
+      {
+        "write_file": {
+          "content": "$INPUT_GPU",
+          "file": "$GAMEDIR/dxvk.conf"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "app": "arial win7 d3dcompiler_43",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "executable": "uplay",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "uplay://launch/420/0 -skipintro",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    }
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  args: uplay://launch/420/0 -skipintro\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- input_menu:\n    description: 'Setting DXVK workarounds please choose your GPU:'\n    id: GPU\n    options:\n    - dxgi.maxFrameLatency = 1: AMD\n    - ? 'dxgi.customVendorId = 10de\n\n        dxgi.nvapiHack = False\n\n        dxgi.FrameLatency = 1'\n      : Nvidia\n    preselect: dxgi.maxFrameLatency = 1\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial win7 d3dcompiler_43\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\nwine:\n  dxvk: true\n  esync: true\n"
+}

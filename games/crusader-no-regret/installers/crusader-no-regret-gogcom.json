@@ -21,76 +21,71 @@
   "gogslug": "crusader_no_regret",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/dosboxREGRET_single.conf",
-      "game_id": "crusader-no-regret",
-      "config_file": "$GAMEDIR/dosboxREGRET.conf"
-    },
     "installer": [
       {
         "extract": {
-          "file": "$fileextract",
+          "description": "Extracting innoextract application",
           "dst": "$CACHE",
-          "description": "Extracting innoextract application"
+          "file": "$fileextract"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE/game\" \"$installer\"",
           "description": "Extracting game data",
-          "args": "-d \"$CACHE/game\" \"$installer\""
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/game"
+          "src": "$CACHE/game",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR",
-          "src": "$GAMEDIR/__support/app/dosboxREGRET.conf"
+          "src": "$GAMEDIR/__support/app/dosboxREGRET.conf",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxREGRET.conf",
-          "value": "opengl",
+          "section": "sdl",
           "key": "output",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosboxREGRET.conf",
+          "value": "opengl"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxREGRET.conf",
-          "value": true,
+          "section": "sdl",
           "key": "fulldouble",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosboxREGRET.conf",
+          "value": true
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxREGRET.conf",
-          "value": "desktop",
+          "section": "sdl",
           "key": "fullresolution",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosboxREGRET.conf",
+          "value": "desktop"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxREGRET.conf",
-          "value": true,
+          "section": "render",
           "key": "aspect",
-          "section": "render"
+          "file": "$GAMEDIR/dosboxREGRET.conf",
+          "value": true
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxREGRET.conf",
-          "value": "normal2x",
+          "section": "render",
           "key": "scaler",
-          "section": "render"
+          "file": "$GAMEDIR/dosboxREGRET.conf",
+          "value": "normal2x"
         }
       },
       {
@@ -107,7 +102,12 @@
       {
         "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
       }
-    ]
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxREGRET.conf",
+      "main_file": "$GAMEDIR/dosboxREGRET_single.conf",
+      "game_id": "crusader-no-regret"
+    }
   },
   "content": "files:\n- installer: \"N/A:Select the GOG.com game setup file. Download it here: \\nhttps://www.gog.com/downloads/crusader_no_regret/en1installer0\\n\"\n- fileextract: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/dosboxREGRET.conf\n  game_id: crusader-no-regret\n  main_file: $GAMEDIR/dosboxREGRET_single.conf\ninstaller:\n- extract:\n    description: Extracting innoextract application\n    dst: $CACHE\n    file: $fileextract\n- execute:\n    args: -d \"$CACHE/game\" \"$installer\"\n    description: Extracting game data\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/game\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/__support/app/dosboxREGRET.conf\n- write_config:\n    file: $GAMEDIR/dosboxREGRET.conf\n    key: output\n    section: sdl\n    value: opengl\n- write_config:\n    file: $GAMEDIR/dosboxREGRET.conf\n    key: fulldouble\n    section: sdl\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxREGRET.conf\n    key: fullresolution\n    section: sdl\n    value: desktop\n- write_config:\n    file: $GAMEDIR/dosboxREGRET.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxREGRET.conf\n    key: scaler\n    section: render\n    value: normal2x\n- write_file:\n    content: ' [ipx] ipx=false\n\n      [autoexec]\n\n      mount c .\n\n      c:\n\n      imgmount d game.gog -t iso -fs iso\n\n      regret.exe\n\n      exit '\n    file: $GAMEDIR/dosboxREGRET_single.conf\n"
 }

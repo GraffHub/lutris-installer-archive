@@ -21,20 +21,11 @@
   "gogslug": "gwent_the_witcher_card_game",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
-      "arch": "win64",
-      "args": "/runWithoutUpdating /deelevated",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "galaxy": "https://cdn.gog.com/open/galaxy/client/setup_galaxy_1.2.54.23.exe"
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -45,25 +36,25 @@
       },
       {
         "task": {
-          "app": "corefonts vcrun2012 vcrun2013 vcrun2015",
           "arch": "win64",
+          "app": "corefonts vcrun2012 vcrun2013 vcrun2015",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "galaxy",
           "arch": "win64",
           "args": "/silent",
+          "executable": "galaxy",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win64",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -76,11 +67,20 @@
         }
       }
     ],
-    "files": [
-      {
-        "galaxy": "https://cdn.gog.com/open/galaxy/client/setup_galaxy_1.2.54.23.exe"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "/runWithoutUpdating /deelevated",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe"
+    }
   },
   "content": "files:\n- galaxy: https://cdn.gog.com/open/galaxy/client/setup_galaxy_1.2.54.23.exe\ngame:\n  arch: win64\n  args: /runWithoutUpdating /deelevated\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2012 vcrun2013 vcrun2015\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: galaxy\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

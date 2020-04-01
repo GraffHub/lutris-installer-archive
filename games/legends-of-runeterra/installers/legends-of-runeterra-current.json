@@ -22,19 +22,11 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "game": {
-        "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe",
-        "args": "--launch-product=bacon --launch-patchline=live",
-        "prefix": "$GAMEDIR"
-      },
-      "system": {
-        "disable_compositor": true
-      },
-      "wine": {
-        "MouseWarpOverride": "disable",
-        "version": "lutris-lol-5.0-x86_64",
-        "dxvk": true
-      },
+      "files": [
+        {
+          "lor_installer": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
+        }
+      ],
       "installer": [
         {
           "task": {
@@ -46,19 +38,27 @@
         },
         {
           "task": {
-            "executable": "lor_installer",
             "arch": "win64",
+            "executable": "lor_installer",
             "description": "Installing Legends of Runeterra",
             "prefix": "$GAMEDIR",
             "name": "wineexec"
           }
         }
       ],
-      "files": [
-        {
-          "lor_installer": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
-        }
-      ]
+      "system": {
+        "disable_compositor": true
+      },
+      "wine": {
+        "MouseWarpOverride": "disable",
+        "dxvk": true,
+        "version": "lutris-lol-5.0-x86_64"
+      },
+      "game": {
+        "args": "--launch-product=bacon --launch-patchline=live",
+        "prefix": "$GAMEDIR",
+        "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe"
+      }
     }
   },
   "content": "script:\n  files:\n  - lor_installer: https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe\n  game:\n    args: --launch-product=bacon --launch-patchline=live\n    exe: $GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe\n    prefix: $GAMEDIR\n  installer:\n  - task:\n      arch: win64\n      description: Creating Wine prefix\n      name: create_prefix\n      prefix: $GAMEDIR\n  - task:\n      arch: win64\n      description: Installing Legends of Runeterra\n      executable: lor_installer\n      name: wineexec\n      prefix: $GAMEDIR\n  system:\n    disable_compositor: true\n  wine:\n    MouseWarpOverride: disable\n    dxvk: true\n    version: lutris-lol-5.0-x86_64\n"

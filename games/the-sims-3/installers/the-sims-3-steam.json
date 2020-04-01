@@ -21,59 +21,63 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "winesteam": {
+      "dxvk": true,
+      "esync": true
+    },
     "game": {
-      "appid": 47890,
       "arch": "win64",
+      "appid": 47890,
       "prefix": "$GAMEDIR/prefix"
     },
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/prefix",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
         "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/prefix",
-        "WINE_LARGE_ADDRESS_AWARE": 1
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/prefix"
       }
     },
     "installer": [
       {
         "task": {
-          "install_mono": false,
           "arch": "win64",
           "description": "Creating prefix",
+          "install_mono": false,
           "prefix": "$GAMEDIR/prefix",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "app": "dotnet20 d3dcompiler_43 d3dx9",
-          "arch": "win64",
-          "description": "Installing dependencies",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks",
-          "silent": true
+          "arch": "win64",
+          "silent": true,
+          "description": "Installing dependencies",
+          "app": "dotnet20 d3dcompiler_43 d3dx9"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting version to XP for Sims3LauncherW...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe",
           "value": "winxp",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting version to XP for Sims3LauncherW...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting version to 7 for default...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win7",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting version to 7 for default...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -82,11 +86,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "winesteam": {
-      "esync": true,
-      "dxvk": true
-    }
+    ]
   },
   "content": "game:\n  appid: 47890\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet20 d3dcompiler_43 d3dx9\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n    silent: true\n- task:\n    arch: win64\n    description: Setting version to XP for Sims3LauncherW...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe\n    prefix: $GAMEDIR/prefix\n    value: winxp\n- task:\n    arch: win64\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR/prefix\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_STATE_CACHE_PATH: $GAMEDIR/prefix\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/prefix\nwinesteam:\n  dxvk: true\n  esync: true\n"
 }

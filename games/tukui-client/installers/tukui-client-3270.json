@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Tukui/Tukui Client/Tukui Client.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -42,8 +37,8 @@
       },
       {
         "extract": {
-          "file": "archive",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "archive"
         }
       },
       {
@@ -58,7 +53,12 @@
       {
         "archive": "https://www.tukui.org/client/windows/tukui-windows-3270.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Tukui/Tukui Client/Tukui Client.exe"
+    }
   },
   "content": "files:\n- archive: https://www.tukui.org/client/windows/tukui-windows-3270.zip\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Tukui/Tukui Client/Tukui Client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet461\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: archive\n- task:\n    executable: $CACHE/Client Install.msi\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

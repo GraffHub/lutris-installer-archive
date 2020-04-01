@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,26 +31,26 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "app": "corefonts",
           "silent": true,
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/silent",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -63,9 +58,9 @@
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -75,7 +70,12 @@
       {
         "game": "https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/friking-shark/FrikingSharkSetup-v1.01-Beta.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe"
+    }
   },
   "content": "files:\n- game: https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/friking-shark/FrikingSharkSetup-v1.01-Beta.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Friking Shark 3D/Bin/Release/GameEngine.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /silent\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

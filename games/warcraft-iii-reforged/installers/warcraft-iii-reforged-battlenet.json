@@ -1,0 +1,148 @@
+{
+  "id": 16572,
+  "game_id": 23383,
+  "game_slug": "warcraft-iii-reforged",
+  "name": "Warcraft III: Reforged",
+  "year": 2020,
+  "user": "jkoehler",
+  "runner": "wine",
+  "slug": "warcraft-iii-reforged-battlenet",
+  "version": "Battle.Net",
+  "description": null,
+  "notes": "**CONFIGURE AND INSTALL THE DEPENDENCIES FIRST**\r\nInstructions for Vulkan support: <a href=\"https://github.com/lutris/lutris/wiki/Installing-drivers\">https://github.com/lutris/lutris/wiki/Installing-drivers</a>\r\n\r\nInstructions for proper functionality of Battle.Net (+ common problems) <a href=\"https://github.com/lutris/lutris/wiki/Game:-Blizzard-App\">https://github.com/lutris/lutris/wiki/Game:-Blizzard-App</a>\r\n\r\nIf the game is laggy you can switch between different windowmodes from the command line. This script defaults to fullscreen.\r\n-windowmode fullscreen\r\n-windowmode windowed\r\n\r\nMore info on command line options can be found here:\r\n<a href=\"https://us.forums.blizzard.com/en/warcraft3/t/1-31-0-patch-notes/5721\">https://us.forums.blizzard.com/en/warcraft3/t/1-31-0-patch-notes/5721</a>",
+  "created_at": "2019-11-02T20:53:20.883000Z",
+  "updated_at": "2020-03-30T13:42:35.112619Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winetricks",
+          "arch": "win64",
+          "silent": true,
+          "description": "Installing Arial font...",
+          "app": "arial"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "win10",
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "write_json": {
+          "description": "Writing a Battle.Net config file",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
+          "data": {
+            "w3": {
+              "AdditionalLaunchArguments": "-windowmode fullscreen"
+            },
+            "Client": {
+              "GameSearch": {
+                "BackgroundSearch": "true"
+              },
+              "GameLaunchWindowBehavior": "2",
+              "Sound": {
+                "Enabled": "false"
+              },
+              "HardwareAcceleration": "false",
+              "Streaming": {
+                "StreamingEnabled": "false"
+              }
+            }
+          }
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "va",
+          "arch": "win64",
+          "key": "backend",
+          "name": "set_regedit",
+          "description": "Wine Staging: Enabling DXVA2",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
+          "executable": "setup",
+          "description": "Installing Blizzard App. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window.",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "system": {
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi": "disabled",
+        "nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "--exec=\"launch W3\"",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net.exe"
+    }
+  },
+  "content": "files:\n- setup: http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe\ngame:\n  arch: win64\n  args: --exec=\"launch W3\"\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        GameSearch:\n          BackgroundSearch: 'true'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n      w3:\n        AdditionalLaunchArguments: -windowmode fullscreen\n    description: Writing a Battle.Net config file\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing Blizzard App. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi: disabled\n    nvapi64: disabled\n"
+}

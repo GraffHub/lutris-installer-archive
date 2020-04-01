@@ -21,9 +21,16 @@
   "gogslug": "mafia_iii",
   "humblestoreid": "",
   "script": {
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64,winegstreamer": "disabled"
+      },
+      "dxvk": true
+    },
     "game": {
-      "appid": 360430,
       "arch": "win64",
+      "appid": 360430,
       "prefix": "$GAMEDIR/prefix"
     },
     "installer": [
@@ -36,32 +43,25 @@
       },
       {
         "task": {
-          "app": "dotnet472",
           "description": "Please wait while .NET 4.7.2 installs.",
+          "app": "dotnet472",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/launcher.orig",
-          "src": "$GAMEDIR/launcher.exe"
+          "src": "$GAMEDIR/launcher.exe",
+          "dst": "$GAMEDIR/launcher.orig"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/launcher.exe",
-          "src": "$GAMEDIR/mafia3.exe"
+          "src": "$GAMEDIR/mafia3.exe",
+          "dst": "$GAMEDIR/launcher.exe"
         }
       }
-    ],
-    "winesteam": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "nvapi,nvapi64,winegstreamer": "disabled"
-      },
-      "dxvk": true
-    }
+    ]
   },
   "content": "game:\n  appid: 360430\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet472\n    description: Please wait while .NET 4.7.2 installs.\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR/launcher.orig\n    src: $GAMEDIR/launcher.exe\n- move:\n    dst: $GAMEDIR/launcher.exe\n    src: $GAMEDIR/mafia3.exe\nwinesteam:\n  dxvk: true\n  overrides:\n    nvapi,nvapi64,winegstreamer: disabled\n    xaudio2_7: native,builtin\n"
 }

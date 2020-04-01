@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Champions Online.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,25 +31,25 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Champions Online.exe",
-          "src": "$game"
+          "src": "$game",
+          "dst": "$GAMEDIR/drive_c/Champions Online.exe"
         }
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -64,7 +59,12 @@
       {
         "game": "http://files.champions-online.com/launcher/Champions%20Online.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Champions Online.exe"
+    }
   },
   "content": "files:\n- game: http://files.champions-online.com/launcher/Champions%20Online.exe\ngame:\n  arch: win32\n  exe: drive_c/Champions Online.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- move:\n    dst: $GAMEDIR/drive_c/Champions Online.exe\n    src: $game\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

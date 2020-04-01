@@ -21,11 +21,18 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "dxvk": true
+    },
     "game": {
-      "appid": 619910,
       "arch": "win64",
+      "appid": 619910,
       "prefix": "$GAMEDIR/prefix"
     },
+    "requires": "just-cause-3-steam-w-dxvk",
     "system": {
       "env": {
         "DXVK_HUD": 0
@@ -42,38 +49,31 @@
       },
       {
         "task": {
-          "app": "xact",
           "arch": "win64",
+          "app": "xact",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "Y",
-          "key": "GrabFullscreen"
+          "arch": "win64",
+          "key": "GrabFullscreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win64",
+          "app": "win7",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       }
-    ],
-    "winesteam": {
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
-    "requires": "just-cause-3-steam-w-dxvk"
+    ]
   },
   "content": "game:\n  appid: 619910\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR/prefix\n    value: Y\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nrequires: just-cause-3-steam-w-dxvk\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

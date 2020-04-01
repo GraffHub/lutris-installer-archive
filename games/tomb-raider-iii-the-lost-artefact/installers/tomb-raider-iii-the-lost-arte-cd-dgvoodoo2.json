@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/TR3TLA/TR3TLAM1.BAT",
-      "prefix": "$GAMEDIR"
-    },
-    "custom-name": "Tomb Raider III - The Lost Artefact - CD",
-    "wine": {
-      "Desktop": true,
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -47,8 +38,8 @@
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/",
-          "src": "$DISC"
+          "src": "$DISC",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/"
         }
       },
       {
@@ -58,26 +49,26 @@
       },
       {
         "extract": {
-          "file": "arsunt",
-          "dst": "$GAMEDIR/drive_c/TR3TLA/"
+          "dst": "$GAMEDIR/drive_c/TR3TLA/",
+          "file": "arsunt"
         }
       },
       {
         "extract": {
-          "file": "dgv",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/",
+          "file": "dgv"
+        }
+      },
+      {
+        "copy": {
+          "src": "$GAMEDIR/drive_c/TR3TLA/MS/x86/DDraw.dll",
           "dst": "$GAMEDIR/drive_c/TR3TLA/"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/",
-          "src": "$GAMEDIR/drive_c/TR3TLA/MS/x86/DDraw.dll"
-        }
-      },
-      {
-        "copy": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/",
-          "src": "$GAMEDIR/drive_c/TR3TLA/MS/x86/D3DImm.dll"
+          "src": "$GAMEDIR/drive_c/TR3TLA/MS/x86/D3DImm.dll",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/"
         }
       },
       {
@@ -89,28 +80,28 @@
         "write_config": {
           "file": "$GAMEDIR/drive_c/TR3TLA/dgVoodoo.conf",
           "data": {
+            "DirectX": {
+              "Resolution": "max_qhd_isf",
+              "dgVoodooWatermark": false,
+              "ForceVerticalSync": true,
+              "VRAM": 256
+            },
             "General": {
               "CaptureMouse": false,
               "FullScreenMode": false,
               "ScalingMode": "stretched_ar"
-            },
-            "DirectX": {
-              "dgVoodooWatermark": false,
-              "ForceVerticalSync": true,
-              "VRAM": 256,
-              "Resolution": "max_qhd_isf"
             }
           }
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "native,builtin",
+          "arch": "win64",
+          "key": "ddraw",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "value": "native,builtin",
-          "key": "ddraw",
           "type": "REG_SZ"
         }
       },
@@ -123,70 +114,70 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/",
-          "src": "menu1"
+          "src": "menu1",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/",
-          "src": "menu2"
+          "src": "menu2",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/gamepad profiles/",
-          "src": "gpx360"
+          "src": "gpx360",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/gamepad profiles/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/gamepad profiles/",
-          "src": "gpsteam"
+          "src": "gpsteam",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/gamepad profiles/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/TR3TLA/gamepad profiles/",
-          "src": "gpreadme"
+          "src": "gpreadme",
+          "dst": "$GAMEDIR/drive_c/TR3TLA/gamepad profiles/"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/",
-          "src": "wpp"
+          "src": "wpp",
+          "dst": "$GAMEDIR/drive_c/"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "c:\\\\tr3tla.bmp",
+          "arch": "win64",
+          "key": "wallpaper",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
-          "value": "c:\\\\tr3tla.bmp",
-          "key": "wallpaper",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "arch": "win64",
+          "key": "background",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "value": "0 0 0",
-          "key": "background",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "arch": "win64",
+          "key": "csmt",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
-          "value": "00000000",
-          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
@@ -221,7 +212,16 @@
       {
         "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/tr3tla.bmp"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
+    },
+    "custom-name": "Tomb Raider III - The Lost Artefact - CD",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/TR3TLA/TR3TLAM1.BAT"
+    }
   },
   "content": "custom-name: Tomb Raider III - The Lost Artefact - CD\nfiles:\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- arsunt: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3_Arsunt_Patch_FOV_FMV_Sunglasses.zip\n- menu1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/TR3TLAM1.BAT\n- menu2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/TR3TLAM2.BAT\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/gamepad%20profiles/tr3_x360.gamecontroller.amgp\n- gpsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/gamepad%20profiles/tr3_steam.sccprofile\n- gpreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/gamepad%20profiles/tr3_gamepad_readme.html\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20The%20Lost%20Artefact/tr3tla.bmp\ngame:\n  exe: drive_c/TR3TLA/TR3TLAM1.BAT\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Please insert \"Tomb Raider III - The Lost Artefact\" CD and press\n      \"Autodetect\"\n    requires: data/trtla.dat\n- merge:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    src: $DISC\n- execute:\n    command: cd $GAMEDIR/drive_c/TR3TLA/; chmod -R u-x,g-x,o-x,u+X,u+w,g+r *\n- extract:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    file: arsunt\n- extract:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    src: $GAMEDIR/drive_c/TR3TLA/MS/x86/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    src: $GAMEDIR/drive_c/TR3TLA/MS/x86/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/TR3TLA/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/TR3TLA/dgVoodoo.conf\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    src: menu1\n- move:\n    dst: $GAMEDIR/drive_c/TR3TLA/\n    src: menu2\n- merge:\n    dst: $GAMEDIR/drive_c/TR3TLA/gamepad profiles/\n    src: gpx360\n- merge:\n    dst: $GAMEDIR/drive_c/TR3TLA/gamepad profiles/\n    src: gpsteam\n- merge:\n    dst: $GAMEDIR/drive_c/TR3TLA/gamepad profiles/\n    src: gpreadme\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr3tla.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- execute:\n    command: cd $GAMEDIR/drive_c/TR3TLA/; rm -f -r 3Dfx Doc MS DIRECTX Script autorun*\n      data1* DSETUP* _* setup.* layout.bin os.dat tomb3.exe DATA.TAG lang.dat Setup.exe\n      SETUP.INI\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

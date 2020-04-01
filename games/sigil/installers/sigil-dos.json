@@ -21,27 +21,23 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "sigil.bat",
-      "config_file": "dosbox_sigil.conf"
-    },
     "installer": [
       {
         "extract": {
-          "file": "sigil",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "sigil"
         }
       },
       {
         "extract": {
-          "file": "doom",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "file": "doom"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/SIGIL_COMPAT.wad"
+          "src": "$CACHE/SIGIL_COMPAT.wad",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -52,18 +48,18 @@
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosbox_sigil.conf",
-          "value": "max",
+          "section": "cpu",
           "key": "cycles",
-          "section": "cpu"
+          "file": "$GAMEDIR/dosbox_sigil.conf",
+          "value": "max"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosbox_sigil.conf",
-          "value": 512,
+          "section": "dosbox",
           "key": "memsize",
-          "section": "dosbox"
+          "file": "$GAMEDIR/dosbox_sigil.conf",
+          "value": 512
         }
       }
     ],
@@ -74,7 +70,11 @@
       {
         "sigil": "https://www.romerogames.ie/s/SIGIL_V1_1.zip"
       }
-    ]
+    ],
+    "game": {
+      "config_file": "dosbox_sigil.conf",
+      "main_file": "sigil.bat"
+    }
   },
   "content": "files:\n- doom: N/A:Please select the Ultimate Doom zip file.\n- sigil: https://www.romerogames.ie/s/SIGIL_V1_1.zip\ngame:\n  config_file: dosbox_sigil.conf\n  main_file: sigil.bat\ninstaller:\n- extract:\n    dst: $CACHE\n    file: sigil\n- extract:\n    dst: $GAMEDIR\n    file: doom\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/SIGIL_COMPAT.wad\n- write_file:\n    content: DOOM.EXE -file SIGIL_~1.wad\n    file: $GAMEDIR/sigil.bat\n- write_config:\n    file: $GAMEDIR/dosbox_sigil.conf\n    key: cycles\n    section: cpu\n    value: max\n- write_config:\n    file: $GAMEDIR/dosbox_sigil.conf\n    key: memsize\n    section: dosbox\n    value: 512\n"
 }

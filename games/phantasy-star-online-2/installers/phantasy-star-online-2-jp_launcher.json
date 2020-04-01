@@ -1,0 +1,100 @@
+{
+  "id": 19094,
+  "game_id": 20769,
+  "game_slug": "phantasy-star-online-2",
+  "name": "Phantasy Star Online 2",
+  "year": 2012,
+  "user": "exec.clouds",
+  "runner": "wine",
+  "slug": "phantasy-star-online-2-jp_launcher",
+  "version": "JP_launcher",
+  "description": "It installs the Japanese launcher of the game with 64bit wine.",
+  "notes": "~You will need to download the Windows installer manually, because I can't seam to make it download from the site. There is probably something that protects from bots idk.\r\nhttp://download.pso2.jp/client/PSO2_SETUP.exe\r\n\r\n~Also don't let it download the update because you don't need the game files and they weigh more that 60gb, since the only way to play is through cloud. Just click the cloud button.",
+  "created_at": "2020-03-23T12:48:51.274000Z",
+  "updated_at": "2020-03-24T16:06:49.181721Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 10 mode for Wine",
+          "app": "win10",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing WinHTTP",
+          "app": "winhttp",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing All Chinese, Japanese, Korean fonts and aliases",
+          "app": "cjkfonts",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "description": "Check for broken fonts",
+          "app": "fontfix",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "chmodx": "pso2_installer"
+      },
+      {
+        "task": {
+          "args": "--windowed",
+          "executable": "pso2_installer",
+          "description": "Installing Phantasy Star Online 2",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      }
+    ],
+    "files": [
+      {
+        "pso2_installer": "N/A:Please select the installer for this game"
+      }
+    ],
+    "wine": {
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/SEGA/PHANTASYSTARONLINE2/pso2_bin/pso2launcher.exe"
+    }
+  },
+  "content": "files:\n- pso2_installer: N/A:Please select the installer for this game\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/SEGA/PHANTASYSTARONLINE2/pso2_bin/pso2launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: winhttp\n    description: Installing WinHTTP\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: cjkfonts\n    description: Installing All Chinese, Japanese, Korean fonts and aliases\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: fontfix\n    description: Check for broken fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- chmodx: pso2_installer\n- task:\n    args: --windowed\n    description: Installing Phantasy Star Online 2\n    executable: pso2_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  esync: true\n"
+}

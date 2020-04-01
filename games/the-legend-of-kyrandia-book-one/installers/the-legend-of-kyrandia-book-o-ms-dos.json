@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "kyra1",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "write_file": {
@@ -37,8 +33,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR"
+          "args": "$game $GAMEDIR",
+          "file": "$CACHE/bulkcopy.sh"
         }
       }
     ],
@@ -46,7 +42,11 @@
       {
         "game": "N/A:Select a file with the extension *.pak"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "kyra1",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: N/A:Select a file with the extension *.pak\ngame:\n  game_id: kyra1\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/bulkcopy.sh\n"
 }

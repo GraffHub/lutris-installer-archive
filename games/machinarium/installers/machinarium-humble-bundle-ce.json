@@ -21,39 +21,31 @@
   "gogslug": "machinarium_collectors_edition",
   "humblestoreid": "machinarium",
   "script": {
-    "game": {
-      "exe": "drive_c/Machinarium/Machinarium.exe",
-      "prefix": "$GAMEDIR/"
-    },
-    "custom-name": "Machinarium Collector's Edition - Humble Bundle - Wine",
-    "wine": {
-      "Desktop": true
-    },
     "installer": [
       {
         "task": {
-          "install_gecko": false,
-          "arch": "win64",
-          "description": "Preparing wineprefix...",
           "prefix": "$GAMEDIR",
           "name": "create_prefix",
+          "arch": "win64",
+          "install_gecko": false,
+          "description": "Preparing wineprefix...",
           "install_mono": false
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Machinarium",
-          "src": "install"
+          "src": "install",
+          "dst": "$GAMEDIR/drive_c/Machinarium"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "arch": "win64",
+          "key": "background",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "value": "0 0 0",
-          "key": "background",
           "type": "REG_SZ"
         }
       }
@@ -62,7 +54,15 @@
       {
         "install": "N/A:Please select the Windows setup game file downloaded from Humble Bundle"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "custom-name": "Machinarium Collector's Edition - Humble Bundle - Wine",
+    "game": {
+      "prefix": "$GAMEDIR/",
+      "exe": "drive_c/Machinarium/Machinarium.exe"
+    }
   },
   "content": "custom-name: Machinarium Collector's Edition - Humble Bundle - Wine\nfiles:\n- install: N/A:Please select the Windows setup game file downloaded from Humble Bundle\ngame:\n  exe: drive_c/Machinarium/Machinarium.exe\n  prefix: $GAMEDIR/\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Machinarium\n    src: install\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

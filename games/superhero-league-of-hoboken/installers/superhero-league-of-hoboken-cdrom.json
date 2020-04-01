@@ -21,14 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/hoboken.conf"
-    },
     "installer": [
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISC1"
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISC1",
+          "file": "mkdir"
         }
       },
       {
@@ -42,14 +39,14 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR/CDD/DISC1"
+          "args": "$game $GAMEDIR/CDD/DISC1",
+          "file": "$CACHE/bulkcopy.sh"
         }
       },
       {
         "execute": {
-          "file": "/bin/chmod",
-          "args": "-R 775  \"$GAMEDIR\""
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
         }
       },
       {
@@ -66,8 +63,8 @@
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR/HDD",
           "config_file": "$GAMEDIR/hoboken-setup.conf",
+          "working_dir": "$GAMEDIR/HDD",
           "name": "dosexec"
         }
       }
@@ -76,7 +73,10 @@
       {
         "game": "N/A:Select the file Install.bat"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/hoboken.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select the file Install.bat\ngame:\n  main_file: $GAMEDIR/hoboken.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISC1\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/CDD/DISC1\n    file: $CACHE/bulkcopy.sh\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t cdrom\n\n      C:\n\n      cd HOBOKEN\n\n      SLH.EXE\n\n      exit'\n    file: $GAMEDIR/hoboken.conf\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t cdrom\n\n      D:\n\n      install\n\n      exit'\n    file: $GAMEDIR/hoboken-setup.conf\n- task:\n    config_file: $GAMEDIR/hoboken-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD\n"
 }

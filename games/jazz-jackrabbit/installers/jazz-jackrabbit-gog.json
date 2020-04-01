@@ -21,37 +21,30 @@
   "gogslug": "jazz_jackrabbit_collection",
   "humblestoreid": "",
   "script": {
-    "dosbox": {
-      "scaler": "normal3x"
-    },
-    "game": {
-      "main_file": "$GAMEDIR/dosbox_jazz_single.conf",
-      "config_file": "$GAMEDIR/dosbox_jazz.conf"
-    },
     "installer": [
       {
         "extract": {
-          "file": "zip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "zip"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
+          "args": "$game -d \"$CACHE\" \"data/noarch/*\"",
           "description": "Extracting game data",
-          "args": "$game -d \"$CACHE\" \"data/noarch/*\""
+          "file": "$CACHE/unzip"
         }
       },
       {
         "rename": {
-          "dst": "$CACHE/data/noarch/data/LEVEL1.005.bak",
-          "src": "$CACHE/data/noarch/data/LEVEL1.005"
+          "src": "$CACHE/data/noarch/data/LEVEL1.005",
+          "dst": "$CACHE/data/noarch/data/LEVEL1.005.bak"
         }
       },
       {
         "extract": {
-          "file": "helper",
-          "dst": "$CACHE/data/noarch/data"
+          "dst": "$CACHE/data/noarch/data",
+          "file": "helper"
         }
       },
       {
@@ -62,21 +55,24 @@
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosbox_jazz.conf",
-          "value": "false",
+          "section": "sdl",
           "key": "fullscreen",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosbox_jazz.conf",
+          "value": "false"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosbox_jazz.conf",
-          "value": "false",
+          "section": "joystick",
           "key": "timed",
-          "section": "joystick"
+          "file": "$GAMEDIR/dosbox_jazz.conf",
+          "value": "false"
         }
       }
     ],
+    "dosbox": {
+      "scaler": "normal3x"
+    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Jazz Jackrabbit Linux installer"
@@ -87,7 +83,11 @@
       {
         "helper": "https://gist.github.com/daniel-j/8b6c04df599fec82958b8bc4d1d69473/archive/master.zip"
       }
-    ]
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosbox_jazz.conf",
+      "main_file": "$GAMEDIR/dosbox_jazz_single.conf"
+    }
   },
   "content": "dosbox:\n  scaler: normal3x\nfiles:\n- game: N/A:Please select the GOG.com Jazz Jackrabbit Linux installer\n- zip: http://lutris.net/files/tools/unzip.tar.gz\n- helper: https://gist.github.com/daniel-j/8b6c04df599fec82958b8bc4d1d69473/archive/master.zip\ngame:\n  config_file: $GAMEDIR/dosbox_jazz.conf\n  main_file: $GAMEDIR/dosbox_jazz_single.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: zip\n- execute:\n    args: $game -d \"$CACHE\" \"data/noarch/*\"\n    description: Extracting game data\n    file: $CACHE/unzip\n- rename:\n    dst: $CACHE/data/noarch/data/LEVEL1.005.bak\n    src: $CACHE/data/noarch/data/LEVEL1.005\n- extract:\n    dst: $CACHE/data/noarch/data\n    file: helper\n- execute:\n    command: mv -f $CACHE/data/noarch/* $GAMEDIR/\n    description: Extracting game data\n- write_config:\n    file: $GAMEDIR/dosbox_jazz.conf\n    key: fullscreen\n    section: sdl\n    value: 'false'\n- write_config:\n    file: $GAMEDIR/dosbox_jazz.conf\n    key: timed\n    section: joystick\n    value: 'false'\n"
 }

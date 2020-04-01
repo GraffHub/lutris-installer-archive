@@ -21,11 +21,6 @@
   "gogslug": "the_settlers_2_gold_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/dosboxSettlers2_single.conf",
-      "config_file": "$GAMEDIR/dosboxSettlers2.conf"
-    },
-    "gogid": "the_settlers_2_gold_edition",
     "installer": [
       {
         "task": {
@@ -36,18 +31,18 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "wine.set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "wine.set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "executable": "$game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "$game",
           "description": "Installing ...",
           "prefix": "$GAMEDIR",
           "name": "wine.wineexec"
@@ -56,37 +51,37 @@
       {
         "execute": {
           "file": "/bin/sh",
-          "description": "cleaning...",
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "terminal": false
-        }
-      },
-      {
-        "execute": {
-          "file": "/bin/sh",
           "description": "cleaning...",
-          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "terminal": false
-        }
-      },
-      {
-        "execute": {
-          "file": "/bin/sed",
-          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSettlers2_single.conf",
-          "terminal": false
-        }
-      },
-      {
-        "execute": {
-          "file": "/bin/sed",
-          "args": "-i 's|..\\settlers2.inst|settlers2.inst|g' $GAMEDIR/dosboxSettlers2_single.conf",
           "terminal": false
         }
       },
       {
         "execute": {
           "file": "/bin/sh",
+          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
+          "description": "cleaning...",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSettlers2_single.conf",
+          "file": "/bin/sed",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "args": "-i 's|..\\settlers2.inst|settlers2.inst|g' $GAMEDIR/dosboxSettlers2_single.conf",
+          "file": "/bin/sed",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
           "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
+          "file": "/bin/sh",
           "terminal": false
         }
       }
@@ -95,7 +90,12 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer"
       }
-    ]
+    ],
+    "gogid": "the_settlers_2_gold_edition",
+    "game": {
+      "config_file": "$GAMEDIR/dosboxSettlers2.conf",
+      "main_file": "$GAMEDIR/dosboxSettlers2_single.conf"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer\ngame:\n  config_file: $GAMEDIR/dosboxSettlers2.conf\n  main_file: $GAMEDIR/dosboxSettlers2_single.conf\ngogid: the_settlers_2_gold_edition\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: $game\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxSettlers2_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -i 's|..\\settlers2.inst|settlers2.inst|g' $GAMEDIR/dosboxSettlers2_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/DOSBOX'\n    file: /bin/sh\n    terminal: false\n"
 }

@@ -11,10 +11,10 @@
   "description": "Installer for the DVD Retail Version",
   "notes": "",
   "created_at": "2019-07-06T11:42:33.308000Z",
-  "updated_at": "2020-01-23T02:57:19.373311Z",
+  "updated_at": "2020-03-08T11:50:04.659735Z",
   "draft": false,
   "published": true,
-  "published_by": 1,
+  "published_by": 20548,
   "rating": "",
   "steamid": 6060,
   "gogid": 1421404701,
@@ -22,24 +22,33 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/LucasArts/Star Wars Battlefront II/LaunchBFII.exe",
       "arch": "win32",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/LucasArts/Star Wars Battlefront II/LaunchBFII.exe"
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "fps"
+      }
+    },
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
     },
     "installer": [
       {
         "task": {
-          "install_mono": false,
           "arch": "win32",
           "description": "Creating Wine Bottle, please wait...",
+          "install_mono": false,
           "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "app": "winxp",
           "arch": "win32",
+          "app": "winxp",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -59,5 +68,5 @@
       }
     ]
   },
-  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/LucasArts/Star Wars Battlefront II/LaunchBFII.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: LaunchBFII.exe\n- task:\n    executable: $DISC/LaunchBFII.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/LucasArts/Star Wars Battlefront II/LaunchBFII.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please wait...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: LaunchBFII.exe\n- task:\n    executable: $DISC/LaunchBFII.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: fps\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

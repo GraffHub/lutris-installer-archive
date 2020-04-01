@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -41,20 +32,20 @@
       },
       {
         "task": {
-          "app": "corefonts vcrun2017 d3dcompiler_43 win10",
           "arch": "win64",
+          "app": "corefonts vcrun2017 d3dcompiler_43 win10",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "client",
-          "arch": "win64",
-          "description": "Installing client",
-          "args": "/S",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "args": "/S",
+          "executable": "client",
+          "description": "Installing client"
         }
       }
     ],
@@ -62,7 +53,16 @@
       {
         "client": "https://updates.digitalcombatsimulator.com/installers/DCS_World_web.exe"
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe"
+    }
   },
   "content": "files:\n- client: https://updates.digitalcombatsimulator.com/installers/DCS_World_web.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Eagle Dynamics/DCS World/bin/DCS_updater.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2017 d3dcompiler_43 win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

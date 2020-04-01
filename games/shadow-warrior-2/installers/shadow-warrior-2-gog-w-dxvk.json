@@ -21,25 +21,11 @@
   "gogslug": "shadow_warrior_2",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Shadow Warrior 2/ShadowWarrior2.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": 0,
-        "DXVK_LOG_LEVEL": "none",
-        "DXVK_STATE_CACHE": 1,
-        "mesa_glthread": "true",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "goginstaller": "N/A:Select the game's setup file"
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -51,30 +37,44 @@
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 10 mode for Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
         "task": {
-          "executable": "goginstaller",
           "arch": "win64",
+          "executable": "goginstaller",
           "description": "Installing game",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "goginstaller": "N/A:Select the game's setup file"
+    "system": {
+      "env": {
+        "mesa_glthread": "true",
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE": 1
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Shadow Warrior 2/ShadowWarrior2.exe"
+    }
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Shadow Warrior 2/ShadowWarrior2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    arch: win64\n    description: Installing game\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE: 1\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n"
 }

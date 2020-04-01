@@ -21,9 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/martian.conf"
-    },
     "installer": [
       {
         "write_file": {
@@ -36,26 +33,26 @@
       },
       {
         "extract": {
-          "file": "$inno",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$inno"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-I app -d \"$CACHE\" \"$game\""
+          "args": "-I app -d \"$CACHE\" \"$game\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/martian"
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/martian",
+          "file": "mkdir"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/selectcopy.sh",
-          "args": "$CACHE/app $GAMEDIR/HDD/martian"
+          "args": "$CACHE/app $GAMEDIR/HDD/martian",
+          "file": "$CACHE/selectcopy.sh"
         }
       },
       {
@@ -72,7 +69,10 @@
       {
         "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/martian.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select GOG installer\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  main_file: $GAMEDIR/martian.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      find \"$src\" -type f \\( -iname \"*.AP\" -o -iname  \"*.DRV\" -o -iname  \"*.LZ\" -o\n      -iname \"*.SC\" -o -iname \"*.DAT\" -o -iname \"*.PDF\" -o -iname \"*.VID\" -o -iname\n      \"*.COL\" -o -iname \"MM.EXE\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- extract:\n    dst: $CACHE\n    file: $inno\n- execute:\n    args: -I app -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/martian\n    file: mkdir\n- execute:\n    args: $CACHE/app $GAMEDIR/HDD/martian\n    file: $CACHE/selectcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd martian\n\n      mm.exe\n\n      exit'\n    file: $GAMEDIR/martian.conf\n"
 }

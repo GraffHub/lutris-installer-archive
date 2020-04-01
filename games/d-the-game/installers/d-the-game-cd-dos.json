@@ -21,10 +21,6 @@
   "gogslug": "d_the_game",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/D_dosbox.conf"
-    },
-    "custom-name": "D - The Game - CD DOS - DOSBox",
     "installer": [
       {
         "insert-disc": {
@@ -34,8 +30,8 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR",
-          "src": "cdrtools"
+          "src": "cdrtools",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -43,8 +39,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "disk 0"
+          "args": "disk 0",
+          "file": "script"
         }
       },
       {
@@ -55,8 +51,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "D_"
+          "args": "D_",
+          "file": "script"
         }
       },
       {
@@ -66,8 +62,8 @@
       },
       {
         "copy": {
-          "dst": "$GAMEDIR",
-          "src": "conf"
+          "src": "conf",
+          "dst": "$GAMEDIR"
         }
       }
     ],
@@ -81,7 +77,11 @@
       {
         "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf"
       }
-    ]
+    ],
+    "custom-name": "D - The Game - CD DOS - DOSBox",
+    "game": {
+      "main_file": "$GAMEDIR/D_dosbox.conf"
+    }
   },
   "content": "custom-name: D - The Game - CD DOS - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf\ngame:\n  main_file: $GAMEDIR/D_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: disk 0\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    args: D_\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv disk.cue D_CD1.cue; mv disk.bin D_CD1.bin;\n      mv D_.cue D_CD2.cue; mv D_.bin D_CD2.bin; sed -i 's/disk.bin/D_CD1.bin/g' D_CD1.cue;\n      sed -i 's/D_.bin/D_CD2.bin/g' D_CD2.cue\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

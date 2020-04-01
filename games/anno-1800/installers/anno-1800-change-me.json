@@ -21,24 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0,
-        "PYTHONIOENCODING": "utf8"
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -49,27 +36,40 @@
       },
       {
         "task": {
-          "app": "corefonts win7",
           "arch": "win64",
+          "app": "corefonts win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "uplay",
           "arch": "win64",
           "args": "/S",
+          "executable": "uplay",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+    "system": {
+      "env": {
+        "PYTHONIOENCODING": "utf8",
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    }
   },
   "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    PYTHONIOENCODING: utf8\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
 }

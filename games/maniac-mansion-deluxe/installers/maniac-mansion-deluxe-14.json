@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -35,26 +31,26 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "app": "sound=alsa",
           "silent": false,
+          "app": "sound=alsa",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "vd=640x480",
           "silent": false,
+          "app": "vd=640x480",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -69,9 +65,9 @@
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -79,12 +75,16 @@
     ],
     "files": [
       {
-        "game": "http://www.adventurecorner.de/dl/mmd14setup.exe",
-        "exe": "drive_c/Program Files/LucasFan Games/MMD/winsetup.exe",
         "arch": "win32",
-        "prefix": "$GAMEDIR"
+        "exe": "drive_c/Program Files/LucasFan Games/MMD/winsetup.exe",
+        "prefix": "$GAMEDIR",
+        "game": "http://www.adventurecorner.de/dl/mmd14setup.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    }
   },
   "content": "files:\n- arch: win32\n  exe: drive_c/Program Files/LucasFan Games/MMD/winsetup.exe\n  game: http://www.adventurecorner.de/dl/mmd14setup.exe\n  prefix: $GAMEDIR\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: sound=alsa\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    app: vd=640x480\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    description: Installing MMD\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

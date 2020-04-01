@@ -21,14 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/Xanth.conf"
-    },
     "installer": [
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISK1"
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISK1",
+          "file": "mkdir"
         }
       },
       {
@@ -42,8 +39,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR/CDD/DISK1"
+          "args": "$game $GAMEDIR/CDD/DISK1",
+          "file": "$CACHE/bulkcopy.sh"
         }
       },
       {
@@ -54,8 +51,8 @@
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR/HDD/",
           "config_file": "$GAMEDIR/Xanth-setup.conf",
+          "working_dir": "$GAMEDIR/HDD/",
           "name": "dosexec"
         }
       },
@@ -70,7 +67,10 @@
       {
         "game": "N/A:Select the file Install.EXE"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/Xanth.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select the file Install.EXE\ngame:\n  main_file: $GAMEDIR/Xanth.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISK1\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/CDD/DISK1\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      D:\n\n      install\n\n      exit'\n    file: $GAMEDIR/Xanth-setup.conf\n- task:\n    config_file: $GAMEDIR/Xanth-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[dosbox]\n\n      machine = svga_et4000\n\n      [sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd Xanth\n\n      Xanth.exe\n\n      exit'\n    file: $GAMEDIR/Xanth.conf\n"
 }

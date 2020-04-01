@@ -21,34 +21,29 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game/Launcher.exe",
-      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
-          "app": "dxvk corefonts vcrun2015 remove_mono win10",
           "arch": "win64",
+          "app": "dxvk corefonts vcrun2015 remove_mono win10",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "Y",
           "key": "ShowDotFiles",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
         "task": {
-          "executable": "installer",
           "args": "/VERYSILENT /SUPPRESSMSGBOXES",
+          "executable": "installer",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -65,7 +60,12 @@
       {
         "installer": "http://cdn.il2sturmovik.net/x64/IL2_setup_Great_Battles.exe"
       }
-    ]
+    ],
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game/Launcher.exe"
+    }
   },
   "content": "files:\r\n- installer: http://cdn.il2sturmovik.net/x64/IL2_setup_Great_Battles.exe\r\ngame:\r\n  exe: $GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik Great Battles/bin/game/Launcher.exe\r\n  prefix: $GAMEDIR\r\n  working_dir: $GAMEDIR/drive_c/Program Files (x86)/1C Game Studios/IL-2 Sturmovik\r\n    Great Battles/bin/game\r\ninstaller:\r\n- task:\r\n    app: dxvk corefonts vcrun2015 remove_mono win10\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    key: ShowDotFiles\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: Y\r\n- task:\r\n    args: /VERYSILENT /SUPPRESSMSGBOXES\r\n    executable: installer\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet40\r\n    name: winetricks\r\n    prefix: $GAMEDIR"
 }

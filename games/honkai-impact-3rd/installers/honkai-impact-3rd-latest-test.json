@@ -21,19 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_LOG_LEVEL": "none",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -44,17 +31,17 @@
       },
       {
         "task": {
-          "executable": "setup",
-          "exclude_processes": "dfsvc.exe",
           "arch": "win64",
+          "exclude_processes": "dfsvc.exe",
+          "executable": "setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "executable": "installer",
           "arch": "win64",
+          "executable": "installer",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -64,7 +51,20 @@
       {
         "installer": "https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe"
       }
-    ]
+    ],
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe"
+    }
   },
   "content": "files:\n- installer: https://download-sea.mihoyo.com/download/os/HI3_Global_Setup.exe\ngame:\n  exe: drive_c/Program Files/Honkai Impact 3rd/falcon_glb.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    exclude_processes: dfsvc.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n"
 }

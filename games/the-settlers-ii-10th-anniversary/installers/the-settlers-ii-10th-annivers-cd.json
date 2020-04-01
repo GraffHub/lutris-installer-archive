@@ -21,12 +21,6 @@
   "gogslug": "the_settlers_2_10th_anniversary",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNG.exe",
-      "working_dir": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/",
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
-    },
     "installer": [
       {
         "task": {
@@ -37,18 +31,18 @@
       },
       {
         "task": {
-          "app": "d3dx9",
           "arch": "win32",
           "description": "Installing d3dx9",
+          "app": "d3dx9",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "d3dx9_36",
           "arch": "win32",
           "description": "Installing d3dx9_36",
+          "app": "d3dx9_36",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -69,31 +63,31 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "description": "Setting Wine CSMT to 0",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": 0,
           "key": "csmt",
+          "name": "set_regedit",
+          "description": "Setting Wine CSMT to 0",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "type": "REG_DWORD"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNGEditor.exe",
-          "src": "nocd_editor"
+          "src": "nocd_editor",
+          "dst": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNGEditor.exe"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNG.exe",
-          "src": "nocd_base"
+          "src": "nocd_base",
+          "dst": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNG.exe"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/s2dng_addon.exe",
-          "src": "nocd_extension"
+          "src": "nocd_extension",
+          "dst": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/s2dng_addon.exe"
         }
       }
     ],
@@ -113,7 +107,13 @@
       {
         "installer_extension": "N/A:Select the Viking Setup executable (setup.exe, NOT Autostart.exe):"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNG.exe"
+    }
   },
   "content": "files:\n- nocd_base: 'N/A:Select the NoCD executable (S2DNG.exe):'\n- nocd_extension: 'N/A:Select the NoCD executable (s2dng_addon.exe):'\n- nocd_editor: 'N/A:Select the NoCD executable (S2DNGEditor.exe):'\n- installer_base: 'N/A:Select the Setup executable (setup.exe, NOT Autostart.exe):'\n- installer_extension: 'N/A:Select the Viking Setup executable (setup.exe, NOT Autostart.exe):'\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNG.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th\n    Anniversary/bin/\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    arch: win32\n    description: Installing d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9_36\n    arch: win32\n    description: Installing d3dx9_36\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: installer_base\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: installer_extension\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Setting Wine CSMT to 0\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 0\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNGEditor.exe\n    src: nocd_editor\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/S2DNG.exe\n    src: nocd_base\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/Ubisoft/Funatics/The Settlers II - 10th Anniversary/bin/s2dng_addon.exe\n    src: nocd_extension\n"
 }

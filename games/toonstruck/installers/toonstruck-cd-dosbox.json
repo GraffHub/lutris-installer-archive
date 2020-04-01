@@ -21,10 +21,6 @@
   "gogslug": "toonstruck",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/toonstruck_dosbox.conf"
-    },
-    "custom-name": "Toonstruck - CD - DOSBox",
     "installer": [
       {
         "insert-disc": {
@@ -34,8 +30,8 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR",
-          "src": "cdrtools"
+          "src": "cdrtools",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -43,8 +39,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "TOON 0"
+          "args": "TOON 0",
+          "file": "script"
         }
       },
       {
@@ -55,8 +51,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "TOONS"
+          "args": "TOONS",
+          "file": "script"
         }
       },
       {
@@ -66,8 +62,8 @@
       },
       {
         "copy": {
-          "dst": "$GAMEDIR",
-          "src": "conf"
+          "src": "conf",
+          "dst": "$GAMEDIR"
         }
       }
     ],
@@ -81,7 +77,11 @@
       {
         "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Toonstruck/toonstruck_dosbox.conf"
       }
-    ]
+    ],
+    "custom-name": "Toonstruck - CD - DOSBox",
+    "game": {
+      "main_file": "$GAMEDIR/toonstruck_dosbox.conf"
+    }
   },
   "content": "custom-name: Toonstruck - CD - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Toonstruck/toonstruck_dosbox.conf\ngame:\n  main_file: $GAMEDIR/toonstruck_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: act1/arcaddbl/arcaddbl.pak\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: TOON 0\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: act2/armory/armory.pak\n- execute:\n    args: TOONS\n    file: script\n- execute:\n    command: cd $GAMEDIR; mv TOON.cue TOONSTRUCK_CD1.cue; mv TOON.bin TOONSTRUCK_CD1.bin;\n      mv TOONS.cue TOONSTRUCK_CD2.cue; mv TOONS.bin TOONSTRUCK_CD2.bin; sed -i 's/TOON.bin/TOONSTRUCK_CD1.bin/g'\n      TOONSTRUCK_CD1.cue; sed -i 's/TOONS.bin/TOONSTRUCK_CD2.bin/g' TOONSTRUCK_CD2.cue;\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

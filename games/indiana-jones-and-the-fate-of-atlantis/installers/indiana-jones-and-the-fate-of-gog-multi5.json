@@ -21,11 +21,6 @@
   "gogslug": "indiana_jones_and_the_fate_of_atlantis",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "atlantis",
-      "path": "$GAMEDIR"
-    },
-    "custom-name": "Indiana Jones and the Fate of Atlantis - GOG",
     "scummvm": {
       "fullscreen": true,
       "aspect": true
@@ -33,30 +28,31 @@
     "installer": [
       {
         "extract": {
-          "file": "inno",
-          "dst": "$CACHE/innoextract"
+          "dst": "$CACHE/innoextract",
+          "file": "inno"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract/innoextract",
-          "args": "--extract $gog --output-dir \"$CACHE/indy\""
+          "args": "--extract $gog --output-dir \"$CACHE/indy\"",
+          "file": "$CACHE/innoextract/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/",
-          "src": "$CACHE/indy"
+          "src": "$CACHE/indy",
+          "dst": "$GAMEDIR/"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "src": "multi5"
+          "src": "multi5",
+          "dst": "$CACHE"
         }
       },
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "keep": "I prefer to keep the default install language"
@@ -74,15 +70,14 @@
               "it": "Italian"
             }
           ],
-          "id": "LANG",
-          "preselect": "keep",
-          "description": "Please choose your preferred subtitles language:"
+          "description": "Please choose your preferred subtitles language:",
+          "preselect": "keep"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/$INPUT_LANG"
+          "src": "$CACHE/$INPUT_LANG",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -101,7 +96,12 @@
       {
         "gog": "N/A:Please select the game Windows setup exe file downloaded from GOG"
       }
-    ]
+    ],
+    "custom-name": "Indiana Jones and the Fate of Atlantis - GOG",
+    "game": {
+      "game_id": "atlantis",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "custom-name: Indiana Jones and the Fate of Atlantis - GOG\nfiles:\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Indiana%20Jones%20and%20the%20Fate%20of%20Atlantis/indi4_multi5.zip\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- gog: N/A:Please select the game Windows setup exe file downloaded from GOG\ngame:\n  game_id: atlantis\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $gog --output-dir \"$CACHE/indy\"\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/\n    src: $CACHE/indy\n- extract:\n    dst: $CACHE\n    src: multi5\n- input_menu:\n    description: 'Please choose your preferred subtitles language:'\n    id: LANG\n    options:\n    - keep: I prefer to keep the default install language\n    - fr: French\n    - sp: Spanish\n    - ge: German\n    - it: Italian\n    preselect: keep\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/$INPUT_LANG\n- execute:\n    command: cd $GAMEDIR; cp other/ATLANTIS.ICO other/HELPME.DOC . ; rm -f -r app\n      commonappdata other __redist scummvm __support tmp goggame-1207666293.* ;\nscummvm:\n  aspect: true\n  fullscreen: true\n"
 }

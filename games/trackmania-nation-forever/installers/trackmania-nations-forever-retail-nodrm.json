@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/TmNationsForever/TmForeverLauncher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,18 +31,18 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/silent",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -55,9 +50,9 @@
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -67,7 +62,12 @@
       {
         "game": "http://files.trackmaniaforever.com/tmnationsforever_setup.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/TmNationsForever/TmForeverLauncher.exe"
+    }
   },
   "content": "files:\n- game: http://files.trackmaniaforever.com/tmnationsforever_setup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/TmNationsForever/TmForeverLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /silent\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

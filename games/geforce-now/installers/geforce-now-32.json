@@ -1,0 +1,77 @@
+{
+  "id": 18981,
+  "game_id": 23560,
+  "game_slug": "geforce-now",
+  "name": "GeForce NOW",
+  "year": 2015,
+  "user": "haru-san",
+  "runner": "wine",
+  "slug": "geforce-now-32",
+  "version": "3.2",
+  "description": "geforce now is a game streaming service by nvidea",
+  "notes": "",
+  "created_at": "2020-03-19T22:07:20.124173Z",
+  "updated_at": "2020-03-20T10:42:11.211694Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "gfn": "http://download.nvidia.com/gfnpc/GeForceNOW-release.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "src": "gfn",
+          "dst": "/tmp/lutris-geforce"
+        }
+      },
+      {
+        "move": {
+          "src": "/tmp/lutris-geforce/GeforceNOW",
+          "dst": "$GAMEDIR/drive_c/users/$USER/AppData/Local/NVIDIA Corporation/GeForceNOW"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing needed libraries",
+          "app": "corefonts msxml3 vcrun2019",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "WINEFSYNC": "1"
+      },
+      "restore_gamma": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Users/$USER/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe"
+    }
+  },
+  "content": "files:\r\n- gfn: http://download.nvidia.com/gfnpc/GeForceNOW-release.exe\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Users/$USER/AppData/Local/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: /tmp/lutris-geforce\r\n    src: gfn\r\n- move:\r\n    dst: $GAMEDIR/drive_c/users/$USER/AppData/Local/NVIDIA Corporation/GeForceNOW\r\n    src: /tmp/lutris-geforce/GeforceNOW\r\n- task:\r\n    app: corefonts msxml3 vcrun2019\r\n    arch: win64\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: compiler\r\n    WINEFSYNC: '1'\r\n  restore_gamma: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
+}

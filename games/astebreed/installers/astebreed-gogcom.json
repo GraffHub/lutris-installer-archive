@@ -19,14 +19,8 @@
   "steamid": 283680,
   "gogid": 1207665523,
   "gogslug": "astebreed",
-  "humblestoreid": "",
+  "humblestoreid": "astebreed",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Astebreed/Astebreed.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "gogid": "astebreed",
     "installer": [
       {
         "task": {
@@ -37,14 +31,14 @@
       },
       {
         "execute": {
-          "file": "/bin/sh",
-          "args": "-c 'printf \"[Software\\\\Wine\\\\DllOverrides]\\n\"mscoree\"=\"\"\\n\"mshtml\"=\"\"\\n\"winemenubuilder.exe\"=\"\"\\n\" >> $GAMEDIR/user.reg'"
+          "args": "-c 'printf \"[Software\\\\Wine\\\\DllOverrides]\\n\"mscoree\"=\"\"\\n\"mshtml\"=\"\"\\n\"winemenubuilder.exe\"=\"\"\\n\" >> $GAMEDIR/user.reg'",
+          "file": "/bin/sh"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "executable": "game",
           "description": "Installing Astebreed",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -55,7 +49,13 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ]
+    ],
+    "gogid": "astebreed",
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Astebreed/Astebreed.exe"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Astebreed/Astebreed.exe\n  prefix: $GAMEDIR\ngogid: astebreed\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'printf \"[Software\\\\Wine\\\\DllOverrides]\\n\"mscoree\"=\"\"\\n\"mshtml\"=\"\"\\n\"winemenubuilder.exe\"=\"\"\\n\"\n      >> $GAMEDIR/user.reg'\n    file: /bin/sh\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing Astebreed\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

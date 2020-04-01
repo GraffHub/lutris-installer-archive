@@ -21,24 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "files": [
-      {
-        "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
-      },
-      {
-        "samp": "http://files.sa-mp.com/sa-mp-0.3.7-install.exe"
-      }
-    ],
     "installer": [
       {
         "extract": {
-          "file": "$downgrade",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$downgrade"
         }
       },
       {
@@ -51,15 +38,28 @@
       },
       {
         "task": {
-          "executable": "$samp",
           "args": "/silent",
+          "executable": "$samp",
           "description": "Installing SA:MP...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "requires": "grand-theft-auto-san-andreas"
+    "requires": "grand-theft-auto-san-andreas",
+    "files": [
+      {
+        "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
+      },
+      {
+        "samp": "http://files.sa-mp.com/sa-mp-0.3.7-install.exe"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe"
+    }
   },
   "content": "files:\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\n- samp: http://files.sa-mp.com/sa-mp-0.3.7-install.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing SA:MP...\n    executable: $samp\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
 }

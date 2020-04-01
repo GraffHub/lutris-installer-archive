@@ -21,16 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Rat Labs/The Realm Online/wlaunch.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "d3d11": "disabled"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -41,8 +31,8 @@
       },
       {
         "task": {
-          "executable": "msiexec",
           "args": "/i \"$CACHE/realm/RatLabsRealm.msi\" /q",
+          "executable": "msiexec",
           "description": "Installing The Realm Online",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -59,7 +49,17 @@
       {
         "realm": "https://realmserver.com/files/TheRealmOnline.msi"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled"
+      }
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Rat Labs/The Realm Online/wlaunch.exe"
+    }
   },
   "content": "files:\n- realm: https://realmserver.com/files/TheRealmOnline.msi\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rat Labs/The Realm Online/wlaunch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/realm/RatLabsRealm.msi\" /q\n    description: Installing The Realm Online\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    d3d11: disabled\n"
 }

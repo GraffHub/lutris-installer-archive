@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,16 +32,16 @@
       },
       {
         "task": {
-          "app": "gdiplus tahoma",
           "description": "Installing dependencies...",
+          "app": "gdiplus tahoma",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "installer",
           "exclude_processes": "iTunesHelper.exe iPodService.exe",
+          "executable": "installer",
           "description": "Installing iTunes...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -63,7 +58,12 @@
       {
         "installer": "http://updates-http.cdn-apple.com/2019/windows/061-27904-20191004-E748B8A2-E6F7-11E9-8931-E55C44AC54BE/iTunes64Setup.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe"
+    }
   },
   "content": "files:\n- installer: http://updates-http.cdn-apple.com/2019/windows/061-27904-20191004-E748B8A2-E6F7-11E9-8931-E55C44AC54BE/iTunes64Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus tahoma\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing iTunes...\n    exclude_processes: iTunesHelper.exe iPodService.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

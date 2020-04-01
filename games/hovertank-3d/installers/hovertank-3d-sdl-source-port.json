@@ -21,21 +21,26 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/game",
-      "working_dir": "$GAMEDIR"
-    },
+    "require-binaries": "cmake, g++",
+    "files": [
+      {
+        "archive": "N/A:Select the game's archive file"
+      },
+      {
+        "sourceport": "https://github.com/Codes4Fun/SDL_Hovertank3D/archive/master.zip"
+      }
+    ],
     "installer": [
       {
         "extract": {
-          "dst": "$GAMEDIR",
-          "src": "$archive"
+          "src": "$archive",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "src": "$sourceport"
+          "src": "$sourceport",
+          "dst": "$CACHE"
         }
       },
       {
@@ -58,20 +63,15 @@
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/build/game"
+          "src": "$CACHE/build/game",
+          "dst": "$GAMEDIR"
         }
       }
     ],
-    "require-binaries": "cmake, g++",
-    "files": [
-      {
-        "archive": "N/A:Select the game's archive file"
-      },
-      {
-        "sourceport": "https://github.com/Codes4Fun/SDL_Hovertank3D/archive/master.zip"
-      }
-    ]
+    "game": {
+      "working_dir": "$GAMEDIR",
+      "exe": "$GAMEDIR/game"
+    }
   },
   "content": "files:\n- archive: N/A:Select the game's archive file\n- sourceport: https://github.com/Codes4Fun/SDL_Hovertank3D/archive/master.zip\ngame:\n  exe: $GAMEDIR/game\n  working_dir: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR\n    src: $archive\n- extract:\n    dst: $CACHE\n    src: $sourceport\n- execute:\n    command: mkdir $CACHE/build\n    working_dir: $CACHE\n- execute:\n    command: cd $CACHE/build && cmake -D CMAKE_CXX_FLAGS=\"-fno-operator-names\" $CACHE\n    working_dir: $CACHE/build\n- execute:\n    command: cd $CACHE/build && make\n    working_dir: $CACHE/build\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/build/game\nrequire-binaries: cmake, g++\n"
 }

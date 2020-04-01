@@ -8,24 +8,19 @@
   "runner": "wine",
   "slug": "the-witcher-enhanced-edition-rise-of-the-white-wo",
   "version": "Rise of the White Wolf Mod",
-  "description": "Requires game files from GOG.\r\n\r\nDownload here: <a href=\"https://www.gog.com/downloads/the_witcher/en1installer1\">1 of 4</a>, <a href=\"https://www.gog.com/downloads/the_witcher/en1installer2\">2 of 4</a>, <a href=\"https://www.gog.com/downloads/the_witcher/en1installer3\">3 of 4</a>, <a href=\"https://www.gog.com/downloads/the_witcher/en1installer4\">4 of 4</a>",
-  "notes": "",
+  "description": "Requires game files from GOG.\r\n\r\nDownload here: <a href=\"https://www.gog.com/downloads/the_witcher/en1installer1\">1 of 4</a>, <a href=\"https://www.gog.com/downloads/the_witcher/en1installer2\">2 of 4</a>, <a href=\"https://www.gog.com/downloads/the_witcher/en1installer3\">3 of 4</a>, <a href=\"https://www.gog.com/downloads/the_witcher/en1installer4\">4 of 4</a>\r\n\r\nAlso requires the Rise of the White Wolf mod downloaded from moddb or Nexus Mods. This installer requires the .exe, NOT the .zip file.",
+  "notes": "The game installer will have several errors upon completion. Exit the game's installer and the mod will install next. You will have to point the installer to your Witcher directory.",
   "created_at": "2018-07-19T00:38:56.486000Z",
-  "updated_at": "2019-10-11T00:23:30.377258Z",
+  "updated_at": "2020-03-21T08:28:07.501360Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": 20900,
   "gogid": 1207658924,
   "gogslug": "the_witcher",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,28 +31,28 @@
       },
       {
         "task": {
-          "executable": "game",
           "arch": "win32",
+          "executable": "game",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "app": "d3dx9_35",
           "arch": "win32",
+          "app": "d3dx9_35",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "value": "enabled",
-          "key": "CheckFloatConstants"
+          "arch": "win32",
+          "key": "CheckFloatConstants",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D"
         }
       },
       {
@@ -67,26 +62,28 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup",
-          "src": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/Launcher"
+          "src": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/Launcher",
+          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup/System",
-          "src": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/System/witcher.exe"
+          "src": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/System/witcher.exe",
+          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup/System"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup",
-          "src": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe"
+          "src": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe",
+          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup"
         }
       },
       {
-        "extract": {
-          "file": "mod",
-          "dst": "$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition"
+        "task": {
+          "arch": "win32",
+          "executable": "mod",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
         }
       }
     ],
@@ -95,13 +92,14 @@
         "game": "N/A:Select the Windows setup exe file downloaded from GOG"
       },
       {
-        "mod": {
-          "filename": "Rise_of_the_White_Wolf_-_Powrot_Bialego_Wilka_-_zip_version.zip",
-          "referer": "https://www.moddb.com/mods/the-rise-of-the-white-wolf-powrt-biaego-wilka/downloads",
-          "url": "https://www.moddb.com/downloads/mirror/93454/122/c5bbb0fbad8b4a855a52d0300485c5ad/"
-        }
+        "mod": "N/A:Select the Mod installer exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe"
+    }
   },
-  "content": "files:\n- game: N/A:Select the Windows setup exe file downloaded from GOG\n- mod:\n    filename: Rise_of_the_White_Wolf_-_Powrot_Bialego_Wilka_-_zip_version.zip\n    referer: https://www.moddb.com/mods/the-rise-of-the-white-wolf-powrt-biaego-wilka/downloads\n    url: https://www.moddb.com/downloads/mirror/93454/122/c5bbb0fbad8b4a855a52d0300485c5ad/\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9_35\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: CheckFloatConstants\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: enabled\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup/System\"\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup\n    src: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/Launcher\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup/System\n    src: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/System/witcher.exe\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup\n    src: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition\n    file: mod\n"
+  "content": "files:\n- game: N/A:Select the Windows setup exe file downloaded from GOG\n- mod: N/A:Select the Mod installer exe\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9_35\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: CheckFloatConstants\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: enabled\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup/System\"\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup\n    src: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/Launcher\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup/System\n    src: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/System/witcher.exe\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/backup\n    src: $GAMEDIR/drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe\n- task:\n    arch: win32\n    executable: mod\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

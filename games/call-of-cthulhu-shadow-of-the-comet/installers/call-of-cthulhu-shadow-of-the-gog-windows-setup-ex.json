@@ -21,27 +21,22 @@
   "gogslug": "call_of_cthulhu_shadow_of_the_comet",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "dosbox_conf/dosbox_sotc.conf",
-      "config_file": "$GAMEDIR/dosbox_conf/dosbox_sotc_single.conf",
-      "prefix": "$GAMEDIR"
-    },
-    "custom-name": "Call of Cthulhu - Shadow of the Comet - GOG",
     "installer": [
       {
         "extract": {
-          "file": "inno",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "inno"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-d \"$GAMEDIR\" \"$install\""
+          "args": "-d \"$GAMEDIR\" \"$install\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "0": "Français"
@@ -59,9 +54,8 @@
               "4": "Italiano"
             }
           ],
-          "id": "LANG",
-          "preselect": 1,
-          "description": "Please choose your preferred game's text language"
+          "description": "Please choose your preferred game's text language",
+          "preselect": 1
         }
       },
       {
@@ -69,8 +63,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "$INPUT_LANG"
+          "args": "$INPUT_LANG",
+          "file": "script"
         }
       }
     ],
@@ -84,7 +78,13 @@
       {
         "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Call%20of%20Cthulhu%20-%20Shadow%20of%20the%20Comet/clean.sh"
       }
-    ]
+    ],
+    "custom-name": "Call of Cthulhu - Shadow of the Comet - GOG",
+    "game": {
+      "config_file": "$GAMEDIR/dosbox_conf/dosbox_sotc_single.conf",
+      "main_file": "dosbox_conf/dosbox_sotc.conf",
+      "prefix": "$GAMEDIR"
+    }
   },
   "content": "custom-name: Call of Cthulhu - Shadow of the Comet - GOG\nfiles:\n- install: N/A:Please select the GOG installer\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Call%20of%20Cthulhu%20-%20Shadow%20of%20the%20Comet/clean.sh\ngame:\n  config_file: $GAMEDIR/dosbox_conf/dosbox_sotc_single.conf\n  main_file: dosbox_conf/dosbox_sotc.conf\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$GAMEDIR\" \"$install\"\n    file: $CACHE/innoextract\n- input_menu:\n    description: Please choose your preferred game's text language\n    id: LANG\n    options:\n    - 0: \"Fran\\xE7ais\"\n    - 1: English\n    - 2: \"Espa\\xF1ol\"\n    - 3: Deutsch\n    - 4: Italiano\n    preselect: 1\n- chmodx: script\n- execute:\n    args: $INPUT_LANG\n    file: script\n"
 }

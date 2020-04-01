@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Dead Air/xrEngine.exe",
-      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Dead Air",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -48,9 +39,9 @@
       },
       {
         "task": {
-          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43",
           "silent": true,
           "description": "Installing needed libraries",
+          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -60,7 +51,16 @@
       {
         "installer": "N/A:Select the game's setup file"
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Dead Air",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Dead Air/xrEngine.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  exe: drive_c/Program Files (x86)/Dead Air/xrEngine.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files (x86)/Dead Air\ninstaller:\n- task:\n    description: Setting up wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Install to default location\n    executable: $installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

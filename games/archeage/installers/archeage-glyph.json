@@ -21,14 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClientApp.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -40,16 +32,16 @@
       },
       {
         "task": {
-          "app": "arial d3dcompiler_43 d3dcompiler_42 vcrun2010",
           "arch": "win64",
+          "app": "arial d3dcompiler_43 d3dcompiler_42 vcrun2010",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "setup",
           "arch": "win64",
+          "executable": "setup",
           "description": "Installing Glyph App. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window.",
           "name": "wineexec"
         }
@@ -59,7 +51,15 @@
       {
         "setup": "http://download.dyn.triongames.com/GlyphInstall-9999-123.exe"
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClientApp.exe"
+    }
   },
   "content": "files:\n- setup: http://download.dyn.triongames.com/GlyphInstall-9999-123.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Glyph/GlyphClientApp.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial d3dcompiler_43 d3dcompiler_42 vcrun2010\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing Glyph App. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window.'\n    executable: setup\n    name: wineexec\nwine:\n  dxvk: true\n"
 }

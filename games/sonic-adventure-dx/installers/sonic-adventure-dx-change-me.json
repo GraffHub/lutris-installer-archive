@@ -1,0 +1,92 @@
+{
+  "id": 18770,
+  "game_id": 1265,
+  "game_slug": "sonic-adventure-dx",
+  "name": "Sonic Adventure DX",
+  "year": 2003,
+  "user": "JerryWester",
+  "runner": "wine",
+  "slug": "sonic-adventure-dx-change-me",
+  "version": "Change Me",
+  "description": "This installer is for the 2-part CD version released in 2004. Installs Sonic Adventure DX Mod Loader as well.",
+  "notes": "INSTALLATION:\r\n1.) Mount both parts of the disc if possible. If you're using a physical release instead of ISO files, insert disc 1 first\r\n2.) The installer will automatically install DirectX 9 and Windows Media Player 9 (requirements of the game) through winetricks\r\n3.) When the install menu pops up, click on \"Install Game\", read and agree to the License Agreement, select the installation you wish to perform (\"Full\" is recommended and the only one I tested), and LEAVE THE DEFAULT INSTALLATION FOLDER (if it has to be moved, do so after the installation is finished). \r\n4.) Wait until the install menu asks you to insert disc 2, then:\r\n4a.) If you're using mounted ISO files, make sure the 2nd disc is mounted, click \"browse\", and figure out which drive is disc 2\r\n4b.) (*UNTESTED*) If you're using physical discs, eject disc 1 and insert disc 2\r\n5.) Wait for the install to finish, then select \"Exit\" on the menu\r\n6.) Wait for Lutris to finish installing the Mod Loader, then launch the game\r\n7.) Click on \"Install Loader\"\r\n8.) (*OPTIONAL*) Go to the \"Options\" tab along the top of the screen and check \"Disable CD Check\"\r\nThe installation is complete, and you may close out of the menu, find mods, or enjoy the game!\r\n\r\nKNOWN ISSUES:\r\nPre-rendered Cutscenes seem to not work, even with Windows Media Player 9 installed. Unsure of fix :/\r\n\r\nRECOMMENDED GRAPHIC SETTINGS:\r\nIn the \"Graphics\" tab along the top of the mod menu, there are some graphic settings that can be tweaked. I recommend the following changes to be made:\r\n* Windowed Fullscreen (checked)\r\n* Resolution (in the drop-down, select \"Native\")\r\n* Scale HUD (checked)\r\n* Background Fill Mode (Fit)\r\n* FMV Fill Mode (Fit)\r\nOther settings can be left alone or can be changed to your liking\r\n\r\nMODS:\r\nSonic Adventure DX, in it's vanilla state, is considered by many to be a poor port of a game. Luckily, dedicated individuals have worked to improve the game in several ways. You can find mods at these sites:\r\n* https://mm.reimuhakurei.net/?page=sadxmods\r\n* https://www.pcgamingwiki.com/wiki/Sonic_Adventure_DX#Featured_mods\r\n* https://gamebanana.com/games/5892\r\nAs well as simply searching for them in your preferred search engine.\r\nMods can be installed by putting them in your mods folder (Default: \"C:\\Program Files\\Sega\\SONICADVENTUREDX\\mods\\\") and checking the box next to their name in the mod loader.\r\n\r\nLANTERN ENGINE:\r\nThe Lantern engine was the lighting system used in the Dreamcast version of the game, but was removed in all other versions of the game. Luckily, there is a mod to restore this engine for those who want it, but getting it to work requires a few hoops to jump through.\r\n1.) First things first, you need d3d8to9.dll, which you can find here: https://github.com/crosire/d3d8to9/releases\r\n2.) Put d3d8.dll into the root folder of the SADX installation (the same directory as \"sonic.exe\"; clicking on the \"filing cabinet\" icon will bring you there automatically)\r\n3.) In Lutris, select Sonic Adventure DX and click on \"Wine configuration\"\r\n4.) Under the \"Libraries\" tab, add a new override for \"d3d8\" and make it native only\r\n5.) Download the Lantern engine mod from here: https://github.com/michael-fadely/sadx-dc-lighting/releases\r\n6.) Finally, extract the folder from the 7z file and place it in your \"mods\" folder\r\nIt's highly recommended to install this if you intend on installing the Dreamcast restoration mod.",
+  "created_at": "2020-03-10T21:16:15.453339Z",
+  "updated_at": "2020-03-10T21:16:15.453364Z",
+  "draft": false,
+  "published": false,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 71250,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "message": "Mount and select disc 1 of Sonic Adventure DX. When it asks for disc 2,mount disc 2 (*UNTESTED* it should be safe to remove disc 1)",
+          "requires": "sonic.exe"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx9",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "app": "wmp9",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/autorun.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/",
+          "file": "sadxml"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/",
+          "file": "usexe"
+        }
+      },
+      {
+        "execute": {
+          "command": "rm \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\" && mv \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic-U-crack.exe\" \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\""
+        }
+      }
+    ],
+    "files": [
+      {
+        "sadxml": "http://mm.reimuhakurei.net/sadxmods/SADXModLoader.7z"
+      },
+      {
+        "usexe": "https://mm.reimuhakurei.net/misc/sonic-U-crack.7z"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Sega/SONICADVENTUREDX/SADXModManager.exe"
+    }
+  },
+  "content": "files:\n- sadxml: http://mm.reimuhakurei.net/sadxmods/SADXModLoader.7z\n- usexe: https://mm.reimuhakurei.net/misc/sonic-U-crack.7z\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Sega/SONICADVENTUREDX/SADXModManager.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    message: Mount and select disc 1 of Sonic Adventure DX. When it asks for disc\n      2,mount disc 2 (*UNTESTED* it should be safe to remove disc 1)\n    requires: sonic.exe\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/\n    file: sadxml\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/\n    file: usexe\n- execute:\n    command: rm \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\" &&\n      mv \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic-U-crack.exe\"\n      \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\"\n"
+}

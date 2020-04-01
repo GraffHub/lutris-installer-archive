@@ -21,15 +21,8 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "appid": 109600,
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Arc/ArcLauncher.exe"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
+    "winesteam": {
+      "dxvk": true
     },
     "installer": [
       {
@@ -53,17 +46,24 @@
         }
       }
     ],
-    "winesteam": {
-      "dxvk": true
-    },
     "files": [
       {
         "neverwinter_installer": {
-          "filename": "Neverwinter_ArcSetup.exe",
-          "url": "https://www.arcgames.com/download/?game=nw"
+          "url": "https://www.arcgames.com/download/?game=nw",
+          "filename": "Neverwinter_ArcSetup.exe"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "game": {
+      "appid": 109600,
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Arc/ArcLauncher.exe"
+    }
   },
   "content": "files:\n- neverwinter_installer:\n    filename: Neverwinter_ArcSetup.exe\n    url: https://www.arcgames.com/download/?game=nw\ngame:\n  appid: 109600\n  exe: drive_c/Program Files (x86)/Arc/ArcLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: neverwinter_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwinesteam:\n  dxvk: true\n"
 }

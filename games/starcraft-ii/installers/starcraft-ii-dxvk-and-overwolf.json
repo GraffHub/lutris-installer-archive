@@ -21,30 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": "compiler",
-        "PULSE_LATENCY_MSEC": 60,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "setup": {
+          "url": "https://battle.net/download/getInstaller?os=win&installer=Battle.net-Setup.exe",
+          "filename": "Battle.net-Setup.exe"
+        }
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi64": "disabled",
-        "d3d12": "disabled",
-        "nvapi": "disabled"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -56,23 +40,23 @@
       },
       {
         "task": {
-          "app": "arial faudio d3dx9 d3dcompiler_43 dotnet45",
-          "arch": "win64",
-          "description": "Installing Arial, FAudio, d3dx9 and d3dcompier, dotnet45...",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true
+          "arch": "win64",
+          "silent": true,
+          "description": "Installing Arial, FAudio, d3dx9 and d3dcompier, dotnet45...",
+          "app": "arial faudio d3dx9 d3dcompiler_43 dotnet45"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 10 mode for Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -83,34 +67,34 @@
       },
       {
         "write_json": {
+          "description": "Writing a Battle.Net config file",
           "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
           "data": {
             "Client": {
               "GameSearch": {
                 "BackgroundSearch": "true"
               },
-              "HardwareAcceleration": "false",
-              "Streaming": {
-                "StreamingEnabled": "false"
-              },
+              "GameLaunchWindowBehavior": "2",
               "Sound": {
                 "Enabled": "false"
               },
-              "GameLaunchWindowBehavior": "2"
+              "HardwareAcceleration": "false",
+              "Streaming": {
+                "StreamingEnabled": "false"
+              }
             }
-          },
-          "description": "Writing a Battle.Net config file"
+          }
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Wine Staging: Enabling DXVA2",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "value": "va",
-          "key": "backend"
+          "arch": "win64",
+          "key": "backend",
+          "name": "set_regedit",
+          "description": "Wine Staging: Enabling DXVA2",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2"
         }
       },
       {
@@ -121,9 +105,9 @@
       },
       {
         "task": {
-          "executable": "setup",
-          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
           "arch": "win64",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
+          "executable": "setup",
           "description": "Installing Blizzard App. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window.",
           "name": "wineexec"
         }
@@ -135,14 +119,30 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup": {
-          "filename": "Battle.net-Setup.exe",
-          "url": "https://battle.net/download/getInstaller?os=win&installer=Battle.net-Setup.exe"
-        }
+    "system": {
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "PULSE_LATENCY_MSEC": 60,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi": "disabled",
+        "d3d12": "disabled",
+        "nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net.exe"
+    }
   },
   "content": "files:\n- setup:\n    filename: Battle.net-Setup.exe\n    url: https://battle.net/download/getInstaller?os=win&installer=Battle.net-Setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial faudio d3dx9 d3dcompiler_43 dotnet45\n    arch: win64\n    description: Installing Arial, FAudio, d3dx9 and d3dcompier, dotnet45...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        GameSearch:\n          BackgroundSearch: 'true'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n    description: Writing a Battle.Net config file\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing Blizzard App. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    PULSE_LATENCY_MSEC: 60\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n"
 }

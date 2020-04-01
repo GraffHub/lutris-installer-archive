@@ -21,32 +21,19 @@
   "gogslug": "",
   "humblestoreid": "batman-arkham-city-goty-edition",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
-      "arch": "win64",
-      "args": "-opengl",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/GLcacheShaders/",
-        "__GL_SHADER_DISK_CACHE": "1",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1",
-        "DXVK_STATE_CACHE": "1",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/StateCache/"
+    "files": [
+      {
+        "epicstore": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "dx10": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "extract": {
-          "file": "dx10",
-          "dst": "$CACHE/directx-2010"
+          "dst": "$CACHE/directx-2010",
+          "file": "dx10"
         }
       },
       {
@@ -59,45 +46,45 @@
       },
       {
         "task": {
-          "app": "vcrun2008",
           "arch": "win64",
           "description": "Installing libraries.",
+          "app": "vcrun2008",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "arial mdx d3dcompiler_43 d3dx9_43",
           "arch": "win64",
           "description": "Adding the software necessary.",
+          "app": "arial mdx d3dcompiler_43 d3dx9_43",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "dotnet35sp1",
           "arch": "win64",
           "description": "Installing .NET Framework. (3.5)",
+          "app": "dotnet35sp1",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "dotnet20sp1",
           "arch": "win64",
           "description": "Installing .NET Framework. (2.0)",
+          "app": "dotnet20sp1",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win64",
           "description": "Changing Windows version to (Win7).",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -111,8 +98,8 @@
       },
       {
         "task": {
-          "executable": "$CACHE/directx-2010/DXSETUP.exe",
           "arch": "win64",
+          "executable": "$CACHE/directx-2010/DXSETUP.exe",
           "description": "(Microsoft`s software) Installing directx-2010.",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -120,12 +107,12 @@
       },
       {
         "task": {
-          "executable": "epicstore",
           "arch": "win64",
-          "description": "Running the Epic Games`s Installer.",
           "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "exclude_processes": "EpicGamesLauncher.exe"
+          "exclude_processes": "EpicGamesLauncher.exe",
+          "executable": "epicstore",
+          "description": "Running the Epic Games`s Installer."
         }
       },
       {
@@ -136,14 +123,27 @@
         }
       }
     ],
-    "files": [
-      {
-        "epicstore": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
-      },
-      {
-        "dx10": "https://lutris.net/files/tools/directx-2010.tar.gz"
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "DXVK_STATE_CACHE": "1",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/StateCache/",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/GLcacheShaders/",
+        "__GL_SHADER_DISK_CACHE": "1"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-opengl",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
+    }
   },
   "content": "files:\n- epicstore: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- dx10: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/directx-2010\n    file: dx10\n- task:\n    arch: win64\n    description: Creating the Wine prefix (64bits).\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win64\n    description: Installing libraries.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: arial mdx d3dcompiler_43 d3dx9_43\n    arch: win64\n    description: Adding the software necessary.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win64\n    description: Installing .NET Framework. (3.5)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20sp1\n    arch: win64\n    description: Installing .NET Framework. (2.0)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Changing Windows version to (Win7).\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: (Microsoft`s software) Installing directx-2010.\n    executable: $CACHE/directx-2010/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running the Epic Games`s Installer.\n    exclude_processes: EpicGamesLauncher.exe\n    executable: epicstore\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_STATE_CACHE: '1'\n    DXVK_STATE_CACHE_PATH: $GAMEDIR/StateCache/\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/GLcacheShaders/\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n"
 }

@@ -21,14 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/StandingStoneGames/The Lord of the Rings Online/LotroLauncher.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -39,16 +31,16 @@
       },
       {
         "task": {
-          "app": "corefonts",
           "description": "Installing fonts",
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "vcrun2017",
           "description": "Setting Windows version to Visual C++ 2017",
+          "app": "vcrun2017",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -62,8 +54,8 @@
       },
       {
         "task": {
-          "executable": "lotro_installer",
           "args": "--mode unattended",
+          "executable": "lotro_installer",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -73,7 +65,15 @@
       {
         "lotro_installer": "http://content.turbine.com/sites/clientdl/lotro/lotrolive.exe"
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/StandingStoneGames/The Lord of the Rings Online/LotroLauncher.exe"
+    }
   },
   "content": "files:\n- lotro_installer: http://content.turbine.com/sites/clientdl/lotro/lotrolive.exe\ngame:\n  exe: drive_c/Program Files/StandingStoneGames/The Lord of the Rings Online/LotroLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing fonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Setting Windows version to Visual C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_42 d3dcompiler_43 d3dx11_42 d3dx11_43 winhttp corefonts win10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: --mode unattended\n    executable: lotro_installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

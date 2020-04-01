@@ -21,11 +21,55 @@
   "gogslug": "",
   "humblestoreid": "bioshock-infinite",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/BioShock Infinite/Binaries/Win32/BioShockInfinite.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "setup": "N/A:Select the game's setup file"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "app": "vcrun2012 vcrun2013",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "executable": "setup",
+          "description": "Installing Bioshock Infinite",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
@@ -37,55 +81,11 @@
       "Desktop": false,
       "dxvk": true
     },
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "file": "dx2010",
-          "dst": "$CACHE/dxsetup"
-        }
-      },
-      {
-        "task": {
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "arch": "win64",
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "app": "vcrun2012 vcrun2013",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "setup",
-          "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES",
-          "description": "Installing Bioshock Infinite",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
-    "files": [
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      },
-      {
-        "setup": "N/A:Select the game's setup file"
-      }
-    ]
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/BioShock Infinite/Binaries/Win32/BioShockInfinite.exe"
+    }
   },
   "content": "files:\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\n- setup: N/A:Select the game's setup file\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/GOG Games/BioShock Infinite/Binaries/Win32/BioShockInfinite.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2012 vcrun2013\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SP- /NOCANCEL /SUPPRESSMSGBOXES\r\n    description: Installing Bioshock Infinite\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n  pulse_latency: false\r\nwine:\r\n  Desktop: false\r\n  dxvk: true"
 }

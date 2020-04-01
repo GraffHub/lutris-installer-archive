@@ -21,14 +21,6 @@
   "gogslug": "tom_clancys_ghost_recon",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Tom Clancys Ghost Recon/GhostRecon.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "esync": true
-    },
     "installer": [
       {
         "task": {
@@ -40,9 +32,9 @@
       },
       {
         "task": {
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
           "executable": "installer",
           "description": "Running Setup, please wait...",
-          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
           "name": "wineexec"
         }
       }
@@ -51,7 +43,15 @@
       {
         "installer": "N/A:Please select the GOG.com Windows installer"
       }
-    ]
+    ],
+    "wine": {
+      "esync": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Tom Clancys Ghost Recon/GhostRecon.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Please select the GOG.com Windows installer\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Tom Clancys Ghost Recon/GhostRecon.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\nwine:\n  esync: true\n"
 }

@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/LucasArts/ROGUE/ROGUE.EXE",
-      "arch": "win32",
-      "prefix": "GAMEDIR"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -35,8 +30,8 @@
       },
       {
         "task": {
-          "executable": "${rogue-installer}",
           "args": "/nocdprompt",
+          "executable": "${rogue-installer}",
           "description": "Installing Rogue Squadron",
           "prefix": "GAMEDIR",
           "name": "wineexec"
@@ -51,12 +46,12 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "description": "Enable Windows 98 compatibility mode",
           "prefix": "GAMEDIR",
-          "name": "set_regedit",
           "value": "win98",
-          "key": "Version"
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Enable Windows 98 compatibility mode",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       }
     ],
@@ -64,7 +59,12 @@
       {
         "rogue-installer": "http://github.com/medfreeman/RogueSquadron3DInstaller/raw/master/RS3DInstaller-0.96_nglide_102.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "GAMEDIR",
+      "exe": "drive_c/Program Files/LucasArts/ROGUE/ROGUE.EXE"
+    }
   },
   "content": "files:\n- rogue-installer: http://github.com/medfreeman/RogueSquadron3DInstaller/raw/master/RS3DInstaller-0.96_nglide_102.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/LucasArts/ROGUE/ROGUE.EXE\n  prefix: GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert the Rogue Squadron CD to continue\n    requires: rogue\n- task:\n    args: /nocdprompt\n    description: Installing Rogue Squadron\n    executable: ${rogue-installer}\n    name: wineexec\n    prefix: GAMEDIR\n- task:\n    app: dsound\n    name: winetricks\n    prefix: GAMEDIR\n- task:\n    description: Enable Windows 98 compatibility mode\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: GAMEDIR\n    value: win98\n"
 }

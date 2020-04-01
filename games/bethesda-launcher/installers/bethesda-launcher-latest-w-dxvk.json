@@ -21,20 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Bethesda.net Launcher/BethesdaNetLauncher.exe",
-      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher",
-      "prefix": "$GAMEDIR",
-      "arch": "win64"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "setup": "https://download.cdp.bethesda.net/BethesdaNetLauncher_Setup.exe"
+      },
+      {
+        "helper": "https://raw.githubusercontent.com/Makaronelle/bethesda-linux-helper/master/helper.sh"
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -45,21 +39,21 @@
       },
       {
         "task": {
-          "app": "vcrun2012 corefonts win7",
           "arch": "win64",
+          "app": "vcrun2012 corefonts win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "setup",
           "arch": "win64",
-          "description": "Installing Bethesda Launcher. Please do not sign in. Launcher will close shortly after opening.",
-          "args": "/silent",
-          "name": "wineexec",
           "prefix": "$GAMEDIR",
-          "exclude_processes": "BethesdaNetLauncher.exe"
+          "name": "wineexec",
+          "exclude_processes": "BethesdaNetLauncher.exe",
+          "args": "/silent",
+          "executable": "setup",
+          "description": "Installing Bethesda Launcher. Please do not sign in. Launcher will close shortly after opening."
         }
       },
       {
@@ -71,22 +65,28 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher",
-          "src": "helper"
+          "src": "helper",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher"
         }
       },
       {
         "chmodx": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher/helper.sh"
       }
     ],
-    "files": [
-      {
-        "setup": "https://download.cdp.bethesda.net/BethesdaNetLauncher_Setup.exe"
-      },
-      {
-        "helper": "https://raw.githubusercontent.com/Makaronelle/bethesda-linux-helper/master/helper.sh"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Bethesda.net Launcher/BethesdaNetLauncher.exe"
+    }
   },
   "content": "files:\n- setup: https://download.cdp.bethesda.net/BethesdaNetLauncher_Setup.exe\n- helper: https://raw.githubusercontent.com/Makaronelle/bethesda-linux-helper/master/helper.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Bethesda.net Launcher/BethesdaNetLauncher.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 corefonts win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Bethesda Launcher. Please do not sign in. Launcher will\n      close shortly after opening.\n    exclude_processes: BethesdaNetLauncher.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher\n    src: helper\n- chmodx: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher/helper.sh\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

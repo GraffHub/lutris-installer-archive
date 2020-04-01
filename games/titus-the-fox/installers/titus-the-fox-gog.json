@@ -21,22 +21,18 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "Game/start.sh",
-      "working_dir": "$GAMEDIR"
-    },
     "installer": [
       {
         "execute": {
-          "file": "unzip",
+          "args": "$installer -d \"$GAMEDIR\" \"data/noarch/*\"",
           "description": "Extracting game data...",
-          "args": "$installer -d \"$GAMEDIR\" \"data/noarch/*\""
+          "file": "unzip"
         }
       },
       {
         "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/data/noarch"
+          "src": "$GAMEDIR/data/noarch",
+          "dst": "$GAMEDIR/Game"
         }
       }
     ],
@@ -44,7 +40,11 @@
       {
         "installer": "N/A:Please select the GOG.com Linux .sh installer."
       }
-    ]
+    ],
+    "game": {
+      "working_dir": "$GAMEDIR",
+      "exe": "Game/start.sh"
+    }
   },
   "content": "files:\n- installer: N/A:Please select the GOG.com Linux .sh installer.\ngame:\n  exe: Game/start.sh\n  working_dir: $GAMEDIR\ninstaller:\n- execute:\n    args: $installer -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data...\n    file: unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n"
 }

@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Creative Destruction/client.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "wininet": "builtin,native"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -40,8 +31,8 @@
       },
       {
         "task": {
-          "app": "vcrun2010 wininet",
           "description": "Setting the prefix",
+          "app": "vcrun2010 wininet",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -59,7 +50,16 @@
       {
         "installer": "https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Creative Destruction/client.exe"
+    }
   },
   "content": "files:\n- installer: https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe\ngame:\n  exe: $GAMEDIR/drive_c/Creative Destruction/client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating the wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet\n    description: Setting the prefix\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing game (WARNING: Uncheck Launch Creative Destruction)'\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

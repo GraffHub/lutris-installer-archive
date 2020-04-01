@@ -21,25 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Warframe/Downloaded/Public/Tools/Launcher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "PBA_DISABLE": 0,
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "__GL_SHADER_DISK_CACHE": 1
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    "files": [
+      {
+        "offlinedownloader": {
+          "url": "https://gitlab.com/snippets/1922761/raw",
+          "filename": "offlinedownloader.sh"
+        }
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -50,8 +39,8 @@
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/",
-          "src": "offlinedownloader"
+          "src": "offlinedownloader",
+          "dst": "$GAMEDIR/"
         }
       },
       {
@@ -59,27 +48,38 @@
       },
       {
         "execute": {
-          "file": "$GAMEDIR/offlinedownloader.sh",
-          "description": "Downloading Warframe Offline Installer."
+          "description": "Downloading Warframe Offline Installer.",
+          "file": "$GAMEDIR/offlinedownloader.sh"
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/Installer/WFInstaller.bat",
           "arch": "win64",
+          "executable": "$GAMEDIR/Installer/WFInstaller.bat",
           "description": "Running Warframe installer. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window.",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "offlinedownloader": {
-          "filename": "offlinedownloader.sh",
-          "url": "https://gitlab.com/snippets/1922761/raw"
-        }
-      }
-    ]
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "PBA_DISABLE": 0,
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "mesa_glthread": "true",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Warframe/Downloaded/Public/Tools/Launcher.exe"
+    }
   },
   "content": "files:\n- offlinedownloader:\n    filename: offlinedownloader.sh\n    url: https://gitlab.com/snippets/1922761/raw\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Warframe/Downloaded/Public/Tools/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/\n    src: offlinedownloader\n- chmodx: $GAMEDIR/offlinedownloader.sh\n- execute:\n    description: Downloading Warframe Offline Installer.\n    file: $GAMEDIR/offlinedownloader.sh\n- task:\n    arch: win64\n    description: 'Running Warframe installer. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window.'\n    executable: $GAMEDIR/Installer/WFInstaller.bat\n    name: wineexec\nsystem:\n  env:\n    PBA_DISABLE: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

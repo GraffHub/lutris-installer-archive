@@ -21,27 +21,23 @@
   "gogslug": "lands_of_lore_the_throne_of_chaos",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "lol",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "extract": {
-          "file": "$inno",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$inno"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR",
-          "src": "$xcopy"
+          "src": "$xcopy",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-I app -d \"$CACHE\" \"$game\""
+          "args": "-I app -d \"$CACHE\" \"$game\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
@@ -52,15 +48,15 @@
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR",
           "config_file": "$CACHE/lore.conf",
+          "working_dir": "$GAMEDIR",
           "name": "dosbox.dosexec"
         }
       },
       {
         "execute": {
-          "file": "/bin/rm",
-          "args": "-r $GAMEDIR/XCOPY.EXE"
+          "args": "-r $GAMEDIR/XCOPY.EXE",
+          "file": "/bin/rm"
         }
       }
     ],
@@ -74,7 +70,11 @@
       {
         "xcopy": "https://github.com/appoloin/WfW/raw/master/XCOPY.EXE"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "lol",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: N/A:Select GOG installer.\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- xcopy: https://github.com/appoloin/WfW/raw/master/XCOPY.EXE\ngame:\n  game_id: lol\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $inno\n- copy:\n    dst: $GAMEDIR\n    src: $xcopy\n- execute:\n    args: -I app -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR\" -t dir\n\n      imgmount D \"$CACHE/app/Lands of Lore 1/GAME.DAT\" -t iso\n\n      ver set 6.22\n\n      D:\n\n      C:\\xcopy.exe  D:\\data\\*.ADL C:\\\n\n      C:\\xcopy.exe  D:\\data\\*.PAK C:\\\n\n      C:\\xcopy.exe  D:\\data\\*.TLK C:\\\n\n      C:\\xcopy.exe  D:\\data\\FILEDATA.FDT C:\\\n\n      md C:\\ENG\n\n      C:\\xcopy.exe D:\\data\\eng\\*.*  C:\\ENG\n\n      md C:\\FRE\n\n      C:\\xcopy.exe D:\\data\\fre\\*.*  C:\\FRE\n\n      md C:\\GER\n\n      C:\\xcopy.exe D:\\data\\ger\\*.* C:\\GER\n\n      exit'\n    file: $CACHE/lore.conf\n- task:\n    config_file: $CACHE/lore.conf\n    name: dosbox.dosexec\n    working_dir: $GAMEDIR\n- execute:\n    args: -r $GAMEDIR/XCOPY.EXE\n    file: /bin/rm\n"
 }

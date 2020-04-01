@@ -21,11 +21,6 @@
   "gogslug": "star_wars_rogue_squadron_3d",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/GOG Games/Star Wars - Rogue Squadron 3D/Launch Star Wars - Rogue Squadron 3D.lnk",
-      "working_dir": "$GAMEDIR/drive_c/game",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,8 +31,8 @@
       },
       {
         "task": {
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -52,12 +47,12 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "description": "Enable Windows 98 compatibility mode",
           "prefix": "GAMEDIR",
-          "name": "set_regedit",
           "value": "win98",
-          "key": "Version"
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Enable Windows 98 compatibility mode",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       }
     ],
@@ -65,7 +60,12 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ]
+    ],
+    "game": {
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Star Wars - Rogue Squadron 3D/Launch Star Wars - Rogue Squadron 3D.lnk"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  exe: $GAMEDIR/drive_c/GOG Games/Star Wars - Rogue Squadron 3D/Launch Star Wars -\n    Rogue Squadron 3D.lnk\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dsound\n    name: winetricks\n    prefix: GAMEDIR\n- task:\n    description: Enable Windows 98 compatibility mode\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: GAMEDIR\n    value: win98\n"
 }

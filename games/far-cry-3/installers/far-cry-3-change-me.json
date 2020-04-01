@@ -21,24 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
+    "files": [
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -50,35 +37,35 @@
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win32",
           "description": "Setting Windows version to 7",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "corefonts",
           "arch": "win32",
           "description": "Installing corefonts",
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "d3dx11_43 d3dcompiler_43",
           "arch": "win32",
           "description": "Installing DirectX dlls",
+          "app": "d3dx11_43 d3dcompiler_43",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "uplay",
           "args": "/S",
+          "executable": "uplay",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -91,11 +78,24 @@
         }
       }
     ],
-    "files": [
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      }
-    ]
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    }
   },
   "content": "files:\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Windows version to 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    description: Installing corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx11_43 d3dcompiler_43\n    arch: win32\n    description: Installing DirectX dlls\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

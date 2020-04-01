@@ -21,29 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Warcraft III/x86_64/Warcraft III.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": "compiler",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "STAGING_SHARED_MEMORY": 1
+    "files": [
+      {
+        "setup2": "N/A:Select the installer for Warcraft III: Reign of Chaos"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi64": "disabled",
-        "d3d12": "disabled",
-        "nvapi": "disabled"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -55,23 +37,23 @@
       },
       {
         "task": {
-          "app": "arial",
-          "arch": "win64",
-          "description": "Installing Arial font...",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true
+          "arch": "win64",
+          "silent": true,
+          "description": "Installing Arial font...",
+          "app": "arial"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 7 mode for Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win7",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 7 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -83,11 +65,29 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup2": "N/A:Select the installer for Warcraft III: Reign of Chaos"
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1,
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi": "disabled",
+        "d3d12": "disabled",
+        "nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Warcraft III/x86_64/Warcraft III.exe"
+    }
   },
   "content": "files:\n- setup2: 'N/A:Select the installer for Warcraft III: Reign of Chaos'\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Warcraft III/x86_64/Warcraft III.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: 'Installing Warcraft III: The Frozen Throne'\n    executable: setup2\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n"
 }

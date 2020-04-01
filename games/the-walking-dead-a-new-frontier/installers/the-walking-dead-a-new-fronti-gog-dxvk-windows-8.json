@@ -21,11 +21,36 @@
   "gogslug": "walking_dead_a_new_frontier_the",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/The Walking Dead - A New Frontier/WalkingDead3_win8.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
+    "files": [
+      {
+        "goginstaller": "N/A:Select the game's setup file"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "app": "vcrun2015 win8",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "goginstaller",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
@@ -39,36 +64,11 @@
       },
       "dxvk": true
     },
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "app": "vcrun2015 win8",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "goginstaller",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
-    "files": [
-      {
-        "goginstaller": "N/A:Select the game's setup file"
-      }
-    ]
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/The Walking Dead - A New Frontier/WalkingDead3_win8.exe"
+    }
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/The Walking Dead - A New Frontier/WalkingDead3_win8.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win8\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  Desktop: true\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

@@ -21,16 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "d3d11": "disabled"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -41,8 +31,8 @@
       },
       {
         "task": {
-          "executable": "msiexec",
           "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
+          "executable": "msiexec",
           "description": "Installing Pokemon TCG Online",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -59,7 +49,17 @@
       {
         "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled"
+      }
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
+    }
   },
   "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win32\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    description: Installing Pokemon TCG Online\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    d3d11: disabled\n"
 }

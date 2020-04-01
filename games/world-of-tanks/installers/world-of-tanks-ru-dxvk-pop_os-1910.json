@@ -21,20 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "wgcinstaller": {
+          "url": "http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_RU.exe",
+          "filename": "Wargaming_Game_Center_Install_RU.exe"
+        }
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -61,22 +55,28 @@
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win64",
           "description": "Setting Wine to Windows 7",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       }
     ],
-    "files": [
-      {
-        "wgcinstaller": {
-          "filename": "Wargaming_Game_Center_Install_RU.exe",
-          "url": "http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_RU.exe"
-        }
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe"
+    }
   },
   "content": "files:\n- wgcinstaller:\n    filename: Wargaming_Game_Center_Install_RU.exe\n    url: http://redirect.wargaming.net/WGC/Wargaming_Game_Center_Install_RU.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Wargaming.net/GameCenter/wgc.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Wargaming Launcher\n    executable: wgcinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Wine to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

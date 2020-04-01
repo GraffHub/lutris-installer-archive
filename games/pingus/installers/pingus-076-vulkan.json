@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2020-02-16T14:38:33.411281Z",
-  "updated_at": "2020-02-16T14:38:33.411306Z",
+  "updated_at": "2020-03-20T10:50:57.543476Z",
   "draft": true,
   "published": false,
   "published_by": null,
@@ -21,26 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "custom-name": "Pingus",
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe"
-    },
-    "system": {
-      "disable_compositor": true,
-      "pulse_latency": true,
-      "xboxdrv": "xboxdrv"
-    },
-    "wine": {
-      "esync": true,
-      "Audio": "pulse",
-      "version": "ge-protonified-nofshack-4.9-x86_64",
-      "overrides": {
-        "winedbg.exe": "d"
-      },
-      "dxvk": true
-    },
+    "files": [
+      {
+        "Pingus.exe": "https://github.com/Pingus/downloads/blob/master/Pingus-0.7.6.exe?raw=true"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -52,8 +37,8 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/prefix/drive_c/",
-          "src": "Pingus.exe"
+          "src": "Pingus.exe",
+          "dst": "$GAMEDIR/prefix/drive_c/"
         }
       },
       {
@@ -66,8 +51,8 @@
       },
       {
         "task": {
-          "executable": "$GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe",
           "args": "/S",
+          "executable": "$GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe",
           "description": "Pingus ...",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
@@ -75,46 +60,54 @@
       },
       {
         "task": {
+          "arch": "win64",
+          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "arch": "win64",
-          "description": "DirectX 11 ...",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "description": "DirectX 11 ...",
           "app": "d3dx11_43",
-          "arch": "win64",
-          "description": "DirectX 11 ...",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "dxvk",
           "arch": "win64",
           "description": "Vulkan ...",
+          "app": "dxvk",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "win8",
           "arch": "win64",
           "description": "Windows version 8 ...",
+          "app": "win8",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       }
     ],
-    "files": [
-      {
-        "Pingus.exe": "https://github.com/Pingus/downloads/blob/master/Pingus-0.7.6.exe?raw=true"
-      }
-    ]
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
+    "wine": {
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "custom-name": "Pingus",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe"
+    }
   },
-  "content": "files:\n- Pingus.exe: https://github.com/Pingus/downloads/blob/master/Pingus-0.7.6.exe?raw=true\ngame:\n  arch: win64\n  custom-name: Pingus\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- move:\n    dst: $GAMEDIR/prefix/drive_c/\n    src: Pingus.exe\n- chmodx: $GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe?raw=true\n- execute:\n    command: cd $GAMEDIR/prefix/drive_c && mv Pingus-0.7.6.exe\\?raw\\=true Pingus-0.7.6.exe\n- task:\n    args: /S\n    description: Pingus ...\n    executable: $GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n  version: ge-protonified-nofshack-4.9-x86_64\n"
+  "content": "files:\r\n- Pingus.exe: https://github.com/Pingus/downloads/blob/master/Pingus-0.7.6.exe?raw=true\r\ngame:\r\n  arch: win64\r\n  custom-name: Pingus\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- move:\r\n    dst: $GAMEDIR/prefix/drive_c/\r\n    src: Pingus.exe\r\n- chmodx: $GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe?raw=true\r\n- execute:\r\n    command: cd $GAMEDIR/prefix/drive_c && mv Pingus-0.7.6.exe\\?raw\\=true Pingus-0.7.6.exe\r\n- task:\r\n    args: /S\r\n    description: Pingus ...\r\n    executable: $GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\nwine:\r\n  esync: true"
 }

@@ -1,47 +1,59 @@
 {
-  "id": 17730,
+  "id": 18909,
   "game_id": 29835,
   "game_slug": "trade-skill-master",
   "name": "Trade Skill Master",
   "year": null,
-  "user": "yakfondler",
+  "user": "noobtaco",
   "runner": "wine",
   "slug": "trade-skill-master-change-me",
   "version": "Change Me",
-  "description": "This will fetch the installer from the website and install it locally using the proper arguments/prefixes.",
-  "notes": "",
-  "created_at": "2020-01-03T20:37:21.261028Z",
-  "updated_at": "2020-01-23T02:56:58.582359Z",
-  "draft": true,
+  "description": "Installs Trade Skill Master to a standalone Wine prefix.",
+  "notes": "If you wish your data to be available to a WoW installation, symlink $GAMEDIR/world-of-warcraft/drive_c/Program Files (x86)/World of Warcraft to $GAMEDIR/tradeskillmaster/drive_c/Program Files (x86)/World of Warcraft.",
+  "created_at": "2020-03-16T15:33:20.570882Z",
+  "updated_at": "2020-03-20T10:28:03.071353Z",
+  "draft": false,
   "published": false,
-  "published_by": null,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "script": {
-      "game": {
-        "exe": "$GAMEDIR/prefix/drive_c/Games/tradeskillmaster/app/tradeskillmaster.exe",
-        "working_dir": "$GAMEDIR"
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
       },
-      "installer": [
-        {
-          "chmodx": "installer"
-        },
-        {
-          "file": "installer",
-          "execute": null,
-          "description": "Installing tradeskillmaster..."
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "app",
+          "description": "Installing Trade Skill Master.",
+          "name": "wineexec"
         }
-      ],
-      "files": [
-        {
-          "installer": "http://cdn.tradeskillmaster.com/setup.exe"
-        }
-      ]
+      }
+    ],
+    "files": [
+      {
+        "app": "http://cdn.tradeskillmaster.com/setup.exe"
+      }
+    ],
+    "system": {
+      "terminal": true
+    },
+    "game": {
+      "arch": "win64",
+      "working_dir": "$GAMEDIR",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/TradeSkillMaster Application/app/TSMApplication.exe"
     }
   },
-  "content": "script:\n  files:\n  - installer: http://cdn.tradeskillmaster.com/setup.exe\n  game:\n    exe: $GAMEDIR/prefix/drive_c/Games/tradeskillmaster/app/tradeskillmaster.exe\n    working_dir: $GAMEDIR\n  installer:\n  - chmodx: installer\n  - description: Installing tradeskillmaster...\n    execute: null\n    file: installer\n"
+  "content": "files:\r\n- app: http://cdn.tradeskillmaster.com/setup.exe\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/TradeSkillMaster Application/app/TSMApplication.exe\r\n  prefix: $GAMEDIR\r\n  working_dir: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64bit Wine prefix.\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    description: Installing Trade Skill Master.\r\n    executable: app\r\n    name: wineexec\r\nsystem:\r\n  terminal: true"
 }

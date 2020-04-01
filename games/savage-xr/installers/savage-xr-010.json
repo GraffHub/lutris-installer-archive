@@ -21,24 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Savage XR/savage.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
+    "files": [
+      {
+        "installer": {
+          "url": "http://www.newerth.com/?id=downloads&op=downloadFile&file=xr_setup-1.0-cl_win_prod.exe&mirrorid=2",
+          "filename": "xr_setup-1.0-cl_win_prod.exe"
+        }
       }
-    },
-    "wine": {
-      "overrides": {
-        "d3d11": "disabled",
-        "ddraw": "native"
-      }
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -49,21 +39,31 @@
       },
       {
         "task": {
-          "executable": "installer",
           "arch": "win32",
+          "executable": "installer",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "installer": {
-          "filename": "xr_setup-1.0-cl_win_prod.exe",
-          "url": "http://www.newerth.com/?id=downloads&op=downloadFile&file=xr_setup-1.0-cl_win_prod.exe&mirrorid=2"
-        }
+    "system": {
+      "env": {
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "__GL_SHADER_DISK_CACHE": "1"
       }
-    ]
+    },
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled",
+        "ddraw": "native"
+      }
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Savage XR/savage.exe"
+    }
   },
   "content": "files:\n- installer:\n    filename: xr_setup-1.0-cl_win_prod.exe\n    url: http://www.newerth.com/?id=downloads&op=downloadFile&file=xr_setup-1.0-cl_win_prod.exe&mirrorid=2\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Savage XR/savage.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwine:\n  overrides:\n    d3d11: disabled\n    ddraw: native\n"
 }

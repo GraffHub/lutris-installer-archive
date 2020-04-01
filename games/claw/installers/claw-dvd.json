@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -42,8 +37,8 @@
       },
       {
         "task": {
-          "executable": "$DISC/SETUP.EXE",
           "arch": "win32",
+          "executable": "$DISC/SETUP.EXE",
           "description": "Installing Claw...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -58,14 +53,14 @@
       },
       {
         "task": {
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "type": "REG_DWORD",
           "arch": "win32",
-          "description": "Setting registry keys...",
           "value": 1,
-          "key": "Disable DVD Movies"
+          "description": "Setting registry keys...",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0",
+          "name": "set_regedit",
+          "key": "Disable DVD Movies",
+          "type": "REG_DWORD"
         }
       }
     ],
@@ -73,7 +68,12 @@
       {
         "patch": "http://kapitanpazur.piasta.pl/dl/claw13.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/games/claw/CLAW.EXE"
+    }
   },
   "content": "files:\n- patch: http://kapitanpazur.piasta.pl/dl/claw13.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/games/claw/CLAW.EXE\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: DATA/CLAW.REZ\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Claw...\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Patching Claw...\n    dst: $GAMEDIR/drive_c/games/claw/\n    src: patch\n- task:\n    arch: win32\n    description: Setting registry keys...\n    key: Disable DVD Movies\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Monolith Productions\\Claw\\1.0\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 1\n"
 }

@@ -11,7 +11,7 @@
   "description": "Non-Steam version of the game.",
   "notes": "",
   "created_at": "2020-01-28T18:43:31.326000Z",
-  "updated_at": "2020-01-31T16:15:33.367713Z",
+  "updated_at": "2020-03-08T11:39:04.134260Z",
   "draft": false,
   "published": true,
   "published_by": 20548,
@@ -21,23 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/ArmoredWarfareMycomLoaderA_en.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "STAGING_SHARED_MEMORY": 1
+    "files": [
+      {
+        "loader": "http://static.gc.my.com/ArmoredWarfareMycomLoaderA_en.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -48,9 +36,18 @@
         }
       },
       {
+        "task": {
+          "arch": "win64",
+          "description": "Installing d3dcompiler_47...",
+          "app": "d3dcompiler_47 win10",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/",
-          "src": "loader"
+          "src": "loader",
+          "dst": "$GAMEDIR/drive_c/"
         }
       },
       {
@@ -61,8 +58,8 @@
       },
       {
         "task": {
-          "executable": "loader",
           "arch": "win64",
+          "executable": "loader",
           "description": "Installing Armored Warfare...",
           "name": "wineexec"
         }
@@ -74,11 +71,23 @@
         }
       }
     ],
-    "files": [
-      {
-        "loader": "http://static.gc.my.com/ArmoredWarfareMycomLoaderA_en.exe"
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/ArmoredWarfareMycomLoaderA_en.exe"
+    }
   },
-  "content": "files:\n- loader: http://static.gc.my.com/ArmoredWarfareMycomLoaderA_en.exe\ngame:\n  arch: win64\n  exe: drive_c/ArmoredWarfareMycomLoaderA_en.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/\n    src: loader\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Armored Warfare...\n    executable: loader\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+  "content": "files:\n- loader: http://static.gc.my.com/ArmoredWarfareMycomLoaderA_en.exe\ngame:\n  arch: win64\n  exe: drive_c/ArmoredWarfareMycomLoaderA_en.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_47 win10\n    arch: win64\n    description: Installing d3dcompiler_47...\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/\n    src: loader\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Armored Warfare...\n    executable: loader\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

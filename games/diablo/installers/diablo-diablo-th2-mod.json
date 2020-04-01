@@ -1,0 +1,100 @@
+{
+  "id": 15078,
+  "game_id": 5826,
+  "game_slug": "diablo",
+  "name": "Diablo",
+  "year": 1996,
+  "user": "justaguru",
+  "runner": "wine",
+  "slug": "diablo-diablo-th2-mod",
+  "version": "Diablo + TH2 mod",
+  "description": "Diablo 1 with The Hell 2 mod https://www.patreon.com/thmod\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions.",
+  "notes": "- TH2 v 1.0146 - 10 march 2020 \r\n- TH2 music v 8.4\r\n- You will need to provide diabdat.mpq during script install.\r\n- Knows issues: move the mouse for the menu to appear.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-08-21T02:08:41.689000Z",
+  "updated_at": "2020-03-10T00:27:45.581756Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1412601690,
+  "gogslug": "diablo",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "arch": "win64",
+          "install_gecko": false,
+          "description": "Creating WINE prefix",
+          "install_mono": false
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "diabdat.mpq"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/DiabloTH2",
+          "file": "th2exe"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/DiabloTH2",
+          "file": "th2music"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$DISC\"; ls | grep -i diabdat.mpq | xargs cp -t \"$GAMEDIR/drive_c/Program Files/DiabloTH2\";"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/Program Files/DiabloTH2\"; sed -i -e \"s/screenwidth.*/screenwidth $RESOLUTION_WIDTH/g\" -e \"s/screenheight.*/screenheight $RESOLUTION_HEIGHT/g\" -e \"s/fullscreen off.*/fullscreen on/g\" -e \"s/Vsync off.*/Vsync on/g\" config.ini;"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "arch": "win64",
+          "key": "background",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      }
+    ],
+    "files": [
+      {
+        "th2exe": {
+          "url": "https://www.moddb.com/downloads/mirror/170128/122/f7200295aabee4b9d1bcca82c87d02a3/",
+          "filename": "th2.zip"
+        }
+      },
+      {
+        "th2music": {
+          "url": "https://www.moddb.com/downloads/mirror/170123/123/e08ce95dccff092c96144cc138e7df43/",
+          "filename": "th2_music.rar"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": true,
+      "dxvk": false
+    },
+    "custom-name": "Diablo - The Hell 2 mod",
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/DiabloTH2/TH2.exe"
+    }
+  },
+  "content": "custom-name: Diablo - The Hell 2 mod\nfiles:\n- th2exe:\n    filename: th2.zip\n    url: https://www.moddb.com/downloads/mirror/170128/122/f7200295aabee4b9d1bcca82c87d02a3/\n- th2music:\n    filename: th2_music.rar\n    url: https://www.moddb.com/downloads/mirror/170123/123/e08ce95dccff092c96144cc138e7df43/\ngame:\n  arch: win64\n  exe: drive_c/Program Files/DiabloTH2/TH2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: diabdat.mpq\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/DiabloTH2\n    file: th2exe\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/DiabloTH2\n    file: th2music\n- execute:\n    command: cd \"$DISC\"; ls | grep -i diabdat.mpq | xargs cp -t \"$GAMEDIR/drive_c/Program\n      Files/DiabloTH2\";\n- execute:\n    command: cd \"$GAMEDIR/drive_c/Program Files/DiabloTH2\"; sed -i -e \"s/screenwidth.*/screenwidth\n      $RESOLUTION_WIDTH/g\" -e \"s/screenheight.*/screenheight $RESOLUTION_HEIGHT/g\"\n      -e \"s/fullscreen off.*/fullscreen on/g\" -e \"s/Vsync off.*/Vsync on/g\" config.ini;\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n  dxvk: false\n"
+}

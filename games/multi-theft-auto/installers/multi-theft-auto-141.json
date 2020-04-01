@@ -21,24 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.4/Multi Theft Auto.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "files": [
-      {
-        "mta": "http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.4.1.exe"
-      },
-      {
-        "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
-      }
-    ],
     "installer": [
       {
         "extract": {
-          "file": "$downgrade",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$downgrade"
         }
       },
       {
@@ -51,15 +38,28 @@
       },
       {
         "task": {
-          "executable": "$mta",
           "args": "/silent",
+          "executable": "$mta",
           "description": "Installing MTA...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "requires": "grand-theft-auto-san-andreas"
+    "requires": "grand-theft-auto-san-andreas",
+    "files": [
+      {
+        "mta": "http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.4.1.exe"
+      },
+      {
+        "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.4/Multi Theft Auto.exe"
+    }
   },
   "content": "files:\n- mta: http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.4.1.exe\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/MTA San Andreas 1.4/Multi Theft Auto.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing MTA...\n    executable: $mta\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
 }

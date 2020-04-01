@@ -8,60 +8,63 @@
   "runner": "dosbox",
   "slug": "duke-nukem-3d-gog",
   "version": "GOG",
-  "description": "Atomic edition from GOG.",
-  "notes": "Requires the latest version of GOG's Linux installer.\r\nUses game data from GOG with DOSBox from Lutris.",
+  "description": "This script will assist you to install \"Duke Nukem 3D - Atomic Edition\" GOG edition on DOSBox with Linux OS.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions on Linux platform.",
+  "notes": "- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2014-07-27T09:46:32.031000Z",
-  "updated_at": "2016-04-15T15:22:22.755195Z",
+  "updated_at": "2020-03-28T21:39:19.015659Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 494,
   "rating": "",
   "steamid": 225140,
-  "gogid": null,
+  "gogid": 1207658730,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/Game/dosboxDuke3D.conf"
-    },
-    "main_file": "Game/dosboxDuke3D_single.conf",
     "installer": [
       {
         "extract": {
-          "file": "$unzip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "inno"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
-          "description": "Extracting game data...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\""
+          "args": "-d \"$GAMEDIR\" \"$gog\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
-        "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/data/noarch"
+        "merge": {
+          "src": "$GAMEDIR/app",
+          "dst": "$GAMEDIR"
         }
       },
       {
-        "write_config": {
-          "file": "$GAMEDIR/Game/dosboxDuke3D.conf",
-          "value": true,
-          "key": "aspect",
-          "section": "render"
+        "merge": {
+          "src": "$GAMEDIR/__support/app",
+          "dst": "$GAMEDIR/dosbox"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR\"; rm -f -r app commonappdata DOSBOX __redist __support tmp goggame-1207658730* webcache.zip ;"
         }
       }
     ],
     "files": [
       {
-        "game": "N/A:Select the Linux installer downloaded from GOG"
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
       },
       {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+        "gog": "N/A:Select the Windows setup file downloaded from GOG"
       }
-    ]
+    ],
+    "custom-name": "Duke Nukem 3D - Atomic Edition - GOG - DOSBox",
+    "game": {
+      "config_file": "$GAMEDIR/dosbox/dosboxDuke3D.conf",
+      "main_file": "$GAMEDIR/dosbox/dosboxDuke3D_single.conf"
+    }
   },
-  "content": "files:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  config_file: $GAMEDIR/Game/dosboxDuke3D.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n- write_config:\n    file: $GAMEDIR/Game/dosboxDuke3D.conf\n    key: aspect\n    section: render\n    value: true\nmain_file: Game/dosboxDuke3D_single.conf\n"
+  "content": "custom-name: Duke Nukem 3D - Atomic Edition - GOG - DOSBox\nfiles:\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- gog: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  config_file: $GAMEDIR/dosbox/dosboxDuke3D.conf\n  main_file: $GAMEDIR/dosbox/dosboxDuke3D_single.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$GAMEDIR\" \"$gog\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $GAMEDIR/app\n- merge:\n    dst: $GAMEDIR/dosbox\n    src: $GAMEDIR/__support/app\n- execute:\n    command: cd \"$GAMEDIR\"; rm -f -r app commonappdata DOSBOX __redist __support tmp\n      goggame-1207658730* webcache.zip ;\n"
 }

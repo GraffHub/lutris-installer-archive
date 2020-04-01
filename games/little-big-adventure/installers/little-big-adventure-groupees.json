@@ -21,58 +21,7 @@
   "gogslug": "little_big_adventure",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/LBA.conf"
-    },
     "main_file": "LBA_single.conf",
-    "installer": [
-      {
-        "extract": {
-          "file": "$file1",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "extract": {
-          "file": "$file2",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-d \"$CACHE\" \"$CACHE/LBA.exe\""
-        }
-      },
-      {
-        "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/app"
-        }
-      },
-      {
-        "move": {
-          "dst": "$GAMEDIR/LBA_single.conf",
-          "src": "$CACHE/app/LBA.conf"
-        }
-      },
-      {
-        "write_config": {
-          "file": "$GAMEDIR/LBA.conf",
-          "value": true,
-          "key": "aspect",
-          "section": "render"
-        }
-      },
-      {
-        "write_config": {
-          "file": "$GAMEDIR/LBA.conf",
-          "value": false,
-          "key": "fullscreen",
-          "section": "sdl"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the Groupees archive"
@@ -80,7 +29,58 @@
       {
         "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
       }
-    ]
+    ],
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file1"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file2"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE\" \"$CACHE/LBA.exe\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/app/LBA.conf",
+          "dst": "$GAMEDIR/LBA_single.conf"
+        }
+      },
+      {
+        "write_config": {
+          "section": "render",
+          "key": "aspect",
+          "file": "$GAMEDIR/LBA.conf",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "key": "fullscreen",
+          "file": "$GAMEDIR/LBA.conf",
+          "value": false
+        }
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/LBA.conf"
+    }
   },
   "content": "files:\n- file1: N/A:Please select the Groupees archive\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/LBA.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file1\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$CACHE/LBA.exe\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- move:\n    dst: $GAMEDIR/LBA_single.conf\n    src: $CACHE/app/LBA.conf\n- write_config:\n    file: $GAMEDIR/LBA.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/LBA.conf\n    key: fullscreen\n    section: sdl\n    value: false\nmain_file: LBA_single.conf\n"
 }

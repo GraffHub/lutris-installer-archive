@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "gnap",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "write_file": {
@@ -37,8 +33,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/selectcopy.sh",
-          "args": "$game $GAMEDIR"
+          "args": "$game $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
         }
       }
     ],
@@ -46,7 +42,11 @@
       {
         "game": "N/A:Select a file with *.DAT extension"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "gnap",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: N/A:Select a file with *.DAT extension\ngame:\n  game_id: gnap\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.AVI\" -o -iname \"*.DAT\" -o -iname \"*.EXE\"\n      -o -iname \"*.MID\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/selectcopy.sh\n"
 }

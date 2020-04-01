@@ -21,13 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/game/Run/game.exe",
-      "working_dir": "$GAMEDIR/drive_c/game",
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
-    },
-    "gogid": "blitzkrieg",
     "installer": [
       {
         "task": {
@@ -38,18 +31,18 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -57,9 +50,9 @@
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -72,6 +65,13 @@
     ],
     "system": {
       "disable_runtime": true
+    },
+    "gogid": "blitzkrieg",
+    "game": {
+      "arch": "win32",
+      "working_dir": "$GAMEDIR/drive_c/game",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/game/Run/game.exe"
     }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Run/game.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ngogid: blitzkrieg\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: true\n"

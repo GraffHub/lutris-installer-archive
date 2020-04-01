@@ -21,32 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
-      "arch": "win64",
-      "args": "-autologin",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": "true",
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_LOG_LEVEL": "none",
-        "DXVK_HUD": 0,
-        "__NV_PRIME_RENDER_OFFLOAD": 1,
-        "STAGING_SHARED_MEMORY": 1
+    "files": [
+      {
+        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
+      },
+      {
+        "gw2shadercache": "https://github.com/Zeioth/zeioth-lutris/raw/master/game-installers/guild-wars-2/gw2-d9vk-shader-cache-0.0.2.zip"
       }
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "extract": {
-          "file": "gw2shadercache",
+          "format": "zip",
           "dst": "$GAMEDIR",
-          "format": "zip"
+          "file": "gw2shadercache"
         }
       },
       {
@@ -71,19 +59,31 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe",
-          "src": "client"
+          "src": "client",
+          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe"
         }
       }
     ],
-    "files": [
-      {
-        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
-      },
-      {
-        "gw2shadercache": "https://github.com/Zeioth/zeioth-lutris/raw/master/game-installers/guild-wars-2/gw2-d9vk-shader-cache-0.0.2.zip"
+    "system": {
+      "disable_compositor": "true",
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__NV_PRIME_RENDER_OFFLOAD": 1,
+        "STAGING_SHARED_MEMORY": 1,
+        "DXVK_HUD": 0,
+        "DXVK_LOG_LEVEL": "none"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-autologin",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe"
+    }
   },
   "content": "files:\r\n- client: https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe\r\n- gw2shadercache: https://github.com/Zeioth/zeioth-lutris/raw/master/game-installers/guild-wars-2/gw2-d9vk-shader-cache-0.0.2.zip\r\ngame:\r\n  arch: win64\r\n  args: -autologin\r\n  exe: drive_c/Program Files/Guild Wars 2/GW2-64.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- extract:\r\n    dst: $GAMEDIR\r\n    file: gw2shadercache\r\n    format: zip\r\n- task:\r\n    arch: win64\r\n    description: Creating win64 prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: faudio\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2\"\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe\r\n    src: client\r\nsystem:\r\n  disable_compositor: 'true'\r\n  env:\r\n    DXVK_HUD: 0\r\n    DXVK_LOG_LEVEL: none\r\n    STAGING_SHARED_MEMORY: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __NV_PRIME_RENDER_OFFLOAD: 1\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

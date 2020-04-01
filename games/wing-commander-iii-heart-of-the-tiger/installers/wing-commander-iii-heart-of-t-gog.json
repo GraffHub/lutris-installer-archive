@@ -1,0 +1,165 @@
+{
+  "id": 8079,
+  "game_id": 12221,
+  "game_slug": "wing-commander-iii-heart-of-the-tiger",
+  "name": "Wing Commander III: Heart of the Tiger",
+  "year": 1994,
+  "user": "Wompus",
+  "runner": "dosbox",
+  "slug": "wing-commander-iii-heart-of-t-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-05-06T21:01:47.957000Z",
+  "updated_at": "2019-09-09T00:29:47.601764Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207658966,
+  "gogslug": "wing_commander_3_heart_of_the_tiger",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/innoextract",
+          "file": "innoextract"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/p7z",
+          "file": "p7z"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $wc3installer --output-dir $CACHE/tmp --gog",
+          "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "x -y -o$CACHE/wc3/disk $CACHE/tmp/app/DATA.DAT",
+          "file": "$CACHE/p7z/7z"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/wc3/disk",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/tmp/app/WC3",
+          "dst": "$GAMEDIR/WC3"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/tmp/app/dosboxWC3.conf",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "input_menu": {
+          "id": "RES",
+          "options": [
+            {
+              "3840x2160": "3840x2160"
+            },
+            {
+              "2560x1440": "2560x1440"
+            },
+            {
+              "1600x1200": "1600x1200"
+            },
+            {
+              "1920x1200": "1920x1200"
+            },
+            {
+              "1920x1080": "1920x1080"
+            },
+            {
+              "1280x1024": "1280x1024"
+            },
+            {
+              "1600x900": "1600x900"
+            },
+            {
+              "1440x900": "1440x900"
+            },
+            {
+              "1280x800": "1280x800"
+            },
+            {
+              "1366x768": "1366x768"
+            },
+            {
+              "1360x768": "1360x768"
+            },
+            {
+              "1024x768": "1024x768"
+            },
+            {
+              "1280x720": "1280x720"
+            }
+          ],
+          "description": "Choose your desktop resolution",
+          "preselect": "1920x1080"
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "key": "output",
+          "file": "$GAMEDIR/dosboxWC3.conf",
+          "value": "openglnb"
+        }
+      },
+      {
+        "write_config": {
+          "section": "render",
+          "key": "scaler",
+          "file": "$GAMEDIR/dosboxWC3.conf",
+          "value": "none"
+        }
+      },
+      {
+        "write_config": {
+          "section": "render",
+          "key": "aspect",
+          "file": "$GAMEDIR/dosboxWC3.conf",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "section": "sdl",
+          "key": "fullresolution",
+          "file": "$GAMEDIR/dosboxWC3.conf",
+          "value": "$INPUT_RES"
+        }
+      }
+    ],
+    "files": [
+      {
+        "wc3installer": "N/A:Select location of GOG executable (should be setup_wing_commander3_2.1.x.x.exe)"
+      },
+      {
+        "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "p7z": "https://lutris.net/files/tools/p7zip-16.02-x86_64.tar.gz"
+      }
+    ],
+    "game": {
+      "config_file": "dosboxWC3.conf",
+      "main_file": "WC3.EXE"
+    }
+  },
+  "content": "files:\n- wc3installer: N/A:Select location of GOG executable (should be setup_wing_commander3_2.1.x.x.exe)\n- innoextract: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- p7z: https://lutris.net/files/tools/p7zip-16.02-x86_64.tar.gz\ngame:\n  config_file: dosboxWC3.conf\n  main_file: WC3.EXE\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- extract:\n    dst: $CACHE/p7z\n    file: p7z\n- execute:\n    args: --extract $wc3installer --output-dir $CACHE/tmp --gog\n    file: $CACHE/innoextract/innoextract\n- execute:\n    args: x -y -o$CACHE/wc3/disk $CACHE/tmp/app/DATA.DAT\n    file: $CACHE/p7z/7z\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/wc3/disk\n- merge:\n    dst: $GAMEDIR/WC3\n    src: $CACHE/tmp/app/WC3\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/tmp/app/dosboxWC3.conf\n- input_menu:\n    description: Choose your desktop resolution\n    id: RES\n    options:\n    - 3840x2160: 3840x2160\n    - 2560x1440: 2560x1440\n    - 1600x1200: 1600x1200\n    - 1920x1200: 1920x1200\n    - 1920x1080: 1920x1080\n    - 1280x1024: 1280x1024\n    - 1600x900: 1600x900\n    - 1440x900: 1440x900\n    - 1280x800: 1280x800\n    - 1366x768: 1366x768\n    - 1360x768: 1360x768\n    - 1024x768: 1024x768\n    - 1280x720: 1280x720\n    preselect: 1920x1080\n- write_config:\n    file: $GAMEDIR/dosboxWC3.conf\n    key: output\n    section: sdl\n    value: openglnb\n- write_config:\n    file: $GAMEDIR/dosboxWC3.conf\n    key: scaler\n    section: render\n    value: none\n- write_config:\n    file: $GAMEDIR/dosboxWC3.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxWC3.conf\n    key: fullresolution\n    section: sdl\n    value: $INPUT_RES\n"
+}

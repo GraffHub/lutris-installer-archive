@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/e-Sword/e-Sword.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -44,9 +39,9 @@
       },
       {
         "task": {
-          "app": "mfc42 vcrun6 msls31 msxml3 msxml6 vb6run wsh57",
           "arch": "win32",
           "description": "Installing winetricks verbs",
+          "app": "mfc42 vcrun6 msls31 msxml3 msxml6 vb6run wsh57",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -70,7 +65,12 @@
       {
         "filename": "https://www.e-sword.net/files/e-sword_1201_setup.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/e-Sword/e-Sword.exe"
+    }
   },
   "content": "files:\n- filename: https://www.e-sword.net/files/e-sword_1201_setup.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/e-Sword/e-Sword.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: mfc42 vcrun6 msls31 msxml3 msxml6 vb6run wsh57\n    arch: win32\n    description: Installing winetricks verbs\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    description: Installing eSword...\n    executable: filename\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

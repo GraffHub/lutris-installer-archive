@@ -21,10 +21,6 @@
   "gogslug": "heroes_of_might_and_magic_3_complete_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -35,17 +31,17 @@
       },
       {
         "task": {
+          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
           "executable": "installer",
           "description": "Running Setup, please wait…",
-          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
           "name": "wineexec"
         }
       },
       {
         "task": {
+          "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"",
           "executable": "hota_setup",
           "description": "Running HotA setup, please wait…",
-          "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"",
           "name": "wineexec"
         }
       }
@@ -57,7 +53,11 @@
       {
         "hota_setup": "N/A:Select HOTA setup exe"
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\n- hota_setup: N/A:Select HOTA setup exe\ngame:\n  exe: drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    description: \"Running Setup, please wait\\u2026\"\n    executable: installer\n    name: wineexec\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"\n    description: \"Running HotA setup, please wait\\u2026\"\n    executable: hota_setup\n    name: wineexec\n"
 }

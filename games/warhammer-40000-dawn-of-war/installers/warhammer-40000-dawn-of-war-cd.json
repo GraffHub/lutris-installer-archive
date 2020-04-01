@@ -21,18 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "exe": "drive_c/Program Files/THQ/Dawn of War/W40k.exe",
     "installer": [
       {
         "task": {
           "executable": "ccinstaller",
-          "name": "wineexec",
+          "requires": "setup.exe",
           "prefix": "$GAMEDIR",
-          "requires": "setup.exe"
+          "name": "wineexec"
         }
       },
       {
@@ -75,7 +71,11 @@
           "name": "wineexec"
         }
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    }
   },
   "content": "exe: drive_c/Program Files/THQ/Dawn of War/W40k.exe\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    executable: ccinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n    requires: setup.exe\n- merge:\n    description: Copying disc 1 to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- insert-disc:\n    message: Insert disc 2\n    requires: Data2.cab\n- merge:\n    description: Copying disc 2 to cache\n    dst: $CACHE/cdrom\n    src: $DISC/Data2.cab\n- insert-disc:\n    message: Insert disc 3\n    requires: Data3.cab\n- merge:\n    description: Copying disc 3 to cache\n    dst: $CACHE/cdrom\n    src: $DISC/Data3.cab\n- task:\n    executable: $CACHE/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

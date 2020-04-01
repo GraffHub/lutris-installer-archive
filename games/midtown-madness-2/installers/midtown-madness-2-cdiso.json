@@ -21,17 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Microsoft Games/Midtown Madness 2/Midtown2.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "ddraw": "native"
-      },
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -42,18 +31,18 @@
       },
       {
         "task": {
-          "app": "directmusic",
           "arch": "win32",
           "description": "Installing DirectMusic...",
+          "app": "directmusic",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "icodecs",
           "arch": "win32",
           "description": "Installing Indeo codec...",
+          "app": "icodecs",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -75,9 +64,9 @@
       },
       {
         "extract": {
-          "file": "dgvoodoo",
+          "description": "Extracting dgVoodoo2 archive...",
           "dst": "$GAMEDIR/drive_c/dgvoodoo/",
-          "description": "Extracting dgVoodoo2 archive..."
+          "file": "dgvoodoo"
         }
       },
       {
@@ -112,7 +101,18 @@
       {
         "dgvoodoo": "http://www.dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_4.zip"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "ddraw": "native"
+      },
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Microsoft Games/Midtown Madness 2/Midtown2.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Please select the Midtown Madness 2 setup executable (setup.exe)\n- nocd: 'N/A:Please select the No-CD executable for Midtown Madness 2 (Midtown2.exe)\n    NOTE: Case sensitive'\n- dgvoodoo: http://www.dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_4.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Games/Midtown Madness 2/Midtown2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: directmusic\n    arch: win32\n    description: Installing DirectMusic...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: icodecs\n    arch: win32\n    description: Installing Indeo codec...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Midtown Madness 2...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- merge:\n    description: Installing No-CD executable...\n    dst: $GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/\n    src: nocd\n- extract:\n    description: Extracting dgVoodoo2 archive...\n    dst: $GAMEDIR/drive_c/dgvoodoo/\n    file: dgvoodoo\n- move:\n    description: Installing dgVoodoo2 (1/3)...\n    dst: $GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/\n    src: $GAMEDIR/drive_c/dgvoodoo/dgVoodooCpl.exe\n- move:\n    description: Installing dgVoodoo2 (2/3)...\n    dst: $GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/\n    src: $GAMEDIR/drive_c/dgvoodoo/dgVoodoo.conf\n- merge:\n    description: Installing dgVoodoo (3/3)...\n    dst: $GAMEDIR/drive_c/Program Files/Microsoft Games/Midtown Madness 2/\n    src: $GAMEDIR/drive_c/dgvoodoo/MS/\nwine:\n  dxvk: true\n  overrides:\n    ddraw: native\n"
 }

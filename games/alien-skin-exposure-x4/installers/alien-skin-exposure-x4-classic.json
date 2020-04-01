@@ -11,7 +11,7 @@
   "description": "Alien Skin Exposure X4",
   "notes": "",
   "created_at": "2020-02-03T21:20:14.548000Z",
-  "updated_at": "2020-02-05T12:55:11.920367Z",
+  "updated_at": "2020-03-08T11:43:29.758685Z",
   "draft": false,
   "published": true,
   "published_by": 20548,
@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Alien Skin/Exposure X4/",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -41,13 +32,13 @@
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 7 mode for Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win7",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 7 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -58,8 +49,8 @@
       },
       {
         "task": {
-          "executable": "installer",
           "arch": "win64",
+          "executable": "installer",
           "description": "Running setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -70,7 +61,16 @@
       {
         "installer": "N/A:Please select the setup.exe located on the installation DVD."
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Alien Skin/Exposure X4/Alien Skin Exposure X4 x64.exe"
+    }
   },
-  "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Alien Skin/Exposure X4/\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+  "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Alien Skin/Exposure X4/Alien Skin Exposure X4 x64.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

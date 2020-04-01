@@ -21,23 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "setup": "http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "dinput8": "n, b"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -48,19 +36,31 @@
       },
       {
         "task": {
-          "executable": "setup",
           "args": "/silent",
+          "executable": "setup",
           "description": "Installing Maniaplanet",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "setup": "http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "dinput8": "n, b"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe"
+    }
   },
   "content": "files:\n- setup: http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing Maniaplanet\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    dinput8: n, b\n"
 }

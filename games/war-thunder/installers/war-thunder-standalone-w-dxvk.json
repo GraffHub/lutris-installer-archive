@@ -21,19 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "game": {
+          "url": "https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher",
+          "filename": "wt_launcher.exe"
+        }
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -45,9 +40,9 @@
       },
       {
         "task": {
-          "app": "arial",
           "arch": "win32",
           "description": "Installing Arial font",
+          "app": "arial",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -61,14 +56,19 @@
         }
       }
     ],
-    "files": [
-      {
-        "game": {
-          "filename": "wt_launcher.exe",
-          "url": "https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher"
-        }
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe"
+    }
   },
   "content": "files:\n- game:\n    filename: wt_launcher.exe\n    url: https://yupmaster.gaijinent.com/launcher/current.php?id=WarThunderLauncher\ngame:\n  arch: win32\n  exe: drive_c/users/$USER/Local Settings/Application Data/WarThunder/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win32\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing the game.\n\n      ------------------------------\n\n      Let Lutris installer finish first. UNCHECK launch WarThunder before you close\n      the installer!'\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

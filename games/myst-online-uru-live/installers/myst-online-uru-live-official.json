@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/Uru Live/UruLauncher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -35,11 +30,11 @@
       },
       {
         "task": {
-          "value": "native,builtin",
-          "path": "HKEY_CURRENT_USER/Software/Wine/DllOverrides",
           "key": "openal32",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER/Software/Wine/DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit"
+          "value": "native,builtin"
         }
       },
       {
@@ -68,7 +63,12 @@
       {
         "install": "N/A"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Uru Live/UruLauncher.exe"
+    }
   },
   "content": "files:\n- install: N/A\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Uru Live/UruLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: openal32\n    name: set_regedit\n    path: HKEY_CURRENT_USER/Software/Wine/DllOverrides\n    prefix: $GAMEDIR\n    value: native,builtin\n- task:\n    executable: $install\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: physx\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $GAMEDIR/drive_c/Program Files/Uru Live/PhysX-9.12.1031-Legacy.msi\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

@@ -21,11 +21,6 @@
   "gogslug": "ghost_of_a_tale",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Ghost of a Tale/GoaT.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,52 +32,52 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "description": "Setting OS as Windows 7.",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "win7",
-          "key": "Version"
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting OS as Windows 7.",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "Y",
+          "key": "GrabFullScreen",
+          "name": "set_regedit",
           "description": "Allow DirectX apps to stop the mouse leaving their window.",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "value": "Y",
-          "key": "GrabFullScreen"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "description": "Deny the window manager to decorate the windows.",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "N",
-          "key": "Decorated"
+          "key": "Decorated",
+          "name": "set_regedit",
+          "description": "Deny the window manager to decorate the windows.",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "description": "Allow the window manager to control the windows.",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "Y",
-          "key": "Managed"
+          "key": "Managed",
+          "name": "set_regedit",
+          "description": "Allow the window manager to control the windows.",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
-          "description": "Enabling VAAPI as backend for DXVA2 GPU decoding.",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "va",
-          "key": "backend"
+          "key": "backend",
+          "name": "set_regedit",
+          "description": "Enabling VAAPI as backend for DXVA2 GPU decoding.",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2"
         }
       },
       {
@@ -98,7 +93,12 @@
       {
         "installer": "N/A:Select the GOG installer:"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Ghost of a Tale/GoaT.exe"
+    }
   },
   "content": "files:\n- installer: 'N/A:Select the GOG installer:'\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Ghost of a Tale/GoaT.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows 7.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: Allow DirectX apps to stop the mouse leaving their window.\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Deny the window manager to decorate the windows.\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    description: Allow the window manager to control the windows.\n    key: Managed\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Enabling VAAPI as backend for DXVA2 GPU decoding.\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    description: The installating folder MUST BE 'C:\\GOG Games\\Ghost of a Tale'. At\n      the end don't launch the game, but click on 'Quit'.\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

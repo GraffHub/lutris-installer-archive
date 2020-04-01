@@ -21,19 +21,15 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "savedir": "$GAMEDIR",
-      "main_file": "$GAMEDIR/hedon.ipk3"
-    },
     "zdoom": {
       "config": "$GAMEDIR/config.ini"
     },
     "installer": [
       {
         "extract": {
-          "file": "archive",
+          "format": "tgz",
           "dst": "$CACHE",
-          "format": "tgz"
+          "file": "archive"
         }
       },
       {
@@ -52,20 +48,20 @@
         "write_config": {
           "file": "$GAMEDIR/config.ini",
           "data": {
+            "Hedon.ConsoleVariables": {
+              "am_rotate": 1
+            },
             "Hedon.Bindings": {
               "f12": "screenshot"
             },
             "GlobalSettings": {
-              "screenshot_dir": "$GAMEDIR/screenshots",
               "saveloadconfirmation": false,
               "vid_scale_customheight": "$RESOLUTION_HEIGHT",
+              "screenshot_dir": "$GAMEDIR/screenshots",
               "menu_resolution_custom_height": "$RESOLUTION_HEIGHT",
-              "menu_resolution_custom_width": "$RESOLUTION_WIDTH",
               "vid_adapter": 0,
-              "vid_scale_customwidth": "$RESOLUTION_WIDTH"
-            },
-            "Hedon.ConsoleVariables": {
-              "am_rotate": 1
+              "vid_scale_customwidth": "$RESOLUTION_WIDTH",
+              "menu_resolution_custom_width": "$RESOLUTION_WIDTH"
             }
           }
         }
@@ -75,7 +71,11 @@
       {
         "archive": "N/A:Please select archive containing Hedon (Linux version)"
       }
-    ]
+    ],
+    "game": {
+      "savedir": "$GAMEDIR",
+      "main_file": "$GAMEDIR/hedon.ipk3"
+    }
   },
   "content": "files:\n- archive: N/A:Please select archive containing Hedon (Linux version)\ngame:\n  main_file: $GAMEDIR/hedon.ipk3\n  savedir: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: archive\n    format: tgz\n- execute:\n    command: '\n\n      export IPK3_FILE=$(find \"$CACHE\" -type f -iname ''hedon.ipk3'') &&\n\n      export CONFIG_FILE=$(find \"$CACHE\" -type f -iname ''*.ini'') &&\n\n      mv \"$IPK3_FILE\" \"$GAMEDIR/hedon.ipk3\" &&\n\n      mv \"$CONFIG_FILE\" \"$GAMEDIR/config.ini\" &&\n\n      mkdir \"$GAMEDIR/screenshots\"\n\n      '\n    description: Copying game assets and config to installation directory...\n- execute:\n    command: \"\\nif [ $RESOLUTION_HEIGHT -ge 1080 ]; then\\n  sed -i 's/con_scaletext=1/con_scaletext=2/g'\\\n      \\ \\\"$GAMEDIR/config.ini\\\"\\nfi\\n\"\n    description: Adjusting text scale to screen resolution...\n- write_config:\n    data:\n      GlobalSettings:\n        menu_resolution_custom_height: $RESOLUTION_HEIGHT\n        menu_resolution_custom_width: $RESOLUTION_WIDTH\n        saveloadconfirmation: false\n        screenshot_dir: $GAMEDIR/screenshots\n        vid_adapter: 0\n        vid_scale_customheight: $RESOLUTION_HEIGHT\n        vid_scale_customwidth: $RESOLUTION_WIDTH\n      Hedon.Bindings:\n        f12: screenshot\n      Hedon.ConsoleVariables:\n        am_rotate: 1\n    file: $GAMEDIR/config.ini\nzdoom:\n  config: $GAMEDIR/config.ini\n"
 }

@@ -21,31 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/Blitz/Blitz.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "files": [
-      {
-        "BlitzInstaller": {
-          "filename": "blitz-installer.exe",
-          "url": "https://dl.blitz.gg/download/windows"
-        }
-      }
-    ],
     "installer": [
       {
         "task": {
-          "app": "dotnet452 win7 corefonts",
           "description": "Installing prerequisites",
+          "app": "dotnet452 win7 corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "BlitzInstaller",
           "exclude_processes": "Update.exe Blitz.exe blitz-installer",
+          "executable": "BlitzInstaller",
           "description": "Running Blitz app installer",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -58,7 +46,19 @@
         }
       }
     ],
-    "requires": "league-of-legends"
+    "requires": "league-of-legends",
+    "files": [
+      {
+        "BlitzInstaller": {
+          "url": "https://dl.blitz.gg/download/windows",
+          "filename": "blitz-installer.exe"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/Blitz/Blitz.exe"
+    }
   },
   "content": "files:\n- BlitzInstaller:\n    filename: blitz-installer.exe\n    url: https://dl.blitz.gg/download/windows\ngame:\n  exe: drive_c/users/$USER/Local Settings/Application Data/Blitz/Blitz.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: dotnet452 win7 corefonts\n    description: Installing prerequisites\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running Blitz app installer\n    exclude_processes: Update.exe Blitz.exe blitz-installer\n    executable: BlitzInstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nrequires: league-of-legends\n"
 }

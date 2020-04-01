@@ -21,13 +21,10 @@
   "gogslug": "heroes_of_might_and_magic_3_complete_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "en": "English"
@@ -39,9 +36,8 @@
               "value and": "label can be anything, surround them with quotes to avoid issues"
             }
           ],
-          "id": "LANG",
-          "preselect": "pl",
-          "description": "Choose the game's language:"
+          "description": "Choose the game's language:",
+          "preselect": "pl"
         }
       },
       {
@@ -53,17 +49,17 @@
       },
       {
         "task": {
+          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
           "executable": "installer",
           "description": "Running Setup, please wait…",
-          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
           "name": "wineexec"
         }
       },
       {
         "task": {
+          "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"",
           "executable": "hd_mod",
           "description": "Running HD mod setup, please wait…",
-          "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"",
           "name": "wineexec"
         }
       }
@@ -75,7 +71,11 @@
       {
         "hd_mod": "http://ih875403.vds.myihor.ru/HoMM3_HD_Latest_setup.exe"
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\n- hd_mod: http://ih875403.vds.myihor.ru/HoMM3_HD_Latest_setup.exe\ngame:\n  exe: drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LANG\n    options:\n    - en: English\n    - pl: Polish\n    - value and: label can be anything, surround them with quotes to avoid issues\n    preselect: pl\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    description: \"Running Setup, please wait\\u2026\"\n    executable: installer\n    name: wineexec\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"\n    description: \"Running HD mod setup, please wait\\u2026\"\n    executable: hd_mod\n    name: wineexec\n"
 }

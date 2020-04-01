@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/EVE/eve.exe",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,13 +32,13 @@
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 10 mode for Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -64,11 +60,15 @@
     "files": [
       {
         "setup": {
-          "filename": "EveLauncher-1602194.exe",
-          "url": "https://binaries.eveonline.com/EveLauncher-1602194.exe"
+          "url": "https://binaries.eveonline.com/EveLauncher-1602194.exe",
+          "filename": "EveLauncher-1602194.exe"
         }
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/EVE/eve.exe"
+    }
   },
   "content": "files:\n- setup:\n    filename: EveLauncher-1602194.exe\n    url: https://binaries.eveonline.com/EveLauncher-1602194.exe\ngame:\n  exe: $GAMEDIR/drive_c/EVE/eve.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running EVE Online Installer. Please do not run the game until this\n      script finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

@@ -11,7 +11,7 @@
   "description": "Brutal Doom on Freedoom Phase 1 and 2. You can select a WAD at startup through GZDOOM.",
   "notes": "By default this installer includes Freedoom v0.12.1 Phase 1 and 2.  If you wish to load other WAD files you can place them in install directory.",
   "created_at": "2019-11-22T22:26:25.329000Z",
-  "updated_at": "2019-12-23T20:01:21.849069Z",
+  "updated_at": "2020-03-10T18:02:10.737300Z",
   "draft": false,
   "published": true,
   "published_by": 20548,
@@ -21,16 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "savedir": "$GAMEDIR",
-      "files": [
-        "$GAMEDIR/brutalv21.pk3"
-      ]
-    },
     "installer": [
       {
+        "write_file": {
+          "content": "#!/bin/sh\n\nURL=\"$(\nwget -q -O - --referer='https://www.moddb.com/mods/brutal-doom/downloads/brutal-doom-v21-beta' 'https://www.moddb.com/downloads/start/95667?referer=https%3A%2F%2Fwww.moddb.com%2Fmods%2Fbrutal-doom' \\\n| sed 's,.*href=\"\\(/downloads/mirror/[^\"]*\\)\".*,\\1,p;d' | sed 's,^,https://www.moddb.com,;1q'\n)\"\n\nwget -O \"${CACHE}/brutalv21.rar\" \\\n     --referer='https://www.moddb.com/mods/brutal-doom/downloads/brutal-doom-v21-beta' \\\n     \"${URL}\"",
+          "file": "$GAMEDIR/dl-brutal.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/dl-brutal.sh"
+      },
+      {
+        "execute": "$GAMEDIR/dl-brutal.sh"
+      },
+      {
         "extract": {
-          "file": "brutal_doom"
+          "file": "$CACHE/brutalv21.rar"
         }
       },
       {
@@ -41,16 +47,15 @@
     ],
     "files": [
       {
-        "brutal_doom": {
-          "filename": "brutalv21.rar",
-          "referer": "https://www.moddb.com/mods/brutal-doom/downloads/brutal-doom-v21-beta",
-          "url": "https://www.moddb.com/downloads/mirror/95667/122/09db6f425510d638d3a1f6783f95cd97"
-        }
-      },
-      {
         "freedoom": "https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.12.1.zip"
       }
-    ]
+    ],
+    "game": {
+      "savedir": "$GAMEDIR",
+      "files": [
+        "$GAMEDIR/brutalv21.pk3"
+      ]
+    }
   },
-  "content": "files:\n- brutal_doom:\n    filename: brutalv21.rar\n    referer: https://www.moddb.com/mods/brutal-doom/downloads/brutal-doom-v21-beta\n    url: https://www.moddb.com/downloads/mirror/95667/122/09db6f425510d638d3a1f6783f95cd97\n- freedoom: https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.12.1.zip\ngame:\n  files:\n  - $GAMEDIR/brutalv21.pk3\n  savedir: $GAMEDIR\ninstaller:\n- extract:\n    file: brutal_doom\n- extract:\n    file: freedoom\n"
+  "content": "files:\n- freedoom: https://github.com/freedoom/freedoom/releases/download/v0.12.1/freedoom-0.12.1.zip\ngame:\n  files:\n  - $GAMEDIR/brutalv21.pk3\n  savedir: $GAMEDIR\ninstaller:\n- write_file:\n    content: \"#!/bin/sh\\n\\nURL=\\\"$(\\nwget -q -O - --referer='https://www.moddb.com/mods/brutal-doom/downloads/brutal-doom-v21-beta'\\\n      \\ 'https://www.moddb.com/downloads/start/95667?referer=https%3A%2F%2Fwww.moddb.com%2Fmods%2Fbrutal-doom'\\\n      \\ \\\\\\n| sed 's,.*href=\\\"\\\\(/downloads/mirror/[^\\\"]*\\\\)\\\".*,\\\\1,p;d' | sed 's,^,https://www.moddb.com,;1q'\\n\\\n      )\\\"\\n\\nwget -O \\\"${CACHE}/brutalv21.rar\\\" \\\\\\n     --referer='https://www.moddb.com/mods/brutal-doom/downloads/brutal-doom-v21-beta'\\\n      \\ \\\\\\n     \\\"${URL}\\\"\"\n    file: $GAMEDIR/dl-brutal.sh\n- chmodx: $GAMEDIR/dl-brutal.sh\n- execute: $GAMEDIR/dl-brutal.sh\n- extract:\n    file: $CACHE/brutalv21.rar\n- extract:\n    file: freedoom\n"
 }

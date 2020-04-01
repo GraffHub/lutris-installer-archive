@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "exe": "drive_c/Program Files/Red Orb/Prince of Persia 3D/PoP3D.exe",
     "installer": [
       {
@@ -41,12 +37,12 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "description": "Enable Windows 98 compatibility mode",
           "prefix": "GAMEDIR",
-          "name": "set_regedit",
           "value": "win98",
-          "key": "Version"
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Enable Windows 98 compatibility mode",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -56,7 +52,11 @@
           "name": "wineexec"
         }
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    }
   },
   "content": "exe: drive_c/Program Files/Red Orb/Prince of Persia 3D/PoP3D.exe\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: _setup.exe\n- task:\n    app: dsound\n    name: winetricks\n    prefix: GAMEDIR\n- task:\n    description: Enable Windows 98 compatibility mode\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: GAMEDIR\n    value: win98\n- task:\n    executable: $DISC/_setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

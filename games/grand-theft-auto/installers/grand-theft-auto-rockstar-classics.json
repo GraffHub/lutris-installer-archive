@@ -21,26 +21,17 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Rockstar Games/Grand Theft Auto/WINO/Grand Theft Auto.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "1024x768"
-    },
     "installer": [
       {
         "extract": {
-          "file": "$unzip_tool",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$unzip_tool"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
-          "args": "-o $installer -d $CACHE"
+          "args": "-o $installer -d $CACHE",
+          "file": "$CACHE/unzip"
         }
       },
       {
@@ -78,7 +69,16 @@
       {
         "unzip_tool": "https://lutris.net/files/tools/unzip.tar.gz"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1024x768"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Rockstar Games/Grand Theft Auto/WINO/Grand Theft Auto.exe"
+    }
   },
   "content": "files:\n- installer: https://gta.com.ua/files/iso/GTAINSTALLER.exe\n- unzip_tool: https://lutris.net/files/tools/unzip.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rockstar Games/Grand Theft Auto/WINO/Grand Theft Auto.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip_tool\n- execute:\n    args: -o $installer -d $CACHE\n    file: $CACHE/unzip\n- task:\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n- task:\n    app: mfc42\n    name: winetricks\n- task:\n    description: Running installer\n    executable: $CACHE/GTAINSTALLER/SETUP.EXE\n    name: wineexec\n- task:\n    description: Running settings\n    executable: $GAMEDIR/drive_c/Program Files/Rockstar Games/Grand Theft Auto/GTA\n      Settings.exe\n    name: wineexec\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
 }

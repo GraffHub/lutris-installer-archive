@@ -21,57 +21,6 @@
   "gogslug": "stardew_valley",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "StardewValley/start.sh"
-    },
-    "installer": [
-      {
-        "extract": {
-          "file": "goginstaller",
-          "dst": "$CACHE/GOG",
-          "format": "zip"
-        }
-      },
-      {
-        "merge": {
-          "dst": "$GAMEDIR/StardewValley",
-          "src": "$CACHE/GOG/data/noarch/"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/SMAPI",
-          "src": "smapi"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/SMAPI/internal/unix-install.zip",
-          "src": "$GAMEDIR/SMAPI/internal/unix-install.dat"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/StardewValley/game/",
-          "src": "$GAMEDIR/SMAPI/internal/unix-install.zip"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/StardewValley/game/StardewValley-original",
-          "src": "$GAMEDIR/StardewValley/game/StardewValley"
-        }
-      },
-      {
-        "rename": {
-          "dst": "$GAMEDIR/StardewValley/game/StardewValley",
-          "src": "$GAMEDIR/StardewValley/game/StardewModdingAPI"
-        }
-      },
-      {
-        "chmodx": "$GAMEDIR/StardewValley/game/StardewValley"
-      }
-    ],
     "require-binaries": "mono",
     "files": [
       {
@@ -80,7 +29,58 @@
       {
         "smapi": "https://github.com/Pathoschild/SMAPI/releases/download/2.11.2/SMAPI-2.11.2-installer.zip"
       }
-    ]
+    ],
+    "installer": [
+      {
+        "extract": {
+          "format": "zip",
+          "dst": "$CACHE/GOG",
+          "file": "goginstaller"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/GOG/data/noarch/",
+          "dst": "$GAMEDIR/StardewValley"
+        }
+      },
+      {
+        "extract": {
+          "src": "smapi",
+          "dst": "$GAMEDIR/SMAPI"
+        }
+      },
+      {
+        "rename": {
+          "src": "$GAMEDIR/SMAPI/internal/unix-install.dat",
+          "dst": "$GAMEDIR/SMAPI/internal/unix-install.zip"
+        }
+      },
+      {
+        "extract": {
+          "src": "$GAMEDIR/SMAPI/internal/unix-install.zip",
+          "dst": "$GAMEDIR/StardewValley/game/"
+        }
+      },
+      {
+        "rename": {
+          "src": "$GAMEDIR/StardewValley/game/StardewValley",
+          "dst": "$GAMEDIR/StardewValley/game/StardewValley-original"
+        }
+      },
+      {
+        "rename": {
+          "src": "$GAMEDIR/StardewValley/game/StardewModdingAPI",
+          "dst": "$GAMEDIR/StardewValley/game/StardewValley"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/StardewValley/game/StardewValley"
+      }
+    ],
+    "game": {
+      "exe": "StardewValley/start.sh"
+    }
   },
   "content": "files:\n- goginstaller: N/A:Please select the GOG.com Linux installer\n- smapi: https://github.com/Pathoschild/SMAPI/releases/download/2.11.2/SMAPI-2.11.2-installer.zip\ngame:\n  exe: StardewValley/start.sh\ninstaller:\n- extract:\n    dst: $CACHE/GOG\n    file: goginstaller\n    format: zip\n- merge:\n    dst: $GAMEDIR/StardewValley\n    src: $CACHE/GOG/data/noarch/\n- extract:\n    dst: $GAMEDIR/SMAPI\n    src: smapi\n- rename:\n    dst: $GAMEDIR/SMAPI/internal/unix-install.zip\n    src: $GAMEDIR/SMAPI/internal/unix-install.dat\n- extract:\n    dst: $GAMEDIR/StardewValley/game/\n    src: $GAMEDIR/SMAPI/internal/unix-install.zip\n- rename:\n    dst: $GAMEDIR/StardewValley/game/StardewValley-original\n    src: $GAMEDIR/StardewValley/game/StardewValley\n- rename:\n    dst: $GAMEDIR/StardewValley/game/StardewValley\n    src: $GAMEDIR/StardewValley/game/StardewModdingAPI\n- chmodx: $GAMEDIR/StardewValley/game/StardewValley\nrequire-binaries: mono\n"
 }

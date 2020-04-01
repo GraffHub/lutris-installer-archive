@@ -10,21 +10,17 @@
   "version": "MS-DOS",
   "description": null,
   "notes": "",
-  "created_at": "2019-09-15T09:43:57.353272Z",
-  "updated_at": "2019-09-15T09:43:57.353300Z",
+  "created_at": "2019-09-15T09:43:57.353000Z",
+  "updated_at": "2020-03-28T18:11:26.685398Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 1,
   "rating": "",
   "steamid": null,
   "gogid": 1207658702,
   "gogslug": "waxworks",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "waxworks",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "write_file": {
@@ -37,8 +33,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/selectcopy.sh",
-          "args": "$game $GAMEDIR"
+          "args": "$game $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
         }
       }
     ],
@@ -46,7 +42,11 @@
       {
         "game": "N/A:Select a file with *.exe extension"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "waxworks",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: N/A:Select a file with *.exe extension\ngame:\n  game_id: waxworks\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.MUS\" -o -iname \"MENUS.DAT\" -o -iname \"MUSIC.DRV\"\n      -o -iname \"ROOMS*\" -o -iname \"ROOMSLST*\" -o -iname \"START*\" -o -iname \"STATELST\"\n      -o -iname \"STRIPPED.TXT\" -o -iname \"TABLES*\" -o -iname \"TBLLIST\" -o -iname \"TEXT*\"\n      -o -iname \"WAX.FXB\" -o -iname \"XTABLE*\" -o -iname \"XTBLLIST\" -o -iname \"*.VGA\"\n      -o -iname \"GAMEPC\" -o -iname \"ICON.DAT\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/selectcopy.sh\n"
 }

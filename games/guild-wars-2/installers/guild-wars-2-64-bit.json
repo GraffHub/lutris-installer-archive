@@ -21,20 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
-      "arch": "win64",
-      "args": "-maploadinfo",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "PBA_ENABLE": 1
+    "files": [
+      {
+        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
+      },
+      {
+        "libfile": "https://github.com/dhollinger/lutris_gw2_lib/raw/master/libpng16.so.16"
       }
-    },
-    "wine": {
-      "esync": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -46,8 +40,8 @@
       },
       {
         "task": {
-          "app": "d3dx9",
           "description": "Installing d3dx9 and d3dcompiler_43",
+          "app": "d3dx9",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -59,19 +53,25 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe",
-          "src": "client"
+          "src": "client",
+          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe"
         }
       }
     ],
-    "files": [
-      {
-        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
-      },
-      {
-        "libfile": "https://github.com/dhollinger/lutris_gw2_lib/raw/master/libpng16.so.16"
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1
       }
-    ]
+    },
+    "wine": {
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-maploadinfo",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe"
+    }
   },
   "content": "files:\n- client: https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe\n- libfile: https://github.com/dhollinger/lutris_gw2_lib/raw/master/libpng16.so.16\ngame:\n  arch: win64\n  args: -maploadinfo\n  exe: drive_c/Program Files/Guild Wars 2/GW2-64.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating win64 prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing d3dx9 and d3dcompiler_43\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2\"\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe\n    src: client\nsystem:\n  env:\n    PBA_ENABLE: 1\nwine:\n  esync: true\n"
 }

@@ -21,11 +21,31 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/EphineaPSO/psobb.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
+    "files": [
+      {
+        "ephineapsobb": "http://files.pioneer2.net/Ephinea_PSOBB_Installer.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Changing to Windows 7",
+          "app": "win7",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "ephineapsobb",
+          "description": "Running Ephinea PSOBB Installer.",
+          "prefix": "$GAMEDIR",
+          "name": "wine.wineexec"
+        }
+      }
+    ],
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
@@ -34,34 +54,14 @@
       "pulse_latency": true
     },
     "wine": {
-      "esync": true,
-      "dxvk": true
+      "dxvk": true,
+      "esync": true
     },
-    "installer": [
-      {
-        "task": {
-          "app": "win7",
-          "arch": "win64",
-          "description": "Changing to Windows 7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "ephineapsobb",
-          "arch": "win64",
-          "description": "Running Ephinea PSOBB Installer.",
-          "prefix": "$GAMEDIR",
-          "name": "wine.wineexec"
-        }
-      }
-    ],
-    "files": [
-      {
-        "ephineapsobb": "http://files.pioneer2.net/Ephinea_PSOBB_Installer.exe"
-      }
-    ]
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/EphineaPSO/psobb.exe"
+    }
   },
   "content": "files:\n- ephineapsobb: http://files.pioneer2.net/Ephinea_PSOBB_Installer.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/EphineaPSO/psobb.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: win7\n    arch: win64\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running Ephinea PSOBB Installer.\n    executable: ephineapsobb\n    name: wine.wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

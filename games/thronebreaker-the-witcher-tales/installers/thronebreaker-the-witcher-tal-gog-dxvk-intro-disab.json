@@ -11,9 +11,9 @@
   "description": null,
   "notes": "Downloads and executes: <a href=\"https://github.com/z0z0z/mf-install\">https://github.com/z0z0z/mf-install</a>\r\n\r\nThis registers all the dlls needed for video playback.",
   "created_at": "2019-11-03T22:25:41.625000Z",
-  "updated_at": "2020-01-23T02:57:11.446001Z",
+  "updated_at": "2020-03-22T09:37:42.658965Z",
   "draft": false,
-  "published": true,
+  "published": false,
   "published_by": 1,
   "rating": "",
   "steamid": 973760,
@@ -21,11 +21,28 @@
   "gogslug": "thronebreaker_the_witcher_tales",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Thronebreaker/Thronebreaker.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
+    "files": [
+      {
+        "goginstaller": "N/A:Select the installer downloaded from GOG"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/SP- /SILENT /VERYSILENT /NORESTART /CLOSEAPPLICATIONS",
+          "executable": "goginstaller",
+          "description": "Installing Thronebreaker: The Witcher Tales",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
@@ -35,140 +52,10 @@
     "wine": {
       "dxvk": true
     },
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "app": "mf",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
-          "component": "mediafoundation",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "install_cab_component"
-        }
-      },
-      {
-        "task": {
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
-          "component": "mf_",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "install_cab_component"
-        }
-      },
-      {
-        "task": {
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
-          "component": "mfreadwrite",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "install_cab_component"
-        }
-      },
-      {
-        "task": {
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
-          "component": "wmadmod",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "install_cab_component"
-        }
-      },
-      {
-        "task": {
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
-          "component": "wmvdecod",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "install_cab_component"
-        }
-      },
-      {
-        "task": {
-          "executable": "goginstaller",
-          "args": "/SP- /SILENT /VERYSILENT /NORESTART /CLOSEAPPLICATIONS",
-          "description": "Installing Thronebreaker: The Witcher Tales",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Thronebreaker",
-          "src": "mfplat_dll"
-        }
-      },
-      {
-        "task": {
-          "app": "win7",
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "extract": {
-          "file": "mf_install",
-          "dst": "$GAMEDIR/mf-install/"
-        }
-      },
-      {
-        "execute": {
-          "file": "$GAMEDIR/mf-install/mf-install.sh",
-          "env": {
-            "WINEPREFIX": "$GAMEDIR"
-          }
-        }
-      },
-      {
-        "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/nr000_cs1_game_intro.bak",
-          "src": "$GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/nr000_cs1_game_intro"
-        }
-      },
-      {
-        "move": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/tb_intro_logo_en_us.bak",
-          "src": "$GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/tb_intro_logo_en_us"
-        }
-      },
-      {
-        "write_file": {
-          "content": "",
-          "file": "$GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/nr000_cs1_game_intro"
-        }
-      },
-      {
-        "write_file": {
-          "content": "",
-          "file": "$GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/tb_intro_logo_en_us"
-        }
-      }
-    ],
-    "files": [
-      {
-        "goginstaller": "N/A:Select the installer downloaded from GOG"
-      },
-      {
-        "mfplat_dll": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
-      },
-      {
-        "mf_install": "https://github.com/z0z0z/mf-install/archive/master.zip"
-      }
-    ]
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Thronebreaker/Thronebreaker.exe"
+    }
   },
-  "content": "files:\n- goginstaller: N/A:Select the installer downloaded from GOG\n- mfplat_dll: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\n- mf_install: https://github.com/z0z0z/mf-install/archive/master.zip\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Thronebreaker/Thronebreaker.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mf\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SILENT /VERYSILENT /NORESTART /CLOSEAPPLICATIONS\n    description: 'Installing Thronebreaker: The Witcher Tales'\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Thronebreaker\n    src: mfplat_dll\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/mf-install/\n    file: mf_install\n- execute:\n    env:\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/mf-install/mf-install.sh\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/nr000_cs1_game_intro.bak\n    src: $GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/nr000_cs1_game_intro\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/tb_intro_logo_en_us.bak\n    src: $GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/tb_intro_logo_en_us\n- write_file:\n    content: ''\n    file: $GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/nr000_cs1_game_intro\n- write_file:\n    content: ''\n    file: $GAMEDIR/drive_c/GOG Games/Thronebreaker/Thronebreaker_Data/StreamingAssets/videos/campaign/tb_intro_logo_en_us\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
+  "content": "files:\r\n- goginstaller: N/A:Select the installer downloaded from GOG\r\ngame:\r\n  exe: drive_c/GOG Games/Thronebreaker/Thronebreaker.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SP- /SILENT /VERYSILENT /NORESTART /CLOSEAPPLICATIONS\r\n    description: 'Installing Thronebreaker: The Witcher Tales'\r\n    executable: goginstaller\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  dxvk: true"
 }

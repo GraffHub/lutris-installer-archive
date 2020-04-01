@@ -9,23 +9,18 @@
   "slug": "microsoft-powerpoint-2010-32bit",
   "version": "2010 32bit",
   "description": null,
-  "notes": "",
-  "created_at": "2019-12-22T00:11:20.323522Z",
-  "updated_at": "2019-12-22T00:11:20.323551Z",
+  "notes": "It needs winbind(from samba) installed.",
+  "created_at": "2019-12-22T00:11:20.323000Z",
+  "updated_at": "2020-03-20T10:43:51.339348Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Microsoft Office/Office14/MSPUB.EXE",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,8 +32,17 @@
       },
       {
         "task": {
-          "executable": "installer",
           "arch": "win32",
+          "description": "Installing needed libs",
+          "app": "dotnet20 riched20 msxml6 corefonts",
+          "prefix": "$CACHE/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "installer",
           "description": "Running setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -49,7 +53,12 @@
       {
         "installer": "N/A:Please select the setup.exe located on the installation DVD."
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Microsoft Office/Office14/POWERPNT.EXE"
+    }
   },
-  "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Office/Office14/MSPUB.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
+  "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Office/Office14/POWERPNT.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20 riched20 msxml6 corefonts\n    arch: win32\n    description: Installing needed libs\n    name: winetricks\n    prefix: $CACHE/prefix\n- task:\n    arch: win32\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

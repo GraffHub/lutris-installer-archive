@@ -21,18 +21,9 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "appid": 371660,
-      "arch": "win64",
-      "args": "-skipintro",
-      "prefix": "$GAMEDIR/prefix"
-    },
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_HUD": 0
-      }
+    "winesteam": {
+      "dxvk": true,
+      "esync": true
     },
     "installer": [
       {
@@ -44,6 +35,7 @@
       },
       {
         "input_menu": {
+          "id": "GPU",
           "options": [
             {
               "#dxgi.nvapiHack = False": "AMD"
@@ -52,9 +44,8 @@
               "dxgi.nvapiHack = False": "Nvidia"
             }
           ],
-          "id": "GPU",
-          "preselect": "#dxgi.nvapiHack = False",
-          "description": "Choose your GPU:"
+          "description": "Choose your GPU:",
+          "preselect": "#dxgi.nvapiHack = False"
         }
       },
       {
@@ -65,50 +56,50 @@
       },
       {
         "extract": {
-          "file": "dx2010",
-          "dst": "$CACHE/dxsetup"
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
         }
       },
       {
         "task": {
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "arch": "win64",
           "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "app": "vcrun2010 vcrun2012 corefonts",
           "arch": "win64",
+          "app": "vcrun2010 vcrun2012 corefonts",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "dotnet472 win7",
           "arch": "win64",
           "description": "Please be patient while we install .NET 4.7.2",
+          "app": "dotnet472 win7",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "value": "winxp",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FCPrimal.exe",
           "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FCPrimal.exe",
           "prefix": "$GAMEDIR/prefix",
-          "name": "set_regedit"
+          "value": "winxp"
         }
       },
       {
         "task": {
-          "executable": "uplay",
           "arch": "win64",
           "args": "/S",
+          "executable": "uplay",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
@@ -121,10 +112,6 @@
         }
       }
     ],
-    "winesteam": {
-      "esync": true,
-      "dxvk": true
-    },
     "files": [
       {
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
@@ -132,7 +119,20 @@
       {
         "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
-    ]
+    ],
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": 0
+      }
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-skipintro",
+      "appid": 371660,
+      "prefix": "$GAMEDIR/prefix"
+    }
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  appid: 371660\n  arch: win64\n  args: -skipintro\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- input_menu:\n    description: 'Choose your GPU:'\n    id: GPU\n    options:\n    - '#dxgi.nvapiHack = False': AMD\n    - dxgi.nvapiHack = False: Nvidia\n    preselect: '#dxgi.nvapiHack = False'\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2010 vcrun2012 corefonts\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet472 win7\n    arch: win64\n    description: Please be patient while we install .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FCPrimal.exe\n    prefix: $GAMEDIR/prefix\n    value: winxp\n- task:\n    arch: win64\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: 0\nwinesteam:\n  dxvk: true\n  esync: true\n"
 }

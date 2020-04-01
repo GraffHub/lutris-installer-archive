@@ -21,65 +21,70 @@
   "gogslug": "betrayal_at_krondor",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/dosboxBAK.conf"
-    },
     "main_file": "DOSBOX/dosboxBAK_single.conf",
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
+      }
+    ],
     "installer": [
       {
         "extract": {
-          "file": "$file2",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$file2"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-d \"$CACHE\" \"$file1\""
+          "args": "-d \"$CACHE\" \"$file1\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/app"
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/DOSBOX",
-          "src": "$GAMEDIR/dosboxBAK_single.conf"
+          "src": "$GAMEDIR/dosboxBAK_single.conf",
+          "dst": "$GAMEDIR/DOSBOX"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": true,
+          "section": "render",
           "key": "aspect",
-          "section": "render"
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": true
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": false,
+          "section": "sdl",
           "key": "fullscreen",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": false
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": "1920x1080",
+          "section": "sdl",
           "key": "fullresolution",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": "1920x1080"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": "128:0",
+          "section": "midi",
           "key": "midiconfig",
-          "section": "midi"
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": "128:0"
         }
       },
       {
@@ -89,14 +94,9 @@
         }
       }
     ],
-    "files": [
-      {
-        "file1": "N/A:Please select the GOG installer"
-      },
-      {
-        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
-      }
-    ]
+    "game": {
+      "config_file": "$GAMEDIR/dosboxBAK.conf"
+    }
   },
   "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosboxBAK.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxBAK_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: fullresolution\n    section: sdl\n    value: 1920x1080\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: midiconfig\n    section: midi\n    value: '128:0'\n- write_file:\n    content: '[IPX]\n\n      Enable=0\n\n      Connection=0\n\n      ipx=false\n\n\n      [autoexec]\n\n      # Lines in this section will be run at startup.\n\n\n      @ECHO OFF\n\n      mount C \"..\"\n\n      imgmount d \"..\\bak.inst\" -t iso -fs iso\n\n      c:\n\n      cls\n\n      INSTALL.EXE\n\n      exit\n\n      '\n    file: $GAMEDIR/DOSBOX/dosboxBAK_settings.conf\nmain_file: DOSBOX/dosboxBAK_single.conf\n"
 }

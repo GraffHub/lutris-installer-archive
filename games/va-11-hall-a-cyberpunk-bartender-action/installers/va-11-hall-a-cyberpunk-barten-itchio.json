@@ -21,27 +21,24 @@
   "gogslug": "va11_halla",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/Game/runner"
-    },
     "installer": [
       {
         "extract": {
-          "file": "unzip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "unzip"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR\" \"linux_content/*\"",
           "description": "Extracting game data, it will take a while...",
-          "args": "$game -d \"$GAMEDIR\" \"linux_content/*\""
+          "file": "$CACHE/unzip"
         }
       },
       {
         "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/linux_content"
+          "src": "$GAMEDIR/linux_content",
+          "dst": "$GAMEDIR/Game"
         }
       },
       {
@@ -55,7 +52,10 @@
       {
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
-    ]
+    ],
+    "game": {
+      "exe": "$GAMEDIR/Game/runner"
+    }
   },
   "content": "files:\n- game: 'N/A: Please select the .zip install file downloaded from itch.io'\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  exe: $GAMEDIR/Game/runner\ninstaller:\n- extract:\n    dst: $CACHE\n    file: unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"linux_content/*\"\n    description: Extracting game data, it will take a while...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/linux_content\n- chmodx: $GAMEDIR/Game/runner\n"
 }

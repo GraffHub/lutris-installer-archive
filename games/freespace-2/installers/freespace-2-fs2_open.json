@@ -21,30 +21,32 @@
   "gogslug": "freespace_2",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "working_dir": "$GAMEDIR/freespace2",
-      "args": "-res 800x600 -nospec -noglow -noenv -nonormal -noheight -old_collision"
-    },
     "exe": "freespace2/fs2_open.sh",
+    "files": [
+      {
+        "game": "https://github.com/scp-fs2open/fs2open.github.com/releases/download/release_3_8_0/fs2_open_3_8_0-builds-Linux.tar.gz"
+      }
+    ],
+    "requires": "freespace-2-gogcom",
     "installer": [
       {
         "extract": {
-          "file": "$game",
+          "description": "extracting...",
           "dst": "$GAMEDIR/freespace2",
-          "description": "extracting..."
+          "file": "$game"
         }
       },
       {
         "execute": {
-          "file": "/bin/sh",
           "args": "-c \"chmod +x $GAMEDIR/freespace2/fs2_open_*\"",
+          "file": "/bin/sh",
           "terminal": false
         }
       },
       {
         "execute": {
-          "file": "/bin/sh",
           "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR/freespace2\\n./fs2_open_3_8_0_x64.AppImage \\\"$$@\\\"'>$GAMEDIR/freespace2/fs2_open.sh\"",
+          "file": "/bin/sh",
           "terminal": false
         }
       },
@@ -52,12 +54,10 @@
         "chmodx": "$GAMEDIR/freespace2/fs2_open.sh"
       }
     ],
-    "files": [
-      {
-        "game": "https://github.com/scp-fs2open/fs2open.github.com/releases/download/release_3_8_0/fs2_open_3_8_0-builds-Linux.tar.gz"
-      }
-    ],
-    "requires": "freespace-2-gogcom"
+    "game": {
+      "args": "-res 800x600 -nospec -noglow -noenv -nonormal -noheight -old_collision",
+      "working_dir": "$GAMEDIR/freespace2"
+    }
   },
   "content": "exe: freespace2/fs2_open.sh\nfiles:\n- game: https://github.com/scp-fs2open/fs2open.github.com/releases/download/release_3_8_0/fs2_open_3_8_0-builds-Linux.tar.gz\ngame:\n  args: -res 800x600 -nospec -noglow -noenv -nonormal -noheight -old_collision\n  working_dir: $GAMEDIR/freespace2\ninstaller:\n- extract:\n    description: extracting...\n    dst: $GAMEDIR/freespace2\n    file: $game\n- execute:\n    args: -c \"chmod +x $GAMEDIR/freespace2/fs2_open_*\"\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c \"printf '#!/bin/sh\\ncd $GAMEDIR/freespace2\\n./fs2_open_3_8_0_x64.AppImage\n      \\\"$$@\\\"'>$GAMEDIR/freespace2/fs2_open.sh\"\n    file: /bin/sh\n    terminal: false\n- chmodx: $GAMEDIR/freespace2/fs2_open.sh\nrequires: freespace-2-gogcom\n"
 }

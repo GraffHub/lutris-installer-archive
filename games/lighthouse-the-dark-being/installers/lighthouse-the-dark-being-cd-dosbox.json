@@ -21,10 +21,6 @@
   "gogslug": "lighthouse_the_dark_being",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/lighthouse_dosbox.conf"
-    },
-    "custom-name": "Lighthouse - The Dark Being - CD - DOSBox",
     "installer": [
       {
         "insert-disc": {
@@ -34,8 +30,8 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR",
-          "src": "cdrtools"
+          "src": "cdrtools",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -43,8 +39,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "VOL 0"
+          "args": "VOL 0",
+          "file": "script"
         }
       },
       {
@@ -55,8 +51,8 @@
       },
       {
         "execute": {
-          "file": "script",
-          "args": "VOLU"
+          "args": "VOLU",
+          "file": "script"
         }
       },
       {
@@ -66,8 +62,8 @@
       },
       {
         "copy": {
-          "dst": "$GAMEDIR",
-          "src": "conf"
+          "src": "conf",
+          "dst": "$GAMEDIR"
         }
       }
     ],
@@ -81,7 +77,11 @@
       {
         "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Lighthouse%20-%20The%20Dark%20Being/lighthouse_dosbox.conf"
       }
-    ]
+    ],
+    "custom-name": "Lighthouse - The Dark Being - CD - DOSBox",
+    "game": {
+      "main_file": "$GAMEDIR/lighthouse_dosbox.conf"
+    }
   },
   "content": "custom-name: Lighthouse - The Dark Being - CD - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Lighthouse%20-%20The%20Dark%20Being/lighthouse_dosbox.conf\ngame:\n  main_file: $GAMEDIR/lighthouse_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: 9.CSC\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: VOL 0\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: movies/5.vmd\n- execute:\n    args: VOLU\n    file: script\n- execute:\n    command: cd $GAMEDIR; mv VOL.cue LIGHTHOUSE_CD1.cue; mv VOL.bin LIGHTHOUSE_CD1.bin;\n      mv VOLU.cue LIGHTHOUSE_CD2.cue; mv VOLU.bin LIGHTHOUSE_CD2.bin; sed -i 's/VOL.bin/LIGHTHOUSE_CD1.bin/g'\n      LIGHTHOUSE_CD1.cue; sed -i 's/VOLU.bin/LIGHTHOUSE_CD2.bin/g' LIGHTHOUSE_CD2.cue;\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

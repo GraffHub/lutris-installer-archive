@@ -21,11 +21,6 @@
   "gogslug": "indiana_jones_and_the_last_crusade",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "indy3",
-      "path": "$GAMEDIR"
-    },
-    "custom-name": "Indiana Jones and the Last Crusade - GOG - ScummVM",
     "scummvm": {
       "fullscreen": true,
       "aspect": true
@@ -33,14 +28,14 @@
     "installer": [
       {
         "extract": {
-          "file": "inno",
-          "dst": "$CACHE/innoextract"
+          "dst": "$CACHE/innoextract",
+          "file": "inno"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract/innoextract",
-          "args": "--extract $gog --output-dir \"$CACHE/\""
+          "args": "--extract $gog --output-dir \"$CACHE/\"",
+          "file": "$CACHE/innoextract/innoextract"
         }
       },
       {
@@ -50,12 +45,13 @@
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "src": "multi5"
+          "src": "multi5",
+          "dst": "$CACHE"
         }
       },
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "en": "English"
@@ -73,9 +69,8 @@
               "ge": "German"
             }
           ],
-          "id": "LANG",
-          "preselect": "en",
-          "description": "Choose your preferred game's language:"
+          "description": "Choose your preferred game's language:",
+          "preselect": "en"
         }
       },
       {
@@ -94,7 +89,12 @@
       {
         "gog": "N/A:Please select the game Windows setup exe file downloaded from GOG"
       }
-    ]
+    ],
+    "custom-name": "Indiana Jones and the Last Crusade - GOG - ScummVM",
+    "game": {
+      "game_id": "indy3",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "custom-name: Indiana Jones and the Last Crusade - GOG - ScummVM\nfiles:\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Indiana%20Jones%20and%20the%20Last%20Crusade/indy3_patch_multi5.zip\n- gog: N/A:Please select the game Windows setup exe file downloaded from GOG\ngame:\n  game_id: indy3\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $gog --output-dir \"$CACHE/\"\n    file: $CACHE/innoextract/innoextract\n- execute:\n    command: cd $CACHE; ls | grep -i .lfl | xargs mv -t \"$GAMEDIR/\";\n- extract:\n    dst: $CACHE\n    src: multi5\n- input_menu:\n    description: 'Choose your preferred game''s language:'\n    id: LANG\n    options:\n    - en: English\n    - fr: French\n    - it: Italian\n    - sp: Spanish\n    - ge: German\n    preselect: en\n- execute:\n    command: cd $GAMEDIR; if [ \"$INPUT_LANG\" == \"en\" ]; then  exit ; fi ; echo \"lang\n      = $INPUT_LANG\"; for i in *.LFL ; do echo \"traitement du fichier $i\"; j=$(basename\n      $i); patch < $CACHE/$INPUT_LANG/$j.patch $i; done ;\nscummvm:\n  aspect: true\n  fullscreen: true\n"
 }

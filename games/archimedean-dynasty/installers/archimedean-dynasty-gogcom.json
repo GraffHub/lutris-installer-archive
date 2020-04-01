@@ -21,41 +21,37 @@
   "gogslug": "archimedean_dynasty",
   "humblestoreid": "",
   "script": {
-    "dosbox": {
-      "fullscreen": true
-    },
-    "game": {
-      "main_file": "$GAMEDIR/AD2.EXE",
-      "config_file": "$GAMEDIR/dosbox_ad.conf"
-    },
     "installer": [
       {
         "extract": {
-          "file": "$innoextract_tar",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$innoextract_tar"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-d \"$CACHE\" \"$game\""
+          "args": "-d \"$CACHE\" \"$game\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/app"
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/dosbox_ad.conf",
-          "value": false,
+          "section": "sdl",
           "key": "fullscreen",
-          "section": "sdl"
+          "file": "$GAMEDIR/dosbox_ad.conf",
+          "value": false
         }
       }
     ],
+    "dosbox": {
+      "fullscreen": true
+    },
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer"
@@ -63,7 +59,11 @@
       {
         "innoextract_tar": "https://lutris.net/files/tools/innoextract.tar.gz"
       }
-    ]
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosbox_ad.conf",
+      "main_file": "$GAMEDIR/AD2.EXE"
+    }
   },
   "content": "dosbox:\n  fullscreen: true\nfiles:\n- game: N/A:Please select the GOG.com Windows installer\n- innoextract_tar: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosbox_ad.conf\n  main_file: $GAMEDIR/AD2.EXE\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $innoextract_tar\n- execute:\n    args: -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- write_config:\n    file: $GAMEDIR/dosbox_ad.conf\n    key: fullscreen\n    section: sdl\n    value: false\n"
 }

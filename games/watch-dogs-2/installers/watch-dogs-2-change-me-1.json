@@ -21,25 +21,17 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
-      "arch": "win64",
-      "args": "uplay://launch/2688/0",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": "compiler",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      },
+      {
+        "cache": "https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz"
       }
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -57,55 +49,63 @@
       },
       {
         "extract": {
-          "file": "dx2010",
-          "dst": "$CACHE/dxsetup"
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
         }
       },
       {
         "extract": {
-          "file": "cache",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "file": "cache"
         }
       },
       {
         "task": {
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "arch": "win64",
-          "description": "Installing prerequisites...",
-          "args": "/silent",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "prefix": "$GAMEDIR"
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "description": "Installing prerequisites..."
         }
       },
       {
         "task": {
-          "app": "arial vcrun2010 vcrun2012 win7 d3dcompiler_43",
           "description": "Installing prerequisites...",
+          "app": "arial vcrun2010 vcrun2012 win7 d3dcompiler_43",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "uplay",
           "args": "/S",
+          "executable": "uplay",
           "description": "Installing Uplay...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
-      },
-      {
-        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
-      },
-      {
-        "cache": "https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz"
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "uplay://launch/2688/0",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+    }
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\n- cache: https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz\ngame:\n  arch: win64\n  args: uplay://launch/2688/0\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: \"overlay: \\n  enabled: false\\n\"\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game\n      Launcher/settings.yml\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- extract:\n    dst: $GAMEDIR\n    file: cache\n- task:\n    arch: win64\n    args: /silent\n    description: Installing prerequisites...\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2010 vcrun2012 win7 d3dcompiler_43\n    description: Installing prerequisites...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    description: Installing Uplay...\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

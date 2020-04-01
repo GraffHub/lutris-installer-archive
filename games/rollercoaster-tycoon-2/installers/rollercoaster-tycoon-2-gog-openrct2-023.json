@@ -21,14 +21,11 @@
   "gogslug": "rollercoaster_tycoon_2",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/openrct2"
-    },
     "installer": [
       {
         "extract": {
-          "file": "Game",
-          "format": "tgz"
+          "format": "tgz",
+          "file": "Game"
         }
       },
       {
@@ -42,23 +39,23 @@
       },
       {
         "write_config": {
-          "file": "$HOME/.config/OpenRCT2/config.ini",
-          "value": "$GAMEDIR/game_files",
+          "section": "general",
           "key": "game_path",
-          "section": "general"
+          "file": "$HOME/.config/OpenRCT2/config.ini",
+          "value": "$GAMEDIR/game_files"
         }
       },
       {
         "extract": {
-          "file": "files_gog",
+          "format": "gog",
           "dst": "$CACHE/GOG",
-          "format": "gog"
+          "file": "files_gog"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/game_files",
-          "src": "$CACHE/GOG/app/"
+          "src": "$CACHE/GOG/app/",
+          "dst": "$GAMEDIR/game_files"
         }
       }
     ],
@@ -69,7 +66,10 @@
       {
         "Game": "https://github.com/Limetric/OpenRCT2-binaries/releases/download/v0.2.3-90cc885/OpenRCT2-0.2.3-develop-90cc88564-linux-x86_64.tar.gz"
       }
-    ]
+    ],
+    "game": {
+      "exe": "$GAMEDIR/openrct2"
+    }
   },
   "content": "files:\n- files_gog: N/A:Please select your GoG-installer\n- Game: https://github.com/Limetric/OpenRCT2-binaries/releases/download/v0.2.3-90cc885/OpenRCT2-0.2.3-develop-90cc88564-linux-x86_64.tar.gz\ngame:\n  exe: $GAMEDIR/openrct2\ninstaller:\n- extract:\n    file: Game\n    format: tgz\n- chmodx: $GAMEDIR/openrct2\n- mkdir: $HOME/.config/OpenRCT2/\n- mkdir: $GAMEDIR/game_files/\n- write_config:\n    file: $HOME/.config/OpenRCT2/config.ini\n    key: game_path\n    section: general\n    value: $GAMEDIR/game_files\n- extract:\n    dst: $CACHE/GOG\n    file: files_gog\n    format: gog\n- merge:\n    dst: $GAMEDIR/game_files\n    src: $CACHE/GOG/app/\n"
 }

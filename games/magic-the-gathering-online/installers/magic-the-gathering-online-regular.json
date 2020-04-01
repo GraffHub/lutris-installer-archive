@@ -21,13 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/MTGO/setup.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "single_cpu": true
-    },
     "installer": [
       {
         "task": {
@@ -38,8 +31,8 @@
       },
       {
         "task": {
-          "executable": "wineboot",
           "arch": "win32",
+          "executable": "wineboot",
           "description": "Simulating Windows reboot.",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -47,75 +40,75 @@
       },
       {
         "task": {
+          "arch": "win32",
           "app": "sound=pulse winegstreamer=builtin",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "app": "corefonts",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "app": "dotnet46",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "app": "win7",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "app": "gdiplus",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "app": "gdiplus=native",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "app": "ddr=gdi",
-          "arch": "win32",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "wineboot",
-          "arch": "win32",
-          "description": "Simulating Windows reboot.",
-          "args": "-s",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "prefix": "$GAMEDIR"
+          "arch": "win32",
+          "args": "-s",
+          "executable": "wineboot",
+          "description": "Simulating Windows reboot."
         }
       },
       {
         "task": {
-          "executable": "setup",
-          "exclude_processes": "dfsvc.exe",
           "arch": "win32",
+          "exclude_processes": "dfsvc.exe",
+          "executable": "setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -127,19 +120,26 @@
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/MTGO",
-          "src": "setup"
+          "src": "setup",
+          "dst": "$GAMEDIR/drive_c/MTGO"
         }
       }
     ],
     "files": [
       {
         "setup": {
-          "filename": "setup.exe",
-          "url": "http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe"
+          "url": "http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe",
+          "filename": "setup.exe"
         }
       }
-    ]
+    ],
+    "system": {
+      "single_cpu": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/MTGO/setup.exe"
+    }
   },
   "content": "files:\n- setup:\n    filename: setup.exe\n    url: http://mtgoclientdepot.onlinegaming.wizards.com/setup.exe\ngame:\n  exe: $GAMEDIR/drive_c/MTGO/setup.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sound=pulse winegstreamer=builtin\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet46\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus=native\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ddr=gdi\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: -s\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    exclude_processes: dfsvc.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: find $GAMEDIR/drive_c/ -name 'MTGO.exe' -exec sh -c 'ln -vs \"$(dirname\n      \"$0\")\" \"$1\" | cut -c 2-' {} $GAMEDIR/drive_c/MTGO \\;\n- merge:\n    dst: $GAMEDIR/drive_c/MTGO\n    src: setup\nsystem:\n  single_cpu: true\n"
 }

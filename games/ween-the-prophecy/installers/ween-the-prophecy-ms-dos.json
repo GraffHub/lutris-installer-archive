@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "ween",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "write_file": {
@@ -37,8 +33,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/selectcopy.sh",
-          "args": "$game $GAMEDIR"
+          "args": "$game $GAMEDIR",
+          "file": "$CACHE/selectcopy.sh"
         }
       }
     ],
@@ -46,7 +42,11 @@
       {
         "game": "N/A:Select the file *.stk"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "ween",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: N/A:Select the file *.stk\ngame:\n  game_id: ween\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.stk\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/selectcopy.sh\n"
 }

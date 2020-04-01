@@ -21,18 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark03/3DMark03.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true
-    },
-    "wine": {
-      "Desktop": true,
-      "dxvk": true
-    },
+    "files": [
+      {
+        "setup": "https://benchmarks.ul.com/downloads/3dmark03.exe"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -44,36 +37,36 @@
       },
       {
         "task": {
-          "app": "l3codecx",
           "arch": "win64",
           "description": "MP3codec DirectShow ...",
+          "app": "l3codecx",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "vcrun2010",
           "arch": "win64",
           "description": "Visual C++ 2010 libraries ...",
+          "app": "vcrun2010",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "win81",
           "arch": "win64",
           "description": "Windows version 8.1 ...",
+          "app": "win81",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "d9vk_master",
           "arch": "win64",
           "description": "Vulkan ...",
+          "app": "d9vk_master",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -87,8 +80,8 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR",
-          "src": "setup"
+          "src": "setup",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -110,32 +103,39 @@
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Register KeyCode ...",
-          "name": "set_regedit",
-          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark03",
           "value": "N4LWE-T6HUX-8U4JB-28YLV",
+          "arch": "win64",
           "key": "KeyCode",
+          "name": "set_regedit",
+          "description": "Register KeyCode ...",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark03",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Register KeyCode ...",
-          "name": "set_regedit",
-          "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark",
           "value": "N4LWE-T6HUX-8U4JB-28YLV",
+          "arch": "win64",
           "key": "KeyCode",
+          "name": "set_regedit",
+          "description": "Register KeyCode ...",
+          "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark",
           "type": "REG_SZ"
         }
       }
     ],
-    "files": [
-      {
-        "setup": "https://benchmarks.ul.com/downloads/3dmark03.exe"
-      }
-    ]
+    "system": {
+      "disable_compositor": true
+    },
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark03/3DMark03.exe"
+    }
   },
   "content": "files:\n- setup: https://benchmarks.ul.com/downloads/3dmark03.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark03/3DMark03.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: l3codecx\n    arch: win64\n    description: MP3codec DirectShow ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Visual C++ 2010 libraries ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win81\n    arch: win64\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d9vk_master\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    description: Copying SystemInfo 4.15.0 from 3dmark_2006 ...\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Futuremark/Futuremark SystemInfo/\n    src: $GAMEDIR/../3dmark_2006/drive_c/Program Files (x86)/Futuremark/Futuremark\n      SystemInfo/\n- move:\n    dst: $GAMEDIR\n    src: setup\n- chmodx: $GAMEDIR/3dmark03.exe\n- task:\n    description: 3DMark 2003 ...\n    executable: $GAMEDIR/3dmark03.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: cd $HOME/Games/3dmark_2003/drive_c/Program\\ Files\\ \\(x86\\)/Futuremark/Futuremark\\\n      SystemInfo && WINEPREFIX=\"$HOME/Games/3dmark_2003/\" wine start register_fmsi.bat\n    description: Register SystemInfo 4.15.0 ...\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark03\n    type: REG_SZ\n    value: N4LWE-T6HUX-8U4JB-28YLV\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark\n    type: REG_SZ\n    value: N4LWE-T6HUX-8U4JB-28YLV\nsystem:\n  disable_compositor: true\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

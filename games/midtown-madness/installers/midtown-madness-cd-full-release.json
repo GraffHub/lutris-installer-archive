@@ -21,16 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe",
-      "working_dir": "$GAMEDIR/prefix",
-      "prefix": "$GAMEDIR/prefix",
-      "arch": "win32"
-    },
-    "system": {
-      "xephyr_fullscreen": false,
-      "xephyr": "16bpp"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -53,24 +43,24 @@
       },
       {
         "task": {
+          "arch": "win32",
           "executable": "setup",
-          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
       },
       {
         "task": {
+          "arch": "win32",
           "executable": "directplay_patch",
-          "arch": "win32",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "executable": "xppat_patch",
           "arch": "win32",
+          "executable": "xppat_patch",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
@@ -86,7 +76,17 @@
       {
         "directplay_patch": "https://jacobspctuneup.tk/Midtown/directplayupdate.exe"
       }
-    ]
+    ],
+    "system": {
+      "xephyr": "16bpp",
+      "xephyr_fullscreen": false
+    },
+    "game": {
+      "arch": "win32",
+      "working_dir": "$GAMEDIR/prefix",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Select 'setup.exe' on the game disc\n- xppat_patch: https://jacobspctuneup.tk/Midtown/mm1xppat.EXE\n- directplay_patch: https://jacobspctuneup.tk/Midtown/directplayupdate.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $GAMEDIR/prefix\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: winxp csmt=off\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: directplay_patch\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: xppat_patch\n    name: wineexec\n    prefix: $GAMEDIR/prefix\nsystem:\n  xephyr: 16bpp\n  xephyr_fullscreen: false\n"
 }

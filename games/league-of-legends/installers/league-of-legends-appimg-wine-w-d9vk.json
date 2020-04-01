@@ -22,21 +22,46 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
-      "args": "wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\""
+      "args": "wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\"",
+      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
     },
     "custom-name": "League of Legends - AppImage + d9vk",
+    "files": [
+      {
+        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
+      },
+      {
+        "appimage_ci": "https://github.com/mmtrt/Wine_Appimage/releases/download/continuous/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+      },
+      {
+        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.22/d9vk-0.22.tar.gz"
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "require-binaries": "wine",
+    "system": {
+      "env": {
+        "WINEOVERRIDES": "msvcp140=native",
+        "WINEARCH": "win32",
+        "WINEPREFIX": "$GAMEDIR",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "WINEDEBUG": "-all",
+        "DXVK_HUD": "compiler"
+      }
+    },
     "installer": [
       {
         "extract": {
-          "file": "d9vk",
-          "dst": "$CACHE/d9vk-0.22/"
+          "dst": "$CACHE/d9vk-0.22/",
+          "file": "d9vk"
         }
       },
       {
         "extract": {
-          "file": "dx2010",
-          "dst": "$CACHE/dxsetup"
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
         }
       },
       {
@@ -44,23 +69,24 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR",
-          "src": "appimage_ci"
+          "src": "appimage_ci",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "execute": {
           "args": "wine wineboot",
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "description": "Setting up wine prefix",
           "env": {
-            "WINEPREFIX": "$GAMEDIR",
-            "WINEARCH": "win32"
-          }
+            "WINEARCH": "win32",
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
       {
         "input_menu": {
+          "id": "LOCALE",
           "options": [
             {
               "cs_CZ": "Čeština"
@@ -111,13 +137,13 @@
               "tr_TR": "Türkçe"
             }
           ],
-          "id": "LOCALE",
-          "preselect": "en_US",
-          "description": "Choose the game's language:"
+          "description": "Choose the game's language:",
+          "preselect": "en_US"
         }
       },
       {
         "input_menu": {
+          "id": "REGION",
           "options": [
             {
               "BR": "Brazil"
@@ -153,49 +179,48 @@
               "SEA": "South East Asia"
             }
           ],
-          "id": "REGION",
-          "preselect": "NA",
-          "description": "Choose the game's server region:"
+          "description": "Choose the game's server region:",
+          "preselect": "NA"
         }
       },
       {
         "execute": {
           "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent",
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "description": "Installing Directx9",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
-          }
+          },
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
       {
         "execute": {
           "args": "wine lol_installer --mode unattended",
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "description": "Installing League of Legends",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
-          }
+          },
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
       {
         "execute": {
           "args": "install",
-          "file": "$CACHE/d9vk-0.22/setup_dxvk.sh",
           "description": "Setting up d9vk",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
-          }
+          },
+          "file": "$CACHE/d9vk-0.22/setup_dxvk.sh"
         }
       },
       {
         "execute": {
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "args": "wine wineboot -u",
           "env": {
-            "WINEPREFIX": "$GAMEDIR",
-            "WINEARCH": "win32"
-          }
+            "WINEARCH": "win32",
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
         }
       },
       {
@@ -203,31 +228,6 @@
           "content": "install:\n    globals:\n        locale: \"$INPUT_LOCALE\"\n        region: \"$INPUT_REGION\"\n",
           "file": "$GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml"
         }
-      }
-    ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler",
-        "WINEPREFIX": "$GAMEDIR",
-        "WINEARCH": "win32",
-        "WINEDEBUG": "-all",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "WINEOVERRIDES": "msvcp140=native"
-      }
-    },
-    "require-binaries": "wine",
-    "files": [
-      {
-        "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
-      },
-      {
-        "appimage_ci": "https://github.com/mmtrt/Wine_Appimage/releases/download/continuous/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
-      },
-      {
-        "d9vk": "https://github.com/Joshua-Ashton/d9vk/releases/download/0.22/d9vk-0.22.tar.gz"
-      },
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ]
   },

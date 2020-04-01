@@ -21,25 +21,11 @@
   "gogslug": "anno_1404_gold_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Anno 1404 Gold Edition/Addon.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_runtime": false,
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "D9VK_HUD": 0
+    "files": [
+      {
+        "installer": "N/A:Select the EXE downloaded from GOG"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -76,11 +62,25 @@
         }
       }
     ],
-    "files": [
-      {
-        "installer": "N/A:Select the EXE downloaded from GOG"
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "D9VK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "esync": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Anno 1404 Gold Edition/Addon.exe"
+    }
   },
   "content": "files:\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Anno 1404 Gold Edition/Addon.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- write_file:\n    content: '<InitFile>\n\n      <RefreshRate>1024MB</RefreshRate>\n\n      <DirectXVersion>9</DirectXVersion>\n\n      </InitFile>\n\n      '\n    file: /tmp/Engine.ini\n- merge:\n    description: Copying user config for base game...\n    dst: $GAMEDIR/drive_c/users/$USER/Application Data/Ubisoft/Anno1404/Config/\n    src: /tmp/Engine.ini\n- merge:\n    description: Copying user config for addon...\n    dst: $GAMEDIR/prefix/drive_c/users/$USER/Application Data/Ubisoft/Anno1404Addon/Config/\n    src: /tmp/Engine.ini\nsystem:\n  disable_runtime: false\n  env:\n    D9VK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

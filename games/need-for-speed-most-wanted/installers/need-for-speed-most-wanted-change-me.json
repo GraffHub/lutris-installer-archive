@@ -21,15 +21,7 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "dinput8": "n,b"
-      }
-    },
+    "exe": "drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/speed.exe",
     "installer": [
       {
         "insert-disc": {
@@ -45,20 +37,28 @@
       },
       {
         "extract": {
-          "file": "hdpatch",
-          "dst": "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/"
+          "dst": "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/",
+          "file": "hdpatch"
         }
       }
     ],
-    "system": {
-      "xboxdrv": "--deadzone=6000 --trigger-as-button=true"
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
     },
-    "exe": "drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/speed.exe",
     "files": [
       {
         "hdpatch": "https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/nfsmw/NFSMostWanted.WidescreenFix.zip"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "dinput8": "n,b"
+      }
+    },
+    "system": {
+      "xboxdrv": "--deadzone=6000 --trigger-as-button=true"
+    }
   },
   "content": "exe: drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/speed.exe\nfiles:\n- hdpatch: https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/nfsmw/NFSMostWanted.WidescreenFix.zip\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: speed.exe\n- task:\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Most Wanted/\n    file: hdpatch\nsystem:\n  xboxdrv: --deadzone=6000 --trigger-as-button=true\nwine:\n  overrides:\n    dinput8: n,b\n"
 }

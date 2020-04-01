@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "blade2.EXE",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,18 +31,18 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "extract": {
-          "file": "game",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "file": "game"
         }
       }
     ],
@@ -55,7 +50,12 @@
       {
         "game": "http://www.sk8tokyo.com/shmup/software/krsmblade2_v122.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "blade2.EXE"
+    }
   },
   "content": "files:\n- game: http://www.sk8tokyo.com/shmup/software/krsmblade2_v122.zip\ngame:\n  arch: win32\n  exe: blade2.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- extract:\n    dst: $GAMEDIR\n    file: game\n"
 }

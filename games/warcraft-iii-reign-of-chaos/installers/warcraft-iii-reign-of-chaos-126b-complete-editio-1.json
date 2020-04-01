@@ -21,11 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "exe": "drive_c/Program Files/Warcraft III/Warcraft III.exe",
+    "files": [
+      {
+        "setup": "N/A:Select the installer for Warcraft III: Reign of Chaos"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -44,20 +45,19 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Blizzard Entertainment\\Warcraft",
-          "description": "Switching to OpenGL renderer",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": 1,
-          "key": "Gfx OpenGL"
+          "key": "Gfx OpenGL",
+          "name": "set_regedit",
+          "description": "Switching to OpenGL renderer",
+          "path": "HKEY_CURRENT_USER\\Software\\Blizzard Entertainment\\Warcraft"
         }
       }
     ],
-    "files": [
-      {
-        "setup": "N/A:Select the installer for Warcraft III: Reign of Chaos"
-      }
-    ]
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    }
   },
   "content": "exe: drive_c/Program Files/Warcraft III/Warcraft III.exe\nfiles:\n- setup: 'N/A:Select the installer for Warcraft III: Reign of Chaos'\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing Warcraft III: Reign of Chaos'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Switching to OpenGL renderer\n    key: Gfx OpenGL\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Blizzard Entertainment\\Warcraft\n    prefix: $GAMEDIR\n    value: 1\n"
 }

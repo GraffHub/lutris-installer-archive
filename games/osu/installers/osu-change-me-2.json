@@ -21,9 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "run.sh"
-    },
+    "require-binaries": "dotnet",
+    "files": [
+      {
+        "archive": "https://github.com/ppy/osu/archive/2020.118.0.zip"
+      }
+    ],
     "installer": [
       {
         "extract": {
@@ -45,12 +48,9 @@
         "chmodx": "$GAMEDIR/run.sh"
       }
     ],
-    "require-binaries": "dotnet",
-    "files": [
-      {
-        "archive": "https://github.com/ppy/osu/archive/2020.118.0.zip"
-      }
-    ]
+    "game": {
+      "exe": "run.sh"
+    }
   },
   "content": "files:\n- archive: https://github.com/ppy/osu/archive/2020.118.0.zip\ngame:\n  exe: run.sh\ninstaller:\n- extract:\n    file: archive\n- execute:\n    command: dotnet build osu.Desktop /p:Configuration=Release /p:GenerateFullPaths=true\n      /m /verbosity:m\n- write_file:\n    content: '#!/bin/bash\n\n\n      script_path=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\"\n\n      app_path=\"$script_path\"/osu.Desktop/bin/Release/netcoreapp3.1\n\n\n      LD_LIBRARY_PATH=\"$app_path\" dotnet \"$app_path\"/osu\\!.dll\n\n      '\n    file: $GAMEDIR/run.sh\n- chmodx: $GAMEDIR/run.sh\nrequire-binaries: dotnet\n"
 }

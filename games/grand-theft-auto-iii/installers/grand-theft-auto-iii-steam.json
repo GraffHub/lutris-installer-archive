@@ -21,10 +21,10 @@
   "gogslug": "",
   "humblestoreid": "grand-theft-auto-iii",
   "script": {
-    "game": {
-      "appid": 12100,
-      "arch": "win32",
-      "prefix": "$GAMEDIR/prefix"
+    "winesteam": {
+      "overrides": {
+        "winegstreamer": "disabled"
+      }
     },
     "installer": [
       {
@@ -36,40 +36,35 @@
       },
       {
         "extract": {
-          "file": "$silentpatch",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$silentpatch"
         }
       },
       {
         "extract": {
-          "file": "$ddrawpatch",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$ddrawpatch"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/ddraw.dll"
+          "src": "$CACHE/ddraw.dll",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/SilentPatchIII.asi"
+          "src": "$CACHE/SilentPatchIII.asi",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/models",
-          "src": "$CACHE/models/particle.txd"
+          "src": "$CACHE/models/particle.txd",
+          "dst": "$GAMEDIR/models"
         }
       }
     ],
-    "winesteam": {
-      "overrides": {
-        "winegstreamer": "disabled"
-      }
-    },
     "files": [
       {
         "ddrawpatch": "http://silent.rockstarvision.com/uploads/SilentPatchDDraw.zip"
@@ -77,7 +72,12 @@
       {
         "silentpatch": "http://silent.rockstarvision.com/uploads/SilentPatchIII.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "appid": 12100,
+      "prefix": "$GAMEDIR/prefix"
+    }
   },
   "content": "files:\n- ddrawpatch: http://silent.rockstarvision.com/uploads/SilentPatchDDraw.zip\n- silentpatch: http://silent.rockstarvision.com/uploads/SilentPatchIII.zip\ngame:\n  appid: 12100\n  arch: win32\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE\n    file: $silentpatch\n- extract:\n    dst: $CACHE\n    file: $ddrawpatch\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/ddraw.dll\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/SilentPatchIII.asi\n- merge:\n    dst: $GAMEDIR/models\n    src: $CACHE/models/particle.txd\nwinesteam:\n  overrides:\n    winegstreamer: disabled\n"
 }

@@ -21,9 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/eye3.conf"
-    },
     "installer": [
       {
         "write_file": {
@@ -36,14 +33,14 @@
       },
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD  $GAMEDIR/HDD/EYE3"
+          "args": "$GAMEDIR/HDD  $GAMEDIR/HDD/EYE3",
+          "file": "mkdir"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy-alt.sh",
-          "args": "$game \"$GAMEDIR/HDD/EYE3\""
+          "args": "$game \"$GAMEDIR/HDD/EYE3\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
         }
       },
       {
@@ -54,8 +51,8 @@
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR/HDD/EYE",
           "config_file": "$GAMEDIR/eye3-setup.conf",
+          "working_dir": "$GAMEDIR/HDD/EYE",
           "name": "dosexec"
         }
       },
@@ -70,7 +67,10 @@
       {
         "game": "N/A:Select the file EYE.bat"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/eye3.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select the file EYE.bat\ngame:\n  main_file: $GAMEDIR/eye3.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD  $GAMEDIR/HDD/EYE3\n    file: mkdir\n- execute:\n    args: $game \"$GAMEDIR/HDD/EYE3\"\n    file: $CACHE/bulkcopy-alt.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd EYE3\n\n      sound\n\n      exit'\n    file: $GAMEDIR/eye3-setup.conf\n- task:\n    config_file: $GAMEDIR/eye3-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/EYE\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd EYE3\n\n      eye.bat\n\n      exit'\n    file: $GAMEDIR/eye3.conf\n"
 }

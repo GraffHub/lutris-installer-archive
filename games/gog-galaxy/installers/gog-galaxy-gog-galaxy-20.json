@@ -8,10 +8,10 @@
   "runner": "wine",
   "slug": "gog-galaxy-gog-galaxy-20",
   "version": "GOG Galaxy 2.0",
-  "description": "DXVK + esync + fsync",
-  "notes": "VA-11 Hall-A: Cyberpunk Bartender Action and Undertale crash with overlay in-game enabled.",
+  "description": null,
+  "notes": "",
   "created_at": "2019-12-07T21:46:09.467000Z",
-  "updated_at": "2020-02-28T11:02:39.838962Z",
+  "updated_at": "2020-03-18T12:11:24.389701Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,28 +21,14 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
-      "arch": "win64",
-      "args": "/runWithoutUpdating /deelevated",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "restore_gamma": true,
-      "reset_desktop": true,
-      "env": {
-        "STAGING_SHARED_MEMORY": "1",
-        "WINEFSYNC": "1"
+    "files": [
+      {
+        "galaxy": "https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
@@ -50,27 +36,35 @@
       {
         "task": {
           "executable": "galaxy",
-          "arch": "win64",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "app": "d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43 physx",
-          "arch": "win64",
+          "silent": true,
           "description": "Installing needed libraries",
+          "app": "physx",
           "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "silent": true
+          "name": "winetricks"
         }
       }
     ],
-    "files": [
-      {
-        "galaxy": "https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe"
-      }
-    ]
+    "system": {
+      "reset_desktop": true,
+      "env": {
+        "WINEFSYNC": "1"
+      },
+      "restore_gamma": true
+    },
+    "wine": {
+      "esync": true
+    },
+    "game": {
+      "args": "/runWithoutUpdating /deelevated",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe"
+    }
   },
-  "content": "files:\r\n- galaxy: https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe\r\ngame:\r\n  arch: win64\r\n  args: /runWithoutUpdating /deelevated\r\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    executable: galaxy\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dcompiler_43 d3dcompiler_47 d3dx9 d3dx10 d3dx11_42 d3dx11_43 physx\r\n    arch: win64\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    STAGING_SHARED_MEMORY: '1'\r\n    WINEFSYNC: '1'\r\n  reset_desktop: true\r\n  restore_gamma: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
+  "content": "files:\r\n- galaxy: https://raw.githubusercontent.com/soredake/lutris-additions/master/GOG_Galaxy_2.0.exe\r\ngame:\r\n  args: /runWithoutUpdating /deelevated\r\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    executable: galaxy\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: physx\r\n    description: Installing needed libraries\r\n    name: winetricks\r\n    silent: true\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    WINEFSYNC: '1'\r\n  reset_desktop: true\r\n  restore_gamma: true\r\nwine:\r\n  esync: true"
 }

@@ -1,0 +1,131 @@
+{
+  "id": 18834,
+  "game_id": 31972,
+  "game_slug": "super-bernie-world",
+  "name": "Super Bernie World",
+  "year": null,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "super-bernie-world-steam",
+  "version": "steam",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-03-13T16:01:12.354690Z",
+  "updated_at": "2020-03-20T10:49:24.600239Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "master.zip": "https://github.com/z0z0z/mf-install/archive/master.zip"
+      },
+      {
+        "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "move": {
+          "src": "SteamSetup.exe",
+          "dst": "$GAMEDIR/prefix/drive_c/"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/prefix/drive_c/SteamSetup.exe"
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "DirectX ...",
+          "app": "d3drm",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "app": "d3dcompiler_43",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "app": "d3dx11_43",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "DirectX compiler ...",
+          "app": "d3dcompiler_47",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Vulkan ...",
+          "app": "dxvk",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "executable": "$GAMEDIR/prefix/drive_c/SteamSetup.exe",
+          "description": "Steam ...",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Windows version 8 ...",
+          "app": "win8",
+          "prefix": "$GAMEDIR/prefix",
+          "name": "winetricks"
+        }
+      }
+    ],
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
+    "wine": {
+      "esync": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "custom-name": "Super Bernie World",
+      "arch": "win64",
+      "args": "-nojoy -applaunch 1258040",
+      "appid": "1258040",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe"
+    }
+  },
+  "content": "files:\r\n- master.zip: https://github.com/z0z0z/mf-install/archive/master.zip\r\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\r\ngame:\r\n  appid: '1258040'\r\n  arch: win64\r\n  args: -nojoy -applaunch 1258040\r\n  custom-name: Super Bernie World\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- move:\r\n    dst: $GAMEDIR/prefix/drive_c/\r\n    src: SteamSetup.exe\r\n- chmodx: $GAMEDIR/prefix/drive_c/SteamSetup.exe\r\n- task:\r\n    app: d3drm\r\n    arch: win64\r\n    description: DirectX ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_47\r\n    arch: win64\r\n    description: DirectX compiler ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    args: /S\r\n    description: Steam ...\r\n    executable: $GAMEDIR/prefix/drive_c/SteamSetup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\nwine:\r\n  esync: true"
+}

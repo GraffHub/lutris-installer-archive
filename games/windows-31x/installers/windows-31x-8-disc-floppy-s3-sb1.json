@@ -21,34 +21,31 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/windows-for-workgroups.conf"
-    },
     "installer": [
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/FDD  $GAMEDIR/FDD/DISC1"
+          "args": "$GAMEDIR/HDD $GAMEDIR/FDD  $GAMEDIR/FDD/DISC1",
+          "file": "mkdir"
         }
       },
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/FDD/Drivers $GAMEDIR/FDD/Drivers/sb16  $GAMEDIR/FDD/Drivers/s3"
+          "args": "$GAMEDIR/FDD/Drivers $GAMEDIR/FDD/Drivers/sb16  $GAMEDIR/FDD/Drivers/s3",
+          "file": "mkdir"
         }
       },
       {
         "extract": {
-          "file": "$SB16",
+          "format": "zip",
           "dst": "$GAMEDIR/FDD/Drivers/sb16",
-          "format": "zip"
+          "file": "$SB16"
         }
       },
       {
         "extract": {
-          "file": "$S3",
+          "format": "zip",
           "dst": "$GAMEDIR/FDD/Drivers/s3",
-          "format": "zip"
+          "file": "$S3"
         }
       },
       {
@@ -59,8 +56,8 @@
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR/HDD",
           "config_file": "$GAMEDIR/windows-for-workgroups-setup.conf",
+          "working_dir": "$GAMEDIR/HDD",
           "name": "dosexec"
         }
       },
@@ -102,7 +99,10 @@
       {
         "SB16": "https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/windows-for-workgroups.conf"
+    }
   },
   "content": "files:\n- Disc1: N/A:Select the image of Disc 1\n- Disc2: N/A:Select the image of Disc 2\n- Disc3: N/A:Select the image of Disc 3\n- Disc4: N/A:Select the image of Disc 4\n- Disc5: N/A:Select the image of Disc 5\n- Disc6: N/A:Select the image of Disc 6\n- Disc7: N/A:Select the image of Disc 7\n- Disc8: N/A:Select the image of Disc 8\n- S3: https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1\n- SB16: https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1\ngame:\n  main_file: $GAMEDIR/windows-for-workgroups.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/FDD  $GAMEDIR/FDD/DISC1\n    file: mkdir\n- execute:\n    args: $GAMEDIR/FDD/Drivers $GAMEDIR/FDD/Drivers/sb16  $GAMEDIR/FDD/Drivers/s3\n    file: mkdir\n- extract:\n    dst: $GAMEDIR/FDD/Drivers/sb16\n    file: $SB16\n    format: zip\n- extract:\n    dst: $GAMEDIR/FDD/Drivers/s3\n    file: $S3\n    format: zip\n- write_file:\n    content: '[sblaster]\n\n      irq=5\n\n      [sdl]\n\n      sensitivity=10\n\n      [autoexec]\n\n      imgmount A \"$Disc1\" -t floppy\n\n      imgmount J \"$Disc2\" -t floppy\n\n      imgmount I \"$Disc3\" -t floppy\n\n      imgmount D \"$Disc4\" -t floppy\n\n      imgmount E \"$Disc5\" -t floppy\n\n      imgmount F \"$Disc6\" -t floppy\n\n      imgmount G \"$Disc7\" -t floppy\n\n      imgmount H \"$Disc1\" -t floppy\n\n      mount B \"$GAMEDIR/FDD/Drivers\" -t dir\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount Y \"$GAMEDIR/FDD/DISC1\" -t dir\n\n      A:\n\n      copy *.* Y:\n\n      J:\n\n      copy *.* Y:\n\n      I:\n\n      copy *.* Y:\n\n      D:\n\n      copy *.* Y:\n\n      E:\n\n      copy *.* Y:\n\n      F:\n\n      copy *.* Y:\n\n      G:\n\n      copy *.* Y:\n\n      H:\n\n      copy *.* Y:\n\n      Y:\n\n      setup.exe\n\n      SET PATH=%PATH%;C:\\WINDOWS;\n\n      SET TEMP=C:\\WINDOWS\\TEMP\n\n      c:\n\n      cd Windows\n\n      Setup\n\n      B:\n\n      cd sb16\n\n      install\n\n      exit'\n    file: $GAMEDIR/windows-for-workgroups-setup.conf\n- task:\n    config_file: $GAMEDIR/windows-for-workgroups-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD\n- write_file:\n    content: '[sblaster]\n\n      irq=5\n\n      [sdl]\n\n      sensitivity=10\n\n      [autoexec]\n\n      mount A \"$GAMEDIR/FDD/DISC1\" -t dir\n\n      mount B \"$GAMEDIR/FDD/Drivers\" -t dir\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      SET PATH=%PATH%;C:\\WINDOWS;\n\n      SET TEMP=C:\\WINDOWS\\TEMP\n\n      c:\n\n      win\n\n      exit'\n    file: $GAMEDIR/windows-for-workgroups.conf\n"
 }

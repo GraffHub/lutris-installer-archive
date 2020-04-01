@@ -21,25 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe",
-      "args": "--launch-product=bacon --launch-patchline=live",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "STAGING_SHARED_MEMORY": 1,
-        "WINE_LARGE_ADDRESS_AWARE": 1
+    "files": [
+      {
+        "lor_installer": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "Desktop": true,
-      "MouseWarpOverride": "disable"
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -51,28 +37,28 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "value": "Y",
-          "key": "GrabFullScreen"
-        }
-      },
-      {
-        "task": {
           "arch": "win64",
-          "prefix": "$GAMEDIR",
+          "key": "GrabFullScreen",
           "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "value": "N",
-          "key": "UseXVidMode"
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
         }
       },
       {
         "task": {
-          "executable": "lor_installer",
+          "prefix": "$GAMEDIR",
+          "value": "N",
           "arch": "win64",
+          "key": "UseXVidMode",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "lor_installer",
           "description": "Installing Legends of Runeterra",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -80,8 +66,8 @@
       },
       {
         "task": {
-          "app": "d3dcompiler_43 d3dx9 wininet dotnet48",
           "arch": "win64",
+          "app": "d3dcompiler_43 d3dx9 wininet dotnet48",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -94,11 +80,25 @@
         }
       }
     ],
-    "files": [
-      {
-        "lor_installer": "https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe"
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1,
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "__GL_SHADER_DISK_CACHE": 1
       }
-    ]
+    },
+    "wine": {
+      "Desktop": true,
+      "MouseWarpOverride": "disable",
+      "esync": true
+    },
+    "game": {
+      "args": "--launch-product=bacon --launch-patchline=live",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe"
+    }
   },
   "content": "files:\n- lor_installer: https://bacon.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.exe\ngame:\n  args: --launch-product=bacon --launch-patchline=live\n  exe: $GAMEDIR/drive_c/Riot Games/Riot Client/RiotClientServices.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win64\n    key: UseXVidMode\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    arch: win64\n    description: Installing Legends of Runeterra\n    executable: lor_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9 wininet dotnet48\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    STAGING_SHARED_MEMORY: 1\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  Desktop: true\n  MouseWarpOverride: disable\n  esync: true\n"
 }

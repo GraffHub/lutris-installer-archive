@@ -11,7 +11,7 @@
   "description": "Installer downloads Lost-Soldier's game and BF2 Hub and installs them.\r\nPlease leave installation paths to default for both bf2hub and lost-soldier battlefield 2.\r\nhttps://www.lost-soldiers.org/",
   "notes": "",
   "created_at": "2019-12-07T16:20:58.074000Z",
-  "updated_at": "2019-12-22T11:33:33.024472Z",
+  "updated_at": "2020-03-08T11:49:47.924127Z",
   "draft": false,
   "published": true,
   "published_by": 20548,
@@ -22,11 +22,6 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "game": {
-        "exe": "$GAMEDIR/drive_c/Program Files (x86)/BF2Hub Client/bf2hub.exe",
-        "arch": "win64",
-        "prefix": "$GAMEDIR"
-      },
       "installer": [
         {
           "task": {
@@ -38,14 +33,14 @@
         },
         {
           "extract": {
-            "file": "game",
-            "dst": "$GAMEDIR/bf2"
+            "dst": "$GAMEDIR/bf2",
+            "file": "game"
           }
         },
         {
           "task": {
-            "executable": "$GAMEDIR/bf2/Setup.exe",
             "arch": "win64",
+            "executable": "$GAMEDIR/bf2/Setup.exe",
             "description": "Running the setup",
             "prefix": "$GAMEDIR",
             "name": "wineexec"
@@ -53,8 +48,8 @@
         },
         {
           "task": {
-            "executable": "bfhub",
             "arch": "win64",
+            "executable": "bfhub",
             "description": "Running BF2Hub",
             "prefix": "$GAMEDIR",
             "name": "wineexec"
@@ -63,13 +58,18 @@
       ],
       "files": [
         {
-          "game": "https://download1640.mediafire.com/ocmt6iapjqvg/evnn10qka61e8ev/Battlefield+2+Complete+Collection.zip"
+          "game": "N/A: Download the game from http://www.mediafire.com/file/evnn10qka61e8ev/Battlefield_2_Complete_Collection.zip/file"
         },
         {
           "bfhub": "https://www.bf2hub.com/downloads/bf2hub-client-setup.exe"
         }
-      ]
+      ],
+      "game": {
+        "arch": "win64",
+        "prefix": "$GAMEDIR",
+        "exe": "$GAMEDIR/drive_c/Program Files (x86)/BF2Hub Client/bf2hub.exe"
+      }
     }
   },
-  "content": "script:\n  files:\n  - game: https://download1640.mediafire.com/ocmt6iapjqvg/evnn10qka61e8ev/Battlefield+2+Complete+Collection.zip\n  - bfhub: https://www.bf2hub.com/downloads/bf2hub-client-setup.exe\n  game:\n    arch: win64\n    exe: $GAMEDIR/drive_c/Program Files (x86)/BF2Hub Client/bf2hub.exe\n    prefix: $GAMEDIR\n  installer:\n  - task:\n      arch: win64\n      description: Creating Wine prefix\n      name: create_prefix\n      prefix: $GAMEDIR\n  - extract:\n      dst: $GAMEDIR/bf2\n      file: game\n  - task:\n      arch: win64\n      description: Running the setup\n      executable: $GAMEDIR/bf2/Setup.exe\n      name: wineexec\n      prefix: $GAMEDIR\n  - task:\n      arch: win64\n      description: Running BF2Hub\n      executable: bfhub\n      name: wineexec\n      prefix: $GAMEDIR\n"
+  "content": "script:\n  files:\n  - game: 'N/A: Download the game from http://www.mediafire.com/file/evnn10qka61e8ev/Battlefield_2_Complete_Collection.zip/file'\n  - bfhub: https://www.bf2hub.com/downloads/bf2hub-client-setup.exe\n  game:\n    arch: win64\n    exe: $GAMEDIR/drive_c/Program Files (x86)/BF2Hub Client/bf2hub.exe\n    prefix: $GAMEDIR\n  installer:\n  - task:\n      arch: win64\n      description: Creating Wine prefix\n      name: create_prefix\n      prefix: $GAMEDIR\n  - extract:\n      dst: $GAMEDIR/bf2\n      file: game\n  - task:\n      arch: win64\n      description: Running the setup\n      executable: $GAMEDIR/bf2/Setup.exe\n      name: wineexec\n      prefix: $GAMEDIR\n  - task:\n      arch: win64\n      description: Running BF2Hub\n      executable: bfhub\n      name: wineexec\n      prefix: $GAMEDIR\n"
 }

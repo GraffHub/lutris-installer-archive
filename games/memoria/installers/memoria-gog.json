@@ -21,24 +21,6 @@
   "gogslug": "memoria",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Memoria/memoria.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "wine": {
-        "dxvk_version": "1.0.1",
-        "version": "tkg-4.1",
-        "dxvk": true
-      },
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": 0,
-        "SDL_AUDIODRIVER": "winmm"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -49,8 +31,8 @@
       },
       {
         "task": {
-          "executable": "setup",
           "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI",
+          "executable": "setup",
           "description": "Installing Memoria",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -58,8 +40,8 @@
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win64",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -69,7 +51,25 @@
       {
         "setup": "N/A:Select the game's installer (setup_memoria_*.exe)"
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": 0,
+        "SDL_AUDIODRIVER": "winmm",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "wine": {
+        "dxvk": true,
+        "version": "tkg-4.1",
+        "dxvk_version": "1.0.1"
+      }
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Memoria/memoria.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Select the game's installer (setup_memoria_*.exe)\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Memoria/memoria.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI\n    description: Installing Memoria\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    SDL_AUDIODRIVER: winmm\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  wine:\n    dxvk: true\n    dxvk_version: 1.0.1\n    version: tkg-4.1\n"
 }

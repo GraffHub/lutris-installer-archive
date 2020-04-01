@@ -21,11 +21,6 @@
   "gogslug": "sid_meiers_civilization_iii_complete",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/game/Conquests/Civ3Conquests.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,8 +32,8 @@
       },
       {
         "task": {
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -46,8 +41,8 @@
       },
       {
         "task": {
-          "app": "directplay",
           "silent": true,
+          "app": "directplay",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -57,7 +52,12 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/Conquests/Civ3Conquests.exe"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/Conquests/Civ3Conquests.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: directplay\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

@@ -21,11 +21,6 @@
   "gogslug": "aqua_kitty_milk_mine_defender",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Aqua Kitty/aqua_kitty.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,22 +31,22 @@
       },
       {
         "execute": {
-          "file": "/bin/sh",
-          "args": "-c 'printf \"[Software\\\\Wine\\\\DllOverrides]\\n\"mscoree\"=\"\"\\n\"mshtml\"=\"\"\\n\" >> $GAMEDIR/user.reg'"
+          "args": "-c 'printf \"[Software\\\\Wine\\\\DllOverrides]\\n\"mscoree\"=\"\"\\n\"mshtml\"=\"\"\\n\" >> $GAMEDIR/user.reg'",
+          "file": "/bin/sh"
         }
       },
       {
         "task": {
-          "app": "dotnet40",
           "description": "Installing .net",
+          "app": "dotnet40",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "xna40",
           "description": "Installing xna",
+          "app": "xna40",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -69,7 +64,12 @@
       {
         "game": "N/A:Please select the Humble Bundle installer."
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Aqua Kitty/aqua_kitty.exe"
+    }
   },
   "content": "files:\n- game: N/A:Please select the Humble Bundle installer.\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Aqua Kitty/aqua_kitty.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'printf \"[Software\\\\Wine\\\\DllOverrides]\\n\"mscoree\"=\"\"\\n\"mshtml\"=\"\"\\n\"\n      >> $GAMEDIR/user.reg'\n    file: /bin/sh\n- task:\n    app: dotnet40\n    description: Installing .net\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xna40\n    description: Installing xna\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Aqua Kitty\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

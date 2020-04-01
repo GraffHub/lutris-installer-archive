@@ -22,6 +22,20 @@
   "humblestoreid": "",
   "script": {
     "extends": "age-of-empires",
+    "files": [
+      {
+        "scriptinstall": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/findaoe.sh"
+      },
+      {
+        "updt": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1_update_1.0c_multi.zip"
+      },
+      {
+        "scriptclean": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/clean.sh"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1covers.zip"
+      }
+    ],
     "wine": {
       "Desktop": true
     },
@@ -35,8 +49,8 @@
       },
       {
         "extract": {
-          "file": "updt",
-          "dst": "$GAMEDIR/drive_c/tmp/"
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "file": "updt"
         }
       },
       {
@@ -49,20 +63,21 @@
       },
       {
         "execute": {
-          "file": "scriptinstall",
-          "args": "$DISC"
+          "args": "$DISC",
+          "file": "scriptinstall"
         }
       },
       {
         "task": {
+          "args": "/desktop=ROR,1024x780 $GAMEDIR/drive_c/tmp/aoeinstall.bat",
           "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
           "description": "Installing Rise of Rome extension...",
-          "args": "/desktop=ROR,1024x780 $GAMEDIR/drive_c/tmp/aoeinstall.bat",
           "name": "wineexec"
         }
       },
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "en": "English"
@@ -83,47 +98,46 @@
               "po": "Portuguese"
             }
           ],
-          "id": "LANG",
-          "preselect": "en",
-          "description": "Please choose AOE I CD language (do not choose another language other than your CD's one)"
+          "description": "Please choose AOE I CD language (do not choose another language other than your CD's one)",
+          "preselect": "en"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "arch": "win64",
+          "key": "ActiveTitle",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "value": "0 0 0",
-          "key": "ActiveTitle",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "255 0 0",
+          "arch": "win64",
+          "key": "GradientActiveTitle",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "value": "255 0 0",
-          "key": "GradientActiveTitle",
           "type": "REG_SZ"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/aoe1covers",
-          "src": "wpp"
+          "src": "wpp",
+          "dst": "$GAMEDIR/drive_c/aoe1covers"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "c:\\\\aoe1.bmp",
+          "arch": "win64",
+          "key": "wallpaper",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
-          "value": "c:\\\\aoe1.bmp",
-          "key": "wallpaper",
           "type": "REG_SZ"
         }
       },
@@ -132,8 +146,8 @@
       },
       {
         "execute": {
-          "file": "scriptclean",
-          "args": "$INPUT_LANG \"$DISC\" ror"
+          "args": "$INPUT_LANG \"$DISC\" ror",
+          "file": "scriptclean"
         }
       },
       {
@@ -142,20 +156,6 @@
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
-      }
-    ],
-    "files": [
-      {
-        "scriptinstall": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/findaoe.sh"
-      },
-      {
-        "updt": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1_update_1.0c_multi.zip"
-      },
-      {
-        "scriptclean": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/clean.sh"
-      },
-      {
-        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Age%20of%20Empires/aoe1covers.zip"
       }
     ]
   },

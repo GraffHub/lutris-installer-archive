@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -67,7 +62,12 @@
       {
         "patch": "https://paste.rs/Wdw"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe"
+    }
   },
   "content": "files:\n- patch: https://paste.rs/Wdw\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: Setup.exe\n- task:\n    description: Installing Project Nomads. Do not install DirectX, check for upgrades,\n      or launch the game.\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    description: Backing up original executable\n    dst: $GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.bak.exe\n    src: $GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe\n- move:\n    description: Installing patch\n    dst: $GAMEDIR/drive_c/Program Files/Project Nomads/Run/bin/win32/nomads.exe\n    src: patch\n"
 }

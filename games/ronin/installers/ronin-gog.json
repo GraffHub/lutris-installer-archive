@@ -21,27 +21,24 @@
   "gogslug": "ronin",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "Game/start.sh"
-    },
     "installer": [
       {
         "extract": {
-          "file": "$unzip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$unzip"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
           "description": "Extracting game data...",
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\""
+          "file": "$CACHE/unzip"
         }
       },
       {
         "rename": {
-          "dst": "$GAMEDIR/Game",
-          "src": "$GAMEDIR/data/noarch"
+          "src": "$GAMEDIR/data/noarch",
+          "dst": "$GAMEDIR/Game"
         }
       }
     ],
@@ -52,7 +49,10 @@
       {
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
-    ]
+    ],
+    "game": {
+      "exe": "Game/start.sh"
+    }
   },
   "content": "files:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  exe: Game/start.sh\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n"
 }

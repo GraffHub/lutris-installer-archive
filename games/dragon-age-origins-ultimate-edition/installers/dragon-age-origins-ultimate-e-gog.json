@@ -8,31 +8,24 @@
   "runner": "wine",
   "slug": "dragon-age-origins-ultimate-e-gog",
   "version": "GOG",
-  "description": "",
+  "description": null,
   "notes": "",
   "created_at": "2017-09-26T09:17:58.429000Z",
-  "updated_at": "2017-10-19T05:06:23.544320Z",
+  "updated_at": "2020-03-07T09:54:22.910621Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 20548,
   "rating": "",
   "steamid": 47810,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/game/DAOriginsLauncher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_monitoring": true,
-      "pulse_latency": true
-    },
-    "wine": {
-      "StrictDrawOrdering": "enabled"
-    },
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -43,8 +36,8 @@
       },
       {
         "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
           "executable": "game",
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
           "description": "Installing Game...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -52,28 +45,35 @@
       },
       {
         "task": {
-          "app": "windowmanagermanaged=n",
           "silent": true,
+          "app": "windowmanagermanaged=n",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe",
-          "blocking": true,
-          "description": "Installing PhysX...",
-          "args": "/quiet /qn",
+          "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "prefix": "$GAMEDIR"
+          "blocking": true,
+          "args": "/quiet /qn",
+          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe",
+          "description": "Installing PhysX..."
         }
       }
     ],
-    "files": [
-      {
-        "game": "N/A:Please select the GOG.com Windows installer."
-      }
-    ]
+    "system": {
+      "disable_monitoring": true,
+      "pulse_latency": true
+    },
+    "wine": {
+      "StrictDrawOrdering": "enabled"
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Dragon Age Origins/DAOriginsLauncher.exe"
+    }
   },
-  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/DAOriginsLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing Game...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /quiet /qn\n    blocking: true\n    description: Installing PhysX...\n    executable: $GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_monitoring: true\n  pulse_latency: true\nwine:\n  StrictDrawOrdering: enabled\n"
+  "content": "files:\r\n- game: N/A:Please select the GOG.com Windows installer.\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/GOG Games/Dragon Age Origins/DAOriginsLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\r\n    description: Installing Game...\r\n    executable: game\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: windowmanagermanaged=n\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    args: /quiet /qn\r\n    blocking: true\r\n    description: Installing PhysX...\r\n    executable: $GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  disable_monitoring: true\r\n  pulse_latency: true\r\nwine:\r\n  StrictDrawOrdering: enabled"
 }

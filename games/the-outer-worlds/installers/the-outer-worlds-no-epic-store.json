@@ -21,33 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/TheOuterWorlds/TheOuterWorlds.exe",
-      "arch": "win64",
-      "args": "-opengl",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_HUD": "compiler",
-        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
+    "files": [
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
       },
-      "pulse_latency": true
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "mfplat": "native,builtin"
-      },
-      "dxvk": true
-    },
+      {
+        "mfplat_dll_64": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
+      }
+    ],
     "installer": [
       {
         "extract": {
-          "file": "audio",
-          "dst": "$CACHE/dxsetup"
+          "dst": "$CACHE/dxsetup",
+          "file": "audio"
         }
       },
       {
@@ -106,9 +92,9 @@
       },
       {
         "task": {
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "arch": "win64",
           "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -122,9 +108,9 @@
       },
       {
         "task": {
-          "app": "arial dotnet48",
           "arch": "win64",
           "description": "Installing dependencies",
+          "app": "arial dotnet48",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -137,14 +123,28 @@
         }
       }
     ],
-    "files": [
-      {
-        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT"
       },
-      {
-        "mfplat_dll_64": "https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll"
-      }
-    ]
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "mfplat": "native,builtin"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-opengl",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/TheOuterWorlds/TheOuterWorlds.exe"
+    }
   },
   "content": "files:\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/TheOuterWorlds/TheOuterWorlds.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    mfplat: native,builtin\n"
 }

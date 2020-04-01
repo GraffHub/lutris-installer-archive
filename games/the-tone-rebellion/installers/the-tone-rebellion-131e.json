@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Tone/float.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -34,32 +29,32 @@
       },
       {
         "task": {
+          "args": "/Q",
           "executable": "$DISC/directx/dxsetup.exe",
-          "args": "/Q",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
+          "args": "/Q",
           "executable": "$DISC/setup/amovie.exe",
-          "args": "/Q",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "executable": "$DISC/setup/setup.exe",
           "args": null,
+          "executable": "$DISC/setup/setup.exe",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "extract": {
-          "file": "$patch",
-          "dst": "$GAMEDIR/drive_c/Program Files/Tone"
+          "dst": "$GAMEDIR/drive_c/Program Files/Tone",
+          "file": "$patch"
         }
       },
       {
@@ -72,7 +67,12 @@
       {
         "patch": "https://archive.org/download/tone131e/tone131e.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Tone/float.exe"
+    }
   },
   "content": "files:\n- patch: https://archive.org/download/tone131e/tone131e.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Tone/float.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: toneicon.ico\n- task:\n    args: /Q\n    executable: $DISC/directx/dxsetup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /Q\n    executable: $DISC/setup/amovie.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: null\n    executable: $DISC/setup/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Tone\n    file: $patch\n- execute:\n    command: cd \"$GAMEDIR/drive_c/Program Files/Tone/\"; mv Float.exe float.exe; sed\n      -i \"s/draw_method 2/draw_method 4/\" float.cfg\n"
 }

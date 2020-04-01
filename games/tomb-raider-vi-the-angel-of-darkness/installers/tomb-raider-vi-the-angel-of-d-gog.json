@@ -21,43 +21,35 @@
   "gogslug": "tomb_raider_the_angel_of_darkness",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Tomb Raider 6/Launcher.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "custom-name": "Tomb Raider VI - The Angel of Darkness - GOG - Wine",
-    "wine": {
-      "Desktop": true
-    },
     "installer": [
       {
         "task": {
-          "install_gecko": false,
-          "arch": "win64",
-          "description": "Creating WINE prefix",
           "prefix": "$GAMEDIR",
           "name": "create_prefix",
+          "arch": "win64",
+          "install_gecko": false,
+          "description": "Creating WINE prefix",
           "install_mono": false
         }
       },
       {
         "task": {
-          "executable": "setuptr6",
           "args": "/sp- /suppressmsgboxes",
+          "executable": "setuptr6",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/drive_c/windows/syswow64/",
-          "src": "eax"
+          "src": "eax",
+          "dst": "$GAMEDIR/drive_c/windows/syswow64/"
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/drive_c/windows/syswow64/regsvr32.exe",
           "args": "eax.dll",
+          "executable": "$GAMEDIR/drive_c/windows/syswow64/regsvr32.exe",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -71,8 +63,8 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/tmp/lavf",
-          "src": "lavf"
+          "src": "lavf",
+          "dst": "$GAMEDIR/drive_c/tmp/lavf"
         }
       },
       {
@@ -84,74 +76,75 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "00000001",
+          "arch": "win64",
+          "key": "csmt",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
-          "value": "00000001",
-          "key": "csmt",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "Y",
+          "arch": "win64",
+          "key": "EAXEnabled",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DirectSound",
-          "value": "Y",
-          "key": "EAXEnabled",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "c:\\\\tr6.bmp",
+          "arch": "win64",
+          "key": "wallpaper",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
-          "value": "c:\\\\tr6.bmp",
-          "key": "wallpaper",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "arch": "win64",
+          "key": "background",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "value": "0 0 0",
-          "key": "background",
           "type": "REG_SZ"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/drive_c/",
-          "src": "wpp"
+          "src": "wpp",
+          "dst": "$GAMEDIR/drive_c/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/",
-          "src": "gpreadme"
+          "src": "gpreadme",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/",
-          "src": "gpx360"
+          "src": "gpx360",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/",
-          "src": "gpsteam"
+          "src": "gpsteam",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/"
         }
       },
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "uk": "English"
@@ -178,9 +171,8 @@
               "sp": "Spanish"
             }
           ],
-          "id": "LANG",
-          "preselect": "uk",
-          "description": "Choose your preferred interface language (menu and subtitles):"
+          "description": "Choose your preferred interface language (menu and subtitles):",
+          "preselect": "uk"
         }
       },
       {
@@ -211,7 +203,15 @@
       {
         "gpreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20VI%20-%20The%20Angel%20of%20Darkness/gamepad%20profiles/tr6_gamepad_readme.html"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "custom-name": "Tomb Raider VI - The Angel of Darkness - GOG - Wine",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Tomb Raider 6/Launcher.exe"
+    }
   },
   "content": "custom-name: Tomb Raider VI - The Angel of Darkness - GOG - Wine\nfiles:\n- setuptr6: N/A:Please select the GOG installer\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20VI%20-%20The%20Angel%20of%20Darkness/tr6.bmp\n- lavf: https://github.com/Nevcairiel/LAVFilters/releases/download/0.74.1/LAVFilters-0.74.1-x86.zip\n- eax: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20VI%20-%20The%20Angel%20of%20Darkness/eax.dll\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20VI%20-%20The%20Angel%20of%20Darkness/gamepad%20profiles/tr6_x360.gamecontroller.amgp\n- gpsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20VI%20-%20The%20Angel%20of%20Darkness/gamepad%20profiles/tr6_steam.sccprofile\n- gpreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20VI%20-%20The%20Angel%20of%20Darkness/gamepad%20profiles/tr6_gamepad_readme.html\ngame:\n  exe: drive_c/GOG Games/Tomb Raider 6/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /sp- /suppressmsgboxes\n    executable: setuptr6\n    name: wineexec\n    prefix: $GAMEDIR\n- copy:\n    dst: $GAMEDIR/drive_c/windows/syswow64/\n    src: eax\n- task:\n    args: eax.dll\n    executable: $GAMEDIR/drive_c/windows/syswow64/regsvr32.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/tmp/lavf\n    src: lavf\n- task:\n    executable: $GAMEDIR/drive_c/tmp/lavf/install_splitter.bat\n    name: wineexec\n    prefix: $GAMEDIR/\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000001'\n- task:\n    arch: win64\n    key: EAXEnabled\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DirectSound\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr6.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- copy:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/\n    src: gpreadme\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/\n    src: gpx360\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 6/gamepad profiles/\n    src: gpsteam\n- input_menu:\n    description: 'Choose your preferred interface language (menu and subtitles):'\n    id: LANG\n    options:\n    - uk: English\n    - fr: French\n    - gr: German\n    - it: Italian\n    - jpa: Japonese\n    - kor: Korean\n    - por: Portuguese\n    - sp: Spanish\n    preselect: uk\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 6/\"; rm -f -r unins000.* webcache.zip\n      support.ico gog* \"Launch T\"* ; cd Data/locale; for f in *; do mv -v \"$f\" \"`echo\n      $f | tr '[A-Z]' '[a-z]'`\"; done; mv text_$INPUT_LANG.db TEXT_UK.DB; mv text_uk.db\n      text_uk.db.bak;\nwine:\n  Desktop: true\n"
 }

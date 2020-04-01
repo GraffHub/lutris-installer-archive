@@ -21,15 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "sword25",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "extract": {
-          "file": "$game",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$game"
         }
       },
       {
@@ -41,18 +37,18 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "wine.set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "wine.set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "executable": "$CACHE/bs25-setup.exe",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "$CACHE/bs25-setup.exe",
           "description": "Installing ...",
           "prefix": "$GAMEDIR",
           "name": "wine.wineexec"
@@ -60,24 +56,24 @@
       },
       {
         "extract": {
-          "file": "$game2",
+          "description": "Installing ...",
           "dst": "$GAMEDIR/drive_c/game",
-          "description": "Installing ..."
+          "file": "$game2"
         }
       },
       {
         "execute": {
           "file": "/bin/sh",
-          "description": "cleaning...",
           "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
+          "description": "cleaning...",
           "terminal": false
         }
       },
       {
         "execute": {
           "file": "/bin/sh",
-          "description": "cleaning...",
           "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
+          "description": "cleaning...",
           "terminal": false
         }
       }
@@ -89,7 +85,11 @@
       {
         "game2": "http://baphometsfluch25.de/downloads/sonstiges/BS25_patch000_multilingual.zip"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "sword25",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: http://server.c-otto.de/baphometsfluch/bs25setup.zip\n- game2: http://baphometsfluch25.de/downloads/sonstiges/BS25_patch000_multilingual.zip\ngame:\n  game_id: sword25\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $game\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: $CACHE/bs25-setup.exe\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing ...\n    dst: $GAMEDIR/drive_c/game\n    file: $game2\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n"
 }

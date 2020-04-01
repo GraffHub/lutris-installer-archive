@@ -1,0 +1,64 @@
+{
+  "id": 18938,
+  "game_id": 32001,
+  "game_slug": "microsoft-outlook",
+  "name": "Microsoft Outlook",
+  "year": null,
+  "user": "kikitesto",
+  "runner": "wine",
+  "slug": "microsoft-outlook-2010-32bit",
+  "version": "2010 32bit",
+  "description": null,
+  "notes": "It needs winbind(from samba) installed.",
+  "created_at": "2020-03-18T13:19:21.508682Z",
+  "updated_at": "2020-03-18T23:08:30.416547Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing needed libs",
+          "app": "dotnet20 riched20 msxml6 corefonts",
+          "prefix": "$CACHE/prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "installer",
+          "description": "Running setup",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "installer": "N/A:Please select the setup.exe located on the installation DVD."
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Microsoft Office/Office14/OUTLOOK.EXE"
+    }
+  },
+  "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Office/Office14/OUTLOOK.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20 riched20 msxml6 corefonts\n    arch: win32\n    description: Installing needed libs\n    name: winetricks\n    prefix: $CACHE/prefix\n- task:\n    arch: win32\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

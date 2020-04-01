@@ -21,21 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "custom-name": "Urban Terror",
-      "arch": "win64",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Urban Terror/Quake3-UrT.exe"
-    },
-    "system": {
-      "disable_compositor": true,
-      "pulse_latency": true
-    },
-    "wine": {
-      "esync": true,
-      "Audio": "pulse",
-      "dxvk": true
-    },
+    "files": [
+      {
+        "UrbanTerror.zip": "http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -47,53 +37,63 @@
       },
       {
         "extract": {
-          "file": "UrbanTerror.zip",
+          "description": "Extracting Urban Terror ...",
           "dst": "$GAMEDIR/prefix/drive_c/Program Files/Urban Terror/",
-          "description": "Extracting Urban Terror ..."
+          "file": "UrbanTerror.zip"
         }
       },
       {
         "task": {
-          "app": "d3drm",
           "arch": "win64",
           "description": "DirectX ...",
+          "app": "d3drm",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "arch": "win64",
-          "description": "DirectX 11 ...",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "description": "DirectX 11 ...",
           "app": "d3dx11_43",
-          "arch": "win64",
-          "description": "DirectX 11 ...",
           "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/prefix/drive_c/UrbanTerror43/UrTUpdater.exe",
           "args": "/S",
+          "executable": "$GAMEDIR/prefix/drive_c/UrbanTerror43/UrTUpdater.exe",
           "description": "Urban Terror ...",
           "prefix": "$GAMEDIR/prefix",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "UrbanTerror.zip": "http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip"
-      }
-    ]
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
+    "wine": {
+      "Audio": "pulse",
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "custom-name": "Urban Terror",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Urban Terror/Quake3-UrT.exe"
+    }
   },
   "content": "files:\r\n- UrbanTerror.zip: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip\r\ngame:\r\n  arch: win64\r\n  custom-name: Urban Terror\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files/Urban Terror/Quake3-UrT.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- extract:\r\n    description: Extracting Urban Terror ...\r\n    dst: $GAMEDIR/prefix/drive_c/Program Files/Urban Terror/\r\n    file: UrbanTerror.zip\r\n- task:\r\n    app: d3drm\r\n    arch: win64\r\n    description: DirectX ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    args: /S\r\n    description: Urban Terror ...\r\n    executable: $GAMEDIR/prefix/drive_c/UrbanTerror43/UrTUpdater.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\nwine:\r\n  Audio: pulse\r\n  dxvk: true\r\n  esync: true"
 }

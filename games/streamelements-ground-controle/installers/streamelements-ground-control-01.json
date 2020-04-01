@@ -1,0 +1,120 @@
+{
+  "id": 19178,
+  "game_id": 32144,
+  "game_slug": "streamelements-ground-controle",
+  "name": "StreamElements Ground Controle",
+  "year": null,
+  "user": "bonaccolto90",
+  "runner": "wine",
+  "slug": "streamelements-ground-control-01",
+  "version": "0.1",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-03-26T19:47:20.192151Z",
+  "updated_at": "2020-03-26T19:47:20.192176Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing Arial font",
+          "app": "arial",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting fontsmooth=rgb",
+          "app": "fontsmooth-rgb",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "win10",
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing Visual C++ 2017",
+          "app": "vcrun2017",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "win10",
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "execute": {
+          "args": "wine setup",
+          "description": "Installing StreamElements GroundControl"
+        }
+      }
+    ],
+    "files": [
+      {
+        "setup": {
+          "url": "https://strms.net/win64-ground-control-latest.exe",
+          "filename": "win64-ground-control-latest.exe"
+        }
+      }
+    ],
+    "game": {
+      "args": "wine \"$GAMEDIR/drive_c/Program Files x86/obs-studio+elements/bin/64bit/obs64.exe\""
+    }
+  },
+  "content": "files:\n- setup:\n    filename: win64-ground-control-latest.exe\n    url: https://strms.net/win64-ground-control-latest.exe\ngame:\n  args: wine \"$GAMEDIR/drive_c/Program Files x86/obs-studio+elements/bin/64bit/obs64.exe\"\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: fontsmooth-rgb\n    arch: win64\n    description: Setting fontsmooth=rgb\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    arch: win64\n    description: Installing Visual C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- execute:\n    args: wine setup\n    description: Installing StreamElements GroundControl\n"
+}

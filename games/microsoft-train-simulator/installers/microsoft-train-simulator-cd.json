@@ -1,0 +1,69 @@
+{
+  "id": 18829,
+  "game_id": 31970,
+  "game_slug": "microsoft-train-simulator",
+  "name": "Microsoft Train Simulator",
+  "year": 2001,
+  "user": "Jannis3005",
+  "runner": "wine",
+  "slug": "microsoft-train-simulator-cd",
+  "version": "CD",
+  "description": "Installs the Retail CD Version of MSTS",
+  "notes": "",
+  "created_at": "2020-03-13T13:07:58.250000Z",
+  "updated_at": "2020-03-14T09:43:37.595060Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "insert-disc": {
+          "message": "Insert disc",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "$DISC/setup.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "update",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "update": {
+          "url": "https://the-train.de/downloads/entry-download/1427-train-simulator-update-version-1-2-deutsch/",
+          "filename": "update.exe"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Microsoft Games/Train Simulator/train.exe"
+    }
+  },
+  "content": "files:\n- update:\n    filename: update.exe\n    url: https://the-train.de/downloads/entry-download/1427-train-simulator-update-version-1-2-deutsch/\ngame:\n  exe: drive_c/Program Files/Microsoft Games/Train Simulator/train.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc\n    requires: setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: update\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Electronic Arts/Dark Age of Camelot/Phoenix.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,16 +32,16 @@
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win32",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "corefonts",
           "description": "Installing Corefonts",
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -61,8 +56,8 @@
       },
       {
         "extract": {
-          "file": "phoenix",
-          "dst": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/"
+          "dst": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/",
+          "file": "phoenix"
         }
       },
       {
@@ -80,11 +75,16 @@
       },
       {
         "phoenix": {
-          "filename": "launcher.zip",
-          "url": "https://forum.playphoenix.online/assets/launcher.zip"
+          "url": "https://forum.playphoenix.online/assets/launcher.zip",
+          "filename": "launcher.zip"
         }
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Electronic Arts/Dark Age of Camelot/Phoenix.exe"
+    }
   },
   "content": "files:\n- setup: http://darkageofcamelot.com/sites/daoc/files/downloads/DAoCSetup.exe\n- phoenix:\n    filename: launcher.zip\n    url: https://forum.playphoenix.online/assets/launcher.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Electronic Arts/Dark Age of Camelot/Phoenix.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing DAOC\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/\n    file: phoenix\n- task:\n    description: Patch Game\n    executable: $GAMEDIR/drive_c/Program Files/Electronic Arts/Dark Age of Camelot/camelot.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

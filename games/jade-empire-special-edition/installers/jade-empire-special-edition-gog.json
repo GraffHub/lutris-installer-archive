@@ -21,22 +21,18 @@
   "gogslug": "jade_empire_special_edition",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "extract": {
-          "file": "innoextract",
-          "dst": "$CACHE/tmp/innoextract"
+          "dst": "$CACHE/tmp/innoextract",
+          "file": "innoextract"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/tmp/innoextract/innoextract",
+          "args": "--gog -d \"$CACHE\" setup",
           "description": "Extracting game data",
-          "args": "--gog -d \"$CACHE\" setup"
+          "file": "$CACHE/tmp/innoextract/innoextract"
         }
       },
       {
@@ -48,12 +44,12 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "arch": "win64",
+          "key": "csmt",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "value": "00000000",
-          "key": "csmt",
           "type": "REG_DWORD"
         }
       }
@@ -65,7 +61,11 @@
       {
         "innoextract": "https://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz"
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Select \"Jade Empire\" setup files\n- innoextract: https://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz\ngame:\n  exe: $GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/tmp/innoextract\n    file: innoextract\n- execute:\n    args: --gog -d \"$CACHE\" setup\n    description: Extracting game data\n    file: $CACHE/tmp/innoextract/innoextract\n- move:\n    description: Moving game data\n    dst: $GAMEDIR/drive_c/GOG Games/Jade Empire\n    src: $CACHE/app\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n"
 }

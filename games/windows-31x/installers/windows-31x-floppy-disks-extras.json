@@ -21,9 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/win31x.conf"
-    },
     "installer": [
       {
         "insert-disc": {
@@ -51,28 +48,28 @@
       },
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E"
+          "args": "$GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E",
+          "file": "mkdir"
         }
       },
       {
         "extract": {
-          "file": "sb16",
+          "format": "zip",
           "dst": "$GAMEDIR/B/sb16",
-          "format": "zip"
+          "file": "sb16"
         }
       },
       {
         "extract": {
-          "file": "s3",
+          "format": "zip",
           "dst": "$GAMEDIR/B/s3",
-          "format": "zip"
+          "file": "s3"
         }
       },
       {
         "task": {
-          "working_dir": "$GAMEDIR",
           "config_file": "$GAMEDIR/win31x-install.conf",
+          "working_dir": "$GAMEDIR",
           "name": "dosexec"
         }
       },
@@ -90,7 +87,10 @@
       {
         "sb16": "https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/win31x.conf"
+    }
   },
   "content": "files:\n- s3: https://www.dropbox.com/s/w3o4v5e7alm1zg5/s3drivers.zip?dl=1\n- sb16: https://www.dropbox.com/s/0ve3ohhtks0wrnf/SB16W3x.zip?dl=1\ngame:\n  main_file: $GAMEDIR/win31x.conf\ninstaller:\n- insert-disc:\n    requires: DISK1\n- task:\n    commands:\n    - 'A:'\n    - SETUP.EXE\n    - 'B:'\n    - CD SB16\n    - INSTALL.EXE\n    - EXIT\n    drives:\n      a: $DISC\n      b: $GAMEDIR/B\n      c: $GAMEDIR/C\n    name: makeconfig\n    path: $GAMEDIR/win31x-install.conf\n- execute:\n    args: $GAMEDIR/A $GAMEDIR/B $GAMEDIR/C $GAMEDIR/D $GAMEDIR/E\n    file: mkdir\n- extract:\n    dst: $GAMEDIR/B/sb16\n    file: sb16\n    format: zip\n- extract:\n    dst: $GAMEDIR/B/s3\n    file: s3\n    format: zip\n- task:\n    config_file: $GAMEDIR/win31x-install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n- write_file:\n    content: '[dosbox]\n\n      memsize = 64\n\n      [sblaster]\n\n      irq=5\n\n      [autoexec]\n\n      mount a $GAMEDIR/A\n\n      mount b $GAMEDIR/B\n\n      mount c $GAMEDIR/C\n\n      mount d $GAMEDIR/D\n\n      mount d $GAMEDIR/E\n\n      c:\n\n      cd windows\n\n      win'\n    file: $GAMEDIR/win31x.conf\n"
 }

@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/ros/ros.exe",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "overrides": {
-        "wininet": "builtin,native"
-      }
-    },
     "installer": [
       {
         "task": {
@@ -46,18 +37,18 @@
       },
       {
         "extract": {
-          "file": "zip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "zip"
         }
       },
       {
         "task": {
-          "executable": "$CACHE/ros_publish_276_publish_1.295523.315158.exe",
-          "description": "Please wait while we install Rules of Survival",
-          "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS",
-          "name": "wineexec",
           "prefix": "$GAMEDIR",
-          "exclude_processes": "ros.exe"
+          "name": "wineexec",
+          "exclude_processes": "ros.exe",
+          "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS",
+          "executable": "$CACHE/ros_publish_276_publish_1.295523.315158.exe",
+          "description": "Please wait while we install Rules of Survival"
         }
       }
     ],
@@ -65,7 +56,16 @@
       {
         "zip": "https://g61.gdl.netease.com/ros_publish_276_publish_1.295523.315158.zip"
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "wininet": "builtin,native"
+      }
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/ros/ros.exe"
+    }
   },
   "content": "files:\n- zip: https://g61.gdl.netease.com/ros_publish_276_publish_1.295523.315158.zip\ngame:\n  exe: drive_c/ros/ros.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet win7\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: zip\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /VERYSILENT /NOICONS\n    description: Please wait while we install Rules of Survival\n    exclude_processes: ros.exe\n    executable: $CACHE/ros_publish_276_publish_1.295523.315158.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

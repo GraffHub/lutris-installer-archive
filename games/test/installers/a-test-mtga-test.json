@@ -22,15 +22,15 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "exe": "drive_c/Program Files (x86)/Wizards of the Coast/MTGA/MTGA.exe",
-      "prefix": "$GAMEDIR"
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Wizards of the Coast/MTGA/MTGA.exe"
     },
     "system": {
       "pulse_latency": true
     },
     "wine": {
-      "esync": true,
-      "Desktop": true
+      "Desktop": true,
+      "esync": true
     },
     "installer": [
       {
@@ -52,26 +52,26 @@
       },
       {
         "task": {
-          "value": "Y",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "key": "GrabFullscreen",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit"
-        }
-      },
-      {
-        "task": {
-          "value": "N",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "key": "UseTakeFocus",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit"
+          "value": "Y"
         }
       },
       {
         "task": {
-          "app": "dotnet472",
+          "key": "UseTakeFocus",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "N"
+        }
+      },
+      {
+        "task": {
           "description": "Installing .NET 4.7.2. This will take a while...",
+          "app": "dotnet472",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -91,18 +91,18 @@
       },
       {
         "copy": {
-          "dst": "$CACHE/mtg-arena/",
-          "src": "setup"
+          "src": "setup",
+          "dst": "$CACHE/mtg-arena/"
         }
       },
       {
         "task": {
-          "executable": "msiexec",
-          "description": "Installing Magic the Gathering Arena",
-          "args": "/i \"$CACHE/MTGAInstaller.msi\"",
-          "name": "wineexec",
           "prefix": "$GAMEDIR",
-          "exclude_processes": "mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe"
+          "name": "wineexec",
+          "exclude_processes": "mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe",
+          "args": "/i \"$CACHE/MTGAInstaller.msi\"",
+          "executable": "msiexec",
+          "description": "Installing Magic the Gathering Arena"
         }
       },
       {

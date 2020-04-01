@@ -1,0 +1,141 @@
+{
+  "id": 18944,
+  "game_id": 1816,
+  "game_slug": "diablo-iii",
+  "name": "Diablo III",
+  "year": 2012,
+  "user": "Hambone",
+  "runner": "wine",
+  "slug": "diablo-iii-aaaaa",
+  "version": "aaaaa",
+  "description": "aaaaa",
+  "notes": "aaaaa",
+  "created_at": "2020-03-18T21:38:06.866756Z",
+  "updated_at": "2020-03-18T21:38:06.866781Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": {
+          "url": "/home/hambone/Downloads/Battle.net-Setup.exe",
+          "filename": "Battle.net-Setup.exe"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing Arial font",
+          "app": "arial",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting fontsmooth=rbg",
+          "app": "fontsmooth-rgb",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "win10",
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+        }
+      },
+      {
+        "write_json": {
+          "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
+          "data": {
+            "Client": {
+              "Sound": {
+                "Enabled": "false"
+              },
+              "GameLaunchWindowBehavior": "2",
+              "Streaming": {
+                "StreamingEnabled": "false"
+              },
+              "HardwareAcceleration": "false"
+            }
+          }
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
+          "executable": "setup",
+          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "va",
+          "arch": "win64",
+          "key": "backend",
+          "name": "set_regedit",
+          "description": "Wine Staging: Enabling DXVA2",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2"
+        }
+      }
+    ],
+    "system": {
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "env": {
+        "PBA_ENABLE": "0",
+        "__PBA_GEO_HEAP": "512",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "DXVK_STATE_CACHE": "1",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__PBA_CB_HEAP": "128",
+        "DXVK_HUD": "0"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe"
+    }
+  },
+  "content": "files:\n- setup:\n    filename: Battle.net-Setup.exe\n    url: /home/hambone/Downloads/Battle.net-Setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: fontsmooth-rgb\n    arch: win64\n    description: Setting fontsmooth=rbg\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n    description: Disabling Sound/Hardware Acceleration/Streaming in Blizzard App\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    arch: win64\n    description: 'Installing Blizzard App\n\n      ------------------------------\n\n      Do not try to log into Battle.net. Lutris will automatically close the login\n      window. After Lutris installer is finished, you can start Blizzard App with\n      \"Launch the game\", and install / locate your Blizzard game.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\nsystem:\n  env:\n    DXVK_HUD: '0'\n    DXVK_STATE_CACHE: '1'\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    PBA_ENABLE: '0'\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    __PBA_CB_HEAP: '128'\n    __PBA_GEO_HEAP: '512'\n    mesa_glthread: 'true'\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\nwine:\n  dxvk: true\n  esync: true\n"
+}

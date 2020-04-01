@@ -21,18 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Call Of Pripyat Benchmark/Benchmark.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true
-    },
-    "wine": {
-      "esync": false,
-      "dxvk": true
-    },
+    "files": [
+      {
+        "setup": "https://files.gsc-game.com/st/bench/stkcop-bench-setup.exe"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -44,44 +37,44 @@
       },
       {
         "task": {
-          "app": "vcrun2017",
           "arch": "win64",
           "description": "Visual C++ 2017 libraries ...",
+          "app": "vcrun2017",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "win81",
           "arch": "win64",
           "description": "Windows version 8.1 ...",
+          "app": "win81",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "description": "DirectX 9 ...",
           "app": "d3dx9_31",
-          "arch": "win64",
-          "description": "DirectX 9 ...",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "d3dx9_42",
           "arch": "win64",
           "description": "DirectX 9 ...",
+          "app": "d3dx9_42",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR",
-          "src": "setup"
+          "src": "setup",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -126,11 +119,18 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup": "https://files.gsc-game.com/st/bench/stkcop-bench-setup.exe"
-      }
-    ]
+    "system": {
+      "disable_compositor": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": false
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Call Of Pripyat Benchmark/Benchmark.exe"
+    }
   },
   "content": "files:\r\n- setup: https://files.gsc-game.com/st/bench/stkcop-bench-setup.exe\r\ngame:\r\n  arch: win64\r\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Call Of Pripyat Benchmark/Benchmark.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2017\r\n    arch: win64\r\n    description: Visual C++ 2017 libraries ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win81\r\n    arch: win64\r\n    description: Windows version 8.1 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9_31\r\n    arch: win64\r\n    description: DirectX 9 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9_42\r\n    arch: win64\r\n    description: DirectX 9 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- move:\r\n    dst: $GAMEDIR\r\n    src: setup\r\n- chmodx: $GAMEDIR/stkcop-bench-setup.exe\r\n- task:\r\n    description: S.T.A.L.K.E.R. Call Of Pripyat ...\r\n    executable: $GAMEDIR/stkcop-bench-setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: echo \"snd_volume_eff 0.\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding sound device option ...\r\n- execute:\r\n    command: echo \"snd_volume_music 0.\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding sound device option ...\r\n- execute:\r\n    command: echo \"rs_v_sync on\" >> $$GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding video sync. option ...\r\n- execute:\r\n    command: echo \"rs_constant_fps on\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding constant fps option ...\r\n- execute:\r\n    command: echo \"rs_refresh_60hz off\" >> $GAMEDIR/drive_c/Program\\ Files\\ \\(x86\\)/Call\\\r\n      Of\\ Pripyat\\ Benchmark/BenchCfg/base.cfg\r\n    description: Adding refresh 60hz option ...\r\nsystem:\r\n  disable_compositor: true\r\nwine:\r\n  dxvk: true\r\n  esync: false"
 }

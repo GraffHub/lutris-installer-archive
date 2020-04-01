@@ -10,11 +10,11 @@
   "version": "Shifting Tides",
   "description": "Anti Cheat prevents this from working properly. This is simply a placeholder for the future.",
   "notes": "",
-  "created_at": "2020-01-05T04:17:27.126447Z",
-  "updated_at": "2020-01-22T02:14:35.060054Z",
-  "draft": true,
-  "published": false,
-  "published_by": null,
+  "created_at": "2020-01-05T04:17:27.126000Z",
+  "updated_at": "2020-03-20T10:33:51.932225Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
@@ -22,14 +22,6 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "game": {
-        "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
-        "arch": "win64",
-        "prefix": "$GAMEDIR"
-      },
-      "wine": {
-        "dxvk": true
-      },
       "installer": [
         {
           "task": {
@@ -40,15 +32,15 @@
         },
         {
           "task": {
-            "app": "corefonts vcrun2017 win7",
+            "app": "corefonts vcrun2010 vcrun2012 vcrun2017 win7",
             "prefix": "$GAMEDIR",
             "name": "winetricks"
           }
         },
         {
           "task": {
-            "executable": "uplay",
             "args": "/S",
+            "executable": "uplay",
             "prefix": "$GAMEDIR",
             "name": "wineexec"
           }
@@ -58,8 +50,28 @@
         {
           "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
         }
-      ]
+      ],
+      "game": {
+        "arch": "win64",
+        "prefix": "$GAMEDIR",
+        "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
+      }
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/nv-shaders",
+        "STAGING_SHARED_MEMORY": "0",
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE": 1
+      },
+      "wine": {
+        "overrides": {
+          "xaudio2_7": "native,builtin",
+          "nvapi,nvapi64": "disabled"
+        },
+        "dxvk": true
+      }
     }
   },
-  "content": "script:\r\n  files:\r\n  - uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\n  game:\r\n    arch: win64\r\n    exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\r\n    prefix: $GAMEDIR\r\n  installer:\r\n  - task:\r\n      arch: win64\r\n      name: create_prefix\r\n      prefix: $GAMEDIR\r\n  - task:\r\n      app: corefonts vcrun2017 win7\r\n      name: winetricks\r\n      prefix: $GAMEDIR\r\n  - task:\r\n      args: /S\r\n      executable: uplay\r\n      name: wineexec\r\n      prefix: $GAMEDIR\r\n  wine:\r\n    dxvk: true"
+  "content": "script:\r\n  files:\r\n  - uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\r\n  game:\r\n    arch: win64\r\n    exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\r\n    prefix: $GAMEDIR\r\n  installer:\r\n  - task:\r\n      arch: win64\r\n      name: create_prefix\r\n      prefix: $GAMEDIR\r\n  - task:\r\n      app: corefonts vcrun2010 vcrun2012 vcrun2017 win7\r\n      name: winetricks\r\n      prefix: $GAMEDIR\r\n  - task:\r\n      args: /S\r\n      executable: uplay\r\n      name: wineexec\r\n      prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\r\n    STAGING_SHARED_MEMORY: '0'\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/nv-shaders\r\n  wine:\r\n    dxvk: true\r\n    overrides:\r\n      nvapi,nvapi64: disabled\r\n      xaudio2_7: native,builtin"
 }

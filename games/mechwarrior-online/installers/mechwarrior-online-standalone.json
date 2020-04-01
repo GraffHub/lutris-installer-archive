@@ -11,7 +11,7 @@
   "description": null,
   "notes": "",
   "created_at": "2017-07-23T19:08:42.536000Z",
-  "updated_at": "2019-10-28T19:54:18.825730Z",
+  "updated_at": "2020-03-20T10:35:22.903159Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -21,26 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Piranha Games/MWO Portal/MWO Portal.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "installer": {
+          "url": "https://mwomercs.com/go/download?id=b1e91bce837ce37bf914b9a02f54f8a4&filename=MWOPortalInstaller.exe",
+          "filename": "MWOPortalInstaller.exe"
+        }
+      },
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
-    },
-    "wine": {
-      "esync": true,
-      "version": "tkg-mwo-4.1-x86_64",
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "extract": {
-          "file": "dx2010",
-          "dst": "$CACHE/dxsetup"
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
         }
       },
       {
@@ -52,9 +48,9 @@
       },
       {
         "task": {
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "arch": "win64",
           "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -68,34 +64,37 @@
       },
       {
         "task": {
-          "app": "arial vcrun2010 dotnet471 win7",
           "arch": "win64",
           "description": "Installing .NET 4.7.1",
+          "app": "arial vcrun2010 dotnet471 win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "installer",
           "arch": "win64",
           "args": "/q",
+          "executable": "installer",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "installer": {
-          "filename": "MWOPortalInstaller.exe",
-          "url": "https://mwomercs.com/go/download?id=b1e91bce837ce37bf914b9a02f54f8a4&filename=MWOPortalInstaller.exe"
-        }
-      },
-      {
-        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Piranha Games/MWO Portal/MWO Portal.exe"
+    }
   },
-  "content": "files:\n- installer:\n    filename: MWOPortalInstaller.exe\n    url: https://mwomercs.com/go/download?id=b1e91bce837ce37bf914b9a02f54f8a4&filename=MWOPortalInstaller.exe\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Piranha Games/MWO Portal/MWO Portal.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2010 dotnet471 win7\n    arch: win64\n    description: Installing .NET 4.7.1\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /q\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  version: tkg-mwo-4.1-x86_64\n"
+  "content": "files:\r\n- installer:\r\n    filename: MWOPortalInstaller.exe\r\n    url: https://mwomercs.com/go/download?id=b1e91bce837ce37bf914b9a02f54f8a4&filename=MWOPortalInstaller.exe\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Piranha Games/MWO Portal/MWO Portal.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial vcrun2010 dotnet471 win7\r\n    arch: win64\r\n    description: Installing .NET 4.7.1\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /q\r\n    executable: installer\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: 0\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

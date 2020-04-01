@@ -1,0 +1,81 @@
+{
+  "id": 19133,
+  "game_id": 7683,
+  "game_slug": "diaspora-shattered-armistice",
+  "name": "Diaspora: Shattered Armistice",
+  "year": 2012,
+  "user": "Lestibournes",
+  "runner": "wine",
+  "slug": "diaspora-shattered-armistice-111",
+  "version": "1.1.1",
+  "description": "Installs the windows version and both patches",
+  "notes": "There are 3 install wizards to go through. The WINE windows might not be brought to the front when they open.",
+  "created_at": "2020-03-24T23:16:15.897726Z",
+  "updated_at": "2020-03-24T23:16:15.897760Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "patch_1_1",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "executable": "patch_1_1_1",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/wxlauncher/pro00001.ini",
+          "data": {
+            "video": {
+              "width": "$RESOLUTION_WIDTH",
+              "height": "$RESOLUTION_HEIGHT"
+            }
+          }
+        }
+      }
+    ],
+    "files": [
+      {
+        "installer": "http://diaspora.fs2downloads.com/Diaspora_R1_Windows.exe"
+      },
+      {
+        "patch_1_1": "http://diaspora.fs2downloads.com/Diaspora_R1_Patch_1.1.exe"
+      },
+      {
+        "patch_1_1_1": "http://diaspora.fs2downloads.com/Diaspora_R1_Patch_1.1.1.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Games/Diaspora/wxLauncher/bin/wxlauncher.exe"
+    }
+  },
+  "content": "files:\n- installer: http://diaspora.fs2downloads.com/Diaspora_R1_Windows.exe\n- patch_1_1: http://diaspora.fs2downloads.com/Diaspora_R1_Patch_1.1.exe\n- patch_1_1_1: http://diaspora.fs2downloads.com/Diaspora_R1_Patch_1.1.1.exe\ngame:\n  exe: drive_c/Games/Diaspora/wxLauncher/bin/wxlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch_1_1\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch_1_1_1\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    data:\n      video:\n        height: $RESOLUTION_HEIGHT\n        width: $RESOLUTION_WIDTH\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/wxlauncher/pro00001.ini\n"
+}

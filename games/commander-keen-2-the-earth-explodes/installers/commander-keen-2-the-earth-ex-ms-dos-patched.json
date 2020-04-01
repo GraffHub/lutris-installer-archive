@@ -21,27 +21,24 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "main_file": "$GAMEDIR/commander_keen.conf"
-    },
     "installer": [
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/keen2"
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/keen2",
+          "file": "mkdir"
         }
       },
       {
         "extract": {
-          "file": "$patch",
+          "format": "zip",
           "dst": "$CACHE",
-          "format": "zip"
+          "file": "$patch"
         }
       },
       {
         "execute": {
-          "file": "/bin/cp",
-          "args": "$CACHE/CK2PATCH.EXE $GAMEDIR/HDD/keen2"
+          "args": "$CACHE/CK2PATCH.EXE $GAMEDIR/HDD/keen2",
+          "file": "/bin/cp"
         }
       },
       {
@@ -61,8 +58,8 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR/HDD/keen2"
+          "args": "$game $GAMEDIR/HDD/keen2",
+          "file": "$CACHE/bulkcopy.sh"
         }
       },
       {
@@ -79,7 +76,10 @@
       {
         "patch": "http://www.shikadi.net/wiki/files/tools/t.ckpatch_v.0.10.andrew_durdin.2007-11-23.zip"
       }
-    ]
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/commander_keen.conf"
+    }
   },
   "content": "files:\n- game: N/A:Select the file Keen2.exe\n- patch: http://www.shikadi.net/wiki/files/tools/t.ckpatch_v.0.10.andrew_durdin.2007-11-23.zip\ngame:\n  main_file: $GAMEDIR/commander_keen.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/keen2\n    file: mkdir\n- extract:\n    dst: $CACHE\n    file: $patch\n    format: zip\n- execute:\n    args: $CACHE/CK2PATCH.EXE $GAMEDIR/HDD/keen2\n    file: /bin/cp\n- write_file:\n    content: '%ext ck2\n\n      #Change the controls to: Space, shoot; Enter, status.\n\n      %patch $120B  $5024W\n\n      %patch $83A2  $5024W\n\n      %patch $6965  $90 $90 $90 $90 $90 $90 $90 $80 $3E $5041W  $00\n\n      %patch $6A90  $90 $90 $90 $90 $90 $90 $90 $80 $3E $5041W  $00\n\n      %patch $6BFB  $90 $90 $90 $90 $90 $90 $90 $80 $3E $5041W  $00\n\n      %patch $6C0E  $90 $90\n\n      %patch $6CAF  $90 $90 $90 $90 $90 $90 $90 $80 $3E $5041W  $00\n\n      %patch $6E3E  $90 $90 $90 $90 $90 $90 $90 $80 $3E $5041W  $00\n\n      %patch $6EEC  $90 $90 $90 $90 $90 $90 $90 $80 $3E $5041W  $00\n\n      %end'\n    file: $GAMEDIR/HDD/keen2/PATCH.PAT\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/HDD/keen2\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[cpu]\n\n      cputype=386_slow\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd keen2\n\n      CK2PATCH.EXE patch.pat\n\n      exit'\n    file: $GAMEDIR/commander_keen.conf\n"
 }

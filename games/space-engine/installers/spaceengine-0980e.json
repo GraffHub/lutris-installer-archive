@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/SpaceEngine/system/SpaceEngine.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,32 +31,37 @@
       },
       {
         "task": {
-          "executable": "setup",
           "arch": "win64",
           "args": "/SP- /SUPPRESSMSGBOXES /SILENT /NOCANCEL",
+          "executable": "setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/SpaceEngine",
-          "src": "patch"
+          "src": "patch",
+          "dst": "$GAMEDIR/drive_c/SpaceEngine"
         }
       }
     ],
     "files": [
       {
         "setup": {
-          "filename": "SE-0980-setup.exe",
           "referer": "https://spaceengine.funix.cz/",
-          "url": "http://spaceengine.funix.cz/engine/latest/SE-0980-setup.exe"
+          "url": "http://spaceengine.funix.cz/engine/latest/SE-0980-setup.exe",
+          "filename": "SE-0980-setup.exe"
         }
       },
       {
         "patch": "http://spaceengine.funix.cz/engine/latest/SE-0980e-patch.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/SpaceEngine/system/SpaceEngine.exe"
+    }
   },
   "content": "files:\n- setup:\n    filename: SE-0980-setup.exe\n    referer: https://spaceengine.funix.cz/\n    url: http://spaceengine.funix.cz/engine/latest/SE-0980-setup.exe\n- patch: http://spaceengine.funix.cz/engine/latest/SE-0980e-patch.zip\ngame:\n  arch: win64\n  exe: drive_c/SpaceEngine/system/SpaceEngine.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /SP- /SUPPRESSMSGBOXES /SILENT /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/SpaceEngine\n    src: patch\n"
 }

@@ -21,20 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "exclude_processes": "GameCenter.exe Launcher.exe",
-      "env": {
-        "DXVK_HUD": "gpuload"
+    "files": [
+      {
+        "setup": "https://gremgoll.de/files/AllodsdeLoader_de.exe"
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -46,37 +37,46 @@
       },
       {
         "task": {
-          "app": "corefonts",
           "arch": "win32",
           "description": "Install MS Core-Fonts with winetricks",
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "win7",
           "arch": "win32",
           "description": "Setting Wine to Windows 7 32-Bit",
+          "app": "win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "setup",
-          "exclude_processes": "GameCenter.exe Launcher.exe",
           "arch": "win32",
+          "exclude_processes": "GameCenter.exe Launcher.exe",
+          "executable": "setup",
           "description": "Installing Allods My.Com\n------------------------------\nLet Lutris installer finish first. Log in afterwards.",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "setup": "https://gremgoll.de/files/AllodsdeLoader_de.exe"
+    "system": {
+      "exclude_processes": "GameCenter.exe Launcher.exe",
+      "env": {
+        "DXVK_HUD": "gpuload"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe"
+    }
   },
   "content": "files:\r\n- setup: https://gremgoll.de/files/AllodsdeLoader_de.exe\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating 32bit Wine prefix.\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: corefonts\r\n    arch: win32\r\n    description: Install MS Core-Fonts with winetricks\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win7\r\n    arch: win32\r\n    description: Setting Wine to Windows 7 32-Bit\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: 'Installing Allods My.Com\r\n\r\n      ------------------------------\r\n\r\n      Let Lutris installer finish first. Log in afterwards.'\r\n    exclude_processes: GameCenter.exe Launcher.exe\r\n    executable: setup\r\n    name: wineexec\r\nsystem:\r\n  env:\r\n    DXVK_HUD: gpuload\r\n  exclude_processes: GameCenter.exe Launcher.exe\r\nwine:\r\n  dxvk: true"
 }

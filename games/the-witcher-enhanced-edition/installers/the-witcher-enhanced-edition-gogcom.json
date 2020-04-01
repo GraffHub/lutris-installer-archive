@@ -21,11 +21,6 @@
   "gogslug": "the_witcher",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,29 +31,29 @@
       },
       {
         "task": {
-          "executable": "game",
           "arch": "win32",
+          "executable": "game",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "app": "d3dx9_35",
-          "silent": true,
           "arch": "win32",
+          "silent": true,
+          "app": "d3dx9_35",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
           "value": "enabled",
-          "key": "CheckFloatConstants"
+          "arch": "win32",
+          "key": "CheckFloatConstants",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D"
         }
       }
     ],
@@ -66,7 +61,12 @@
       {
         "game": "N/A:Select the Windows setup file downloaded from GOG"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe"
+    }
   },
   "content": "files:\n- game: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/The Witcher Enhanced Edition/launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9_35\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    key: CheckFloatConstants\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: enabled\n"
 }

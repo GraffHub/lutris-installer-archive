@@ -21,28 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/Sims3LauncherW.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "WINE_LARGE_ADDRESS_AWARE": 1
+    "files": [
+      {
+        "setup": "N/A:Please select the setup file for The Sims 3"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -60,40 +43,40 @@
       },
       {
         "task": {
-          "app": "dotnet20 mfc42 d3dx9 vcrun2005 vcrun2010",
-          "arch": "win32",
-          "description": "Installing dependencies...",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true
+          "arch": "win32",
+          "silent": true,
+          "description": "Installing dependencies...",
+          "app": "dotnet20 mfc42 d3dx9 vcrun2005 vcrun2010"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Setting version to XP for Sims3LauncherW...",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe",
           "value": "winxp",
-          "key": "Version"
-        }
-      },
-      {
-        "task": {
           "arch": "win32",
-          "description": "Setting version to 7 for default...",
-          "prefix": "$GAMEDIR",
+          "key": "Version",
           "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
-          "value": "win7",
-          "key": "Version"
+          "description": "Setting version to XP for Sims3LauncherW...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe"
         }
       },
       {
         "task": {
-          "executable": "setup",
+          "prefix": "$GAMEDIR",
+          "value": "win7",
           "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting version to 7 for default...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "setup",
           "description": "Installing The Sims 3 from setup...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -106,11 +89,28 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup": "N/A:Please select the setup file for The Sims 3"
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/Sims3LauncherW.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Please select the setup file for The Sims 3\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Electronic Arts/The Sims 3/Game/Bin/Sims3LauncherW.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: dotnet20 mfc42 d3dx9 vcrun2005 vcrun2010\n    arch: win32\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to XP for Sims3LauncherW...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\Sims3LauncherW.exe\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    arch: win32\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    arch: win32\n    description: Installing The Sims 3 from setup...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
 }

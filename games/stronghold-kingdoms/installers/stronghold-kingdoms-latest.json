@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Program Files/Firefly Studios/Stronghold Kingdoms/StrongholdKingdoms.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,8 +32,8 @@
       },
       {
         "task": {
-          "app": "riched20 dotnet35sp1",
           "description": "Installing dependencies",
+          "app": "riched20 dotnet35sp1",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -56,7 +51,12 @@
       {
         "gameinstaller": "https://static.strongholdkingdoms.com/Kingdoms/StrongholdKingdoms-Setup.exe"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Firefly Studios/Stronghold Kingdoms/StrongholdKingdoms.exe"
+    }
   },
   "content": "files:\n- gameinstaller: https://static.strongholdkingdoms.com/Kingdoms/StrongholdKingdoms-Setup.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Firefly Studios/Stronghold Kingdoms/StrongholdKingdoms.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: riched20 dotnet35sp1\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Stronghold Kingdoms\n    executable: $gameinstaller\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

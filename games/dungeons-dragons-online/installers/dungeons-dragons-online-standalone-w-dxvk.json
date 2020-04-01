@@ -11,52 +11,33 @@
   "description": null,
   "notes": "",
   "created_at": "2018-11-12T13:16:37.982000Z",
-  "updated_at": "2020-01-23T02:57:20.184778Z",
+  "updated_at": "2020-03-20T10:15:01.107570Z",
   "draft": false,
   "published": true,
-  "published_by": 19464,
+  "published_by": 20548,
   "rating": "",
   "steamid": 206480,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/TurbineLauncher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "pulse_latency": true,
-      "env": {
-        "DXVK_HUD": 0
-      },
-      "reset_pulse": true
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    "files": [
+      {
+        "setup": "http://content.turbine.com/sites/clientdl/ddo/ddolive.exe"
+      }
+    ],
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
-        "task": {
-          "app": "win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
         "merge": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online",
-          "src": "setup"
+          "src": "setup",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online"
         }
       },
       {
@@ -68,11 +49,18 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup": "http://content.turbine.com/sites/clientdl/ddo/ddolive.exe"
-      }
-    ]
+    "system": {
+      "pulse_latency": true,
+      "reset_pulse": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/DNDLaucher.exe"
+    }
   },
-  "content": "files:\n- setup: http://content.turbine.com/sites/clientdl/ddo/ddolive.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/TurbineLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons\n      Online\n    src: setup\n- task:\n    description: Installing Dungeons & Dragons\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\n  reset_pulse: true\nwine:\n  dxvk: true\n  esync: true\n"
+  "content": "files:\r\n- setup: http://content.turbine.com/sites/clientdl/ddo/ddolive.exe\r\ngame:\r\n  exe: drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/DNDLaucher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons\r\n      Online\r\n    src: setup\r\n- task:\r\n    description: Installing Dungeons & Dragons\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  pulse_latency: true\r\n  reset_pulse: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

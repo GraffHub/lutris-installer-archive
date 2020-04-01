@@ -21,15 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
     "installer": [
       {
         "task": {
@@ -41,16 +32,16 @@
       },
       {
         "task": {
-          "app": "d3dcompiler_43 d3dx9 arial",
           "description": "Installing dependencies",
+          "app": "d3dcompiler_43 d3dx9 arial",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "AO_installer",
           "arch": "win64",
+          "executable": "AO_installer",
           "description": "Running Anarchy Online Installer. Please do not run the game until this script finishes installing.",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -61,7 +52,16 @@
       {
         "AO_installer": "http://update.anarchy-online.com/download/AO/AnarchyOnline_EP2.exe"
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe"
+    }
   },
   "content": "files:\n- AO_installer: http://update.anarchy-online.com/download/AO/AnarchyOnline_EP2.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Funcom/Anarchy Online/AnarchyOnline.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9 arial\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Running Anarchy Online Installer. Please do not run the game until\n      this script finishes installing.\n    executable: AO_installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

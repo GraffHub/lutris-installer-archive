@@ -21,23 +21,11 @@
   "gogslug": "spore_collection",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Origin/Origin.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_LOG_LEVEL": "none",
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+    "files": [
+      {
+        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -49,8 +37,8 @@
       },
       {
         "task": {
-          "app": "nocrashdialog",
           "arch": "win32",
+          "app": "nocrashdialog",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -64,13 +52,13 @@
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Setting version to xp...",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "winxp",
-          "key": "Version"
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting version to xp...",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -81,12 +69,12 @@
       },
       {
         "task": {
-          "executable": "origin",
           "arch": "win32",
-          "description": "Installing Origin...",
           "prefix": "$GAMEDIR",
           "name": "wineexec",
-          "exclude_processes": "Origin.exe OriginClientService.exe"
+          "exclude_processes": "Origin.exe OriginClientService.exe",
+          "executable": "origin",
+          "description": "Installing Origin..."
         }
       },
       {
@@ -96,11 +84,23 @@
         }
       }
     ],
-    "files": [
-      {
-        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Origin/Origin.exe"
+    }
   },
   "content": "files:\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Origin...\n    exclude_processes: Origin.exe OriginClientService.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

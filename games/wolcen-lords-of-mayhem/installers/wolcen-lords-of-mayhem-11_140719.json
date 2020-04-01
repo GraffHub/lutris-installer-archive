@@ -21,9 +21,23 @@
   "gogslug": "wolcen_lords_of_mayhem",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "appid": 424370,
+    "winesteam": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      },
+      "prefix": "$GAMEDIR",
+      "game": null,
       "arch": "win64",
+      "args": "--exec=\"launch Pro\"",
+      "dxvk": true,
+      "Desktop": false,
+      "WineDesktop": "2560x1440",
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "appid": 424370,
       "prefix": "$GAMEDIR/prefix"
     },
     "installer": [
@@ -37,23 +51,23 @@
       },
       {
         "task": {
-          "app": "arial",
-          "arch": "win64",
-          "description": "Installing Arial font...",
           "prefix": "$GAMEDIR",
           "name": "winetricks",
-          "silent": true
+          "arch": "win64",
+          "silent": true,
+          "description": "Installing Arial font...",
+          "app": "arial"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 10 mode for Wine",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "value": "win10",
-          "key": "Version"
+          "arch": "win64",
+          "key": "Version",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
@@ -62,21 +76,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "winesteam": {
-      "game": null,
-      "dxvk": true,
-      "prefix": "$GAMEDIR",
-      "Desktop": false,
-      "WineDesktop": "2560x1440",
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "xaudio2_7": "native,builtin"
-      },
-      "arch": "win64",
-      "args": "--exec=\"launch Pro\"",
-      "esync": true
-    }
+    ]
   },
   "content": "game:\n  appid: 424370\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwinesteam:\n  Desktop: false\n  WineDesktop: 2560x1440\n  arch: win64\n  args: --exec=\"launch Pro\"\n  dxvk: true\n  esync: true\n  game: null\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n  prefix: $GAMEDIR\n"
 }

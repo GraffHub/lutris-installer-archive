@@ -21,21 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Battlestate Games/BsgLauncher/BsgLauncher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_LOG_LEVEL": "none"
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    "files": [
+      {
+        "eft": "N/A:Select the exe downloaded from https://www.escapefromtarkov.com/profile"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -46,37 +36,47 @@
       },
       {
         "task": {
-          "app": "corefonts vcrun2013 vcrun2017",
           "arch": "win64",
           "description": "Installing corefonts and Visual C++ 2013 and 2017",
+          "app": "corefonts vcrun2013 vcrun2017",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "dotnet472 win7",
           "arch": "win64",
           "description": "Installing .NET 4.7.2 (This takes a while, please wait)",
+          "app": "dotnet472 win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "eft",
           "arch": "win64",
+          "executable": "eft",
           "description": "Installing Launcher (UNCHECK \"launch after install\", otherwise close launcher)",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "eft": "N/A:Select the exe downloaded from https://www.escapefromtarkov.com/profile"
-      }
-    ]
+    "system": {
+      "env": {
+        "DXVK_LOG_LEVEL": "none"
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Battlestate Games/BsgLauncher/BsgLauncher.exe"
+    }
   },
   "content": "files:\n- eft: N/A:Select the exe downloaded from https://www.escapefromtarkov.com/profile\ngame:\n  arch: win64\n  exe: drive_c/Battlestate Games/BsgLauncher/BsgLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2013 vcrun2017\n    arch: win64\n    description: Installing corefonts and Visual C++ 2013 and 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win7\n    arch: win64\n    description: Installing .NET 4.7.2 (This takes a while, please wait)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Launcher (UNCHECK \"launch after install\", otherwise close\n      launcher)\n    executable: eft\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

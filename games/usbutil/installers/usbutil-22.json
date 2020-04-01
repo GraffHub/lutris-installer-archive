@@ -22,13 +22,21 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "game": {
-        "args": "--some-args",
-        "exe": "$GAMEDIR/USBUTIL v2.2 rev1.0.7z",
-        "working_dir": "$GAMEDIR/prefix",
-        "prefix": "$GAMEDIR/prefix",
-        "arch": "win64"
-      },
+      "files": [
+        {
+          "installer": "/USBUTIL v2.2 rev1.0/USBUtil v2.2 rev1.0.exe"
+        }
+      ],
+      "installer": [
+        {
+          "task": {
+            "arch": "win32",
+            "executable": "installer",
+            "prefix": "$GAMEDIR/prefix",
+            "name": "wineexec"
+          }
+        }
+      ],
       "system": {
         "env": {
           "SOMEENV": true
@@ -37,26 +45,18 @@
       },
       "wine": {
         "Desktop": true,
-        "WineDesktop": "1024x768",
         "overrides": {
           "ddraw.dll": "n"
-        }
+        },
+        "WineDesktop": "1024x768"
       },
-      "installer": [
-        {
-          "task": {
-            "executable": "installer",
-            "arch": "win32",
-            "prefix": "$GAMEDIR/prefix",
-            "name": "wineexec"
-          }
-        }
-      ],
-      "files": [
-        {
-          "installer": "/USBUTIL v2.2 rev1.0/USBUtil v2.2 rev1.0.exe"
-        }
-      ]
+      "game": {
+        "arch": "win64",
+        "args": "--some-args",
+        "working_dir": "$GAMEDIR/prefix",
+        "prefix": "$GAMEDIR/prefix",
+        "exe": "$GAMEDIR/USBUTIL v2.2 rev1.0.7z"
+      }
     }
   },
   "content": "script:\n  files:\n  - installer: /USBUTIL v2.2 rev1.0/USBUtil v2.2 rev1.0.exe\n  game:\n    arch: win64\n    args: --some-args\n    exe: $GAMEDIR/USBUTIL v2.2 rev1.0.7z\n    prefix: $GAMEDIR/prefix\n    working_dir: $GAMEDIR/prefix\n  installer:\n  - task:\n      arch: win32\n      executable: installer\n      name: wineexec\n      prefix: $GAMEDIR/prefix\n  system:\n    env:\n      SOMEENV: true\n    terminal: true\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n    overrides:\n      ddraw.dll: n\n"

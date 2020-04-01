@@ -21,14 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/Codemasters/Severance/Bin/Blade.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "wine": {
-      "Desktop": true
-    },
     "installer": [
       {
         "insert-disc": {
@@ -45,16 +37,16 @@
       },
       {
         "task": {
-          "executable": "$DISC/SetUp.exe",
           "arch": "win32",
+          "executable": "$DISC/SetUp.exe",
           "description": "Installing Severance Blade of Darkness...",
           "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Codemasters/Severance/",
-          "src": "raster"
+          "src": "raster",
+          "dst": "$GAMEDIR/drive_c/Codemasters/Severance/"
         }
       }
     ],
@@ -62,7 +54,15 @@
       {
         "raster": "http://rampage.bigtruck-canada.ca/blade/oth/raster.zip"
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    },
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Codemasters/Severance/Bin/Blade.exe"
+    }
   },
   "content": "files:\n- raster: http://rampage.bigtruck-canada.ca/blade/oth/raster.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Codemasters/Severance/Bin/Blade.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: SetUp.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Severance Blade of Darkness...\n    executable: $DISC/SetUp.exe\n    name: wineexec\n- extract:\n    dst: $GAMEDIR/drive_c/Codemasters/Severance/\n    src: raster\nwine:\n  Desktop: true\n"
 }

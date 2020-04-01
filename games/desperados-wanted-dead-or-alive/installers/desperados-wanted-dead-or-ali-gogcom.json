@@ -21,12 +21,6 @@
   "gogslug": "desperados_wanted_dead_or_alive",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Desperados Wanted Dead or Alive/Desperados.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "gogid": "desperados_wanted_dead_or_alive",
     "installer": [
       {
         "task": {
@@ -37,42 +31,42 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
+          "silent": true,
           "app": "ddr=gdi",
-          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "silent": true,
           "app": "glsl=disabled",
-          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "silent": true,
           "app": "multisampling=disabled",
-          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -80,9 +74,9 @@
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -92,7 +86,13 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ]
+    ],
+    "gogid": "desperados_wanted_dead_or_alive",
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Desperados Wanted Dead or Alive/Desperados.exe"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Desperados Wanted Dead or Alive/Desperados.exe\n  prefix: $GAMEDIR\ngogid: desperados_wanted_dead_or_alive\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: ddr=gdi\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: glsl=disabled\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: multisampling=disabled\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

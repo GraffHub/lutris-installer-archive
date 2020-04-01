@@ -21,12 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "rvgl"
-    },
+    "require-binaries": "wget, unzip, 7z",
+    "files": [
+      {
+        "setup": "https://gitlab.com/Medath/install_rvgl/raw/master/install_rvgl.py"
+      }
+    ],
     "installer": [
       {
         "input_menu": {
+          "id": "BONUSPACKS",
           "options": [
             {
               "soundtrack": "Download the soundtrack (~100MB)"
@@ -41,9 +45,8 @@
               "none": "None. Just install the game without anything else"
             }
           ],
-          "id": "BONUSPACKS",
-          "preselect": "soundtrack",
-          "description": "What additional features do you want?"
+          "description": "What additional features do you want?",
+          "preselect": "soundtrack"
         }
       },
       {
@@ -51,24 +54,21 @@
       },
       {
         "execute": {
-          "file": "setup",
+          "args": "install $GAMEDIR $INPUT_BONUSPACKS",
           "description": "Installing game. Please be patient",
-          "args": "install $GAMEDIR $INPUT_BONUSPACKS"
+          "file": "setup"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/",
-          "src": "setup"
+          "src": "setup",
+          "dst": "$GAMEDIR/"
         }
       }
     ],
-    "require-binaries": "wget, unzip, 7z",
-    "files": [
-      {
-        "setup": "https://gitlab.com/Medath/install_rvgl/raw/master/install_rvgl.py"
-      }
-    ]
+    "game": {
+      "exe": "rvgl"
+    }
   },
   "content": "files:\n- setup: https://gitlab.com/Medath/install_rvgl/raw/master/install_rvgl.py\ngame:\n  exe: rvgl\ninstaller:\n- input_menu:\n    description: What additional features do you want?\n    id: BONUSPACKS\n    options:\n    - soundtrack: Download the soundtrack (~100MB)\n    - io: Download the io tracks and cars (recommended if you want to play online.\n        ~420MB)\n    - both: Download both the soundtrack and the io packs\n    - none: None. Just install the game without anything else\n    preselect: soundtrack\n- chmodx: setup\n- execute:\n    args: install $GAMEDIR $INPUT_BONUSPACKS\n    description: Installing game. Please be patient\n    file: setup\n- move:\n    dst: $GAMEDIR/\n    src: setup\nrequire-binaries: wget, unzip, 7z\n"
 }

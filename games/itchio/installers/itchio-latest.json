@@ -11,32 +11,52 @@
   "description": null,
   "notes": "",
   "created_at": "2018-08-20T06:19:04.629000Z",
-  "updated_at": "2018-08-20T14:50:02.723774Z",
+  "updated_at": "2020-03-30T16:37:07.119993Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/itch"
-    },
     "installer": [
       {
-        "extract": {
-          "file": "$file1",
+        "chmodx": "installer"
+      },
+      {
+        "execute": {
+          "disable_runtime": true,
+          "file": "installer"
+        }
+      },
+      {
+        "move": {
+          "src": "$HOME/.itch",
           "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "command": "ln -s $GAMEDIR $HOME/.itch"
         }
       }
     ],
     "files": [
       {
-        "file1": "N/A:Download and select the Itch client from https://itch.io/app"
+        "installer": {
+          "url": "http://nuts.itch.zone/download/linux",
+          "filename": "itch-setup"
+        }
       }
-    ]
+    ],
+    "system": {
+      "disable_runtime": true
+    },
+    "game": {
+      "exe": "$GAMEDIR/itch"
+    }
   },
-  "content": "files:\r\n- file1: N/A:Download and select the Itch client from https://itch.io/app\r\ngame:\r\n  exe: $GAMEDIR/itch\r\ninstaller:\r\n- extract:\r\n    dst: $GAMEDIR\r\n    file: $file1"
+  "content": "files:\r\n- installer:\r\n    filename: itch-setup\r\n    url: http://nuts.itch.zone/download/linux\r\ngame:\r\n  exe: $GAMEDIR/itch\r\ninstaller:\r\n- chmodx: installer\r\n- execute:\r\n    file: installer\r\n    disable_runtime: true\r\n- move:\r\n    dst: $GAMEDIR\r\n    src: $HOME/.itch\r\n- execute:\r\n    command: ln -s $GAMEDIR $HOME/.itch\r\nsystem:\r\n  disable_runtime: true"
 }

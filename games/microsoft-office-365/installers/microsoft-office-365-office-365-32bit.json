@@ -1,0 +1,78 @@
+{
+  "id": 18966,
+  "game_id": 32009,
+  "game_slug": "microsoft-office-365",
+  "name": "Microsoft Office 365",
+  "year": 2016,
+  "user": "Yukiyaiba",
+  "runner": "wine",
+  "slug": "microsoft-office-365-office-365-32bit",
+  "version": "Office 365 32bit",
+  "description": null,
+  "notes": "Its work with the pre downloaded 32bit installer for Windows 10.",
+  "created_at": "2020-03-19T12:41:59.363427Z",
+  "updated_at": "2020-03-19T12:41:59.363453Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing dependencies",
+          "app": "msxml6 riched20 riched30 lib32-libxinerama lib32-libxcomposite libncurses6:i386 libncurses6:amd64 ttf-ms-fonts samba msxml3 msxml6 dotnet20 corefonts win7",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "arch": "win32",
+          "key": "max_version_factory",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct2D",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "executable": "mso365",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "overrides": {
+          "riched30": "native,builtin",
+          "riched20": "native,builtin"
+        }
+      }
+    ],
+    "files": [
+      {
+        "mso365": "N/A:Please select the 32bit installer for this program"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe"
+    }
+  },
+  "content": "files:\n- mso365: N/A:Please select the 32bit installer for this program\ngame:\n  arch: win32\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: msxml6 riched20 riched30 lib32-libxinerama lib32-libxcomposite libncurses6:i386\n      libncurses6:amd64 ttf-ms-fonts samba msxml3 msxml6 dotnet20 corefonts win7\n    arch: win32\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: max_version_factory\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct2D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    executable: mso365\n    name: wineexec\n    prefix: $GAMEDIR\n- overrides:\n    riched20: native,builtin\n    riched30: native,builtin\n"
+}

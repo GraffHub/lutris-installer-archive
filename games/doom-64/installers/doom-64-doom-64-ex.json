@@ -1,0 +1,67 @@
+{
+  "id": 19134,
+  "game_id": 5029,
+  "game_slug": "doom-64",
+  "name": "Doom 64",
+  "year": 1997,
+  "user": "theoutrider",
+  "runner": "wine",
+  "slug": "doom-64-doom-64-ex",
+  "version": "Doom 64 EX",
+  "description": null,
+  "notes": "Uses https://doom64ex.wordpress.com/\r\n\r\nWhen WadGen is launched during the installation, select a Doom 64 Nintendo 64 ROM. This is required to extract the game data for use by Doom 64 EX.",
+  "created_at": "2020-03-25T00:10:31.855000Z",
+  "updated_at": "2020-03-25T08:46:33.207148Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 1148590,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/DOOM64EX/DOOM64.EXE"
+    },
+    "require-binaries": "wget",
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "execute": {
+          "args": "https://sourceforge.net/projects/doom64ex/files/doom64ex/2.5/doom64ex_2.5_win32.zip/download -O $CACHE/doom64ex.zip",
+          "file": "wget"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/d64ex",
+          "file": "$CACHE/doom64ex.zip"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/d64ex",
+          "dst": "$GAMEDIR/drive_c/DOOM64EX"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "$GAMEDIR/drive_c/DOOM64EX/WadGen.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/DOOM64EX/DOOM64.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    args: https://sourceforge.net/projects/doom64ex/files/doom64ex/2.5/doom64ex_2.5_win32.zip/download\n      -O $CACHE/doom64ex.zip\n    file: wget\n- extract:\n    dst: $CACHE/d64ex\n    file: $CACHE/doom64ex.zip\n- move:\n    dst: $GAMEDIR/drive_c/DOOM64EX\n    src: $CACHE/d64ex\n- task:\n    arch: win32\n    executable: $GAMEDIR/drive_c/DOOM64EX/WadGen.exe\n    name: wineexec\n    prefix: $GAMEDIR\nrequire-binaries: wget\n"
+}

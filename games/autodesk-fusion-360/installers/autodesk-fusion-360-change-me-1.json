@@ -21,29 +21,24 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "input_menu": {
+          "id": "download",
           "options": [
             {
               "wait": "Wait a bit, your connection might be slow"
             }
           ],
-          "id": "download",
-          "preselect": "wait",
-          "description": "Is the 'Fusion 360 Client Downloader.exe' in your $CACHE (default: ~/.cache/lutris/installer/autodesk_fusion_360/)?"
+          "description": "Is the 'Fusion 360 Client Downloader.exe' in your $CACHE (default: ~/.cache/lutris/installer/autodesk_fusion_360/)?",
+          "preselect": "wait"
         }
       },
       {
         "extract": {
-          "file": "fusion_installer",
-          "dst": "$CACHE/fusion_installer/",
           "description": "extracting installer",
+          "dst": "$CACHE/fusion_installer/",
+          "file": "fusion_installer",
           "extractor": "exe"
         }
       },
@@ -80,8 +75,8 @@
       },
       {
         "task": {
-          "app": "vcrun2017 corefonts wininet winhttp dxvk atmlib gdiplus iertutil msxml3 msxml6 urlmon win7",
           "description": "doing the winetrickery",
+          "app": "vcrun2017 corefonts wininet winhttp dxvk atmlib gdiplus iertutil msxml3 msxml6 urlmon win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -98,14 +93,19 @@
     "files": [
       {
         "fusion_installer": {
-          "filename": "Fusion%20360%20Client%20Downloader.exe",
-          "url": "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe"
+          "url": "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe",
+          "filename": "Fusion%20360%20Client%20Downloader.exe"
         }
       },
       {
         "platform_py": "https://raw.githubusercontent.com/python/cpython/master/Lib/platform.py"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe"
+    }
   },
   "content": "files:\r\n- fusion_installer:\r\n    filename: Fusion%20360%20Client%20Downloader.exe\r\n    url: https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe\r\n- platform_py: https://raw.githubusercontent.com/python/cpython/master/Lib/platform.py\r\ngame:\r\n  arch: win64\r\n  exe: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- input_menu:\r\n    description: 'Is the ''Fusion 360 Client Downloader.exe'' in your $CACHE (default:\r\n      ~/.cache/lutris/installer/autodesk_fusion_360/)?'\r\n    id: download\r\n    options:\r\n    - wait: Wait a bit, your connection might be slow\r\n    preselect: wait\r\n- extract:\r\n    description: extracting installer\r\n    dst: $CACHE/fusion_installer/\r\n    extractor: exe\r\n    file: fusion_installer\r\n- move:\r\n    description: moving installer\r\n    dst: $CACHE/fusion_installer/\r\n    src: platform_py\r\n- execute:\r\n    command: sed -i '/maj, min, build = /c\\    maj, min, build = winver[:3]' $CACHE/fusion_installer/platform.py;\r\n    description: patch installer 1\r\n- execute:\r\n    command: sed -i \"/return uname().system/c\\    return 'Windows'\" $CACHE/fusion_installer/platform.py;\r\n    description: patch installer 2\r\n- execute:\r\n    command: sed -i \"/return uname().release/c\\    return '7'\" $CACHE/fusion_installer/platform.py;\r\n    description: patch installer 3\r\n- execute:\r\n    command: sed -i \"/return uname().version/c\\    return '6.1.7601'\" $CACHE/fusion_installer/platform.py\r\n    description: patch installer 4\r\n- task:\r\n    app: vcrun2017 corefonts wininet winhttp dxvk atmlib gdiplus iertutil msxml3 msxml6\r\n      urlmon win7\r\n    description: doing the winetrickery\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    description: running the installer (After Login, please change the Graphics driver\r\n      to DirectX 9 in the preferences, apply and choose 'Not Now' and close it manually\r\n      (you might need to kill the wine processes if Fusion isn't closing!) to complete\r\n      the installer)\r\n    executable: $CACHE/fusion_installer/streamer.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR"
 }

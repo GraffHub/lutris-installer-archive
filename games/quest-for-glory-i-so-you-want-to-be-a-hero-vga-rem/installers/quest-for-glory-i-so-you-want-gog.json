@@ -9,85 +9,90 @@
   "slug": "quest-for-glory-i-so-you-want-gog",
   "version": "GOG",
   "description": "Uses the files from the Windows installer from GOG.",
-  "notes": "To get better quality MIDI audio (might need to install additional packages):\r\nI - Need to install fluid-soundfont-gm and fluidsynth.\r\nFor Mint 19:\r\nsudo apt install -y fluid-soundfont-gm fluidsynth\r\nII - Open terminal and run the command (needs to be run each time you want to play):\r\nfluidsynth -l -s -i -aalsa -o audio.alsa.device=default /usr/share/sounds/sf2/FluidR3_GM.sf2\r\nIII - Start the game.\r\n\r\nFor lower quality MIDI audio (no additional packages):\r\nI - Run the game and you'll get a menu\r\nII - Select '2' for VGA version settings (or 4 if you want EGA version)\r\nIII - Select 'Music' --> Soundblaster / AdLib Card (or compabibles)\r\nIV - Accept these choies and save configuration\r\nThe setup only needs to be done once.  You can now run the game and select '1' for VGA version (or 3 if you want EGA version)",
+  "notes": "To get better quality MIDI audio (might need to install additional packages):\r\nI - Need to install fluid-soundfont-gm and fluidsynth.\r\nFor Mint 19:\r\nsudo apt install -y fluid-soundfont-gm fluidsynth\r\nII - Open terminal and run the command (needs to be run each time you want to play):\r\nfluidsynth -l -s -i -aalsa -o audio.alsa.device=default /usr/share/sounds/sf2/FluidR3_GM.sf2\r\nIII - Start the game.\r\n\r\nFor lower quality MIDI audio (no additional packages):\r\nI - Run the game and you'll get a menu\r\nII - Select '2' for VGA version settings (or 4 if you want EGA version)\r\nIII - Select 'Music' --> Soundblaster / AdLib Card (or compabibles)\r\nIV - Accept these choies and save configuration\r\nThe setup only needs to be done once.  You can now run the game and select '1' for VGA version (or 3 if you want EGA version)\r\n\r\nYou also may get errors in regards to dosbox dll shared libraries. Install the dosbox package from your distro software repository.",
   "created_at": "2018-09-15T22:46:49.956000Z",
-  "updated_at": "2018-10-28T05:30:02.206758Z",
+  "updated_at": "2020-03-18T12:09:16.102894Z",
   "draft": false,
   "published": true,
-  "published_by": null,
+  "published_by": 20548,
   "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "config_file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf"
-    },
     "main_file": "DOSBOX/dosboxQG1VGA_single.conf",
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://github.com/dscharrer/innoextract/releases/download/1.8/innoextract-1.8-linux.tar.xz"
+      }
+    ],
     "installer": [
       {
         "extract": {
-          "file": "$file2",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$file2"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/innoextract",
-          "args": "-d \"$CACHE\" \"$file1\""
+          "args": "-d \"$CACHE\" \"$file1\"",
+          "file": "$CACHE/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR",
-          "src": "$CACHE/app"
+          "src": "$CACHE",
+          "dst": "$GAMEDIR"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/DOSBOX",
-          "src": "$GAMEDIR/dosboxQG1VGA.conf"
+          "src": "$GAMEDIR/__support/app/dosboxQG1VGA.conf",
+          "dst": "$GAMEDIR/DOSBOX"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
-          "value": true,
+          "section": "render",
           "key": "aspect",
-          "section": "render"
+          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
+          "value": true
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
-          "value": "overlay",
+          "section": "sdl",
           "key": "output",
-          "section": "sdl"
+          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
+          "value": "overlay"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
-          "value": false,
+          "section": "sdl",
           "key": "fullscreen",
-          "section": "sdl"
+          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
+          "value": false
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
-          "value": "1920x1080",
+          "section": "sdl",
           "key": "fullresolution",
-          "section": "sdl"
+          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
+          "value": "1920x1080"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
-          "value": "128:0",
+          "section": "midi",
           "key": "midiconfig",
-          "section": "midi"
+          "file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf",
+          "value": "128:0"
         }
       },
       {
@@ -97,14 +102,9 @@
         }
       }
     ],
-    "files": [
-      {
-        "file1": "N/A:Please select the GOG installer"
-      },
-      {
-        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
-      }
-    ]
+    "game": {
+      "config_file": "$GAMEDIR/DOSBOX/dosboxQG1VGA.conf"
+    }
   },
-  "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxQG1VGA.conf\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: output\n    section: sdl\n    value: overlay\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: fullresolution\n    section: sdl\n    value: 1920x1080\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: midiconfig\n    section: midi\n    value: '128:0'\n- write_file:\n    content: \"[ipx]\\n# ipx: Enable ipx over UDP/IP emulation.\\nipx=false\\n\\n[autoexec]\\\n      \\ \\n@echo off\\nmount C \\\"..\\\"\\nc:\\ncls\\nECHO  ---------------------------------------------\\\n      \\ \\nECHO  Quest for Glory - So You Want To Be A Hero\\nECHO  ---------------------------------------------\\\n      \\ \\nECHO   1) VGA version (default)\\nECHO   2) VGA version Settings\\nECHO  \\\n      \\ 3) EGA version (Hero's Quest)\\nECHO   4) EGA version Settings\\nECHO  ---------------------------------------------\\\n      \\ \\nECHO   5) exit program\\nECHO  ---------------------------------------------\\n\\\n      \\n choice /c12345 /s Which game do you want to run? 1-5: /n\\n if errorlevel\\\n      \\ 5 goto exit\\n if errorlevel 4 goto setega\\n if errorlevel 3 goto pqega\\n if\\\n      \\ errorlevel 2 goto setvga\\n if errorlevel 1 goto pqvga\\n\\n :pqvga\\n cls\\n scidhuv.exe\\n\\\n      \\ exit\\n  \\n :setvga\\n cls\\n INSTALL.EXE\\n exit\\n\\n :pqega\\n cls\\n cd ega\\n\\\n      \\ SCIV.EXE\\n exit\\n\\n :setega\\n cls\\n cd ega\\n INSTALL.EXE\\n exit\\n\\n :exit\\n\\\n      \\ exit\"\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA_single.conf\nmain_file: DOSBOX/dosboxQG1VGA_single.conf\n"
+  "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://github.com/dscharrer/innoextract/releases/download/1.8/innoextract-1.8-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/__support/app/dosboxQG1VGA.conf\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: output\n    section: sdl\n    value: overlay\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: fullresolution\n    section: sdl\n    value: 1920x1080\n- write_config:\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA.conf\n    key: midiconfig\n    section: midi\n    value: '128:0'\n- write_file:\n    content: \"[ipx]\\n# ipx: Enable ipx over UDP/IP emulation.\\nipx=false\\n\\n[autoexec]\\\n      \\ \\n@echo off\\nmount C \\\"..\\\"\\nc:\\ncls\\nECHO  ---------------------------------------------\\\n      \\ \\nECHO  Quest for Glory - So You Want To Be A Hero\\nECHO  ---------------------------------------------\\\n      \\ \\nECHO   1) VGA version (default)\\nECHO   2) VGA version Settings\\nECHO  \\\n      \\ 3) EGA version (Hero's Quest)\\nECHO   4) EGA version Settings\\nECHO  ---------------------------------------------\\\n      \\ \\nECHO   5) exit program\\nECHO  ---------------------------------------------\\n\\\n      \\n choice /c12345 /s Which game do you want to run? 1-5: /n\\n if errorlevel\\\n      \\ 5 goto exit\\n if errorlevel 4 goto setega\\n if errorlevel 3 goto pqega\\n if\\\n      \\ errorlevel 2 goto setvga\\n if errorlevel 1 goto pqvga\\n\\n :pqvga\\n cls\\n scidhuv.exe\\n\\\n      \\ exit\\n  \\n :setvga\\n cls\\n INSTALL.EXE\\n exit\\n\\n :pqega\\n cls\\n cd ega\\n\\\n      \\ SCIV.EXE\\n exit\\n\\n :setega\\n cls\\n cd ega\\n INSTALL.EXE\\n exit\\n\\n :exit\\n\\\n      \\ exit\"\n    file: $GAMEDIR/DOSBOX/dosboxQG1VGA_single.conf\nmain_file: DOSBOX/dosboxQG1VGA_single.conf\n"
 }

@@ -21,12 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "HERETICIICDL/heretic2.sh",
-      "args": "+set vid_ref glx +set vid_mode 3 +set vid_fullscreen 1 +set gl_driver /usr/lib/i386-linux-gnu/libGL.so.1",
-      "prefix": "$GAMEDIR"
-    },
-    "custom-name": "HERETIC II - Linux CD",
     "installer": [
       {
         "insert-disc": {
@@ -43,33 +37,33 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/HERETICIICDL/base",
+          "src": "$DISC/data.tar.gz",
           "format": "tgz",
-          "src": "$DISC/data.tar.gz"
+          "dst": "$GAMEDIR/HERETICIICDL/base"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/HERETICIICDL/tmp2",
-          "src": "patch106l"
+          "src": "patch106l",
+          "dst": "$GAMEDIR/HERETICIICDL/tmp2"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/HERETICIICDL/",
-          "src": "$GAMEDIR/HERETICIICDL/tmp2/data/patch-1.06c.tar.xz"
+          "src": "$GAMEDIR/HERETICIICDL/tmp2/data/patch-1.06c.tar.xz",
+          "dst": "$GAMEDIR/HERETICIICDL/"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/HERETICIICDL/",
-          "src": "$GAMEDIR/HERETICIICDL/tmp2/data/dm-maps.tar.xz"
+          "src": "$GAMEDIR/HERETICIICDL/tmp2/data/dm-maps.tar.xz",
+          "dst": "$GAMEDIR/HERETICIICDL/"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/HERETICIICDL/",
-          "src": "$GAMEDIR/HERETICIICDL/tmp2/data/heretic2.sh"
+          "src": "$GAMEDIR/HERETICIICDL/tmp2/data/heretic2.sh",
+          "dst": "$GAMEDIR/HERETICIICDL/"
         }
       },
       {
@@ -80,12 +74,13 @@
       },
       {
         "execute": {
-          "file": "scriptws",
-          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT"
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
+          "file": "scriptws"
         }
       },
       {
         "input_menu": {
+          "id": "LANG",
           "options": [
             {
               "keep": "I prefer to use default install language"
@@ -103,9 +98,8 @@
               "sp": "Spanish"
             }
           ],
-          "id": "LANG",
-          "preselect": "keep",
-          "description": "Please choose wich language you would like to install this game:"
+          "description": "Please choose wich language you would like to install this game:",
+          "preselect": "keep"
         }
       },
       {
@@ -113,8 +107,8 @@
       },
       {
         "execute": {
-          "file": "scriptlocal",
-          "args": "$INPUT_LANG"
+          "args": "$INPUT_LANG",
+          "file": "scriptlocal"
         }
       },
       {
@@ -127,20 +121,20 @@
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/HERETICIICDL/gamepad profiles",
-          "src": "gppreadme"
+          "src": "gppreadme",
+          "dst": "$GAMEDIR/HERETICIICDL/gamepad profiles"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/HERETICIICDL/gamepad profiles",
-          "src": "gppx360"
+          "src": "gppx360",
+          "dst": "$GAMEDIR/HERETICIICDL/gamepad profiles"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/HERETICIICDL/gamepad profiles",
-          "src": "gppsc"
+          "src": "gppsc",
+          "dst": "$GAMEDIR/HERETICIICDL/gamepad profiles"
         }
       },
       {
@@ -171,7 +165,13 @@
       {
         "gppsc": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/gamepad%20profiles/h2_steam.sccprofile"
       }
-    ]
+    ],
+    "custom-name": "HERETIC II - Linux CD",
+    "game": {
+      "args": "+set vid_ref glx +set vid_mode 3 +set vid_fullscreen 1 +set gl_driver /usr/lib/i386-linux-gnu/libGL.so.1",
+      "prefix": "$GAMEDIR",
+      "exe": "HERETICIICDL/heretic2.sh"
+    }
   },
   "content": "custom-name: HERETIC II - Linux CD\nfiles:\n- patch106l: https://github.com/liflg/heretic.2_1.06c-english_x86/archive/master.zip\n- scriptws: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/hereticiiws.sh\n- scriptlocal: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/h2local.sh\n- scriptconf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/defconfig.sh\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/gamepad%20profiles/h2_gamepad_readme.html\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/gamepad%20profiles/h2_x360.gamecontroller.amgp\n- gppsc: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Heretic%20II/gamepad%20profiles/h2_steam.sccprofile\ngame:\n  args: +set vid_ref glx +set vid_mode 3 +set vid_fullscreen 1 +set gl_driver /usr/lib/i386-linux-gnu/libGL.so.1\n  exe: HERETICIICDL/heretic2.sh\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: Please insert \"HERETIC II\" Linux CD and press autodetect\n    requires: base/video/bumper.mpg\n- merge:\n    description: Copying data from \"HERETIC II\" Linux CD, please wait\n    dst: $GAMEDIR/HERETICIICDL\n    src: $DISC/\n- extract:\n    dst: $GAMEDIR/HERETICIICDL/base\n    format: tgz\n    src: $DISC/data.tar.gz\n- extract:\n    dst: $GAMEDIR/HERETICIICDL/tmp2\n    src: patch106l\n- extract:\n    dst: $GAMEDIR/HERETICIICDL/\n    src: $GAMEDIR/HERETICIICDL/tmp2/data/patch-1.06c.tar.xz\n- extract:\n    dst: $GAMEDIR/HERETICIICDL/\n    src: $GAMEDIR/HERETICIICDL/tmp2/data/dm-maps.tar.xz\n- copy:\n    dst: $GAMEDIR/HERETICIICDL/\n    src: $GAMEDIR/HERETICIICDL/tmp2/data/heretic2.sh\n- chmodx: $GAMEDIR/HERETICIICDL/heretic2.sh\n- chmodx: scriptws\n- execute:\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: scriptws\n- input_menu:\n    description: 'Please choose wich language you would like to install this game:'\n    id: LANG\n    options:\n    - keep: I prefer to use default install language\n    - fr: French\n    - ge: German\n    - it: Italian\n    - sp: Spanish\n    preselect: keep\n- chmodx: scriptlocal\n- execute:\n    args: $INPUT_LANG\n    file: scriptlocal\n- chmodx: scriptconf\n- execute:\n    file: scriptconf\n- merge:\n    dst: $GAMEDIR/HERETICIICDL/gamepad profiles\n    src: gppreadme\n- copy:\n    dst: $GAMEDIR/HERETICIICDL/gamepad profiles\n    src: gppx360\n- merge:\n    dst: $GAMEDIR/HERETICIICDL/gamepad profiles\n    src: gppsc\n- execute:\n    command: cd $GAMEDIR/HERETICIICDL; rm -f -r tmp2 bin* Parches setup.* data.tar.gz\n      win32/ autorun.inf heretic2.dynamic Soundtrack\n"
 }

@@ -21,34 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
-      "arch": "win64",
-      "args": "-maploadinfo",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "disable_compositor": "true",
-      "env": {
-        "DXVK_HUD": 0,
-        "WINEDEBUG": "-all",
-        "DXVK_LOG_LEVEL": "none",
-        "STAGING_SHARED_MEMORY": 1,
-        "vblank_mode": 0,
-        "mesa_glthread": true,
-        "MESA_GLSL_CACHE_DISABLE": 0,
-        "MESA_GLSL_CACHE_DIR": "$GAMEDIR"
+    "files": [
+      {
+        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi64": "disabled",
-        "d3d9": "native",
-        "nvapi": "disabled"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -72,16 +49,39 @@
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe",
-          "src": "client"
+          "src": "client",
+          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe"
         }
       }
     ],
-    "files": [
-      {
-        "client": "https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe"
+    "system": {
+      "disable_compositor": "true",
+      "env": {
+        "MESA_GLSL_CACHE_DIR": "$GAMEDIR",
+        "MESA_GLSL_CACHE_DISABLE": 0,
+        "WINEDEBUG": "-all",
+        "mesa_glthread": true,
+        "vblank_mode": 0,
+        "DXVK_LOG_LEVEL": "none",
+        "STAGING_SHARED_MEMORY": 1,
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "nvapi": "disabled",
+        "d3d9": "native",
+        "nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "args": "-maploadinfo",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe"
+    }
   },
   "content": "files:\n- client: https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe\ngame:\n  arch: win64\n  args: -maploadinfo\n  exe: drive_c/Program Files/Guild Wars 2/GW2-64.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating win64 prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3d9 dxgi\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2\"\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe\n    src: client\nsystem:\n  disable_compositor: 'true'\n  env:\n    DXVK_HUD: 0\n    DXVK_LOG_LEVEL: none\n    MESA_GLSL_CACHE_DIR: $GAMEDIR\n    MESA_GLSL_CACHE_DISABLE: 0\n    STAGING_SHARED_MEMORY: 1\n    WINEDEBUG: -all\n    mesa_glthread: true\n    vblank_mode: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3d9: native\n    nvapi: disabled\n    nvapi64: disabled\n"
 }

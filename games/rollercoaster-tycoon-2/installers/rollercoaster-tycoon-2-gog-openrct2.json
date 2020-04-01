@@ -21,14 +21,11 @@
   "gogslug": "rollercoaster_tycoon_2",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/openrct2"
-    },
     "installer": [
       {
         "extract": {
-          "file": "Game",
-          "format": "tgz"
+          "format": "tgz",
+          "file": "Game"
         }
       },
       {
@@ -42,28 +39,28 @@
       },
       {
         "write_config": {
-          "file": "$HOME/.config/OpenRCT2/config.ini",
-          "value": "$GAMEDIR/game_files",
+          "section": "general",
           "key": "game_path",
-          "section": "general"
+          "file": "$HOME/.config/OpenRCT2/config.ini",
+          "value": "$GAMEDIR/game_files"
         }
       },
       {
         "extract": {
-          "file": "innoextract",
-          "dst": "$CACHE/tmp/innoextract"
+          "dst": "$CACHE/tmp/innoextract",
+          "file": "innoextract"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/tmp/innoextract/innoextract",
-          "args": "--extract $files_gog --output-dir $CACHE/tmp/game_files/"
+          "args": "--extract $files_gog --output-dir $CACHE/tmp/game_files/",
+          "file": "$CACHE/tmp/innoextract/innoextract"
         }
       },
       {
         "merge": {
-          "dst": "$GAMEDIR/game_files",
-          "src": "$CACHE/tmp/game_files/app/"
+          "src": "$CACHE/tmp/game_files/app/",
+          "dst": "$GAMEDIR/game_files"
         }
       }
     ],
@@ -77,7 +74,10 @@
       {
         "innoextract": "http://constexpr.org/innoextract/files/innoextract-1.6-linux.tar.xz"
       }
-    ]
+    ],
+    "game": {
+      "exe": "$GAMEDIR/openrct2"
+    }
   },
   "content": "files:\n- files_gog: N/A:Please select your GoG-installer\n- Game: https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.2.2/OpenRCT2-0.2.2-linux-x86_64.tar.gz\n- innoextract: http://constexpr.org/innoextract/files/innoextract-1.6-linux.tar.xz\ngame:\n  exe: $GAMEDIR/openrct2\ninstaller:\n- extract:\n    file: Game\n    format: tgz\n- chmodx: $GAMEDIR/openrct2\n- mkdir: $HOME/.config/OpenRCT2/\n- mkdir: $GAMEDIR/game_files/\n- write_config:\n    file: $HOME/.config/OpenRCT2/config.ini\n    key: game_path\n    section: general\n    value: $GAMEDIR/game_files\n- extract:\n    dst: $CACHE/tmp/innoextract\n    file: innoextract\n- execute:\n    args: --extract $files_gog --output-dir $CACHE/tmp/game_files/\n    file: $CACHE/tmp/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/game_files\n    src: $CACHE/tmp/game_files/app/\n"
 }

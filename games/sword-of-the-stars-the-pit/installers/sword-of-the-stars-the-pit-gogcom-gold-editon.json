@@ -21,12 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/game/ThePit.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
-    "gogid": "sword_of_the_stars_the_pit_gold_edition",
     "installer": [
       {
         "task": {
@@ -37,27 +31,27 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "task": {
-          "app": "corefonts",
           "silent": true,
           "description": "Installing...",
+          "app": "corefonts",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -65,36 +59,36 @@
       },
       {
         "task": {
-          "app": "dotnet40",
           "silent": true,
           "description": "Installing .net",
+          "app": "dotnet40",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "xna40",
           "silent": true,
           "description": "Installing xna",
+          "app": "xna40",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "xinput",
           "silent": true,
           "description": "Installing...",
+          "app": "xinput",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "sandbox",
           "silent": true,
           "description": "Disabling unused WINE features",
+          "app": "sandbox",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -104,7 +98,13 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ]
+    ],
+    "gogid": "sword_of_the_stars_the_pit_gold_edition",
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/ThePit.exe"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/ThePit.exe\n  prefix: $GAMEDIR\ngogid: sword_of_the_stars_the_pit_gold_edition\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: corefonts\n    description: Installing...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40\n    description: Installing .net\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: xna40\n    description: Installing xna\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: xinput\n    description: Installing...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

@@ -1,0 +1,103 @@
+{
+  "id": 19038,
+  "game_id": 32053,
+  "game_slug": "scrabblepro",
+  "name": "ScrabblePro",
+  "year": null,
+  "user": "tiixel",
+  "runner": "wine",
+  "slug": "scrabblepro-118",
+  "version": "1.1.8",
+  "description": "The installer is downloaded from its official website: https://www.scrabblepro.com.\r\n\r\n----\r\n\r\nL'éxecutable d'installation est téléchargé depuis le site officiel : https://www.scrabblepro.com.",
+  "notes": "If Wine asks whether it should install mono or gecko, you can select \"no\": the install script will manage installation of required dependencies.\r\n\r\nIt is possible that the interface flickers when switching windows.\r\n\r\n----\r\n\r\nSi Wine demande s'il doit installer mono ou gecko, vous pouvez dire \"non\" : le script d'installation va gérer les dépendances nécessaires.\r\n\r\nIl est possible que l'interface scintille pendant le changement de fenêtre.",
+  "created_at": "2020-03-21T17:44:26.750040Z",
+  "updated_at": "2020-03-21T17:44:26.750069Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing .NET 3.5",
+          "app": "dotnet35",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing .NET 3.5 SP1",
+          "app": "dotnet35sp1",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing Wine-Gecko",
+          "app": "gecko",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing ie8",
+          "app": "ie8",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Setting Windows version to win7",
+          "app": "win7",
+          "prefix": "$GAMEDIR",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "installer",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "files": [
+      {
+        "installer": {
+          "url": "https://www.scrabblepro.com/download.php?t=scrabbleproB1.1.8",
+          "filename": "scrableproB1.8.8.exe"
+        }
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "version": "1.1.8",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/scrabbleproB1.1/scrabblepro.exe"
+    }
+  },
+  "content": "files:\n- installer:\n    filename: scrableproB1.8.8.exe\n    url: https://www.scrabblepro.com/download.php?t=scrabbleproB1.1.8\ngame:\n  arch: win32\n  exe: drive_c/Program Files/scrabbleproB1.1/scrabblepro.exe\n  prefix: $GAMEDIR\n  version: 1.1.8\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35\n    arch: win32\n    description: Installing .NET 3.5\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win32\n    description: Installing .NET 3.5 SP1\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: gecko\n    arch: win32\n    description: Installing Wine-Gecko\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ie8\n    arch: win32\n    description: Installing ie8\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Windows version to win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

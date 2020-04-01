@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/game/game.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -36,18 +31,18 @@
       },
       {
         "task": {
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
           "prefix": "$GAMEDIR",
-          "name": "set_regedit",
           "value": "",
           "key": "winemenubuilder.exe",
-          "type": "REG_SZ"
+          "name": "set_regedit",
+          "type": "REG_SZ",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
       {
         "extract": {
-          "file": "$game",
-          "dst": "$GAMEDIR/drive_c/game"
+          "dst": "$GAMEDIR/drive_c/game",
+          "file": "$game"
         }
       }
     ],
@@ -55,7 +50,12 @@
       {
         "game": "http://www.valarsoft.com/data/downloads/ggr_056.zip"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/game.exe"
+    }
   },
   "content": "files:\n- game: http://www.valarsoft.com/data/downloads/ggr_056.zip\ngame:\n  arch: win32\n  exe: drive_c/game/game.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- extract:\n    dst: $GAMEDIR/drive_c/game\n    file: $game\n"
 }

@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "game_id": "sci",
-      "path": "$GAMEDIR"
-    },
     "installer": [
       {
         "write_file": {
@@ -37,14 +33,14 @@
       },
       {
         "execute": {
-          "file": "$CACHE/bulkcopy.sh",
-          "args": "$game $GAMEDIR"
+          "args": "$game $GAMEDIR",
+          "file": "$CACHE/bulkcopy.sh"
         }
       },
       {
         "execute": {
-          "file": "/bin/chmod",
-          "args": "-R 775  \"$GAMEDIR\""
+          "args": "-R 775  \"$GAMEDIR\"",
+          "file": "/bin/chmod"
         }
       }
     ],
@@ -52,7 +48,11 @@
       {
         "game": "N/A:Select the file INSTALL.EXE"
       }
-    ]
+    ],
+    "game": {
+      "game_id": "sci",
+      "path": "$GAMEDIR"
+    }
   },
   "content": "files:\n- game: N/A:Select the file INSTALL.EXE\ngame:\n  game_id: sci\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/bulkcopy.sh\n- execute:\n    args: -R 775  \"$GAMEDIR\"\n    file: /bin/chmod\n"
 }

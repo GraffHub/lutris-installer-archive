@@ -21,24 +21,11 @@
   "gogslug": "frostpunk",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Frostpunk/Frostpunk.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
       }
-    },
-    "wine": {
-      "esync": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -49,8 +36,8 @@
       },
       {
         "task": {
-          "app": "vcrun2013 vcrun2017 win7",
           "arch": "win64",
+          "app": "vcrun2013 vcrun2017 win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
@@ -64,11 +51,24 @@
         }
       }
     ],
-    "files": [
-      {
-        "setup": "N/A:Select the game's setup file"
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Frostpunk/Frostpunk.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Frostpunk/Frostpunk.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing Frostpunk\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

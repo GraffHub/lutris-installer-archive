@@ -1,0 +1,80 @@
+{
+  "id": 19041,
+  "game_id": 7885,
+  "game_slug": "dungeon-keeper-2",
+  "name": "Dungeon Keeper 2",
+  "year": 1999,
+  "user": "Armageddon91",
+  "runner": "wine",
+  "slug": "dungeon-keeper-2-gog-german-patch",
+  "version": "GOG + German Patch",
+  "description": "This script installs Dungeon Keeper 2 and patches it in German.",
+  "notes": "-Please download the Patch file from: https://www.la-patches.de/downloads/gog_keeper2_de_v10.zip\r\n-Thanks to https://www.la-patches.de for the German Patch\r\n--Disable upstream CSMT",
+  "created_at": "2020-03-21T19:13:23.791748Z",
+  "updated_at": "2020-03-21T19:13:23.791775Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207658959,
+  "gogslug": "dungeon_keeper_2",
+  "humblestoreid": "",
+  "script": {
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "game",
+          "description": "Installing game",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$patch"
+        }
+      },
+      {
+        "task": {
+          "args": "/DIR=C:/game",
+          "executable": "$CACHE/gog_keeper2_de_v10.exe",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "key": "csmt",
+          "name": "set_regedit",
+          "type": "REG_DWORD",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D"
+        }
+      }
+    ],
+    "files": [
+      {
+        "game": "N/A:Please select the installer downloaded from GOG."
+      },
+      {
+        "patch": "N/A:Please select the Patch file."
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/game/DKII-DX.exe"
+    }
+  },
+  "content": "files:\n- game: N/A:Please select the installer downloaded from GOG.\n- patch: N/A:Please select the Patch file.\ngame:\n  exe: drive_c/game/DKII-DX.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing game\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $patch\n- task:\n    args: /DIR=C:/game\n    executable: $CACHE/gog_keeper2_de_v10.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n"
+}

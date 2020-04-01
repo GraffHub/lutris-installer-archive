@@ -21,25 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Games/World_of_Warships/WoWSLauncher.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "1920x1080",
-      "overrides": {
-        "xaudio2_7": "native,builtin"
-      },
-      "dxvk": true
-    },
+    "files": [
+      {
+        "game": "http://dl-wows-gc.wargaming.net/asia/files/Kg9cc1LM/WoWS_internet_install_asia.exe"
+      }
+    ],
     "installer": [
       {
         "task": {
@@ -51,21 +37,21 @@
       },
       {
         "task": {
-          "app": "corefonts win10",
           "arch": "win64",
+          "app": "corefonts win10",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "game",
           "arch": "win64",
-          "description": "Installing World of Warships",
-          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
-          "name": "wineexec",
           "prefix": "$GAMEDIR",
-          "exclude_processes": "explorer.exe rpcss.exe services.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoWSLauncher.exe"
+          "name": "wineexec",
+          "exclude_processes": "explorer.exe rpcss.exe services.exe winedevice.exe plugplay.exe WargamingGameUpdater.exe WoWSLauncher.exe",
+          "args": "/VERYSILENT /CLOSEAPPLICATIONS",
+          "executable": "game",
+          "description": "Installing World of Warships"
         }
       },
       {
@@ -76,11 +62,25 @@
         }
       }
     ],
-    "files": [
-      {
-        "game": "http://dl-wows-gc.wargaming.net/asia/files/Kg9cc1LM/WoWS_internet_install_asia.exe"
-      }
-    ]
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      },
+      "pulse_latency": true
+    },
+    "wine": {
+      "Desktop": true,
+      "overrides": {
+        "xaudio2_7": "native,builtin"
+      },
+      "WineDesktop": "1920x1080",
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Games/World_of_Warships/WoWSLauncher.exe"
+    }
   },
   "content": "files:\n- game: http://dl-wows-gc.wargaming.net/asia/files/Kg9cc1LM/WoWS_internet_install_asia.exe\ngame:\n  arch: win64\n  exe: drive_c/Games/World_of_Warships/WoWSLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /VERYSILENT /CLOSEAPPLICATIONS\n    description: Installing World of Warships\n    exclude_processes: explorer.exe rpcss.exe services.exe winedevice.exe plugplay.exe\n      WargamingGameUpdater.exe WoWSLauncher.exe\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

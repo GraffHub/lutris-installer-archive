@@ -21,15 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/ProgramData/Microsoft/Windows/Start Menu/Programs/Maxis/FullTilt!.lnk",
-      "prefix": "$GAMEDIR/"
-    },
     "installer": [
       {
         "extract": {
-          "file": "marble_drop_iso",
-          "dst": "$GAMEDIR/drive_c/marble-drop-iso"
+          "dst": "$GAMEDIR/drive_c/marble-drop-iso",
+          "file": "marble_drop_iso"
         }
       },
       {
@@ -40,9 +36,9 @@
       },
       {
         "task": {
-          "executable": "C:\\marble-drop-iso\\FullTilt\\setup.exe",
-          "working_dir": "$GAMEDIR/drive_c/marble-drop-iso/FullTilt/",
           "args": "-s -f1 setup.iss",
+          "working_dir": "$GAMEDIR/drive_c/marble-drop-iso/FullTilt/",
+          "executable": "C:\\marble-drop-iso\\FullTilt\\setup.exe",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -52,7 +48,11 @@
       {
         "marble_drop_iso": "https://archive.org/download/marble-drop/Marble%20Drop%20%281997%29%28Maxis%29.iso"
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/",
+      "exe": "$GAMEDIR/drive_c/ProgramData/Microsoft/Windows/Start Menu/Programs/Maxis/FullTilt!.lnk"
+    }
   },
   "content": "files:\n- marble_drop_iso: https://archive.org/download/marble-drop/Marble%20Drop%20%281997%29%28Maxis%29.iso\ngame:\n  exe: $GAMEDIR/drive_c/ProgramData/Microsoft/Windows/Start Menu/Programs/Maxis/FullTilt!.lnk\n  prefix: $GAMEDIR/\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/marble-drop-iso\n    file: marble_drop_iso\n- write_file:\n    content: '[InstallShield Silent]\n\n      Version=v3.00.000\n\n      File=Response File\n\n      [Application]\n\n      Name=FullTilt!\n\n      Version=1.1\n\n      Company=Maxis\n\n      [DlgOrder]\n\n      Dlg0=Welcome-0\n\n      Count=4\n\n      Dlg1=AskOptions-0\n\n      Dlg2=AskDestPath-0\n\n      Dlg3=MessageBox-0\n\n      [Welcome-0]\n\n      Result=1\n\n      [AskOptions-0]\n\n      Result=1\n\n      Sel-0=0\n\n      Sel-1=1\n\n      [AskDestPath-0]\n\n      szPath=C:\\Maxis\\FullTilt\n\n      Result=1\n\n      [MessageBox-0]\n\n      Result=1\n\n      '\n    file: $GAMEDIR/drive_c/marble-drop-iso/FullTilt/setup.iss\n- task:\n    args: -s -f1 setup.iss\n    executable: C:\\marble-drop-iso\\FullTilt\\setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR/drive_c/marble-drop-iso/FullTilt/\n"
 }

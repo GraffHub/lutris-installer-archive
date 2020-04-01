@@ -1,0 +1,67 @@
+{
+  "id": 18764,
+  "game_id": 11178,
+  "game_slug": "playerunknowns-battlegrounds",
+  "name": "PLAYERUNKNOWN'S BATTLEGROUNDS",
+  "year": 2017,
+  "user": "l1zy64",
+  "runner": "wine",
+  "slug": "playerunknowns-battlegrounds-change-me",
+  "version": "Change Me",
+  "description": "Only sets up Garena and DXVK you'll need to download PUBG Lite manually.",
+  "notes": "",
+  "created_at": "2020-03-10T12:22:37.266087Z",
+  "updated_at": "2020-03-10T12:22:37.266112Z",
+  "draft": false,
+  "published": false,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 578080,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0.exe"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "setup",
+          "description": "Installing the garena (WARNING: Don't login, close the window)",
+          "prefix": "$GAMEDIR",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "mesa_glthread": true,
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1
+      }
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe"
+    }
+  },
+  "content": "files:\n- setup: http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing the garena (WARNING: Don''t login, close the window)'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: true\nwine:\n  dxvk: true\n"
+}

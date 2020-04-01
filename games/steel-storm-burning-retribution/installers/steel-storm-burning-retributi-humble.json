@@ -21,15 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/start.sh"
-    },
     "installer": [
       {
         "extract": {
-          "dst": "$GAMEDIR/",
+          "src": "$game",
           "format": "tgz",
-          "src": "$game"
+          "dst": "$GAMEDIR/"
         }
       },
       {
@@ -46,7 +43,10 @@
       {
         "game": "N/A:Please select the *.tar.gz installer downloaded from https://www.humblebundle.com"
       }
-    ]
+    ],
+    "game": {
+      "exe": "$GAMEDIR/start.sh"
+    }
   },
   "content": "files:\n- game: N/A:Please select the *.tar.gz installer downloaded from https://www.humblebundle.com\ngame:\n  exe: $GAMEDIR/start.sh\ninstaller:\n- extract:\n    dst: $GAMEDIR/\n    format: tgz\n    src: $game\n- write_file:\n    content: '#!/bin/sh\n\n      if (uname -m | grep \"64\"); then\n\n      arch=\"64\";\n\n      else\n\n      arch=\"\";\n\n      fi;\n\n      ./steelstorm$arch\n\n      '\n    file: $GAMEDIR/start.sh\n- chmodx: $GAMEDIR/start.sh\n"
 }

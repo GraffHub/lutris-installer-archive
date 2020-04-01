@@ -21,11 +21,6 @@
   "gogslug": "worms_2",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Worms 2/frontend.exe",
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -37,20 +32,20 @@
       },
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
+          "value": 5,
+          "arch": "win32",
+          "key": "VideoSetting",
           "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Team17SoftwareLTD\\frontend\\Worms2",
-          "value": 5,
-          "key": "VideoSetting",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "executable": "setup",
-          "exclude_processes": "GOGLauncher.exe start.exe",
           "arch": "win32",
+          "exclude_processes": "GOGLauncher.exe start.exe",
+          "executable": "setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
@@ -67,7 +62,12 @@
       {
         "setup": "N/A:Please select the GOG.com Worms 2 installer executable"
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Worms 2/frontend.exe"
+    }
   },
   "content": "files:\r\n- setup: N/A:Please select the GOG.com Worms 2 installer executable\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/GOG Games/Worms 2/frontend.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    key: VideoSetting\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Team17SoftwareLTD\\frontend\\Worms2\r\n    prefix: $GAMEDIR\r\n    type: REG_DWORD\r\n    value: 5\r\n- task:\r\n    arch: win32\r\n    exclude_processes: GOGLauncher.exe start.exe\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    name: winekill\r\n    prefix: $GAMEDIR"
 }

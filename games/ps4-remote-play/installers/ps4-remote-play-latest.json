@@ -21,10 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/Program Files (x86)/Sony/PS4 Remote Play/RemotePlay.exe",
-      "prefix": "$GAMEDIR"
-    },
     "installer": [
       {
         "task": {
@@ -34,30 +30,30 @@
       },
       {
         "task": {
-          "app": "vcrun2013 dotnet472 win10",
           "description": "Installing .NET 4.7.2",
+          "app": "vcrun2013 dotnet472 win10",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "setup",
           "args": "/extract",
+          "executable": "setup",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "move": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Sony/PS4 Remote Play",
-          "src": "$CACHE/setup/B3CD2F9"
+          "src": "$CACHE/setup/B3CD2F9",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Sony/PS4 Remote Play"
         }
       },
       {
         "copy": {
-          "dst": "$GAMEDIR/drive_c/windows/syswow64",
-          "src": "$GAMEDIR/drive_c/Program Files (x86)/Sony/PS4 Remote Play/scenp.dll"
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Sony/PS4 Remote Play/scenp.dll",
+          "dst": "$GAMEDIR/drive_c/windows/syswow64"
         }
       },
       {
@@ -70,7 +66,11 @@
       {
         "setup": "https://remoteplay.dl.playstation.net/remoteplay/module/win/RemotePlayInstaller.exe"
       }
-    ]
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Sony/PS4 Remote Play/RemotePlay.exe"
+    }
   },
   "content": "files:\n- setup: https://remoteplay.dl.playstation.net/remoteplay/module/win/RemotePlayInstaller.exe\ngame:\n  exe: drive_c/Program Files (x86)/Sony/PS4 Remote Play/RemotePlay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013 dotnet472 win10\n    description: Installing .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /extract\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Sony/PS4 Remote Play\n    src: $CACHE/setup/B3CD2F9\n- copy:\n    dst: $GAMEDIR/drive_c/windows/syswow64\n    src: $GAMEDIR/drive_c/Program Files (x86)/Sony/PS4 Remote Play/scenp.dll\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Temp\"\n"
 }

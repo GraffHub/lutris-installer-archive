@@ -21,12 +21,6 @@
   "gogslug": "rise_of_the_triad",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "$GAMEDIR/drive_c/game/Binaries/ROTTLauncher.exe",
-      "working_dir": "$GAMEDIR/drive_c/game/Binaries",
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
-    },
     "installer": [
       {
         "task": {
@@ -37,24 +31,24 @@
       },
       {
         "task": {
+          "silent": true,
           "app": "dotnet40",
-          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "silent": true,
           "app": "corefonts",
-          "silent": true,
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "game",
           "args": "/SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "executable": "game",
           "description": "Installing...",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
@@ -65,7 +59,13 @@
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
-    ]
+    ],
+    "game": {
+      "arch": "win32",
+      "working_dir": "$GAMEDIR/drive_c/game/Binaries",
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/game/Binaries/ROTTLauncher.exe"
+    }
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Binaries/ROTTLauncher.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game/Binaries\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet40\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    args: /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

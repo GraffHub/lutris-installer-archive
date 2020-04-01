@@ -21,20 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "exe": "drive_c/GOG Games/Bound By Flame/BoundByFlame.exe",
-      "arch": "win64",
-      "prefix": "$GAMEDIR"
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler",
-        "mesa_glthread": "true"
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
       }
-    },
-    "wine": {
-      "dxvk": true
-    },
+    ],
     "installer": [
       {
         "task": {
@@ -45,27 +36,36 @@
       },
       {
         "task": {
-          "app": "vcrun2010 vcrun2017 win7 dotNet462 win7",
           "arch": "win64",
+          "app": "vcrun2010 vcrun2017 win7 dotNet462 win7",
           "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "setup",
           "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
+          "executable": "setup",
           "description": "Installing Bound By Flame",
           "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       }
     ],
-    "files": [
-      {
-        "setup": "N/A:Select the game's setup file"
+    "system": {
+      "env": {
+        "mesa_glthread": "true",
+        "DXVK_HUD": "compiler"
       }
-    ]
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "game": {
+      "arch": "win64",
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Bound By Flame/BoundByFlame.exe"
+    }
   },
   "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Bound By Flame/BoundByFlame.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 vcrun2017 win7 dotNet462 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    description: Installing Bound By Flame\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n"
 }
