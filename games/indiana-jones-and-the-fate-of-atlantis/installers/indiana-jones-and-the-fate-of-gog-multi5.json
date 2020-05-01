@@ -21,21 +21,18 @@
   "gogslug": "indiana_jones_and_the_fate_of_atlantis",
   "humblestoreid": "",
   "script": {
-    "scummvm": {
-      "fullscreen": true,
-      "aspect": true
-    },
+    "custom-name": "Indiana Jones and the Fate of Atlantis - GOG",
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/innoextract",
-          "file": "inno"
+          "file": "inno",
+          "dst": "$CACHE/innoextract"
         }
       },
       {
         "execute": {
-          "args": "--extract $gog --output-dir \"$CACHE/indy\"",
-          "file": "$CACHE/innoextract/innoextract"
+          "file": "$CACHE/innoextract/innoextract",
+          "args": "--extract $gog --output-dir \"$CACHE/indy\""
         }
       },
       {
@@ -52,7 +49,7 @@
       },
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "keep",
           "options": [
             {
               "keep": "I prefer to keep the default install language"
@@ -71,7 +68,7 @@
             }
           ],
           "description": "Please choose your preferred subtitles language:",
-          "preselect": "keep"
+          "id": "LANG"
         }
       },
       {
@@ -97,10 +94,13 @@
         "gog": "N/A:Please select the game Windows setup exe file downloaded from GOG"
       }
     ],
-    "custom-name": "Indiana Jones and the Fate of Atlantis - GOG",
     "game": {
       "game_id": "atlantis",
       "path": "$GAMEDIR"
+    },
+    "scummvm": {
+      "fullscreen": true,
+      "aspect": true
     }
   },
   "content": "custom-name: Indiana Jones and the Fate of Atlantis - GOG\nfiles:\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Indiana%20Jones%20and%20the%20Fate%20of%20Atlantis/indi4_multi5.zip\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- gog: N/A:Please select the game Windows setup exe file downloaded from GOG\ngame:\n  game_id: atlantis\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $gog --output-dir \"$CACHE/indy\"\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/\n    src: $CACHE/indy\n- extract:\n    dst: $CACHE\n    src: multi5\n- input_menu:\n    description: 'Please choose your preferred subtitles language:'\n    id: LANG\n    options:\n    - keep: I prefer to keep the default install language\n    - fr: French\n    - sp: Spanish\n    - ge: German\n    - it: Italian\n    preselect: keep\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/$INPUT_LANG\n- execute:\n    command: cd $GAMEDIR; cp other/ATLANTIS.ICO other/HELPME.DOC . ; rm -f -r app\n      commonappdata other __redist scummvm __support tmp goggame-1207666293.* ;\nscummvm:\n  aspect: true\n  fullscreen: true\n"

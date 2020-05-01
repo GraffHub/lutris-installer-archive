@@ -21,35 +21,35 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "description": "Creating Wine Prefix...",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "executable": "installer",
-          "description": "Installing Kindle...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "https://s3.amazonaws.com/kindlecreate/KindleCreateInstaller.exe"
       }
     ],
     "game": {
-      "arch": "win64",
       "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Amazon/Kindle/Kindle.exe"
-    }
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Amazon/Kindle/Kindle.exe",
+      "arch": "win64"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine Prefix..."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Installing Kindle..."
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: https://s3.amazonaws.com/kindlecreate/KindleCreateInstaller.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Amazon/Kindle/Kindle.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Kindle...\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

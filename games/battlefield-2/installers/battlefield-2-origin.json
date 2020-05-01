@@ -29,38 +29,52 @@
         "updater": "https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Origin Games/Battlefield 2 Complete Collection/BF2.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      }
+    },
+    "system": {
+      "disable_runtime": false
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "app": "nocrashdialog win7",
-          "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
+          "name": "wineexec",
+          "description": "Installing Origin... Login window will pop-up and close.",
           "args": "/silent",
-          "executable": "client",
-          "description": "Installing Origin... Login window will pop-up and close."
+          "prefix": "$GAMEDIR",
+          "executable": "client"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "winekill"
         }
       },
@@ -75,28 +89,14 @@
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Installing winetricks components.",
           "app": "dotnet20 dotnet40 wmp9 d3dx10 d3dx10_43 d3dx11_42 d3dx11_43 d3dx9 d3dx9_26 d3dx9_28 d3dx9_31 d3dx9_35 d3dx9_36 d3dx9_39 d3dx9_42 d3dx9_43 xinput",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "disable_runtime": false
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "nvapi,nvapi64": "disabled"
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Origin Games/Battlefield 2 Complete Collection/BF2.exe"
-    }
+    ]
   },
   "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin Games/Battlefield 2 Complete Collection/BF2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\n- task:\n    app: dotnet20 dotnet40 wmp9 d3dx10 d3dx10_43 d3dx11_42 d3dx11_43 d3dx9 d3dx9_26\n      d3dx9_28 d3dx9_31 d3dx9_35 d3dx9_36 d3dx9_39 d3dx9_42 d3dx9_43 xinput\n    description: Installing winetricks components.\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: false\nwine:\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
 }

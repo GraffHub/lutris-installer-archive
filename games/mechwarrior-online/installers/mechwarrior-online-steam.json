@@ -22,63 +22,63 @@
   "humblestoreid": "",
   "script": {
     "winesteam": {
-      "dxvk": true,
-      "esync": true
+      "esync": true,
+      "dxvk": true
     },
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "args": "/silent",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winekill"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "app": "arial vcrun2010 dotnet471 win7",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64",
+      "appid": 342200
+    },
     "system": {
       "env": {
         "DXVK_HUD": 0
       }
     },
-    "game": {
-      "arch": "win64",
-      "appid": 342200,
-      "prefix": "$GAMEDIR/prefix"
-    }
+    "installer": [
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "arial vcrun2010 dotnet471 win7",
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\ngame:\r\n  appid: 342200\r\n  arch: win64\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: arial vcrun2010 dotnet471 win7\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  env:\r\n    DXVK_HUD: 0\r\nwinesteam:\r\n  dxvk: true\r\n  esync: true"
 }

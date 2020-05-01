@@ -21,29 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "description": "Creating 64bit Wine prefix.",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "app": "corefonts",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/orbiter/",
-          "file": "$filename"
-        }
-      }
-    ],
     "files": [
       {
         "filename": "http://mirror.orbiter-radio.co.uk/orbiter/assets/packages/core2016/Orbiter2016.zip"
@@ -52,7 +29,30 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "$GAMEDIR/drive_c/orbiter/orbiter.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64bit Wine prefix."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "corefonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "file": "$filename",
+          "dst": "$GAMEDIR/drive_c/orbiter/"
+        }
+      }
+    ]
   },
   "content": "files:\n- filename: http://mirror.orbiter-radio.co.uk/orbiter/assets/packages/core2016/Orbiter2016.zip\ngame:\n  exe: $GAMEDIR/drive_c/orbiter/orbiter.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/orbiter/\n    file: $filename\n"
 }

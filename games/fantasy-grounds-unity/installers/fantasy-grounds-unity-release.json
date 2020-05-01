@@ -1,0 +1,67 @@
+{
+  "id": 19785,
+  "game_id": 32206,
+  "game_slug": "fantasy-grounds-unity",
+  "name": "Fantasy Grounds Unity",
+  "year": 2019,
+  "user": "Kohrias",
+  "runner": "wine",
+  "slug": "fantasy-grounds-unity-release",
+  "version": "Release",
+  "description": "Install the latest Windows version of Fantasy Grounds Unity with wine.",
+  "notes": "After Installation FantasyGroundsUpdater.exe updates and restarts itself when pressing update button. After that the update button is not working any more. You have to login in with a fantasy grounds user to continue update process.",
+  "created_at": "2020-04-18T05:26:31.243000Z",
+  "updated_at": "2020-04-20T07:35:16.292500Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": {
+          "filename": "FGUWebInstall.exe",
+          "url": "https://www.fantasygrounds.com/filelibrary/FGUWebInstall.exe"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/SmiteWorks/Fantasy Grounds/FantasyGroundsUpdater.exe"
+    },
+    "wine": {
+      "esync": false,
+      "dxvk": false
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "arial",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Running Fantasy Grounds Unity Installer. Please do not run the game until this script finishes installing. The Updater needs a logged in user to work properly."
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer:\n    filename: FGUWebInstall.exe\n    url: https://www.fantasygrounds.com/filelibrary/FGUWebInstall.exe\ngame:\n  exe: $GAMEDIR/drive_c/Program Files/SmiteWorks/Fantasy Grounds/FantasyGroundsUpdater.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running Fantasy Grounds Unity Installer. Please do not run the game\n      until this script finishes installing. The Updater needs a logged in user to\n      work properly.\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: false\n  esync: false\n"
+}

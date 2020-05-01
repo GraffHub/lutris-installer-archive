@@ -21,27 +21,43 @@
   "gogslug": "the_settlers_4_gold_edition",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "game": "N/A:Select the installer downloaded from GOG."
+      },
+      {
+        "fix": "https://github.com/Armageddon91/Lutris-Script/raw/master/The%20Settlers%20IV/The%20Settler%204%20Fix.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Settlers 4 Gold/S4.exe"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "$RESOLUTION"
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating WINE prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$fix"
+          "file": "$fix",
+          "dst": "$CACHE"
         }
       },
       {
         "task": {
-          "args": "/silent /nogui",
-          "executable": "$game",
-          "description": "Installing game",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$game",
+          "name": "wineexec",
+          "description": "Installing game",
+          "args": "/silent /nogui"
         }
       },
       {
@@ -68,23 +84,7 @@
           "dst": "$GAMEDIR/drive_c/GOG Games/Settlers 4 Gold/Config/GameSettings.cfg"
         }
       }
-    ],
-    "files": [
-      {
-        "game": "N/A:Select the installer downloaded from GOG."
-      },
-      {
-        "fix": "https://github.com/Armageddon91/Lutris-Script/raw/master/The%20Settlers%20IV/The%20Settler%204%20Fix.zip"
-      }
-    ],
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "$RESOLUTION"
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Settlers 4 Gold/S4.exe"
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Select the installer downloaded from GOG.\n- fix: https://github.com/Armageddon91/Lutris-Script/raw/master/The%20Settlers%20IV/The%20Settler%204%20Fix.zip\ngame:\n  exe: drive_c/GOG Games/Settlers 4 Gold/S4.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $fix\n- task:\n    args: /silent /nogui\n    description: Installing game\n    executable: $game\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Settlers 4 Gold/Config/SoundTracks.cfg\n    src: $CACHE/Music Fix/SoundTracks.cfg\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Settlers 4 Gold/Snd/Trojans_settle_03.mp3\n    src: $CACHE/Music Fix/Trojans_settle_03.mp3\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Settlers 4 Gold/Exe/GfxEngine.dll\n    src: $CACHE/Widescreen Fix/$RESOLUTION/GfxEngine.dll\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Settlers 4 Gold/Config/GameSettings.cfg\n    src: $CACHE/GameSettings.cfg\nwine:\n  Desktop: true\n  WineDesktop: $RESOLUTION\n"
 }

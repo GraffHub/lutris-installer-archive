@@ -26,56 +26,68 @@
         "setup": "https://benchmarks.ul.com/downloads/3dmark2001.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/MadOnion.com/3DMark2001 SE/3DMark2001SE.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "system": {
+      "disable_compositor": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "MP3codec DirectShow ...",
           "app": "l3codecx",
-          "prefix": "$GAMEDIR",
+          "description": "MP3codec DirectShow ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Visual C++ 2010 libraries ...",
           "app": "vcrun2010",
-          "prefix": "$GAMEDIR",
+          "description": "Visual C++ 2010 libraries ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Windows version 8.1 ...",
           "app": "win81",
-          "prefix": "$GAMEDIR",
+          "description": "Windows version 8.1 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Vulkan ...",
-          "app": "d9vk_master",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "d9vk_master",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
       {
         "merge": {
           "src": "$GAMEDIR/../3dmark_2006/drive_c/Program Files (x86)/Futuremark/Futuremark SystemInfo/",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/Futuremark SystemInfo/",
-          "description": "Copying SystemInfo 4.15.0 from 3dmark_2006 ..."
+          "description": "Copying SystemInfo 4.15.0 from 3dmark_2006 ...",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/Futuremark SystemInfo/"
         }
       },
       {
@@ -89,64 +101,52 @@
       },
       {
         "task": {
-          "executable": "$GAMEDIR/3dmark2001.exe",
-          "description": "3DMark 2001 ...",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/3dmark2001.exe",
+          "name": "wineexec",
+          "description": "3DMark 2001 ..."
         }
       },
       {
         "execute": {
-          "description": "Register SystemInfo 4.15.0 ...",
-          "command": "cd $HOME/Games/3dmark_2001/drive_c/Program\\ Files\\ \\(x86\\)/Futuremark/Futuremark\\ SystemInfo && WINEPREFIX=\"$HOME/Games/3dmark_2001/\" wine start register_fmsi.bat"
+          "command": "cd $HOME/Games/3dmark_2001/drive_c/Program\\ Files\\ \\(x86\\)/Futuremark/Futuremark\\ SystemInfo && WINEPREFIX=\"$HOME/Games/3dmark_2001/\" wine start register_fmsi.bat",
+          "description": "Register SystemInfo 4.15.0 ..."
         }
       },
       {
         "task": {
-          "value": "C:\\\\Program Files (x86)\\\\MadOnion.com\\\\3DMark2001 SE\\\\3DMark2001SE.exe",
           "arch": "win64",
-          "key": "ExePath",
           "name": "set_regedit",
           "description": "Register ExePath ...",
+          "key": "ExePath",
+          "value": "C:\\\\Program Files (x86)\\\\MadOnion.com\\\\3DMark2001 SE\\\\3DMark2001SE.exe",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\MadOnion.com\\3DMark2001 SE",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "value": "7QMF2-TSLJR-ESRDD-L3FJF",
           "arch": "win64",
-          "key": "3DMarkRegKey",
           "name": "set_regedit",
           "description": "Register KeyCode ...",
+          "key": "3DMarkRegKey",
+          "value": "7QMF2-TSLJR-ESRDD-L3FJF",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\MadOnion.com\\Registration2001",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "value": "Futuremark",
           "arch": "win64",
-          "key": "3DMarkRegName",
           "name": "set_regedit",
           "description": "Register KeyCode ...",
+          "key": "3DMarkRegName",
+          "value": "Futuremark",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\MadOnion.com\\Registration2001",
           "type": "REG_SZ"
         }
       }
-    ],
-    "system": {
-      "disable_compositor": true
-    },
-    "wine": {
-      "Desktop": true,
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/MadOnion.com/3DMark2001 SE/3DMark2001SE.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: https://benchmarks.ul.com/downloads/3dmark2001.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/MadOnion.com/3DMark2001 SE/3DMark2001SE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: l3codecx\n    arch: win64\n    description: MP3codec DirectShow ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Visual C++ 2010 libraries ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win81\n    arch: win64\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d9vk_master\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    description: Copying SystemInfo 4.15.0 from 3dmark_2006 ...\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Futuremark/Futuremark SystemInfo/\n    src: $GAMEDIR/../3dmark_2006/drive_c/Program Files (x86)/Futuremark/Futuremark\n      SystemInfo/\n- move:\n    dst: $GAMEDIR\n    src: setup\n- chmodx: $GAMEDIR/3dmark2001.exe\n- task:\n    description: 3DMark 2001 ...\n    executable: $GAMEDIR/3dmark2001.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: cd $HOME/Games/3dmark_2001/drive_c/Program\\ Files\\ \\(x86\\)/Futuremark/Futuremark\\\n      SystemInfo && WINEPREFIX=\"$HOME/Games/3dmark_2001/\" wine start register_fmsi.bat\n    description: Register SystemInfo 4.15.0 ...\n- task:\n    arch: win64\n    description: Register ExePath ...\n    key: ExePath\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\MadOnion.com\\3DMark2001 SE\n    type: REG_SZ\n    value: C:\\\\Program Files (x86)\\\\MadOnion.com\\\\3DMark2001 SE\\\\3DMark2001SE.exe\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: 3DMarkRegKey\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\MadOnion.com\\Registration2001\n    type: REG_SZ\n    value: 7QMF2-TSLJR-ESRDD-L3FJF\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: 3DMarkRegName\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\MadOnion.com\\Registration2001\n    type: REG_SZ\n    value: Futuremark\nsystem:\n  disable_compositor: true\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

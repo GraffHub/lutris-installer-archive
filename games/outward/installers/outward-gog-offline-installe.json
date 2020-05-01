@@ -26,6 +26,21 @@
         "setup": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Outward/Outward.exe"
+    },
+    "wine": {
+      "esync": true,
+      "Desktop": false
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "pulse_latency": false
+    },
     "installer": [
       {
         "task": {
@@ -41,29 +56,14 @@
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
-          "description": "Installing Outward",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing Outward",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1
-      },
-      "pulse_latency": false
-    },
-    "wine": {
-      "Desktop": false,
-      "esync": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Outward/Outward.exe"
-    }
+    ]
   },
   "content": "files:\r\n- setup: N/A:Select the game's setup file\r\ngame:\r\n  exe: drive_c/GOG Games/Outward/Outward.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\r\n    description: Installing Outward\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n  pulse_latency: false\r\nwine:\r\n  Desktop: false\r\n  esync: true"
 }

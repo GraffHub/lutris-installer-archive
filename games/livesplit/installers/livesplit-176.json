@@ -21,30 +21,40 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "livesplitzip": "https://github.com/LiveSplit/LiveSplit/releases/download/1.7.6/LiveSplit_1.7.6.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "LiveSplit.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Installing .NET 4.5. This will take a while...",
-          "app": "dotnet45",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "dotnet45",
+          "description": "Installing .NET 4.5. This will take a while...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Changing to 10 version...",
-          "app": "win10",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "win10",
+          "description": "Changing to 10 version...",
           "name": "winetricks"
         }
       },
@@ -62,17 +72,7 @@
       {
         "chmodx": "$GAMEDIR/LiveSplit.exe"
       }
-    ],
-    "files": [
-      {
-        "livesplitzip": "https://github.com/LiveSplit/LiveSplit/releases/download/1.7.6/LiveSplit_1.7.6.zip"
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "LiveSplit.exe"
-    }
+    ]
   },
   "content": "files:\r\n- livesplitzip: https://github.com/LiveSplit/LiveSplit/releases/download/1.7.6/LiveSplit_1.7.6.zip\r\ngame:\r\n  arch: win32\r\n  exe: LiveSplit.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet45\r\n    arch: win32\r\n    description: Installing .NET 4.5. This will take a while...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win10\r\n    arch: win32\r\n    description: Changing to 10 version...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    file: livesplitzip\r\n- chmodx: $GAMEDIR/LiveSplit.exe"
 }

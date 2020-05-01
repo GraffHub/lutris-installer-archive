@@ -21,23 +21,36 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/Blitz/Blitz.exe"
+    },
+    "files": [
+      {
+        "BlitzInstaller": {
+          "filename": "blitz-installer.exe",
+          "url": "https://dl.blitz.gg/download/windows"
+        }
+      }
+    ],
+    "requires": "league-of-legends",
     "installer": [
       {
         "task": {
-          "description": "Installing prerequisites",
-          "app": "dotnet452 win7 corefonts",
           "prefix": "$GAMEDIR",
+          "app": "dotnet452 win7 corefonts",
+          "description": "Installing prerequisites",
           "name": "winetricks"
         }
       },
       {
         "task": {
           "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "exclude_processes": "Blitz.exe",
-          "executable": "BlitzInstaller",
-          "description": "Running Blitz app installer"
+          "name": "wineexec",
+          "description": "Running Blitz app installer",
+          "prefix": "$GAMEDIR",
+          "executable": "BlitzInstaller"
         }
       },
       {
@@ -46,20 +59,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "requires": "league-of-legends",
-    "files": [
-      {
-        "BlitzInstaller": {
-          "url": "https://dl.blitz.gg/download/windows",
-          "filename": "blitz-installer.exe"
-        }
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/$USER/Local Settings/Application Data/Blitz/Blitz.exe"
-    }
+    ]
   },
   "content": "files:\n- BlitzInstaller:\n    filename: blitz-installer.exe\n    url: https://dl.blitz.gg/download/windows\ngame:\n  exe: drive_c/users/$USER/Local Settings/Application Data/Blitz/Blitz.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: dotnet452 win7 corefonts\n    description: Installing prerequisites\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Running Blitz app installer\n    exclude_processes: Blitz.exe\n    executable: BlitzInstaller\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nrequires: league-of-legends\n"
 }

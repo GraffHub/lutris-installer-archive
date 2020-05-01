@@ -41,31 +41,53 @@
         "controller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/cemu_1.17.3/Cemu.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "overrides": {
+        "mscoree": "disabled",
+        "dbghelp": "native,builtin",
+        "mshtml": "disabled"
+      },
+      "esync": true
+    },
+    "system": {
+      "env": {
+        "vblank_mode": 0,
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "R600_DEBUG": "nohyperz"
+      },
+      "disable_compositor": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "app": "vcrun2017 win7",
           "prefix": "$GAMEDIR",
+          "app": "vcrun2017 win7",
           "name": "winetricks"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3",
-          "file": "cemu"
+          "file": "cemu",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/sharedFonts",
-          "file": "fonts"
+          "file": "fonts",
+          "dst": "$CACHE/sharedFonts"
         }
       },
       {
@@ -76,8 +98,8 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/hook",
-          "file": "hook"
+          "file": "hook",
+          "dst": "$CACHE/hook"
         }
       },
       {
@@ -88,14 +110,14 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/graphicPacks/downloadedGraphicPacks",
-          "file": "packs"
+          "file": "packs",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/graphicPacks/downloadedGraphicPacks"
         }
       },
       {
         "write_file": {
-          "content": "bleh",
-          "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/controllerProfiles/Xbox_Controller.txt"
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/controllerProfiles/Xbox_Controller.txt",
+          "content": "bleh"
         }
       },
       {
@@ -106,8 +128,8 @@
       },
       {
         "write_file": {
-          "content": "bleh",
-          "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/cemuhook.ini"
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/cemuhook.ini",
+          "content": "bleh"
         }
       },
       {
@@ -116,29 +138,7 @@
           "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/cemuhook.ini"
         }
       }
-    ],
-    "system": {
-      "disable_compositor": true,
-      "env": {
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "vblank_mode": 0,
-        "R600_DEBUG": "nohyperz"
-      }
-    },
-    "wine": {
-      "overrides": {
-        "mscoree": "disabled",
-        "mshtml": "disabled",
-        "dbghelp": "native,builtin"
-      },
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/cemu_1.17.3/Cemu.exe"
-    }
+    ]
   },
   "content": "files:\r\n- cemu: http://cemu.info/releases/cemu_1.17.3.zip\r\n- fonts: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz\r\n- hook: https://files.sshnuke.net/cemuhook_1159_0573.zip\r\n- config: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/cemuhook.ini\r\n- packs: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/graphicPacks544.tar.xz\r\n- controller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/cemu_1.17.3/Cemu.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2017 win7\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3\r\n    file: cemu\r\n- extract:\r\n    dst: $CACHE/sharedFonts\r\n    file: fonts\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3\r\n    src: $CACHE/sharedFonts\r\n- extract:\r\n    dst: $CACHE/hook\r\n    file: hook\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3\r\n    src: $CACHE/hook\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/graphicPacks/downloadedGraphicPacks\r\n    file: packs\r\n- write_file:\r\n    content: bleh\r\n    file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/controllerProfiles/Xbox_Controller.txt\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/controllerProfiles\r\n    src: controller\r\n- write_file:\r\n    content: bleh\r\n    file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/cemuhook.ini\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.17.3/cemuhook.ini\r\n    src: config\r\nsystem:\r\n  disable_compositor: true\r\n  env:\r\n    R600_DEBUG: nohyperz\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: 'true'\r\n    vblank_mode: 0\r\nwine:\r\n  esync: true\r\n  overrides:\r\n    dbghelp: native,builtin\r\n    mscoree: disabled\r\n    mshtml: disabled"
 }

@@ -21,7 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "require-binaries": "cmake, g++",
+    "game": {
+      "exe": "$GAMEDIR/game",
+      "working_dir": "$GAMEDIR"
+    },
     "files": [
       {
         "archive": "N/A:Select the game's archive file"
@@ -30,6 +33,7 @@
         "sourceport": "https://github.com/Codes4Fun/SDL_Hovertank3D/archive/master.zip"
       }
     ],
+    "require-binaries": "cmake, g++",
     "installer": [
       {
         "extract": {
@@ -45,20 +49,20 @@
       },
       {
         "execute": {
-          "working_dir": "$CACHE",
-          "command": "mkdir $CACHE/build"
+          "command": "mkdir $CACHE/build",
+          "working_dir": "$CACHE"
         }
       },
       {
         "execute": {
-          "working_dir": "$CACHE/build",
-          "command": "cd $CACHE/build && cmake -D CMAKE_CXX_FLAGS=\"-fno-operator-names\" $CACHE"
+          "command": "cd $CACHE/build && cmake -D CMAKE_CXX_FLAGS=\"-fno-operator-names\" $CACHE",
+          "working_dir": "$CACHE/build"
         }
       },
       {
         "execute": {
-          "working_dir": "$CACHE/build",
-          "command": "cd $CACHE/build && make"
+          "command": "cd $CACHE/build && make",
+          "working_dir": "$CACHE/build"
         }
       },
       {
@@ -67,11 +71,7 @@
           "dst": "$GAMEDIR"
         }
       }
-    ],
-    "game": {
-      "working_dir": "$GAMEDIR",
-      "exe": "$GAMEDIR/game"
-    }
+    ]
   },
   "content": "files:\n- archive: N/A:Select the game's archive file\n- sourceport: https://github.com/Codes4Fun/SDL_Hovertank3D/archive/master.zip\ngame:\n  exe: $GAMEDIR/game\n  working_dir: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR\n    src: $archive\n- extract:\n    dst: $CACHE\n    src: $sourceport\n- execute:\n    command: mkdir $CACHE/build\n    working_dir: $CACHE\n- execute:\n    command: cd $CACHE/build && cmake -D CMAKE_CXX_FLAGS=\"-fno-operator-names\" $CACHE\n    working_dir: $CACHE/build\n- execute:\n    command: cd $CACHE/build && make\n    working_dir: $CACHE/build\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/build/game\nrequire-binaries: cmake, g++\n"
 }

@@ -21,23 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Setting up wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "executable": "$installer",
-          "description": "Install to default location",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Select the game's setup.exe file"
@@ -46,7 +29,24 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/Program Files (x86)/Snowball Interactive/40/speedthief.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Setting up wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$installer",
+          "name": "wineexec",
+          "description": "Install to default location"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup.exe file\ngame:\n  exe: drive_c/Program Files (x86)/Snowball Interactive/40/speedthief.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Setting up wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Install to default location\n    executable: $installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

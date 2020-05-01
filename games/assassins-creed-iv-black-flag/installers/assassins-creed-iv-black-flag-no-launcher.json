@@ -1,0 +1,101 @@
+{
+  "id": 19722,
+  "game_id": 2927,
+  "game_slug": "assassins-creed-iv-black-flag",
+  "name": "Assassin's Creed IV Black Flag",
+  "year": 2013,
+  "user": "AhmadMamdouh",
+  "runner": "wine",
+  "slug": "assassins-creed-iv-black-flag-no-launcher",
+  "version": "No Launcher",
+  "description": "No game store launcher for those who use cracks.\r\ncracks are obviously bad btw.",
+  "notes": "you must specify the path for the .exe file\r\nstill under work - haven't been tested yet",
+  "created_at": "2020-04-15T10:04:45.350000Z",
+  "updated_at": "2020-04-16T07:51:12.035796Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 242050,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "game": {
+      "exe": null,
+      "arch": "win64",
+      "appid": 242050
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "vcrun2008 vcrun2010 d3dcompiler_43 corefonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "dotnet472",
+          "description": "Please be patient while we install .NET 4.7.2",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "uplay",
+          "name": "wineexec",
+          "args": "/S"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  appid: 242050\n  arch: win64\n  exe: null\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008 vcrun2010 d3dcompiler_43 corefonts\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Please be patient while we install .NET 4.7.2\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
+}

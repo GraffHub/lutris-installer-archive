@@ -21,11 +21,20 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "args": "-game rogue -rogue"
+    },
+    "files": [
+      {
+        "game": "N/A:Select a file with *.PAK extension"
+      }
+    ],
+    "requires": "quake-cdrom-darkplaces",
     "installer": [
       {
         "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;",
-          "file": "$CACHE/selectcopy.sh"
+          "file": "$CACHE/selectcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;"
         }
       },
       {
@@ -33,26 +42,17 @@
       },
       {
         "execute": {
-          "args": "$GAMEDIR/rouge",
-          "file": "mkdir"
+          "file": "mkdir",
+          "args": "$GAMEDIR/rouge"
         }
       },
       {
         "execute": {
-          "args": "$game/ $GAMEDIR/rouge",
-          "file": "$CACHE/selectcopy.sh"
+          "file": "$CACHE/selectcopy.sh",
+          "args": "$game/ $GAMEDIR/rouge"
         }
       }
-    ],
-    "requires": "quake-cdrom-darkplaces",
-    "files": [
-      {
-        "game": "N/A:Select a file with *.PAK extension"
-      }
-    ],
-    "game": {
-      "args": "-game rogue -rogue"
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Select a file with *.PAK extension\ngame:\n  args: -game rogue -rogue\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $GAMEDIR/rouge\n    file: mkdir\n- execute:\n    args: $game/ $GAMEDIR/rouge\n    file: $CACHE/selectcopy.sh\nrequires: quake-cdrom-darkplaces\n"
 }

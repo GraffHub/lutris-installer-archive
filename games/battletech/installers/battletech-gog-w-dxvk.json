@@ -29,57 +29,57 @@
         "CCCP": "http://www.cccp-project.net/public/Combined-Community-Codec-Pack-64bit-2015-10-18.exe"
       }
     ],
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "description": "Installing dotnet472 with winetricks. This will take several minutes.",
-          "app": "dotnet472",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "executable": "CCCP",
-          "description": "Installing CCCP (Combined Community Codec Pack) else cutscenes can't play and the game can't launch. Please follow the installer prompts to select \"Full Installation\".",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
-          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES",
-          "executable": "goginstaller",
-          "description": "Please wait while the game installs. This will take several minutes."
-        }
-      }
-    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/BATTLETECH/BattleTechLauncher.exe",
+      "arch": "win64",
+      "args": "-force-driver-type-warp"
+    },
+    "wine": {
+      "dxvk": true
+    },
     "system": {
       "env": {
         "DXVK_HUD": 0
       }
     },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "args": "-force-driver-type-warp",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/BATTLETECH/BattleTechLauncher.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "dotnet472",
+          "description": "Installing dotnet472 with winetricks. This will take several minutes.",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "CCCP",
+          "name": "wineexec",
+          "description": "Installing CCCP (Combined Community Codec Pack) else cutscenes can't play and the game can't launch. Please follow the installer prompts to select \"Full Installation\"."
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "wineexec",
+          "description": "Please wait while the game installs. This will take several minutes.",
+          "args": "/LANG=en /SP- /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
+          "executable": "goginstaller"
+        }
+      }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the BATTLETECH setup file\n- CCCP: http://www.cccp-project.net/public/Combined-Community-Codec-Pack-64bit-2015-10-18.exe\ngame:\n  arch: win64\n  args: -force-driver-type-warp\n  exe: drive_c/GOG Games/BATTLETECH/BattleTechLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing dotnet472 with winetricks. This will take several minutes.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing CCCP (Combined Community Codec Pack) else cutscenes can't\n      play and the game can't launch. Please follow the installer prompts to select\n      \"Full Installation\".\n    executable: CCCP\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=en /SP- /SUPPRESSMSGBOXES\n    description: Please wait while the game installs. This will take several minutes.\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

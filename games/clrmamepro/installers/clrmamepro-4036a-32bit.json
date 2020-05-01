@@ -21,45 +21,45 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Installing MS Corefonts",
-          "app": "corefonts",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "extract": {
-          "description": "Extracting clrmamepro",
-          "dst": "$GAMEDIR/drive_c/Program Files/clrmamepro",
-          "file": "$download"
-        }
-      },
-      {
-        "chmodx": "$GAMEDIR/drive_c/Program Files/clrmamepro/cmpro.exe"
-      }
-    ],
     "files": [
       {
         "download": "https://mamedev.emulab.it/clrmamepro/binaries/cmp4036a_32.zip"
       }
     ],
     "game": {
-      "arch": "win32",
-      "working_dir": "$GAMEDIR/drive_c/Program Files/clrmamepro",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/clrmamepro/cmpro.exe"
-    }
+      "exe": "drive_c/Program Files/clrmamepro/cmpro.exe",
+      "arch": "win32",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/clrmamepro"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "corefonts",
+          "description": "Installing MS Corefonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "extract": {
+          "file": "$download",
+          "description": "Extracting clrmamepro",
+          "dst": "$GAMEDIR/drive_c/Program Files/clrmamepro"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/Program Files/clrmamepro/cmpro.exe"
+      }
+    ]
   },
   "content": "files:\n- download: https://mamedev.emulab.it/clrmamepro/binaries/cmp4036a_32.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/clrmamepro/cmpro.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/clrmamepro\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    description: Installing MS Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting clrmamepro\n    dst: $GAMEDIR/drive_c/Program Files/clrmamepro\n    file: $download\n- chmodx: $GAMEDIR/drive_c/Program Files/clrmamepro/cmpro.exe\n"
 }

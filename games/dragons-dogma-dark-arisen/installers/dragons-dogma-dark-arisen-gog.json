@@ -3,7 +3,7 @@
   "game_id": 5960,
   "game_slug": "dragons-dogma-dark-arisen",
   "name": "Dragon's Dogma: Dark Arisen",
-  "year": null,
+  "year": 2013,
   "user": "cxf",
   "runner": "wine",
   "slug": "dragons-dogma-dark-arisen-gog",
@@ -21,47 +21,6 @@
   "gogslug": "dragons_dogma_dark_arisen",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "args": "/silent",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "app": "vcrun2010 win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "executable": "setup",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
@@ -71,10 +30,51 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/DDDA/DDDA.exe"
-    }
+      "exe": "drive_c/GOG Games/DDDA/DDDA.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "vcrun2010 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES"
+        }
+      }
+    ]
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- setup: N/A:Select gog setup exe\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/DDDA/DDDA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- /SUPPRESSMSGBOXES\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

@@ -21,13 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "picture": "https://www.myabandonware.com/media/screenshots/l/lemmings-16x/lemmings_1.gif"
+      }
+    ],
+    "game": {
+      "main_file": "another.exe"
+    },
     "installer": [
       {
         "execute": {
-          "args": "https://www.myabandonware.com/download/18e-out-of-this-world --referer=www.myabandonware.com --directory-prefix=$CACHE",
-          "dst": "$CACHE",
+          "file": "/usr/bin/wget",
           "description": "Downloading game data…",
-          "file": "/usr/bin/wget"
+          "dst": "$CACHE",
+          "args": "https://www.myabandonware.com/download/18e-out-of-this-world --referer=www.myabandonware.com --directory-prefix=$CACHE"
         }
       },
       {
@@ -38,21 +46,13 @@
       },
       {
         "extract": {
+          "file": "$CACHE/game.zip",
           "description": "Extracting game…",
           "dst": "$GAMEDIR/",
-          "file": "$CACHE/game.zip",
           "format": "zip"
         }
       }
-    ],
-    "files": [
-      {
-        "picture": "https://www.myabandonware.com/media/screenshots/l/lemmings-16x/lemmings_1.gif"
-      }
-    ],
-    "game": {
-      "main_file": "another.exe"
-    }
+    ]
   },
   "content": "files:\n- picture: https://www.myabandonware.com/media/screenshots/l/lemmings-16x/lemmings_1.gif\ngame:\n  main_file: another.exe\ninstaller:\n- execute:\n    args: https://www.myabandonware.com/download/18e-out-of-this-world --referer=www.myabandonware.com\n      --directory-prefix=$CACHE\n    description: \"Downloading game data\\u2026\"\n    dst: $CACHE\n    file: /usr/bin/wget\n- move:\n    dst: $CACHE/game.zip\n    src: $CACHE/18e-out-of-this-world\n- extract:\n    description: \"Extracting game\\u2026\"\n    dst: $GAMEDIR/\n    file: $CACHE/game.zip\n    format: zip\n"
 }

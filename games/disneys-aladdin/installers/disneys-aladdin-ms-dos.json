@@ -21,31 +21,35 @@
   "gogslug": "disney_aladdin",
   "humblestoreid": "",
   "script": {
-    "require-binaries": "7z",
+    "game": {
+      "main_file": "ALADDIN.EXE",
+      "config_file": "$GAMEDIR/dosbox_aladdin.conf"
+    },
     "files": [
       {
         "file1": "N/A:Select the game's archive file"
       }
     ],
+    "require-binaries": "7z",
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/game",
-          "file": "$file1"
+          "file": "$file1",
+          "dst": "$CACHE/game"
         }
       },
       {
         "execute": {
-          "args": "x \"$CACHE/game/DISK1.DAT\"",
+          "file": "7z",
           "description": "Extracting the data files...",
-          "file": "7z"
+          "args": "x \"$CACHE/game/DISK1.DAT\""
         }
       },
       {
         "execute": {
-          "args": "x \"$CACHE/game/DISK2.DAT\"",
+          "file": "7z",
           "description": "Extracting more data files...",
-          "file": "7z"
+          "args": "x \"$CACHE/game/DISK2.DAT\""
         }
       },
       {
@@ -56,48 +60,44 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosbox_aladdin.conf",
+          "value": true,
           "section": "render",
-          "key": "aspect",
-          "file": "$GAMEDIR/dosbox_aladdin.conf",
-          "value": true
+          "key": "aspect"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosbox_aladdin.conf",
+          "value": false,
           "section": "sdl",
-          "key": "fullscreen",
-          "file": "$GAMEDIR/dosbox_aladdin.conf",
-          "value": false
+          "key": "fullscreen"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosbox_aladdin.conf",
+          "value": "sb16",
           "section": "sblaster",
-          "key": "sbtype",
-          "file": "$GAMEDIR/dosbox_aladdin.conf",
-          "value": "sb16"
+          "key": "sbtype"
         }
       },
       {
         "write_config": {
-          "section": "cpu",
-          "key": "cycles",
           "file": "$GAMEDIR/dosbox_aladdin.conf",
-          "value": "max"
+          "value": "max",
+          "section": "cpu",
+          "key": "cycles"
         }
       },
       {
         "task": {
           "executable": "SETSND.EXE",
-          "description": "Setting sound. just type Y and Enter directly.",
-          "name": "dosexec"
+          "name": "dosexec",
+          "description": "Setting sound. just type Y and Enter directly."
         }
       }
-    ],
-    "game": {
-      "config_file": "$GAMEDIR/dosbox_aladdin.conf",
-      "main_file": "ALADDIN.EXE"
-    }
+    ]
   },
   "content": "files:\r\n- file1: N/A:Select the game's archive file\r\ngame:\r\n  config_file: $GAMEDIR/dosbox_aladdin.conf\r\n  main_file: ALADDIN.EXE\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/game\r\n    file: $file1\r\n- execute:\r\n    args: x \"$CACHE/game/DISK1.DAT\"\r\n    description: Extracting the data files...\r\n    file: 7z\r\n- execute:\r\n    args: x \"$CACHE/game/DISK2.DAT\"\r\n    description: Extracting more data files...\r\n    file: 7z\r\n- merge:\r\n    dst: $GAMEDIR\r\n    src: $CACHE/game\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: aspect\r\n    section: render\r\n    value: true\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: fullscreen\r\n    section: sdl\r\n    value: false\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: sbtype\r\n    section: sblaster\r\n    value: sb16\r\n- write_config:\r\n    file: $GAMEDIR/dosbox_aladdin.conf\r\n    key: cycles\r\n    section: cpu\r\n    value: max\r\n- task:\r\n    description: Setting sound. just type Y and Enter directly.\r\n    executable: SETSND.EXE\r\n    name: dosexec\r\nrequire-binaries: 7z"
 }

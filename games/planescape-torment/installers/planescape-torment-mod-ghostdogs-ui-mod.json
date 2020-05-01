@@ -21,39 +21,39 @@
   "gogslug": "planescape_torment",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
+    "files": [
+      {
+        "patch": {
+          "filename": "Ghostdogs_PST_UI_mod_v2.2.7z",
+          "url": "http://www.shsforums.net/files/download/683-ghostdogs-pst-ui-mod-v22/"
+        }
+      }
+    ],
+    "requires": "planescape-torment",
     "installer": [
       {
         "extract": {
+          "file": "$patch",
           "description": "Extracting the patch",
           "dst": "$GAMEDIR/drive_c/Torment/",
-          "file": "$patch",
           "format": "7z"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "name": "wineexec",
+          "description": "Running the Patch",
           "args": "/c \"Setup-GhostDog\\'s-PST-UI.exe\"",
-          "working_dir": "$GAMEDIR/drive_c/Torment/",
+          "prefix": "$GAMEDIR",
           "executable": "cmd",
-          "description": "Running the Patch"
+          "working_dir": "$GAMEDIR/drive_c/Torment/"
         }
       }
-    ],
-    "requires": "planescape-torment",
-    "files": [
-      {
-        "patch": {
-          "url": "http://www.shsforums.net/files/download/683-ghostdogs-pst-ui-mod-v22/",
-          "filename": "Ghostdogs_PST_UI_mod_v2.2.7z"
-        }
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    }
+    ]
   },
   "content": "files:\n- patch:\n    filename: Ghostdogs_PST_UI_mod_v2.2.7z\n    url: http://www.shsforums.net/files/download/683-ghostdogs-pst-ui-mod-v22/\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    description: Extracting the patch\n    dst: $GAMEDIR/drive_c/Torment/\n    file: $patch\n    format: 7z\n- task:\n    args: /c \"Setup-GhostDog\\'s-PST-UI.exe\"\n    description: Running the Patch\n    executable: cmd\n    name: wineexec\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR/drive_c/Torment/\nrequires: planescape-torment\n"
 }

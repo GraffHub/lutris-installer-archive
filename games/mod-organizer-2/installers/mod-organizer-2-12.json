@@ -21,51 +21,51 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "files": [
-      {
-        "setup": "N/A:Download and select the ModOrganizer2 setup file"
-      }
-    ],
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "app": "vcrun2019 vcrun2017 vcrun2015 dotnet40",
-          "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
-          "executable": "setup",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI"
         }
       },
       {
         "write_file": {
-          "content": "Copy the installed game files in here.",
-          "file": "$GAMEDIR/drive_c/Modding/Game/Copy-game-in-here.txt"
+          "file": "$GAMEDIR/drive_c/Modding/Game/Copy-game-in-here.txt",
+          "content": "Copy the installed game files in here."
         }
       }
     ],
+    "files": [
+      {
+        "setup": "N/A:Download and select the ModOrganizer2 setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Modding/MO2/ModOrganizer.exe",
+      "arch": "win64",
+      "working_dir": "$GAMEDIR/drive_c/Modding/MO2/"
+    },
     "dxvk": true,
     "wine": {
       "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "working_dir": "$GAMEDIR/drive_c/Modding/MO2/",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Modding/MO2/ModOrganizer.exe"
     }
   },
   "content": "dxvk: true\r\nfiles:\r\n- setup: N/A:Download and select the ModOrganizer2 setup file\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Modding/MO2/ModOrganizer.exe\r\n  prefix: $GAMEDIR\r\n  working_dir: $GAMEDIR/drive_c/Modding/MO2/\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2019 vcrun2017 vcrun2015 dotnet40\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- write_file:\r\n    content: Copy the installed game files in here.\r\n    file: $GAMEDIR/drive_c/Modding/Game/Copy-game-in-here.txt\r\nwine:\r\n  dxvk: true"

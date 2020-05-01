@@ -21,46 +21,6 @@
   "gogslug": "limbo",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "args": "/silent",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES",
-          "executable": "goginstaller",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "goginstaller": "N/A:Please select the GOG.com Windows installer"
@@ -70,10 +30,50 @@
       }
     ],
     "game": {
-      "arch": "win64",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/LIMBO/limbo.exe"
-    }
+      "exe": "drive_c/GOG Games/LIMBO/limbo.exe",
+      "arch": "win64"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "goginstaller",
+          "name": "wineexec",
+          "args": "/LANG=English /SP- /SUPPRESSMSGBOXES"
+        }
+      }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Please select the GOG.com Windows installer\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/LIMBO/limbo.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=English /SP- /SUPPRESSMSGBOXES\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

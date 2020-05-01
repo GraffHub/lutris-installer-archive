@@ -21,48 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "execute": {
-          "args": "$GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISK1",
-          "file": "mkdir"
-        }
-      },
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\"",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/bulkcopy.sh"
-      },
-      {
-        "execute": {
-          "args": "$game $GAMEDIR/CDD/DISK1",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\nmount C \"$GAMEDIR/HDD\" -t dir\nD:\ninstall\nexit",
-          "file": "$GAMEDIR/Gateway-setup.conf"
-        }
-      },
-      {
-        "task": {
-          "config_file": "$GAMEDIR/Gateway-setup.conf",
-          "working_dir": "$GAMEDIR/HDD/",
-          "name": "dosexec"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[dosbox]\nmachine = svga_et4000\n[sdl]\nsensitivity=20\n[autoexec]\nmount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\nmount C \"$GAMEDIR/HDD\" -t dir\nD:\ncd GW2\nHome.EXE\nexit",
-          "file": "$GAMEDIR/Gateway.conf"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select the file Install.EXE"
@@ -70,7 +28,49 @@
     ],
     "game": {
       "main_file": "$GAMEDIR/Gateway.conf"
-    }
+    },
+    "installer": [
+      {
+        "execute": {
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISK1"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$CACHE/bulkcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\""
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy.sh"
+      },
+      {
+        "execute": {
+          "file": "$CACHE/bulkcopy.sh",
+          "args": "$game $GAMEDIR/CDD/DISK1"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/Gateway-setup.conf",
+          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\nmount C \"$GAMEDIR/HDD\" -t dir\nD:\ninstall\nexit"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/Gateway-setup.conf",
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR/HDD/"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/Gateway.conf",
+          "content": "[dosbox]\nmachine = svga_et4000\n[sdl]\nsensitivity=20\n[autoexec]\nmount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\nmount C \"$GAMEDIR/HDD\" -t dir\nD:\ncd GW2\nHome.EXE\nexit"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the file Install.EXE\ngame:\n  main_file: $GAMEDIR/Gateway.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD  $GAMEDIR/CDD/DISK1\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/CDD/DISK1\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      D:\n\n      install\n\n      exit'\n    file: $GAMEDIR/Gateway-setup.conf\n- task:\n    config_file: $GAMEDIR/Gateway-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[dosbox]\n\n      machine = svga_et4000\n\n      [sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount D \"$GAMEDIR/CDD/DISK1\" -t cdrom\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      D:\n\n      cd GW2\n\n      Home.EXE\n\n      exit'\n    file: $GAMEDIR/Gateway.conf\n"
 }

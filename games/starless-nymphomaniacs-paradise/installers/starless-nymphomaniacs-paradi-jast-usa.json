@@ -21,34 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$file1"
-        }
-      },
-      {
-        "task": {
-          "executable": "$CACHE/setup.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$file2"
-        }
-      },
-      {
-        "task": {
-          "executable": "$CACHE/starless-patch-1.2.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the JAST USA archive"
@@ -58,10 +30,38 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Starless Nymphomaniacs' Paradise/starless.exe"
-    }
+      "exe": "drive_c/Program Files/Starless Nymphomaniacs' Paradise/starless.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$file1",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "$file2",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/starless-patch-1.2.exe",
+          "name": "wineexec"
+        }
+      }
+    ]
   },
   "content": "files:\n- file1: N/A:Please select the JAST USA archive\n- file2: http://jas.tv/g/patch/starless-patch-1.2.exe.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Starless Nymphomaniacs' Paradise/starless.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file1\n- task:\n    executable: $CACHE/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $file2\n- task:\n    executable: $CACHE/starless-patch-1.2.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

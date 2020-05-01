@@ -21,32 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "executable": "game",
-          "description": "Installing XIII",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "description": "Disabling unused WINE features",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Please select Windows installer provided by GOG"
@@ -55,7 +29,33 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/GOG Games/XIII/system/XIII.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "description": "Installing XIII"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Disabling unused WINE features",
+          "app": "sandbox",
+          "silent": true,
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Please select Windows installer provided by GOG\ngame:\n  exe: drive_c/GOG Games/XIII/system/XIII.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing XIII\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

@@ -21,35 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "execute": {
-          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/spell",
-          "file": "mkdir"
-        }
-      },
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\"",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/bulkcopy.sh"
-      },
-      {
-        "execute": {
-          "args": "$game $GAMEDIR/HDD/spell",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd spell\nS201.EXE mt32\nexit",
-          "file": "$GAMEDIR/spell.conf"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select the file S201.EXE"
@@ -57,7 +28,36 @@
     ],
     "game": {
       "main_file": "$GAMEDIR/spell.conf"
-    }
+    },
+    "installer": [
+      {
+        "execute": {
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/spell"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$CACHE/bulkcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\""
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy.sh"
+      },
+      {
+        "execute": {
+          "file": "$CACHE/bulkcopy.sh",
+          "args": "$game $GAMEDIR/HDD/spell"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/spell.conf",
+          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd spell\nS201.EXE mt32\nexit"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the file S201.EXE\ngame:\n  main_file: $GAMEDIR/spell.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/spell\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/HDD/spell\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd spell\n\n      S201.EXE mt32\n\n      exit'\n    file: $GAMEDIR/spell.conf\n"
 }

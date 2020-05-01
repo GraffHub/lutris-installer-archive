@@ -24,16 +24,36 @@
     "files": [
       {
         "wfmsi": {
-          "url": "http://content.warframe.com/dl/Warframe.msi",
-          "filename": "Warframe.msi"
+          "filename": "Warframe.msi",
+          "url": "http://content.warframe.com/dl/Warframe.msi"
         }
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Warframe/Downloaded/Public/Tools/Launcher.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/../.warframe-cache/GL_Shader",
+        "mesa_glthread": "true",
+        "PBA_DISABLE": 0,
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/../.warframe-cache/DXVK"
+      },
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
@@ -41,31 +61,11 @@
         "task": {
           "arch": "win64",
           "executable": "wfmsi",
-          "description": "Running Warframe installer. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window. Be sure to close before first launch",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Running Warframe installer. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window. Be sure to close before first launch"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/../.warframe-cache/DXVK",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/../.warframe-cache/GL_Shader",
-        "PBA_DISABLE": 0,
-        "__GL_SHADER_DISK_CACHE": 1
-      },
-      "pulse_latency": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Warframe/Downloaded/Public/Tools/Launcher.exe"
-    }
+    ]
   },
   "content": "files:\n- wfmsi:\n    filename: Warframe.msi\n    url: http://content.warframe.com/dl/Warframe.msi\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Warframe/Downloaded/Public/Tools/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Running Warframe installer. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window. Be sure to close\n      before first launch'\n    executable: wfmsi\n    name: wineexec\nsystem:\n  env:\n    DXVK_STATE_CACHE_PATH: $GAMEDIR/../.warframe-cache/DXVK\n    PBA_DISABLE: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/../.warframe-cache/GL_Shader\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n"
 }

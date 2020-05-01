@@ -10,21 +10,42 @@
   "version": "GOG + Unofficial Patch",
   "description": "You have the option to download the latest version of Unofficial Patch.",
   "notes": "-- This installer have support to select Mods using the launcher.\r\n-- During installation you can install the latest Unofficial Patch if you want.",
-  "created_at": "2020-03-31T06:22:05.933174Z",
-  "updated_at": "2020-03-31T06:22:05.933202Z",
+  "created_at": "2020-03-31T06:22:05.933000Z",
+  "updated_at": "2020-04-04T08:54:23.313533Z",
   "draft": false,
-  "published": false,
-  "published_by": null,
+  "published": true,
+  "published_by": 494,
   "rating": "",
   "steamid": 2600,
   "gogid": 1207659240,
   "gogslug": "vampire_the_masquerade_bloodlines",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "prelaunch": "https://gitlab.com/lutris-utils/vtmb-loader-lutris/-/raw/master/prelaunch-lutris.sh"
+      },
+      {
+        "updater": "https://gitlab.com/lutris-utils/vtmb-loader-lutris/-/raw/master/vtmb-update.sh"
+      },
+      {
+        "setup": "N/A:Select Windows GOG setup exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/VtMB/vampire.exe",
+      "arch": "win32",
+      "args": "-game '\"$(cat .vampire_mod)\"'"
+    },
+    "system": {
+      "prelaunch_command": "$GAMEDIR/drive_c/GOG Games/VtMB/prelaunch-lutris.sh",
+      "prelaunch_wait": true
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "UPDT",
+          "preselect": "0",
           "options": [
             {
               "0": "NO, don´t update my game."
@@ -34,7 +55,7 @@
             }
           ],
           "description": "Do you want to install the latest Unofficial Patch?",
-          "preselect": "0"
+          "id": "UPDT"
         }
       },
       {
@@ -57,37 +78,37 @@
       },
       {
         "execute": {
-          "description": "Downloading the Unofficial Patch...",
-          "command": "[ \"$INPUT_UPDT\" = \"1\" ] && \"$CACHE/vtmb-update.sh\""
+          "command": "[ \"$INPUT_UPDT\" = \"1\" ] && \"$CACHE/vtmb-update.sh\"",
+          "description": "Downloading the Unofficial Patch..."
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
           "arch": "win32",
-          "install_gecko": false,
+          "name": "create_prefix",
           "description": "Creating WINE prefix.",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
           "install_mono": false
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "arch": "win32",
+          "name": "wineexec",
+          "description": "Be patient, this task may take several minutes.",
           "args": "/SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
-          "description": "Be patient, this task may take several minutes."
+          "prefix": "$GAMEDIR",
+          "executable": "setup"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "$CACHE/vtmbup.exe",
-          "description": "Installing the Unofficial Patch for Vampire the Masquerade - Bloodilines",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Installing the Unofficial Patch for Vampire the Masquerade - Bloodilines"
         }
       },
       {
@@ -96,28 +117,7 @@
           "dst": "$GAMEDIR/drive_c/GOG Games/VtMB/vampire.exe"
         }
       }
-    ],
-    "files": [
-      {
-        "prelaunch": "https://gitlab.com/lutris-utils/vtmb-loader-lutris/-/raw/master/prelaunch-lutris.sh"
-      },
-      {
-        "updater": "https://gitlab.com/lutris-utils/vtmb-loader-lutris/-/raw/master/vtmb-update.sh"
-      },
-      {
-        "setup": "N/A:Select Windows GOG setup exe"
-      }
-    ],
-    "system": {
-      "prelaunch_command": "$GAMEDIR/drive_c/GOG Games/VtMB/prelaunch-lutris.sh",
-      "prelaunch_wait": true
-    },
-    "game": {
-      "arch": "win32",
-      "args": "-game '\"$(cat .vampire_mod)\"'",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/VtMB/vampire.exe"
-    }
+    ]
   },
   "content": "files:\n- prelaunch: https://gitlab.com/lutris-utils/vtmb-loader-lutris/-/raw/master/prelaunch-lutris.sh\n- updater: https://gitlab.com/lutris-utils/vtmb-loader-lutris/-/raw/master/vtmb-update.sh\n- setup: N/A:Select Windows GOG setup exe\ngame:\n  arch: win32\n  args: -game '\"$(cat .vampire_mod)\"'\n  exe: drive_c/GOG Games/VtMB/vampire.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: Do you want to install the latest Unofficial Patch?\n    id: UPDT\n    options:\n    - '0': \"NO, don\\xB4t update my game.\"\n    - '1': YES, download and install the AMAZING Unofficial Patch.\n    preselect: '0'\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/VtMB/\n    src: prelaunch\n- merge:\n    dst: $CACHE\n    src: updater\n- chmodx: $GAMEDIR/drive_c/GOG Games/VtMB/prelaunch-lutris.sh\n- chmodx: $CACHE/vtmb-update.sh\n- execute:\n    command: '[ \"$INPUT_UPDT\" = \"1\" ] && \"$CACHE/vtmb-update.sh\"'\n    description: Downloading the Unofficial Patch...\n- task:\n    arch: win32\n    description: Creating WINE prefix.\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL\n    description: Be patient, this task may take several minutes.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing the Unofficial Patch for Vampire the Masquerade - Bloodilines\n    executable: $CACHE/vtmbup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/VtMB/vampire.exe\n    src: $GAMEDIR/drive_c/GOG Games/VtMB/Vampire.exe\nsystem:\n  prelaunch_command: $GAMEDIR/drive_c/GOG Games/VtMB/prelaunch-lutris.sh\n  prelaunch_wait: true\n"
 }

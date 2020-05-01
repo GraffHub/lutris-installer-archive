@@ -21,13 +21,28 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "gzdoom_installer": "https://devbuilds.drdteam.org/ultimatedoombuilder/UltimateDoomBuilder-r3309-x64.7z"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/ultimate_doom_builder/Builder.exe",
+      "arch": "win32"
+    },
+    "system": {
+      "env": {
+        "__GL_MaxFramesAllowed": 1
+      }
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
@@ -38,38 +53,23 @@
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Installing Core Fonts",
           "app": "corefonts",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Installing .NET framework 4.7.2",
           "app": "dotnet472",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       }
-    ],
-    "files": [
-      {
-        "gzdoom_installer": "https://devbuilds.drdteam.org/ultimatedoombuilder/UltimateDoomBuilder-r3309-x64.7z"
-      }
-    ],
-    "system": {
-      "env": {
-        "__GL_MaxFramesAllowed": 1
-      }
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/ultimate_doom_builder/Builder.exe"
-    }
+    ]
   },
   "content": "files:\r\n- gzdoom_installer: https://devbuilds.drdteam.org/ultimatedoombuilder/UltimateDoomBuilder-r3309-x64.7z\r\ngame:\r\n  arch: win32\r\n  exe: $GAMEDIR/drive_c/ultimate_doom_builder/Builder.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/ultimate_doom_builder\r\n    src: gzdoom_installer\r\n- task:\r\n    app: corefonts\r\n    description: Installing Core Fonts\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    app: dotnet472\r\n    description: Installing .NET framework 4.7.2\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\nsystem:\r\n  env:\r\n    __GL_MaxFramesAllowed: 1"
 }

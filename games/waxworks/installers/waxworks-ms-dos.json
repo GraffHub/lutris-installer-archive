@@ -21,23 +21,6 @@
   "gogslug": "waxworks",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.MUS\" -o -iname \"MENUS.DAT\" -o -iname \"MUSIC.DRV\" -o -iname \"ROOMS*\" -o -iname \"ROOMSLST*\" -o -iname \"START*\" -o -iname \"STATELST\" -o -iname \"STRIPPED.TXT\" -o -iname \"TABLES*\" -o -iname \"TBLLIST\" -o -iname \"TEXT*\" -o -iname \"WAX.FXB\" -o -iname \"XTABLE*\" -o -iname \"XTBLLIST\" -o -iname \"*.VGA\" -o -iname \"GAMEPC\" -o -iname \"ICON.DAT\" \\) -exec cp {} \"$dst\" \\;",
-          "file": "$CACHE/selectcopy.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/selectcopy.sh"
-      },
-      {
-        "execute": {
-          "args": "$game $GAMEDIR",
-          "file": "$CACHE/selectcopy.sh"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select a file with *.exe extension"
@@ -46,7 +29,24 @@
     "game": {
       "game_id": "waxworks",
       "path": "$GAMEDIR"
-    }
+    },
+    "installer": [
+      {
+        "write_file": {
+          "file": "$CACHE/selectcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.MUS\" -o -iname \"MENUS.DAT\" -o -iname \"MUSIC.DRV\" -o -iname \"ROOMS*\" -o -iname \"ROOMSLST*\" -o -iname \"START*\" -o -iname \"STATELST\" -o -iname \"STRIPPED.TXT\" -o -iname \"TABLES*\" -o -iname \"TBLLIST\" -o -iname \"TEXT*\" -o -iname \"WAX.FXB\" -o -iname \"XTABLE*\" -o -iname \"XTBLLIST\" -o -iname \"*.VGA\" -o -iname \"GAMEPC\" -o -iname \"ICON.DAT\" \\) -exec cp {} \"$dst\" \\;"
+        }
+      },
+      {
+        "chmodx": "$CACHE/selectcopy.sh"
+      },
+      {
+        "execute": {
+          "file": "$CACHE/selectcopy.sh",
+          "args": "$game $GAMEDIR"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select a file with *.exe extension\ngame:\n  game_id: waxworks\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.MUS\" -o -iname \"MENUS.DAT\" -o -iname \"MUSIC.DRV\"\n      -o -iname \"ROOMS*\" -o -iname \"ROOMSLST*\" -o -iname \"START*\" -o -iname \"STATELST\"\n      -o -iname \"STRIPPED.TXT\" -o -iname \"TABLES*\" -o -iname \"TBLLIST\" -o -iname \"TEXT*\"\n      -o -iname \"WAX.FXB\" -o -iname \"XTABLE*\" -o -iname \"XTBLLIST\" -o -iname \"*.VGA\"\n      -o -iname \"GAMEPC\" -o -iname \"ICON.DAT\" \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/selectcopy.sh\n"
 }

@@ -3,7 +3,7 @@
   "game_id": 606,
   "game_slug": "dragon-age-origins-ultimate-edition",
   "name": "Dragon Age: Origins - Ultimate Edition",
-  "year": null,
+  "year": 2009,
   "user": "libgradev",
   "runner": "wine",
   "slug": "dragon-age-origins-ultimate-e-gog",
@@ -11,14 +11,14 @@
   "description": null,
   "notes": "",
   "created_at": "2017-09-26T09:17:58.429000Z",
-  "updated_at": "2020-03-07T09:54:22.910621Z",
+  "updated_at": "2020-04-16T22:51:30.645872Z",
   "draft": false,
   "published": true,
-  "published_by": 20548,
+  "published_by": 494,
   "rating": "",
-  "steamid": 47810,
-  "gogid": null,
-  "gogslug": "",
+  "steamid": 17450,
+  "gogid": 1949616134,
+  "gogslug": "dragon_age_origins",
   "humblestoreid": "",
   "script": {
     "files": [
@@ -26,54 +26,54 @@
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Dragon Age Origins/DAOriginsLauncher.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "StrictDrawOrdering": "enabled"
+    },
+    "system": {
+      "disable_monitoring": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
+          "prefix": "$GAMEDIR",
           "executable": "game",
+          "name": "wineexec",
           "description": "Installing Game...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES"
         }
       },
       {
         "task": {
-          "silent": true,
-          "app": "windowmanagermanaged=n",
           "prefix": "$GAMEDIR",
+          "app": "windowmanagermanaged=n",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "blocking": true,
+          "name": "wineexec",
+          "description": "Installing PhysX...",
           "args": "/quiet /qn",
-          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe",
-          "description": "Installing PhysX..."
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe"
         }
       }
-    ],
-    "system": {
-      "disable_monitoring": true,
-      "pulse_latency": true
-    },
-    "wine": {
-      "StrictDrawOrdering": "enabled"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Dragon Age Origins/DAOriginsLauncher.exe"
-    }
+    ]
   },
   "content": "files:\r\n- game: N/A:Please select the GOG.com Windows installer.\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/GOG Games/Dragon Age Origins/DAOriginsLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\r\n    description: Installing Game...\r\n    executable: game\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: windowmanagermanaged=n\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    args: /quiet /qn\r\n    blocking: true\r\n    description: Installing PhysX...\r\n    executable: $GAMEDIR/drive_c/game/redist/PhysX_9.09.0408_SystemSoftware.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  disable_monitoring: true\r\n  pulse_latency: true\r\nwine:\r\n  StrictDrawOrdering: enabled"
 }

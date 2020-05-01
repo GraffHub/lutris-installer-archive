@@ -21,45 +21,45 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating the wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "description": "Setting the prefix",
-          "app": "vcrun2010 wininet",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "installer",
-          "description": "Installing game (WARNING: Uncheck Launch Creative Destruction)",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Creative Destruction/client.exe"
+    },
     "wine": {
       "overrides": {
         "wininet": "builtin,native"
       }
     },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Creative Destruction/client.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating the wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "vcrun2010 wininet",
+          "description": "Setting the prefix",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Installing game (WARNING: Uncheck Launch Creative Destruction)"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: https://g91na.gdl.netease.com/creative_destruction_3.0.36_20190307.exe\ngame:\n  exe: $GAMEDIR/drive_c/Creative Destruction/client.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating the wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 wininet\n    description: Setting the prefix\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing game (WARNING: Uncheck Launch Creative Destruction)'\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    wininet: builtin,native\n"
 }

@@ -24,18 +24,36 @@
     "winesteam": {
       "dxvk": true
     },
+    "files": [
+      {
+        "neverwinter_installer": {
+          "filename": "Neverwinter_ArcSetup.exe",
+          "url": "https://www.arcgames.com/download/?game=nw"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Arc/ArcLauncher.exe",
+      "appid": 109600
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
-          "executable": "neverwinter_installer",
           "prefix": "$GAMEDIR",
+          "executable": "neverwinter_installer",
           "name": "wineexec"
         }
       },
@@ -45,25 +63,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "files": [
-      {
-        "neverwinter_installer": {
-          "url": "https://www.arcgames.com/download/?game=nw",
-          "filename": "Neverwinter_ArcSetup.exe"
-        }
-      }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "game": {
-      "appid": 109600,
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Arc/ArcLauncher.exe"
-    }
+    ]
   },
   "content": "files:\n- neverwinter_installer:\n    filename: Neverwinter_ArcSetup.exe\n    url: https://www.arcgames.com/download/?game=nw\ngame:\n  appid: 109600\n  exe: drive_c/Program Files (x86)/Arc/ArcLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: neverwinter_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwinesteam:\n  dxvk: true\n"
 }

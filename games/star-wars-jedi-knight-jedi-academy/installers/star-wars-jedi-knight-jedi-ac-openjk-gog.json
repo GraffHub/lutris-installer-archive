@@ -21,17 +21,31 @@
   "gogslug": "star_wars_jedi_knight_jedi_academy",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "openjk-build": "http://builds.openjk.org/openjk-2018-02-26-e3f22070-linux-64.tar.gz"
+      },
+      {
+        "goginstaller": "N/A:Please select the GOG installer"
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/innoextract-1.6-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/openjk_sp.x86_64"
+    },
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$inno"
+          "file": "$inno",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE\" \"$goginstaller\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE\" \"$goginstaller\""
         }
       },
       {
@@ -63,21 +77,7 @@
           "dst": "$GAMEDIR"
         }
       }
-    ],
-    "files": [
-      {
-        "openjk-build": "http://builds.openjk.org/openjk-2018-02-26-e3f22070-linux-64.tar.gz"
-      },
-      {
-        "goginstaller": "N/A:Please select the GOG installer"
-      },
-      {
-        "inno": "http://constexpr.org/innoextract/files/innoextract-1.6-linux.tar.xz"
-      }
-    ],
-    "game": {
-      "exe": "$GAMEDIR/openjk_sp.x86_64"
-    }
+    ]
   },
   "content": "files:\n- openjk-build: http://builds.openjk.org/openjk-2018-02-26-e3f22070-linux-64.tar.gz\n- goginstaller: N/A:Please select the GOG installer\n- inno: http://constexpr.org/innoextract/files/innoextract-1.6-linux.tar.xz\ngame:\n  exe: $GAMEDIR/openjk_sp.x86_64\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $inno\n- execute:\n    args: -d \"$CACHE\" \"$goginstaller\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app/GameData\n- extract:\n    file: openjk-build\n- merge:\n    dst: $GAMEDIR/base\n    src: $CACHE/app/GameData/base\n- merge:\n    dst: $GAMEDIR/base\n    src: $GAMEDIR/JediAcademy/OpenJK\n- merge:\n    dst: $GAMEDIR\n    src: $GAMEDIR/JediAcademy\n"
 }

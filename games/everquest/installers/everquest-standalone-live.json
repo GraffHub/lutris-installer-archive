@@ -24,98 +24,98 @@
     "files": [
       {
         "setup": {
-          "url": "https://launch.daybreakgames.com/installer/EQ_setup.exe",
-          "filename": "EQ_setup.exe"
+          "filename": "EQ_setup.exe",
+          "url": "https://launch.daybreakgames.com/installer/EQ_setup.exe"
         }
       }
     ],
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "app": "win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "silent": true,
-          "description": "Installing Corefonts",
-          "app": "corefonts"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "silent": false,
-          "description": "Installing DirectX 9",
-          "app": "d3dx9_43"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
-          "silent": false,
-          "description": "Installing Windows Management Interface",
-          "app": "wmi"
-        }
-      },
-      {
-        "task": {
-          "executable": "wineboot",
-          "description": "Simulating Windows reboot.",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "app": "win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "executable": "setup",
-          "description": "Installing EverQuest",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/Public/Daybreak Game Company/Installed Games/EverQuest/LaunchPad.exe"
+    },
+    "wine": {
+      "esync": false,
+      "dxvk": false
+    },
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "single_cpu": true
     },
-    "wine": {
-      "dxvk": false,
-      "esync": false
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/Public/Daybreak Game Company/Installed Games/EverQuest/LaunchPad.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "silent": true,
+          "arch": "win32",
+          "name": "winetricks",
+          "description": "Installing Corefonts",
+          "prefix": "$GAMEDIR",
+          "app": "corefonts"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "arch": "win32",
+          "name": "winetricks",
+          "description": "Installing DirectX 9",
+          "prefix": "$GAMEDIR",
+          "app": "d3dx9_43"
+        }
+      },
+      {
+        "task": {
+          "silent": false,
+          "arch": "win32",
+          "name": "winetricks",
+          "description": "Installing Windows Management Interface",
+          "prefix": "$GAMEDIR",
+          "app": "wmi"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "wineboot",
+          "name": "wineexec",
+          "description": "Simulating Windows reboot."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing EverQuest"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup:\n    filename: EQ_setup.exe\n    url: https://launch.daybreakgames.com/installer/EQ_setup.exe\ngame:\n  exe: drive_c/users/Public/Daybreak Game Company/Installed Games/EverQuest/LaunchPad.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    description: Installing Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dx9_43\n    arch: win32\n    description: Installing DirectX 9\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    app: wmi\n    arch: win32\n    description: Installing Windows Management Interface\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing EverQuest\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  single_cpu: true\nwine:\n  dxvk: false\n  esync: false\n"
 }

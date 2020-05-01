@@ -1,0 +1,86 @@
+{
+  "id": 19750,
+  "game_id": 1801,
+  "game_slug": "space-engineers",
+  "name": "Space Engineers",
+  "year": 2013,
+  "user": "yourbolt",
+  "runner": "winesteam",
+  "slug": "space-engineers-change-me-1",
+  "version": "Change Me",
+  "description": null,
+  "notes": "You have to install libjpeg62 package or else the thumbnails in New Game menu will be dispalyed as magenta rectangles. Due to JIT compiler issues and the way this game uses multithreating, there are audio stutters. If you are on a Debian-based distribution you can try the libFAudio package from this PPA:\r\n\r\n<a href=\"https://launchpad.net/~cybermax-dexter/+archive/ubuntu/sdl2-backport\">https://launchpad.net/~cybermax-dexter/+archive/ubuntu/sdl2-backport</a>",
+  "created_at": "2020-04-16T17:08:53.066457Z",
+  "updated_at": "2020-04-16T17:08:53.066483Z",
+  "draft": false,
+  "published": false,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 244850,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "winesteam": {
+      "overrides": {
+        "msvcr120": "n,b",
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true,
+      "dxvk": true
+    },
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64",
+      "appid": 244850
+    },
+    "system": {
+      "env": {
+        "STAGING_SHARED_MEMORY": 0,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
+        "DXVK_HUD": "compiler"
+      },
+      "pulse_latency": true
+    },
+    "installer": [
+      {
+        "write_file": {
+          "file": "$GAMEDIR/prefix/dxvk.conf",
+          "content": "dxgi.nvapiHack = False"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "vcrun2017 xact",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "dotnet48 win7",
+          "description": "Installing .NET 4.8. This will take a while...",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  appid: 244850\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/prefix/dxvk.conf\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2017 xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet48 win7\n    arch: win64\n    description: Installing .NET 4.8. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/prefix/dxvk.conf\n    DXVK_HUD: compiler\n    STAGING_SHARED_MEMORY: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    msvcr120: n,b\n    nvapi,nvapi64: disabled\n"
+}

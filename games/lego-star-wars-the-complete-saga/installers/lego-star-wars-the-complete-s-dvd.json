@@ -1,0 +1,76 @@
+{
+  "id": 13137,
+  "game_id": 696,
+  "game_slug": "lego-star-wars-the-complete-saga",
+  "name": "Lego Star Wars The Complete Saga",
+  "year": 2009,
+  "user": "cxf",
+  "runner": "wine",
+  "slug": "lego-star-wars-the-complete-s-dvd",
+  "version": "DVD",
+  "description": "This installer is for the Games for Windows DVD released 2009.",
+  "notes": "You might encounter issues when changing the resolution in game. Then just restart and your proper resolution will be shown.\r\nIf you're camera is weirdly placed on the ground at the after starting a new game, exit to menu (with keyboard) and start a new game again.",
+  "created_at": "2019-04-27T02:43:21.619000Z",
+  "updated_at": "2020-04-18T07:18:50.471308Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 32440,
+  "gogid": 1731318270,
+  "gogslug": "lego_star_wars_the_complete_saga",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "X360": "https://lutris.net/files/tools/x360ce-dinput8.tar.gz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/LEGOStarWarsSaga.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "xinput": true
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "LEGOStarWarsSaga.msi"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Windows File System (Wine Bottle)"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec",
+          "description": "Please follow the instructions of the Installer",
+          "args": "/L1033"
+        }
+      },
+      {
+        "extract": {
+          "file": "X360",
+          "description": "Installing x360 dinput8 for controller support",
+          "dst": "$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/"
+        }
+      },
+      {
+        "execute": {
+          "file": "/bin/sh",
+          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/wine_custom_user.reg'\""
+        }
+      }
+    ]
+  },
+  "content": "files:\n- X360: https://lutris.net/files/tools/x360ce-dinput8.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/LEGOStarWarsSaga.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: LEGOStarWarsSaga.msi\n- task:\n    arch: win32\n    description: Creating Windows File System (Wine Bottle)\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /L1033\n    description: Please follow the instructions of the Installer\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing x360 dinput8 for controller support\n    dst: $GAMEDIR/drive_c/Program Files/LucasArts/LEGO Star Wars - The Complete Saga/\n    file: X360\n- execute:\n    args: -v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/LucasArts/LEGO\n      Star Wars - The Complete Saga/wine_custom_user.reg'\"\n    file: /bin/sh\nwine:\n  xinput: true\n"
+}

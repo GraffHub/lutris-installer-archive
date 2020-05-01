@@ -21,39 +21,6 @@
   "gogslug": "jade_empire_special_edition",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE/tmp/innoextract",
-          "file": "innoextract"
-        }
-      },
-      {
-        "execute": {
-          "args": "--gog -d \"$CACHE\" setup",
-          "description": "Extracting game data",
-          "file": "$CACHE/tmp/innoextract/innoextract"
-        }
-      },
-      {
-        "move": {
-          "src": "$CACHE/app",
-          "dst": "$GAMEDIR/drive_c/GOG Games/Jade Empire",
-          "description": "Moving game data"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "00000000",
-          "arch": "win64",
-          "key": "csmt",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "type": "REG_DWORD"
-        }
-      }
-    ],
     "files": [
       {
         "setup": "N/A:Select \"Jade Empire\" setup files"
@@ -65,7 +32,40 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "$GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe"
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "innoextract",
+          "dst": "$CACHE/tmp/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/tmp/innoextract/innoextract",
+          "description": "Extracting game data",
+          "args": "--gog -d \"$CACHE\" setup"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/app",
+          "description": "Moving game data",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Jade Empire"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "csmt",
+          "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "type": "REG_DWORD"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: N/A:Select \"Jade Empire\" setup files\n- innoextract: https://constexpr.org/innoextract/files/innoextract-1.7-linux.tar.xz\ngame:\n  exe: $GAMEDIR/drive_c/GOG Games/Jade Empire/JadeEmpire.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/tmp/innoextract\n    file: innoextract\n- execute:\n    args: --gog -d \"$CACHE\" setup\n    description: Extracting game data\n    file: $CACHE/tmp/innoextract/innoextract\n- move:\n    description: Moving game data\n    dst: $GAMEDIR/drive_c/GOG Games/Jade Empire\n    src: $CACHE/app\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n"
 }

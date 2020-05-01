@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "args": "wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\"",
-      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
-    },
-    "custom-name": "Teamfight Tactics",
     "files": [
       {
         "lol_installer": "https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe"
@@ -37,20 +32,15 @@
         "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
       }
     ],
-    "require-binaries": "wine",
-    "system": {
-      "env": {
-        "WINEOVERRIDES": "msvcp140=native",
-        "WINEARCH": "win32",
-        "WINEPREFIX": "$GAMEDIR",
-        "WINEDEBUG": "-all"
-      }
+    "game": {
+      "exe": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
+      "args": "wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\""
     },
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
@@ -64,18 +54,18 @@
       },
       {
         "execute": {
-          "args": "wine wineboot",
-          "description": "Setting up wine prefix",
           "env": {
             "WINEARCH": "win32",
             "WINEPREFIX": "$GAMEDIR"
           },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
+          "description": "Setting up wine prefix",
+          "args": "wine wineboot"
         }
       },
       {
         "input_menu": {
-          "id": "LOCALE",
+          "preselect": "en_US",
           "options": [
             {
               "cs_CZ": "Čeština"
@@ -127,12 +117,12 @@
             }
           ],
           "description": "Choose the game's language:",
-          "preselect": "en_US"
+          "id": "LOCALE"
         }
       },
       {
         "input_menu": {
-          "id": "REGION",
+          "preselect": "NA",
           "options": [
             {
               "BR": "Brazil"
@@ -169,36 +159,46 @@
             }
           ],
           "description": "Choose the game's server region:",
-          "preselect": "NA"
+          "id": "REGION"
         }
       },
       {
         "execute": {
-          "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent",
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
           "description": "Installing Directx9",
-          "env": {
-            "WINEPREFIX": "$GAMEDIR"
-          },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+          "args": "wine $CACHE/dxsetup/DXSETUP.exe /silent"
         }
       },
       {
         "execute": {
-          "args": "wine lol_installer --mode unattended",
-          "description": "Installing League of Legends",
           "env": {
             "WINEPREFIX": "$GAMEDIR"
           },
-          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage"
+          "file": "$GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage",
+          "description": "Installing League of Legends",
+          "args": "wine lol_installer --mode unattended"
         }
       },
       {
         "write_file": {
-          "content": "install:\n    globals:\n        locale: \"$INPUT_LOCALE\"\n        region: \"$INPUT_REGION\"\n",
-          "file": "$GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml"
+          "file": "$GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml",
+          "content": "install:\n    globals:\n        locale: \"$INPUT_LOCALE\"\n        region: \"$INPUT_REGION\"\n"
         }
       }
-    ]
+    ],
+    "custom-name": "Teamfight Tactics",
+    "require-binaries": "wine",
+    "system": {
+      "env": {
+        "WINEARCH": "win32",
+        "WINEOVERRIDES": "msvcp140=native",
+        "WINEPREFIX": "$GAMEDIR",
+        "WINEDEBUG": "-all"
+      }
+    }
   },
   "content": "custom-name: Teamfight Tactics\nfiles:\n- lol_installer: https://riotgamespatcher-a.akamaihd.net/releases/live/installer/deploy/League%20of%20Legends%20installer%20NA.exe\n- appimage_ci: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/lol-wine/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  args: wine \"$GAMEDIR/drive_c/Riot Games/League of Legends/LeagueClient.exe\"\n  exe: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- chmodx: appimage_ci\n- move:\n    dst: $GAMEDIR\n    src: appimage_ci\n- execute:\n    args: wine wineboot\n    description: Setting up wine prefix\n    env:\n      WINEARCH: win32\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LOCALE\n    options:\n    - cs_CZ: \"\\u010Ce\\u0161tina\"\n    - en_AU: English AUS\n    - en_GB: English U.K.\n    - en_US: English U.S.\n    - fr_FR: \"Fran\\xE7ais\"\n    - de_DE: Deutsch\n    - es_ES: \"Espa\\xF1ol\"\n    - es_MX: \"Espa\\xF1ol Mexicano\"\n    - it_IT: Italiano\n    - ja_JP: \"\\u65E5\\u672C\\u8A9E\"\n    - hu_HU: Magyar\n    - pl_PL: Polski\n    - pt_BR: \"Portugu\\xEAs do Brasil\"\n    - ro_RO: Romanian\n    - ru_RU: \"\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439\"\n    - tr_TR: \"T\\xFCrk\\xE7e\"\n    preselect: en_US\n- input_menu:\n    description: 'Choose the game''s server region:'\n    id: REGION\n    options:\n    - BR: Brazil\n    - EUNE: Europe Nordic & East\n    - EUW: Europe West\n    - LAN: Latin America North\n    - LAS: Latin America South\n    - NA: North America\n    - OCE: Oceania\n    - RU: Russia\n    - TR: Turkey\n    - JP: Japan\n    - SEA: South East Asia\n    preselect: NA\n- execute:\n    args: wine $CACHE/dxsetup/DXSETUP.exe /silent\n    description: Installing Directx9\n    env:\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- execute:\n    args: wine lol_installer --mode unattended\n    description: Installing League of Legends\n    env:\n      WINEPREFIX: $GAMEDIR\n    file: $GAMEDIR/wine-staging-i386_lol-patched_x86_64-bionic.AppImage\n- write_file:\n    content: \"install:\\n    globals:\\n        locale: \\\"$INPUT_LOCALE\\\"\\n        region:\\\n      \\ \\\"$INPUT_REGION\\\"\\n\"\n    file: $GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml\nrequire-binaries: wine\nsystem:\n  env:\n    WINEARCH: win32\n    WINEDEBUG: -all\n    WINEOVERRIDES: msvcp140=native\n    WINEPREFIX: $GAMEDIR\n"
 }

@@ -21,20 +21,37 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "overrides": {
+        "ddraw.dll": "n"
+      },
+      "Desktop": true,
+      "WineDesktop": "1024x768"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating WINE prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
         }
       },
       {
         "task": {
           "executable": "installer",
-          "description": "Running Setup, please wait...",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Running Setup, please wait..."
         }
       },
       {
@@ -43,24 +60,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "files": [
-      {
-        "installer": "N/A:Select the game's setup file"
-      }
-    ],
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "ddraw.dll": "n"
-      },
-      "WineDesktop": "1024x768"
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe"
-    }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Diablo/dx/DiabloLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n  overrides:\n    ddraw.dll: n\n"
 }

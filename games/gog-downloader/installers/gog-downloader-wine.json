@@ -21,12 +21,26 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "netframework": "https://lutris.net/files/runners/netframework3.exe"
+      },
+      {
+        "downloader": "http://static.gog.com/download/d3/stable/Setup_Downloader_3.6.0_stable.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "version": "1.9.13-i368",
+      "exe": "drive_c/Program Files/GOG.com/GOG.com Downloader.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
@@ -40,50 +54,36 @@
       },
       {
         "task": {
-          "description": "Installing .NET 3.5",
+          "prefix": "$GAMEDIR",
           "app": "dotnet35",
-          "prefix": "$GAMEDIR",
+          "description": "Installing .NET 3.5",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing .NET 3.5 SP1",
+          "prefix": "$GAMEDIR",
           "app": "dotnet35sp1",
-          "prefix": "$GAMEDIR",
+          "description": "Installing .NET 3.5 SP1",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing Windows codecs",
+          "prefix": "$GAMEDIR",
           "app": "windowscodecs",
-          "prefix": "$GAMEDIR",
+          "description": "Installing Windows codecs",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "downloader",
           "prefix": "$GAMEDIR",
+          "executable": "downloader",
           "name": "wineexec"
         }
       }
-    ],
-    "files": [
-      {
-        "netframework": "https://lutris.net/files/runners/netframework3.exe"
-      },
-      {
-        "downloader": "http://static.gog.com/download/d3/stable/Setup_Downloader_3.6.0_stable.exe"
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "version": "1.9.13-i368",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/GOG.com/GOG.com Downloader.exe"
-    }
+    ]
   },
   "content": "files:\r\n- netframework: https://lutris.net/files/runners/netframework3.exe\r\n- downloader: http://static.gog.com/download/d3/stable/Setup_Downloader_3.6.0_stable.exe\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/GOG.com/GOG.com Downloader.exe\r\n  prefix: $GAMEDIR\r\n  version: 1.9.13-i368\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- mkdir: $HOME/.cache/winetricks/dotnet30\r\n- move:\r\n    dst: $HOME/.cache/winetricks/dotnet30\r\n    src: netframework\r\n- task:\r\n    app: dotnet35\r\n    description: Installing .NET 3.5\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet35sp1\r\n    description: Installing .NET 3.5 SP1\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: windowscodecs\r\n    description: Installing Windows codecs\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    executable: downloader\r\n    name: wineexec\r\n    prefix: $GAMEDIR"
 }

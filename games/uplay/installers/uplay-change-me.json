@@ -29,23 +29,41 @@
         "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler"
+      }
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
       {
         "write_file": {
-          "content": "overlay: \n  enabled: false\n",
-          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
+          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml",
+          "content": "overlay: \n  enabled: false\n"
         }
       },
       {
         "input_menu": {
-          "id": "GPU",
+          "preselect": "dxgi.maxFrameLatency = 1",
           "options": [
             {
               "dxgi.maxFrameLatency = 1": "AMD"
@@ -55,64 +73,46 @@
             }
           ],
           "description": "Setting DXVK workarounds please choose your GPU:",
-          "preselect": "dxgi.maxFrameLatency = 1"
+          "id": "GPU"
         }
       },
       {
         "write_file": {
-          "content": "$INPUT_GPU",
-          "file": "$GAMEDIR/dxvk.conf"
+          "file": "$GAMEDIR/dxvk.conf",
+          "content": "$INPUT_GPU"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "args": "/silent",
           "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "args": "/silent"
         }
       },
       {
         "task": {
-          "app": "arial win7 d3dcompiler_43",
           "prefix": "$GAMEDIR",
+          "app": "arial win7 d3dcompiler_43",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/S",
-          "executable": "uplay",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "uplay",
+          "name": "wineexec",
+          "args": "/S"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "DXVK_HUD": "compiler"
-      }
-    },
-    "wine": {
-      "dxvk": true,
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
-      },
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe"
-    }
+    ]
   },
   "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: \"overlay: \\n  enabled: false\\n\"\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game\n      Launcher/settings.yml\n- input_menu:\n    description: 'Setting DXVK workarounds please choose your GPU:'\n    id: GPU\n    options:\n    - dxgi.maxFrameLatency = 1: AMD\n    - ? 'dxgi.customVendorId = 10de\n\n        dxgi.nvapiHack = False\n\n        dxgi.FrameLatency = 1'\n      : Nvidia\n    preselect: dxgi.maxFrameLatency = 1\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial win7 d3dcompiler_43\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
 }

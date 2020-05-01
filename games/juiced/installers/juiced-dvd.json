@@ -22,60 +22,60 @@
   "humblestoreid": "",
   "script": {
     "script": {
-      "installer": [
-        {
-          "task": {
-            "arch": "win32",
-            "description": "Creating Wine Prefix...",
-            "prefix": "$GAMEDIR",
-            "name": "create_prefix"
-          }
-        },
-        {
-          "task": {
-            "prefix": "$GAMEDIR",
-            "name": "winetricks",
-            "arch": "win32",
-            "silent": "true",
-            "description": "Hiding crash dialogs...",
-            "app": "nocrashdialog"
-          }
-        },
-        {
-          "task": {
-            "prefix": "$GAMEDIR",
-            "value": "winxp",
-            "arch": "win32",
-            "key": "Version",
-            "name": "set_regedit",
-            "description": "Setting version to xp...",
-            "path": "HKEY_CURRENT_USER\\Software\\Wine"
-          }
-        },
-        {
-          "task": {
-            "arch": "win32",
-            "executable": "installer",
-            "prefix": "$GAMEDIR",
-            "name": "wineexec"
-          }
-        }
-      ],
       "files": [
         {
           "installer": "N/A:Select the game's setup file"
         }
       ],
+      "game": {
+        "prefix": "$GAMEDIR",
+        "exe": "$GAMEDIR/Juiced.exe",
+        "arch": "win64",
+        "working_dir": "$GAMEDIR"
+      },
       "wine": {
         "Desktop": true,
         "WineDesktop": "1024x768"
       },
-      "game": {
-        "arch": "win64",
-        "working_dir": "$GAMEDIR",
-        "prefix": "$GAMEDIR",
-        "exe": "$GAMEDIR/Juiced.exe"
-      }
+      "installer": [
+        {
+          "task": {
+            "prefix": "$GAMEDIR",
+            "arch": "win32",
+            "name": "create_prefix",
+            "description": "Creating Wine Prefix..."
+          }
+        },
+        {
+          "task": {
+            "silent": "true",
+            "arch": "win32",
+            "name": "winetricks",
+            "description": "Hiding crash dialogs...",
+            "prefix": "$GAMEDIR",
+            "app": "nocrashdialog"
+          }
+        },
+        {
+          "task": {
+            "arch": "win32",
+            "name": "set_regedit",
+            "description": "Setting version to xp...",
+            "key": "Version",
+            "prefix": "$GAMEDIR",
+            "value": "winxp",
+            "path": "HKEY_CURRENT_USER\\Software\\Wine"
+          }
+        },
+        {
+          "task": {
+            "prefix": "$GAMEDIR",
+            "arch": "win32",
+            "executable": "installer",
+            "name": "wineexec"
+          }
+        }
+      ]
     }
   },
   "content": "script:\n  files:\n  - installer: N/A:Select the game's setup file\n  game:\n    arch: win64\n    exe: $GAMEDIR/Juiced.exe\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR\n  installer:\n  - task:\n      arch: win32\n      description: Creating Wine Prefix...\n      name: create_prefix\n      prefix: $GAMEDIR\n  - task:\n      app: nocrashdialog\n      arch: win32\n      description: Hiding crash dialogs...\n      name: winetricks\n      prefix: $GAMEDIR\n      silent: 'true'\n  - task:\n      arch: win32\n      description: Setting version to xp...\n      key: Version\n      name: set_regedit\n      path: HKEY_CURRENT_USER\\Software\\Wine\n      prefix: $GAMEDIR\n      value: winxp\n  - task:\n      arch: win32\n      executable: installer\n      name: wineexec\n      prefix: $GAMEDIR\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n"

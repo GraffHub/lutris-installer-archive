@@ -21,38 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$patch"
-        }
-      },
-      {
-        "task": {
-          "executable": "setup",
-          "description": "Installing 18 WoS Across America...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "executable": "$CACHE/patch_1_10.exe",
-          "description": "Patching 18 WoS Across America...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "setup": "N/A:Select the installer (setup.exe) for 18 Wheels of Steel Across America"
@@ -62,10 +30,42 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/18 WoS Across America/aa.exe"
-    }
+      "exe": "$GAMEDIR/drive_c/Program Files/18 WoS Across America/aa.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "$patch",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing 18 WoS Across America..."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/patch_1_10.exe",
+          "name": "wineexec",
+          "description": "Patching 18 WoS Across America..."
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: N/A:Select the installer (setup.exe) for 18 Wheels of Steel Across America\n- patch: https://gitlab.com/cxf_/lutris_files/raw/master/18wheels1_10.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/18 WoS Across America/aa.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $patch\n- task:\n    description: Installing 18 WoS Across America...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Patching 18 WoS Across America...\n    executable: $CACHE/patch_1_10.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

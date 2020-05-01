@@ -21,41 +21,41 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "$tool"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit",
-          "type": "REG_SZ",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
-        }
-      }
-    ],
     "files": [
       {
         "tool": "http://dependencywalker.com/depends22_x86.zip"
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "depends.exe"
-    }
+      "exe": "depends.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "$tool",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
+          "prefix": "$GAMEDIR",
+          "value": "",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "type": "REG_SZ"
+        }
+      }
+    ]
   },
   "content": "files:\n- tool: http://dependencywalker.com/depends22_x86.zip\ngame:\n  arch: win32\n  exe: depends.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR\n    file: $tool\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n"
 }

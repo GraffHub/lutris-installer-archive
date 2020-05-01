@@ -21,11 +21,22 @@
   "gogslug": "rollercoaster_tycoon_2",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "files_gog": "N/A:Please select your GoG-installer"
+      },
+      {
+        "Game": "https://github.com/Limetric/OpenRCT2-binaries/releases/download/v0.2.3-90cc885/OpenRCT2-0.2.3-develop-90cc88564-linux-x86_64.tar.gz"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/openrct2"
+    },
     "installer": [
       {
         "extract": {
-          "format": "tgz",
-          "file": "Game"
+          "file": "Game",
+          "format": "tgz"
         }
       },
       {
@@ -39,17 +50,17 @@
       },
       {
         "write_config": {
-          "section": "general",
-          "key": "game_path",
           "file": "$HOME/.config/OpenRCT2/config.ini",
-          "value": "$GAMEDIR/game_files"
+          "value": "$GAMEDIR/game_files",
+          "section": "general",
+          "key": "game_path"
         }
       },
       {
         "extract": {
+          "file": "files_gog",
           "format": "gog",
-          "dst": "$CACHE/GOG",
-          "file": "files_gog"
+          "dst": "$CACHE/GOG"
         }
       },
       {
@@ -58,18 +69,7 @@
           "dst": "$GAMEDIR/game_files"
         }
       }
-    ],
-    "files": [
-      {
-        "files_gog": "N/A:Please select your GoG-installer"
-      },
-      {
-        "Game": "https://github.com/Limetric/OpenRCT2-binaries/releases/download/v0.2.3-90cc885/OpenRCT2-0.2.3-develop-90cc88564-linux-x86_64.tar.gz"
-      }
-    ],
-    "game": {
-      "exe": "$GAMEDIR/openrct2"
-    }
+    ]
   },
   "content": "files:\n- files_gog: N/A:Please select your GoG-installer\n- Game: https://github.com/Limetric/OpenRCT2-binaries/releases/download/v0.2.3-90cc885/OpenRCT2-0.2.3-develop-90cc88564-linux-x86_64.tar.gz\ngame:\n  exe: $GAMEDIR/openrct2\ninstaller:\n- extract:\n    file: Game\n    format: tgz\n- chmodx: $GAMEDIR/openrct2\n- mkdir: $HOME/.config/OpenRCT2/\n- mkdir: $GAMEDIR/game_files/\n- write_config:\n    file: $HOME/.config/OpenRCT2/config.ini\n    key: game_path\n    section: general\n    value: $GAMEDIR/game_files\n- extract:\n    dst: $CACHE/GOG\n    file: files_gog\n    format: gog\n- merge:\n    dst: $GAMEDIR/game_files\n    src: $CACHE/GOG/app/\n"
 }

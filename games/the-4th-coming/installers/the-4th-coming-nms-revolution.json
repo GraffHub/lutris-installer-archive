@@ -26,27 +26,39 @@
         "setup": "http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe",
+      "arch": "win32",
+      "args": "--waitforpreload --nologo --nodx9ex --gc2"
+    },
+    "wine": {
+      "esync": true
+    },
+    "system": {
+      "disable_runtime": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Setting Wine to Windows 7 32-Bit",
-          "app": "win7",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "win7",
+          "description": "Setting Wine to Windows 7 32-Bit",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "$setup",
           "prefix": "$GAMEDIR",
+          "executable": "$setup",
           "name": "wineexec"
         }
       },
@@ -56,19 +68,7 @@
           "dst": "$GAMEDIR/drive_c/Program Files/The4Coming"
         }
       }
-    ],
-    "system": {
-      "disable_runtime": true
-    },
-    "wine": {
-      "esync": true
-    },
-    "game": {
-      "arch": "win32",
-      "args": "--waitforpreload --nologo --nodx9ex --gc2",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: http://forum-nmsrevolution.com/NMSGame/NMSRevolution_Light.exe\ngame:\n  arch: win32\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  exe: drive_c/Program Files/NMSRevolution/T4C Client/T4C.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/The4Coming\n    src: $CACHE\nsystem:\n  disable_runtime: true\nwine:\n  esync: true\n"
 }

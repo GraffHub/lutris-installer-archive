@@ -21,54 +21,54 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "",
-          "key": "winemenubuilder.exe",
-          "name": "set_regedit",
-          "type": "REG_SZ",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES",
-          "executable": "game",
-          "description": "Installing...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "description": "Disabling unused WINE features",
-          "app": "sandbox",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
+    "gogid": "children_of_the_nile_complete",
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
-    "gogid": "children_of_the_nile_complete",
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Children of the Nile Complete/CotN.exe"
-    }
+      "exe": "drive_c/GOG Games/Children of the Nile Complete/CotN.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "key": "winemenubuilder.exe",
+          "prefix": "$GAMEDIR",
+          "value": "",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "description": "Installing...",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Disabling unused WINE features",
+          "app": "sandbox",
+          "silent": true,
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Children of the Nile Complete/CotN.exe\n  prefix: $GAMEDIR\ngogid: children_of_the_nile_complete\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
 }

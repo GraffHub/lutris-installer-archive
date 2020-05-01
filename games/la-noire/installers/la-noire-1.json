@@ -1,0 +1,112 @@
+{
+  "id": 9062,
+  "game_id": 623,
+  "game_slug": "la-noire",
+  "name": "L.A. Noire",
+  "year": 2011,
+  "user": "TuiorGames",
+  "runner": "wine",
+  "slug": "la-noire-1",
+  "version": "1",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-07-07T01:53:15.108000Z",
+  "updated_at": "2020-04-12T22:21:15.708078Z",
+  "draft": false,
+  "published": false,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 110800,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/LANLauncher.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "version": "tkg-3.21-x86_64"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "d3dx9_42 d3dx9_43 vcrun2008 win7",
+          "description": "Hold tight while we install some winetricks",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "winekill"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/",
+          "arch": "win32",
+          "executable": "$GAMEDIR/3rd/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "executable": "$GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/3rd/Social Club Setup.exe",
+          "name": "wineexec",
+          "args": "/Silent"
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/3rd/Social Club Setup.exe",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/3rd",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir \"$GAMEDIR/3rd\""
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/Social Club Setup.exe",
+          "dst": "$GAMEDIR/3rd/"
+        }
+      }
+    ]
+  },
+  "content": "files:\r\n- setup: N/A:Select the game's setup file\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/LANLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9_42 d3dx9_43 vcrun2008 win7\r\n    arch: win32\r\n    description: Hold tight while we install some winetricks\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    args: /silent\r\n    executable: $GAMEDIR/3rd/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/\r\n- task:\r\n    arch: win32\r\n    args: /Silent\r\n    executable: $GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/3rd/Social\r\n      Club Setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- move:\r\n    dst: $GAMEDIR\r\n    src: $GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/3rd/Social\r\n      Club Setup.exe\r\n- move:\r\n    dst: $CACHE\r\n    src: $GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/3rd\r\n- execute:\r\n    command: mkdir \"$GAMEDIR/3rd\"\r\n- move:\r\n    dst: $GAMEDIR/3rd/\r\n    src: $GAMEDIR/drive_c/Program Files (x86)/Steam/steamapps/common/L.A.Noire/Social\r\n      Club Setup.exe\r\nwine:\r\n  version: tkg-3.21-x86_64"
+}

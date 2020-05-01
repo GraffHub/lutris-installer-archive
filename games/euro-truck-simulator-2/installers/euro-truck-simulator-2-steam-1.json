@@ -22,22 +22,22 @@
   "humblestoreid": "",
   "script": {
     "winesteam": {
-      "dxvk": true,
       "overrides": {
         "msvcr120": "n,b",
         "nvapi,nvapi64": "disabled"
       },
-      "esync": true
+      "esync": true,
+      "dxvk": true
     },
     "game": {
+      "prefix": "$GAMEDIR/prefix",
       "arch": "win64",
-      "appid": 227300,
-      "prefix": "$GAMEDIR/prefix"
+      "appid": 227300
     },
     "system": {
       "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
         "STAGING_SHARED_MEMORY": 0,
+        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
         "DXVK_HUD": "compiler"
       },
       "pulse_latency": true
@@ -45,29 +45,29 @@
     "installer": [
       {
         "write_file": {
-          "content": "dxgi.nvapiHack = False",
-          "file": "$GAMEDIR/prefix/dxvk.conf"
+          "file": "$GAMEDIR/prefix/dxvk.conf",
+          "content": "dxgi.nvapiHack = False"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "name": "winekill"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
           "app": "vcrun2017 xact",
-          "prefix": "$GAMEDIR/prefix",
           "name": "winetricks"
         }
       }

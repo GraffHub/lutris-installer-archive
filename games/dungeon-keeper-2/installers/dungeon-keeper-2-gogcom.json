@@ -21,45 +21,45 @@
   "gogslug": "dungeon_keeper_2",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "executable": "game",
-          "description": "Installing...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "00000000",
-          "arch": "win32",
-          "key": "csmt",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "type": "REG_DWORD"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/game/DKII-DX.exe"
-    }
+      "exe": "drive_c/game/DKII-DX.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "description": "Installing...",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "csmt",
+          "prefix": "$GAMEDIR",
+          "value": "00000000",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "type": "REG_DWORD"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/DKII-DX.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n"
 }

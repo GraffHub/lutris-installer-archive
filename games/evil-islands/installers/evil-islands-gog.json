@@ -1,0 +1,70 @@
+{
+  "id": 19570,
+  "game_id": 24144,
+  "game_slug": "evil-islands",
+  "name": "Evil Islands - Curse of the Lost Soul",
+  "year": 2001,
+  "user": "axet",
+  "runner": "wine",
+  "slug": "evil-islands-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "Download the game from GOG: <a href=\"https://www.gog.com/downloads/evil_islands/en1installer1\">Part 1 of 1</a>",
+  "created_at": "2020-04-09T22:50:37.687000Z",
+  "updated_at": "2020-04-13T06:41:56.209997Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1457950224,
+  "gogslug": "evil_islands",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Evil Islands/game.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/",
+          "executable": "installer",
+          "name": "wineexec",
+          "args": "/VERYSILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$CACHE/camera.reg",
+          "content": "Windows Registry Editor Version 5.00\n\n[HKEY_CURRENT_USER\\SOFTWARE\\Nival Interactive\\EvilIslands\\Camera Settings]\n\n\"CameraDefaultScrollSpeed\"=hex:00,00,c0,3f\n\"CameraDefaultScrollPowerMouse\"=hex:00,00,80,3f\n\n\"CameraDefaultRotateSpeed\"=hex:9a,99,19,3e\n\"CameraDefaultRotatePowerMouse\"=hex:00,00,80,3f\n\n\"CameraDefaultPitchSpeed\"=hex:a6,9b,c4,3a\n\"CameraDefaultPitchPowerMouse\"=hex:00,00,80,3f\n\n\"CameraDefaultZoomSpeed\"=hex:00,00,00,40\n\"CameraDefaultZoomPowerMouse\"=hex:00,00,80,3f\n"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "filename": "$CACHE/camera.reg",
+          "name": "set_regedit_file"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "description": "Set camera flip x axis",
+          "key": "CameraFlipXAxis",
+          "prefix": "$GAMEDIR",
+          "value": "1",
+          "path": "HKEY_CURRENT_USER\\Software\\Nival Interactive\\EvilIslands\\Camera Settings",
+          "type": "REG_DWORD"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Evil Islands/game.exe\n  prefix: $GAMEDIR/\ninstaller:\n- task:\n    args: /VERYSILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR/\n- write_file:\n    content: 'Windows Registry Editor Version 5.00\n\n\n      [HKEY_CURRENT_USER\\SOFTWARE\\Nival Interactive\\EvilIslands\\Camera Settings]\n\n\n      \"CameraDefaultScrollSpeed\"=hex:00,00,c0,3f\n\n      \"CameraDefaultScrollPowerMouse\"=hex:00,00,80,3f\n\n\n      \"CameraDefaultRotateSpeed\"=hex:9a,99,19,3e\n\n      \"CameraDefaultRotatePowerMouse\"=hex:00,00,80,3f\n\n\n      \"CameraDefaultPitchSpeed\"=hex:a6,9b,c4,3a\n\n      \"CameraDefaultPitchPowerMouse\"=hex:00,00,80,3f\n\n\n      \"CameraDefaultZoomSpeed\"=hex:00,00,00,40\n\n      \"CameraDefaultZoomPowerMouse\"=hex:00,00,80,3f\n\n      '\n    file: $CACHE/camera.reg\n- task:\n    filename: $CACHE/camera.reg\n    name: set_regedit_file\n    prefix: $GAMEDIR\n- task:\n    description: Set camera flip x axis\n    key: CameraFlipXAxis\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Nival Interactive\\EvilIslands\\Camera Settings\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '1'\n"
+}

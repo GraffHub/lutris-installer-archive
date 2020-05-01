@@ -21,10 +21,18 @@
   "gogslug": "7_billion_humans",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "game": "N/A: Please select the .sh install file downloaded from humblebundle.com"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/7BillionHumans.bin.$INPUT_ARCH"
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "ARCH",
+          "preselect": "x86_64",
           "options": [
             {
               "x86": "32 bit"
@@ -34,14 +42,14 @@
             }
           ],
           "description": "CPU Architecture:",
-          "preselect": "x86_64"
+          "id": "ARCH"
         }
       },
       {
         "extract": {
+          "file": "$game",
           "format": "zip",
-          "dst": "$CACHE",
-          "file": "$game"
+          "dst": "$CACHE"
         }
       },
       {
@@ -56,15 +64,7 @@
           "dst": "$GAMEDIR/"
         }
       }
-    ],
-    "files": [
-      {
-        "game": "N/A: Please select the .sh install file downloaded from humblebundle.com"
-      }
-    ],
-    "game": {
-      "exe": "$GAMEDIR/7BillionHumans.bin.$INPUT_ARCH"
-    }
+    ]
   },
   "content": "files:\n- game: 'N/A: Please select the .sh install file downloaded from humblebundle.com'\ngame:\n  exe: $GAMEDIR/7BillionHumans.bin.$INPUT_ARCH\ninstaller:\n- input_menu:\n    description: 'CPU Architecture:'\n    id: ARCH\n    options:\n    - x86: 32 bit\n    - x86_64: 64 bit\n    preselect: x86_64\n- extract:\n    dst: $CACHE\n    file: $game\n    format: zip\n- merge:\n    dst: $GAMEDIR/\n    src: $CACHE/data/$INPUT_ARCH/\n- merge:\n    dst: $GAMEDIR/\n    src: $CACHE/data/noarch/\n"
 }

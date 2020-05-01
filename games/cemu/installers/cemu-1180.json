@@ -1,0 +1,175 @@
+{
+  "id": 19480,
+  "game_id": 16449,
+  "game_slug": "cemu",
+  "name": "Cemu",
+  "year": 2015,
+  "user": "noggles",
+  "runner": "wine",
+  "slug": "cemu-1180",
+  "version": "1.18.0",
+  "description": "I literally just copy and pasted the previous script for 1.17.3 and changed all instances of 1.17.3 to 1.18.0 and I'm assuming it will work. This is my first script.",
+  "notes": "Includes Cemuhook plugin, graphic packs, and controller support\r\n\r\nSome options under the Debug menu cause the program to crash.\r\n\r\nUpdating games via xml causes Cemu to crash. Use this method instead:\r\n\r\n- Open up: drive_c/Program Files (x86)/cemu_1.17.3/mlc01/usr/title and create a folder as well as an additional subfolder inside the newly created one. Name them after the game's Title ID.\r\n\r\nNow you're ready to extract your update folders:\r\n\r\n- For updates: mlc01/usr/title/00050000/101C9500\r\n- For DLC: mlc01/usr/title/00050000/101C9500/aoc\r\n\r\nTo obtain your game's Title ID launch your game and open your drive_c/Program Files (x86)/cemu_1.17.3/log.txt file. Search for the file path similar to the given example.\r\n\r\nChoose the Xbox_Controller profile in Cemu's input settings to enable controller support.",
+  "created_at": "2020-04-06T14:31:16.927746Z",
+  "updated_at": "2020-04-06T14:31:16.927772Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "count": 1,
+    "results": [
+      {
+        "draft": false,
+        "script": {
+          "files": [
+            {
+              "cemu": "http://cemu.info/releases/cemu_1.18.0.zip"
+            },
+            {
+              "fonts": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz"
+            },
+            {
+              "hook": "https://files.sshnuke.net/cemuhook_1159_0573.zip"
+            },
+            {
+              "config": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/cemuhook.ini"
+            },
+            {
+              "packs": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/graphicPacks544.tar.xz"
+            },
+            {
+              "controller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt"
+            }
+          ],
+          "game": {
+            "prefix": "$GAMEDIR",
+            "exe": "drive_c/Program Files (x86)/cemu_1.18.0/Cemu.exe",
+            "arch": "win64"
+          },
+          "wine": {
+            "overrides": {
+              "mscoree": "disabled",
+              "dbghelp": "native,builtin",
+              "mshtml": "disabled"
+            },
+            "esync": true
+          },
+          "system": {
+            "env": {
+              "vblank_mode": 0,
+              "mesa_glthread": "true",
+              "__GL_THREADED_OPTIMIZATIONS": 1,
+              "R600_DEBUG": "nohyperz"
+            },
+            "disable_compositor": true
+          },
+          "installer": [
+            {
+              "task": {
+                "prefix": "$GAMEDIR",
+                "arch": "win64",
+                "name": "create_prefix"
+              }
+            },
+            {
+              "task": {
+                "prefix": "$GAMEDIR",
+                "app": "vcrun2017 win7",
+                "name": "winetricks"
+              }
+            },
+            {
+              "extract": {
+                "file": "cemu",
+                "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0"
+              }
+            },
+            {
+              "extract": {
+                "file": "fonts",
+                "dst": "$CACHE/sharedFonts"
+              }
+            },
+            {
+              "move": {
+                "src": "$CACHE/sharedFonts",
+                "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0"
+              }
+            },
+            {
+              "extract": {
+                "file": "hook",
+                "dst": "$CACHE/hook"
+              }
+            },
+            {
+              "merge": {
+                "src": "$CACHE/hook",
+                "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0"
+              }
+            },
+            {
+              "extract": {
+                "file": "packs",
+                "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/graphicPacks/downloadedGraphicPacks"
+              }
+            },
+            {
+              "write_file": {
+                "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles/Xbox_Controller.txt",
+                "content": "bleh"
+              }
+            },
+            {
+              "merge": {
+                "src": "controller",
+                "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles"
+              }
+            },
+            {
+              "write_file": {
+                "file": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/cemuhook.ini",
+                "content": "bleh"
+              }
+            },
+            {
+              "merge": {
+                "src": "config",
+                "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/cemuhook.ini"
+              }
+            }
+          ]
+        },
+        "game_slug": "cemu",
+        "notes": "Some options under the Debug menu cause the program to crash.\r\n\r\nUpdating games via xml causes Cemu to crash. Use this method instead:\r\n\r\n- Open up: <b>drive_c/Program Files (x86)/cemu_1.18.0/mlc01/usr/title</b> and create a folder as well as an additional subfolder inside the newly created one. Name them after the game's Title ID.\r\n\r\nNow you're ready to extract your update folders:\r\n\r\n- For updates: <b>mlc01/usr/title/00050000/101C9500</b>\r\n- For DLC: <b>mlc01/usr/title/00050000/101C9500/aoc</b>\r\n\r\nTo obtain your game's Title ID launch your game and open your <b>drive_c/Program Files (x86)/cemu_1.18.0/log.txt</b> file. Search for the file path similar to the given example.\r\n\r\nChoose the Xbox_Controller profile in Cemu's input settings to enable controller support.",
+        "description": "Includes Cemuhook plugin, graphic packs, and controller support",
+        "version": "v1.18.0",
+        "published": true,
+        "published_by": 51687,
+        "year": 2015,
+        "name": "Cemu",
+        "slug": "cemu-v1173",
+        "runner": "wine",
+        "gogid": null,
+        "game_id": 16449,
+        "humblestoreid": "",
+        "updated_at": "2020-03-07T19:02:14.032155Z",
+        "created_at": "2018-02-10T04:43:52.465000Z",
+        "rating": "4",
+        "id": 7284,
+        "user": "cxf",
+        "gogslug": "",
+        "steamid": null,
+        "content": "files:\r\n- cemu: http://cemu.info/releases/cemu_1.18.0.zip\r\n- fonts: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz\r\n- hook: https://files.sshnuke.net/cemuhook_1159_0573.zip\r\n- config: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/cemuhook.ini\r\n- packs: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/graphicPacks544.tar.xz\r\n- controller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/cemu_1.18.0/Cemu.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2017 win7\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\r\n    file: cemu\r\n- extract:\r\n    dst: $CACHE/sharedFonts\r\n    file: fonts\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\r\n    src: $CACHE/sharedFonts\r\n- extract:\r\n    dst: $CACHE/hook\r\n    file: hook\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\r\n    src: $CACHE/hook\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/graphicPacks/downloadedGraphicPacks\r\n    file: packs\r\n- write_file:\r\n    content: bleh\r\n    file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles/Xbox_Controller.txt\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles\r\n    src: controller\r\n- write_file:\r\n    content: bleh\r\n    file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/cemuhook.ini\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/cemuhook.ini\r\n    src: config\r\nsystem:\r\n  disable_compositor: true\r\n  env:\r\n    R600_DEBUG: nohyperz\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: 'true'\r\n    vblank_mode: 0\r\nwine:\r\n  esync: true\r\n  overrides:\r\n    dbghelp: native,builtin\r\n    mscoree: disabled\r\n    mshtml: disabled"
+      }
+    ],
+    "previous": null,
+    "next": null
+  },
+  "content": "count: 1\nnext: null\nprevious: null\nresults:\n- content: \"files:\\r\\n- cemu: http://cemu.info/releases/cemu_1.18.0.zip\\r\\n- fonts:\\\n    \\ https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz\\r\\\n    \\n- hook: https://files.sshnuke.net/cemuhook_1159_0573.zip\\r\\n- config: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/cemuhook.ini\\r\\\n    \\n- packs: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/graphicPacks544.tar.xz\\r\\\n    \\n- controller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt\\r\\\n    \\ngame:\\r\\n  arch: win64\\r\\n  exe: drive_c/Program Files (x86)/cemu_1.18.0/Cemu.exe\\r\\\n    \\n  prefix: $GAMEDIR\\r\\ninstaller:\\r\\n- task:\\r\\n    arch: win64\\r\\n    name:\\\n    \\ create_prefix\\r\\n    prefix: $GAMEDIR\\r\\n- task:\\r\\n    app: vcrun2017 win7\\r\\\n    \\n    name: winetricks\\r\\n    prefix: $GAMEDIR\\r\\n- extract:\\r\\n    dst: $GAMEDIR/drive_c/Program\\\n    \\ Files (x86)/cemu_1.18.0\\r\\n    file: cemu\\r\\n- extract:\\r\\n    dst: $CACHE/sharedFonts\\r\\\n    \\n    file: fonts\\r\\n- move:\\r\\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\\r\\\n    \\n    src: $CACHE/sharedFonts\\r\\n- extract:\\r\\n    dst: $CACHE/hook\\r\\n    file:\\\n    \\ hook\\r\\n- merge:\\r\\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\\r\\\n    \\n    src: $CACHE/hook\\r\\n- extract:\\r\\n    dst: $GAMEDIR/drive_c/Program Files\\\n    \\ (x86)/cemu_1.18.0/graphicPacks/downloadedGraphicPacks\\r\\n    file: packs\\r\\n\\\n    - write_file:\\r\\n    content: bleh\\r\\n    file: $GAMEDIR/drive_c/Program Files\\\n    \\ (x86)/cemu_1.18.0/controllerProfiles/Xbox_Controller.txt\\r\\n- merge:\\r\\n   \\\n    \\ dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles\\r\\n\\\n    \\    src: controller\\r\\n- write_file:\\r\\n    content: bleh\\r\\n    file: $GAMEDIR/drive_c/Program\\\n    \\ Files (x86)/cemu_1.18.0/cemuhook.ini\\r\\n- merge:\\r\\n    dst: $GAMEDIR/drive_c/Program\\\n    \\ Files (x86)/cemu_1.18.0/cemuhook.ini\\r\\n    src: config\\r\\nsystem:\\r\\n  disable_compositor:\\\n    \\ true\\r\\n  env:\\r\\n    R600_DEBUG: nohyperz\\r\\n    __GL_THREADED_OPTIMIZATIONS:\\\n    \\ 1\\r\\n    mesa_glthread: 'true'\\r\\n    vblank_mode: 0\\r\\nwine:\\r\\n  esync: true\\r\\\n    \\n  overrides:\\r\\n    dbghelp: native,builtin\\r\\n    mscoree: disabled\\r\\n   \\\n    \\ mshtml: disabled\"\n  created_at: '2018-02-10T04:43:52.465000Z'\n  description: Includes Cemuhook plugin, graphic packs, and controller support\n  draft: false\n  game_id: 16449\n  game_slug: cemu\n  gogid: null\n  gogslug: ''\n  humblestoreid: ''\n  id: 7284\n  name: Cemu\n  notes: \"Some options under the Debug menu cause the program to crash.\\r\\n\\r\\nUpdating\\\n    \\ games via xml causes Cemu to crash. Use this method instead:\\r\\n\\r\\n- Open up:\\\n    \\ <b>drive_c/Program Files (x86)/cemu_1.18.0/mlc01/usr/title</b> and create a\\\n    \\ folder as well as an additional subfolder inside the newly created one. Name\\\n    \\ them after the game's Title ID.\\r\\n\\r\\nNow you're ready to extract your update\\\n    \\ folders:\\r\\n\\r\\n- For updates: <b>mlc01/usr/title/00050000/101C9500</b>\\r\\n\\\n    - For DLC: <b>mlc01/usr/title/00050000/101C9500/aoc</b>\\r\\n\\r\\nTo obtain your\\\n    \\ game's Title ID launch your game and open your <b>drive_c/Program Files (x86)/cemu_1.18.0/log.txt</b>\\\n    \\ file. Search for the file path similar to the given example.\\r\\n\\r\\nChoose the\\\n    \\ Xbox_Controller profile in Cemu's input settings to enable controller support.\"\n  published: true\n  published_by: 51687\n  rating: '4'\n  runner: wine\n  script:\n    files:\n    - cemu: http://cemu.info/releases/cemu_1.18.0.zip\n    - fonts: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/sharedFonts.tar.xz\n    - hook: https://files.sshnuke.net/cemuhook_1159_0573.zip\n    - config: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/cemuhook.ini\n    - packs: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/graphicPacks544.tar.xz\n    - controller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt\n    game:\n      arch: win64\n      exe: drive_c/Program Files (x86)/cemu_1.18.0/Cemu.exe\n      prefix: $GAMEDIR\n    installer:\n    - task:\n        arch: win64\n        name: create_prefix\n        prefix: $GAMEDIR\n    - task:\n        app: vcrun2017 win7\n        name: winetricks\n        prefix: $GAMEDIR\n    - extract:\n        dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\n        file: cemu\n    - extract:\n        dst: $CACHE/sharedFonts\n        file: fonts\n    - move:\n        dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\n        src: $CACHE/sharedFonts\n    - extract:\n        dst: $CACHE/hook\n        file: hook\n    - merge:\n        dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0\n        src: $CACHE/hook\n    - extract:\n        dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/graphicPacks/downloadedGraphicPacks\n        file: packs\n    - write_file:\n        content: bleh\n        file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles/Xbox_Controller.txt\n    - merge:\n        dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/controllerProfiles\n        src: controller\n    - write_file:\n        content: bleh\n        file: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/cemuhook.ini\n    - merge:\n        dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.18.0/cemuhook.ini\n        src: config\n    system:\n      disable_compositor: true\n      env:\n        R600_DEBUG: nohyperz\n        __GL_THREADED_OPTIMIZATIONS: 1\n        mesa_glthread: 'true'\n        vblank_mode: 0\n    wine:\n      esync: true\n      overrides:\n        dbghelp: native,builtin\n        mscoree: disabled\n        mshtml: disabled\n  slug: cemu-v1173\n  steamid: null\n  updated_at: '2020-03-07T19:02:14.032155Z'\n  user: cxf\n  version: v1.18.0\n  year: 2015\n"
+}

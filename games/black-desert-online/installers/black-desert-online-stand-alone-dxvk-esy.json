@@ -1,0 +1,79 @@
+{
+  "id": 19373,
+  "game_id": 11537,
+  "game_slug": "black-desert-online",
+  "name": "Black Desert Online",
+  "year": 2014,
+  "user": "twisty",
+  "runner": "wine",
+  "slug": "black-desert-online-stand-alone-dxvk-esy",
+  "version": "Stand Alone DXVK + ESYNC",
+  "description": "Installs and downloads fine but crashes when you hit Play due to Xigncode. No known workarounds at this time.",
+  "notes": "Game installs OK and downloads game files, but when you launch the game it crashes.",
+  "created_at": "2020-04-02T14:57:29.387000Z",
+  "updated_at": "2020-04-04T08:53:20.009417Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 582660,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": {
+          "filename": "BlackDesertOnlineSetup_20180524_10010.exe",
+          "url": "http://akamai-gamecdn.blackdesertonline.com/game/download/setup/BlackDesertOnlineSetup_20180524_10010.exe"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Black Desert Online/Black Desert Online Launcher.exe",
+      "appid": 582660
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64bit Wine prefix."
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "description": "Setting Windows 10 mode for Wine",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "value": "win10",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "arial",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Running Black Desert Online Installer. Please do not run the game until this script finishes installing."
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup:\n    filename: BlackDesertOnlineSetup_20180524_10010.exe\n    url: http://akamai-gamecdn.blackdesertonline.com/game/download/setup/BlackDesertOnlineSetup_20180524_10010.exe\ngame:\n  appid: 582660\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Black Desert Online/Black Desert Online\n    Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running Black Desert Online Installer. Please do not run the game\n      until this script finishes installing.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

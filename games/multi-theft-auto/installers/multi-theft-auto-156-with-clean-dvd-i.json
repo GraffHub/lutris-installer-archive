@@ -21,47 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "app": "winxp",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "app": "corefonts",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "gta",
-          "description": "Installing GTA:SA...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "executable": "mta",
-          "description": "Installing MTA...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "gta": "N/A:Select the installer for GTA San Andreas (setup.exe)"
@@ -71,10 +30,51 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe"
-    }
+      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "winxp",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "corefonts",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "gta",
+          "name": "wineexec",
+          "description": "Installing GTA:SA..."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "mta",
+          "name": "wineexec",
+          "description": "Installing MTA...",
+          "args": "/silent"
+        }
+      }
+    ]
   },
   "content": "files:\n- gta: N/A:Select the installer for GTA San Andreas (setup.exe)\n- mta: http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa_xp-1.5.6.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: winxp\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing GTA:SA...\n    executable: gta\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing MTA...\n    executable: mta\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

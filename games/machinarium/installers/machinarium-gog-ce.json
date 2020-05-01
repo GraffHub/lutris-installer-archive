@@ -21,27 +21,43 @@
   "gogslug": "machinarium_collectors_edition",
   "humblestoreid": "machinarium",
   "script": {
+    "custom-name": "Machinarium Collector's Edition - GOG - Wine",
+    "files": [
+      {
+        "gog": "N/A:Please select the Windows setup game file downloaded from GOG"
+      },
+      {
+        "inno": "https://constexpr.org/innoextract/files/innoextract-1.8-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/",
+      "exe": "drive_c/GOG Games/Machinarium/Machinarium.exe"
+    },
+    "wine": {
+      "Desktop": true
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
           "arch": "win64",
-          "install_gecko": false,
+          "name": "create_prefix",
           "description": "Preparing wineprefix...",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
           "install_mono": false
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/",
-          "file": "inno"
+          "file": "inno",
+          "dst": "$CACHE/"
         }
       },
       {
         "execute": {
-          "args": "--extract $gog --output-dir $CACHE",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "--extract $gog --output-dir $CACHE"
         }
       },
       {
@@ -52,11 +68,11 @@
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "value": "0 0 0",
-          "arch": "win64",
-          "key": "background",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
@@ -66,23 +82,7 @@
           "command": "cd \"$GAMEDIR/drive_c/GOG Games/Machinarium/\"; rm -f -r __support goggame-1207659017.* webcache.zip"
         }
       }
-    ],
-    "files": [
-      {
-        "gog": "N/A:Please select the Windows setup game file downloaded from GOG"
-      },
-      {
-        "inno": "https://constexpr.org/innoextract/files/innoextract-1.8-linux.tar.xz"
-      }
-    ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "Machinarium Collector's Edition - GOG - Wine",
-    "game": {
-      "prefix": "$GAMEDIR/",
-      "exe": "drive_c/GOG Games/Machinarium/Machinarium.exe"
-    }
+    ]
   },
   "content": "custom-name: Machinarium Collector's Edition - GOG - Wine\nfiles:\n- gog: N/A:Please select the Windows setup game file downloaded from GOG\n- inno: https://constexpr.org/innoextract/files/innoextract-1.8-linux.tar.xz\ngame:\n  exe: drive_c/GOG Games/Machinarium/Machinarium.exe\n  prefix: $GAMEDIR/\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/\n    file: inno\n- execute:\n    args: --extract $gog --output-dir $CACHE\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Machinarium/\n    src: $CACHE/app\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Machinarium/\"; rm -f -r __support goggame-1207659017.*\n      webcache.zip\nwine:\n  Desktop: true\n"
 }

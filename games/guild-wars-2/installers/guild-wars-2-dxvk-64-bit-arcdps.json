@@ -11,11 +11,11 @@
   "description": "This game requires an SSD hard drive as 3D models are lazy loaded constantly.",
   "notes": "With AMD graphics (with or without DXVK), it's highly recommended to use a virtual desktop as GW2's launcher will slow most desktop environments to a crawl only recoverable by hard reboot. Running GW2's exe with -image lets it download all game data and updates. For convenience, It's recommended to create a context menu entry for updating the game.\r\n\r\nTo improve perfomance, <a href=\"https://i.imgur.com/fhEr0rW.jpg\">these settings</a>. are suggested. Also, using a fast SSD hard drive can massively reduce, or eliminate stuttering on this game.",
   "created_at": "2019-08-10T07:41:37.418000Z",
-  "updated_at": "2019-12-25T16:54:48.741292Z",
+  "updated_at": "2020-04-13T19:25:44.691967Z",
   "draft": false,
-  "published": true,
-  "published_by": 20548,
-  "rating": "4",
+  "published": false,
+  "published_by": 68872,
+  "rating": "",
   "steamid": null,
   "gogid": null,
   "gogslug": "",
@@ -32,26 +32,46 @@
         "gw2shadercache": "https://github.com/Zeioth/zeioth-lutris/raw/master/game-installers/guild-wars-2/gw2-d9vk-shader-cache-0.0.2.zip"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
+      "arch": "win64",
+      "args": "-autologin"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "STAGING_SHARED_MEMORY": 1,
+        "DXVK_HUD": 0,
+        "__NV_PRIME_RENDER_OFFLOAD": 1,
+        "DXVK_LOG_LEVEL": "none",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "disable_compositor": "true"
+    },
     "installer": [
       {
         "extract": {
+          "file": "gw2shadercache",
           "format": "zip",
-          "dst": "$GAMEDIR",
-          "file": "gw2shadercache"
+          "dst": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Creating win64 prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating win64 prefix"
         }
       },
       {
         "task": {
-          "app": "faudio",
           "prefix": "$GAMEDIR",
+          "app": "faudio",
           "name": "winetricks"
         }
       },
@@ -72,27 +92,7 @@
           "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/bin64"
         }
       }
-    ],
-    "system": {
-      "disable_compositor": "true",
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__NV_PRIME_RENDER_OFFLOAD": 1,
-        "STAGING_SHARED_MEMORY": 1,
-        "DXVK_HUD": 0,
-        "DXVK_LOG_LEVEL": "none"
-      }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "args": "-autologin",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe"
-    }
+    ]
   },
   "content": "files:\r\n- client: https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe\r\n- arcdps: https://www.deltaconnected.com/arcdps/x64/d3d9.dll\r\n- gw2shadercache: https://github.com/Zeioth/zeioth-lutris/raw/master/game-installers/guild-wars-2/gw2-d9vk-shader-cache-0.0.2.zip\r\ngame:\r\n  arch: win64\r\n  args: -autologin\r\n  exe: drive_c/Program Files/Guild Wars 2/GW2-64.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- extract:\r\n    dst: $GAMEDIR\r\n    file: gw2shadercache\r\n    format: zip\r\n- task:\r\n    arch: win64\r\n    description: Creating win64 prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: faudio\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2/bin64\"\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe\r\n    src: client\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/bin64\r\n    src: arcdps\r\nsystem:\r\n  disable_compositor: 'true'\r\n  env:\r\n    DXVK_HUD: 0\r\n    DXVK_LOG_LEVEL: none\r\n    STAGING_SHARED_MEMORY: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __NV_PRIME_RENDER_OFFLOAD: 1\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

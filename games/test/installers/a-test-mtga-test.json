@@ -25,19 +25,19 @@
       "prefix": "$GAMEDIR",
       "exe": "drive_c/Program Files (x86)/Wizards of the Coast/MTGA/MTGA.exe"
     },
+    "wine": {
+      "esync": true,
+      "Desktop": true
+    },
     "system": {
       "pulse_latency": true
-    },
-    "wine": {
-      "Desktop": true,
-      "esync": true
     },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
@@ -52,34 +52,34 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
+          "value": "Y",
           "key": "GrabFullscreen",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "prefix": "$GAMEDIR",
-          "value": "Y"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
+          "value": "N",
           "key": "UseTakeFocus",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
-          "prefix": "$GAMEDIR",
-          "value": "N"
+          "name": "set_regedit"
         }
       },
       {
         "task": {
-          "description": "Installing .NET 4.7.2. This will take a while...",
-          "app": "dotnet472",
           "prefix": "$GAMEDIR",
+          "app": "dotnet472",
+          "description": "Installing .NET 4.7.2. This will take a while...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "app": "faudio arial win10",
           "prefix": "$GAMEDIR",
+          "app": "faudio arial win10",
           "name": "winetricks"
         }
       },
@@ -97,12 +97,12 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "exclude_processes": "mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe",
+          "name": "wineexec",
+          "description": "Installing Magic the Gathering Arena",
           "args": "/i \"$CACHE/MTGAInstaller.msi\"",
-          "executable": "msiexec",
-          "description": "Installing Magic the Gathering Arena"
+          "prefix": "$GAMEDIR",
+          "executable": "msiexec"
         }
       },
       {

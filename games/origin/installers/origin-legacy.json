@@ -21,32 +21,42 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Origin/Origin.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating Wine Prefix...",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine Prefix..."
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Hiding annoying dialogs...",
-          "app": "nocrashdialog",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "nocrashdialog",
+          "description": "Hiding annoying dialogs...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "winxp",
           "arch": "win32",
-          "key": "Version",
           "name": "set_regedit",
           "description": "Setting version to xp...",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "value": "winxp",
           "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
@@ -59,11 +69,11 @@
       {
         "task": {
           "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "exclude_processes": "Origin.exe OriginClientService.exe",
-          "executable": "origin",
-          "description": "Installing Origin..."
+          "name": "wineexec",
+          "description": "Installing Origin...",
+          "prefix": "$GAMEDIR",
+          "executable": "origin"
         }
       },
       {
@@ -72,17 +82,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "files": [
-      {
-        "origin": "https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe"
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Origin/Origin.exe"
-    }
+    ]
   },
   "content": "files:\n- origin: https://origin-a.akamaihd.net/Origin-Client-Download/origin/legacy/OriginThinSetup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: nocrashdialog\n    arch: win32\n    description: Hiding annoying dialogs...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Setting version to xp...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Origin...\n    exclude_processes: Origin.exe OriginClientService.exe\n    executable: origin\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

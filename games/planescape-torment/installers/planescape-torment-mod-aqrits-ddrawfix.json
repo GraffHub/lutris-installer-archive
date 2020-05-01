@@ -21,39 +21,39 @@
   "gogslug": "planescape_torment",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
+    "files": [
+      {
+        "patch": {
+          "filename": "ie-ddrawfix.zip",
+          "url": "http://bitpatch.com/downloads/ie-ddrawfix.zip"
+        }
+      }
+    ],
+    "requires": "planescape-torment",
     "installer": [
       {
         "extract": {
+          "file": "$patch",
           "description": "Extracting the Patch",
           "dst": "$GAMEDIR/drive_c/Torment/",
-          "file": "$patch",
           "format": "zip"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "name": "wineexec",
+          "description": "Running the Patch",
           "args": "/c \"setup-ddrawfix.exe\"",
-          "working_dir": "$GAMEDIR/drive_c/Torment/",
+          "prefix": "$GAMEDIR",
           "executable": "cmd",
-          "description": "Running the Patch"
+          "working_dir": "$GAMEDIR/drive_c/Torment/"
         }
       }
-    ],
-    "requires": "planescape-torment",
-    "files": [
-      {
-        "patch": {
-          "url": "http://bitpatch.com/downloads/ie-ddrawfix.zip",
-          "filename": "ie-ddrawfix.zip"
-        }
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    }
+    ]
   },
   "content": "files:\n- patch:\n    filename: ie-ddrawfix.zip\n    url: http://bitpatch.com/downloads/ie-ddrawfix.zip\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    description: Extracting the Patch\n    dst: $GAMEDIR/drive_c/Torment/\n    file: $patch\n    format: zip\n- task:\n    args: /c \"setup-ddrawfix.exe\"\n    description: Running the Patch\n    executable: cmd\n    name: wineexec\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR/drive_c/Torment/\nrequires: planescape-torment\n"
 }

@@ -1,0 +1,79 @@
+{
+  "id": 20128,
+  "game_id": 1237,
+  "game_slug": "call-of-duty",
+  "name": "Call of Duty",
+  "year": null,
+  "user": "Autolycus",
+  "runner": "wine",
+  "slug": "call-of-duty-cd-15-patch",
+  "version": "CD + 1.5 Patch",
+  "description": "Installs from CD set.\r\nDownloads and installs the last patch (1.5)",
+  "notes": "- After installation your game should indicate a version number of 1.5 on the main menu.\r\n- If you are reinstalling COD this is the only patch that you need to update the game to the latest version.\r\n- Change the exe: from CoDSP.exe to CoDMP for Multi-player",
+  "created_at": "2020-04-30T05:36:02.861407Z",
+  "updated_at": "2020-04-30T05:36:02.861436Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 2620,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "patch": "http://www.callofdutyview.net/files/patches/cod-v1.5.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Activision/Call of Duty/CoDSP.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "mfc42",
+          "description": "Installing mfc42 - required for CD key check",
+          "name": "winetricks"
+        }
+      },
+      {
+        "insert-disc": {
+          "message": "Mount the Call of Duty CD to continue",
+          "requires": "Setup.Exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/Setup.Exe",
+          "name": "wineexec",
+          "description": "Installing Call of Duty"
+        }
+      },
+      {
+        "extract": {
+          "file": "patch",
+          "dst": "$GAMEDIR/patch/cod1.5/"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/patch/cod1.5/cod-v1.5.exe",
+          "name": "wineexec",
+          "description": "Installing COD 1.5 Patch"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: http://www.callofdutyview.net/files/patches/cod-v1.5.zip\ngame:\n  exe: drive_c/Program Files (x86)/Activision/Call of Duty/CoDSP.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mfc42\n    description: Installing mfc42 - required for CD key check\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    message: Mount the Call of Duty CD to continue\n    requires: Setup.Exe\n- task:\n    description: Installing Call of Duty\n    executable: $DISC/Setup.Exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/patch/cod1.5/\n    file: patch\n- task:\n    description: Installing COD 1.5 Patch\n    executable: $GAMEDIR/patch/cod1.5/cod-v1.5.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

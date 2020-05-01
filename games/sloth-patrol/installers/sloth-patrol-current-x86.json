@@ -22,12 +22,17 @@
   "humblestoreid": "",
   "script": {
     "exe": "start.sh",
+    "files": [
+      {
+        "game": "http://www.slothpatrol.com/files/SlothPatrol.tar.gz"
+      }
+    ],
     "installer": [
       {
         "extract": {
+          "file": "$game",
           "description": "extracting...",
-          "dst": "$GAMEDIR",
-          "file": "$game"
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -38,18 +43,13 @@
       },
       {
         "execute": {
-          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nif [ \\\"$$(uname -m)\\\" = \\\"x86_64\\\" ]\\nthen\\n./SlothPatrol.x86_64 \\\"$$@\\\"\\nelse\\n./SlothPatrol.x86 \\\"$$@\\\"\\nfi'>$GAMEDIR/start.sh\"",
           "file": "/bin/sh",
-          "terminal": false
+          "terminal": false,
+          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nif [ \\\"$$(uname -m)\\\" = \\\"x86_64\\\" ]\\nthen\\n./SlothPatrol.x86_64 \\\"$$@\\\"\\nelse\\n./SlothPatrol.x86 \\\"$$@\\\"\\nfi'>$GAMEDIR/start.sh\""
         }
       },
       {
         "chmodx": "$GAMEDIR/start.sh"
-      }
-    ],
-    "files": [
-      {
-        "game": "http://www.slothpatrol.com/files/SlothPatrol.tar.gz"
       }
     ]
   },

@@ -21,6 +21,17 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "setup": {
+          "filename": "OldSchool.dmg",
+          "url": "https://www.runescape.com/downloads/OldSchool.dmg"
+        }
+      }
+    ],
+    "game": {
+      "exe": "osrslauncher.sh"
+    },
     "installer": [
       {
         "execute": {
@@ -35,25 +46,14 @@
       },
       {
         "write_file": {
-          "content": "#!/bin/bash\njava -Dsun.java2d.opengl='True' -Dsun.java2d.uiScale='2' -Duser.home='.' -Djava.class.path='$GAMEDIR/jagexappletviewer.jar' -Dcom.jagex.config='http://oldschool.runescape.com/jav_config.ws' 'jagexappletviewer' 'oldschool'",
-          "file": "$GAMEDIR/osrslauncher.sh"
+          "file": "$GAMEDIR/osrslauncher.sh",
+          "content": "#!/bin/bash\njava -Dsun.java2d.opengl='True' -Dsun.java2d.uiScale='2' -Duser.home='.' -Djava.class.path='$GAMEDIR/jagexappletviewer.jar' -Dcom.jagex.config='http://oldschool.runescape.com/jav_config.ws' 'jagexappletviewer' 'oldschool'"
         }
       },
       {
         "chmodx": "$GAMEDIR/osrslauncher.sh"
       }
-    ],
-    "files": [
-      {
-        "setup": {
-          "url": "https://www.runescape.com/downloads/OldSchool.dmg",
-          "filename": "OldSchool.dmg"
-        }
-      }
-    ],
-    "game": {
-      "exe": "osrslauncher.sh"
-    }
+    ]
   },
   "content": "files:\n- setup:\n    filename: OldSchool.dmg\n    url: https://www.runescape.com/downloads/OldSchool.dmg\ngame:\n  exe: osrslauncher.sh\ninstaller:\n- execute:\n    command: 7z e -o'$CACHE/setup/OldSchool-dmg' -y '$CACHE/setup/OldSchool.dmg'\n- copy:\n    dst: $GAMEDIR\n    src: $CACHE/setup/OldSchool-dmg/jagexappletviewer.jar\n- write_file:\n    content: '#!/bin/bash\n\n      java -Dsun.java2d.opengl=''True'' -Dsun.java2d.uiScale=''2'' -Duser.home=''.''\n      -Djava.class.path=''$GAMEDIR/jagexappletviewer.jar'' -Dcom.jagex.config=''http://oldschool.runescape.com/jav_config.ws''\n      ''jagexappletviewer'' ''oldschool'''\n    file: $GAMEDIR/osrslauncher.sh\n- chmodx: $GAMEDIR/osrslauncher.sh\n"
 }

@@ -26,46 +26,46 @@
         "setup": "N/A:Select the game's setup file"
       }
     ],
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "app": "vcrun2010 vcrun2017 win7 dotNet462 win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
-          "description": "Installing Bound By Flame",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Bound By Flame/BoundByFlame.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "dxvk": true
+    },
     "system": {
       "env": {
         "mesa_glthread": "true",
         "DXVK_HUD": "compiler"
       }
     },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Bound By Flame/BoundByFlame.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "vcrun2010 vcrun2017 win7 dotNet462 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing Bound By Flame",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Bound By Flame/BoundByFlame.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 vcrun2017 win7 dotNet462 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    description: Installing Bound By Flame\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n"
 }

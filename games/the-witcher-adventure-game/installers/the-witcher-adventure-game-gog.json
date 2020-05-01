@@ -1,0 +1,67 @@
+{
+  "id": 9967,
+  "game_id": 5541,
+  "game_slug": "the-witcher-adventure-game",
+  "name": "The Witcher Adventure Game",
+  "year": 2014,
+  "user": "lysergia",
+  "runner": "wine",
+  "slug": "the-witcher-adventure-game-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-08-30T03:02:02.572904Z",
+  "updated_at": "2018-08-31T10:41:42.831166Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 303800,
+  "gogid": 1207666883,
+  "gogslug": "witcher_adventure_game",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/The Witcher Adventure Game/TheWitcherAdventureGame.exe",
+      "arch": "win64"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Prefix"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "wineexec",
+          "description": "Installing The Witcher Adventure Game",
+          "args": "/LANG=en /SILENT /SUPPRESSMSGBOXES /NOGUI",
+          "prefix": "$GAMEDIR",
+          "executable": "installer"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "description": "Disabling GLSL",
+          "key": "UseGLSL",
+          "prefix": "$GAMEDIR",
+          "value": "disabled",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/The Witcher Adventure Game/TheWitcherAdventureGame.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /LANG=en /SILENT /SUPPRESSMSGBOXES /NOGUI\n    description: Installing The Witcher Adventure Game\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Disabling GLSL\n    key: UseGLSL\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: disabled\n"
+}

@@ -33,10 +33,12 @@
         "gemrbengine": "https://lutris.net/files/runners/gemrb-0.8.1-x64.tar.gz"
       }
     ],
+    "game": {
+      "args": "-c planescape-torment.cfg"
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "FOLDER",
           "options": [
             {
               "Planescape Torment": "English"
@@ -51,26 +53,27 @@
               "Planescape Torment (Polish)": "Polski"
             }
           ],
-          "description": "Select the game's language (same as the version downloaded from GOG)"
+          "description": "Select the game's language (same as the version downloaded from GOG)",
+          "id": "FOLDER"
         }
       },
       {
         "extract": {
+          "file": "$unzip",
           "description": "Extracting game data...",
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "$game -d \"$GAMEDIR/tmp\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR/tmp\" \"data/noarch/*\""
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR",
-          "file": "gemrbengine"
+          "file": "gemrbengine",
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -79,10 +82,7 @@
           "dst": "$GAMEDIR/planescape-torment"
         }
       }
-    ],
-    "game": {
-      "args": "-c planescape-torment.cfg"
-    }
+    ]
   },
   "content": "exe: gemrb\nfiles:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\n- gemrbengine: https://lutris.net/files/runners/gemrb-0.8.1-x64.tar.gz\ngame:\n  args: -c planescape-torment.cfg\ninstaller:\n- input_menu:\n    description: Select the game's language (same as the version downloaded from GOG)\n    id: FOLDER\n    options:\n    - Planescape Torment: English\n    - Planescape Torment (German): Deutsch\n    - Planescape Torment (French): \"Fran\\xE7ais\"\n    - Planescape Torment (Polish): Polski\n- extract:\n    description: Extracting game data...\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR/tmp\" \"data/noarch/*\"\n    file: $CACHE/unzip\n- extract:\n    dst: $GAMEDIR\n    file: gemrbengine\n- move:\n    dst: $GAMEDIR/planescape-torment\n    src: $GAMEDIR/tmp/data/noarch/prefix/drive_c/GOG Games/$INPUT_FOLDER\n"
 }

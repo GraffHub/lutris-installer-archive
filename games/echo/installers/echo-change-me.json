@@ -21,44 +21,6 @@
   "gogslug": "echo",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/dxsetup",
-          "file": "dx2010"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "args": "/silent",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "app": "vcrun2015 win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "executable": "goginstaller",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "goginstaller": "N/A:Select gog setup exe"
@@ -70,7 +32,45 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/GOG Games/Echo/Echo.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "dx2010",
+          "dst": "$CACHE/dxsetup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "args": "/silent"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "vcrun2015 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "goginstaller",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES"
+        }
+      }
+    ]
   },
   "content": "files:\r\n- goginstaller: N/A:Select gog setup exe\r\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\r\ngame:\r\n  exe: drive_c/GOG Games/Echo/Echo.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: dx2010\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: vcrun2015 win7\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /SP- /SUPPRESSMSGBOXES\r\n    executable: goginstaller\r\n    name: wineexec\r\n    prefix: $GAMEDIR"
 }

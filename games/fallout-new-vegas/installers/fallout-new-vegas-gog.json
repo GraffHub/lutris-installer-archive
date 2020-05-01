@@ -35,10 +35,32 @@
         "launchmenu": "https://gist.github.com/daniel-j/953311dec023c4c1b77103a085e1151a/archive/master.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Fallout New Vegas/launch.bat",
+      "arch": "win64",
+      "gogid": 1312824873
+    },
+    "wine": {
+      "overrides": {
+        "winegstreamer": "disabled",
+        "quartz": "builtin"
+      },
+      "Desktop": true,
+      "WineDesktop": "1280x720"
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": "1",
+        "mesa_glthread": "true",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "SAVES_LOCATION",
+          "preselect": "true",
           "options": [
             {
               "true": "Yes, store them in home"
@@ -48,152 +70,152 @@
             }
           ],
           "description": "Do you want to store saves in ~/Documents/My Games/FalloutNV/Saves ?",
-          "preselect": "true"
+          "id": "SAVES_LOCATION"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
           "arch": "win64",
-          "install_gecko": false,
+          "name": "create_prefix",
           "description": "Creating 64-bit Wine prefix",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
           "install_mono": false
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "",
           "arch": "win64",
-          "key": "WineDesktop",
           "name": "set_regedit",
           "description": "Disabling virtual desktop",
+          "key": "WineDesktop",
+          "prefix": "$GAMEDIR",
+          "value": "",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "winetricks: win7",
-          "app": "win7",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "win7",
+          "description": "winetricks: win7",
           "name": "winetricks"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c",
-          "file": "wallpaper"
+          "file": "wallpaper",
+          "dst": "$GAMEDIR/drive_c"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
           "arch": "win64",
-          "key": "Background",
           "name": "set_regedit",
           "description": "Setting wallpaper",
+          "key": "Background",
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "c:\\\\wallpaper.bmp",
           "arch": "win64",
-          "key": "Wallpaper",
           "name": "set_regedit",
           "description": "Setting wallpaper",
+          "key": "Wallpaper",
+          "prefix": "$GAMEDIR",
+          "value": "c:\\\\wallpaper.bmp",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "Y",
           "arch": "win64",
-          "key": "GrabFullscreen",
           "name": "set_regedit",
           "description": "Enabling GrabFullscreen for FalloutNV.exe",
+          "key": "GrabFullscreen",
+          "prefix": "$GAMEDIR",
+          "value": "Y",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FalloutNV.exe\\X11 Driver"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "disabled",
           "arch": "win64",
-          "key": "AlwaysOffscreen",
           "name": "set_regedit",
           "description": "Disabling AlwaysOffscreen",
+          "key": "AlwaysOffscreen",
+          "prefix": "$GAMEDIR",
+          "value": "disabled",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "value": "0d2433",
           "description": "Configuring console",
-          "path": "HKEY_CURRENT_USER\\Console",
+          "prefix": "$GAMEDIR",
+          "value": "0d2433",
+          "arch": "win64",
           "name": "set_regedit",
           "key": "ColorTable06",
+          "path": "HKEY_CURRENT_USER\\Console",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "value": "42b6ff",
           "description": "Configuring console",
-          "path": "HKEY_CURRENT_USER\\Console",
+          "prefix": "$GAMEDIR",
+          "value": "42b6ff",
+          "arch": "win64",
           "name": "set_regedit",
           "key": "ColorTable14",
+          "path": "HKEY_CURRENT_USER\\Console",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "value": "6e",
           "description": "Configuring console",
-          "path": "HKEY_CURRENT_USER\\Console",
+          "prefix": "$GAMEDIR",
+          "value": "6e",
+          "arch": "win64",
           "name": "set_regedit",
           "key": "ScreenColors",
+          "path": "HKEY_CURRENT_USER\\Console",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "Fixedsys",
           "arch": "win64",
-          "key": "FaceName",
           "name": "set_regedit",
           "description": "Configuring console",
+          "key": "FaceName",
+          "prefix": "$GAMEDIR",
+          "value": "Fixedsys",
           "path": "HKEY_CURRENT_USER\\Console"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "value": "0190",
           "description": "Configuring console",
-          "path": "HKEY_CURRENT_USER\\Console",
+          "prefix": "$GAMEDIR",
+          "value": "0190",
+          "arch": "win64",
           "name": "set_regedit",
           "key": "FontWeight",
+          "path": "HKEY_CURRENT_USER\\Console",
           "type": "REG_DWORD"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/innoextract",
-          "file": "innoextract"
+          "file": "innoextract",
+          "dst": "$CACHE/innoextract"
         }
       },
       {
@@ -203,257 +225,257 @@
       },
       {
         "execute": {
-          "args": "--gog --exclude-temp --output-dir \"$CACHE/extract\" \"$setup\"",
+          "file": "$CACHE/innoextract/innoextract",
           "description": "Extracting game files",
-          "file": "$CACHE/innoextract/innoextract"
+          "args": "--gog --exclude-temp --output-dir \"$CACHE/extract\" \"$setup\""
         }
       },
       {
         "write_file": {
-          "content": "REGEDIT4\n\n[HKEY_LOCAL_MACHINE\\Software\\Bethesda Softworks\\FalloutNV]\n\"Installed Path\"=\"C:\\\\Fallout New Vegas\\\\\"\n\n[HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\FalloutNV]\n\"Installed Path\"=\"C:\\\\Fallout New Vegas\\\\\"\n",
-          "file": "$CACHE/install.reg"
+          "file": "$CACHE/install.reg",
+          "content": "REGEDIT4\n\n[HKEY_LOCAL_MACHINE\\Software\\Bethesda Softworks\\FalloutNV]\n\"Installed Path\"=\"C:\\\\Fallout New Vegas\\\\\"\n\n[HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\FalloutNV]\n\"Installed Path\"=\"C:\\\\Fallout New Vegas\\\\\"\n"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "filename": "$CACHE/install.reg",
-          "prefix": "$GAMEDIR",
           "name": "set_regedit_file"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseThreadedAI",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseThreadedAI"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "iNumHWThreads",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 2
+          "value": 2,
+          "section": "General",
+          "key": "iNumHWThreads"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseThreadedBlood",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseThreadedBlood"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseThreadedMorpher",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseThreadedMorpher"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseThreadedTempEffects",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseThreadedTempEffects"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseThreadedParticleSystem",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseThreadedParticleSystem"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseMultiThreadedFaceGen",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseMultiThreadedFaceGen"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "bUseMultiThreadedTrees",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "General",
+          "key": "bUseMultiThreadedTrees"
         }
       },
       {
         "write_config": {
-          "section": "General",
-          "key": "iPreloadSizeLimit",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 104857600
+          "value": 104857600,
+          "section": "General",
+          "key": "iPreloadSizeLimit"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 80,
           "section": "Display",
-          "key": "fDefaultFOV",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 80
+          "key": "fDefaultFOV"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 85,
           "section": "Display",
-          "key": "fDefaultWorldFOV",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 85
+          "key": "fDefaultWorldFOV"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 65,
           "section": "Display",
-          "key": "fDefault1stPersonFOV",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 65
+          "key": "fDefault1stPersonFOV"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 50,
           "section": "Display",
-          "key": "fPipboy1stPersonFOV",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 50
+          "key": "fPipboy1stPersonFOV"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 0,
           "section": "Display",
-          "key": "iPresentInterval",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 0
+          "key": "iPresentInterval"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 1,
           "section": "Display",
-          "key": "bFull Screen",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "key": "bFull Screen"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 1,
           "section": "Audio",
-          "key": "bMultiThreadAudio",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "key": "bMultiThreadAudio"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 1,
           "section": "Audio",
-          "key": "bEnableAudioCache",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "key": "bEnableAudioCache"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 4096,
           "section": "Audio",
-          "key": "iAudioCacheSize",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 4096
+          "key": "iAudioCacheSize"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 256,
           "section": "Audio",
-          "key": "iMaxSizeForCachedSound",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 256
+          "key": "iMaxSizeForCachedSound"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
+          "value": 1024,
           "section": "Audio",
-          "key": "iRadioUpdateInterval",
-          "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1024
+          "key": "iRadioUpdateInterval"
         }
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "fForegroundMouseMult",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 0
+          "value": 0,
+          "section": "Controls",
+          "key": "fForegroundMouseMult"
         }
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "fForegroundMouseAccelBase",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 0
+          "value": 0,
+          "section": "Controls",
+          "key": "fForegroundMouseAccelBase"
         }
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "fForegroundMouseAccelTop",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 0
+          "value": 0,
+          "section": "Controls",
+          "key": "fForegroundMouseAccelTop"
         }
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "fForegroundMouseBase",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 0
+          "value": 0,
+          "section": "Controls",
+          "key": "fForegroundMouseBase"
         }
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "bBackground Mouse",
           "file": "$GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini",
-          "value": 1
+          "value": 1,
+          "section": "Controls",
+          "key": "bBackground Mouse"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Fallout New Vegas",
-          "file": "launchmenu"
+          "file": "launchmenu",
+          "dst": "$GAMEDIR/drive_c/Fallout New Vegas"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "1280x720",
           "arch": "win64",
-          "key": "WineDesktop",
           "name": "set_regedit",
           "description": "Enabling virtual desktop",
+          "key": "WineDesktop",
+          "prefix": "$GAMEDIR",
+          "value": "1280x720",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "WineDesktop",
           "arch": "win64",
-          "key": "Desktop",
           "name": "set_regedit",
           "description": "Enabling virtual desktop",
+          "key": "Desktop",
+          "prefix": "$GAMEDIR",
+          "value": "WineDesktop",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Explorer"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "winekill"
         }
       },
@@ -464,47 +486,25 @@
       },
       {
         "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "exclude_processes": "FalloutNV.exe",
           "env": {
             "WINEDEBUG": "-all"
           },
-          "executable": "$GAMEDIR/drive_c/Fallout New Vegas/FalloutNVLauncher.exe",
-          "description": "Configure data files (DLCs), video settings and exit the launcher.\nDon't forget to set your native resolution!\n"
+          "arch": "win64",
+          "exclude_processes": "FalloutNV.exe",
+          "name": "wineexec",
+          "description": "Configure data files (DLCs), video settings and exit the launcher.\nDon't forget to set your native resolution!\n",
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/Fallout New Vegas/FalloutNVLauncher.exe"
         }
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "winekill"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1",
-        "__GL_SHADER_DISK_CACHE": "1"
-      }
-    },
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "winegstreamer": "disabled",
-        "quartz": "builtin"
-      },
-      "WineDesktop": "1280x720"
-    },
-    "game": {
-      "arch": "win64",
-      "gogid": 1312824873,
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Fallout New Vegas/launch.bat"
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Please select file setup_fallout_new_vegas_1.4.0.525_(12010).exe from\n    GOG\n- innoextract: http://constexpr.org/innoextract/files/innoextract-1.8/innoextract-1.8-linux.tar.xz\n- wallpaper: https://gist.github.com/daniel-j/28c6d207c5393aa64c3a9d8ee26d1425/raw/wallpaper-falloutnv.tar.xz\n- launchmenu: https://gist.github.com/daniel-j/953311dec023c4c1b77103a085e1151a/archive/master.tar.gz\ngame:\n  arch: win64\n  exe: drive_c/Fallout New Vegas/launch.bat\n  gogid: 1312824873\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: Do you want to store saves in ~/Documents/My Games/FalloutNV/Saves\n      ?\n    id: SAVES_LOCATION\n    options:\n    - 'true': Yes, store them in home\n    - 'false': No, store them inside the wineprefix\n    preselect: 'true'\n- task:\n    arch: win64\n    description: Creating 64-bit Wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Disabling virtual desktop\n    key: WineDesktop\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops\n    prefix: $GAMEDIR\n    value: ''\n- task:\n    app: win7\n    arch: win64\n    description: 'winetricks: win7'\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c\n    file: wallpaper\n- task:\n    arch: win64\n    description: Setting wallpaper\n    key: Background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\n    prefix: $GAMEDIR\n    value: 0 0 0\n- task:\n    arch: win64\n    description: Setting wallpaper\n    key: Wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\n    prefix: $GAMEDIR\n    value: c:\\\\wallpaper.bmp\n- task:\n    arch: win64\n    description: Enabling GrabFullscreen for FalloutNV.exe\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\FalloutNV.exe\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win64\n    description: Disabling AlwaysOffscreen\n    key: AlwaysOffscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: disabled\n- task:\n    arch: win64\n    description: Configuring console\n    key: ColorTable06\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Console\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 0d2433\n- task:\n    arch: win64\n    description: Configuring console\n    key: ColorTable14\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Console\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 42b6ff\n- task:\n    arch: win64\n    description: Configuring console\n    key: ScreenColors\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Console\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 6e\n- task:\n    arch: win64\n    description: Configuring console\n    key: FaceName\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Console\n    prefix: $GAMEDIR\n    value: Fixedsys\n- task:\n    arch: win64\n    description: Configuring console\n    key: FontWeight\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Console\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: 0190\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    command: mkdir -pv \"$GAMEDIR/drive_c/Fallout New Vegas\" \"$CACHE/extract\"; ln -sv\n      \"$GAMEDIR/drive_c/Fallout New Vegas\" \"$CACHE/extract/app\"\n- execute:\n    args: --gog --exclude-temp --output-dir \"$CACHE/extract\" \"$setup\"\n    description: Extracting game files\n    file: $CACHE/innoextract/innoextract\n- write_file:\n    content: 'REGEDIT4\n\n\n      [HKEY_LOCAL_MACHINE\\Software\\Bethesda Softworks\\FalloutNV]\n\n      \"Installed Path\"=\"C:\\\\Fallout New Vegas\\\\\"\n\n\n      [HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Bethesda Softworks\\FalloutNV]\n\n      \"Installed Path\"=\"C:\\\\Fallout New Vegas\\\\\"\n\n      '\n    file: $CACHE/install.reg\n- task:\n    arch: win64\n    filename: $CACHE/install.reg\n    name: set_regedit_file\n    prefix: $GAMEDIR\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseThreadedAI\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: iNumHWThreads\n    section: General\n    value: 2\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseThreadedBlood\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseThreadedMorpher\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseThreadedTempEffects\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseThreadedParticleSystem\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseMultiThreadedFaceGen\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bUseMultiThreadedTrees\n    section: General\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: iPreloadSizeLimit\n    section: General\n    value: 104857600\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fDefaultFOV\n    section: Display\n    value: 80\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fDefaultWorldFOV\n    section: Display\n    value: 85\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fDefault1stPersonFOV\n    section: Display\n    value: 65\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fPipboy1stPersonFOV\n    section: Display\n    value: 50\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: iPresentInterval\n    section: Display\n    value: 0\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bFull Screen\n    section: Display\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bMultiThreadAudio\n    section: Audio\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bEnableAudioCache\n    section: Audio\n    value: 1\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: iAudioCacheSize\n    section: Audio\n    value: 4096\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: iMaxSizeForCachedSound\n    section: Audio\n    value: 256\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: iRadioUpdateInterval\n    section: Audio\n    value: 1024\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fForegroundMouseMult\n    section: Controls\n    value: 0\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fForegroundMouseAccelBase\n    section: Controls\n    value: 0\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fForegroundMouseAccelTop\n    section: Controls\n    value: 0\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: fForegroundMouseBase\n    section: Controls\n    value: 0\n- write_config:\n    file: $GAMEDIR/drive_c/Fallout New Vegas/Fallout_default.ini\n    key: bBackground Mouse\n    section: Controls\n    value: 1\n- extract:\n    dst: $GAMEDIR/drive_c/Fallout New Vegas\n    file: launchmenu\n- task:\n    arch: win64\n    description: Enabling virtual desktop\n    key: WineDesktop\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Explorer\\Desktops\n    prefix: $GAMEDIR\n    value: 1280x720\n- task:\n    arch: win64\n    description: Enabling virtual desktop\n    key: Desktop\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Explorer\n    prefix: $GAMEDIR\n    value: WineDesktop\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- execute:\n    command: 'rm -f \"$GAMEDIR/drive_c/users/$USER/My Documents\"\n\n      mkdir -pv \"$GAMEDIR/drive_c/users/$USER/My Documents/My Games/FalloutNV\"\n\n      rm -f \"$GAMEDIR/data\"; ln -svrT \"$GAMEDIR/drive_c/Fallout New Vegas/Data\" \"$GAMEDIR/data\"\n\n      rm -f \"$GAMEDIR/config\"; ln -svrT \"$GAMEDIR/drive_c/users/$USER/My Documents/My\n      Games/FalloutNV\" \"$GAMEDIR/config\"\n\n      rm -f \"$GAMEDIR/drive_c/users/$USER/My Documents/My Games/FalloutNV/Saves\"\n\n      $INPUT_SAVES_LOCATION && (mkdir -pv \"$HOME/Documents/My Games/FalloutNV/Saves\"\n      \"$GAMEDIR/drive_c/users/$USER/My Documents/My Games/FalloutNV\"; ln -svT \"$HOME/Documents/My\n      Games/FalloutNV/Saves\" \"$GAMEDIR/drive_c/users/$USER/My Documents/My Games/FalloutNV/Saves\")\n\n      '\n- task:\n    arch: win64\n    description: 'Configure data files (DLCs), video settings and exit the launcher.\n\n      Don''t forget to set your native resolution!\n\n      '\n    env:\n      WINEDEBUG: -all\n    exclude_processes: FalloutNV.exe\n    executable: $GAMEDIR/drive_c/Fallout New Vegas/FalloutNVLauncher.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwine:\n  Desktop: true\n  WineDesktop: 1280x720\n  overrides:\n    quartz: builtin\n    winegstreamer: disabled\n"
 }

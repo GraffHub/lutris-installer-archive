@@ -21,36 +21,6 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating WINE prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
-          "executable": "installer",
-          "description": "Running Setup, please wait...",
-          "prefix": "$CACHE",
-          "name": "wineexec"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Diablo",
-          "file": "belzebub"
-        }
-      },
-      {
-        "move": {
-          "src": "$CACHE/drive_c/GOG Games/Diablo/DIABDAT.MPQ",
-          "dst": "$GAMEDIR/drive_c/Program Files/Diablo"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Select the installer downloaded from GOG"
@@ -60,10 +30,40 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Diablo/Belzebub.exe"
-    }
+      "exe": "drive_c/Program Files/Diablo/Belzebub.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$CACHE",
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Running Setup, please wait...",
+          "args": "/VERYSILENT /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "extract": {
+          "file": "belzebub",
+          "dst": "$GAMEDIR/drive_c/Program Files/Diablo"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/drive_c/GOG Games/Diablo/DIABDAT.MPQ",
+          "dst": "$GAMEDIR/drive_c/Program Files/Diablo"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the installer downloaded from GOG\n- belzebub: https://lutris.net/files/games/diablo/belzebub-r1045.tar.gz\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Diablo/Belzebub.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n    prefix: $CACHE\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Diablo\n    file: belzebub\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/Diablo\n    src: $CACHE/drive_c/GOG Games/Diablo/DIABDAT.MPQ\n"
 }

@@ -26,6 +26,18 @@
         "setup": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/They Are Billions/TheyAreBillions.exe"
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler"
+      }
+    },
     "installer": [
       {
         "task": {
@@ -35,33 +47,21 @@
       },
       {
         "task": {
-          "description": "Installing .NET 4.7.2...",
-          "app": "dotnet472 win7",
           "prefix": "$GAMEDIR",
+          "app": "dotnet472 win7",
+          "description": "Installing .NET 4.7.2...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/-SP /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/-SP /SUPPRESSMSGBOXES /NOCANCEL"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
-      }
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/They Are Billions/TheyAreBillions.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  exe: drive_c/GOG Games/They Are Billions/TheyAreBillions.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472 win7\n    description: Installing .NET 4.7.2...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /-SP /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n"
 }

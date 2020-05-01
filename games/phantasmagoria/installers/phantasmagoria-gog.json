@@ -21,26 +21,17 @@
   "gogslug": "phantasmagoria",
   "humblestoreid": "",
   "script": {
-    "main_file": "DOSBOX/dosboxPHANT_single.conf",
-    "files": [
-      {
-        "file1": "N/A:Please select the GOG installer"
-      },
-      {
-        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
-      }
-    ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$file2"
+          "file": "$file2",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE\" \"$file1\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE\" \"$file1\""
         }
       },
       {
@@ -57,24 +48,33 @@
       },
       {
         "write_config": {
-          "section": "render",
-          "key": "aspect",
           "file": "$GAMEDIR/dosboxPHANT.conf",
-          "value": true
+          "value": true,
+          "section": "render",
+          "key": "aspect"
         }
       },
       {
         "write_config": {
-          "section": "sdl",
-          "key": "fullscreen",
           "file": "$GAMEDIR/dosboxPHANT.conf",
-          "value": false
+          "value": false,
+          "section": "sdl",
+          "key": "fullscreen"
         }
+      }
+    ],
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
       }
     ],
     "game": {
       "config_file": "$GAMEDIR/dosboxPHANT.conf"
-    }
+    },
+    "main_file": "DOSBOX/dosboxPHANT_single.conf"
   },
   "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosboxPHANT.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxPHANT_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxPHANT.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxPHANT.conf\n    key: fullscreen\n    section: sdl\n    value: false\nmain_file: DOSBOX/dosboxPHANT_single.conf\n"
 }

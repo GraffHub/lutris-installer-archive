@@ -21,24 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "args": "/SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "executable": "game",
-          "description": "Installing...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Please select the GOG.com Windows installer."
@@ -47,7 +29,25 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "$GAMEDIR/drive_c/game/Oblivion.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec",
+          "description": "Installing...",
+          "args": "/SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  exe: $GAMEDIR/drive_c/game/Oblivion.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

@@ -21,75 +21,7 @@
   "gogslug": "diablo",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64",
-          "install_gecko": false,
-          "description": "Creating WINE prefix",
-          "install_mono": false
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/innoextract",
-          "file": "inno"
-        }
-      },
-      {
-        "execute": {
-          "args": "--extract $gog --output-dir \"$CACHE/\"",
-          "file": "$CACHE/innoextract/innoextract"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Diablo Tchernobog/",
-          "file": "tchernobog"
-        }
-      },
-      {
-        "move": {
-          "src": "$CACHE/DIABDAT.MPQ",
-          "dst": "$GAMEDIR/drive_c/Diablo Tchernobog/"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
-          "arch": "win64",
-          "key": "background",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
-          "arch": "win64",
-          "key": "ActiveTitle",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "242 59 13",
-          "arch": "win64",
-          "key": "GradientActiveTitle",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
-        }
-      }
-    ],
+    "custom-name": "Diablo - GOG - Tchernobog",
     "files": [
       {
         "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.9-dev-2020-01-12/innoextract-1.9-dev-2020-01-12-linux.tar.xz"
@@ -101,15 +33,83 @@
         "gog": "N/A:Please select the gog installer for this game"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Diablo Tchernobog/Tchernobog.exe",
+      "arch": "win64"
+    },
     "wine": {
       "Desktop": true
     },
-    "custom-name": "Diablo - GOG - Tchernobog",
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Diablo Tchernobog/Tchernobog.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
+          "install_mono": false
+        }
+      },
+      {
+        "extract": {
+          "file": "inno",
+          "dst": "$CACHE/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract/innoextract",
+          "args": "--extract $gog --output-dir \"$CACHE/\""
+        }
+      },
+      {
+        "extract": {
+          "file": "tchernobog",
+          "dst": "$GAMEDIR/drive_c/Diablo Tchernobog/"
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/DIABDAT.MPQ",
+          "dst": "$GAMEDIR/drive_c/Diablo Tchernobog/"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "background",
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "ActiveTitle",
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "GradientActiveTitle",
+          "prefix": "$GAMEDIR",
+          "value": "242 59 13",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      }
+    ]
   },
   "content": "custom-name: Diablo - GOG - Tchernobog\nfiles:\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.9-dev-2020-01-12/innoextract-1.9-dev-2020-01-12-linux.tar.xz\n- tchernobog: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Diablo/Tchernobog.zip\n- gog: N/A:Please select the gog installer for this game\ngame:\n  arch: win64\n  exe: drive_c/Diablo Tchernobog/Tchernobog.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $gog --output-dir \"$CACHE/\"\n    file: $CACHE/innoextract/innoextract\n- extract:\n    dst: $GAMEDIR/drive_c/Diablo Tchernobog/\n    file: tchernobog\n- move:\n    dst: $GAMEDIR/drive_c/Diablo Tchernobog/\n    src: $CACHE/DIABDAT.MPQ\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 242 59 13\nwine:\n  Desktop: true\n"
 }

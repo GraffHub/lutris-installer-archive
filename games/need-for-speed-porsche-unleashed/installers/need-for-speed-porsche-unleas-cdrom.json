@@ -1,0 +1,79 @@
+{
+  "id": 20051,
+  "game_id": 11318,
+  "game_slug": "need-for-speed-porsche-unleashed",
+  "name": "Need for Speed: Porsche Unleashed",
+  "year": 2000,
+  "user": "tfk",
+  "runner": "wine",
+  "slug": "need-for-speed-porsche-unleas-cdrom",
+  "version": "CDROM",
+  "description": "This installs the CDROM version of Need for Speed: Porsche Unleashed.\r\n\r\nThis game is abandon-ware and can be found here:\r\nhttps://www.myabandonware.com/game/need-for-speed-porsche-unleashed-bg9",
+  "notes": "The iso is in bin/cue format. It is generally easier to mount and iso. Use this command to convert the bin/cue version to iso:\r\n\r\ncd <cd-image-location>\r\nbchunk ./NFS_PU.bin ./NFS_PU.cue ./NFS_PU.iso\r\n\r\nIf bchunk isn't installed then you'll need to install it. It should be in the repositories.\r\n\r\nFedora:\r\n# Find it:\r\ndnf search bchunk\r\n\r\n# Install it:\r\nsudo dnf install bchunk\r\n\r\nUbuntu based:\r\n# Find it:\r\napt-cache search bchunk\r\n\r\n# Install it:\r\nsudo apt-get install bchunk",
+  "created_at": "2020-04-27T19:18:17.441866Z",
+  "updated_at": "2020-04-27T19:18:17.441890Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "patch": "N/A: Select the Patch Setup File (Need-for-Speed-Porsche-Unleashed_Patch_Win_EN_Patch-35.exe)"
+      },
+      {
+        "widescreen": "https://bitbucket.org/fk/porsche-graphics-hacks/downloads/nfspu-widescreen-1.0.1.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Electronic Arts/Need for Speed - Porsche Unleashed/nfspu.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "AutoRun.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/AutoRun.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "patch",
+          "name": "Install patch"
+        }
+      },
+      {
+        "extract": {
+          "dest": "$GAMEDIR/Drivers",
+          "file": "widescreen"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "filename": "$GAMEDIR/Drivers/Enable Widescreen Renderer.reg",
+          "name": "set_regedit_file"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: 'N/A: Select the Patch Setup File (Need-for-Speed-Porsche-Unleashed_Patch_Win_EN_Patch-35.exe)'\n- widescreen: https://bitbucket.org/fk/porsche-graphics-hacks/downloads/nfspu-widescreen-1.0.1.zip\ngame:\n  exe: $GAMEDIR/drive_c/Program Files/Electronic Arts/Need for Speed - Porsche Unleashed/nfspu.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: AutoRun.exe\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/AutoRun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch\n    name: Install patch\n    prefix: $GAMEDIR\n- extract:\n    dest: $GAMEDIR/Drivers\n    file: widescreen\n- task:\n    arch: win64\n    filename: $GAMEDIR/Drivers/Enable Widescreen Renderer.reg\n    name: set_regedit_file\n    prefix: $GAMEDIR\n"
+}

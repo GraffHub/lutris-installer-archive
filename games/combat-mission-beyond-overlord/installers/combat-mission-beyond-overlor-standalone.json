@@ -21,30 +21,49 @@
   "gogslug": "combat_mission_beyond_overlord",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "dgvoodoo": "https://lutris.net/files/tools/dgvoodoo_2.55.4_dx1-7.tar.xz"
+      },
+      {
+        "installer": "N/A:Select the Setup executable from your CD:"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/Combat Mission.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "overrides": {
+        "ddraw.dll": "native"
+      },
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win32",
           "description": "Creating prefix",
           "install_mono": false,
-          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Installing d3dcompiler_43 and d3dcompiler_47...",
-          "app": "d3dcompiler_43 d3dcompiler_47 quartz",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "d3dcompiler_43 d3dcompiler_47 quartz",
+          "description": "Installing d3dcompiler_43 and d3dcompiler_47...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "installer",
-          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
@@ -56,38 +75,19 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/",
-          "file": "dgvoodoo"
+          "file": "dgvoodoo",
+          "dst": "$GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/"
         }
       },
       {
         "write_config": {
-          "section": "DirectX",
-          "key": "dgVoodooWatermark",
           "file": "$GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/dgVoodoo.conf",
-          "value": false
+          "value": false,
+          "section": "DirectX",
+          "key": "dgVoodooWatermark"
         }
       }
-    ],
-    "files": [
-      {
-        "dgvoodoo": "https://lutris.net/files/tools/dgvoodoo_2.55.4_dx1-7.tar.xz"
-      },
-      {
-        "installer": "N/A:Select the Setup executable from your CD:"
-      }
-    ],
-    "wine": {
-      "overrides": {
-        "ddraw.dll": "native"
-      },
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/Combat Mission.exe"
-    }
+    ]
   },
   "content": "files:\n- dgvoodoo: https://lutris.net/files/tools/dgvoodoo_2.55.4_dx1-7.tar.xz\n- installer: 'N/A:Select the Setup executable from your CD:'\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/Combat Mission.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dcompiler_47 quartz\n    arch: win32\n    description: Installing d3dcompiler_43 and d3dcompiler_47...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/\n    file: dgvoodoo\n- write_config:\n    file: $GAMEDIR/drive_c/Program Files/Combat Mission - Beyond Overlord/dgVoodoo.conf\n    key: dgVoodooWatermark\n    section: DirectX\n    value: false\nwine:\n  dxvk: true\n  overrides:\n    ddraw.dll: native\n"
 }

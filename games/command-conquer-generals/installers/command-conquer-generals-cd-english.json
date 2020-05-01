@@ -33,6 +33,10 @@
         "optionsini": "https://lutris.net/files/games/command-conquer-generals/options.ini"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
     "installer": [
       {
         "insert-disc": {
@@ -43,8 +47,8 @@
       {
         "merge": {
           "src": "$DISC",
-          "dst": "$CACHE/cdrom",
-          "description": "Copying disc 1 to cache"
+          "description": "Copying disc 1 to cache",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
@@ -56,28 +60,28 @@
       {
         "merge": {
           "src": "$DISC/Data2.cab",
-          "dst": "$CACHE/cdrom",
-          "description": "Copying disc 2 to cache"
+          "description": "Copying disc 2 to cache",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "task": {
-          "executable": "$CACHE/cdrom/setup.exe",
           "prefix": "$GAMEDIR",
+          "executable": "$CACHE/cdrom/setup.exe",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "executable": "patch1",
           "prefix": "$GAMEDIR",
+          "executable": "patch1",
           "name": "wineexec"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/EA Games/Command and Conquer Generals/",
-          "file": "patch2"
+          "file": "patch2",
+          "dst": "$GAMEDIR/drive_c/Program Files/EA Games/Command and Conquer Generals/"
         }
       },
       {
@@ -86,11 +90,7 @@
           "dst": "$GAMEDIR/drive_c/users/$USER/My Documents/Command and Conquer Generals Data/"
         }
       }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    }
+    ]
   },
   "content": "exe: drive_c/Program Files/EA Games/Command and Conquer Generals/generals.exe\nfiles:\n- patch1: https://lutris.net/files/games/command-conquer-generals/Generals-108-english.exe\n- patch2: https://lutris.net/files/games/command-conquer-generals/cc-generals-patch-1.08.tar.gz\n- optionsini: https://lutris.net/files/games/command-conquer-generals/options.ini\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Copying disc 1 to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- insert-disc:\n    message: Insert disc 2\n    requires: Data2.cab\n- merge:\n    description: Copying disc 2 to cache\n    dst: $CACHE/cdrom\n    src: $DISC/Data2.cab\n- task:\n    executable: $CACHE/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch1\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/EA Games/Command and Conquer Generals/\n    file: patch2\n- merge:\n    dst: $GAMEDIR/drive_c/users/$USER/My Documents/Command and Conquer Generals Data/\n    src: optionsini\n"
 }

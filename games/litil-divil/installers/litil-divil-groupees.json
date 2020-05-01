@@ -21,26 +21,17 @@
   "gogslug": "litil_divil",
   "humblestoreid": "",
   "script": {
-    "main_file": "dosboxLilDevil_single.conf",
-    "files": [
-      {
-        "file1": "N/A:Please select the Groupees installer"
-      },
-      {
-        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
-      }
-    ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$file2"
+          "file": "$file2",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE\" \"$file1\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE\" \"$file1\""
         }
       },
       {
@@ -57,24 +48,33 @@
       },
       {
         "write_config": {
-          "section": "render",
-          "key": "aspect",
           "file": "$GAMEDIR/dosboxLilDevil.conf",
-          "value": true
+          "value": true,
+          "section": "render",
+          "key": "aspect"
         }
       },
       {
         "write_config": {
-          "section": "sdl",
-          "key": "fullscreen",
           "file": "$GAMEDIR/dosboxLilDevil.conf",
-          "value": false
+          "value": false,
+          "section": "sdl",
+          "key": "fullscreen"
         }
+      }
+    ],
+    "files": [
+      {
+        "file1": "N/A:Please select the Groupees installer"
+      },
+      {
+        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
       }
     ],
     "game": {
       "config_file": "$GAMEDIR/dosboxLilDevil.conf"
-    }
+    },
+    "main_file": "dosboxLilDevil_single.conf"
   },
   "content": "files:\n- file1: N/A:Please select the Groupees installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosboxLilDevil.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- move:\n    dst: $GAMEDIR/dosboxLilDevil_single.conf\n    src: $CACHE/app/dosboxLilDevil.conf\n- write_config:\n    file: $GAMEDIR/dosboxLilDevil.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxLilDevil.conf\n    key: fullscreen\n    section: sdl\n    value: false\nmain_file: dosboxLilDevil_single.conf\n"
 }

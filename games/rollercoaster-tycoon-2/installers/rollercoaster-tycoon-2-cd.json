@@ -21,6 +21,17 @@
   "gogslug": "rollercoaster_tycoon_2",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "engine": "https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.2.2/OpenRCT2-0.2.2-linux-x86_64.tar.gz"
+      },
+      {
+        "unshield": "https://lutris.net/files/tools/unshield-1.3-x86_64.tar.gz"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/openrct2"
+    },
     "installer": [
       {
         "insert-disc": {
@@ -29,8 +40,8 @@
       },
       {
         "extract": {
-          "format": "tgz",
-          "file": "engine"
+          "file": "engine",
+          "format": "tgz"
         }
       },
       {
@@ -41,22 +52,22 @@
       },
       {
         "write_config": {
-          "section": "general",
-          "key": "game_path",
           "file": "$HOME/.config/OpenRCT2/config.ini",
-          "value": "$GAMEDIR"
+          "value": "$GAMEDIR",
+          "section": "general",
+          "key": "game_path"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE/tmp/unshield",
-          "file": "unshield"
+          "file": "unshield",
+          "dst": "$CACHE/tmp/unshield"
         }
       },
       {
         "execute": {
-          "args": "-d $CACHE/tmp/game_files/ x $DISC/data1.cab",
-          "file": "$CACHE/tmp/unshield/unshield"
+          "file": "$CACHE/tmp/unshield/unshield",
+          "args": "-d $CACHE/tmp/game_files/ x $DISC/data1.cab"
         }
       },
       {
@@ -95,18 +106,7 @@
           "dst": "$GAMEDIR/Tracks"
         }
       }
-    ],
-    "files": [
-      {
-        "engine": "https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.2.2/OpenRCT2-0.2.2-linux-x86_64.tar.gz"
-      },
-      {
-        "unshield": "https://lutris.net/files/tools/unshield-1.3-x86_64.tar.gz"
-      }
-    ],
-    "game": {
-      "exe": "$GAMEDIR/openrct2"
-    }
+    ]
   },
   "content": "files:\n- engine: https://github.com/OpenRCT2/OpenRCT2/releases/download/v0.2.2/OpenRCT2-0.2.2-linux-x86_64.tar.gz\n- unshield: https://lutris.net/files/tools/unshield-1.3-x86_64.tar.gz\ngame:\n  exe: $GAMEDIR/openrct2\ninstaller:\n- insert-disc:\n    requires: data1.cab\n- extract:\n    file: engine\n    format: tgz\n- chmodx: $GAMEDIR/openrct2\n- mkdir: $HOME/.config/OpenRCT2/\n- write_config:\n    file: $HOME/.config/OpenRCT2/config.ini\n    key: game_path\n    section: general\n    value: $GAMEDIR\n- extract:\n    dst: $CACHE/tmp/unshield\n    file: unshield\n- execute:\n    args: -d $CACHE/tmp/game_files/ x $DISC/data1.cab\n    file: $CACHE/tmp/unshield/unshield\n- merge:\n    dst: $GAMEDIR/Data\n    src: $CACHE/tmp/game_files/Minimum/Data/\n- merge:\n    dst: $GAMEDIR/Saved_Games\n    src: $CACHE/tmp/game_files/Minimum/Saved_Games\n- merge:\n    dst: $GAMEDIR/ObjData\n    src: $CACHE/tmp/game_files/Minimum/ObjData\n- merge:\n    dst: $GAMEDIR/Scenarios\n    src: $CACHE/tmp/game_files/Minimum/Scenarios\n- merge:\n    dst: $GAMEDIR/Landscapes\n    src: $CACHE/tmp/game_files/Minimum/Landscapes\n- merge:\n    dst: $GAMEDIR/Tracks\n    src: $CACHE/tmp/game_files/Minimum/Tracks\n"
 }

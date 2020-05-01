@@ -29,35 +29,49 @@
         "unzip_tar": "http://lutris.net/files/tools/unzip.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "installer": [
       {
         "extract": {
+          "file": "unzip_tar",
           "arch": "win64",
-          "dst": "$CACHE",
-          "file": "unzip_tar"
+          "dst": "$CACHE"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Installing vcrun2010",
           "app": "vcrun2010",
-          "prefix": "$GAMEDIR",
+          "description": "Installing vcrun2010",
           "name": "winetricks"
         }
       },
       {
         "execute": {
-          "args": "-c \"mkdir '$GAMEDIR/tmp'\"",
-          "file": "/bin/sh"
+          "file": "/bin/sh",
+          "args": "-c \"mkdir '$GAMEDIR/tmp'\""
         }
       },
       {
@@ -68,14 +82,14 @@
       },
       {
         "execute": {
-          "args": "$GAMEDIR/tmp/Install_ESO.exe -d $GAMEDIR/tmp/Install_ESO",
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "args": "$GAMEDIR/tmp/Install_ESO.exe -d $GAMEDIR/tmp/Install_ESO"
         }
       },
       {
         "execute": {
-          "args": "$GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1.zip -d $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1",
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "args": "$GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1.zip -d $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1"
         }
       },
       {
@@ -86,11 +100,11 @@
       },
       {
         "task": {
-          "value": "native",
           "arch": "win64",
-          "key": "d3dcompiler_47",
           "name": "set_regedit",
           "description": "Adding DLL Overrides",
+          "key": "d3dcompiler_47",
+          "value": "native",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
         }
       },
@@ -99,35 +113,21 @@
       },
       {
         "execute": {
-          "args": "-c \"rm -rf '$GAMEDIR/tmp'\"",
-          "file": "/bin/sh"
+          "file": "/bin/sh",
+          "args": "-c \"rm -rf '$GAMEDIR/tmp'\""
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "arch": "win64",
+          "name": "wineexec",
+          "description": "Updating Wine prefix.",
           "args": "--update",
-          "executable": "wineboot",
-          "description": "Updating Wine prefix."
+          "prefix": "$GAMEDIR",
+          "executable": "wineboot"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe"
-    }
+    ]
   },
   "content": "files:\n- install_file: http://elderscrolls-a.akamaihd.net/products/BNA_Launcher/Install_ESO.exe\n- unzip_tar: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    arch: win64\n    dst: $CACHE\n    file: unzip_tar\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Installing vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    args: -c \"mkdir '$GAMEDIR/tmp'\"\n    file: /bin/sh\n- move:\n    dst: $GAMEDIR/tmp/\n    src: install_file\n- execute:\n    args: $GAMEDIR/tmp/Install_ESO.exe -d $GAMEDIR/tmp/Install_ESO\n    file: $CACHE/unzip\n- execute:\n    args: $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1.zip -d $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1\n    file: $CACHE/unzip\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher\n    src: $GAMEDIR/tmp/Install_ESO/InstallerData/Disk1/InstData/Resource1/$IA_PROJECT_DIR$/src_path/Launcher\n- task:\n    arch: win64\n    description: Adding DLL Overrides\n    key: d3dcompiler_47\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    value: native\n- chmodx: $GAMEDIR/drive_c/Program Files (x86)/Zenimax Online/Launcher/Bethesda.net_Launcher.exe\n- execute:\n    args: -c \"rm -rf '$GAMEDIR/tmp'\"\n    file: /bin/sh\n- task:\n    arch: win64\n    args: --update\n    description: Updating Wine prefix.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n"
 }

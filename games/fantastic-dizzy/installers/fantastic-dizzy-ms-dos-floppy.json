@@ -21,41 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "execute": {
-          "args": "$GAMEDIR/HDD",
-          "file": "mkdir"
-        }
-      },
-      {
-        "execute": {
-          "args": "$GAMEDIR/HDD/dizzy",
-          "file": "mkdir"
-        }
-      },
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\"",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/bulkcopy.sh"
-      },
-      {
-        "execute": {
-          "args": "$game $GAMEDIR/HDD/dizzy",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd dizzy\nPCDIZZY.EXE\nexit",
-          "file": "$GAMEDIR/fantastic_dizzy_dosbox.conf"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select the file pcdizzy.exe"
@@ -63,7 +28,42 @@
     ],
     "game": {
       "main_file": "$GAMEDIR/fantastic_dizzy_dosbox.conf"
-    }
+    },
+    "installer": [
+      {
+        "execute": {
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD"
+        }
+      },
+      {
+        "execute": {
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD/dizzy"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$CACHE/bulkcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\""
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy.sh"
+      },
+      {
+        "execute": {
+          "file": "$CACHE/bulkcopy.sh",
+          "args": "$game $GAMEDIR/HDD/dizzy"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/fantastic_dizzy_dosbox.conf",
+          "content": "[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd dizzy\nPCDIZZY.EXE\nexit"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the file pcdizzy.exe\ngame:\n  main_file: $GAMEDIR/fantastic_dizzy_dosbox.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD\n    file: mkdir\n- execute:\n    args: $GAMEDIR/HDD/dizzy\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/HDD/dizzy\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd dizzy\n\n      PCDIZZY.EXE\n\n      exit'\n    file: $GAMEDIR/fantastic_dizzy_dosbox.conf\n"
 }

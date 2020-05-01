@@ -26,27 +26,38 @@
         "installer": "https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "system": {
+      "fps_limit": "30"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win32",
           "app": "vcrun2015 win7",
-          "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "write_file": {
-          "content": "$PLUGINSDIR\n$TEMP",
-          "file": "$CACHE/exclude.txt"
+          "file": "$CACHE/exclude.txt",
+          "content": "$PLUGINSDIR\n$TEMP"
         }
       },
       {
@@ -56,32 +67,21 @@
       },
       {
         "write_config": {
-          "section": "fps-cap",
-          "key": "dxgi.syncInterval",
           "file": "$GAMEDIR/dxvk.conf",
-          "value": 2
+          "value": 2,
+          "section": "fps-cap",
+          "key": "dxgi.syncInterval"
         }
       },
       {
         "write_config": {
-          "section": "fps-cap",
-          "key": "dxgi.numBackBuffers",
           "file": "$GAMEDIR/dxvk.conf",
-          "value": 4
+          "value": 4,
+          "section": "fps-cap",
+          "key": "dxgi.numBackBuffers"
         }
       }
-    ],
-    "system": {
-      "fps_limit": "30"
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe"
-    }
+    ]
   },
   "content": "files:\n- installer: https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: '$PLUGINSDIR\n\n      $TEMP'\n    file: $CACHE/exclude.txt\n- execute:\n    command: 7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\"\n      -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\"\n- write_config:\n    file: $GAMEDIR/dxvk.conf\n    key: dxgi.syncInterval\n    section: fps-cap\n    value: 2\n- write_config:\n    file: $GAMEDIR/dxvk.conf\n    key: dxgi.numBackBuffers\n    section: fps-cap\n    value: 4\nsystem:\n  fps_limit: '30'\nwine:\n  dxvk: true\n"
 }

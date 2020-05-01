@@ -21,6 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "patch13": "http://www.callofdutyview.net/files/patches/cod2-v1.3.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Activision/Call of Duty 2/CoD2SP_s.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
@@ -30,44 +40,34 @@
       },
       {
         "insert-disc": {
-          "description": "Insert DVD",
-          "requires": "setup.exe"
+          "requires": "setup.exe",
+          "description": "Insert DVD"
         }
       },
       {
         "extract": {
-          "description": "Extracting the patch",
-          "file": "patch13"
+          "file": "patch13",
+          "description": "Extracting the patch"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "exclude_processes": "cod2.exe",
           "executable": "$DISC/setup.exe",
-          "description": "Running the installer. Choose Typical. The installer will crash, you'll have to end the process \"cod2.exe\" using a task manager, or else the process will not procead.",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Running the installer. Choose Typical. The installer will crash, you'll have to end the process \"cod2.exe\" using a task manager, or else the process will not procead."
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/cod2-v1.3.exe",
-          "description": "Running the 1.3 Patch.",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/cod2-v1.3.exe",
+          "name": "wineexec",
+          "description": "Running the 1.3 Patch."
         }
       }
-    ],
-    "files": [
-      {
-        "patch13": "http://www.callofdutyview.net/files/patches/cod2-v1.3.zip"
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Activision/Call of Duty 2/CoD2SP_s.exe"
-    }
+    ]
   },
   "content": "files:\n- patch13: http://www.callofdutyview.net/files/patches/cod2-v1.3.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Activision/Call of Duty 2/CoD2SP_s.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert DVD\n    requires: setup.exe\n- extract:\n    description: Extracting the patch\n    file: patch13\n- task:\n    description: Running the installer. Choose Typical. The installer will crash,\n      you'll have to end the process \"cod2.exe\" using a task manager, or else the\n      process will not procead.\n    exclude_processes: cod2.exe\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Running the 1.3 Patch.\n    executable: $GAMEDIR/cod2-v1.3.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

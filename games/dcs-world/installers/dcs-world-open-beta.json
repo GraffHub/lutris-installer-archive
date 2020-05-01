@@ -26,50 +26,50 @@
         "client": "https://updates.digitalcombatsimulator.com/installers/DCS_World_OpenBeta_web.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World OpenBeta/bin/DCS_updater.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "app": "corefonts vcrun2013 vcrun2017 d3dcompiler_43 win10",
-          "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "arch": "win64",
+          "name": "wineexec",
+          "description": "Installing client",
           "args": "/silent",
-          "executable": "client",
-          "description": "Installing client"
+          "prefix": "$GAMEDIR",
+          "executable": "client"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
-      }
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Eagle Dynamics/DCS World OpenBeta/bin/DCS_updater.exe"
-    }
+    ]
   },
   "content": "files:\n- client: https://updates.digitalcombatsimulator.com/installers/DCS_World_OpenBeta_web.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Eagle Dynamics/DCS World OpenBeta/bin/DCS_updater.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2013 vcrun2017 d3dcompiler_43 win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

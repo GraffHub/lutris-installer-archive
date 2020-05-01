@@ -21,6 +21,15 @@
   "gogslug": "system_shock_2",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "patch1": "N/A:Provide path to Patch"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Sshock2/ss2.exe"
+    },
     "installer": [
       {
         "insert-disc": {
@@ -31,35 +40,26 @@
       {
         "merge": {
           "src": "$DISC",
-          "dst": "$CACHE/cdrom",
-          "description": "Copying disc to cache"
+          "description": "Copying disc to cache",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "task": {
-          "args": "-lgntforce",
+          "prefix": "$GAMEDIR",
           "executable": "$CACHE/cdrom/SETUP.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "args": "-lgntforce"
         }
       },
       {
         "task": {
-          "executable": "patch1",
           "prefix": "$GAMEDIR",
+          "executable": "patch1",
           "name": "wineexec"
         }
       }
-    ],
-    "files": [
-      {
-        "patch1": "N/A:Provide path to Patch"
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Sshock2/ss2.exe"
-    }
+    ]
   },
   "content": "files:\n- patch1: N/A:Provide path to Patch\ngame:\n  exe: drive_c/Sshock2/ss2.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc\n    requires: SETUP.exe\n- merge:\n    description: Copying disc to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- task:\n    args: -lgntforce\n    executable: $CACHE/cdrom/SETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch1\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

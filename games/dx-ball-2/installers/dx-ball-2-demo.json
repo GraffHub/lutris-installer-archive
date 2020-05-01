@@ -27,26 +27,26 @@
         "installer": "http://www.longbowgames.com/downloads/DX-Ball%202%20Demo%20Install.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "args": "/S",
-          "executable": "installer",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "installer",
+          "name": "wineexec",
+          "args": "/S"
         }
       },
       {
         "execute": {
-          "args": "sed -i 's/MusicVoices = 8/MusicVoices = 24/;s/PlaybackRate = 22050/PlaybackRate = 44100/' '$GAMEDIR/drive_c/Program Files/LDA Games/DX-Ball 2/config.cfg'",
-          "file": "/usr/bin/env"
+          "file": "/usr/bin/env",
+          "args": "sed -i 's/MusicVoices = 8/MusicVoices = 24/;s/PlaybackRate = 22050/PlaybackRate = 44100/' '$GAMEDIR/drive_c/Program Files/LDA Games/DX-Ball 2/config.cfg'"
         }
       }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    }
+    ]
   },
   "content": "exe: drive_c/Program Files/LDA Games/DX-Ball 2/DXBall2.exe\nfiles:\n- installer: http://www.longbowgames.com/downloads/DX-Ball%202%20Demo%20Install.exe\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    args: /S\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: sed -i 's/MusicVoices = 8/MusicVoices = 24/;s/PlaybackRate = 22050/PlaybackRate\n      = 44100/' '$GAMEDIR/drive_c/Program Files/LDA Games/DX-Ball 2/config.cfg'\n    file: /usr/bin/env\n"
 }

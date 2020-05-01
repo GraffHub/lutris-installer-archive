@@ -26,12 +26,24 @@
         "setup": "http://content.turbine.com/sites/clientdl/ddo/ddolive.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/DNDLaucher.exe"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "reset_pulse": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
@@ -42,25 +54,13 @@
       },
       {
         "task": {
-          "executable": "setup",
-          "description": "Installing Dungeons & Dragons",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing Dungeons & Dragons"
         }
       }
-    ],
-    "system": {
-      "pulse_latency": true,
-      "reset_pulse": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/DNDLaucher.exe"
-    }
+    ]
   },
   "content": "files:\r\n- setup: http://content.turbine.com/sites/clientdl/ddo/ddolive.exe\r\ngame:\r\n  exe: drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online/DNDLaucher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons\r\n      Online\r\n    src: setup\r\n- task:\r\n    description: Installing Dungeons & Dragons\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  pulse_latency: true\r\n  reset_pulse: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

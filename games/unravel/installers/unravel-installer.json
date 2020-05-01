@@ -1,0 +1,78 @@
+{
+  "id": 20012,
+  "game_id": 19031,
+  "game_slug": "unravel",
+  "name": "Unravel",
+  "year": 2016,
+  "user": "oster",
+  "runner": "wine",
+  "slug": "unravel-installer",
+  "version": "Installer",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-04-26T14:35:30.766000Z",
+  "updated_at": "2020-04-26T15:05:16.957812Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Unravel/Unravel.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin",
+        "nvapi,nvapi64": "disabled"
+      },
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "disable_runtime": false
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "vcrun2012 win10",
+          "description": "Installing vcrun2012 with winetricks",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Unravel/Unravel.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2012 win10\n    arch: win64\n    description: Installing vcrun2012 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: false\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n    xaudio2_7: native,builtin\n"
+}

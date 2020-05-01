@@ -1,0 +1,80 @@
+{
+  "id": 19551,
+  "game_id": 32349,
+  "game_slug": "star-trek-starfleet-command-iii",
+  "name": "Star Trek Starfleet Command III",
+  "year": 2002,
+  "user": "Autolycus",
+  "runner": "wine",
+  "slug": "star-trek-starfleet-command-i-cdrom-patch",
+  "version": "CDROM + patch",
+  "description": "Installs from CD, then installs a user downloaded patch.\r\nRecommend the 534b patch: http://starfleetcommand3.filefront.com/file/sfc3_beta_patch_v534b_all_languages;28800",
+  "notes": "Download the desired patch before installing.\r\nDo NOT install DirectX 8 when prompted.\r\nDo NOT install GameSpy when prompted.\r\nRenamed the Cinema directory to prevent resolution change problems at startup.\r\nUnfortunately, I don't know how to automatically download a patch, so the user must download manually.",
+  "created_at": "2020-04-09T09:13:02.336000Z",
+  "updated_at": "2020-04-20T07:36:04.715048Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "patch": "N/A: Select the patch to install"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec",
+          "description": "Installing Starfleet Command III"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "patch",
+          "name": "wineexec",
+          "description": "Installing patch"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "d3dxof",
+          "description": "Installing d3dxof winetrick",
+          "name": "winetricks"
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema",
+          "description": "Disabling Cinemas",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema-disabled"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: 'N/A: Select the patch to install'\ngame:\n  exe: drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: setup.exe\n- task:\n    description: Installing Starfleet Command III\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing patch\n    executable: patch\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dxof\n    description: Installing d3dxof winetrick\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    description: Disabling Cinemas\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema-disabled\n    src: $GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema\n"
+}

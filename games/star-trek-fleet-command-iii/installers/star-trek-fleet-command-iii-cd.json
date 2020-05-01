@@ -1,0 +1,73 @@
+{
+  "id": 19689,
+  "game_id": 32501,
+  "game_slug": "star-trek-fleet-command-iii",
+  "name": "Star Trek: Starfleet Command III",
+  "year": 2002,
+  "user": "tfk",
+  "runner": "wine",
+  "slug": "star-trek-fleet-command-iii-cd",
+  "version": "CD",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-04-13T15:27:03.354899Z",
+  "updated_at": "2020-04-14T06:41:50.004829Z",
+  "draft": true,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "latest_patch": "N/A: Select the latest patch setup.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe",
+      "arch": "win64"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "Setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "latest_patch",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "corefonts d3dx9 d3dcompiler_43 dinput8",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- latest_patch: 'N/A: Select the latest patch setup.exe'\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Setup.exe\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: latest_patch\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: corefonts d3dx9 d3dcompiler_43 dinput8\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n"
+}

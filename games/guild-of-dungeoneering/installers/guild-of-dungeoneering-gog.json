@@ -26,6 +26,22 @@
         "install": "N/A:Select the Windows setup file downloaded from GOG"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Guild of Dungeoneering/dungeoneering.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "installer": [
       {
         "task": {
@@ -35,31 +51,15 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "arch": "win64",
+          "name": "wineexec",
+          "description": "Installing the Game",
           "args": "/VERYSILENT /SUPPRESSMSGBOXES",
-          "executable": "install",
-          "description": "Installing the Game"
+          "prefix": "$GAMEDIR",
+          "executable": "install"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Guild of Dungeoneering/dungeoneering.exe"
-    }
+    ]
   },
   "content": "files:\n- install: N/A:Select the Windows setup file downloaded from GOG\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Guild of Dungeoneering/dungeoneering.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Installing the Game\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

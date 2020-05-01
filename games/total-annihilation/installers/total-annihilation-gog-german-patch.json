@@ -21,6 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Total Annihilation/TotalA.exe"
+    },
+    "files": [
+      {
+        "patch": "N/A:Please select the Patch file"
+      }
+    ],
+    "requires": "total-annihilation-gog",
     "installer": [
       {
         "extract": {
@@ -36,25 +46,15 @@
       },
       {
         "task": {
+          "name": "set_regedit",
+          "key": "Language",
           "prefix": "$GAMEDIR",
           "value": "german",
-          "key": "Language",
-          "name": "set_regedit",
-          "type": "REG_SZ",
-          "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Total Annihilation"
+          "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Total Annihilation",
+          "type": "REG_SZ"
         }
       }
-    ],
-    "requires": "total-annihilation-gog",
-    "files": [
-      {
-        "patch": "N/A:Please select the Patch file"
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/GOG Games/Total Annihilation/TotalA.exe"
-    }
+    ]
   },
   "content": "files:\n- patch: N/A:Please select the Patch file\ngame:\n  exe: $GAMEDIR/drive_c/GOG Games/Total Annihilation/TotalA.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    src: $patch\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Total Annihilation\n    src: $CACHE/Deutschpatch\n- task:\n    key: Language\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Total Annihilation\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: german\nrequires: total-annihilation-gog\n"
 }

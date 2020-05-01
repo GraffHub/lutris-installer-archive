@@ -21,23 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\"",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/bulkcopy.sh"
-      },
-      {
-        "execute": {
-          "args": "$game $GAMEDIR",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select the Install.exe file"
@@ -46,7 +29,24 @@
     "game": {
       "game_id": "voyeur",
       "path": "$GAMEDIR"
-    }
+    },
+    "installer": [
+      {
+        "write_file": {
+          "file": "$CACHE/bulkcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\""
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy.sh"
+      },
+      {
+        "execute": {
+          "file": "$CACHE/bulkcopy.sh",
+          "args": "$game $GAMEDIR"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the Install.exe file\ngame:\n  game_id: voyeur\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR\n    file: $CACHE/bulkcopy.sh\n"
 }

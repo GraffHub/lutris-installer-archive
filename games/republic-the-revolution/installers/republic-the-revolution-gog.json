@@ -21,19 +21,30 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "gogpackage": "N/A:Select the GOG installer for Republic: The Revolution."
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Republic The Revolution/Main/Republic/Exe/Republic.exe",
+      "working_dir": "$GAMEDIR/drive_c/Program Files/Republic The Revolution/Main/Republic/Exe/"
+    },
+    "require_binaries": "innoextract",
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
           "name": "create_prefix"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE/tmp\" \"$gogpackage\"",
           "file": "innoextract",
-          "name": "Extract game data"
+          "name": "Extract game data",
+          "args": "-d \"$CACHE/tmp\" \"$gogpackage\""
         }
       },
       {
@@ -42,18 +53,7 @@
           "dst": "$GAMEDIR/drive_c/Program Files/Republic The Revolution/"
         }
       }
-    ],
-    "files": [
-      {
-        "gogpackage": "N/A:Select the GOG installer for Republic: The Revolution."
-      }
-    ],
-    "require_binaries": "innoextract",
-    "game": {
-      "working_dir": "$GAMEDIR/drive_c/Program Files/Republic The Revolution/Main/Republic/Exe/",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/Republic The Revolution/Main/Republic/Exe/Republic.exe"
-    }
+    ]
   },
   "content": "files:\n- gogpackage: 'N/A:Select the GOG installer for Republic: The Revolution.'\ngame:\n  exe: $GAMEDIR/drive_c/Program Files/Republic The Revolution/Main/Republic/Exe/Republic.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files/Republic The Revolution/Main/Republic/Exe/\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    args: -d \"$CACHE/tmp\" \"$gogpackage\"\n    file: innoextract\n    name: Extract game data\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/Republic The Revolution/\n    src: $CACHE/tmp/app\nrequire_binaries: innoextract\n"
 }

@@ -1,0 +1,110 @@
+{
+  "id": 19774,
+  "game_id": 24193,
+  "game_slug": "homeworld-emergence",
+  "name": "Homeworld: Emergence",
+  "year": 2000,
+  "user": "PugOfStardoc",
+  "runner": "wine",
+  "slug": "homeworld-emergence-retail-cd",
+  "version": "Retail CD",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-04-17T11:13:27.246000Z",
+  "updated_at": "2020-04-18T07:20:15.037093Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1766413869,
+  "gogslug": "homeworld_emergence",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Sierra/Cataclysm/cataclysm.exe",
+      "arch": "win32",
+      "args": "/disableAVI /noglddraw /noswddraw /device gl"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "HWCSetup.EXE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/HWCSetup.EXE",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "screenDepth",
+          "prefix": "$GAMEDIR",
+          "value": "00000020",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "screenWidth",
+          "prefix": "$GAMEDIR",
+          "value": "00000500",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "screenHeight",
+          "prefix": "$GAMEDIR",
+          "value": "00000400",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "deviceToSelect",
+          "prefix": "$GAMEDIR",
+          "value": "gl",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "glToSelect",
+          "prefix": "$GAMEDIR",
+          "value": "opengl32.dll",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "executable": "regedit",
+          "name": "wineexec",
+          "description": "The game has been set to its highest supported resolution, 1280x1024. If you wish to use an unsupported resolution, please navigate to HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm and set screenHeight and screenWidth to height and width of the desired resolution (switch from hexadecimal to decimal before entering the values). Either way, exit regedit afterwards."
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  args: /disableAVI /noglddraw /noswddraw /device gl\n  exe: drive_c/Sierra/Cataclysm/cataclysm.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: HWCSetup.EXE\n- task:\n    executable: $DISC/HWCSetup.EXE\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: screenDepth\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000020'\n- task:\n    arch: win32\n    key: screenWidth\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000500'\n- task:\n    arch: win32\n    key: screenHeight\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000400'\n- task:\n    arch: win32\n    key: deviceToSelect\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: gl\n- task:\n    arch: win32\n    key: glToSelect\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: opengl32.dll\n- task:\n    arch: win32\n    description: The game has been set to its highest supported resolution, 1280x1024.\n      If you wish to use an unsupported resolution, please navigate to HKEY_LOCAL_MACHINE\\Software\\Sierra\n      On-Line\\Cataclysm and set screenHeight and screenWidth to height and width of\n      the desired resolution (switch from hexadecimal to decimal before entering the\n      values). Either way, exit regedit afterwards.\n    executable: regedit\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

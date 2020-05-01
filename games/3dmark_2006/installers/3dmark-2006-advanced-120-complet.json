@@ -26,57 +26,69 @@
         "setup": "https://benchmarks.ul.com/downloads/3dmark06.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark06/3DMark06.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
+    "system": {
+      "disable_compositor": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "MP3codec DirectShow ...",
           "app": "l3codecx",
-          "prefix": "$GAMEDIR",
+          "description": "MP3codec DirectShow ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Visual C++ 2010 libraries ...",
           "app": "vcrun2010",
-          "prefix": "$GAMEDIR",
+          "description": "Visual C++ 2010 libraries ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Visual C++ 2005 libraries ...",
           "app": "vcrun2005",
-          "prefix": "$GAMEDIR",
+          "description": "Visual C++ 2005 libraries ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "description": "Windows version 8.1 ...",
           "app": "win81",
-          "prefix": "$GAMEDIR",
+          "description": "Windows version 8.1 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Vulkan ...",
-          "app": "d9vk_master",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "d9vk_master",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
@@ -91,47 +103,35 @@
       },
       {
         "task": {
-          "executable": "$GAMEDIR/3dmark06.exe",
-          "description": "3DMark 2006 ...",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/3dmark06.exe",
+          "name": "wineexec",
+          "description": "3DMark 2006 ..."
         }
       },
       {
         "task": {
-          "value": "3DM06-YKL9-C7R6-73WW-AAPA-VHKW",
           "arch": "win64",
-          "key": "KeyCode",
           "name": "set_regedit",
           "description": "Register KeyCode ...",
+          "key": "KeyCode",
+          "value": "3DM06-YKL9-C7R6-73WW-AAPA-VHKW",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark06",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "value": "3DM06-YKL9-C7R6-73WW-AAPA-VHKW",
           "arch": "win64",
-          "key": "KeyCode",
           "name": "set_regedit",
           "description": "Register KeyCode ...",
+          "key": "KeyCode",
+          "value": "3DM06-YKL9-C7R6-73WW-AAPA-VHKW",
           "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark",
           "type": "REG_SZ"
         }
       }
-    ],
-    "system": {
-      "disable_compositor": true
-    },
-    "wine": {
-      "Desktop": true,
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark06/3DMark06.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: https://benchmarks.ul.com/downloads/3dmark06.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark06/3DMark06.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: l3codecx\n    arch: win64\n    description: MP3codec DirectShow ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Visual C++ 2010 libraries ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005\n    arch: win64\n    description: Visual C++ 2005 libraries ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win81\n    arch: win64\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d9vk_master\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR\n    src: setup\n- chmodx: $GAMEDIR/3dmark06.exe\n- task:\n    description: 3DMark 2006 ...\n    executable: $GAMEDIR/3dmark06.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark06\n    type: REG_SZ\n    value: 3DM06-YKL9-C7R6-73WW-AAPA-VHKW\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark\n    type: REG_SZ\n    value: 3DM06-YKL9-C7R6-73WW-AAPA-VHKW\nsystem:\n  disable_compositor: true\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

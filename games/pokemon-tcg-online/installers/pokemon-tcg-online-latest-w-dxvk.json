@@ -21,44 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q",
-          "executable": "msiexec",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
-        }
-      }
-    ],
     "files": [
       {
         "pokemon": "https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe",
+      "arch": "win64"
+    },
     "wine": {
       "dxvk": true
     },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/users/$USER/Application Data/Pokémon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon Trading Card Game Online.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "msiexec",
+          "name": "wineexec",
+          "args": "/i \"$CACHE/pokemon/PokemonInstaller.msi\" /q"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "winekill"
+        }
+      }
+    ]
   },
   "content": "files:\n- pokemon: https://tcgo-installer.s3.amazonaws.com/PokemonInstaller.msi\ngame:\n  arch: win64\n  exe: \"drive_c/users/$USER/Application Data/Pok\\xE9mon Trading Card Game Online/PokemonTradingCardGameOnline/Pokemon\\\n    \\ Trading Card Game Online.exe\"\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"$CACHE/pokemon/PokemonInstaller.msi\" /q\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

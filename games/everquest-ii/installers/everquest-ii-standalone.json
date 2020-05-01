@@ -21,48 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "app": "win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "description": "Installing Corefonts",
-          "app": "corefonts",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "wineboot",
-          "description": "Simulating Windows reboot.",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "executable": "setup",
-          "description": "Installing EverQuest 2",
-          "prefix": "$GAMEDIR",
-          "name": "wine.wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "setup": "https://launch.daybreakgames.com/installer/EQ2_setup.exe"
@@ -71,7 +29,49 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "/drive_c/users/Public/Daybreak Game Company/Installed Games/EverQuest II/LaunchPad.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "description": "Installing Corefonts",
+          "app": "corefonts",
+          "silent": true,
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "wineboot",
+          "name": "wineexec",
+          "description": "Simulating Windows reboot."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wine.wineexec",
+          "description": "Installing EverQuest 2"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: https://launch.daybreakgames.com/installer/EQ2_setup.exe\ngame:\n  exe: /drive_c/users/Public/Daybreak Game Company/Installed Games/EverQuest II/LaunchPad.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Installing Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    description: Simulating Windows reboot.\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Installing EverQuest 2\n    executable: setup\n    name: wine.wineexec\n    prefix: $GAMEDIR\n"
 }

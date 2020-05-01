@@ -17,50 +17,10 @@
   "published_by": 20548,
   "rating": "",
   "steamid": null,
-  "gogid": 1443696086,
+  "gogid": 1441704920,
   "gogslug": "quake_iii_gold",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "chmodx": "ioquake3installer"
-      },
-      {
-        "execute": {
-          "args": "--tar -xf ./ioquake3.x86_64.tar",
-          "file": "ioquake3installer"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "$GAMEDIR/ioquake3.x86_64.tar"
-        }
-      },
-      {
-        "execute": {
-          "command": "rm ioquake3.x86_64.tar"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE/innoextract",
-          "file": "innoextract"
-        }
-      },
-      {
-        "execute": {
-          "args": "--extract $q3data --output-dir $CACHE/q3data/",
-          "file": "$CACHE/innoextract/innoextract"
-        }
-      },
-      {
-        "merge": {
-          "src": "$CACHE/q3data/app/baseq3",
-          "dst": "$GAMEDIR/baseq3"
-        }
-      }
-    ],
     "files": [
       {
         "ioquake3installer": "http://ioquake3.org/files/1.36/installer/ioquake3-1.36-7.1.x86_64.run"
@@ -74,7 +34,47 @@
     ],
     "game": {
       "exe": "ioquake3.x86_64"
-    }
+    },
+    "installer": [
+      {
+        "chmodx": "ioquake3installer"
+      },
+      {
+        "execute": {
+          "file": "ioquake3installer",
+          "args": "--tar -xf ./ioquake3.x86_64.tar"
+        }
+      },
+      {
+        "extract": {
+          "file": "$GAMEDIR/ioquake3.x86_64.tar",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "command": "rm ioquake3.x86_64.tar"
+        }
+      },
+      {
+        "extract": {
+          "file": "innoextract",
+          "dst": "$CACHE/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract/innoextract",
+          "args": "--extract $q3data --output-dir $CACHE/q3data/"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/q3data/app/baseq3",
+          "dst": "$GAMEDIR/baseq3"
+        }
+      }
+    ]
   },
   "content": "files:\n- ioquake3installer: http://ioquake3.org/files/1.36/installer/ioquake3-1.36-7.1.x86_64.run\n- innoextract: https://lutris.net/files/tools/innoextract.tar.gz\n- q3data: N/A:Please select the GOG.com Windows installer\ngame:\n  exe: ioquake3.x86_64\ninstaller:\n- chmodx: ioquake3installer\n- execute:\n    args: --tar -xf ./ioquake3.x86_64.tar\n    file: ioquake3installer\n- extract:\n    dst: $GAMEDIR\n    file: $GAMEDIR/ioquake3.x86_64.tar\n- execute:\n    command: rm ioquake3.x86_64.tar\n- extract:\n    dst: $CACHE/innoextract\n    file: innoextract\n- execute:\n    args: --extract $q3data --output-dir $CACHE/q3data/\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/baseq3\n    src: $CACHE/q3data/app/baseq3\n"
 }

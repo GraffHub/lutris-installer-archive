@@ -21,11 +21,26 @@
   "gogslug": "d_the_game",
   "humblestoreid": "",
   "script": {
+    "custom-name": "D - The Game - CD DOS - DOSBox",
+    "files": [
+      {
+        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
+      },
+      {
+        "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf"
+      }
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/D_dosbox.conf"
+    },
     "installer": [
       {
         "insert-disc": {
-          "description": "Please insert disc 1",
-          "requires": "d/laura.exe"
+          "requires": "d/laura.exe",
+          "description": "Please insert disc 1"
         }
       },
       {
@@ -39,20 +54,20 @@
       },
       {
         "execute": {
-          "args": "disk 0",
-          "file": "script"
+          "file": "script",
+          "args": "disk 0"
         }
       },
       {
         "insert-disc": {
-          "description": "Please insert disc 2",
-          "requires": "efc/baby.raw"
+          "requires": "efc/baby.raw",
+          "description": "Please insert disc 2"
         }
       },
       {
         "execute": {
-          "args": "D_",
-          "file": "script"
+          "file": "script",
+          "args": "D_"
         }
       },
       {
@@ -66,22 +81,7 @@
           "dst": "$GAMEDIR"
         }
       }
-    ],
-    "files": [
-      {
-        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
-      },
-      {
-        "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
-      },
-      {
-        "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf"
-      }
-    ],
-    "custom-name": "D - The Game - CD DOS - DOSBox",
-    "game": {
-      "main_file": "$GAMEDIR/D_dosbox.conf"
-    }
+    ]
   },
   "content": "custom-name: D - The Game - CD DOS - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/D%20-%20The%20Game/D_dosbox.conf\ngame:\n  main_file: $GAMEDIR/D_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: d/laura.exe\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: disk 0\n    file: script\n- insert-disc:\n    description: Please insert disc 2\n    requires: efc/baby.raw\n- execute:\n    args: D_\n    file: script\n- execute:\n    command: cd $GAMEDIR; rm -f -r *.toc; mv disk.cue D_CD1.cue; mv disk.bin D_CD1.bin;\n      mv D_.cue D_CD2.cue; mv D_.bin D_CD2.bin; sed -i 's/disk.bin/D_CD1.bin/g' D_CD1.cue;\n      sed -i 's/D_.bin/D_CD2.bin/g' D_CD2.cue\n- copy:\n    dst: $GAMEDIR\n    src: conf\n"
 }

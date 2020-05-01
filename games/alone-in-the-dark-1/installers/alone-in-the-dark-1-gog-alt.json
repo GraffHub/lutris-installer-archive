@@ -11,9 +11,9 @@
   "description": null,
   "notes": "",
   "created_at": "2019-09-08T10:55:10.169218Z",
-  "updated_at": "2019-09-08T10:55:10.169246Z",
+  "updated_at": "2020-04-23T08:07:02.524897Z",
   "draft": false,
-  "published": false,
+  "published": true,
   "published_by": null,
   "rating": "",
   "steamid": null,
@@ -21,23 +21,34 @@
   "gogslug": "alone_in_the_dark",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "game": "N/A:Select GOG installer."
+      },
+      {
+        "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/alone-in-the-dark.conf"
+    },
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$inno"
+          "file": "$inno",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-I app -d \"$CACHE\" \"$game\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-I app -d \"$CACHE\" \"$game\""
         }
       },
       {
         "execute": {
-          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/INDARK $GAMEDIR/CDD $GAMEDIR/CDD/DISC1",
-          "file": "mkdir"
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/INDARK $GAMEDIR/CDD $GAMEDIR/CDD/DISC1"
         }
       },
       {
@@ -66,35 +77,24 @@
       },
       {
         "write_file": {
-          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nimgmount D \"$GAMEDIR/CDD/DISC1/GAME.INST\" -t iso\nC:\ncd INDARK\nINSTALL\nexit",
-          "file": "$GAMEDIR/alone-in-the-dark-setup.conf"
+          "file": "$GAMEDIR/alone-in-the-dark-setup.conf",
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nimgmount D \"$GAMEDIR/CDD/DISC1/GAME.INST\" -t iso\nC:\ncd INDARK\nINSTALL\nexit"
         }
       },
       {
         "task": {
           "config_file": "$GAMEDIR/alone-in-the-dark-setup.conf",
-          "working_dir": "$GAMEDIR/HDD/INDARK",
-          "name": "dosexec"
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR/HDD/INDARK"
         }
       },
       {
         "write_file": {
-          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nimgmount D \"$GAMEDIR/CDD/DISC1/GAME.INST\" -t iso\nC:\ncd INDARK\nINDARK\nexit",
-          "file": "$GAMEDIR/alone-in-the-dark.conf"
+          "file": "$GAMEDIR/alone-in-the-dark.conf",
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nimgmount D \"$GAMEDIR/CDD/DISC1/GAME.INST\" -t iso\nC:\ncd INDARK\nINDARK\nexit"
         }
       }
-    ],
-    "files": [
-      {
-        "game": "N/A:Select GOG installer."
-      },
-      {
-        "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
-      }
-    ],
-    "game": {
-      "main_file": "$GAMEDIR/alone-in-the-dark.conf"
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Select GOG installer.\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  main_file: $GAMEDIR/alone-in-the-dark.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $inno\n- execute:\n    args: -I app -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/INDARK $GAMEDIR/CDD $GAMEDIR/CDD/DISC1\n    file: mkdir\n- copy:\n    dst: $GAMEDIR/CDD/DISC1\n    src: $CACHE/app/GAME.INST\n- copy:\n    dst: $GAMEDIR/CDD/DISC1\n    src: $CACHE/app/GAME.GOG\n- copy:\n    dst: $GAMEDIR\n    src: $CACHE/app/manual.pdf\n- merge:\n    dst: $GAMEDIR/HDD/INDARK\n    src: $CACHE/app/INDARK\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      imgmount D \"$GAMEDIR/CDD/DISC1/GAME.INST\" -t iso\n\n      C:\n\n      cd INDARK\n\n      INSTALL\n\n      exit'\n    file: $GAMEDIR/alone-in-the-dark-setup.conf\n- task:\n    config_file: $GAMEDIR/alone-in-the-dark-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/INDARK\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      imgmount D \"$GAMEDIR/CDD/DISC1/GAME.INST\" -t iso\n\n      C:\n\n      cd INDARK\n\n      INDARK\n\n      exit'\n    file: $GAMEDIR/alone-in-the-dark.conf\n"
 }

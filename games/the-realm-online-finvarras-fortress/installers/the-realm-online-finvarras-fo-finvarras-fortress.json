@@ -21,21 +21,36 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "realm": "https://realmserver.com/files/TheRealmOnline.msi"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Rat Labs/The Realm Online/wlaunch.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled"
+      }
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/i \"$CACHE/realm/RatLabsRealm.msi\" /q",
-          "executable": "msiexec",
-          "description": "Installing The Realm Online",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "msiexec",
+          "name": "wineexec",
+          "description": "Installing The Realm Online",
+          "args": "/i \"$CACHE/realm/RatLabsRealm.msi\" /q"
         }
       },
       {
@@ -44,22 +59,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "files": [
-      {
-        "realm": "https://realmserver.com/files/TheRealmOnline.msi"
-      }
-    ],
-    "wine": {
-      "overrides": {
-        "d3d11": "disabled"
-      }
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Rat Labs/The Realm Online/wlaunch.exe"
-    }
+    ]
   },
   "content": "files:\n- realm: https://realmserver.com/files/TheRealmOnline.msi\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rat Labs/The Realm Online/wlaunch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /i \"$CACHE/realm/RatLabsRealm.msi\" /q\n    description: Installing The Realm Online\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    d3d11: disabled\n"
 }

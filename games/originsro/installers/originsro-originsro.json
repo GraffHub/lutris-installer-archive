@@ -21,59 +21,59 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "client"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "app": "vcrun2008",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "app": "ie8",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "opengl",
-          "arch": "win32",
-          "key": "DirectDrawRenderer",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "type": "REG_SZ"
-        }
-      }
-    ],
     "files": [
       {
         "client": "https://dl.originsro.org/client/OriginsRO-full-2020-03-05.zip"
       }
     ],
     "game": {
-      "arch": "win32",
-      "working_dir": "$GAMEDIR",
       "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/OriginsroLauncher.exe"
-    }
+      "exe": "$GAMEDIR/OriginsroLauncher.exe",
+      "arch": "win32",
+      "working_dir": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "client",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "app": "vcrun2008",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "app": "ie8",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "DirectDrawRenderer",
+          "prefix": "$GAMEDIR",
+          "value": "opengl",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "type": "REG_SZ"
+        }
+      }
+    ]
   },
   "content": "files:\n- client: https://dl.originsro.org/client/OriginsRO-full-2020-03-05.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/OriginsroLauncher.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR\n    file: client\n- task:\n    app: vcrun2008\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: ie8\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: DirectDrawRenderer\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: opengl\n"
 }

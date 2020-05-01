@@ -21,49 +21,6 @@
   "gogslug": "journeyman_project_1_pegasus_prime_the",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$innoextract"
-        }
-      },
-      {
-        "execute": {
-          "disable_runtime": true,
-          "args": "--gog -I \"/app\" -d \"$GAMEDIR\" -ms \"$installer\"",
-          "description": "Extracting game data (empty output means it's working, please be patient)...",
-          "file": "$CACHE/innoextract"
-        }
-      },
-      {
-        "execute": {
-          "disable_runtime": true,
-          "args": "\"$GAMEDIR/app/docs/ScummVM Documentation/Source.zip\" -d \"$CACHE\"",
-          "description": "Extracting ScummVM source...",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "execute": {
-          "disable_runtime": true,
-          "description": "Compiling custom ScummVM...",
-          "command": "cd \"$CACHE/Source\" && ./configure --datadir=. --disable-all-engines --enable-engine=pegasus && make && strip --strip-unneeded PegasusPrime"
-        }
-      },
-      {
-        "move": {
-          "src": "$CACHE/Source/PegasusPrime",
-          "dst": "$GAMEDIR/app"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Please select the GOG.com Windows installer."
@@ -76,10 +33,53 @@
       }
     ],
     "game": {
-      "working_dir": "$GAMEDIR/app",
+      "exe": "$GAMEDIR/app/PegasusPrime",
       "appid": 359420,
-      "exe": "$GAMEDIR/app/PegasusPrime"
-    }
+      "working_dir": "$GAMEDIR/app"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$unzip",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "extract": {
+          "file": "$innoextract",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "disable_runtime": true,
+          "description": "Extracting game data (empty output means it's working, please be patient)...",
+          "args": "--gog -I \"/app\" -d \"$GAMEDIR\" -ms \"$installer\""
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/unzip",
+          "disable_runtime": true,
+          "description": "Extracting ScummVM source...",
+          "args": "\"$GAMEDIR/app/docs/ScummVM Documentation/Source.zip\" -d \"$CACHE\""
+        }
+      },
+      {
+        "execute": {
+          "disable_runtime": true,
+          "command": "cd \"$CACHE/Source\" && ./configure --datadir=. --disable-all-engines --enable-engine=pegasus && make && strip --strip-unneeded PegasusPrime",
+          "description": "Compiling custom ScummVM..."
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/Source/PegasusPrime",
+          "dst": "$GAMEDIR/app"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Please select the GOG.com Windows installer.\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\n- innoextract: http://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  appid: 359420\n  exe: $GAMEDIR/app/PegasusPrime\n  working_dir: $GAMEDIR/app\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- extract:\n    dst: $CACHE\n    file: $innoextract\n- execute:\n    args: --gog -I \"/app\" -d \"$GAMEDIR\" -ms \"$installer\"\n    description: Extracting game data (empty output means it's working, please be\n      patient)...\n    disable_runtime: true\n    file: $CACHE/innoextract\n- execute:\n    args: '\"$GAMEDIR/app/docs/ScummVM Documentation/Source.zip\" -d \"$CACHE\"'\n    description: Extracting ScummVM source...\n    disable_runtime: true\n    file: $CACHE/unzip\n- execute:\n    command: cd \"$CACHE/Source\" && ./configure --datadir=. --disable-all-engines --enable-engine=pegasus\n      && make && strip --strip-unneeded PegasusPrime\n    description: Compiling custom ScummVM...\n    disable_runtime: true\n- move:\n    dst: $GAMEDIR/app\n    src: $CACHE/Source/PegasusPrime\n"
 }

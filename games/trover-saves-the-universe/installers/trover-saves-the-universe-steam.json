@@ -1,5 +1,5 @@
 {
-  "id": 18369,
+  "id": 19924,
   "game_id": 28613,
   "game_slug": "trover-saves-the-universe",
   "name": "Trover Saves the Universe",
@@ -10,8 +10,8 @@
   "version": "Steam",
   "description": null,
   "notes": "",
-  "created_at": "2020-02-14T08:59:21.664783Z",
-  "updated_at": "2020-03-20T10:46:47.930385Z",
+  "created_at": "2020-04-23T15:09:48.564288Z",
+  "updated_at": "2020-04-23T15:09:48.564313Z",
   "draft": true,
   "published": false,
   "published_by": null,
@@ -29,26 +29,48 @@
         "SteamSetup.exe": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
       }
     ],
+    "game": {
+      "custom-name": "Trover Saves the Universe",
+      "arch": "win64",
+      "args": "-nojoy -applaunch 1051200",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe",
+      "appid": "1051200"
+    },
+    "wine": {
+      "Audio": "pulse",
+      "version": "ge-protonified-nofshack-4.9-x86_64",
+      "esync": true,
+      "dxvk": true,
+      "overrides": {
+        "winedbg.exe": "d"
+      }
+    },
+    "system": {
+      "xboxdrv": "xboxdrv",
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
         "execute": {
-          "description": "Creating Media Foundation workaround directory ...",
-          "command": "mkdir \"$GAMEDIR/prefix/mediafoundation_workaround\""
+          "command": "mkdir \"$GAMEDIR/prefix/mediafoundation_workaround\"",
+          "description": "Creating Media Foundation workaround directory ..."
         }
       },
       {
         "write_file": {
-          "content": "cd $HOME/Games/trover-saves-the-universe/prefix/mediafoundation_workaround && WINEPREFIX=\"$HOME/Games/trover-saves-the-universe/prefix\" ./mf-install.sh",
+          "file": "$GAMEDIR/prefix/mediafoundation_workaround/install.sh",
           "description": "Creating install.sh with prefix ...",
-          "file": "$GAMEDIR/prefix/mediafoundation_workaround/install.sh"
+          "content": "cd $HOME/Games/trover-saves-the-universe/prefix/mediafoundation_workaround && WINEPREFIX=\"$HOME/Games/trover-saves-the-universe/prefix\" ./mf-install.sh"
         }
       },
       {
@@ -56,15 +78,15 @@
       },
       {
         "extract": {
+          "file": "master.zip",
           "description": "Extracting Media Foundation workaround ...",
-          "dst": "$GAMEDIR/prefix/mediafoundation_workaround",
-          "file": "master.zip"
+          "dst": "$GAMEDIR/prefix/mediafoundation_workaround"
         }
       },
       {
         "execute": {
-          "description": "Media Foundation workaround ...",
-          "command": "sh $GAMEDIR/prefix/mediafoundation_workaround/install.sh"
+          "command": "sh $GAMEDIR/prefix/mediafoundation_workaround/install.sh",
+          "description": "Media Foundation workaround ..."
         }
       },
       {
@@ -78,86 +100,68 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX ...",
           "app": "d3drm",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
           "description": "DirectX 11 ...",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "app": "d3dx11_43",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX 11 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX compiler ...",
           "app": "d3dcompiler_47",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX compiler ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "Vulkan ...",
           "app": "dxvk",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/S",
-          "executable": "$GAMEDIR/prefix/drive_c/SteamSetup.exe",
-          "description": "Steam ...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/prefix/drive_c/SteamSetup.exe",
+          "name": "wineexec",
+          "description": "Steam ...",
+          "args": "/S"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Windows version 8 ...",
-          "app": "win8",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "win8",
+          "description": "Windows version 8 ...",
           "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "xboxdrv": "xboxdrv",
-      "pulse_latency": true,
-      "disable_compositor": true
-    },
-    "wine": {
-      "Audio": "pulse",
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR/prefix",
-      "custom-name": "Trover Saves the Universe",
-      "arch": "win64",
-      "args": "-nojoy -applaunch 1051200",
-      "appid": "1051200",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe"
-    }
+    ]
   },
-  "content": "files:\r\n- master.zip: https://github.com/z0z0z/mf-install/archive/master.zip\r\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\r\ngame:\r\n  appid: '1051200'\r\n  arch: win64\r\n  args: -nojoy -applaunch 1051200\r\n  custom-name: Trover Saves the Universe\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- execute:\r\n    command: mkdir \"$GAMEDIR/prefix/mediafoundation_workaround\"\r\n    description: Creating Media Foundation workaround directory ...\r\n- write_file:\r\n    content: cd $HOME/Games/trover-saves-the-universe/prefix/mediafoundation_workaround\r\n      && WINEPREFIX=\"$HOME/Games/trover-saves-the-universe/prefix\" ./mf-install.sh\r\n    description: Creating install.sh with prefix ...\r\n    file: $GAMEDIR/prefix/mediafoundation_workaround/install.sh\r\n- chmodx: $GAMEDIR/prefix/mediafoundation_workaround/install.sh\r\n- extract:\r\n    description: Extracting Media Foundation workaround ...\r\n    dst: $GAMEDIR/prefix/mediafoundation_workaround\r\n    file: master.zip\r\n- execute:\r\n    command: sh $GAMEDIR/prefix/mediafoundation_workaround/install.sh\r\n    description: Media Foundation workaround ...\r\n- move:\r\n    dst: $GAMEDIR/prefix/drive_c/\r\n    src: SteamSetup.exe\r\n- chmodx: $GAMEDIR/prefix/drive_c/SteamSetup.exe\r\n- task:\r\n    app: d3drm\r\n    arch: win64\r\n    description: DirectX ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_47\r\n    arch: win64\r\n    description: DirectX compiler ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    args: /S\r\n    description: Steam ...\r\n    executable: $GAMEDIR/prefix/drive_c/SteamSetup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\n  xboxdrv: xboxdrv\r\nwine:\r\n  Audio: pulse\r\n  dxvk: true\r\n  esync: true"
+  "content": "files:\n- master.zip: https://github.com/z0z0z/mf-install/archive/master.zip\n- SteamSetup.exe: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\ngame:\n  appid: '1051200'\n  arch: win64\n  args: -nojoy -applaunch 1051200\n  custom-name: Trover Saves the Universe\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Steam/Steam.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- execute:\n    command: mkdir \"$GAMEDIR/prefix/mediafoundation_workaround\"\n    description: Creating Media Foundation workaround directory ...\n- write_file:\n    content: cd $HOME/Games/trover-saves-the-universe/prefix/mediafoundation_workaround\n      && WINEPREFIX=\"$HOME/Games/trover-saves-the-universe/prefix\" ./mf-install.sh\n    description: Creating install.sh with prefix ...\n    file: $GAMEDIR/prefix/mediafoundation_workaround/install.sh\n- chmodx: $GAMEDIR/prefix/mediafoundation_workaround/install.sh\n- extract:\n    description: Extracting Media Foundation workaround ...\n    dst: $GAMEDIR/prefix/mediafoundation_workaround\n    file: master.zip\n- execute:\n    command: sh $GAMEDIR/prefix/mediafoundation_workaround/install.sh\n    description: Media Foundation workaround ...\n- move:\n    dst: $GAMEDIR/prefix/drive_c/\n    src: SteamSetup.exe\n- chmodx: $GAMEDIR/prefix/drive_c/SteamSetup.exe\n- task:\n    app: d3drm\n    arch: win64\n    description: DirectX ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dx11_43\n    arch: win64\n    description: DirectX 11 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: d3dcompiler_47\n    arch: win64\n    description: DirectX compiler ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    args: /S\n    description: Steam ...\n    executable: $GAMEDIR/prefix/drive_c/SteamSetup.exe\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    app: win8\n    arch: win64\n    description: Windows version 8 ...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  disable_compositor: true\n  pulse_latency: true\n  xboxdrv: xboxdrv\nwine:\n  Audio: pulse\n  dxvk: true\n  esync: true\n  overrides:\n    winedbg.exe: d\n  version: ge-protonified-nofshack-4.9-x86_64\n"
 }

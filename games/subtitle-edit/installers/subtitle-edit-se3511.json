@@ -21,40 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "src": "subeditzip",
-          "dst": "$GAMEDIR/drive_c/subtitleedit",
-          "description": "Unzipping subtitle edit"
-        }
-      },
-      {
-        "task": {
-          "args": "/S",
-          "executable": "vlc",
-          "description": "Installing VLC",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing Direct3D 9",
-          "app": "d3dx9",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing .NET 4.6.1 runtime",
-          "app": "dotnet461",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "subeditzip": "https://github.com/SubtitleEdit/subtitleedit/releases/download/3.5.11/SE3511.zip"
@@ -63,15 +29,49 @@
         "vlc": "https://get.videolan.org/vlc/3.0.8/win32/vlc-3.0.8-win32.exe"
       }
     ],
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/subtitleedit/SubtitleEdit.exe"
-    }
+      "exe": "$GAMEDIR/drive_c/subtitleedit/SubtitleEdit.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "installer": [
+      {
+        "extract": {
+          "src": "subeditzip",
+          "description": "Unzipping subtitle edit",
+          "dst": "$GAMEDIR/drive_c/subtitleedit"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "vlc",
+          "name": "wineexec",
+          "description": "Installing VLC",
+          "args": "/S"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "d3dx9",
+          "description": "Installing Direct3D 9",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "dotnet461",
+          "description": "Installing .NET 4.6.1 runtime",
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\n- subeditzip: https://github.com/SubtitleEdit/subtitleedit/releases/download/3.5.11/SE3511.zip\n- vlc: https://get.videolan.org/vlc/3.0.8/win32/vlc-3.0.8-win32.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/subtitleedit/SubtitleEdit.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    description: Unzipping subtitle edit\n    dst: $GAMEDIR/drive_c/subtitleedit\n    src: subeditzip\n- task:\n    args: /S\n    description: Installing VLC\n    executable: vlc\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    description: Installing Direct3D 9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet461\n    description: Installing .NET 4.6.1 runtime\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

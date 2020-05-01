@@ -21,26 +21,17 @@
   "gogslug": "betrayal_at_krondor",
   "humblestoreid": "",
   "script": {
-    "main_file": "DOSBOX/dosboxBAK_single.conf",
-    "files": [
-      {
-        "file1": "N/A:Please select the GOG installer"
-      },
-      {
-        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
-      }
-    ],
     "installer": [
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$file2"
+          "file": "$file2",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE\" \"$file1\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE\" \"$file1\""
         }
       },
       {
@@ -57,46 +48,55 @@
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": true,
           "section": "render",
-          "key": "aspect",
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": true
+          "key": "aspect"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": false,
           "section": "sdl",
-          "key": "fullscreen",
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": false
+          "key": "fullscreen"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": "1920x1080",
           "section": "sdl",
-          "key": "fullresolution",
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": "1920x1080"
+          "key": "fullresolution"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "value": "128:0",
           "section": "midi",
-          "key": "midiconfig",
-          "file": "$GAMEDIR/dosboxBAK.conf",
-          "value": "128:0"
+          "key": "midiconfig"
         }
       },
       {
         "write_file": {
-          "content": "[IPX]\nEnable=0\nConnection=0\nipx=false\n\n[autoexec]\n# Lines in this section will be run at startup.\n\n@ECHO OFF\nmount C \"..\"\nimgmount d \"..\\bak.inst\" -t iso -fs iso\nc:\ncls\nINSTALL.EXE\nexit\n",
-          "file": "$GAMEDIR/DOSBOX/dosboxBAK_settings.conf"
+          "file": "$GAMEDIR/DOSBOX/dosboxBAK_settings.conf",
+          "content": "[IPX]\nEnable=0\nConnection=0\nipx=false\n\n[autoexec]\n# Lines in this section will be run at startup.\n\n@ECHO OFF\nmount C \"..\"\nimgmount d \"..\\bak.inst\" -t iso -fs iso\nc:\ncls\nINSTALL.EXE\nexit\n"
         }
+      }
+    ],
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://lutris.net/files/tools/innoextract.tar.gz"
       }
     ],
     "game": {
       "config_file": "$GAMEDIR/dosboxBAK.conf"
-    }
+    },
+    "main_file": "DOSBOX/dosboxBAK_single.conf"
   },
   "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosboxBAK.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxBAK_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: fullresolution\n    section: sdl\n    value: 1920x1080\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: midiconfig\n    section: midi\n    value: '128:0'\n- write_file:\n    content: '[IPX]\n\n      Enable=0\n\n      Connection=0\n\n      ipx=false\n\n\n      [autoexec]\n\n      # Lines in this section will be run at startup.\n\n\n      @ECHO OFF\n\n      mount C \"..\"\n\n      imgmount d \"..\\bak.inst\" -t iso -fs iso\n\n      c:\n\n      cls\n\n      INSTALL.EXE\n\n      exit\n\n      '\n    file: $GAMEDIR/DOSBOX/dosboxBAK_settings.conf\nmain_file: DOSBOX/dosboxBAK_single.conf\n"
 }

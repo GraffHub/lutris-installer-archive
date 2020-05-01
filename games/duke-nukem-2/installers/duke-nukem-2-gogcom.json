@@ -21,27 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
-        }
-      },
-      {
-        "execute": {
-          "args": "$game -d \"$GAMEDIR\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "src": "$GAMEDIR/data/noarch",
-          "dst": "$GAMEDIR/Game"
-        }
-      }
-    ],
-    "description": "DRM-free GOG.com version",
     "files": [
       {
         "game": "N/A:Please select the GOG.com Linux installer"
@@ -51,9 +30,30 @@
       }
     ],
     "game": {
-      "config_file": "$GAMEDIR/Game/dosbox_duke2.conf",
-      "main_file": "$GAMEDIR/Game/dosbox_duke2_single.conf"
-    }
+      "main_file": "$GAMEDIR/Game/dosbox_duke2_single.conf",
+      "config_file": "$GAMEDIR/Game/dosbox_duke2.conf"
+    },
+    "description": "DRM-free GOG.com version",
+    "installer": [
+      {
+        "extract": {
+          "file": "$unzip",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR\""
+        }
+      },
+      {
+        "rename": {
+          "src": "$GAMEDIR/data/noarch",
+          "dst": "$GAMEDIR/Game"
+        }
+      }
+    ]
   },
   "content": "description: DRM-free GOG.com version\nfiles:\n- game: N/A:Please select the GOG.com Linux installer\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  config_file: $GAMEDIR/Game/dosbox_duke2.conf\n  main_file: $GAMEDIR/Game/dosbox_duke2_single.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\"\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n"
 }

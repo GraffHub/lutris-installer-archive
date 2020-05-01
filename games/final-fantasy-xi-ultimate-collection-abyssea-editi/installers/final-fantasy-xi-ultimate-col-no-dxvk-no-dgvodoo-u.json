@@ -21,46 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "execute": {
-          "args": "-s -t \"$CACHE\" \"$installer_part1\" \"$installer_part2\" \"$installer_part3\" \"$installer_part4\" \"$installer_part5\"",
-          "description": "Preparing installer archive",
-          "file": "ln"
-        }
-      },
-      {
-        "task": {
-          "args": "-s",
-          "executable": "$CACHE/FFXIFullSetup_US.part1.exe",
-          "description": "Extracting installer archive",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "args": "-q -i \"$CACHE/FFXIFullSetup_US/PlayOnline/PlayOnlineViewer.msi\"",
-          "executable": "msiexec",
-          "description": "Installing PlayOnline",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "args": "-q -i \"$CACHE/FFXIFullSetup_US/FINAL_FANTASY_XI/FINAL_FANTASY_XI.msi\"",
-          "executable": "msiexec",
-          "description": "Installing Final Fantasy XI",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "description": "Installing d3dcompiler",
-          "app": "d3dcompiler_43 d3dcompiler_47",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "installer_part1": "https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part1.exe"
@@ -78,20 +38,60 @@
         "installer_part5": "https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part5.rar"
       }
     ],
-    "wine": {
-      "dxvk": false,
-      "overrides": {
-        "d3d8": "n,b",
-        "d3dimm": "n,b",
-        "d3d9": "n,b",
-        "ddraw": "n,b"
-      },
-      "esync": true
-    },
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/Program Files (x86)/PlayOnline/SquareEnix/FINAL FANTASY XI/polboot.exe"
-    }
+    },
+    "wine": {
+      "overrides": {
+        "d3dimm": "n,b",
+        "ddraw": "n,b",
+        "d3d9": "n,b",
+        "d3d8": "n,b"
+      },
+      "esync": true,
+      "dxvk": false
+    },
+    "installer": [
+      {
+        "execute": {
+          "file": "ln",
+          "description": "Preparing installer archive",
+          "args": "-s -t \"$CACHE\" \"$installer_part1\" \"$installer_part2\" \"$installer_part3\" \"$installer_part4\" \"$installer_part5\""
+        }
+      },
+      {
+        "task": {
+          "executable": "$CACHE/FFXIFullSetup_US.part1.exe",
+          "name": "wineexec",
+          "description": "Extracting installer archive",
+          "args": "-s"
+        }
+      },
+      {
+        "task": {
+          "executable": "msiexec",
+          "name": "wineexec",
+          "description": "Installing PlayOnline",
+          "args": "-q -i \"$CACHE/FFXIFullSetup_US/PlayOnline/PlayOnlineViewer.msi\""
+        }
+      },
+      {
+        "task": {
+          "executable": "msiexec",
+          "name": "wineexec",
+          "description": "Installing Final Fantasy XI",
+          "args": "-q -i \"$CACHE/FFXIFullSetup_US/FINAL_FANTASY_XI/FINAL_FANTASY_XI.msi\""
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43 d3dcompiler_47",
+          "description": "Installing d3dcompiler",
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer_part1: https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part1.exe\n- installer_part2: https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part2.rar\n- installer_part3: https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part3.rar\n- installer_part4: https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part4.rar\n- installer_part5: https://gdl.square-enix.com/ffxi/download/us/FFXIFullSetup_US.part5.rar\ngame:\n  exe: drive_c/Program Files (x86)/PlayOnline/SquareEnix/FINAL FANTASY XI/polboot.exe\n  prefix: $GAMEDIR\ninstaller:\n- execute:\n    args: -s -t \"$CACHE\" \"$installer_part1\" \"$installer_part2\" \"$installer_part3\"\n      \"$installer_part4\" \"$installer_part5\"\n    description: Preparing installer archive\n    file: ln\n- task:\n    args: -s\n    description: Extracting installer archive\n    executable: $CACHE/FFXIFullSetup_US.part1.exe\n    name: wineexec\n- task:\n    args: -q -i \"$CACHE/FFXIFullSetup_US/PlayOnline/PlayOnlineViewer.msi\"\n    description: Installing PlayOnline\n    executable: msiexec\n    name: wineexec\n- task:\n    args: -q -i \"$CACHE/FFXIFullSetup_US/FINAL_FANTASY_XI/FINAL_FANTASY_XI.msi\"\n    description: Installing Final Fantasy XI\n    executable: msiexec\n    name: wineexec\n- task:\n    app: d3dcompiler_43 d3dcompiler_47\n    description: Installing d3dcompiler\n    name: winetricks\nwine:\n  dxvk: false\n  esync: true\n  overrides:\n    d3d8: n,b\n    d3d9: n,b\n    d3dimm: n,b\n    ddraw: n,b\n"
 }

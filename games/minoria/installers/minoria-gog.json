@@ -26,41 +26,41 @@
         "installer": "N/A:Select the game's setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Minoria/Minoria.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": false,
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "pulse_latency": false
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:GOG Games/Minoria\"",
-          "executable": "installer",
-          "description": "Installing Minoria",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Installing Minoria",
+          "args": "/SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:GOG Games/Minoria\""
         }
       }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1
-      },
-      "pulse_latency": false
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": false
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Minoria/Minoria.exe"
-    }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/Minoria/Minoria.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:GOG Games/Minoria\"\n    description: Installing Minoria\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: false\nwine:\n  dxvk: true\n  esync: false\n"
 }

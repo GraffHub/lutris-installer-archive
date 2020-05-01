@@ -21,44 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Installing needed libs",
-          "app": "dotnet20 riched20 msxml6 corefonts",
-          "prefix": "$CACHE/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "executable": "installer",
-          "description": "Running setup",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Please select the setup.exe located on the installation DVD."
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Microsoft Office/Office14/WINWORD.EXE"
-    }
+      "exe": "drive_c/Program Files/Microsoft Office/Office14/WINWORD.EXE",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$CACHE/prefix",
+          "arch": "win32",
+          "app": "dotnet20 riched20 msxml6 corefonts",
+          "description": "Installing needed libs",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Running setup"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Please select the setup.exe located on the installation DVD.\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Office/Office14/WINWORD.EXE\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20 riched20 msxml6 corefonts\n    arch: win32\n    description: Installing needed libs\n    name: winetricks\n    prefix: $CACHE/prefix\n- task:\n    arch: win32\n    description: Running setup\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

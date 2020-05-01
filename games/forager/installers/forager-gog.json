@@ -21,23 +21,6 @@
   "gogslug": "forager",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating WINE prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "installer",
-          "description": "Running Setup",
-          "name": "wineexec"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Select the EXE downloaded from GOG"
@@ -46,7 +29,24 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/GOG Games/Forager/Forager.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Running Setup",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Forager/Forager.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    description: Running Setup\n    executable: installer\n    name: wineexec\n"
 }

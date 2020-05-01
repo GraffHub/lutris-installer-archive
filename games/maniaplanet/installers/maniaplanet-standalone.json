@@ -26,41 +26,41 @@
         "setup": "http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe"
       }
     ],
-    "installer": [
-      {
-        "task": {
-          "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "overrides": {
+        "dinput8": "n, b"
       },
-      {
-        "task": {
-          "args": "/silent",
-          "executable": "setup",
-          "description": "Installing Maniaplanet",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
+      "esync": true,
+      "dxvk": true
+    },
     "system": {
       "env": {
         "DXVK_HUD": 0
       }
     },
-    "wine": {
-      "dxvk": true,
-      "overrides": {
-        "dinput8": "n, b"
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix"
+        }
       },
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe"
-    }
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing Maniaplanet",
+          "args": "/silent"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: http://files.v04.maniaplanet.com/setups/Maniaplanet_Setup.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/ManiaPlanet/ManiaPlanetLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing Maniaplanet\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    dinput8: n, b\n"
 }

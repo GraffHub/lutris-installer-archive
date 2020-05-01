@@ -26,50 +26,61 @@
         "file1": "N/A:Please select the Sims Medieval setup file"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Electronic Arts/The Sims Medieval/Game/Bin/TSM.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "UseXVidMode": true
+    },
+    "system": {
+      "restore_gamma": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
           "silent": true,
+          "arch": "win32",
+          "name": "winetricks",
           "description": "Installing dependencies",
+          "prefix": "$GAMEDIR",
           "app": "dotnet20 mfc42"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "winxp",
           "arch": "win32",
-          "key": "Version",
           "name": "set_regedit",
           "description": "Setting version to xp for SimsMedievalLauncher...",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "value": "winxp",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\SimsMedievalLauncher.exe"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "win7",
           "arch": "win32",
-          "key": "Version",
           "name": "set_regedit",
           "description": "Setting version to 7 for default...",
+          "key": "Version",
+          "prefix": "$GAMEDIR",
+          "value": "win7",
           "path": "HKEY_CURRENT_USER\\Software\\Wine"
         }
       },
       {
         "task": {
-          "executable": "file1",
           "prefix": "$GAMEDIR",
+          "executable": "file1",
           "name": "wineexec"
         }
       },
@@ -79,18 +90,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "system": {
-      "restore_gamma": true
-    },
-    "wine": {
-      "UseXVidMode": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Electronic Arts/The Sims Medieval/Game/Bin/TSM.exe"
-    }
+    ]
   },
   "content": "files:\n- file1: N/A:Please select the Sims Medieval setup file\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Electronic Arts/The Sims Medieval/Game/Bin/TSM.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet20 mfc42\n    arch: win32\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win32\n    description: Setting version to xp for SimsMedievalLauncher...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\SimsMedievalLauncher.exe\n    prefix: $GAMEDIR\n    value: winxp\n- task:\n    arch: win32\n    description: Setting version to 7 for default...\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    executable: file1\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  restore_gamma: true\nwine:\n  UseXVidMode: true\n"
 }

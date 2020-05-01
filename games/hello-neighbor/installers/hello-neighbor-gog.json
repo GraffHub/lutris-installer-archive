@@ -26,6 +26,18 @@
         "setup": "N/A:Select GOG setup exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Hello Neighbor/HelloNeighbor/Binaries/Win64/HelloNeighbor-Win64-Shipping.exe"
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler"
+      }
+    },
     "installer": [
       {
         "task": {
@@ -35,32 +47,20 @@
       },
       {
         "task": {
-          "app": "vcrun2015 win7",
           "prefix": "$GAMEDIR",
+          "app": "vcrun2015 win7",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES /NOCANCEL"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler"
-      }
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Hello Neighbor/HelloNeighbor/Binaries/Win64/HelloNeighbor-Win64-Shipping.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Select GOG setup exe\ngame:\n  exe: drive_c/GOG Games/Hello Neighbor/HelloNeighbor/Binaries/Win64/HelloNeighbor-Win64-Shipping.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /NOCANCEL\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\nwine:\n  dxvk: true\n"
 }

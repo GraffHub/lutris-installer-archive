@@ -21,59 +21,59 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "game"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "app": "l3codecx",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "app": "sound=alsa",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "silent": true,
-          "app": "windowmanagermanaged=n",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "game": "https://locomalito.com/juegos/Hydorah_1_1.zip"
       }
     ],
-    "system": {
-      "use_us_layout": true,
-      "single_cpu": true
-    },
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "Hydorah.exe"
-    }
+      "exe": "Hydorah.exe",
+      "arch": "win32"
+    },
+    "system": {
+      "single_cpu": true,
+      "use_us_layout": true
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "game",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "l3codecx",
+          "silent": true,
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "sound=alsa",
+          "silent": true,
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "windowmanagermanaged=n",
+          "silent": true,
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\r\n- game: https://locomalito.com/juegos/Hydorah_1_1.zip\r\ngame:\r\n  arch: win32\r\n  exe: Hydorah.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR\r\n    file: game\r\n- task:\r\n    app: l3codecx\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    app: sound=alsa\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\n- task:\r\n    app: windowmanagermanaged=n\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n    silent: true\r\nsystem:\r\n  single_cpu: true\r\n  use_us_layout: true"
 }

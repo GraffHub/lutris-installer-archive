@@ -21,19 +21,32 @@
   "gogslug": "ultima_underworld_1_2",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/ultima_underworld_1/en1installer0\n"
+      },
+      {
+        "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxULTIMA1.conf",
+      "main_file": "$GAMEDIR/dosboxULTIMA1_single.conf",
+      "game_id": "ultima-underworld-the-stygian-abyss"
+    },
     "installer": [
       {
         "extract": {
+          "file": "$fileextract",
           "description": "Extracting innoextract application",
-          "dst": "$CACHE",
-          "file": "$fileextract"
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE/game\" \"$installer\"",
+          "file": "$CACHE/innoextract",
           "description": "Extracting game data",
-          "file": "$CACHE/innoextract"
+          "args": "-d \"$CACHE/game\" \"$installer\""
         }
       },
       {
@@ -56,70 +69,57 @@
       },
       {
         "write_config": {
-          "section": "sdl",
-          "key": "output",
           "file": "$GAMEDIR/dosboxULTIMA1.conf",
-          "value": "opengl"
+          "value": "opengl",
+          "section": "sdl",
+          "key": "output"
         }
       },
       {
         "write_config": {
-          "section": "sdl",
-          "key": "fulldouble",
           "file": "$GAMEDIR/dosboxULTIMA1.conf",
-          "value": true
+          "value": true,
+          "section": "sdl",
+          "key": "fulldouble"
         }
       },
       {
         "write_config": {
-          "section": "sdl",
-          "key": "fullresolution",
           "file": "$GAMEDIR/dosboxULTIMA1.conf",
-          "value": "desktop"
+          "value": "desktop",
+          "section": "sdl",
+          "key": "fullresolution"
         }
       },
       {
         "write_config": {
+          "file": "$GAMEDIR/dosboxULTIMA1.conf",
+          "value": true,
           "section": "render",
-          "key": "aspect",
-          "file": "$GAMEDIR/dosboxULTIMA1.conf",
-          "value": true
+          "key": "aspect"
         }
       },
       {
         "write_config": {
-          "section": "render",
-          "key": "scaler",
           "file": "$GAMEDIR/dosboxULTIMA1.conf",
-          "value": "normal2x"
+          "value": "normal2x",
+          "section": "render",
+          "key": "scaler"
         }
       },
       {
         "write_file": {
-          "content": "[ipx] ipx=false\n[autoexec]\nmount c \".\"\nimgmount d game.gog -t iso -fs iso\nd: \nuw.bat\nexit\n",
-          "file": "$GAMEDIR/dosboxULTIMA1_single.conf"
+          "file": "$GAMEDIR/dosboxULTIMA1_single.conf",
+          "content": "[ipx] ipx=false\n[autoexec]\nmount c \".\"\nimgmount d game.gog -t iso -fs iso\nd: \nuw.bat\nexit\n"
         }
       },
       {
         "write_file": {
-          "content": "4 7 220 1 sound\n\n2 7 220 1 speech\n\n0 cuts\n",
-          "file": "$GAMEDIR/UNDEROM1/DATA/UW.CFG"
+          "file": "$GAMEDIR/UNDEROM1/DATA/UW.CFG",
+          "content": "4 7 220 1 sound\n\n2 7 220 1 speech\n\n0 cuts\n"
         }
       }
-    ],
-    "files": [
-      {
-        "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/ultima_underworld_1/en1installer0\n"
-      },
-      {
-        "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
-      }
-    ],
-    "game": {
-      "config_file": "$GAMEDIR/dosboxULTIMA1.conf",
-      "main_file": "$GAMEDIR/dosboxULTIMA1_single.conf",
-      "game_id": "ultima-underworld-the-stygian-abyss"
-    }
+    ]
   },
   "content": "files:\n- installer: \"N/A:Select the GOG.com game setup file. Download it here: \\nhttps://www.gog.com/downloads/ultima_underworld_1/en1installer0\\n\"\n- fileextract: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/dosboxULTIMA1.conf\n  game_id: ultima-underworld-the-stygian-abyss\n  main_file: $GAMEDIR/dosboxULTIMA1_single.conf\ninstaller:\n- extract:\n    description: Extracting innoextract application\n    dst: $CACHE\n    file: $fileextract\n- execute:\n    args: -d \"$CACHE/game\" \"$installer\"\n    description: Extracting game data\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/game\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/__support/app/dosboxULTIMA1.conf\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/__support/app/dosboxULTIMA1_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: output\n    section: sdl\n    value: opengl\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: fulldouble\n    section: sdl\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: fullresolution\n    section: sdl\n    value: desktop\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxULTIMA1.conf\n    key: scaler\n    section: render\n    value: normal2x\n- write_file:\n    content: \"[ipx] ipx=false\\n[autoexec]\\nmount c \\\".\\\"\\nimgmount d game.gog -t iso\\\n      \\ -fs iso\\nd: \\nuw.bat\\nexit\\n\"\n    file: $GAMEDIR/dosboxULTIMA1_single.conf\n- write_file:\n    content: '4 7 220 1 sound\n\n\n      2 7 220 1 speech\n\n\n      0 cuts\n\n      '\n    file: $GAMEDIR/UNDEROM1/DATA/UW.CFG\n"
 }

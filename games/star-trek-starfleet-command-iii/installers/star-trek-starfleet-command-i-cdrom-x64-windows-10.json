@@ -1,0 +1,58 @@
+{
+  "id": 19813,
+  "game_id": 32349,
+  "game_slug": "star-trek-starfleet-command-iii",
+  "name": "Star Trek Starfleet Command III",
+  "year": 2002,
+  "user": "tfk",
+  "runner": "wine",
+  "slug": "star-trek-starfleet-command-i-cdrom-x64-windows-10",
+  "version": "CDROM x64 Windows 10",
+  "description": "This installer installs the CD version of the game into a prefix which mimics a Windows 10 installation.",
+  "notes": "Because this is an old game, you will run into the same issues as Windows 8/10 users. So a few steps need to be taken to make it run, get support for 16/9 and 16/10 resolutions, and get the latest patch so all mods which require it can be installed.\r\n\r\nThis game is abandonware so it can be found here:\r\nhttps://www.myabandonware.com/game/star-trek-starfleet-command-iii-bde\r\n\r\nSection one - Base install\r\nSteps:\r\nInstall the game.\r\nDo not install DirectX 8.\r\nDo not install GameSpy.\r\n\r\nDownload the 3.2 Upgrade Mod:\r\nhttps://www.moddb.com/games/star-trek-starfleet-command-3/downloads/sfc-upgrade-mod-3-2-all-in-one\r\n\r\nExtract the archive.\r\nRun the following exe files in the Wine prefix: \r\n<sfc-upgrade-mod-3-2-all-in-one>/JanB Extras/Patch v354b/Patch v534b Installer.exe\r\n<sfc-upgrade-mod-3-2-all-in-one>/SFC3 Upgrade Mod 3.2 Setup.exe\r\n\r\nChoose the resolution you want to run. The largest recommended resolution is 1920x1080.\r\n\r\nIn Lutris go into the settings of the Wine prefix, Runner options and enable the virtual desktop and enter the resolution.\r\n\r\nOn the file system navigate to <sfc-upgrade-mod-3-2-all-in-one>/JanB Extras/ directory.\r\n\r\nIf there is a directory with your resolution then copy the files in that directory to the root directory of the game.\r\n\r\nIf there isn't a directory with your resolution but you do have a 16/9 or 16/10 resolution then you can copy the files in the 169 or 1610 directory.\r\n\r\nOpen sfc.ini which is located in the root directory of the game.\r\n\r\nMake sure windowed equals 0 (zero):\r\nwindowed=0\r\n\r\nMake sure makeitso equals 1 (one):\r\nmakeitso=1\r\n\r\nThat should be all you need to run the game.\r\n\r\nSection Two - Battle the Unable to save model cache error\r\nThe reason for the d3dxof winetrick\r\nWithout this winetrick the game will be unable to perform write actions. Settings won't be saved and when entering a mission you will be greeted with a \"Unable to save model cache\" error.\r\n\r\nWhile testing it became apparent that the method below works too. I left this for others who may need this information. There was only one place on the Internet which covered this issue but only half so.\r\n\r\nSteps:\r\nOpen the file manager from Lutris and navigate to the C:\\Windows\\System32 directory.\r\nLook up d3dxof.dll and rename it to d3dxof.dll_ (put an underscore behind the file extension)\r\nMount the original CD and open the DirectX/DirectX.cab archive;\r\nExtract d3dxof.dll to the game main directory;\r\nGo into the Wine Configuration and set d3dxof.dll to native, builtin.\r\n\r\nA little background on the cinematics\r\nWhen the patches are installed you will notice that the intro videos are not showing any more. This is because the SFC3 Upgrade Mod 3.2 Setup patch replaces these videos with zero length versions.\r\n\r\nReplacing these with the originals will crash the game. I think that is because the game wants to switch to 640x480. It works when I enable the windowed mode in sfc3.ini but as this is the cause of the black screen (also under Windows) this option is unusable. So I think the creators of the patch choose just to disable these videos.",
+  "created_at": "2020-04-19T12:27:38.802000Z",
+  "updated_at": "2020-04-20T07:34:55.540452Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "Setup.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "d3dxof",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  exe: drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Setup.exe\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dxof\n    name: winetricks\n    prefix: $GAMEDIR\n"
+}

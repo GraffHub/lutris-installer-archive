@@ -21,13 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "file_id": "https://www.myabandonware.com/media/screenshots/l/lemmings-16x/thumbs/lemmings_1.png"
+      }
+    ],
+    "game": {
+      "main_file": "Lemmings.gb"
+    },
     "installer": [
       {
         "execute": {
-          "args": "https://www.myabandonware.com/download/emu-lemmings --referer=www.myabandonware.com --directory-prefix=$CACHE",
-          "dst": "$CACHE",
+          "file": "/usr/bin/wget",
           "description": "Downloading addon…",
-          "file": "/usr/bin/wget"
+          "dst": "$CACHE",
+          "args": "https://www.myabandonware.com/download/emu-lemmings --referer=www.myabandonware.com --directory-prefix=$CACHE"
         }
       },
       {
@@ -38,15 +46,15 @@
       },
       {
         "extract": {
+          "file": "$CACHE/game.zip",
           "description": "Extracting game…",
           "dst": "$GAMEDIR/",
-          "file": "$CACHE/game.zip",
           "format": "zip"
         }
       },
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "Europe",
           "options": [
             {
               "Europe": "Europe"
@@ -62,7 +70,7 @@
             }
           ],
           "description": "Choose the desired version:",
-          "preselect": "Europe"
+          "id": "LANG"
         }
       },
       {
@@ -71,15 +79,7 @@
           "dst": "$GAMEDIR/Lemmings.gb"
         }
       }
-    ],
-    "files": [
-      {
-        "file_id": "https://www.myabandonware.com/media/screenshots/l/lemmings-16x/thumbs/lemmings_1.png"
-      }
-    ],
-    "game": {
-      "main_file": "Lemmings.gb"
-    }
+    ]
   },
   "content": "files:\n- file_id: https://www.myabandonware.com/media/screenshots/l/lemmings-16x/thumbs/lemmings_1.png\ngame:\n  main_file: Lemmings.gb\ninstaller:\n- execute:\n    args: https://www.myabandonware.com/download/emu-lemmings --referer=www.myabandonware.com\n      --directory-prefix=$CACHE\n    description: \"Downloading addon\\u2026\"\n    dst: $CACHE\n    file: /usr/bin/wget\n- move:\n    dst: $CACHE/game.zip\n    src: $CACHE/emu-lemmings\n- extract:\n    description: \"Extracting game\\u2026\"\n    dst: $GAMEDIR/\n    file: $CACHE/game.zip\n    format: zip\n- input_menu:\n    description: 'Choose the desired version:'\n    id: LANG\n    options:\n    - Europe: Europe\n    - Europe) (Rev A: Europe (Rev A)\n    - USA: USA\n    - Japan: Japan\n    preselect: Europe\n- merge:\n    dst: $GAMEDIR/Lemmings.gb\n    src: $GAMEDIR/Lemmings ($LANG).gb\n"
 }

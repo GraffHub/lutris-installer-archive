@@ -21,63 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$game"
-        }
-      },
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "wine.create_prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "",
-          "key": "winemenubuilder.exe",
-          "name": "wine.set_regedit",
-          "type": "REG_SZ",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
-          "executable": "$CACHE/bs25-setup.exe",
-          "description": "Installing ...",
-          "prefix": "$GAMEDIR",
-          "name": "wine.wineexec"
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing ...",
-          "dst": "$GAMEDIR/drive_c/game",
-          "file": "$game2"
-        }
-      },
-      {
-        "execute": {
-          "file": "/bin/sh",
-          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
-          "description": "cleaning...",
-          "terminal": false
-        }
-      },
-      {
-        "execute": {
-          "file": "/bin/sh",
-          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
-          "description": "cleaning...",
-          "terminal": false
-        }
-      }
-    ],
     "files": [
       {
         "game": "http://server.c-otto.de/baphometsfluch/bs25setup.zip"
@@ -89,7 +32,64 @@
     "game": {
       "game_id": "sword25",
       "path": "$GAMEDIR"
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$game",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "wine.create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "name": "wine.set_regedit",
+          "key": "winemenubuilder.exe",
+          "prefix": "$GAMEDIR",
+          "value": "",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/bs25-setup.exe",
+          "name": "wine.wineexec",
+          "description": "Installing ...",
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'"
+        }
+      },
+      {
+        "extract": {
+          "file": "$game2",
+          "description": "Installing ...",
+          "dst": "$GAMEDIR/drive_c/game"
+        }
+      },
+      {
+        "execute": {
+          "file": "/bin/sh",
+          "terminal": false,
+          "description": "cleaning...",
+          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'"
+        }
+      },
+      {
+        "execute": {
+          "file": "/bin/sh",
+          "terminal": false,
+          "description": "cleaning...",
+          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: http://server.c-otto.de/baphometsfluch/bs25setup.zip\n- game2: http://baphometsfluch25.de/downloads/sonstiges/BS25_patch000_multilingual.zip\ngame:\n  game_id: sword25\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $game\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: $CACHE/bs25-setup.exe\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing ...\n    dst: $GAMEDIR/drive_c/game\n    file: $game2\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n"
 }

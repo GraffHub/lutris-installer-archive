@@ -26,49 +26,49 @@
         "goginstaller": "N/A:Select the game's setup file"
       }
     ],
-    "installer": [
-      {
-        "task": {
-          "description": "Creating Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/The Walking Dead - A New Frontier/WalkingDead3_win7.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "overrides": {
+        "xaudio2_7": "native,builtin"
       },
-      {
-        "task": {
-          "arch": "win64",
-          "app": "vcrun2015 win7",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "executable": "goginstaller",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
+      "dxvk": true,
+      "Desktop": true
+    },
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "pulse_latency": true
     },
-    "wine": {
-      "Desktop": true,
-      "overrides": {
-        "xaudio2_7": "native,builtin"
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
       },
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/The Walking Dead - A New Frontier/WalkingDead3_win7.exe"
-    }
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "vcrun2015 win7",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "executable": "goginstaller",
+          "name": "wineexec"
+        }
+      }
+    ]
   },
   "content": "files:\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win64\n  exe: drive_c/GOG Games/The Walking Dead - A New Frontier/WalkingDead3_win7.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  Desktop: true\n  dxvk: true\n  overrides:\n    xaudio2_7: native,builtin\n"
 }

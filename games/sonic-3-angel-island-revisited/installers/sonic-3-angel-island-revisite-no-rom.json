@@ -2,7 +2,7 @@
   "id": 12775,
   "game_id": 26498,
   "game_slug": "sonic-3-angel-island-revisited",
-  "name": "Sonic 3 Angel Island Revisited",
+  "name": "Sonic 3 - Angel Island Revisited",
   "year": 2019,
   "user": "TheFerenOSDeveloper",
   "runner": "wine",
@@ -21,32 +21,55 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "steaminstall": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
+      },
+      {
+        "fixedairconfig": "https://github.com/feren/sonic3nkair-lutris-stuff/raw/master/config.json"
+      },
+      {
+        "s3andkhelper": "https://github.com/feren/sonic3nkair-lutris-stuff/raw/master/steam-install-s3andk.bat"
+      },
+      {
+        "sonic3air": {
+          "referer": "sonic3air.org",
+          "filename": "sonic3air_game.zip",
+          "url": "http://sonic3air.org/downloadgame.php"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/sonic3air_game/Sonic3AIR.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "description": "Setting Windows version to 10",
-          "app": "win10",
           "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "win10",
+          "description": "Setting Windows version to 10",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "arch": "win32",
+          "name": "wineexec",
+          "description": "Installing Steam Client",
           "args": "/s /v /qb",
-          "executable": "steaminstall",
-          "description": "Installing Steam Client"
+          "prefix": "$GAMEDIR",
+          "executable": "steaminstall"
         }
       },
       {
@@ -65,11 +88,11 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "s3andkhelper",
-          "description": "Installing Sonic 3 and Knuckles - SEGA Megadrive & Genesis Classics",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Installing Sonic 3 and Knuckles - SEGA Megadrive & Genesis Classics"
         }
       },
       {
@@ -84,30 +107,7 @@
           "dst": "$GAMEDIR/drive_c/sonic3air_game"
         }
       }
-    ],
-    "files": [
-      {
-        "steaminstall": "https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe"
-      },
-      {
-        "fixedairconfig": "https://github.com/feren/sonic3nkair-lutris-stuff/raw/master/config.json"
-      },
-      {
-        "s3andkhelper": "https://github.com/feren/sonic3nkair-lutris-stuff/raw/master/steam-install-s3andk.bat"
-      },
-      {
-        "sonic3air": {
-          "referer": "sonic3air.org",
-          "url": "http://sonic3air.org/downloadgame.php",
-          "filename": "sonic3air_game.zip"
-        }
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/sonic3air_game/Sonic3AIR.exe"
-    }
+    ]
   },
   "content": "files:\n- steaminstall: https://steamcdn-a.akamaihd.net/client/installer/SteamSetup.exe\n- fixedairconfig: https://github.com/feren/sonic3nkair-lutris-stuff/raw/master/config.json\n- s3andkhelper: https://github.com/feren/sonic3nkair-lutris-stuff/raw/master/steam-install-s3andk.bat\n- sonic3air:\n    filename: sonic3air_game.zip\n    referer: sonic3air.org\n    url: http://sonic3air.org/downloadgame.php\ngame:\n  arch: win32\n  exe: drive_c/sonic3air_game/Sonic3AIR.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win32\n    description: Setting Windows version to 10\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /s /v /qb\n    description: Installing Steam Client\n    executable: steaminstall\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting and Installing Sonic 3 Angel Island Revisited files\n    dst: $GAMEDIR/drive_c\n    file: sonic3air\n    nomerge: true\n- task:\n    arch: win32\n    description: Installing Sonic 3 and Knuckles - SEGA Megadrive & Genesis Classics\n    executable: s3andkhelper\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/sonic3air_game\n    src: fixedairconfig\n"
 }

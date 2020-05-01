@@ -26,12 +26,24 @@
         "setup": "http://live.ddo.com/sites/clientdl/ddo/preview/ddopreview.exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online (Preview)/DNDLauncher.exe"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "reset_pulse": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
@@ -42,25 +54,13 @@
       },
       {
         "task": {
-          "executable": "setup",
-          "description": "Installing Dungeons & Dragons Online (Preview)",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Installing Dungeons & Dragons Online (Preview)"
         }
       }
-    ],
-    "system": {
-      "pulse_latency": true,
-      "reset_pulse": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online (Preview)/DNDLauncher.exe"
-    }
+    ]
   },
   "content": "files:\r\n- setup: http://live.ddo.com/sites/clientdl/ddo/preview/ddopreview.exe\r\ngame:\r\n  exe: drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons Online (Preview)/DNDLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/StandingStoneGames/Dungeons & Dragons\r\n      Online (Preview)\r\n    src: setup\r\n- task:\r\n    description: Installing Dungeons & Dragons Online (Preview)\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  pulse_latency: true\r\n  reset_pulse: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

@@ -21,48 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\"",
-          "file": "$CACHE/bulkcopy-alt.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/bulkcopy-alt.sh"
-      },
-      {
-        "execute": {
-          "args": "$GAMEDIR/HDD  $GAMEDIR/HDD/EYE3",
-          "file": "mkdir"
-        }
-      },
-      {
-        "execute": {
-          "args": "$game \"$GAMEDIR/HDD/EYE3\"",
-          "file": "$CACHE/bulkcopy-alt.sh"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd EYE3\nsound\nexit",
-          "file": "$GAMEDIR/eye3-setup.conf"
-        }
-      },
-      {
-        "task": {
-          "config_file": "$GAMEDIR/eye3-setup.conf",
-          "working_dir": "$GAMEDIR/HDD/EYE",
-          "name": "dosexec"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd EYE3\neye.bat\nexit",
-          "file": "$GAMEDIR/eye3.conf"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select the file EYE.bat"
@@ -70,7 +28,49 @@
     ],
     "game": {
       "main_file": "$GAMEDIR/eye3.conf"
-    }
+    },
+    "installer": [
+      {
+        "write_file": {
+          "file": "$CACHE/bulkcopy-alt.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\""
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy-alt.sh"
+      },
+      {
+        "execute": {
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD  $GAMEDIR/HDD/EYE3"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/bulkcopy-alt.sh",
+          "args": "$game \"$GAMEDIR/HDD/EYE3\""
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/eye3-setup.conf",
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd EYE3\nsound\nexit"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/eye3-setup.conf",
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR/HDD/EYE"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/eye3.conf",
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd EYE3\neye.bat\nexit"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the file EYE.bat\ngame:\n  main_file: $GAMEDIR/eye3.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD  $GAMEDIR/HDD/EYE3\n    file: mkdir\n- execute:\n    args: $game \"$GAMEDIR/HDD/EYE3\"\n    file: $CACHE/bulkcopy-alt.sh\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd EYE3\n\n      sound\n\n      exit'\n    file: $GAMEDIR/eye3-setup.conf\n- task:\n    config_file: $GAMEDIR/eye3-setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/EYE\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd EYE3\n\n      eye.bat\n\n      exit'\n    file: $GAMEDIR/eye3.conf\n"
 }

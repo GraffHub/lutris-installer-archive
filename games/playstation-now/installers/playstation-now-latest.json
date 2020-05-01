@@ -21,91 +21,91 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe",
+      "arch": "win64"
+    },
     "files": [
       {
         "psnow": "https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe"
       }
     ],
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe"
+    "move": {
+      "src": "$GAMEDIR/drive_c/294C619",
+      "dst": "$CACHE"
+    },
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
     },
     "installer": [
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "install_gecko": false,
           "install_mono": false,
-          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "app": "win7",
-          "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "app": "vcrun2013",
-          "prefix": "$GAMEDIR",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "args": "/extract \"c:\"",
           "executable": "psnow",
+          "name": "wineexec",
+          "args": "/extract \"c:\""
+        }
+      },
+      {
+        "task": {
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "arch": "win64",
+          "executable": "msiexec",
+          "name": "wineexec",
+          "args": "/i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\""
         }
       },
       {
         "task": {
           "arch": "win64",
-          "args": "/i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\"",
-          "executable": "msiexec",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
+          "name": "set_regedit",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "value": "00000000",
-          "arch": "win64",
-          "key": "csmt",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "value": "0 0 0",
-          "arch": "win64",
-          "key": "background",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
       }
-    ],
-    "wine": {
-      "Desktop": true,
-      "dxvk": true
-    },
-    "move": {
-      "src": "$GAMEDIR/drive_c/294C619",
-      "dst": "$CACHE"
-    }
+    ]
   },
   "content": "files:\n- psnow: https://download-psnow.playstation.com/downloads/psnow/pc/PlayStationNow-11.0.2.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2013\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /extract \"c:\"\n    executable: psnow\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /i \"C:\\294C619\\PlayStationNow.msi\" SETUPEXEDIR=\"C:\\294C619\"\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nmove:\n  dst: $CACHE\n  src: $GAMEDIR/drive_c/294C619\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

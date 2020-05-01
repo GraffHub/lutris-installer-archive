@@ -21,6 +21,22 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "tera_installer": "http://dl.tera.gameforge.com/tera/installer/2018-11-27_TERA_Setup.exe"
+      },
+      {
+        "glyph_installer": "http://download.dyn.triongames.com/GlyphInstall.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/TERA/TERA-launcher.exe",
+      "arch": "win64"
+    },
+    "system": {
+      "disable_runtime": true
+    },
     "installer": [
       {
         "merge": {
@@ -30,99 +46,83 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Setting Windows 7 mode for Wine",
-          "app": "win7",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "win7",
+          "description": "Setting Windows 7 mode for Wine",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Microsoft TrueType Fonts",
           "app": "corefonts",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Flash Player",
           "app": "flash",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Installing D3D9 Dlls",
           "app": "d3dx9",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Visual C++ Runtime 2008",
           "app": "vcrun2008",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Visual C++ Runtime 2010",
           "app": "vcrun2010",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "silent": true,
+          "prefix": "$GAMEDIR",
           "description": "Visual C++ Runtime 2013",
           "app": "vcrun2013",
-          "prefix": "$GAMEDIR",
+          "silent": true,
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "executable": "tera_installer",
-          "description": "Installing game. You will receive an error about installing Visual C++ runtime 2010 for x64. It is safe to click YES to continue the installation.",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "tera_installer",
+          "name": "wineexec",
+          "description": "Installing game. You will receive an error about installing Visual C++ runtime 2010 for x64. It is safe to click YES to continue the installation."
         }
       }
-    ],
-    "files": [
-      {
-        "tera_installer": "http://dl.tera.gameforge.com/tera/installer/2018-11-27_TERA_Setup.exe"
-      },
-      {
-        "glyph_installer": "http://download.dyn.triongames.com/GlyphInstall.exe"
-      }
-    ],
-    "system": {
-      "disable_runtime": true
-    },
-    "game": {
-      "arch": "win64",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/TERA/TERA-launcher.exe"
-    }
+    ]
   },
   "content": "files:\n- tera_installer: http://dl.tera.gameforge.com/tera/installer/2018-11-27_TERA_Setup.exe\n- glyph_installer: http://download.dyn.triongames.com/GlyphInstall.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/TERA/TERA-launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- merge:\n    dst: $GAMEDIR/drive_c\n    src: glyph_installer\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    description: Microsoft TrueType Fonts\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: flash\n    description: Flash Player\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: d3dx9\n    description: Installing D3D9 Dlls\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2008\n    description: Visual C++ Runtime 2008\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2010\n    description: Visual C++ Runtime 2010\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vcrun2013\n    description: Visual C++ Runtime 2013\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    description: Installing game. You will receive an error about installing Visual\n      C++ runtime 2010 for x64. It is safe to click YES to continue the installation.\n    executable: tera_installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: true\n"
 }

@@ -22,47 +22,93 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Blue Byte/Die Siedler IV/S4.exe"
+      "exe": "drive_c/Blue Byte/Die Siedler IV/S4.exe",
+      "arch": "win32"
     },
     "installer": [
       {
         "insert-disc": {
-          "description": "Insert disc",
-          "requires": "S4/setup.exe"
+          "requires": "S4/setup.exe",
+          "description": "Insert disc"
         }
       },
       {
         "task": {
-          "arch": "win32",
-          "install_mono": false,
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "install_mono": false
         }
       },
       {
         "write_config": {
-          "description": "Creating installer config file",
           "file": "$GAMEDIR/drive_c/setup.iss",
           "data": {
+            "SdWelcome-0": {
+              "Result": 1
+            },
+            "SdComponentDialog-0": {
+              "Game-count": 3,
+              "Component-type": "string",
+              "Game\\Maps(Other)-0": "Game\\Maps(Other)\\Singleplayer",
+              "Game-type": "string",
+              "Component-3": "BBInstallShieldExtension",
+              "Game\\Maps(Other)-type": "string",
+              "Result": 1,
+              "Component-1": "Movies",
+              "szDir": "C:\\Blue Byte\\Die Siedler IV",
+              "Game-0": "Game\\LanguageDefs",
+              "Component-0": "Game",
+              "Game-2": "Game\\Maps(Other)",
+              "Game\\Maps(Other)-2": "Game\\Maps(Other)\\Tutorial",
+              "Game-1": "Game\\GFX",
+              "Component-count": 4,
+              "Game\\Maps(Other)-1": "Game\\Maps(Other)\\Mutliplayer",
+              "Game\\Maps(Other)-count": 3,
+              "Component-2": "Music"
+            },
+            "InstallShield Silent": {
+              "File": "Response File",
+              "Version": "v5.00.000"
+            },
+            "File Transfer": {
+              "OverwriteReadOnly": "NoToAll"
+            },
+            "DlgOrder": {
+              "Count": 9,
+              "Dlg6": "SprintfBox-1",
+              "Dlg2": "SdLicense-0",
+              "Dlg3": "SdSetupTypeEx-0",
+              "Dlg7": "SprintfBox-2",
+              "Dlg5": "SdSelectFolder-0",
+              "Dlg1": "SdWelcome-0",
+              "Dlg8": "AskOptions-0",
+              "Dlg0": "SprintfBox-0",
+              "Dlg4": "SdComponentDialog-0"
+            },
+            "SprintfBox-2": {
+              "Result": 7
+            },
+            "SprintfBox-0": {
+              "Result": 7
+            },
+            "AskOptions-0": {
+              "Sel-0": 0,
+              "Result": 1,
+              "Sel-1": 0
+            },
+            "SdLicense-0": {
+              "Result": 1
+            },
             "SprintfBox-1": {
               "Result": 7
             },
-            "DlgOrder": {
-              "Dlg5": "SdSelectFolder-0",
-              "Dlg3": "SdSetupTypeEx-0",
-              "Dlg6": "SprintfBox-1",
-              "Count": 9,
-              "Dlg0": "SprintfBox-0",
-              "Dlg8": "AskOptions-0",
-              "Dlg2": "SdLicense-0",
-              "Dlg7": "SprintfBox-2",
-              "Dlg1": "SdWelcome-0",
-              "Dlg4": "SdComponentDialog-0"
-            },
-            "SdWelcome-0": {
-              "Result": 1
+            "Application": {
+              "Name": "Settlers4",
+              "Lang": 7,
+              "Company": "BlueByte",
+              "Version": 0
             },
             "SdSetupTypeEx-0": {
               "Result": "Custom"
@@ -70,64 +116,18 @@
             "SdSelectFolder-0": {
               "szFolder": "Blue Byte\\Die Siedler IV",
               "Result": 1
-            },
-            "File Transfer": {
-              "OverwriteReadOnly": "NoToAll"
-            },
-            "SdLicense-0": {
-              "Result": 1
-            },
-            "Application": {
-              "Lang": 7,
-              "Name": "Settlers4",
-              "Company": "BlueByte",
-              "Version": 0
-            },
-            "AskOptions-0": {
-              "Sel-1": 0,
-              "Result": 1,
-              "Sel-0": 0
-            },
-            "SprintfBox-2": {
-              "Result": 7
-            },
-            "InstallShield Silent": {
-              "File": "Response File",
-              "Version": "v5.00.000"
-            },
-            "SprintfBox-0": {
-              "Result": 7
-            },
-            "SdComponentDialog-0": {
-              "Game-0": "Game\\LanguageDefs",
-              "Component-3": "BBInstallShieldExtension",
-              "Game\\Maps(Other)-0": "Game\\Maps(Other)\\Singleplayer",
-              "Game-count": 3,
-              "Game\\Maps(Other)-type": "string",
-              "Game-2": "Game\\Maps(Other)",
-              "Result": 1,
-              "szDir": "C:\\Blue Byte\\Die Siedler IV",
-              "Component-0": "Game",
-              "Game\\Maps(Other)-1": "Game\\Maps(Other)\\Mutliplayer",
-              "Game\\Maps(Other)-2": "Game\\Maps(Other)\\Tutorial",
-              "Component-1": "Movies",
-              "Game-type": "string",
-              "Game-1": "Game\\GFX",
-              "Component-2": "Music",
-              "Component-type": "string",
-              "Game\\Maps(Other)-count": 3,
-              "Component-count": 4
             }
-          }
+          },
+          "description": "Creating installer config file"
         }
       },
       {
         "task": {
-          "args": "/s /f1\"C:\\setup.iss\"",
-          "executable": "$DISC/S4/setup.exe",
-          "description": "Running installator.",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$DISC/S4/setup.exe",
+          "name": "wineexec",
+          "description": "Running installator.",
+          "args": "/s /f1\"C:\\setup.iss\""
         }
       }
     ]

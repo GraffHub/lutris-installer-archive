@@ -21,39 +21,92 @@
   "gogslug": "tomb_raider_1",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "tombati": {
+          "filename": "TombATI_v1.7.rar",
+          "url": "http://download.glidos.net/TombATI/TombATI_v1.7.exe"
+        }
+      },
+      {
+        "hdtextures": {
+          "filename": "TombATI_HD_Textures_v1.0.rar",
+          "url": "http://download.glidos.net/TombATI/TombATI_HD_Textures_v1.0.exe"
+        }
+      },
+      {
+        "trpcx": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/TITLEH.zip"
+      },
+      {
+        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/TOMBATI.BAT"
+      },
+      {
+        "gppx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_x360.gamecontroller.amgp"
+      },
+      {
+        "gppsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_steam.sccprofile"
+      },
+      {
+        "gppreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_gamepad_readme.html"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/tr1.bmp"
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
+      },
+      {
+        "multilang": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/tombati_multi_lang/tombati_locale.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/clean.sh"
+      },
+      {
+        "gog": "N/A:Select the installer downloaded from GOG"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/windows/syswow64/wineconsole.exe",
+      "arch": "win64",
+      "args": "c:\\\\TOMBATI\\\\TOMBATI.BAT"
+    },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
           "arch": "win64",
-          "install_gecko": false,
+          "name": "create_prefix",
           "description": "Creating WINE prefix",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
           "install_mono": false
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "inno"
+          "file": "inno",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "-d \"$CACHE/\" \"$gog\"",
-          "file": "$CACHE/innoextract"
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE/\" \"$gog\""
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/TOMBATI/",
-          "file": "tombati"
+          "file": "tombati",
+          "dst": "$GAMEDIR/drive_c/TOMBATI/"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/TOMBATI/TR1HD/",
-          "file": "hdtextures"
+          "file": "hdtextures",
+          "dst": "$GAMEDIR/drive_c/TOMBATI/TR1HD/"
         }
       },
       {
@@ -82,8 +135,8 @@
       },
       {
         "task": {
-          "app": "vcrun2015",
           "prefix": "$GAMEDIR",
+          "app": "vcrun2015",
           "name": "winetricks"
         }
       },
@@ -130,7 +183,7 @@
       },
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "en_gb",
           "options": [
             {
               "en_gb": "English (interface + audio cutscenes)"
@@ -170,7 +223,7 @@
             }
           ],
           "description": "Choose your preferred game's language for menus:",
-          "preselect": "en_gb"
+          "id": "LANG"
         }
       },
       {
@@ -178,149 +231,96 @@
       },
       {
         "execute": {
-          "args": "$INPUT_LANG",
-          "file": "script"
+          "file": "script",
+          "args": "$INPUT_LANG"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "native,builtin",
           "arch": "win64",
+          "name": "set_regedit",
           "key": "ddraw",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
           "value": "native,builtin",
-          "arch": "win64",
-          "key": "winmm",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "winmm",
+          "prefix": "$GAMEDIR",
+          "value": "native,builtin",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "value": "00000000",
-          "arch": "win64",
-          "key": "csmt",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "wallpaper",
           "prefix": "$GAMEDIR",
           "value": "c:\\\\tr1.bmp",
-          "arch": "win64",
-          "key": "wallpaper",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
           "arch": "win64",
+          "name": "set_regedit",
           "key": "background",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
           "value": "0 0 0",
-          "arch": "win64",
-          "key": "ActiveTitle",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "ActiveTitle",
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "GradientActiveTitle",
           "prefix": "$GAMEDIR",
           "value": "255 179 102",
-          "arch": "win64",
-          "key": "GradientActiveTitle",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
       }
     ],
     "custom-name": "Tomb Raider I - GOG - TombATI HD",
-    "files": [
-      {
-        "tombati": {
-          "url": "http://download.glidos.net/TombATI/TombATI_v1.7.exe",
-          "filename": "TombATI_v1.7.rar"
-        }
-      },
-      {
-        "hdtextures": {
-          "url": "http://download.glidos.net/TombATI/TombATI_HD_Textures_v1.0.exe",
-          "filename": "TombATI_HD_Textures_v1.0.rar"
-        }
-      },
-      {
-        "trpcx": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/TITLEH.zip"
-      },
-      {
-        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/TOMBATI.BAT"
-      },
-      {
-        "gppx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_x360.gamecontroller.amgp"
-      },
-      {
-        "gppsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_steam.sccprofile"
-      },
-      {
-        "gppreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_gamepad_readme.html"
-      },
-      {
-        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/tr1.bmp"
-      },
-      {
-        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
-      },
-      {
-        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
-      },
-      {
-        "multilang": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/tombati_multi_lang/tombati_locale.zip"
-      },
-      {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/clean.sh"
-      },
-      {
-        "gog": "N/A:Select the installer downloaded from GOG"
-      }
-    ],
-    "game": {
-      "arch": "win64",
-      "args": "c:\\\\TOMBATI\\\\TOMBATI.BAT",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/windows/syswow64/wineconsole.exe"
+    "wine": {
+      "Desktop": true
     },
     "system": {
       "env": {
         "MESA_GL_VERSION_OVERRIDE": "3.3"
       }
-    },
-    "wine": {
-      "Desktop": true
     }
   },
   "content": "custom-name: Tomb Raider I - GOG - TombATI HD\nfiles:\n- tombati:\n    filename: TombATI_v1.7.rar\n    url: http://download.glidos.net/TombATI/TombATI_v1.7.exe\n- hdtextures:\n    filename: TombATI_HD_Textures_v1.0.rar\n    url: http://download.glidos.net/TombATI/TombATI_HD_Textures_v1.0.exe\n- trpcx: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/TITLEH.zip\n- menu: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/TOMBATI.BAT\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_x360.gamecontroller.amgp\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_steam.sccprofile\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/gamepad%20profiles/tr1-2_gamepad_readme.html\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/tr1.bmp\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- multilang: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/tombati_multi_lang/tombati_locale.zip\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20I/clean.sh\n- gog: N/A:Select the installer downloaded from GOG\ngame:\n  arch: win64\n  args: c:\\\\TOMBATI\\\\TOMBATI.BAT\n  exe: drive_c/windows/syswow64/wineconsole.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$CACHE/\" \"$gog\"\n    file: $CACHE/innoextract\n- extract:\n    dst: $GAMEDIR/drive_c/TOMBATI/\n    file: tombati\n- extract:\n    dst: $GAMEDIR/drive_c/TOMBATI/TR1HD/\n    file: hdtextures\n- move:\n    dst: $GAMEDIR/drive_c/TOMBATI/\n    src: menu\n- merge:\n    dst: $GAMEDIR/drive_c/TOMBATI/gamepad profiles/\n    src: gppx360\n- merge:\n    dst: $GAMEDIR/drive_c/TOMBATI/gamepad profiles/\n    src: gppsteam\n- merge:\n    dst: $GAMEDIR/drive_c/TOMBATI/gamepad profiles/\n    src: gppreadme\n- task:\n    app: vcrun2015\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/app\n    src: cdrtools\n- execute:\n    command: cd \"$CACHE/app\"; ./bin2iso game.cue -c GAME.GOG ;./bin2iso game.cue;\n      if [ -f \"GAME-01.iso\" ]; then cd=GAME-01.iso; else  cd=GAME.GOG; fi; echo $cd;\n      7z x -y $cd;\n- merge:\n    dst: $GAMEDIR/drive_c/TOMBATI/DATA/\n    src: $CACHE/app/DATA\n- merge:\n    dst: $GAMEDIR/drive_c/TOMBATI/FMV/\n    src: $CACHE/app/FMV/\n- extract:\n    dst: $GAMEDIR/drive_c/TOMBATI/DATA/\n    src: trpcx\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- extract:\n    dst: $GAMEDIR/drive_c/TOMBATI/patches/locale\n    src: multilang\n- input_menu:\n    description: 'Choose your preferred game''s language for menus:'\n    id: LANG\n    options:\n    - en_gb: English (interface + audio cutscenes)\n    - fr_fr: French (interface + audio cutscenes)\n    - de_de: German (interface + audio cutscenes)\n    - jp_jp: Japanese (audio cutscenes)\n    - es_es: Spanish (interface)\n    - fi_fi: Finish (interface)\n    - hu_hu: Hungarian (interface)\n    - id_id: Indonesian (interface)\n    - it_it: Italian (interface)\n    - nl_nl: Dutch (interface)\n    - pt_pt: Portuguese (interface)\n    - sv_se: Swedish (interface)\n    preselect: en_gb\n- chmodx: script\n- execute:\n    args: $INPUT_LANG\n    file: script\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: winmm\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr1.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 255 179 102\nsystem:\n  env:\n    MESA_GL_VERSION_OVERRIDE: '3.3'\nwine:\n  Desktop: true\n"

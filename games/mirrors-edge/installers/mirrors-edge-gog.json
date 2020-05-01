@@ -21,30 +21,6 @@
   "gogslug": "mirrors_edge",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "description": "Creating WINE prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "args": "/VERYSILENT /SUPPRESSMSGBOXES",
-          "executable": "installer",
-          "description": "Running Setup, please wait...",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "app": "physx",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Select the EXE downloaded from GOG"
@@ -53,7 +29,31 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/GOG Games/Mirror's Edge/Binaries/MirrorsEdge.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Running Setup, please wait...",
+          "args": "/VERYSILENT /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "physx",
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the EXE downloaded from GOG\ngame:\n  exe: drive_c/GOG Games/Mirror's Edge/Binaries/MirrorsEdge.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPPRESSMSGBOXES\n    description: Running Setup, please wait...\n    executable: installer\n    name: wineexec\n- task:\n    app: physx\n    name: winetricks\n    prefix: $GAMEDIR\n"
 }

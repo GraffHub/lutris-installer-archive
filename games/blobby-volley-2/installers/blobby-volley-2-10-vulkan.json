@@ -26,13 +26,29 @@
         "blobby2": "http://www.blobby-liga.de/blobby2-win32-1.0-installer.exe"
       }
     ],
+    "game": {
+      "custom-name": "Blobby Volley 2",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Blobby Volley 2 Version 1.0/blobby.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "Audio": "pulse",
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "xboxdrv": "xboxdrv",
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
@@ -43,65 +59,49 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "executable": "$GAMEDIR/prefix/drive_c/blobby2-win32-1.0-installer.exe",
-          "description": "Blobby Volley 2 ...",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Blobby Volley 2 ..."
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
           "description": "DirectX 11 ...",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "app": "d3dx11_43",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX 11 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "Vulkan ...",
           "app": "dxvk",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Windows version 8 ...",
-          "app": "win8",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "win8",
+          "description": "Windows version 8 ...",
           "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "xboxdrv": "xboxdrv",
-      "pulse_latency": true,
-      "disable_compositor": true
-    },
-    "wine": {
-      "Audio": "pulse",
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "custom-name": "Blobby Volley 2",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Blobby Volley 2 Version 1.0/blobby.exe"
-    }
+    ]
   },
   "content": "files:\r\n- blobby2: http://www.blobby-liga.de/blobby2-win32-1.0-installer.exe\r\ngame:\r\n  arch: win64\r\n  custom-name: Blobby Volley 2\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Blobby Volley 2 Version 1.0/blobby.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- move:\r\n    dst: $GAMEDIR/prefix/drive_c/\r\n    src: blobby2\r\n- task:\r\n    description: Blobby Volley 2 ...\r\n    executable: $GAMEDIR/prefix/drive_c/blobby2-win32-1.0-installer.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\n  xboxdrv: xboxdrv\r\nwine:\r\n  Audio: pulse\r\n  dxvk: true\r\n  esync: true"
 }

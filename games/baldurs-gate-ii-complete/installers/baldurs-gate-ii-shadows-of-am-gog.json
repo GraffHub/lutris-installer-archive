@@ -30,6 +30,9 @@
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR/Game/prefix"
+    },
     "installer": [
       {
         "input_menu": {
@@ -55,14 +58,14 @@
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "file": "$unzip",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\""
         }
       },
       {
@@ -73,14 +76,11 @@
       },
       {
         "execute": {
-          "args": "-s \"$GAMEDIR/Game/prefix/drive_c/GOG Games/$INPUT\" \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Baldur's Gate 2\"",
-          "file": "/bin/ln"
+          "file": "/bin/ln",
+          "args": "-s \"$GAMEDIR/Game/prefix/drive_c/GOG Games/$INPUT\" \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Baldur's Gate 2\""
         }
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR/Game/prefix"
-    }
+    ]
   },
   "content": "exe: Game/prefix/drive_c/GOG Games/Baldur's Gate 2/BGMain.exe\nfiles:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  prefix: $GAMEDIR/Game/prefix\ninstaller:\n- input_menu:\n    description: Select the game's language (same as the version downloaded from GOG)\n    options:\n    - Baldur's Gate 2: English\n    - Baldur's Gate 2 (French): French\n    - Baldur's Gate 2 (German): German\n    - Baldur's Gate 2 (Polish): Polish\n    - Baldur's Gate 2 (Russian): Russian\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n- execute:\n    args: -s \"$GAMEDIR/Game/prefix/drive_c/GOG Games/$INPUT\" \"$GAMEDIR/Game/prefix/drive_c/GOG\n      Games/Baldur's Gate 2\"\n    file: /bin/ln\n"
 }

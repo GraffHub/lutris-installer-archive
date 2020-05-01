@@ -26,13 +26,26 @@
         "Pingus.exe": "https://github.com/Pingus/downloads/blob/master/Pingus-0.7.6.exe?raw=true"
       }
     ],
+    "game": {
+      "custom-name": "Pingus",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": true
+    },
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
@@ -51,63 +64,50 @@
       },
       {
         "task": {
-          "args": "/S",
+          "prefix": "$GAMEDIR/prefix",
           "executable": "$GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe",
+          "name": "wineexec",
           "description": "Pingus ...",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec"
+          "args": "/S"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
           "description": "DirectX 11 ...",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "app": "d3dx11_43",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX 11 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "Vulkan ...",
           "app": "dxvk",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Windows version 8 ...",
-          "app": "win8",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "win8",
+          "description": "Windows version 8 ...",
           "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "disable_compositor": true,
-      "pulse_latency": true
-    },
-    "wine": {
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "custom-name": "Pingus",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe"
-    }
+    ]
   },
   "content": "files:\r\n- Pingus.exe: https://github.com/Pingus/downloads/blob/master/Pingus-0.7.6.exe?raw=true\r\ngame:\r\n  arch: win64\r\n  custom-name: Pingus\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/Pingus/pingus.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- move:\r\n    dst: $GAMEDIR/prefix/drive_c/\r\n    src: Pingus.exe\r\n- chmodx: $GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe?raw=true\r\n- execute:\r\n    command: cd $GAMEDIR/prefix/drive_c && mv Pingus-0.7.6.exe\\?raw\\=true Pingus-0.7.6.exe\r\n- task:\r\n    args: /S\r\n    description: Pingus ...\r\n    executable: $GAMEDIR/prefix/drive_c/Pingus-0.7.6.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\nwine:\r\n  esync: true"
 }

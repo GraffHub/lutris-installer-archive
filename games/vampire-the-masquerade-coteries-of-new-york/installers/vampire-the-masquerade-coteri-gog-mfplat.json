@@ -11,7 +11,7 @@
   "description": "This versions is 100% working, the script will install mfplat that is required to show the game background, fixing the black screen issue.If mf-install download fails, cancel and restart the script.",
   "notes": "For now, Media Foundation Platform is necessary to make the game work, the script mf-install, install it on the created prefix, if you want to check the script before run it, the source code is here on my git:  https://gitlab.com/lutris-utils/mf-install",
   "created_at": "2020-03-22T19:13:19.759000Z",
-  "updated_at": "2020-03-25T01:08:59.932028Z",
+  "updated_at": "2020-04-03T19:49:50.305719Z",
   "draft": false,
   "published": true,
   "published_by": 494,
@@ -21,47 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win64",
-          "install_gecko": false,
-          "description": "Creating WINE prefix.",
-          "install_mono": false
-        }
-      },
-      {
-        "extract": {
-          "description": "Installing Media Foundation Platform.",
-          "dst": "$CACHE",
-          "file": "mfinstall",
-          "format": "zip"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
-          "arch": "win64",
-          "args": "/SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
-          "description": "Be patient, this task may take several minutes."
-        }
-      },
-      {
-        "execute": {
-          "command": "cd $CACHE; WINEPREFIX=\"$GAMEDIR\" ./mf-install.sh;"
-        }
-      }
-    ],
     "files": [
       {
         "mfinstall": {
           "referer": "https://lutris.net",
-          "url": "https://gitlab.com/lutris-utils/mf-install/-/archive/master/mf-install-master.zip",
-          "filename": "mf-install.zip"
+          "filename": "mf-install.zip",
+          "url": "https://gitlab.com/lutris-utils/mf-install/-/archive/master/mf-install-master.zip"
         }
       },
       {
@@ -71,7 +36,45 @@
     "game": {
       "prefix": "$GAMEDIR",
       "exe": "drive_c/GOG Games/Vampire The Masquerade - Coteries of New York/VtM Coteries of New York.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix.",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
+          "install_mono": false
+        }
+      },
+      {
+        "extract": {
+          "file": "mfinstall",
+          "description": "Installing Media Foundation Platform.",
+          "dst": "$CACHE",
+          "format": "zip"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "wineexec",
+          "description": "Be patient, this task may take several minutes.",
+          "args": "/SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL",
+          "prefix": "$GAMEDIR",
+          "executable": "setup"
+        }
+      },
+      {
+        "execute": {
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          },
+          "command": "$CACHE/mf-install.sh;"
+        }
+      }
+    ]
   },
-  "content": "files:\n- mfinstall:\n    filename: mf-install.zip\n    referer: https://lutris.net\n    url: https://gitlab.com/lutris-utils/mf-install/-/archive/master/mf-install-master.zip\n- setup: N/A:Select Windows GOG setup exe\ngame:\n  exe: drive_c/GOG Games/Vampire The Masquerade - Coteries of New York/VtM Coteries\n    of New York.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix.\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    description: Installing Media Foundation Platform.\n    dst: $CACHE\n    file: mfinstall\n    format: zip\n- task:\n    arch: win64\n    args: /SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL\n    description: Be patient, this task may take several minutes.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: cd $CACHE; WINEPREFIX=\"$GAMEDIR\" ./mf-install.sh;\n"
+  "content": "files:\n- mfinstall:\n    filename: mf-install.zip\n    referer: https://lutris.net\n    url: https://gitlab.com/lutris-utils/mf-install/-/archive/master/mf-install-master.zip\n- setup: N/A:Select Windows GOG setup exe\ngame:\n  exe: drive_c/GOG Games/Vampire The Masquerade - Coteries of New York/VtM Coteries\n    of New York.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix.\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    description: Installing Media Foundation Platform.\n    dst: $CACHE\n    file: mfinstall\n    format: zip\n- task:\n    arch: win64\n    args: /SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL\n    description: Be patient, this task may take several minutes.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: $CACHE/mf-install.sh;\n    env:\n      WINEPREFIX: $GAMEDIR\n"
 }

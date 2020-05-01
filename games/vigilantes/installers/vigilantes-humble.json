@@ -21,23 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "$file1"
-        }
-      },
-      {
-        "write_file": {
-          "content": "#!/bin/sh if (uname -m | grep \"64\"); then ARCH=\"x86_64\"; else ARCH=\"x86\"; fi; ./VigilantesV*Linux.$ARCH ",
-          "file": "$GAMEDIR/start.sh"
-        }
-      },
-      {
-        "chmodx": "$GAMEDIR/start.sh"
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the Humble archive"
@@ -45,7 +28,24 @@
     ],
     "game": {
       "exe": "$GAMEDIR/start.sh"
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$file1",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/start.sh",
+          "content": "#!/bin/sh if (uname -m | grep \"64\"); then ARCH=\"x86_64\"; else ARCH=\"x86\"; fi; ./VigilantesV*Linux.$ARCH "
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/start.sh"
+      }
+    ]
   },
   "content": "files:\n- file1: N/A:Please select the Humble archive\ngame:\n  exe: $GAMEDIR/start.sh\ninstaller:\n- extract:\n    dst: $GAMEDIR\n    file: $file1\n- write_file:\n    content: '#!/bin/sh if (uname -m | grep \"64\"); then ARCH=\"x86_64\"; else ARCH=\"x86\";\n      fi; ./VigilantesV*Linux.$ARCH '\n    file: $GAMEDIR/start.sh\n- chmodx: $GAMEDIR/start.sh\n"
 }

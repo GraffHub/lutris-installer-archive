@@ -21,17 +21,25 @@
   "gogslug": "torchlight",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "game": "N/A: Please select the .sh install file downloaded from humblebundle.com"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/start.sh"
+    },
     "installer": [
       {
         "execute": {
-          "args": "-u -r -l -d $GAMEDIR -b $GAMEDIR --nox11",
-          "file": "$game"
+          "file": "$game",
+          "args": "-u -r -l -d $GAMEDIR -b $GAMEDIR --nox11"
         }
       },
       {
         "execute": {
-          "args": "--tar xvf -C $CACHE",
-          "file": "$game"
+          "file": "$game",
+          "args": "--tar xvf -C $CACHE"
         }
       },
       {
@@ -41,22 +49,14 @@
       },
       {
         "write_file": {
-          "content": "#!/bin/sh\nif (uname -m | grep \"64\"); then\n arch=\"x86_64\";\nelse\n arch=\"x86\";\nfi;\n./Torchlight/Torchlight.bin.$arch\n",
-          "file": "$GAMEDIR/start.sh"
+          "file": "$GAMEDIR/start.sh",
+          "content": "#!/bin/sh\nif (uname -m | grep \"64\"); then\n arch=\"x86_64\";\nelse\n arch=\"x86\";\nfi;\n./Torchlight/Torchlight.bin.$arch\n"
         }
       },
       {
         "chmodx": "$GAMEDIR/start.sh"
       }
-    ],
-    "files": [
-      {
-        "game": "N/A: Please select the .sh install file downloaded from humblebundle.com"
-      }
-    ],
-    "game": {
-      "exe": "$GAMEDIR/start.sh"
-    }
+    ]
   },
   "content": "files:\n- game: 'N/A: Please select the .sh install file downloaded from humblebundle.com'\ngame:\n  exe: $GAMEDIR/start.sh\ninstaller:\n- execute:\n    args: -u -r -l -d $GAMEDIR -b $GAMEDIR --nox11\n    file: $game\n- execute:\n    args: --tar xvf -C $CACHE\n    file: $game\n- execute:\n    command: \"if (uname -m | grep \\\"64\\\"); then\\n arch=\\\"x86_64\\\";\\nelse\\n arch=\\\"\\\n      x86\\\";\\nfi;\\n\\\"$CACHE/bin/linux/$arch/libc.so.6/lzma\\\" d \\\"$CACHE/subarch\\\"\\\n      \\ - | tar xvf - -C \\\"$CACHE/\\\" &&\\n\\\"$CACHE/bin/linux/$arch/libc.so.6/lzma\\\"\\\n      \\ d \\\"$CACHE/deps/SDL2/SDL2_files_linux_$arch\\\" - | tar xvf - -C \\\"$GAMEDIR/Torchlight/\\\"\\\n      \\n\"\n- write_file:\n    content: \"#!/bin/sh\\nif (uname -m | grep \\\"64\\\"); then\\n arch=\\\"x86_64\\\";\\nelse\\n\\\n      \\ arch=\\\"x86\\\";\\nfi;\\n./Torchlight/Torchlight.bin.$arch\\n\"\n    file: $GAMEDIR/start.sh\n- chmodx: $GAMEDIR/start.sh\n"
 }

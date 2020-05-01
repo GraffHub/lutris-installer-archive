@@ -21,57 +21,57 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "install_gecko": false,
-          "install_mono": false,
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Installing ie8 with winetricks",
-          "app": "ie8",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "value": 30000,
-          "arch": "win32",
-          "key": "MaxVersionGL",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "type": "REG_DWORD"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec",
-          "arch": "win32",
-          "args": "/S",
-          "executable": "installer",
-          "description": "Installing BYOND"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "http://www.byond.com/download/build/512/512.1488_byond.exe"
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR/prefix",
-      "exe": "prefix/drive_c/Program Files/BYOND/bin/byond.exe"
-    }
+      "exe": "prefix/drive_c/Program Files/BYOND/bin/byond.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "install_gecko": false,
+          "install_mono": false,
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "app": "ie8",
+          "description": "Installing ie8 with winetricks",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "MaxVersionGL",
+          "prefix": "$GAMEDIR/prefix",
+          "value": 30000,
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
+          "type": "REG_DWORD"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "wineexec",
+          "description": "Installing BYOND",
+          "args": "/S",
+          "prefix": "$GAMEDIR/prefix",
+          "executable": "installer"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer: http://www.byond.com/download/build/512/512.1488_byond.exe\ngame:\n  arch: win32\n  exe: prefix/drive_c/Program Files/BYOND/bin/byond.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: ie8\n    arch: win32\n    description: Installing ie8 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    key: MaxVersionGL\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR/prefix\n    type: REG_DWORD\n    value: 30000\n- task:\n    arch: win32\n    args: /S\n    description: Installing BYOND\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n"
 }

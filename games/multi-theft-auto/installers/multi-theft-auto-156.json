@@ -21,32 +21,11 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$downgrade"
-        }
-      },
-      {
-        "task": {
-          "executable": "$CACHE/gtasapatch.exe",
-          "description": "Downgrading GTA:SA...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "args": "/silent",
-          "executable": "$mta",
-          "description": "Installing MTA...",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      }
-    ],
-    "requires": "grand-theft-auto-san-andreas",
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe",
+      "arch": "win32"
+    },
     "files": [
       {
         "mta": "http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.5.6.exe"
@@ -55,11 +34,32 @@
         "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
       }
     ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe"
-    }
+    "requires": "grand-theft-auto-san-andreas",
+    "installer": [
+      {
+        "extract": {
+          "file": "$downgrade",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/gtasapatch.exe",
+          "name": "wineexec",
+          "description": "Downgrading GTA:SA..."
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$mta",
+          "name": "wineexec",
+          "description": "Installing MTA...",
+          "args": "/silent"
+        }
+      }
+    ]
   },
   "content": "files:\n- mta: http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.5.6.exe\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing MTA...\n    executable: $mta\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
 }

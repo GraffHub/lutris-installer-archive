@@ -21,34 +21,6 @@
   "gogslug": "archimedean_dynasty",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$innoextract_tar"
-        }
-      },
-      {
-        "execute": {
-          "args": "-d \"$CACHE\" \"$game\"",
-          "file": "$CACHE/innoextract"
-        }
-      },
-      {
-        "merge": {
-          "src": "$CACHE/app",
-          "dst": "$GAMEDIR"
-        }
-      },
-      {
-        "write_config": {
-          "section": "sdl",
-          "key": "fullscreen",
-          "file": "$GAMEDIR/dosbox_ad.conf",
-          "value": false
-        }
-      }
-    ],
     "dosbox": {
       "fullscreen": true
     },
@@ -61,9 +33,37 @@
       }
     ],
     "game": {
-      "config_file": "$GAMEDIR/dosbox_ad.conf",
-      "main_file": "$GAMEDIR/AD2.EXE"
-    }
+      "main_file": "$GAMEDIR/AD2.EXE",
+      "config_file": "$GAMEDIR/dosbox_ad.conf"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$innoextract_tar",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE\" \"$game\""
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/app",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosbox_ad.conf",
+          "value": false,
+          "section": "sdl",
+          "key": "fullscreen"
+        }
+      }
+    ]
   },
   "content": "dosbox:\n  fullscreen: true\nfiles:\n- game: N/A:Please select the GOG.com Windows installer\n- innoextract_tar: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  config_file: $GAMEDIR/dosbox_ad.conf\n  main_file: $GAMEDIR/AD2.EXE\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $innoextract_tar\n- execute:\n    args: -d \"$CACHE\" \"$game\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- write_config:\n    file: $GAMEDIR/dosbox_ad.conf\n    key: fullscreen\n    section: sdl\n    value: false\n"
 }

@@ -30,10 +30,12 @@
         "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR/Game/prefix"
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "LANG",
           "options": [
             {
               "Torment": "English"
@@ -48,20 +50,21 @@
               "Torment (Polish)": "Polski"
             }
           ],
-          "description": "Select the game's language (determined by the setup file you downloaded):"
+          "description": "Select the game's language (determined by the setup file you downloaded):",
+          "id": "LANG"
         }
       },
       {
         "extract": {
+          "file": "$unzip",
           "description": "Extracting game data...",
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "$game -d \"$GAMEDIR\"",
-          "file": "$CACHE/unzip"
+          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR\""
         }
       },
       {
@@ -72,14 +75,11 @@
       },
       {
         "execute": {
-          "args": "-s \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Planescape $INPUT_LANG\" \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Planescape Torment\"",
-          "file": "/bin/ln"
+          "file": "/bin/ln",
+          "args": "-s \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Planescape $INPUT_LANG\" \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Planescape Torment\""
         }
       }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR/Game/prefix"
-    }
+    ]
   },
   "content": "exe: Game/prefix/drive_c/GOG Games/Planescape Torment/Torment.exe\nfiles:\n- game: N/A:Select the Linux installer downloaded from GOG\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  prefix: $GAMEDIR/Game/prefix\ninstaller:\n- input_menu:\n    description: 'Select the game''s language (determined by the setup file you downloaded):'\n    id: LANG\n    options:\n    - Torment: English\n    - Torment (German): Deutsch\n    - Torment (French): \"Fran\\xE7ais\"\n    - Torment (Polish): Polski\n- extract:\n    description: Extracting game data...\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\"\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n- execute:\n    args: -s \"$GAMEDIR/Game/prefix/drive_c/GOG Games/Planescape $INPUT_LANG\" \"$GAMEDIR/Game/prefix/drive_c/GOG\n      Games/Planescape Torment\"\n    file: /bin/ln\n"
 }

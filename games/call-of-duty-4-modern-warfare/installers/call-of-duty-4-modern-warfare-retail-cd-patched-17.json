@@ -29,6 +29,16 @@
         "patch2": "N/A:Provide path to 1.6-1.7 patch"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files (x86)/Activision/Call of Duty 4 - Modern Warfare/iw3mp.exe"
+    },
+    "wine": {
+      "esync": true
+    },
+    "system": {
+      "prefer_system_libs": false
+    },
     "installer": [
       {
         "insert-disc": {
@@ -39,42 +49,32 @@
       {
         "merge": {
           "src": "$DISC",
-          "dst": "$CACHE/cdrom",
-          "description": "Copying disc 1 to cache"
+          "description": "Copying disc 1 to cache",
+          "dst": "$CACHE/cdrom"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "executable": "$CACHE/cdrom/setup.exe",
-          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "executable": "patch1",
-          "prefix": "$GAMEDIR",
           "name": "wineexec"
         }
       },
       {
         "task": {
-          "executable": "patch2",
           "prefix": "$GAMEDIR",
+          "executable": "patch2",
           "name": "wineexec"
         }
       }
-    ],
-    "system": {
-      "prefer_system_libs": false
-    },
-    "wine": {
-      "esync": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Activision/Call of Duty 4 - Modern Warfare/iw3mp.exe"
-    }
+    ]
   },
   "content": "files:\n- patch1: N/A:Provide path to 1.6 patch\n- patch2: N/A:Provide path to 1.6-1.7 patch\ngame:\n  exe: drive_c/Program Files (x86)/Activision/Call of Duty 4 - Modern Warfare/iw3mp.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Copying disc 1 to cache\n    dst: $CACHE/cdrom\n    src: $DISC\n- task:\n    executable: $CACHE/cdrom/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch1\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch2\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  prefer_system_libs: false\nwine:\n  esync: true\n"
 }

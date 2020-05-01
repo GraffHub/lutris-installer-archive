@@ -22,36 +22,36 @@
   "humblestoreid": "",
   "script": {
     "exe": "start.sh",
+    "files": [
+      {
+        "game": "http://www.netpanzer.info/Download/NetPanzer/Releases/0.8.7/netpanzer-0.8.7-Ubuntu_x32-x64_portable.zip"
+      }
+    ],
     "installer": [
       {
         "extract": {
+          "file": "$game",
           "description": "extracting...",
           "dst": "$GAMEDIR",
-          "file": "$game",
           "format": "zip"
         }
       },
       {
         "execute": {
-          "args": "-c \"chmod +x $GAMEDIR/netpanzer-x*\"",
           "file": "/bin/sh",
-          "terminal": true
+          "terminal": true,
+          "args": "-c \"chmod +x $GAMEDIR/netpanzer-x*\""
         }
       },
       {
         "execute": {
-          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nif [ \\\"$$(uname -m)\\\" = \\\"x86_64\\\" ]\\nthen\\n./netpanzer-x64 \\\"$$@\\\"\\nelse\\n./netpanzer-x32 \\\"$$@\\\"\\nfi'>$GAMEDIR/start.sh\"",
           "file": "/bin/sh",
-          "terminal": true
+          "terminal": true,
+          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nif [ \\\"$$(uname -m)\\\" = \\\"x86_64\\\" ]\\nthen\\n./netpanzer-x64 \\\"$$@\\\"\\nelse\\n./netpanzer-x32 \\\"$$@\\\"\\nfi'>$GAMEDIR/start.sh\""
         }
       },
       {
         "chmodx": "$GAMEDIR/start.sh"
-      }
-    ],
-    "files": [
-      {
-        "game": "http://www.netpanzer.info/Download/NetPanzer/Releases/0.8.7/netpanzer-0.8.7-Ubuntu_x32-x64_portable.zip"
       }
     ]
   },

@@ -21,45 +21,45 @@
   "gogslug": "",
   "humblestoreid": "bioshock",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$file1"
-        }
-      },
-      {
-        "task": {
-          "args": "/S",
-          "executable": "$CACHE/Setup.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "",
-          "key": "dxgi",
-          "name": "set_regedit",
-          "type": "REG_SZ",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the Humble archive"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe",
+      "arch": "win32"
+    },
     "wine": {
       "dxvk": true
     },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe"
-    }
+    "installer": [
+      {
+        "extract": {
+          "file": "$file1",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/Setup.exe",
+          "name": "wineexec",
+          "args": "/S"
+        }
+      },
+      {
+        "task": {
+          "name": "set_regedit",
+          "key": "dxgi",
+          "prefix": "$GAMEDIR",
+          "value": "",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "type": "REG_SZ"
+        }
+      }
+    ]
   },
   "content": "files:\r\n- file1: N/A:Please select the Humble archive\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE\r\n    file: $file1\r\n- task:\r\n    args: /S\r\n    executable: $CACHE/Setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    key: dxgi\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: ''\r\nwine:\r\n  dxvk: true"
 }

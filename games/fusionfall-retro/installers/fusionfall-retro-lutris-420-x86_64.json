@@ -21,70 +21,85 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "setup": "https://cdn.fusionfalluniverse.com/launcher/ULInstaller.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/dosdevices/c:/Program Files/FusionFall Universe/UniverseLauncher.exe",
+      "arch": "win32",
+      "working_dir": "$GAMEDIR/dosdevices/c:/Program Files/FusionFall Universe/"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
     "installer": [
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win32",
-          "description": "Creating 32-bit Wine prefix",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating 32-bit Wine prefix"
         }
       },
       {
         "task": {
-          "description": "Installing vcrun2017",
+          "prefix": "$GAMEDIR",
           "app": "vcrun2017",
-          "prefix": "$GAMEDIR",
+          "description": "Installing vcrun2017",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing d3dx11_43",
+          "prefix": "$GAMEDIR",
           "app": "d3dx11_43",
-          "prefix": "$GAMEDIR",
+          "description": "Installing d3dx11_43",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Installing d3dcompiler_47",
+          "prefix": "$GAMEDIR",
           "app": "d3dcompiler_47",
-          "prefix": "$GAMEDIR",
+          "description": "Installing d3dcompiler_47",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "description": "Setting Wine to Windows 7",
-          "app": "win7",
           "prefix": "$GAMEDIR",
+          "app": "win7",
+          "description": "Setting Wine to Windows 7",
           "name": "winetricks"
         }
       },
       {
         "input_menu": {
+          "preselect": "y",
           "options": [
             {
               "y": "I understand"
             }
           ],
-          "description": "ATTENTION! In order for this game to install successfully, the launcher needs to be run a single time to download extra required files.\n\nSteps:\n  * At the end of the following installer, check the box to \"Run FusionFall Universe\".\n  * Log in to your FusionFall Universe account.\n  * Press \"Play Now\" in the launcher.\n  * The game will start, and then exit with an error. This is expected.\n  * Close the launcher.\n",
-          "preselect": "y"
+          "description": "ATTENTION! In order for this game to install successfully, the launcher needs to be run a single time to download extra required files.\n\nSteps:\n  * At the end of the following installer, check the box to \"Run FusionFall Universe\".\n  * Log in to your FusionFall Universe account.\n  * Press \"Play Now\" in the launcher.\n  * The game will start, and then exit with an error. This is expected.\n  * Close the launcher.\n"
         }
       },
       {
         "task": {
-          "executable": "setup",
-          "description": "Running FusionFall Retro Installer",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Running FusionFall Retro Installer"
         }
       },
       {
         "execute": {
-          "description": "Fix Unity Web Player files",
-          "command": "rm -r \"$GAMEDIR/dosdevices/c:/users/$USER/AppData/LocalLow/Unity/WebPlayer\" && ln -s \"$GAMEDIR/dosdevices/c:/users/$USER/Application Data/FusionFall Universe/Games/Retro/WebPlayer\" \"$GAMEDIR/dosdevices/c:/users/$USER/AppData/LocalLow/Unity/WebPlayer\"\n"
+          "command": "rm -r \"$GAMEDIR/dosdevices/c:/users/$USER/AppData/LocalLow/Unity/WebPlayer\" && ln -s \"$GAMEDIR/dosdevices/c:/users/$USER/Application Data/FusionFall Universe/Games/Retro/WebPlayer\" \"$GAMEDIR/dosdevices/c:/users/$USER/AppData/LocalLow/Unity/WebPlayer\"\n",
+          "description": "Fix Unity Web Player files"
         }
       },
       {
@@ -93,22 +108,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "files": [
-      {
-        "setup": "https://cdn.fusionfalluniverse.com/launcher/ULInstaller.exe"
-      }
-    ],
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win32",
-      "working_dir": "$GAMEDIR/dosdevices/c:/Program Files/FusionFall Universe/",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/dosdevices/c:/Program Files/FusionFall Universe/UniverseLauncher.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: https://cdn.fusionfalluniverse.com/launcher/ULInstaller.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/dosdevices/c:/Program Files/FusionFall Universe/UniverseLauncher.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/dosdevices/c:/Program Files/FusionFall Universe/\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32-bit Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Installing vcrun2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx11_43\n    description: Installing d3dx11_43\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_47\n    description: Installing d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    description: Setting Wine to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- input_menu:\n    description: \"ATTENTION! In order for this game to install successfully, the launcher\\\n      \\ needs to be run a single time to download extra required files.\\n\\nSteps:\\n\\\n      \\  * At the end of the following installer, check the box to \\\"Run FusionFall\\\n      \\ Universe\\\".\\n  * Log in to your FusionFall Universe account.\\n  * Press \\\"\\\n      Play Now\\\" in the launcher.\\n  * The game will start, and then exit with an\\\n      \\ error. This is expected.\\n  * Close the launcher.\\n\"\n    options:\n    - y: I understand\n    preselect: y\n- task:\n    description: Running FusionFall Retro Installer\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- execute:\n    command: 'rm -r \"$GAMEDIR/dosdevices/c:/users/$USER/AppData/LocalLow/Unity/WebPlayer\"\n      && ln -s \"$GAMEDIR/dosdevices/c:/users/$USER/Application Data/FusionFall Universe/Games/Retro/WebPlayer\"\n      \"$GAMEDIR/dosdevices/c:/users/$USER/AppData/LocalLow/Unity/WebPlayer\"\n\n      '\n    description: Fix Unity Web Player files\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

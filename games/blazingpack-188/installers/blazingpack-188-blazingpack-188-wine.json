@@ -1,0 +1,95 @@
+{
+  "id": 19393,
+  "game_id": 32291,
+  "game_slug": "blazingpack-188",
+  "name": "BlazingPack 1.8.8",
+  "year": null,
+  "user": "Natalka",
+  "runner": "wine",
+  "slug": "blazingpack-188-blazingpack-188-wine",
+  "version": "BlazingPack 1.8.8 Wine x64",
+  "description": "We need to install Minecraft using wine because anticheat isn't working on native java.",
+  "notes": "",
+  "created_at": "2020-04-03T09:34:35.693395Z",
+  "updated_at": "2020-04-03T09:34:35.693422Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "launcher": "https://launcher.mojang.com/download/Minecraft.exe"
+      },
+      {
+        "launcherprofiles": "https://bp.natalia.ovh/blazingpack/launcher_profiles.json"
+      },
+      {
+        "blazingpackdl": "https://update2.blazingpack.pl/files/blazingpack_1.8.8.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Minecraft/Minecraft.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": false
+    },
+    "installer": [
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR/drive_c/users/$USER/Application Data/.minecraft/versions/blazingpack_1.8.8/\""
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir -p \"$GAMEDIR/drive_c/Minecraft/\""
+        }
+      },
+      {
+        "move": {
+          "src": "launcher",
+          "description": "moving installer",
+          "dst": "$GAMEDIR/drive_c/Minecraft/Minecraft.exe"
+        }
+      },
+      {
+        "move": {
+          "src": "launcherprofiles",
+          "description": "setting up profiles",
+          "dst": "$GAMEDIR/drive_c/users/$USER/Application Data/.minecraft/launcher_profiles.json"
+        }
+      },
+      {
+        "extract": {
+          "file": "blazingpackdl",
+          "description": "extracting blazingpack zip to versions",
+          "dst": "$GAMEDIR/drive_c/users/$USER/Application Data/.minecraft/versions/blazingpack_1.8.8"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "corefonts",
+          "description": "fixing fonts in launcher",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/Minecraft/Minecraft.exe",
+          "name": "wineexec",
+          "description": "installing minecraft launcher, after installing - check if minecraft launches."
+        }
+      }
+    ]
+  },
+  "content": "files:\n- launcher: https://launcher.mojang.com/download/Minecraft.exe\n- launcherprofiles: https://bp.natalia.ovh/blazingpack/launcher_profiles.json\n- blazingpackdl: https://update2.blazingpack.pl/files/blazingpack_1.8.8.zip\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Minecraft/Minecraft.exe\n  prefix: $GAMEDIR\ninstaller:\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/users/$USER/Application Data/.minecraft/versions/blazingpack_1.8.8/\"\n- execute:\n    command: mkdir -p \"$GAMEDIR/drive_c/Minecraft/\"\n- move:\n    description: moving installer\n    dst: $GAMEDIR/drive_c/Minecraft/Minecraft.exe\n    src: launcher\n- move:\n    description: setting up profiles\n    dst: $GAMEDIR/drive_c/users/$USER/Application Data/.minecraft/launcher_profiles.json\n    src: launcherprofiles\n- extract:\n    description: extracting blazingpack zip to versions\n    dst: $GAMEDIR/drive_c/users/$USER/Application Data/.minecraft/versions/blazingpack_1.8.8\n    file: blazingpackdl\n- task:\n    app: corefonts\n    description: fixing fonts in launcher\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: installing minecraft launcher, after installing - check if minecraft\n      launches.\n    executable: $GAMEDIR/drive_c/Minecraft/Minecraft.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: false\n  esync: true\n"
+}

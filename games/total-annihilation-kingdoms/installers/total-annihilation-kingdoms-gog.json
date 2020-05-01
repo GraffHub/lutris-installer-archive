@@ -21,10 +21,23 @@
   "gogslug": "total_annihilation_kingdoms",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "game": "N/A:Select the installer downloaded from GOG."
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Total Annihilation Kingdoms/Kingdoms.exe"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "$RESOLUTION"
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "ENGLISH",
           "options": [
             {
               "ENGLISH": "English"
@@ -43,82 +56,69 @@
             }
           ],
           "description": "Please choose your preferred Interface language:",
-          "preselect": "ENGLISH"
+          "id": "LANG"
         }
       },
       {
         "task": {
-          "app": "gdiplus",
           "prefix": "$GAMEDIR",
+          "app": "gdiplus",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/VERYSILENT /SUPRESSMSGBOXES",
-          "executable": "$game",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$game",
+          "name": "wineexec",
+          "args": "/VERYSILENT /SUPRESSMSGBOXES"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "RendererName",
           "prefix": "$GAMEDIR",
           "value": "Software MMX Rendering",
-          "arch": "win64",
-          "key": "RendererName",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\RendererOptions",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "RendererPrefs",
           "prefix": "$GAMEDIR",
           "value": "00010002",
-          "arch": "win64",
-          "key": "RendererPrefs",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\RendererOptions",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "RendererType",
           "prefix": "$GAMEDIR",
           "value": "00000002",
-          "arch": "win64",
-          "key": "RendererType",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\RendererOptions",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "Language",
           "prefix": "$GAMEDIR",
           "value": "$INPUT_LANG",
-          "arch": "win64",
-          "key": "Language",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\InterfaceOptions",
           "type": "REG_SZ"
         }
       }
-    ],
-    "files": [
-      {
-        "game": "N/A:Select the installer downloaded from GOG."
-      }
-    ],
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "$RESOLUTION"
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Total Annihilation Kingdoms/Kingdoms.exe"
-    }
+    ]
   },
   "content": "files:\n- game: N/A:Select the installer downloaded from GOG.\ngame:\n  exe: drive_c/GOG Games/Total Annihilation Kingdoms/Kingdoms.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Please choose your preferred Interface language:'\n    id: LANG\n    options:\n    - ENGLISH: English\n    - GERMAN: German\n    - ITALIAN: Italian\n    - FRENCH: French\n    - SPANISH: Spanish\n    preselect: ENGLISH\n- task:\n    app: gdiplus\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /VERYSILENT /SUPRESSMSGBOXES\n    executable: $game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: RendererName\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\RendererOptions\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Software MMX Rendering\n- task:\n    arch: win64\n    key: RendererPrefs\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\RendererOptions\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00010002'\n- task:\n    arch: win64\n    key: RendererType\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\RendererOptions\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000002'\n- task:\n    arch: win64\n    key: Language\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Kingdoms\\InterfaceOptions\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: $INPUT_LANG\nwine:\n  Desktop: true\n  WineDesktop: $RESOLUTION\n"
 }

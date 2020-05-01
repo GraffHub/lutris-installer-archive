@@ -21,13 +21,21 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "file_id": "https://www.myabandonware.com/media/screenshots/o/oh-no-more-lemmings-18b/oh-no-more-lemmings_1.gif"
+      }
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/L2/L2.EXE"
+    },
     "installer": [
       {
         "execute": {
-          "args": "https://www.myabandonware.com/download/1zk-lemmings-2-the-tribes --referer=www.myabandonware.com --directory-prefix=$CACHE",
-          "dst": "$CACHE",
+          "file": "/usr/bin/wget",
           "description": "Downloading addon…",
-          "file": "/usr/bin/wget"
+          "dst": "$CACHE",
+          "args": "https://www.myabandonware.com/download/1zk-lemmings-2-the-tribes --referer=www.myabandonware.com --directory-prefix=$CACHE"
         }
       },
       {
@@ -38,9 +46,9 @@
       },
       {
         "extract": {
+          "file": "$CACHE/game.zip",
           "description": "Extracting addon…",
           "dst": "$CACHE",
-          "file": "$CACHE/game.zip",
           "format": "zip"
         }
       },
@@ -50,15 +58,7 @@
           "name": "dosexec"
         }
       }
-    ],
-    "files": [
-      {
-        "file_id": "https://www.myabandonware.com/media/screenshots/o/oh-no-more-lemmings-18b/oh-no-more-lemmings_1.gif"
-      }
-    ],
-    "game": {
-      "main_file": "$GAMEDIR/L2/L2.EXE"
-    }
+    ]
   },
   "content": "files:\n- file_id: https://www.myabandonware.com/media/screenshots/o/oh-no-more-lemmings-18b/oh-no-more-lemmings_1.gif\ngame:\n  main_file: $GAMEDIR/L2/L2.EXE\ninstaller:\n- execute:\n    args: https://www.myabandonware.com/download/1zk-lemmings-2-the-tribes --referer=www.myabandonware.com\n      --directory-prefix=$CACHE\n    description: \"Downloading addon\\u2026\"\n    dst: $CACHE\n    file: /usr/bin/wget\n- move:\n    dst: $CACHE/game.zip\n    src: $CACHE/1zk-lemmings-2-the-tribes\n- extract:\n    description: \"Extracting addon\\u2026\"\n    dst: $CACHE\n    file: $CACHE/game.zip\n    format: zip\n- task:\n    executable: $CACHE/install.exe\n    name: dosexec\n"
 }

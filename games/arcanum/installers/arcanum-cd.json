@@ -1,0 +1,77 @@
+{
+  "id": 19919,
+  "game_id": 7315,
+  "game_slug": "arcanum",
+  "name": "Arcanum",
+  "year": 2001,
+  "user": "gto",
+  "runner": "wine",
+  "slug": "arcanum-cd",
+  "version": "CD",
+  "description": "Installation of double CD version",
+  "notes": "",
+  "created_at": "2020-04-23T12:11:28.198851Z",
+  "updated_at": "2020-04-23T12:11:28.198879Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 500810,
+  "gogid": 1207658829,
+  "gogslug": "arcanum_of_steamworks_and_magick_obscura",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Sierra/Arcanum/arcanum.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "Setup.exe",
+          "description": "Insert disc"
+        }
+      },
+      {
+        "merge": {
+          "src": "$DISC",
+          "dst": "$GAMEDIR/drive_c/CDROM"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "Sierra/Arcanum/arcanum1.dat",
+          "description": "Insert disc"
+        }
+      },
+      {
+        "merge": {
+          "src": "$DISC",
+          "dst": "$GAMEDIR/drive_c/CDROM"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$GAMEDIR/drive_c/CDROM/Setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/CDROM",
+          "description": "Moving the CDROM files",
+          "dst": "$CACHE"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Sierra/Arcanum/arcanum.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc\n    requires: Setup.exe\n- merge:\n    dst: $GAMEDIR/drive_c/CDROM\n    src: $DISC\n- insert-disc:\n    description: Insert disc\n    requires: Sierra/Arcanum/arcanum1.dat\n- merge:\n    dst: $GAMEDIR/drive_c/CDROM\n    src: $DISC\n- task:\n    executable: $GAMEDIR/drive_c/CDROM/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    description: Moving the CDROM files\n    dst: $CACHE\n    src: $GAMEDIR/drive_c/CDROM\n"
+}

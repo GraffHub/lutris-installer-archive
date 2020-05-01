@@ -22,25 +22,30 @@
   "humblestoreid": "luftrausers",
   "script": {
     "exe": "start.sh",
+    "files": [
+      {
+        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
+      }
+    ],
     "installer": [
       {
         "execute": {
-          "args": "-c 'LD_PRELOAD='' LD_LIBRARY_PATH='' lgogdownloader --download --game luftrausers --platform lin --exclude e,p,l,c,d --directory $CACHE/installer'",
           "file": "/bin/sh",
-          "terminal": true
+          "terminal": true,
+          "args": "-c 'LD_PRELOAD='' LD_LIBRARY_PATH='' lgogdownloader --download --game luftrausers --platform lin --exclude e,p,l,c,d --directory $CACHE/installer'"
         }
       },
       {
         "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
+          "file": "$unzip",
+          "dst": "$CACHE"
         }
       },
       {
         "execute": {
-          "args": "$CACHE/installer/luftrausers/gog_luftrausers*.sh -d $CACHE/installer data/noarch/*",
+          "file": "$CACHE/unzip",
           "description": "Extracting game data, it will take a while...",
-          "file": "$CACHE/unzip"
+          "args": "$CACHE/installer/luftrausers/gog_luftrausers*.sh -d $CACHE/installer data/noarch/*"
         }
       },
       {
@@ -51,11 +56,6 @@
       },
       {
         "chmodx": "$GAMEDIR/start.sh"
-      }
-    ],
-    "files": [
-      {
-        "unzip": "http://lutris.net/files/tools/unzip.tar.gz"
       }
     ]
   },

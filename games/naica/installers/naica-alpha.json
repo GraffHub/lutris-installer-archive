@@ -1,0 +1,65 @@
+{
+  "id": 20120,
+  "game_id": 32849,
+  "game_slug": "naica",
+  "name": "Naïca",
+  "year": 2020,
+  "user": "Elfranne",
+  "runner": "wine",
+  "slug": "naica-alpha",
+  "version": "Alpha",
+  "description": null,
+  "notes": "Alt tabbing is broken (no keyboard/mouse)",
+  "created_at": "2020-04-30T00:59:39.173203Z",
+  "updated_at": "2020-04-30T00:59:39.173234Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "naica_installer": "https://naicaonline.com/assets/download/naicaonline.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/naicaonline.exe"
+    },
+    "installer": [
+      {
+        "move": {
+          "src": "naica_installer",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "execute": {
+          "prefix": "$GAMEDIR",
+          "command": "wineserver -k"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "win7",
+          "name": "winetricks"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- naica_installer: https://naicaonline.com/assets/download/naicaonline.exe\ngame:\n  exe: $GAMEDIR/naicaonline.exe\n  prefix: $GAMEDIR\ninstaller:\n- move:\n    dst: $GAMEDIR\n    src: naica_installer\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: wineserver -k\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n"
+}

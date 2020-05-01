@@ -21,28 +21,66 @@
   "gogslug": "/tomb_raider_the_last_revelation_chronicles",
   "humblestoreid": "",
   "script": {
+    "custom-name": "Tomb Raider V - Chronicles - GOG",
+    "files": [
+      {
+        "installer": "N/A:Select the installer downloaded from GOG"
+      },
+      {
+        "dgv": "https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip"
+      },
+      {
+        "menu1": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/TR5CM1.BAT"
+      },
+      {
+        "menu2": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/TR5CM2.BAT"
+      },
+      {
+        "gpx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_x360.gamecontroller.amgp"
+      },
+      {
+        "gpsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_steam.sccprofile"
+      },
+      {
+        "gpreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_gamepad_readme.html"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/tr5c.bmp"
+      },
+      {
+        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Last%20Revelation/TombRaider234_Patch.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Tomb Raider 5/TR5CM1.BAT"
+    },
+    "wine": {
+      "dxvk": true,
+      "Desktop": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating WINE prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "executable": "installer",
-          "description": "Installing...",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "installer",
+          "name": "wineexec",
+          "description": "Installing...",
+          "args": "/SP- /SUPPRESSMSGBOXES"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 5/",
-          "file": "dgv"
+          "file": "dgv",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 5/"
         }
       },
       {
@@ -68,14 +106,14 @@
           "data": {
             "DirectX": {
               "Resolution": "max_qhd_isf",
-              "dgVoodooWatermark": false,
               "ForceVerticalSync": true,
-              "VRAM": 256
+              "VRAM": 256,
+              "dgVoodooWatermark": false
             },
             "General": {
-              "CaptureMouse": false,
               "FullScreenMode": false,
-              "ScalingMode": "stretched_ar"
+              "ScalingMode": "stretched_ar",
+              "CaptureMouse": false
             }
           }
         }
@@ -88,19 +126,19 @@
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "ddraw",
           "prefix": "$GAMEDIR",
           "value": "native,builtin",
-          "arch": "win64",
-          "key": "ddraw",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "app": "d3dcompiler_47",
           "prefix": "$GAMEDIR",
+          "app": "d3dcompiler_47",
           "name": "winetricks"
         }
       },
@@ -142,55 +180,55 @@
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "wallpaper",
           "prefix": "$GAMEDIR",
           "value": "c:\\\\tr5c.bmp",
-          "arch": "win64",
-          "key": "wallpaper",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "background",
           "prefix": "$GAMEDIR",
           "value": "0 0 0",
-          "arch": "win64",
-          "key": "background",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "value": "00000000",
-          "arch": "win64",
-          "key": "csmt",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "ActiveTitle",
           "prefix": "$GAMEDIR",
           "value": "0 0 0",
-          "arch": "win64",
-          "key": "ActiveTitle",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "GradientActiveTitle",
           "prefix": "$GAMEDIR",
           "value": "191 166 12",
-          "arch": "win64",
-          "key": "GradientActiveTitle",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
@@ -200,45 +238,7 @@
           "command": "cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\"; rm -f -r unins000.* webcache.zip support.ico Launch* gog* 3Dfx MS Doc"
         }
       }
-    ],
-    "files": [
-      {
-        "installer": "N/A:Select the installer downloaded from GOG"
-      },
-      {
-        "dgv": "https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip"
-      },
-      {
-        "menu1": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/TR5CM1.BAT"
-      },
-      {
-        "menu2": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/TR5CM2.BAT"
-      },
-      {
-        "gpx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_x360.gamecontroller.amgp"
-      },
-      {
-        "gpsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_steam.sccprofile"
-      },
-      {
-        "gpreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_gamepad_readme.html"
-      },
-      {
-        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/tr5c.bmp"
-      },
-      {
-        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Last%20Revelation/TombRaider234_Patch.zip"
-      }
-    ],
-    "wine": {
-      "Desktop": true,
-      "dxvk": true
-    },
-    "custom-name": "Tomb Raider V - Chronicles - GOG",
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Tomb Raider 5/TR5CM1.BAT"
-    }
+    ]
   },
   "content": "custom-name: Tomb Raider V - Chronicles - GOG\nfiles:\n- installer: N/A:Select the installer downloaded from GOG\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- menu1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/TR5CM1.BAT\n- menu2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/TR5CM2.BAT\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_x360.gamecontroller.amgp\n- gpsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_steam.sccprofile\n- gpreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/gamepad%20profiles/tr5_gamepad_readme.html\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20V%20-%20Chronicles/tr5c.bmp\n- patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20IV%20-%20The%20Last%20Revelation/TombRaider234_Patch.zip\ngame:\n  exe: drive_c/GOG Games/Tomb Raider 5/TR5CM1.BAT\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    description: Installing...\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\n    src: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/MS/x86/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\n    src: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/MS/x86/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/dgVoodoo.conf\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\n    src: patch\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\n    src: menu1\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\n    src: menu2\n- copy:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/gamepad profiles/\n    src: gpreadme\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/gamepad profiles/\n    src: gpx360\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 5/gamepad profiles/\n    src: gpsteam\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr5c.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 191 166 12\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 5/\"; rm -f -r unins000.* webcache.zip\n      support.ico Launch* gog* 3Dfx MS Doc\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

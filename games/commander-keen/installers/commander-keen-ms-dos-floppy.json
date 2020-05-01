@@ -21,35 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "execute": {
-          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/keen1",
-          "file": "mkdir"
-        }
-      },
-      {
-        "write_file": {
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\"",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "chmodx": "$CACHE/bulkcopy.sh"
-      },
-      {
-        "execute": {
-          "args": "$game $GAMEDIR/HDD/keen1",
-          "file": "$CACHE/bulkcopy.sh"
-        }
-      },
-      {
-        "write_file": {
-          "content": "[cpu]\ncputype=386_slow\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd keen1\nkeen1.EXE\nexit",
-          "file": "$GAMEDIR/commander_keen.conf"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select the file Keen1.exe"
@@ -57,7 +28,36 @@
     ],
     "game": {
       "main_file": "$GAMEDIR/commander_keen.conf"
-    }
+    },
+    "installer": [
+      {
+        "execute": {
+          "file": "mkdir",
+          "args": "$GAMEDIR/HDD $GAMEDIR/HDD/keen1"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$CACHE/bulkcopy.sh",
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\ncp -avr \"$src_path/.\"  \"$dst\""
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy.sh"
+      },
+      {
+        "execute": {
+          "file": "$CACHE/bulkcopy.sh",
+          "args": "$game $GAMEDIR/HDD/keen1"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/commander_keen.conf",
+          "content": "[cpu]\ncputype=386_slow\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nC:\ncd keen1\nkeen1.EXE\nexit"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Select the file Keen1.exe\ngame:\n  main_file: $GAMEDIR/commander_keen.conf\ninstaller:\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/HDD/keen1\n    file: mkdir\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      cp -avr \"$src_path/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy.sh\n- chmodx: $CACHE/bulkcopy.sh\n- execute:\n    args: $game $GAMEDIR/HDD/keen1\n    file: $CACHE/bulkcopy.sh\n- write_file:\n    content: '[cpu]\n\n      cputype=386_slow\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      C:\n\n      cd keen1\n\n      keen1.EXE\n\n      exit'\n    file: $GAMEDIR/commander_keen.conf\n"
 }

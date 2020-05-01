@@ -27,6 +27,13 @@
         "X360": "https://lutris.net/files/tools/x360ce-dinput8.tar.gz"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "arch": "win32"
+    },
+    "wine": {
+      "xinput": true
+    },
     "installer": [
       {
         "insert-disc": {
@@ -35,41 +42,34 @@
       },
       {
         "task": {
-          "description": "Creating Windows File System (Wine Bottle)",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating Windows File System (Wine Bottle)"
         }
       },
       {
         "task": {
-          "args": null,
-          "executable": "$DISC/setup.exe",
-          "description": "Please follow the instructions of the Installer   Don't kill the Installer(As long as the Drive is spinning)    It will finish the installation even though it is recognized as Non responsive     This should take about 10min",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec",
+          "description": "Please follow the instructions of the Installer   Don't kill the Installer(As long as the Drive is spinning)    It will finish the installation even though it is recognized as Non responsive     This should take about 10min",
+          "args": null
         }
       },
       {
         "extract": {
+          "file": "$X360",
           "description": "Installing x360 dinput8 for controller support",
-          "dst": "$GAMEDIR/drive_c/Program Files/Disney Interactive Studios/LEGO Pirates/",
-          "file": "$X360"
+          "dst": "$GAMEDIR/drive_c/Program Files/Disney Interactive Studios/LEGO Pirates/"
         }
       },
       {
         "execute": {
-          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/Disney Interactive Studios/LEGO Pirates/wine_custom_user.reg'\"",
-          "file": "/bin/sh"
+          "file": "/bin/sh",
+          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/Disney Interactive Studios/LEGO Pirates/wine_custom_user.reg'\""
         }
       }
-    ],
-    "wine": {
-      "xinput": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR"
-    }
+    ]
   },
   "content": "exe: drive_c/Program Files/Disney Interactive Studios/LEGO Pirates/LEGOPirates.exe\nfiles:\n- X360: https://lutris.net/files/tools/x360ce-dinput8.tar.gz\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    description: Creating Windows File System (Wine Bottle)\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: null\n    description: Please follow the instructions of the Installer   Don't kill the\n      Installer(As long as the Drive is spinning)    It will finish the installation\n      even though it is recognized as Non responsive     This should take about 10min\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing x360 dinput8 for controller support\n    dst: $GAMEDIR/drive_c/Program Files/Disney Interactive Studios/LEGO Pirates/\n    file: $X360\n- execute:\n    args: -v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/Disney\n      Interactive Studios/LEGO Pirates/wine_custom_user.reg'\"\n    file: /bin/sh\nwine:\n  xinput: true\n"
 }

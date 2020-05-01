@@ -21,106 +21,6 @@
   "gogslug": "jazz_jackrabbit_2_collection",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/helper/",
-          "file": "ahk"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/helper/",
-          "file": "helper"
-        }
-      },
-      {
-        "task": {
-          "executable": "game",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "executable": "patch",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Games/Jazz2/",
-          "file": "plus"
-        }
-      },
-      {
-        "task": {
-          "args": "/C $GAMEDIR/drive_c/helper/plusify.bat",
-          "working_dir": "$GAMEDIR/drive_c/Games/Jazz2",
-          "executable": "cmd",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "filename": "$GAMEDIR/drive_c/helper/reset.reg",
-          "prefix": "$GAMEDIR",
-          "name": "set_regedit_file"
-        }
-      },
-      {
-        "write_config": {
-          "section": "General",
-          "key": "GameInfo",
-          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
-          "value": 1
-        }
-      },
-      {
-        "write_config": {
-          "section": "General",
-          "key": "PlayerListSort",
-          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
-          "value": 2
-        }
-      },
-      {
-        "write_config": {
-          "section": "General",
-          "key": "MouseAim",
-          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
-          "value": false
-        }
-      },
-      {
-        "write_config": {
-          "section": "Server",
-          "key": "AllowSpectating",
-          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
-          "value": true
-        }
-      },
-      {
-        "execute": {
-          "file": "$GAMEDIR/drive_c/helper/postinstall.sh"
-        }
-      },
-      {
-        "merge": {
-          "src": "$GAMEDIR/drive_c/helper/JAZZ2.CFG",
-          "dst": "$GAMEDIR/drive_c/Games/Jazz2/"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Select JJ2 installer exe"
@@ -139,11 +39,111 @@
       }
     ],
     "game": {
-      "arch": "win32",
-      "args": "-menu -windowed -nolog -nospy",
       "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Games/Jazz2/Jazz2+.exe"
-    }
+      "exe": "$GAMEDIR/drive_c/Games/Jazz2/Jazz2+.exe",
+      "arch": "win32",
+      "args": "-menu -windowed -nolog -nospy"
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "extract": {
+          "file": "ahk",
+          "dst": "$GAMEDIR/drive_c/helper/"
+        }
+      },
+      {
+        "extract": {
+          "file": "helper",
+          "dst": "$GAMEDIR/drive_c/helper/"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "game",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "patch",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "plus",
+          "dst": "$GAMEDIR/drive_c/Games/Jazz2/"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "args": "/C $GAMEDIR/drive_c/helper/plusify.bat",
+          "executable": "cmd",
+          "name": "wineexec",
+          "working_dir": "$GAMEDIR/drive_c/Games/Jazz2"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "filename": "$GAMEDIR/drive_c/helper/reset.reg",
+          "name": "set_regedit_file"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
+          "value": 1,
+          "section": "General",
+          "key": "GameInfo"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
+          "value": 2,
+          "section": "General",
+          "key": "PlayerListSort"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
+          "value": false,
+          "section": "General",
+          "key": "MouseAim"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/Games/Jazz2/plus.ini",
+          "value": true,
+          "section": "Server",
+          "key": "AllowSpectating"
+        }
+      },
+      {
+        "execute": {
+          "file": "$GAMEDIR/drive_c/helper/postinstall.sh"
+        }
+      },
+      {
+        "merge": {
+          "src": "$GAMEDIR/drive_c/helper/JAZZ2.CFG",
+          "dst": "$GAMEDIR/drive_c/Games/Jazz2/"
+        }
+      }
+    ]
   },
   "content": "files:\r\n- game: N/A:Select JJ2 installer exe\r\n- plus: http://www.jazz2online.com/jj2plus/plus.zip\r\n- ahk: https://autohotkey.com/download/ahk.zip\r\n- helper: https://gist.github.com/daniel-j/83bf128212c085cc99989e4d1e33ffb1/archive/master.zip\r\n- patch: http://www.jazz2online.com/J2Ov2/upload/misc/j2patch_123r.exe\r\ngame:\r\n  arch: win32\r\n  args: -menu -windowed -nolog -nospy\r\n  exe: $GAMEDIR/drive_c/Games/Jazz2/Jazz2+.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/helper/\r\n    file: ahk\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/helper/\r\n    file: helper\r\n- task:\r\n    executable: game\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    executable: patch\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Games/Jazz2/\r\n    file: plus\r\n- task:\r\n    args: /C $GAMEDIR/drive_c/helper/plusify.bat\r\n    executable: cmd\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n    working_dir: $GAMEDIR/drive_c/Games/Jazz2\r\n- task:\r\n    filename: $GAMEDIR/drive_c/helper/reset.reg\r\n    name: set_regedit_file\r\n    prefix: $GAMEDIR\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: GameInfo\r\n    section: General\r\n    value: 1\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: PlayerListSort\r\n    section: General\r\n    value: 2\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: MouseAim\r\n    section: General\r\n    value: false\r\n- write_config:\r\n    file: $GAMEDIR/drive_c/Games/Jazz2/plus.ini\r\n    key: AllowSpectating\r\n    section: Server\r\n    value: true\r\n- execute:\r\n    file: $GAMEDIR/drive_c/helper/postinstall.sh\r\n- merge:\r\n    src: $GAMEDIR/drive_c/helper/JAZZ2.CFG\r\n    dst: $GAMEDIR/drive_c/Games/Jazz2/"
 }

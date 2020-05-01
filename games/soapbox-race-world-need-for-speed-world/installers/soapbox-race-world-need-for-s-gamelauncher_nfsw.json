@@ -21,41 +21,41 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Creating 32bit Wine prefix.",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "extract": {
-          "description": "Extracting installer.",
-          "dst": "$GAMEDIR",
-          "file": "nfsw_installer",
-          "format": "zip"
-        }
-      }
-    ],
     "files": [
       {
         "nfsw_installer": "http://l.mtntr.pl/download"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/GameLauncher.exe",
+      "arch": "win32"
+    },
     "wine": {
       "overrides": {
-        "lightfx": "n,b",
-        "dinput8": "n,b"
+        "dinput8": "n,b",
+        "lightfx": "n,b"
       },
       "version": "lutris-nfsworld-5.4-x86_64"
     },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/GameLauncher.exe"
-    }
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating 32bit Wine prefix."
+        }
+      },
+      {
+        "extract": {
+          "file": "nfsw_installer",
+          "description": "Extracting installer.",
+          "dst": "$GAMEDIR",
+          "format": "zip"
+        }
+      }
+    ]
   },
   "content": "files:\n- nfsw_installer: http://l.mtntr.pl/download\ngame:\n  arch: win32\n  exe: $GAMEDIR/GameLauncher.exe\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    description: Extracting installer.\n    dst: $GAMEDIR\n    file: nfsw_installer\n    format: zip\nwine:\n  overrides:\n    dinput8: n,b\n    lightfx: n,b\n  version: lutris-nfsworld-5.4-x86_64\n"
 }

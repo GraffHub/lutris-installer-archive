@@ -16,7 +16,7 @@
   "published": true,
   "published_by": 20548,
   "rating": "",
-  "steamid": null,
+  "steamid": 1151340,
   "gogid": null,
   "gogslug": "",
   "humblestoreid": "",
@@ -35,31 +35,47 @@
         "nvCustomSettings": "https://gist.githubusercontent.com/Makaronelle/4e911a869f679c8c71bef3cf644e12f0/raw/37d58a291958497540416099cfeaad78a3ad992c/Fallout76CustomNvidia.ini"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher/BethesdaNetLauncher.exe",
+      "arch": "win64",
+      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher"
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 0,
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating Wine prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Installing needed libraries",
-          "app": "corefonts vcrun2012 win7",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "corefonts vcrun2012 win7",
+          "description": "Installing needed libraries",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "GrabFullscreen",
           "prefix": "$GAMEDIR",
           "value": "Y",
-          "arch": "win64",
-          "key": "GrabFullscreen",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "type": "REG_SZ"
         }
@@ -67,12 +83,12 @@
       {
         "task": {
           "arch": "win64",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec",
           "exclude_processes": "BethesdaNetLauncher.exe",
+          "name": "wineexec",
+          "description": "Installing Bethesda.Net launcher, please do not sign in, the launcher will shortly close after being launched. If not, you can safely close it, and wait for the end of the installation.",
           "args": "/silent",
-          "executable": "bethesdaSetup",
-          "description": "Installing Bethesda.Net launcher, please do not sign in, the launcher will shortly close after being launched. If not, you can safely close it, and wait for the end of the installation."
+          "prefix": "$GAMEDIR",
+          "executable": "bethesdaSetup"
         }
       },
       {
@@ -89,18 +105,18 @@
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "bBackgroundMouse",
           "file": "$GAMEDIR/Fallout76Custom.ini",
-          "value": 1
+          "value": 1,
+          "section": "Controls",
+          "key": "bBackgroundMouse"
         }
       },
       {
         "write_config": {
-          "section": "Controls",
-          "key": "bBackgroundMouse",
           "file": "$GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout 76/Fallout76Custom.ini",
-          "value": 1
+          "value": 1,
+          "section": "Controls",
+          "key": "bBackgroundMouse"
         }
       },
       {
@@ -114,28 +130,12 @@
       },
       {
         "task": {
-          "arch": "win64",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
           "name": "winekill"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 0,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
-      }
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "arch": "win64",
-      "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher/BethesdaNetLauncher.exe"
-    }
+    ]
   },
   "content": "files:\n- bethesdaSetup: http://download.cdp.bethesda.net/BethesdaNetLauncher_Setup.exe\n- helper: https://raw.githubusercontent.com/Makaronelle/bethesda-linux-helper/master/helper.sh\n- customSettings: https://gist.githubusercontent.com/Makaronelle/3839039cb938d07a817ace2c89ee0a08/raw/1936ad59668ae2cc6c7596d222fe62b02df5e21e/Fallout76Custom.ini\n- nvCustomSettings: https://gist.githubusercontent.com/Makaronelle/4e911a869f679c8c71bef3cf644e12f0/raw/37d58a291958497540416099cfeaad78a3ad992c/Fallout76CustomNvidia.ini\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher/BethesdaNetLauncher.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2012 win7\n    arch: win64\n    description: Installing needed libraries\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: Y\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Bethesda.Net launcher, please do not sign in, the launcher\n      will shortly close after being launched. If not, you can safely close it, and\n      wait for the end of the installation.\n    exclude_processes: BethesdaNetLauncher.exe\n    executable: bethesdaSetup\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR\n    src: nvCustomSettings\n- move:\n    dst: $GAMEDIR\n    src: customSettings\n- write_config:\n    file: $GAMEDIR/Fallout76Custom.ini\n    key: bBackgroundMouse\n    section: Controls\n    value: 1\n- write_config:\n    file: $GAMEDIR/prefix/drive_c/users/$USER/My Documents/My Games/Fallout 76/Fallout76Custom.ini\n    key: bBackgroundMouse\n    section: Controls\n    value: 1\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher\n    src: helper\n- chmodx: $GAMEDIR/drive_c/Program Files (x86)/Bethesda.net Launcher/helper.sh\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 0\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
 }

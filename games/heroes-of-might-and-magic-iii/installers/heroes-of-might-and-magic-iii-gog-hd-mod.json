@@ -21,10 +21,22 @@
   "gogslug": "heroes_of_might_and_magic_3_complete_edition",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      },
+      {
+        "hd_mod": "http://vm914332.had.yt/HoMM3_HD_Latest_setup.exe"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe"
+    },
     "installer": [
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "pl",
           "options": [
             {
               "en": "English"
@@ -37,45 +49,33 @@
             }
           ],
           "description": "Choose the game's language:",
-          "preselect": "pl"
+          "id": "LANG"
         }
       },
       {
         "task": {
-          "description": "Creating WINE prefix",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "description": "Creating WINE prefix"
         }
       },
       {
         "task": {
-          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI",
           "executable": "installer",
+          "name": "wineexec",
           "description": "Running Setup, please wait…",
-          "name": "wineexec"
+          "args": "/SILENT /SUPPRESSMSGBOXES /NOGUI"
         }
       },
       {
         "task": {
-          "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"",
           "executable": "hd_mod",
+          "name": "wineexec",
           "description": "Running HD mod setup, please wait…",
-          "name": "wineexec"
+          "args": "/SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\""
         }
       }
-    ],
-    "files": [
-      {
-        "installer": "N/A:Select the game's setup file"
-      },
-      {
-        "hd_mod": "http://vm914332.had.yt/HoMM3_HD_Latest_setup.exe"
-      }
-    ],
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe"
-    }
+    ]
   },
   "content": "files:\n- installer: N/A:Select the game's setup file\n- hd_mod: http://vm914332.had.yt/HoMM3_HD_Latest_setup.exe\ngame:\n  exe: drive_c/GOG Games/HoMM 3 Complete/HD_Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LANG\n    options:\n    - en: English\n    - pl: Polish\n    - value and: label can be anything, surround them with quotes to avoid issues\n    preselect: pl\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /NOGUI\n    description: \"Running Setup, please wait\\u2026\"\n    executable: installer\n    name: wineexec\n- task:\n    args: /SILENT /SUPPRESSMSGBOXES /DIR=\"C:\\GOG Games\\HoMM 3 Complete\"\n    description: \"Running HD mod setup, please wait\\u2026\"\n    executable: hd_mod\n    name: wineexec\n"
 }

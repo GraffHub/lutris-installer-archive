@@ -21,89 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "insert-disc": {
-          "message": "Mount and select disc 1 of Sonic Adventure DX. When it asks for disc 2,mount disc 2 (*UNTESTED* it should be safe to remove disc 1)",
-          "requires": "sonic.exe"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "app": "d3dx9",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "app": "quartz",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "executable": "$DISC/autorun.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/",
-          "file": "usexe"
-        }
-      },
-      {
-        "execute": {
-          "command": "rm \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\" && mv \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic-U-crack.exe\" \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\""
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/",
-          "file": "sadxml"
-        }
-      },
-      {
-        "move": {
-          "src": "d3d8to9",
-          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "value": "native",
-          "arch": "win32",
-          "key": "d3d8",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "extract": {
-          "src": "inputmod",
-          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/mods/sadx-input-mod"
-        }
-      },
-      {
-        "write_file": {
-          "content": "DisableCDCheck=True\nWindowedFullscreen=True\nScaleHud=True\nUpdateCheck=False\nModUpdateCheck=False\nMod1=sadx-input-mod\n",
-          "file": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/mods/SADXModLoader.ini",
-          "mode": "w"
-        }
-      }
-    ],
     "files": [
       {
         "sadxml": "http://mm.reimuhakurei.net/sadxmods/SADXModLoader.7z"
@@ -119,10 +36,93 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Sega/SONICADVENTUREDX/SADXModManager.exe"
-    }
+      "exe": "drive_c/Program Files/Sega/SONICADVENTUREDX/SADXModManager.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "message": "Mount and select disc 1 of Sonic Adventure DX. When it asks for disc 2,mount disc 2 (*UNTESTED* it should be safe to remove disc 1)",
+          "requires": "sonic.exe"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "name": "create_prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "d3dx9",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "quartz",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$DISC/autorun.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "extract": {
+          "file": "usexe",
+          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/"
+        }
+      },
+      {
+        "execute": {
+          "command": "rm \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\" && mv \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic-U-crack.exe\" \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\""
+        }
+      },
+      {
+        "extract": {
+          "file": "sadxml",
+          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/"
+        }
+      },
+      {
+        "move": {
+          "src": "d3d8to9",
+          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "d3d8",
+          "prefix": "$GAMEDIR",
+          "value": "native",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "extract": {
+          "src": "inputmod",
+          "dst": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/mods/sadx-input-mod"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/mods/SADXModLoader.ini",
+          "content": "DisableCDCheck=True\nWindowedFullscreen=True\nScaleHud=True\nUpdateCheck=False\nModUpdateCheck=False\nMod1=sadx-input-mod\n",
+          "mode": "w"
+        }
+      }
+    ]
   },
   "content": "files:\n- sadxml: http://mm.reimuhakurei.net/sadxmods/SADXModLoader.7z\n- usexe: https://mm.reimuhakurei.net/misc/sonic-U-crack.7z\n- d3d8to9: https://github.com/crosire/d3d8to9/releases/latest/download/d3d8.dll\n- inputmod: https://github.com/michael-fadely/sadx-input-mod/releases/latest/download/sadx-input-mod.7z\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Sega/SONICADVENTUREDX/SADXModManager.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    message: Mount and select disc 1 of Sonic Adventure DX. When it asks for disc\n      2,mount disc 2 (*UNTESTED* it should be safe to remove disc 1)\n    requires: sonic.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/\n    file: usexe\n- execute:\n    command: rm \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\" &&\n      mv \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic-U-crack.exe\"\n      \"$GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/sonic.exe\"\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/\n    file: sadxml\n- move:\n    dst: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/\n    src: d3d8to9\n- task:\n    arch: win32\n    key: d3d8\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/mods/sadx-input-mod\n    src: inputmod\n- write_file:\n    content: 'DisableCDCheck=True\n\n      WindowedFullscreen=True\n\n      ScaleHud=True\n\n      UpdateCheck=False\n\n      ModUpdateCheck=False\n\n      Mod1=sadx-input-mod\n\n      '\n    file: $GAMEDIR/drive_c/Program Files/Sega/SONICADVENTUREDX/mods/SADXModLoader.ini\n    mode: w\n"
 }

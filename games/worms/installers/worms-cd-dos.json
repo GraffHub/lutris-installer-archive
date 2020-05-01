@@ -1,0 +1,67 @@
+{
+  "id": 19994,
+  "game_id": 1408,
+  "game_slug": "worms",
+  "name": "Worms",
+  "year": 1995,
+  "user": "AngryUbuntuNerd",
+  "runner": "dosbox",
+  "slug": "worms-cd-dos",
+  "version": "CD DOS",
+  "description": "Install from retail DOS CD.",
+  "notes": "",
+  "created_at": "2020-04-25T23:40:12.508527Z",
+  "updated_at": "2020-04-25T23:40:12.508551Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 70640,
+  "gogid": 1207658991,
+  "gogslug": "worms_united",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/WORMS.EXE",
+      "config_file": "$GAMEDIR/dosbox.ini"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "copy": {
+          "src": "$DISC",
+          "dst": "$GAMEDIR/CD/"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/install.ini",
+          "content": "[autoexec]\nmount c $GAMEDIR\nmount d $GAMEDIR/CD/ -t cdrom\nd:\nSETUP.EXE\nexit\n"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/install.ini",
+          "name": "dosexec"
+        }
+      },
+      {
+        "copy": {
+          "src": "$GAMEDIR/WORMS",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "file": "$GAMEDIR/dosbox.ini",
+          "content": "[autoexec]\nmount d $GAMEDIR/CD/ -t cdrom"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  config_file: $GAMEDIR/dosbox.ini\n  main_file: $GAMEDIR/WORMS.EXE\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- copy:\n    dst: $GAMEDIR/CD/\n    src: $DISC\n- write_file:\n    content: '[autoexec]\n\n      mount c $GAMEDIR\n\n      mount d $GAMEDIR/CD/ -t cdrom\n\n      d:\n\n      SETUP.EXE\n\n      exit\n\n      '\n    file: $GAMEDIR/install.ini\n- task:\n    config_file: $GAMEDIR/install.ini\n    name: dosexec\n- copy:\n    dst: $GAMEDIR\n    src: $GAMEDIR/WORMS\n- write_file:\n    content: '[autoexec]\n\n      mount d $GAMEDIR/CD/ -t cdrom'\n    file: $GAMEDIR/dosbox.ini\n"
+}

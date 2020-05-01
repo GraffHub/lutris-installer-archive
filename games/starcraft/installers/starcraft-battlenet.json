@@ -21,44 +21,57 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "setup": {
+          "filename": "Battle.net-Setup.exe",
+          "url": "https://battle.net/download/getInstallerForGame?os=WIN&version=LIVE&gameProgram=STARCRAFT"
+        }
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "$GAMEDIR/drive_c/Program Files/Battle.net/Battle.net.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating 32bit Wine prefix.",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating 32bit Wine prefix."
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winetricks",
-          "arch": "win32",
           "silent": true,
+          "arch": "win32",
+          "name": "winetricks",
           "description": "Installing Arial font",
+          "prefix": "$GAMEDIR",
           "app": "arial"
         }
       },
       {
         "write_json": {
-          "description": "Writing a Battle.Net config file",
           "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
           "data": {
             "Client": {
+              "HardwareAcceleration": "false",
+              "GameLaunchWindowBehavior": "2",
               "GameSearch": {
                 "BackgroundSearch": "true"
               },
-              "GameLaunchWindowBehavior": "2",
               "Sound": {
                 "Enabled": "false"
               },
-              "HardwareAcceleration": "false",
               "Streaming": {
                 "StreamingEnabled": "false"
               }
             }
-          }
+          },
+          "description": "Writing a Battle.Net config file"
         }
       },
       {
@@ -69,11 +82,11 @@
       },
       {
         "task": {
-          "arch": "win32",
           "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
+          "arch": "win32",
           "executable": "setup",
-          "description": "Installing Blizzard App (an installer will open)\n------------------------------\nLet Lutris installer finish first. Log in afterwards.",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Installing Blizzard App (an installer will open)\n------------------------------\nLet Lutris installer finish first. Log in afterwards."
         }
       },
       {
@@ -82,20 +95,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "files": [
-      {
-        "setup": {
-          "url": "https://battle.net/download/getInstallerForGame?os=WIN&version=LIVE&gameProgram=STARCRAFT",
-          "filename": "Battle.net-Setup.exe"
-        }
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/Battle.net/Battle.net.exe"
-    }
+    ]
   },
   "content": "files:\n- setup:\n    filename: Battle.net-Setup.exe\n    url: https://battle.net/download/getInstallerForGame?os=WIN&version=LIVE&gameProgram=STARCRAFT\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Battle.net/Battle.net.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win32\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        GameSearch:\n          BackgroundSearch: 'true'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n    description: Writing a Battle.Net config file\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: 'Installing Blizzard App (an installer will open)\n\n      ------------------------------\n\n      Let Lutris installer finish first. Log in afterwards.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

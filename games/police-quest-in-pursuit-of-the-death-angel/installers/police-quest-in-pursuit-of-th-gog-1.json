@@ -21,26 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$file2"
-        }
-      },
-      {
-        "execute": {
-          "args": "-d \"$CACHE\" \"$file1\"",
-          "file": "$CACHE/innoextract"
-        }
-      },
-      {
-        "merge": {
-          "src": "$CACHE/app/EGA",
-          "dst": "$GAMEDIR"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the GOG installer"
@@ -50,10 +30,30 @@
       }
     ],
     "game": {
-      "game_id": "pq1",
       "subtitles": true,
+      "game_id": "pq1",
       "path": "$GAMEDIR"
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$file2",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$CACHE\" \"$file1\""
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/app/EGA",
+          "dst": "$GAMEDIR"
+        }
+      }
+    ]
   },
   "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.net/files/tools/innoextract.tar.gz\ngame:\n  game_id: pq1\n  path: $GAMEDIR\n  subtitles: true\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app/EGA\n"
 }

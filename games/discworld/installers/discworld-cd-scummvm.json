@@ -8,10 +8,10 @@
   "runner": "scummvm",
   "slug": "discworld-cd-scummvm",
   "version": "CD + ScummVM",
-  "description": "This script will install \"Discworld\" CD edition for ScummVM.\r\nDuring install please let all options by default.\r\nThis script uses remastered soundtracks from James Woodcock. Visit his site to find more adventure games quality soundtracks replacement for ScummVM: http://scummvm.jameswoodcock.co.uk/\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "description": "This script will install \"Discworld\" CD edition for ScummVM.\r\nDuring install please let all options by default.\r\nThis script uses remastered soundtracks from James Woodcock. Visit his site to find more adventure games quality soundtracks replacement for ScummVM: http://scummvm.jameswoodcock.co.uk/\r\nThanks to the people who contributed to play this game in the best conditions on Linux platform.",
   "notes": "- You will need the Discworld CD only one time during install.\r\n- This script is compatible with US and European CD version.\r\n- Press F1 for main menu (load, save, quit...).\r\n- Multilanguage: during install you will be able to choose your preferred menus and subtitles game language between English (default), Italian, French, Spanish and German, whatever the Discworld CD version you use.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
   "created_at": "2020-01-14T18:21:49.762000Z",
-  "updated_at": "2020-01-18T16:33:59.535063Z",
+  "updated_at": "2020-04-28T21:51:14.973851Z",
   "draft": false,
   "published": true,
   "published_by": 494,
@@ -21,32 +21,12 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "copy": {
-      "src": "$GAMEDIR/lang/$INPUT_LANG.txt",
-      "dst": "$GAMEDIR"
-    },
     "custom-name": "Discworld - CD - ScummVM",
-    "files": [
-      {
-        "music": "https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip"
-      },
-      {
-        "multi5": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip"
-      }
-    ],
-    "game": {
-      "game_id": "dw",
-      "subtitles": true,
-      "path": "$GAMEDIR"
-    },
-    "scummvm": {
-      "fullscreen": true
-    },
     "installer": [
       {
         "insert-disc": {
-          "description": "Please insert Discworld disc",
-          "requires": "dwu.exe"
+          "requires": "dwu.exe",
+          "description": "Please insert Discworld disc"
         }
       },
       {
@@ -58,7 +38,7 @@
       {
         "extract": {
           "src": "multi5",
-          "dst": "$GAMEDIR/lang"
+          "dst": "$GAMEDIR/"
         }
       },
       {
@@ -69,34 +49,46 @@
       },
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "en",
           "options": [
             {
-              "english": "English"
+              "en": "English"
             },
             {
-              "french": "French"
+              "fr": "French"
             },
             {
-              "spanish": "Spanish"
+              "es": "Spanish"
             },
             {
-              "italian": "Italian"
+              "it": "Italian"
             },
             {
-              "german": "German"
+              "de": "German"
             }
           ],
           "description": "Choose your preferred game's language for game menus and subtitles:",
-          "preselect": "english"
-        }
-      },
-      {
-        "execute": {
-          "command": "cd $GAMEDIR; rm -f -r drivers dwu.exe dwb.exe french.txt german.txt english.txt italian.txt spanish.txt; cp lang/$INPUT_LANG.txt english.txt ;"
+          "id": "LANG"
         }
       }
-    ]
+    ],
+    "files": [
+      {
+        "music": "https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip"
+      },
+      {
+        "multi5": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip"
+      }
+    ],
+    "game": {
+      "subtitles": true,
+      "game_id": "dw",
+      "path": "$GAMEDIR",
+      "args": "--language=$INPUT_LANG"
+    },
+    "scummvm": {
+      "fullscreen": true
+    }
   },
-  "content": "copy:\n  dst: $GAMEDIR\n  src: $GAMEDIR/lang/$INPUT_LANG.txt\ncustom-name: Discworld - CD - ScummVM\nfiles:\n- music: https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip\ngame:\n  game_id: dw\n  path: $GAMEDIR\n  subtitles: true\ninstaller:\n- insert-disc:\n    description: Please insert Discworld disc\n    requires: dwu.exe\n- merge:\n    dst: $GAMEDIR\n    src: $DISC/discwld\n- extract:\n    dst: $GAMEDIR/lang\n    src: multi5\n- extract:\n    dst: $GAMEDIR\n    src: music\n- input_menu:\n    description: 'Choose your preferred game''s language for game menus and subtitles:'\n    id: LANG\n    options:\n    - english: English\n    - french: French\n    - spanish: Spanish\n    - italian: Italian\n    - german: German\n    preselect: english\n- execute:\n    command: cd $GAMEDIR; rm -f -r drivers dwu.exe dwb.exe french.txt german.txt english.txt\n      italian.txt spanish.txt; cp lang/$INPUT_LANG.txt english.txt ;\nscummvm:\n  fullscreen: true\n"
+  "content": "custom-name: Discworld - CD - ScummVM\nfiles:\n- music: https://dl.dropboxusercontent.com/s/8kcnavvu4n848do/discworld_v2_1_ogg.zip\n- multi5: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Discworld/discworld_multi5.zip\ngame:\n  args: --language=$INPUT_LANG\n  game_id: dw\n  path: $GAMEDIR\n  subtitles: true\ninstaller:\n- insert-disc:\n    description: Please insert Discworld disc\n    requires: dwu.exe\n- merge:\n    dst: $GAMEDIR\n    src: $DISC/discwld\n- extract:\n    dst: $GAMEDIR/\n    src: multi5\n- extract:\n    dst: $GAMEDIR\n    src: music\n- input_menu:\n    description: 'Choose your preferred game''s language for game menus and subtitles:'\n    id: LANG\n    options:\n    - en: English\n    - fr: French\n    - es: Spanish\n    - it: Italian\n    - de: German\n    preselect: en\nscummvm:\n  fullscreen: true\n"
 }

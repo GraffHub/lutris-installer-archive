@@ -22,12 +22,17 @@
   "humblestoreid": "",
   "script": {
     "exe": "start.sh",
+    "files": [
+      {
+        "game": "http://tvgigant.de/downloads/TVTower.LatestRelease.zip"
+      }
+    ],
     "installer": [
       {
         "extract": {
+          "file": "$game",
           "description": "extracting...",
-          "dst": "$GAMEDIR",
-          "file": "$game"
+          "dst": "$GAMEDIR"
         }
       },
       {
@@ -41,18 +46,13 @@
       },
       {
         "execute": {
-          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nif [ \\\"$$(uname -m)\\\" = \\\"x86_64\\\" ]\\nthen\\n./TVTower_Linux64 \\\"$$@\\\"\\nelse\\n./TVTower_Linux32 \\\"$$@\\\"\\nfi'>$GAMEDIR/start.sh\"",
           "file": "/bin/sh",
-          "terminal": true
+          "terminal": true,
+          "args": "-c \"printf '#!/bin/sh\\ncd $GAMEDIR\\nif [ \\\"$$(uname -m)\\\" = \\\"x86_64\\\" ]\\nthen\\n./TVTower_Linux64 \\\"$$@\\\"\\nelse\\n./TVTower_Linux32 \\\"$$@\\\"\\nfi'>$GAMEDIR/start.sh\""
         }
       },
       {
         "chmodx": "$GAMEDIR/start.sh"
-      }
-    ],
-    "files": [
-      {
-        "game": "http://tvgigant.de/downloads/TVTower.LatestRelease.zip"
       }
     ]
   },

@@ -1,0 +1,94 @@
+{
+  "id": 19764,
+  "game_id": 606,
+  "game_slug": "dragon-age-origins-ultimate-edition",
+  "name": "Dragon Age: Origins - Ultimate Edition",
+  "year": 2009,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "dragon-age-origins-ultimate-e-gog-lgdn",
+  "version": "GOG LGDN",
+  "description": "This script will facilitate you install of this game on Linux OS:\r\n\"Dragon Age - Origins - Ultimate Edition\" provided by GOG.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions on Linux platform.",
+  "notes": "- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2020-04-16T23:12:59.428000Z",
+  "updated_at": "2020-04-20T23:48:44.151514Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 17450,
+  "gogid": 1949616134,
+  "gogslug": "dragon_age_origins",
+  "humblestoreid": "",
+  "script": {
+    "custom-name": "Dragon Age - Origins - Ultimate Edition - GOG",
+    "files": [
+      {
+        "gogsetup": "N/A:Please select the Windows setup exe file downloaded from your GOG account."
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Dragon Age - Origins - Ultimate Edition/DAOriginsLauncher.exe"
+    },
+    "wine": {
+      "Desktop": true
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "inno",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Preparing wineprefix..."
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "description": "Installing game, could take a while...",
+          "args": "-g -d \"$GAMEDIR/drive_c/GOG Games/\" \"$gogsetup\""
+        }
+      },
+      {
+        "move": {
+          "src": "$GAMEDIR/drive_c/GOG Games/game",
+          "dst": "$GAMEDIR/drive_c/GOG Games/Dragon Age - Origins - Ultimate Edition/"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "physx",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "background",
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/\"; rm -f -r app/ DirectXpackage/ dotNet35/ MSVC2005* support/ tmp/ __unpacker/ userdocs/; cd \"Dragon Age - Origins - Ultimate Edition\"; rm -f -r goggame-1949616134.* webcache.zip redist/;"
+        }
+      }
+    ]
+  },
+  "content": "custom-name: Dragon Age - Origins - Ultimate Edition - GOG\nfiles:\n- gogsetup: N/A:Please select the Windows setup exe file downloaded from your GOG\n    account.\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  exe: drive_c/GOG Games/Dragon Age - Origins - Ultimate Edition/DAOriginsLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: inno\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    args: -g -d \"$GAMEDIR/drive_c/GOG Games/\" \"$gogsetup\"\n    description: Installing game, could take a while...\n    file: $CACHE/innoextract\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Dragon Age - Origins - Ultimate Edition/\n    src: $GAMEDIR/drive_c/GOG Games/game\n- task:\n    app: physx\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/\"; rm -f -r app/ DirectXpackage/ dotNet35/\n      MSVC2005* support/ tmp/ __unpacker/ userdocs/; cd \"Dragon Age - Origins - Ultimate\n      Edition\"; rm -f -r goggame-1949616134.* webcache.zip redist/;\nwine:\n  Desktop: true\n"
+}

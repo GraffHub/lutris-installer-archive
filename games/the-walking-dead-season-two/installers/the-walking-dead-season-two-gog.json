@@ -21,22 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "execute": {
-          "args": "--gog -d \"$CACHE\" \"$installer\"",
-          "description": "Extracting game data",
-          "file": "innoextract"
-        }
-      },
-      {
-        "move": {
-          "src": "$CACHE/app",
-          "dst": "$GAMEDIR/prefix/drive_c/game",
-          "description": "Extracting game data"
-        }
-      }
-    ],
     "files": [
       {
         "installer": "N/A:Select the game's setup file"
@@ -45,7 +29,23 @@
     "game": {
       "prefix": "$GAMEDIR/prefix",
       "exe": "drive_c/game/WalkingDead2.exe"
-    }
+    },
+    "installer": [
+      {
+        "execute": {
+          "file": "innoextract",
+          "description": "Extracting game data",
+          "args": "--gog -d \"$CACHE\" \"$installer\""
+        }
+      },
+      {
+        "move": {
+          "src": "$CACHE/app",
+          "description": "Extracting game data",
+          "dst": "$GAMEDIR/prefix/drive_c/game"
+        }
+      }
+    ]
   },
   "content": "files:\r\n- installer: N/A:Select the game's setup file\r\ngame:\r\n  exe: drive_c/game/WalkingDead2.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- execute:\r\n    args: --gog -d \"$CACHE\" \"$installer\"\r\n    description: Extracting game data\r\n    file: innoextract\r\n- move:\r\n    description: Extracting game data\r\n    dst: $GAMEDIR/prefix/drive_c/game\r\n    src: $CACHE/app"
 }

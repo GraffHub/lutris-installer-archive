@@ -21,16 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "require-binaries": "wget, unzip, 7z",
+    "game": {
+      "exe": "rvgl"
+    },
     "files": [
       {
         "setup": "https://gitlab.com/Medath/install_rvgl/raw/master/install_rvgl.py"
       }
     ],
+    "require-binaries": "wget, unzip, 7z",
     "installer": [
       {
         "input_menu": {
-          "id": "BONUSPACKS",
+          "preselect": "soundtrack",
           "options": [
             {
               "soundtrack": "Download the soundtrack (~100MB)"
@@ -46,7 +49,7 @@
             }
           ],
           "description": "What additional features do you want?",
-          "preselect": "soundtrack"
+          "id": "BONUSPACKS"
         }
       },
       {
@@ -54,9 +57,9 @@
       },
       {
         "execute": {
-          "args": "install $GAMEDIR $INPUT_BONUSPACKS",
+          "file": "setup",
           "description": "Installing game. Please be patient",
-          "file": "setup"
+          "args": "install $GAMEDIR $INPUT_BONUSPACKS"
         }
       },
       {
@@ -65,10 +68,7 @@
           "dst": "$GAMEDIR/"
         }
       }
-    ],
-    "game": {
-      "exe": "rvgl"
-    }
+    ]
   },
   "content": "files:\n- setup: https://gitlab.com/Medath/install_rvgl/raw/master/install_rvgl.py\ngame:\n  exe: rvgl\ninstaller:\n- input_menu:\n    description: What additional features do you want?\n    id: BONUSPACKS\n    options:\n    - soundtrack: Download the soundtrack (~100MB)\n    - io: Download the io tracks and cars (recommended if you want to play online.\n        ~420MB)\n    - both: Download both the soundtrack and the io packs\n    - none: None. Just install the game without anything else\n    preselect: soundtrack\n- chmodx: setup\n- execute:\n    args: install $GAMEDIR $INPUT_BONUSPACKS\n    description: Installing game. Please be patient\n    file: setup\n- move:\n    dst: $GAMEDIR/\n    src: setup\nrequire-binaries: wget, unzip, 7z\n"
 }

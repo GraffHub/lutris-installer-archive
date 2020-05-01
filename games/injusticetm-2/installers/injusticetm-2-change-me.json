@@ -22,8 +22,24 @@
   "humblestoreid": "",
   "script": {
     "winesteam": {
-      "dxvk": true,
-      "esync": true
+      "esync": true,
+      "dxvk": true
+    },
+    "files": [
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/prefix",
+      "arch": "win64",
+      "appid": 976310
+    },
+    "system": {
+      "env": {
+        "WINE_LOW_USER_SPACE_LIMIT": 1,
+        "DXVK_HUD": "compiler"
+      }
     },
     "installer": [
       {
@@ -34,8 +50,8 @@
       },
       {
         "extract": {
-          "dst": "$CACHE/mfinstaller",
-          "file": "mfinstaller"
+          "file": "mfinstaller",
+          "dst": "$CACHE/mfinstaller"
         }
       },
       {
@@ -49,30 +65,14 @@
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Installing dependencies",
-          "app": "arial",
           "prefix": "$GAMEDIR",
+          "arch": "win64",
+          "app": "arial",
+          "description": "Installing dependencies",
           "name": "winetricks"
         }
       }
-    ],
-    "files": [
-      {
-        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
-      }
-    ],
-    "system": {
-      "env": {
-        "DXVK_HUD": "compiler",
-        "WINE_LOW_USER_SPACE_LIMIT": 1
-      }
-    },
-    "game": {
-      "arch": "win64",
-      "appid": 976310,
-      "prefix": "$GAMEDIR/prefix"
-    }
+    ]
   },
   "content": "files:\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  appid: 976310\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n    terminal: true\n- task:\n    app: arial\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    WINE_LOW_USER_SPACE_LIMIT: 1\nwinesteam:\n  dxvk: true\n  esync: true\n"
 }

@@ -22,80 +22,80 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Fox/Croc/CrocD3D.exe"
+      "exe": "drive_c/Program Files/Fox/Croc/CrocD3D.exe",
+      "arch": "win32"
     },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix...",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating Wine prefix..."
         }
       },
       {
         "insert-disc": {
           "message": "Insert the Croc CD-ROM disc.",
-          "description": "Waiting for game installer...",
-          "requires": "autorun.exe"
+          "requires": "autorun.exe",
+          "description": "Waiting for game installer..."
         }
       },
       {
         "task": {
-          "executable": "$DISC/autorun.exe",
-          "description": "Executing setup from disc. Select \"Install Croc\" and follow the prompts. Do not change the default installation directory. Select a full installation. Click \"No\" when asked to install DirectX. Exit the application.",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$DISC/autorun.exe",
+          "name": "wineexec",
+          "description": "Executing setup from disc. Select \"Install Croc\" and follow the prompts. Do not change the default installation directory. Select a full installation. Click \"No\" when asked to install DirectX. Exit the application."
         }
       },
       {
         "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "D3D Device",
           "prefix": "$GAMEDIR",
           "value": "DirectDraw HAL",
-          "arch": "win32",
-          "key": "D3D Device",
-          "name": "set_regedit",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc"
         }
       },
       {
         "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "D3D Mode",
           "prefix": "$GAMEDIR",
           "value": "DirectDraw HAL $RESOLUTION, 16 bit",
-          "arch": "win32",
-          "key": "D3D Mode",
-          "name": "set_regedit",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc"
         }
       },
       {
         "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "D3D Resoloution",
           "prefix": "$GAMEDIR",
           "value": "$RESOLUTION, 16 bit",
-          "arch": "win32",
-          "key": "D3D Resoloution",
-          "name": "set_regedit",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc"
         }
       },
       {
         "task": {
+          "arch": "win32",
+          "name": "set_regedit",
+          "key": "Driver name",
           "prefix": "$GAMEDIR",
           "value": "d3drend",
-          "arch": "win32",
-          "key": "Driver name",
-          "name": "set_regedit",
           "path": "HKEY_LOCAL_MACHINE\\Software\\Argonaut Software\\Croc"
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/drive_c/Program Files/Fox/Croc/CrocRun.exe",
-          "description": "Select \"Change driver settings\". Use the dropdown menu under \"Screen Resolution\" to set resolution. Click \"OK\" when done. Exit the application.",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/drive_c/Program Files/Fox/Croc/CrocRun.exe",
+          "name": "wineexec",
+          "description": "Select \"Change driver settings\". Use the dropdown menu under \"Screen Resolution\" to set resolution. Click \"OK\" when done. Exit the application."
         }
       }
     ]

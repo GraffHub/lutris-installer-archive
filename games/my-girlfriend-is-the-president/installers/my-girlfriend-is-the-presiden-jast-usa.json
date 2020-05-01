@@ -21,28 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$file1"
-        }
-      },
-      {
-        "task": {
-          "args": "\"/sp-\" \"/silent\" \"/norestart\" /DIR=\"C:\\\\Program Files\\\\My Girlfriend is the President\"",
-          "executable": "$CACHE/President_Setup.exe",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "extract": {
-          "dst": "$GAMEDIR/plugin",
-          "file": "$file2"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the JAST USA archive"
@@ -52,10 +30,32 @@
       }
     ],
     "game": {
-      "arch": "win32",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/My Girlfriend is the President/osana.exe"
-    }
+      "exe": "drive_c/Program Files/My Girlfriend is the President/osana.exe",
+      "arch": "win32"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$file1",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "$CACHE/President_Setup.exe",
+          "name": "wineexec",
+          "args": "\"/sp-\" \"/silent\" \"/norestart\" /DIR=\"C:\\\\Program Files\\\\My Girlfriend is the President\""
+        }
+      },
+      {
+        "extract": {
+          "file": "$file2",
+          "dst": "$GAMEDIR/plugin"
+        }
+      }
+    ]
   },
   "content": "files:\n- file1: N/A:Please select the JAST USA archive\n- file2: N/A:Please select the JAST USA patch file\ngame:\n  arch: win32\n  exe: drive_c/Program Files/My Girlfriend is the President/osana.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file1\n- task:\n    args: '\"/sp-\" \"/silent\" \"/norestart\" /DIR=\"C:\\\\Program Files\\\\My Girlfriend is\n      the President\"'\n    executable: $CACHE/President_Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/plugin\n    file: $file2\n"
 }

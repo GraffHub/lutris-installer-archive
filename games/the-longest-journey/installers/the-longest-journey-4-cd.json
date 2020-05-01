@@ -21,28 +21,34 @@
   "gogslug": "the_longest_journey",
   "humblestoreid": "",
   "script": {
-    "residualvm": {
-      "fullscreen": true
-    },
+    "custom-name": "The Longest Journey - 4 CD - ResidualVM",
     "files": [
       {
         "rvmengine": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/engines.zip"
       },
       {
         "multi5": {
-          "url": "https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1",
-          "filename": "tlj_4cd_gog_menus_sub_multi5.zip"
+          "filename": "tlj_4cd_gog_menus_sub_multi5.zip",
+          "url": "https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1"
         }
       },
       {
         "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh"
       }
     ],
+    "game": {
+      "subtitles": true,
+      "game_id": "tlj",
+      "path": "$GAMEDIR/TLJCD"
+    },
+    "residualvm": {
+      "fullscreen": true
+    },
     "installer": [
       {
         "insert-disc": {
-          "description": "Please insert The Longest journey CD 1",
-          "requires": "game.exe"
+          "requires": "game.exe",
+          "description": "Please insert The Longest journey CD 1"
         }
       },
       {
@@ -58,8 +64,8 @@
       },
       {
         "insert-disc": {
-          "description": "Please insert The Longest journey CD 2",
-          "requires": "slide2.avi"
+          "requires": "slide2.avi",
+          "description": "Please insert The Longest journey CD 2"
         }
       },
       {
@@ -75,8 +81,8 @@
       },
       {
         "insert-disc": {
-          "description": "Please insert The Longest journey CD 3",
-          "requires": "slide3.avi"
+          "requires": "slide3.avi",
+          "description": "Please insert The Longest journey CD 3"
         }
       },
       {
@@ -92,8 +98,8 @@
       },
       {
         "insert-disc": {
-          "description": "Please insert The Longest journey CD 4",
-          "requires": "slide4.avi"
+          "requires": "slide4.avi",
+          "description": "Please insert The Longest journey CD 4"
         }
       },
       {
@@ -109,19 +115,19 @@
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/tmp",
-          "file": "multi5"
+          "file": "multi5",
+          "dst": "$GAMEDIR/tmp"
         }
       },
       {
         "extract": {
-          "dst": "$GAMEDIR/TLJCD/engines",
-          "file": "rvmengine"
+          "file": "rvmengine",
+          "dst": "$GAMEDIR/TLJCD/engines"
         }
       },
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "keep",
           "options": [
             {
               "keep": "I prefer to keep default install language for menus and subtitles"
@@ -140,7 +146,7 @@
             }
           ],
           "description": "Do you want to use another language for menus and subtitles?",
-          "preselect": "keep"
+          "id": "LANG"
         }
       },
       {
@@ -148,17 +154,11 @@
       },
       {
         "execute": {
-          "args": "$INPUT_LANG",
-          "file": "script"
+          "file": "script",
+          "args": "$INPUT_LANG"
         }
       }
-    ],
-    "custom-name": "The Longest Journey - 4 CD - ResidualVM",
-    "game": {
-      "game_id": "tlj",
-      "subtitles": true,
-      "path": "$GAMEDIR/TLJCD"
-    }
+    ]
   },
   "content": "custom-name: The Longest Journey - 4 CD - ResidualVM\nfiles:\n- rvmengine: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/engines.zip\n- multi5:\n    filename: tlj_4cd_gog_menus_sub_multi5.zip\n    url: https://www.dropbox.com/s/h2mfqt8bw7xygt2/tlj_4cd_gog_menus_sub_multi5.zip?dl=1\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/The%20Longest%20Journey/clean.sh\ngame:\n  game_id: tlj\n  path: $GAMEDIR/TLJCD\n  subtitles: true\ninstaller:\n- insert-disc:\n    description: Please insert The Longest journey CD 1\n    requires: game.exe\n- merge:\n    dst: $GAMEDIR/TLJCD\n    src: $DISC/\n- execute:\n    command: cd $GAMEDIR/TLJCD; chmod -R +w *\n- insert-disc:\n    description: Please insert The Longest journey CD 2\n    requires: slide2.avi\n- merge:\n    dst: $GAMEDIR/TLJCD\n    src: $DISC/\n- execute:\n    command: $GAMEDIR/TLJCD; chmod -R +w *\n- insert-disc:\n    description: Please insert The Longest journey CD 3\n    requires: slide3.avi\n- merge:\n    dst: $GAMEDIR/TLJCD\n    src: $DISC/\n- execute:\n    command: cd $GAMEDIR/TLJCD; chmod -R +w *\n- insert-disc:\n    description: Please insert The Longest journey CD 4\n    requires: slide4.avi\n- merge:\n    dst: $GAMEDIR/TLJCD\n    src: $DISC/\n- execute:\n    command: cd $GAMEDIR/TLJCD; chmod -R +w *\n- extract:\n    dst: $GAMEDIR/tmp\n    file: multi5\n- extract:\n    dst: $GAMEDIR/TLJCD/engines\n    file: rvmengine\n- input_menu:\n    description: Do you want to use another language for menus and subtitles?\n    id: LANG\n    options:\n    - keep: I prefer to keep default install language for menus and subtitles\n    - fr: French\n    - it: Italian\n    - sp: Spanish\n    - ge: german\n    preselect: keep\n- chmodx: script\n- execute:\n    args: $INPUT_LANG\n    file: script\nresidualvm:\n  fullscreen: true\n"
 }

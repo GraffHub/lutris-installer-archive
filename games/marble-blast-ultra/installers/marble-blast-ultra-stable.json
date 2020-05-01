@@ -24,18 +24,30 @@
     "files": [
       {
         "setup": {
-          "url": "http://old.marblevortex.com/download/MarbleBlastUltra-1.9.1.5_setup.exe",
-          "filename": "MarbleBlastUltra-1.9.1.5_setup.exe"
+          "filename": "MarbleBlastUltra-1.9.1.5_setup.exe",
+          "url": "http://old.marblevortex.com/download/MarbleBlastUltra-1.9.1.5_setup.exe"
         }
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Marble Blast Ultra/marbleblast.exe",
+      "arch": "win32"
+    },
+    "wine": {
+      "esync": true,
+      "Desktop": true
+    },
+    "system": {
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win32",
-          "description": "Creating 32bit Wine prefix.",
           "prefix": "$GAMEDIR",
-          "name": "create_prefix"
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating 32bit Wine prefix."
         }
       },
       {
@@ -48,8 +60,8 @@
         "task": {
           "arch": "win32",
           "executable": "setup",
-          "description": "Installing Marble Blast Ultra\n------------------------------\nMake sure to uncheck final launch toggle.",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Installing Marble Blast Ultra\n------------------------------\nMake sure to uncheck final launch toggle."
         }
       },
       {
@@ -58,19 +70,7 @@
           "name": "winekill"
         }
       }
-    ],
-    "system": {
-      "pulse_latency": true
-    },
-    "wine": {
-      "Desktop": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Marble Blast Ultra/marbleblast.exe"
-    }
+    ]
   },
   "content": "files:\n- setup:\n    filename: MarbleBlastUltra-1.9.1.5_setup.exe\n    url: http://old.marblevortex.com/download/MarbleBlastUltra-1.9.1.5_setup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Marble Blast Ultra/marbleblast.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: 'Installing Marble Blast Ultra\n\n      ------------------------------\n\n      Make sure to uncheck final launch toggle.'\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  pulse_latency: true\nwine:\n  Desktop: true\n  esync: true\n"
 }

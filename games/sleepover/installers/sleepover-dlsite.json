@@ -21,29 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "$file2"
-        }
-      },
-      {
-        "chmodx": "$GAMEDIR/renpy.sh"
-      },
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$file1"
-        }
-      },
-      {
-        "merge": {
-          "src": "$CACHE/game",
-          "dst": "$GAMEDIR/sleepover/game"
-        }
-      }
-    ],
     "files": [
       {
         "file1": "N/A:Please select the game archive"
@@ -53,9 +30,32 @@
       }
     ],
     "game": {
-      "args": "sleepover",
-      "exe": "renpy.sh"
-    }
+      "exe": "renpy.sh",
+      "args": "sleepover"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$file2",
+          "dst": "$GAMEDIR"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/renpy.sh"
+      },
+      {
+        "extract": {
+          "file": "$file1",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/game",
+          "dst": "$GAMEDIR/sleepover/game"
+        }
+      }
+    ]
   },
   "content": "files:\n- file1: N/A:Please select the game archive\n- file2: https://www.renpy.org/dl/6.16.5/renpy-6.16.5-sdk.tar.bz2\ngame:\n  args: sleepover\n  exe: renpy.sh\ninstaller:\n- extract:\n    dst: $GAMEDIR\n    file: $file2\n- chmodx: $GAMEDIR/renpy.sh\n- extract:\n    dst: $CACHE\n    file: $file1\n- merge:\n    dst: $GAMEDIR/sleepover/game\n    src: $CACHE/game\n"
 }

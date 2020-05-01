@@ -21,6 +21,16 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "files": [
+      {
+        "patch13": "http://www.callofdutyview.net/files/patches/cod2-v1.3.zip"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/Program Files/Activision/Call of Duty 2/CoD2SP_s.exe",
+      "arch": "win32"
+    },
     "installer": [
       {
         "task": {
@@ -30,8 +40,8 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 1",
-          "requires": "setup.exe"
+          "requires": "setup.exe",
+          "description": "Insert disc 1"
         }
       },
       {
@@ -42,8 +52,8 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 2",
-          "requires": "Setup/Data/main/iw_02.iwd"
+          "requires": "Setup/Data/main/iw_02.iwd",
+          "description": "Insert disc 2"
         }
       },
       {
@@ -54,8 +64,8 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 3",
-          "requires": "Setup/Data/main/iw_07.iwd"
+          "requires": "Setup/Data/main/iw_07.iwd",
+          "description": "Insert disc 3"
         }
       },
       {
@@ -66,8 +76,8 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 4",
-          "requires": "Setup/Data/main/iw_12.iwd"
+          "requires": "Setup/Data/main/iw_12.iwd",
+          "description": "Insert disc 4"
         }
       },
       {
@@ -78,8 +88,8 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 5",
-          "requires": "autorun.inf"
+          "requires": "autorun.inf",
+          "description": "Insert disc 5"
         }
       },
       {
@@ -90,8 +100,8 @@
       },
       {
         "insert-disc": {
-          "description": "Insert disc 6",
-          "requires": "Launch.ini"
+          "requires": "Launch.ini",
+          "description": "Insert disc 6"
         }
       },
       {
@@ -102,39 +112,29 @@
       },
       {
         "extract": {
+          "file": "patch13",
           "description": "Extracting the patch",
-          "dst": "$GAMEDIR/drive_c/patch13",
-          "file": "patch13"
+          "dst": "$GAMEDIR/drive_c/patch13"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "exclude_processes": "cod2.exe",
           "executable": "$GAMEDIR/drive_c/COD2_DISC/setup.exe",
-          "description": "Running the installer. Choose Typical. The installer will crash, you'll have to end the process \"cod2.exe\" using a task manager, or else the process will not procead.",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Running the installer. Choose Typical. The installer will crash, you'll have to end the process \"cod2.exe\" using a task manager, or else the process will not procead."
         }
       },
       {
         "task": {
-          "executable": "$GAMEDIR/drive_c/patch13/cod2-v1.3.exe",
-          "description": "Running the 1.3 Patch.",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "$GAMEDIR/drive_c/patch13/cod2-v1.3.exe",
+          "name": "wineexec",
+          "description": "Running the 1.3 Patch."
         }
       }
-    ],
-    "files": [
-      {
-        "patch13": "http://www.callofdutyview.net/files/patches/cod2-v1.3.zip"
-      }
-    ],
-    "game": {
-      "arch": "win32",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Activision/Call of Duty 2/CoD2SP_s.exe"
-    }
+    ]
   },
   "content": "files:\n- patch13: http://www.callofdutyview.net/files/patches/cod2-v1.3.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Activision/Call of Duty 2/CoD2SP_s.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: setup.exe\n- merge:\n    dst: $GAMEDIR/drive_c/COD2_DISC\n    src: $DISC\n- insert-disc:\n    description: Insert disc 2\n    requires: Setup/Data/main/iw_02.iwd\n- merge:\n    dst: $GAMEDIR/drive_c/COD2_DISC/Setup/Data/main/\n    src: $DISC/Setup/Data/main/\n- insert-disc:\n    description: Insert disc 3\n    requires: Setup/Data/main/iw_07.iwd\n- merge:\n    dst: $GAMEDIR/drive_c/COD2_DISC/Setup/Data/main/\n    src: $DISC/Setup/Data/main/\n- insert-disc:\n    description: Insert disc 4\n    requires: Setup/Data/main/iw_12.iwd\n- merge:\n    dst: $GAMEDIR/drive_c/COD2_DISC/Setup/Data/main/\n    src: $DISC/Setup/Data/main/\n- insert-disc:\n    description: Insert disc 5\n    requires: autorun.inf\n- merge:\n    dst: $GAMEDIR/drive_c/COD2_DISC/Setup/Data/main/\n    src: $DISC/Setup/Data/main/\n- insert-disc:\n    description: Insert disc 6\n    requires: Launch.ini\n- merge:\n    dst: $GAMEDIR/drive_c/COD2_DISC/Setup/Data/main/\n    src: $DISC/Setup/Data/main/\n- extract:\n    description: Extracting the patch\n    dst: $GAMEDIR/drive_c/patch13\n    file: patch13\n- task:\n    description: Running the installer. Choose Typical. The installer will crash,\n      you'll have to end the process \"cod2.exe\" using a task manager, or else the\n      process will not procead.\n    exclude_processes: cod2.exe\n    executable: $GAMEDIR/drive_c/COD2_DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Running the 1.3 Patch.\n    executable: $GAMEDIR/drive_c/patch13/cod2-v1.3.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
 }

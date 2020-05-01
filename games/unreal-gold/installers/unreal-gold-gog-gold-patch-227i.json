@@ -21,23 +21,61 @@
   "gogslug": "unreal_gold",
   "humblestoreid": "",
   "script": {
+    "custom-name": "Unreal Gold 227i - GOG",
+    "files": [
+      {
+        "gog": "N/A:Select the EXE downloaded from GOG"
+      },
+      {
+        "libs": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_libs_i386.tar.bz2"
+      },
+      {
+        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_patch_227i_MULTI5.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/defconfig.sh"
+      },
+      {
+        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_gold.bat"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_gold.bmp"
+      },
+      {
+        "gpr": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_gamepad_readme.html"
+      },
+      {
+        "gpx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_x360.gamecontroller.amgp"
+      },
+      {
+        "gpsc": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_steam.sccprofile"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/windows/syswow64/wineconsole.exe",
+      "args": "c:\\\\GOG Games\\\\Unreal Gold\\\\unreal_gold.bat"
+    },
+    "wine": {
+      "Desktop": true
+    },
     "installer": [
       {
         "task": {
+          "prefix": "$GAMEDIR",
           "arch": "win64",
           "install_gecko": true,
           "install_mono": false,
-          "prefix": "$GAMEDIR",
           "name": "create_prefix"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES /SILENT",
-          "executable": "gog",
-          "description": "Installing...",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "gog",
+          "name": "wineexec",
+          "description": "Installing...",
+          "args": "/SP- /SUPPRESSMSGBOXES /SILENT"
         }
       },
       {
@@ -57,7 +95,7 @@
       },
       {
         "input_menu": {
-          "id": "LANG",
+          "preselect": "int",
           "options": [
             {
               "int": "English"
@@ -76,7 +114,7 @@
             }
           ],
           "description": "Choose your game's language:",
-          "preselect": "int"
+          "id": "LANG"
         }
       },
       {
@@ -84,14 +122,14 @@
       },
       {
         "execute": {
-          "args": "$INPUT_LANG $RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
-          "file": "script"
+          "file": "script",
+          "args": "$INPUT_LANG $RESOLUTION_WIDTH $RESOLUTION_HEIGHT"
         }
       },
       {
         "write_file": {
-          "content": "#!/bin/sh\ncd System\nMESA_EXTENSION_MAX_YEAR=1999\n#LD_LIBRARY_PATH=../lin_convenience_libs\n#export LD_LIBRARY_PATH\n#exec ./UnrealLinux.bin -log\nLD_LIBRARY_PATH=../libs ./UnrealLinux.bin -log",
-          "file": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh"
+          "file": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh",
+          "content": "#!/bin/sh\ncd System\nMESA_EXTENSION_MAX_YEAR=1999\n#LD_LIBRARY_PATH=../lin_convenience_libs\n#export LD_LIBRARY_PATH\n#exec ./UnrealLinux.bin -log\nLD_LIBRARY_PATH=../libs ./UnrealLinux.bin -log"
         }
       },
       {
@@ -99,55 +137,55 @@
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "csmt",
           "prefix": "$GAMEDIR",
           "value": "00000000",
-          "arch": "win64",
-          "key": "csmt",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
           "type": "REG_DWORD"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "wallpaper",
           "prefix": "$GAMEDIR",
           "value": "c:\\\\unreal_gold.bmp",
-          "arch": "win64",
-          "key": "wallpaper",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
           "arch": "win64",
+          "name": "set_regedit",
           "key": "background",
-          "name": "set_regedit",
-          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
-        }
-      },
-      {
-        "task": {
           "prefix": "$GAMEDIR",
           "value": "0 0 0",
-          "arch": "win64",
-          "key": "ActiveTitle",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
       },
       {
         "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "ActiveTitle",
+          "prefix": "$GAMEDIR",
+          "value": "0 0 0",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "type": "REG_SZ"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "set_regedit",
+          "key": "GradientActiveTitle",
           "prefix": "$GAMEDIR",
           "value": "255 179 102",
-          "arch": "win64",
-          "key": "GradientActiveTitle",
-          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
           "type": "REG_SZ"
         }
@@ -182,45 +220,7 @@
           "dst": "$GAMEDIR/drive_c/GOG Games/Unreal Gold/gamepad profiles/"
         }
       }
-    ],
-    "files": [
-      {
-        "gog": "N/A:Select the EXE downloaded from GOG"
-      },
-      {
-        "libs": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_libs_i386.tar.bz2"
-      },
-      {
-        "patch": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_patch_227i_MULTI5.zip"
-      },
-      {
-        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/defconfig.sh"
-      },
-      {
-        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_gold.bat"
-      },
-      {
-        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_gold.bmp"
-      },
-      {
-        "gpr": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_gamepad_readme.html"
-      },
-      {
-        "gpx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_x360.gamecontroller.amgp"
-      },
-      {
-        "gpsc": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_steam.sccprofile"
-      }
-    ],
-    "wine": {
-      "Desktop": true
-    },
-    "custom-name": "Unreal Gold 227i - GOG",
-    "game": {
-      "args": "c:\\\\GOG Games\\\\Unreal Gold\\\\unreal_gold.bat",
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/windows/syswow64/wineconsole.exe"
-    }
+    ]
   },
   "content": "custom-name: Unreal Gold 227i - GOG\nfiles:\n- gog: N/A:Select the EXE downloaded from GOG\n- libs: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_libs_i386.tar.bz2\n- patch: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_patch_227i_MULTI5.zip\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/defconfig.sh\n- menu: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_gold.bat\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/unreal_gold.bmp\n- gpr: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_gamepad_readme.html\n- gpx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_x360.gamecontroller.amgp\n- gpsc: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal/gamepad%20profiles/unreal_steam.sccprofile\ngame:\n  args: c:\\\\GOG Games\\\\Unreal Gold\\\\unreal_gold.bat\n  exe: drive_c/windows/syswow64/wineconsole.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    install_gecko: true\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /SILENT\n    description: Installing...\n    executable: gog\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/libs\n    src: libs\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/\n    src: patch\n- chmodx: $GAMEDIR/drive_c/GOG Games/Unreal Gold/System/UnrealLinux.bin\n- input_menu:\n    description: 'Choose your game''s language:'\n    id: LANG\n    options:\n    - int: English\n    - frt: French\n    - det: German\n    - itt: Italian\n    - est: Spanish\n    preselect: int\n- chmodx: script\n- execute:\n    args: $INPUT_LANG $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: script\n- write_file:\n    content: '#!/bin/sh\n\n      cd System\n\n      MESA_EXTENSION_MAX_YEAR=1999\n\n      #LD_LIBRARY_PATH=../lin_convenience_libs\n\n      #export LD_LIBRARY_PATH\n\n      #exec ./UnrealLinux.bin -log\n\n      LD_LIBRARY_PATH=../libs ./UnrealLinux.bin -log'\n    file: $GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh\n- chmodx: $GAMEDIR/drive_c/GOG Games/Unreal Gold/UnrealLinux.sh\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\unreal_gold.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 255 179 102\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/\n    src: menu\n- copy:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/gamepad profiles/\n    src: gpr\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/gamepad profiles/\n    src: gpx360\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Gold/gamepad profiles/\n    src: gpsc\nwine:\n  Desktop: true\n"
 }

@@ -1,0 +1,71 @@
+{
+  "id": 20158,
+  "game_id": 4385,
+  "game_slug": "ultima-worlds-of-adventure-2-martian-dreams",
+  "name": "Ultima Worlds of Adventure 2: Martian Dreams",
+  "year": 1991,
+  "user": "legluondunet",
+  "runner": "dosbox",
+  "slug": "ultima-worlds-of-adventure-2-gog",
+  "version": "GOG",
+  "description": "This script will facilitate you install of this game on Linux OS:\r\n\"Ultima Worlds of Adventure 2 - Martian Dreams\" GOG edition with DOSBox runner.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions on Linux platform.",
+  "notes": "- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2020-04-30T22:11:01.655000Z",
+  "updated_at": "2020-04-30T23:13:10.742107Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207659062,
+  "gogslug": "ultima_worlds_of_adventure_2_martian_dreams",
+  "humblestoreid": "",
+  "script": {
+    "custom-name": "Ultima Worlds of Adventure 2 - Martian Dreams - DOSBox",
+    "files": [
+      {
+        "gamesetup": "N/A:Please select the Windows setup exe file downloaded from your GOG account."
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "main_file": "dosbox_conf/dosboxMARTIAN_single.conf",
+      "config_file": "$GAMEDIR/dosbox_conf/dosboxMARTIAN.conf"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "inno",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/innoextract",
+          "args": "-d \"$GAMEDIR\" \"$gamesetup\""
+        }
+      },
+      {
+        "merge": {
+          "src": "$GAMEDIR/__support/app/",
+          "dst": "$GAMEDIR/dosbox_conf"
+        }
+      },
+      {
+        "merge": {
+          "src": "$GAMEDIR/__support/save/",
+          "dst": "$GAMEDIR/"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR\";rm -f -r app commonappdata DOSBOX tmp goggame-1207659062.* __redist __support; cd dosbox_conf; sed -i -e 's/fullscreen=true/fullscreen=false/g' -e 's/fulldouble=false/fulldouble=true/g' -e 's/output=overlay/output=opengl/g' -e 's/aspect=.*/aspect=true/g' -e 's/mididevice=default/mididevice=none/g' dosboxMARTIAN.conf;"
+        }
+      }
+    ]
+  },
+  "content": "custom-name: Ultima Worlds of Adventure 2 - Martian Dreams - DOSBox\nfiles:\n- gamesetup: N/A:Please select the Windows setup exe file downloaded from your GOG\n    account.\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/dosbox_conf/dosboxMARTIAN.conf\n  main_file: dosbox_conf/dosboxMARTIAN_single.conf\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$GAMEDIR\" \"$gamesetup\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR/dosbox_conf\n    src: $GAMEDIR/__support/app/\n- merge:\n    dst: $GAMEDIR/\n    src: $GAMEDIR/__support/save/\n- execute:\n    command: cd \"$GAMEDIR\";rm -f -r app commonappdata DOSBOX tmp goggame-1207659062.*\n      __redist __support; cd dosbox_conf; sed -i -e 's/fullscreen=true/fullscreen=false/g'\n      -e 's/fulldouble=false/fulldouble=true/g' -e 's/output=overlay/output=opengl/g'\n      -e 's/aspect=.*/aspect=true/g' -e 's/mididevice=default/mididevice=none/g' dosboxMARTIAN.conf;\n"
+}

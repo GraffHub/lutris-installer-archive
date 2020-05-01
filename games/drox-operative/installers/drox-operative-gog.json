@@ -21,27 +21,6 @@
   "gogslug": "drox_operative",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
-        }
-      },
-      {
-        "execute": {
-          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\"",
-          "description": "Extracting game data, it will take a while...",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "src": "$GAMEDIR/data/noarch",
-          "dst": "$GAMEDIR/game"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Please select the GOG.com Linux installer"
@@ -52,7 +31,28 @@
     ],
     "game": {
       "exe": "game/start.sh"
-    }
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$unzip",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/unzip",
+          "description": "Extracting game data, it will take a while...",
+          "args": "$game -d \"$GAMEDIR\" \"data/noarch/*\""
+        }
+      },
+      {
+        "rename": {
+          "src": "$GAMEDIR/data/noarch",
+          "dst": "$GAMEDIR/game"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Linux installer\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  exe: game/start.sh\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\" \"data/noarch/*\"\n    description: Extracting game data, it will take a while...\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/game\n    src: $GAMEDIR/data/noarch\n"
 }

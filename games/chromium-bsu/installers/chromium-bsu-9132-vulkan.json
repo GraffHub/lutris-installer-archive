@@ -26,13 +26,29 @@
         "chromium.exe": "https://sourceforge.net/projects/chromium-bsu/files/Chromium B.S.U. Win32 binary/chromium-0.9.13.2.exe"
       }
     ],
+    "game": {
+      "custom-name": "Chromium B.S.U.",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/chromium/bin/chromium.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "Audio": "pulse",
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "xboxdrv": "xboxdrv",
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
@@ -46,65 +62,49 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "executable": "$GAMEDIR/prefix/drive_c/chromium-0.9.13.2.exe",
-          "description": "Chromium B.S.U. ...",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "wineexec"
+          "name": "wineexec",
+          "description": "Chromium B.S.U. ..."
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
           "description": "DirectX 11 ...",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "app": "d3dx11_43",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX 11 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "Vulkan ...",
           "app": "dxvk",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Windows version 8 ...",
-          "app": "win8",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "win8",
+          "description": "Windows version 8 ...",
           "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "xboxdrv": "xboxdrv",
-      "pulse_latency": true,
-      "disable_compositor": true
-    },
-    "wine": {
-      "Audio": "pulse",
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "custom-name": "Chromium B.S.U.",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files (x86)/chromium/bin/chromium.exe"
-    }
+    ]
   },
   "content": "files:\r\n- chromium.exe: https://sourceforge.net/projects/chromium-bsu/files/Chromium B.S.U.\r\n    Win32 binary/chromium-0.9.13.2.exe\r\ngame:\r\n  arch: win64\r\n  custom-name: Chromium B.S.U.\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files (x86)/chromium/bin/chromium.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- move:\r\n    dst: $GAMEDIR/prefix/drive_c/\r\n    src: chromium.exe\r\n- chmodx: $GAMEDIR/prefix/drive_c/chromium-0.9.13.2.exe\r\n- task:\r\n    description: Chromium B.S.U. ...\r\n    executable: $GAMEDIR/prefix/drive_c/chromium-0.9.13.2.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\n  xboxdrv: xboxdrv\r\nwine:\r\n  Audio: pulse\r\n  dxvk: true\r\n  esync: true"
 }

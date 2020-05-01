@@ -21,43 +21,43 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "arch": "win32",
-          "description": "Creating Wine prefix",
-          "prefix": "$CACHE",
-          "name": "wine.create_prefix"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
-          "executable": "$installer",
-          "description": "Installing ...",
-          "prefix": "$CACHE",
-          "name": "wine.wineexec"
-        }
-      },
-      {
-        "merge": {
-          "src": "$CACHE/drive_c/Program Files/AGD Interactive/King's Quest I",
-          "dst": "$GAMEDIR",
-          "description": "Copying files"
-        }
-      }
-    ],
     "files": [
       {
         "installer": {
-          "url": "http://agdinteractive.com/countdl.php?action=download&game=11",
-          "filename": "Kq1vga41c.exe"
+          "filename": "Kq1vga41c.exe",
+          "url": "http://agdinteractive.com/countdl.php?action=download&game=11"
         }
       }
     ],
     "game": {
       "main_file": "$GAMEDIR/Kq1vga.exe"
-    }
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$CACHE",
+          "arch": "win32",
+          "name": "wine.create_prefix",
+          "description": "Creating Wine prefix"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$CACHE",
+          "arch": "win32",
+          "executable": "$installer",
+          "name": "wine.wineexec",
+          "description": "Installing ..."
+        }
+      },
+      {
+        "merge": {
+          "src": "$CACHE/drive_c/Program Files/AGD Interactive/King's Quest I",
+          "description": "Copying files",
+          "dst": "$GAMEDIR"
+        }
+      }
+    ]
   },
   "content": "files:\n- installer:\n    filename: Kq1vga41c.exe\n    url: http://agdinteractive.com/countdl.php?action=download&game=11\ngame:\n  main_file: $GAMEDIR/Kq1vga.exe\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $CACHE\n- task:\n    arch: win32\n    description: Installing ...\n    executable: $installer\n    name: wine.wineexec\n    prefix: $CACHE\n- merge:\n    description: Copying files\n    dst: $GAMEDIR\n    src: $CACHE/drive_c/Program Files/AGD Interactive/King's Quest I\n"
 }

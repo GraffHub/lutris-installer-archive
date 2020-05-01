@@ -26,6 +26,18 @@
         "setup": "N/A:Select gog setup exe"
       }
     ],
+    "game": {
+      "prefix": "$GAMEDIR",
+      "exe": "drive_c/GOG Games/Hitman Absolution/retail/HMA.exe"
+    },
+    "wine": {
+      "dxvk": true
+    },
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
     "installer": [
       {
         "task": {
@@ -35,32 +47,20 @@
       },
       {
         "task": {
-          "app": "vcrun2010 d3dcompiler_43 d3dx11_43 win7",
           "prefix": "$GAMEDIR",
+          "app": "vcrun2010 d3dcompiler_43 d3dx11_43 win7",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "args": "/SP- /SUPPRESSMSGBOXES",
-          "executable": "setup",
           "prefix": "$GAMEDIR",
-          "name": "wineexec"
+          "executable": "setup",
+          "name": "wineexec",
+          "args": "/SP- /SUPPRESSMSGBOXES"
         }
       }
-    ],
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/GOG Games/Hitman Absolution/retail/HMA.exe"
-    }
+    ]
   },
   "content": "files:\n- setup: N/A:Select gog setup exe\ngame:\n  exe: drive_c/GOG Games/Hitman Absolution/retail/HMA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 d3dcompiler_43 d3dx11_43 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

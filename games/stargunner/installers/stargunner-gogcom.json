@@ -21,26 +21,6 @@
   "gogslug": "stargunner",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "extract": {
-          "dst": "$CACHE",
-          "file": "$unzip"
-        }
-      },
-      {
-        "execute": {
-          "args": "$game -d \"$GAMEDIR\"",
-          "file": "$CACHE/unzip"
-        }
-      },
-      {
-        "rename": {
-          "src": "$GAMEDIR/data/noarch",
-          "dst": "$GAMEDIR/Game"
-        }
-      }
-    ],
     "files": [
       {
         "game": "N/A:Please select the GOG.com Linux installer"
@@ -50,9 +30,29 @@
       }
     ],
     "game": {
-      "config_file": "$GAMEDIR/Game/dosbox_stargun.conf",
-      "main_file": "$GAMEDIR/Game/dosbox_stargun_single.conf"
-    }
+      "main_file": "$GAMEDIR/Game/dosbox_stargun_single.conf",
+      "config_file": "$GAMEDIR/Game/dosbox_stargun.conf"
+    },
+    "installer": [
+      {
+        "extract": {
+          "file": "$unzip",
+          "dst": "$CACHE"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/unzip",
+          "args": "$game -d \"$GAMEDIR\""
+        }
+      },
+      {
+        "rename": {
+          "src": "$GAMEDIR/data/noarch",
+          "dst": "$GAMEDIR/Game"
+        }
+      }
+    ]
   },
   "content": "files:\n- game: N/A:Please select the GOG.com Linux installer\n- unzip: http://lutris.net/files/tools/unzip.tar.gz\ngame:\n  config_file: $GAMEDIR/Game/dosbox_stargun.conf\n  main_file: $GAMEDIR/Game/dosbox_stargun_single.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $unzip\n- execute:\n    args: $game -d \"$GAMEDIR\"\n    file: $CACHE/unzip\n- rename:\n    dst: $GAMEDIR/Game\n    src: $GAMEDIR/data/noarch\n"
 }

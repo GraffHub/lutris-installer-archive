@@ -21,44 +21,44 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "create_prefix",
-          "arch": "win32",
-          "install_gecko": false,
-          "description": "Creating WINE prefix.",
-          "install_mono": false
-        }
-      },
-      {
-        "task": {
-          "args": "/SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL",
-          "executable": "setup",
-          "description": "Be patient, this task may take several minutes.",
-          "prefix": "$GAMEDIR",
-          "name": "wineexec"
-        }
-      },
-      {
-        "task": {
-          "app": "quartz",
-          "prefix": "$GAMEDIR",
-          "name": "winetricks"
-        }
-      }
-    ],
     "files": [
       {
         "setup": "N/A:Select Windows GOG setup exe"
       }
     ],
     "game": {
-      "args": "-nointro",
       "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/GOG.com/SWAT 3/game/swat.exe"
-    }
+      "exe": "drive_c/Program Files/GOG.com/SWAT 3/game/swat.exe",
+      "args": "-nointro"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "name": "create_prefix",
+          "description": "Creating WINE prefix.",
+          "prefix": "$GAMEDIR",
+          "install_gecko": false,
+          "install_mono": false
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "executable": "setup",
+          "name": "wineexec",
+          "description": "Be patient, this task may take several minutes.",
+          "args": "/SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "app": "quartz",
+          "name": "winetricks"
+        }
+      }
+    ]
   },
   "content": "files:\n- setup: N/A:Select Windows GOG setup exe\ngame:\n  args: -nointro\n  exe: drive_c/Program Files/GOG.com/SWAT 3/game/swat.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating WINE prefix.\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SILENT /SUPPRESSMSGBOXES /NOCANCEL\n    description: Be patient, this task may take several minutes.\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: quartz\n    name: winetricks\n    prefix: $GAMEDIR\n"
 }

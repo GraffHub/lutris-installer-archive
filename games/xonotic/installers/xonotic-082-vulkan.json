@@ -26,13 +26,27 @@
         "xonotic.zip": "https://dl.xonotic.org/xonotic-0.8.2.zip"
       }
     ],
+    "game": {
+      "custom-name": "Xonotic",
+      "prefix": "$GAMEDIR/prefix",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/xonotic.exe",
+      "arch": "win64"
+    },
+    "wine": {
+      "esync": true,
+      "dxvk": true
+    },
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
     "installer": [
       {
         "task": {
-          "arch": "win64",
-          "description": "Creating 64-bit prefix ...",
           "prefix": "$GAMEDIR/prefix",
-          "name": "create_prefix"
+          "arch": "win64",
+          "name": "create_prefix",
+          "description": "Creating 64-bit prefix ..."
         }
       },
       {
@@ -43,55 +57,41 @@
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "DirectX 11 ...",
           "app": "d3dcompiler_43",
-          "prefix": "$GAMEDIR/prefix",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
           "description": "DirectX 11 ...",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
           "app": "d3dx11_43",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "DirectX 11 ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
+          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "description": "Vulkan ...",
           "app": "dxvk",
-          "prefix": "$GAMEDIR/prefix",
+          "description": "Vulkan ...",
           "name": "winetricks"
         }
       },
       {
         "task": {
-          "arch": "win64",
-          "description": "Windows version 8 ...",
-          "app": "win8",
           "prefix": "$GAMEDIR/prefix",
+          "arch": "win64",
+          "app": "win8",
+          "description": "Windows version 8 ...",
           "name": "winetricks"
         }
       }
-    ],
-    "system": {
-      "disable_compositor": true,
-      "pulse_latency": true
-    },
-    "wine": {
-      "dxvk": true,
-      "esync": true
-    },
-    "game": {
-      "arch": "win64",
-      "custom-name": "Xonotic",
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files/xonotic.exe"
-    }
+    ]
   },
   "content": "files:\r\n- xonotic.zip: https://dl.xonotic.org/xonotic-0.8.2.zip\r\ngame:\r\n  arch: win64\r\n  custom-name: Xonotic\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files/xonotic.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- extract:\r\n    dst: $GAMEDIR/prefix/drive_c/Program Files/\r\n    src: xonotic.zip\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: dxvk\r\n    arch: win64\r\n    description: Vulkan ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: win8\r\n    arch: win64\r\n    description: Windows version 8 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

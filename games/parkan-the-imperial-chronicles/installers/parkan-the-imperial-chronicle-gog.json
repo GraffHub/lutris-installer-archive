@@ -1,0 +1,129 @@
+{
+  "id": 19619,
+  "game_id": 13870,
+  "game_slug": "parkan-the-imperial-chronicles",
+  "name": "PARKAN: THE IMPERIAL CHRONICLES",
+  "year": 1997,
+  "user": "axet",
+  "runner": "wine",
+  "slug": "parkan-the-imperial-chronicle-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-04-11T10:21:01.438000Z",
+  "updated_at": "2020-04-12T08:08:28.554830Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 575690,
+  "gogid": 1198456673,
+  "gogslug": "parkan_the_imperial_chronicles",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      },
+      {
+        "iv5setup": "http://files.freenet.de/filepilot/fpt/video/codecs/intel_indeo_videos_codecs/iv5setup.exe"
+      },
+      {
+        "unshield": "https://lutris.net/files/tools/unshield-1.3-x86_64.tar.gz"
+      }
+    ],
+    "game": {
+      "prefix": "$GAMEDIR/",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Parkan - The Imperial Chronicles/PARKAN.EXE",
+      "arch": "win32",
+      "appid": 575690
+    },
+    "installer": [
+      {
+        "task": {
+          "prefix": "$GAMEDIR/",
+          "arch": "win32",
+          "executable": "installer",
+          "name": "wineexec",
+          "args": "/VERYSILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/Parkan - The Imperial Chronicles/\"; sed -i s/WINMM.dll/WIN32.dll/g NAV32.DLL NGI32.DLL WALK3D.DLL PARKAN.EXE && mv winmm.dll win32.dll",
+          "description": "fixing MICICD crash on startup"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "msxml3",
+          "description": "winetricks msxml3",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "wmp9",
+          "description": "winetricks wmp9",
+          "name": "winetricks"
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "arch": "win32",
+          "app": "ddr=gdi",
+          "description": "winetricks ddr=gdi",
+          "name": "winetricks"
+        }
+      },
+      {
+        "execute": {
+          "file": "cabextract",
+          "description": "Installing Ligos Indeo Codec (cabextract)...",
+          "args": "-d $CACHE/tmp/ligos1 iv5setup"
+        }
+      },
+      {
+        "extract": {
+          "file": "unshield",
+          "description": "Installing Ligos Indeo Codec (unshield)...",
+          "dst": "$CACHE/tmp/unshield"
+        }
+      },
+      {
+        "execute": {
+          "file": "$CACHE/tmp/unshield/unshield",
+          "description": "Installing Ligos Indeo Codec (data1.cab)...",
+          "args": "-d $CACHE/tmp/ligos2 x $CACHE/tmp/ligos1/data1.cab"
+        }
+      },
+      {
+        "execute": {
+          "command": "find $CACHE/tmp/ligos2 \\( -name *.dll -o -name *.ax \\) -exec cp {} $GAMEDIR/drive_c/windows/system32 \\;",
+          "description": "Installing Ligos Indeo Codec (system32)..."
+        }
+      },
+      {
+        "write_file": {
+          "file": "$CACHE/ligos.reg",
+          "description": "Installing Ligos Indeo Codec (regedit)...",
+          "content": "REGEDIT4\n[HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32]\n\"msacm.iac2\"=\"iac25_32.ax\"\n\"vidc.iv31\"=\"ir32_32.dll\"\n\"vidc.iv32\"=\"ir32_32.dll\"\n\"vidc.iv41\"=\"ir41_32.ax\"\n\"vidc.iv50\"=\"ir50_32.dll\"\n\"vidc.yvu9\"=\"iyvu9_32.dll\" "
+        }
+      },
+      {
+        "task": {
+          "prefix": "$GAMEDIR",
+          "filename": "$CACHE/ligos.reg",
+          "description": "Installing Ligos Indeo Codec (set_regedit)...",
+          "name": "set_regedit_file"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: N/A:Select the game's setup file\n- iv5setup: http://files.freenet.de/filepilot/fpt/video/codecs/intel_indeo_videos_codecs/iv5setup.exe\n- unshield: https://lutris.net/files/tools/unshield-1.3-x86_64.tar.gz\ngame:\n  appid: 575690\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Parkan - The Imperial Chronicles/PARKAN.EXE\n  prefix: $GAMEDIR/\ninstaller:\n- task:\n    arch: win32\n    args: /VERYSILENT /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR/\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Parkan - The Imperial Chronicles/\"; sed\n      -i s/WINMM.dll/WIN32.dll/g NAV32.DLL NGI32.DLL WALK3D.DLL PARKAN.EXE && mv winmm.dll\n      win32.dll\n    description: fixing MICICD crash on startup\n- task:\n    app: msxml3\n    arch: win32\n    description: winetricks msxml3\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: wmp9\n    arch: win32\n    description: winetricks wmp9\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: ddr=gdi\n    arch: win32\n    description: winetricks ddr=gdi\n    name: winetricks\n    prefix: $GAMEDIR\n- execute:\n    args: -d $CACHE/tmp/ligos1 iv5setup\n    description: Installing Ligos Indeo Codec (cabextract)...\n    file: cabextract\n- extract:\n    description: Installing Ligos Indeo Codec (unshield)...\n    dst: $CACHE/tmp/unshield\n    file: unshield\n- execute:\n    args: -d $CACHE/tmp/ligos2 x $CACHE/tmp/ligos1/data1.cab\n    description: Installing Ligos Indeo Codec (data1.cab)...\n    file: $CACHE/tmp/unshield/unshield\n- execute:\n    command: find $CACHE/tmp/ligos2 \\( -name *.dll -o -name *.ax \\) -exec cp {} $GAMEDIR/drive_c/windows/system32\n      \\;\n    description: Installing Ligos Indeo Codec (system32)...\n- write_file:\n    content: 'REGEDIT4\n\n      [HKEY_LOCAL_MACHINE\\Software\\Microsoft\\Windows NT\\CurrentVersion\\Drivers32]\n\n      \"msacm.iac2\"=\"iac25_32.ax\"\n\n      \"vidc.iv31\"=\"ir32_32.dll\"\n\n      \"vidc.iv32\"=\"ir32_32.dll\"\n\n      \"vidc.iv41\"=\"ir41_32.ax\"\n\n      \"vidc.iv50\"=\"ir50_32.dll\"\n\n      \"vidc.yvu9\"=\"iyvu9_32.dll\" '\n    description: Installing Ligos Indeo Codec (regedit)...\n    file: $CACHE/ligos.reg\n- task:\n    description: Installing Ligos Indeo Codec (set_regedit)...\n    filename: $CACHE/ligos.reg\n    name: set_regedit_file\n    prefix: $GAMEDIR\n"
+}
