@@ -33,62 +33,42 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "overrides": {
-        "nvapi64": "disabled",
-        "nvapi": "disabled"
-      },
-      "esync": true,
-      "dxvk": true,
-      "vkd3d": true
-    },
-    "system": {
-      "env": {
-        "STAGING_SHARED_MEMORY": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      },
-      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
-      "manual_command": "$GAMEDIR/state-cache-merge/state-cache-update.sh"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
           "name": "create_prefix",
-          "description": "Creating 64bit Wine prefix."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "file": "dxvkcache",
           "description": "Extracting DXVK state cache",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "file": "dxvkcache"
         }
       },
       {
         "write_file": {
-          "file": "$GAMEDIR/timestamp.sh",
-          "content": "#!/bin/bash\ndate=\"$(wget --server-response --spider https://lutris.nyc3.cdn.digitaloceanspaces.com/games/overwatch/Overwatch.tar.xz 2>&1 | sed -n \"s/  Last-Modified: //p\")\"\ndate=\"$(date -d \"$date\" +%s)\"\necho \"$date\" > ./state-cache-merge/.state-cache-timestamp"
+          "content": "#!/bin/bash\ndate=\"$(wget --server-response --spider https://lutris.nyc3.cdn.digitaloceanspaces.com/games/overwatch/Overwatch.tar.xz 2>&1 | sed -n \"s/  Last-Modified: //p\")\"\ndate=\"$(date -d \"$date\" +%s)\"\necho \"$date\" > ./state-cache-merge/.state-cache-timestamp",
+          "file": "$GAMEDIR/timestamp.sh"
         }
       },
       {
         "write_file": {
-          "file": "$GAMEDIR/dxvk.conf",
-          "content": "dxgi.nvapiHack = False\n[Overwatch.exe]\ndxvk.hud = compiler"
+          "content": "dxgi.nvapiHack = False\n[Overwatch.exe]\ndxvk.hud = compiler",
+          "file": "$GAMEDIR/dxvk.conf"
         }
       },
       {
         "merge": {
-          "src": "cache-updater",
-          "dst": "$GAMEDIR/state-cache-merge"
+          "dst": "$GAMEDIR/state-cache-merge",
+          "src": "cache-updater"
         }
       },
       {
@@ -104,36 +84,35 @@
       },
       {
         "move": {
-          "src": "$GAMEDIR/timestamp.sh",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "src": "$GAMEDIR/timestamp.sh"
         }
       },
       {
         "task": {
-          "silent": true,
+          "app": "arial",
           "arch": "win64",
-          "name": "winetricks",
           "description": "Installing Arial font...",
+          "name": "winetricks",
           "prefix": "$GAMEDIR",
-          "app": "arial"
+          "silent": true
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "write_json": {
-          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
           "data": {
             "Client": {
-              "HardwareAcceleration": "false",
               "GameLaunchWindowBehavior": "2",
               "GameSearch": {
                 "BackgroundSearch": "true"
               },
+              "HardwareAcceleration": "false",
               "Sound": {
                 "Enabled": "false"
               },
@@ -142,76 +121,97 @@
               }
             }
           },
-          "description": "Writing a Battle.Net config file"
+          "description": "Writing a Battle.Net config file",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini",
-          "value": "\"1\"",
-          "section": "Render.13",
           "description": "Enabling Borderless Windowed mode",
-          "key": "WindowMode"
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini",
+          "key": "WindowMode",
+          "section": "Render.13",
+          "value": "\"1\""
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini",
-          "value": "\"1\"",
-          "section": "MovieExport.1",
           "description": "Switching to WEBM format for saving Highlights",
-          "key": "Type"
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini",
+          "key": "Type",
+          "section": "MovieExport.1",
+          "value": "\"1\""
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini",
-          "value": "\"0\"",
-          "section": "MovieExport.1",
           "description": "Disabling hardware acceleration for saving Highlights",
-          "key": "UseHardware"
+          "file": "$GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini",
+          "key": "UseHardware",
+          "section": "MovieExport.1",
+          "value": "\"0\""
         }
       },
       {
         "write_file": {
-          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Blizzard/Hearthstone/options.txt",
+          "content": "hasseennewcinematic=True",
           "description": "Adding a startup workaround for Hearthstone",
-          "content": "hasseennewcinematic=True"
+          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Blizzard/Hearthstone/options.txt"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "description": "Wine Staging: Enabling DXVA2",
           "key": "backend",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "prefix": "$GAMEDIR",
-          "value": "va",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2"
+          "value": "va"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\" wineconsole explorer.exe",
           "arch": "win64",
+          "description": "Installing Blizzard App. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window.",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\" wineconsole explorer.exe",
           "executable": "setup",
-          "name": "wineexec",
-          "description": "Installing Blizzard App. An installer will open.\n------------------------------\nTo progress, manually continue installation in that window."
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\"",
+      "manual_command": "$GAMEDIR/state-cache-merge/state-cache-update.sh"
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi": "disabled",
+        "nvapi64": "disabled"
+      },
+      "vkd3d": true
+    }
   },
   "content": "files:\n- cache-updater: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/overwatch/state-cache-update.sh\n- setup: http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe\n- dxvkcache: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/overwatch/Overwatch.tar.xz\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting DXVK state cache\n    dst: $GAMEDIR\n    file: dxvkcache\n- write_file:\n    content: '#!/bin/bash\n\n      date=\"$(wget --server-response --spider https://lutris.nyc3.cdn.digitaloceanspaces.com/games/overwatch/Overwatch.tar.xz\n      2>&1 | sed -n \"s/  Last-Modified: //p\")\"\n\n      date=\"$(date -d \"$date\" +%s)\"\n\n      echo \"$date\" > ./state-cache-merge/.state-cache-timestamp'\n    file: $GAMEDIR/timestamp.sh\n- write_file:\n    content: 'dxgi.nvapiHack = False\n\n      [Overwatch.exe]\n\n      dxvk.hud = compiler'\n    file: $GAMEDIR/dxvk.conf\n- merge:\n    dst: $GAMEDIR/state-cache-merge\n    src: cache-updater\n- chmodx: $GAMEDIR/state-cache-merge/state-cache-update.sh\n- chmodx: $GAMEDIR/timestamp.sh\n- execute:\n    file: $GAMEDIR/timestamp.sh\n- move:\n    dst: $CACHE\n    src: $GAMEDIR/timestamp.sh\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        GameSearch:\n          BackgroundSearch: 'true'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n    description: Writing a Battle.Net config file\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- write_config:\n    description: Enabling Borderless Windowed mode\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini\n    key: WindowMode\n    section: Render.13\n    value: '\"1\"'\n- write_config:\n    description: Switching to WEBM format for saving Highlights\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini\n    key: Type\n    section: MovieExport.1\n    value: '\"1\"'\n- write_config:\n    description: Disabling hardware acceleration for saving Highlights\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/Overwatch/Settings/Settings_v0.ini\n    key: UseHardware\n    section: MovieExport.1\n    value: '\"0\"'\n- write_file:\n    content: hasseennewcinematic=True\n    description: Adding a startup workaround for Hearthstone\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Blizzard/Hearthstone/options.txt\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing Blizzard App. An installer will open.\n\n      ------------------------------\n\n      To progress, manually continue installation in that window.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\" wineconsole\n      explorer.exe\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\n  manual_command: $GAMEDIR/state-cache-merge/state-cache-update.sh\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi: disabled\n    nvapi64: disabled\n  vkd3d: true\n"
 }

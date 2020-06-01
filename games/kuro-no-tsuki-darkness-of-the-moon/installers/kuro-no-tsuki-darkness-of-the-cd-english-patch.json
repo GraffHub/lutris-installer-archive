@@ -30,50 +30,50 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "$GAMEDIR/drive_c/kuro-no-tsuki",
-      "arch": "win32"
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "800x600"
-    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/kuro-no-tsuki",
+          "file": "$install"
+        }
+      },
+      {
+        "task": {
+          "app": "winxp",
+          "arch": "win32",
+          "description": "Setting Windows version to XP",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$patch"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "$CACHE/knt-patch-1[1].0.0.1.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
     "system": {
       "env": {
         "LC_ALL": "ja_JP.UTF-8"
       }
     },
-    "installer": [
-      {
-        "extract": {
-          "file": "$install",
-          "dst": "$GAMEDIR/drive_c/kuro-no-tsuki"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
-          "app": "winxp",
-          "description": "Setting Windows version to XP",
-          "name": "winetricks"
-        }
-      },
-      {
-        "extract": {
-          "file": "$patch",
-          "dst": "$CACHE"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
-          "executable": "$CACHE/knt-patch-1[1].0.0.1.exe",
-          "name": "wineexec"
-        }
-      }
-    ]
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "800x600"
+    }
   },
   "content": "files:\n- install: N/A:Please select the installer\n- patch: N/A:Please select the English patch archive\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/kuro-no-tsuki\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR/drive_c/kuro-no-tsuki\n    file: $install\n- task:\n    app: winxp\n    arch: win32\n    description: Setting Windows version to XP\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: $patch\n- task:\n    arch: win32\n    executable: $CACHE/knt-patch-1[1].0.0.1.exe\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    LC_ALL: ja_JP.UTF-8\nwine:\n  Desktop: true\n  WineDesktop: 800x600\n"
 }

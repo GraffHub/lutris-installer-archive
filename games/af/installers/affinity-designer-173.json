@@ -11,7 +11,7 @@
   "description": null,
   "notes": "Loading screen is black",
   "created_at": "2019-11-29T08:04:53.466000Z",
-  "updated_at": "2020-01-22T02:05:01.375151Z",
+  "updated_at": "2020-05-04T16:07:22.724704Z",
   "draft": false,
   "published": true,
   "published_by": 51687,
@@ -27,108 +27,105 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files/Affinity/Designer/Designer.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "overrides": {
-        "nvapi64": "disabled",
-        "nvapi": "disabled",
-        "d3d12": "disabled",
-        "ucrtbase": "n,b"
-      },
-      "esync": true,
-      "dxvk": true
-    },
-    "system": {
-      "env": {
-        "STAGING_SHARED_MEMORY": 1,
-        "DXVK_HUD": "compiler",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
           "name": "create_prefix",
-          "description": "Creating 64bit Wine prefix."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "arial",
+          "arch": "win64",
           "description": "Installing Arial font",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "dotnet35sp1",
+          "arch": "win64",
           "description": "Installing .NET 3.5 SP1 will take a while...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "dotnet472",
+          "arch": "win64",
           "description": "Installing .NET 4.7.2 will take a while...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "description": "Setting Windows 10 mode for Wine",
           "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "prefix": "$GAMEDIR",
-          "value": "win10",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+          "value": "win10"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "description": "Wine Staging: Enabling DXVA2",
           "key": "backend",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
           "prefix": "$GAMEDIR",
-          "value": "va",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2"
+          "value": "va"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
           "executable": "setup",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "d3d12": "disabled",
+        "nvapi": "disabled",
+        "nvapi64": "disabled",
+        "ucrtbase": "n,b"
+      }
+    }
   },
-  "content": "files:\n- setup: N/A:Select Affinity designer installer\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Affinity/Designer/Designer.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win64\n    description: Installing .NET 3.5 SP1 will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing .NET 4.7.2 will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n    ucrtbase: n,b\n"
+  "content": "files:\r\n- setup: N/A:Select Affinity designer installer\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files/Affinity/Designer/Designer.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64bit Wine prefix.\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial\r\n    arch: win64\r\n    description: Installing Arial font\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet35sp1\r\n    arch: win64\r\n    description: Installing .NET 3.5 SP1 will take a while...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: dotnet472\r\n    arch: win64\r\n    description: Installing .NET 4.7.2 will take a while...\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    description: Setting Windows 10 mode for Wine\r\n    key: Version\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\r\n    prefix: $GAMEDIR\r\n    value: win10\r\n- task:\r\n    arch: win64\r\n    description: 'Wine Staging: Enabling DXVA2'\r\n    key: backend\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\r\n    prefix: $GAMEDIR\r\n    value: va\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  dxvk: true\r\n  esync: true\r\n  overrides:\r\n    d3d12: disabled\r\n    nvapi: disabled\r\n    nvapi64: disabled\r\n    ucrtbase: n,b"
 }

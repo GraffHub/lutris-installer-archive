@@ -27,86 +27,86 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile/PathOfExile.exe",
       "arch": "win64",
-      "args": "--waitforpreload --nologo --nodx9ex --gc2"
-    },
-    "wine": {
-      "overrides": {
-        "xaudio2_7": "native,builtin",
-        "d3dcompiler_47": "native"
-      },
-      "esync": true,
-      "dxvk": true
-    },
-    "system": {
-      "env": {
-        "DXVK_USE_PIPECOMPILER": 1,
-        "DXVK_USE_PLACEHOLDER_SHADERS": 1,
-        "DXVK_HUD": 0
-      },
-      "reset_pulse": true,
-      "pulse_latency": true
+      "args": "--waitforpreload --nologo --nodx9ex --gc2",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile/PathOfExile.exe",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "win7",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "merge": {
-          "src": "setup",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile",
+          "src": "setup"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Installing Rich Text Editor 2.0",
           "app": "riched20",
-          "silent": true,
-          "name": "winetricks"
+          "description": "Installing Rich Text Editor 2.0",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Installing Uniscribe 1.0",
           "app": "usp10",
-          "silent": true,
-          "name": "winetricks"
+          "description": "Installing Uniscribe 1.0",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Installing Path Of Exile",
           "executable": "setup",
           "name": "wineexec",
-          "description": "Installing Path Of Exile"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "value": 8192,
           "key": "VideoMemorySize",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D",
-          "name": "set_regedit"
+          "prefix": "$GAMEDIR",
+          "value": 8192
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "DXVK_USE_PIPECOMPILER": 1,
+        "DXVK_USE_PLACEHOLDER_SHADERS": 1
+      },
+      "pulse_latency": true,
+      "reset_pulse": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "d3dcompiler_47": "native",
+        "xaudio2_7": "native,builtin"
+      }
+    }
   },
   "content": "files:\n- setup: https://www.pathofexile.com/downloads/PathOfExileInstaller.exe\ngame:\n  arch: win64\n  args: --waitforpreload --nologo --nodx9ex --gc2\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile/PathOfExile.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Grinding Gear Games/Path of Exile\n    src: setup\n- task:\n    app: riched20\n    description: Installing Rich Text Editor 2.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: usp10\n    description: Installing Uniscribe 1.0\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    description: Installing Path Of Exile\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    key: VideoMemorySize\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\n    prefix: $GAMEDIR\n    value: 8192\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_USE_PIPECOMPILER: 1\n    DXVK_USE_PLACEHOLDER_SHADERS: 1\n  pulse_latency: true\n  reset_pulse: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3dcompiler_47: native\n    xaudio2_7: native,builtin\n"
 }

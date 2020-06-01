@@ -30,61 +30,61 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/cemu/Cemu.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "overrides": {
-        "mscoree": "disabled",
-        "dbghelp": "native,builtin",
-        "mshtml": "disabled"
-      },
-      "esync": true
-    },
-    "system": {
-      "env": {
-        "vblank_mode": 0,
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "R600_DEBUG": "nohyperz"
-      },
-      "disable_compositor": true
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "vcrun2017 win7",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "file": "cemu",
-          "dst": "$GAMEDIR/drive_c/cemu"
+          "dst": "$GAMEDIR/drive_c/cemu",
+          "file": "cemu"
         }
       },
       {
         "write_file": {
-          "file": "$GAMEDIR/drive_c/cemu/controllerProfiles/Xbox_Controller.txt",
-          "content": "bleh"
+          "content": "bleh",
+          "file": "$GAMEDIR/drive_c/cemu/controllerProfiles/Xbox_Controller.txt"
         }
       },
       {
         "merge": {
-          "src": "controller",
-          "dst": "$GAMEDIR/drive_c/cemu/controllerProfiles"
+          "dst": "$GAMEDIR/drive_c/cemu/controllerProfiles",
+          "src": "controller"
         }
       }
-    ]
+    ],
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "R600_DEBUG": "nohyperz",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "mesa_glthread": "true",
+        "vblank_mode": 0
+      }
+    },
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "dbghelp": "native,builtin",
+        "mscoree": "disabled",
+        "mshtml": "disabled"
+      }
+    }
   },
   "content": "files:\n- cemu: http://cemu.info/releases/cemu_1.18.0.zip\n- controller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/cemu/Xbox_Controller.txt\ngame:\n  arch: win64\n  exe: drive_c/cemu/Cemu.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/cemu\n    file: cemu\n- write_file:\n    content: bleh\n    file: $GAMEDIR/drive_c/cemu/controllerProfiles/Xbox_Controller.txt\n- merge:\n    dst: $GAMEDIR/drive_c/cemu/controllerProfiles\n    src: controller\nsystem:\n  disable_compositor: true\n  env:\n    R600_DEBUG: nohyperz\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\n    vblank_mode: 0\nwine:\n  esync: true\n  overrides:\n    dbghelp: native,builtin\n    mscoree: disabled\n    mshtml: disabled\n"
 }

@@ -27,11 +27,8 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Starship Titanic/St.exe"
-    },
-    "wine": {
-      "Desktop": true
+      "exe": "drive_c/Starship Titanic/St.exe",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -41,17 +38,17 @@
       },
       {
         "task": {
-          "include_processes": "explorer.exe",
-          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
-          "name": "wineexec",
+          "args": "/desktop=StarshipTitanic,1024x780 $DISC/Autorun.exe",
           "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
-          "args": "/desktop=StarshipTitanic,1024x780 $DISC/Autorun.exe"
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "file": "cncddraw",
-          "dst": "$GAMEDIR/drive_c/Starship Titanic/"
+          "dst": "$GAMEDIR/drive_c/Starship Titanic/",
+          "file": "cncddraw"
         }
       },
       {
@@ -61,58 +58,61 @@
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Starship Titanic/ddraw.ini",
-          "merge": true,
           "data": {
             "ddraw": {
-              "windowed": true,
-              "maintas": true,
+              "border": false,
               "fullscreen": false,
               "height": "$RESOLUTION_HEIGHT",
+              "maintas": true,
               "maxfps": -1,
               "renderer": "opengl",
               "singlecpu": false,
-              "width": "$RESOLUTION_WIDTH",
               "vsync": true,
-              "border": false
+              "width": "$RESOLUTION_WIDTH",
+              "windowed": true
             }
-          }
+          },
+          "file": "$GAMEDIR/drive_c/Starship Titanic/ddraw.ini",
+          "merge": true
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "ddraw",
-          "prefix": "$GAMEDIR",
-          "value": "native,builtin",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "type": "REG_SZ"
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "native,builtin"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "csmt",
-          "prefix": "$GAMEDIR",
-          "value": "00000000",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
-          "type": "REG_DWORD"
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
+          "value": "00000000"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "background",
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    }
   },
   "content": "files:\n- cncddraw: https://github.com/CnCNet/cnc-ddraw/files/3139881/ddraw.zip\ngame:\n  exe: drive_c/Starship Titanic/St.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Autorun.exe\n- task:\n    args: /desktop=StarshipTitanic,1024x780 $DISC/Autorun.exe\n    description: Running setup of the game. Just proceed and keep all settings at\n      their defaults\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\n- extract:\n    dst: $GAMEDIR/drive_c/Starship Titanic/\n    file: cncddraw\n- execute:\n    command: cp \"$GAMEDIR/drive_c/Starship Titanic/ddraw.ini\" \"$GAMEDIR/drive_c/Starship\n      Titanic/ddraw_original.ini\"\n- write_config:\n    data:\n      ddraw:\n        border: false\n        fullscreen: false\n        height: $RESOLUTION_HEIGHT\n        maintas: true\n        maxfps: -1\n        renderer: opengl\n        singlecpu: false\n        vsync: true\n        width: $RESOLUTION_WIDTH\n        windowed: true\n    file: $GAMEDIR/drive_c/Starship Titanic/ddraw.ini\n    merge: true\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
 }

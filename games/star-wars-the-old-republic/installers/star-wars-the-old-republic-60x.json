@@ -30,54 +30,41 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
-    "system": {
-      "env": {
-        "PBA_ENABLE": 1,
-        "mesa_glthread": "true",
-        "__GL_SHADER_DISK_CACHE": 1,
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "msxml3 msls31 winhttp vcrun2008 d3dx9",
+          "arch": "win64",
           "description": "Installing winetricks",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/S",
+          "description": "Installing Star Wars - The Old Republic",
           "executable": "setup",
           "name": "wineexec",
-          "description": "Installing Star Wars - The Old Republic",
-          "args": "/S"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -87,17 +74,30 @@
       },
       {
         "extract": {
-          "file": "$GAMEDIR/drive_c/users/$USER/Temp/InstallSWTOR/swtor.rar",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic",
+          "file": "$GAMEDIR/drive_c/users/$USER/Temp/InstallSWTOR/swtor.rar"
         }
       },
       {
         "merge": {
-          "src": "launcher",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic",
+          "src": "launcher"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "mesa_glthread": "true"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
   "content": "files:\r\n- setup: https://swtor-a.akamaihd.net/installer/SWTOR_setup.exe\r\n- launcher: https://raw.githubusercontent.com/AccountOneOff/lutris_files/master/launcher.settings\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars - The Old Republic/launcher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: msxml3 msls31 winhttp vcrun2008 d3dx9\r\n    arch: win64\r\n    description: Installing winetricks\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    args: /S\r\n    description: Installing Star Wars - The Old Republic\r\n    executable: setup\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star\r\n      Wars - The Old Republic\"\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars -\r\n      The Old Republic\r\n    file: $GAMEDIR/drive_c/users/$USER/Temp/InstallSWTOR/swtor.rar\r\n- merge:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/BioWare/Star Wars -\r\n      The Old Republic\r\n    src: launcher\r\nsystem:\r\n  env:\r\n    PBA_ENABLE: 1\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\n    __GL_THREADED_OPTIMIZATIONS: 1\r\n    mesa_glthread: 'true'\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

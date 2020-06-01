@@ -30,39 +30,38 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "$GAMEDIR/drive_c/Program Files/Battle.net/Battle.net.exe",
-      "arch": "win32"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating 32bit Wine prefix.",
           "name": "create_prefix",
-          "description": "Creating 32bit Wine prefix."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "silent": true,
+          "app": "arial",
           "arch": "win32",
-          "name": "winetricks",
           "description": "Installing Arial font",
+          "name": "winetricks",
           "prefix": "$GAMEDIR",
-          "app": "arial"
+          "silent": true
         }
       },
       {
         "write_json": {
-          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config",
           "data": {
             "Client": {
-              "HardwareAcceleration": "false",
               "GameLaunchWindowBehavior": "2",
               "GameSearch": {
                 "BackgroundSearch": "true"
               },
+              "HardwareAcceleration": "false",
               "Sound": {
                 "Enabled": "false"
               },
@@ -71,28 +70,29 @@
               }
             }
           },
-          "description": "Writing a Battle.Net config file"
+          "description": "Writing a Battle.Net config file",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
           "arch": "win32",
+          "description": "Installing Blizzard App (an installer will open)\n------------------------------\nLet Lutris installer finish first. Log in afterwards.",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
           "executable": "setup",
-          "name": "wineexec",
-          "description": "Installing Blizzard App (an installer will open)\n------------------------------\nLet Lutris installer finish first. Log in afterwards."
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       }
     ]

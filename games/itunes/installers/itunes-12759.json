@@ -27,49 +27,49 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "$GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "esync": true
-    },
-    "system": {
-      "gamemode": false
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix",
-          "description": "Creating Wine Prefix..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "gdiplus tahoma",
           "description": "Installing dependencies...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Installing iTunes...",
           "exclude_processes": "iTunesHelper.exe iPodService.exe",
           "executable": "installer",
           "name": "wineexec",
-          "description": "Installing iTunes..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "gamemode": false
+    },
+    "wine": {
+      "esync": true
+    }
   },
   "content": "files:\n- installer: https://secure-appldnld.apple.com/itunes12/091-81934-20180529-DAFCAAD0-5F77-11E8-99A3-4F9A897FD268/iTunes64Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus tahoma\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing iTunes...\n    exclude_processes: iTunesHelper.exe iPodService.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  gamemode: false\nwine:\n  esync: true\n"
 }

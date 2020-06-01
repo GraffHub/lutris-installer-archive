@@ -22,13 +22,9 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "$GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "640x480"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -38,34 +34,38 @@
       },
       {
         "task": {
-          "name": "set_regedit",
           "description": "Enable Windows 98 compatibility mode",
           "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
           "prefix": "$GAMEDIR",
-          "value": "win98",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine"
+          "value": "win98"
         }
       },
       {
         "merge": {
-          "src": "$DISC/MDKitchen/Assets/",
-          "dst": "$GAMEDIR/drive_c/MDKitchen/Assets/"
+          "dst": "$GAMEDIR/drive_c/MDKitchen/Assets/",
+          "src": "$DISC/MDKitchen/Assets/"
         }
       },
       {
         "write_file": {
-          "file": "$GAMEDIR/drive_c/.windows-label",
-          "content": "MDKitchen"
+          "content": "MDKitchen",
+          "file": "$GAMEDIR/drive_c/.windows-label"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "executable": "$DISC/SETUP.EXE",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "640x480"
+    }
   },
   "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/Disney Interactive/My Disney Kitchen/MDKitchen.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: SETUP.EXE\n- task:\n    description: Enable Windows 98 compatibility mode\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win98\n- merge:\n    dst: $GAMEDIR/drive_c/MDKitchen/Assets/\n    src: $DISC/MDKitchen/Assets/\n- write_file:\n    content: MDKitchen\n    file: $GAMEDIR/drive_c/.windows-label\n- task:\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 640x480\n"
 }

@@ -27,50 +27,50 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe",
-      "arch": "win64"
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "overrides": {
-        "nvapi,nvapi64": "disabled"
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
       },
-      "esync": true,
-      "dxvk": true
-    },
+      {
+        "task": {
+          "app": "corefonts vcrun2017 win10",
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/S",
+          "description": "Installing client",
+          "executable": "client",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
     "system": {
       "env": {
         "DXVK_HUD": "0"
       }
     },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "create_prefix",
-          "description": "Creating Wine prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "corefonts vcrun2017 win10",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "name": "wineexec",
-          "description": "Installing client",
-          "args": "/S",
-          "prefix": "$GAMEDIR",
-          "executable": "client"
-        }
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "nvapi,nvapi64": "disabled"
       }
-    ]
+    }
   },
   "content": "files:\n- client: https://install.robertsspaceindustries.com/star-citizen/RSI-Setup-1.2.1.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2017 win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /S\n    description: Installing client\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: '0'\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    nvapi,nvapi64: disabled\n"
 }

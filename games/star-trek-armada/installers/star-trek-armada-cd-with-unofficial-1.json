@@ -1,0 +1,104 @@
+{
+  "id": 20171,
+  "game_id": 19481,
+  "game_slug": "star-trek-armada",
+  "name": "Star Trek - Armada",
+  "year": 2000,
+  "user": "jasoncollege24",
+  "runner": "wine",
+  "slug": "star-trek-armada-cd-with-unofficial-1",
+  "version": "CD with unofficial 1.3 patch",
+  "description": "CD required for install, and play. Runs 3 separate installers. Base game, official 1.2 patch, and unofficial 1.3 patch project from armadafiles.com",
+  "notes": "Accept agreements, and select all defaults through each install.\r\n\r\nBase game: Close the agreement in notepad. When the installer completes, click Finish, then Exit. (Don't click play.)\r\n\r\n1.2 patch may complain about lack of disk space. If you know you have enough, click the ignore button to continue.\r\n\r\nNo animations will show on any menu screens, but clicking in the right spots will change screens, and bring up menu items normally. Bonus mission select is in the center, when available.\r\n\r\nEither save the final Borg mission just before the end, or play clear through the first bonus mission as soon as it's available, otherwise the bonus missions won't remain unlocked the next time you start the game.",
+  "created_at": "2020-05-01T09:55:23.967300Z",
+  "updated_at": "2020-05-01T09:55:23.967324Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "patch1": {
+          "filename": "armada_patch_1_2.exe",
+          "url": "http://armadafiles.com/files/armada/official-releases/patches/star-trek-armada-12-patch/summary/download/"
+        }
+      },
+      {
+        "patch2": {
+          "filename": "Armada_Patch_1_3_0.exe",
+          "url": "http://armadafiles.com/files/armada/mods/patches/star-trek-armada-patch-1-3-project/summary/download/"
+        }
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Activision/Star Trek - Armada/Armada.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "setup/data/Armada.exe"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/users/jason/Downloads/",
+          "src": "$CACHE/patch1/armada_patch_1_2.exe"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/users/jason/Downloads/",
+          "src": "$CACHE/patch2/Armada_Patch_1_3_0.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/desktop=Armada,1024x768 $DISC/setup/setup.exe",
+          "description": "Running game setup. Keep all settings at their defaults, and close notepad. You won't see any progress information during actual game install, but the game does install, so please be patient. Click Finish, then Exit when installer completes. (Do not click Play!)",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/desktop=Armada1.2,1024x768 $GAMEDIR/drive_c/users/jason/Downloads/armada_patch_1_2.exe",
+          "description": "Running official 1.2 patch. Keep all settings at their defaults, and click Ignore on any errors.",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/desktop=Armada1.3,1024x768 $GAMEDIR/drive_c/users/jason/Downloads/Armada_Patch_1_3_0.exe",
+          "description": "Running unofficial 1.3 patch. Keep all settings at their defaults, and click Ignore on any errors.",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "wine": {
+      "version": "lutris-5.2-x86_64"
+    }
+  },
+  "content": "files:\n- patch1:\n    filename: armada_patch_1_2.exe\n    url: http://armadafiles.com/files/armada/official-releases/patches/star-trek-armada-12-patch/summary/download/\n- patch2:\n    filename: Armada_Patch_1_3_0.exe\n    url: http://armadafiles.com/files/armada/mods/patches/star-trek-armada-patch-1-3-project/summary/download/\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Activision/Star Trek - Armada/Armada.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: setup/data/Armada.exe\n- move:\n    dst: $GAMEDIR/drive_c/users/jason/Downloads/\n    src: $CACHE/patch1/armada_patch_1_2.exe\n- move:\n    dst: $GAMEDIR/drive_c/users/jason/Downloads/\n    src: $CACHE/patch2/Armada_Patch_1_3_0.exe\n- task:\n    arch: win32\n    args: /desktop=Armada,1024x768 $DISC/setup/setup.exe\n    description: Running game setup. Keep all settings at their defaults, and close\n      notepad. You won't see any progress information during actual game install,\n      but the game does install, so please be patient. Click Finish, then Exit when\n      installer completes. (Do not click Play!)\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\n- task:\n    arch: win32\n    args: /desktop=Armada1.2,1024x768 $GAMEDIR/drive_c/users/jason/Downloads/armada_patch_1_2.exe\n    description: Running official 1.2 patch. Keep all settings at their defaults,\n      and click Ignore on any errors.\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\n- task:\n    arch: win32\n    args: /desktop=Armada1.3,1024x768 $GAMEDIR/drive_c/users/jason/Downloads/Armada_Patch_1_3_0.exe\n    description: Running unofficial 1.3 patch. Keep all settings at their defaults,\n      and click Ignore on any errors.\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\nwine:\n  version: lutris-5.2-x86_64\n"
+}

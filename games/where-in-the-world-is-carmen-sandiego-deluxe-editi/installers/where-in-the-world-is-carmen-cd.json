@@ -1,0 +1,83 @@
+{
+  "id": 10243,
+  "game_id": 21789,
+  "game_slug": "where-in-the-world-is-carmen-sandiego-deluxe-editi",
+  "name": "Where in the World Is Carmen Sandiego? (Deluxe Edition)",
+  "year": 1992,
+  "user": "Mr_Alert",
+  "runner": "dosbox",
+  "slug": "where-in-the-world-is-carmen-cd",
+  "version": "CD",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-09-19T02:07:43.051000Z",
+  "updated_at": "2018-09-20T00:00:56.699310Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/play.conf"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "carmen.dat"
+        }
+      },
+      {
+        "mkdir": "$GAMEDIR/c"
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/d",
+          "src": "$DISC"
+        }
+      },
+      {
+        "task": {
+          "commands": [
+            "C:",
+            "CD DELUXE",
+            "CALL CARMEN.BAT",
+            "exit"
+          ],
+          "drives": {
+            "c": "$GAMEDIR/c",
+            "d": "$GAMEDIR/d"
+          },
+          "name": "makeconfig",
+          "path": "$GAMEDIR/play.conf"
+        }
+      },
+      {
+        "task": {
+          "commands": [
+            "D:",
+            "SETUP.EXE",
+            "exit"
+          ],
+          "drives": {
+            "c": "$GAMEDIR/c",
+            "d": "$GAMEDIR/d"
+          },
+          "name": "makeconfig",
+          "path": "$GAMEDIR/install.conf"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/install.conf",
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  main_file: $GAMEDIR/play.conf\ninstaller:\n- insert-disc:\n    requires: carmen.dat\n- mkdir: $GAMEDIR/c\n- merge:\n    dst: $GAMEDIR/d\n    src: $DISC\n- task:\n    commands:\n    - 'C:'\n    - CD DELUXE\n    - CALL CARMEN.BAT\n    - exit\n    drives:\n      c: $GAMEDIR/c\n      d: $GAMEDIR/d\n    name: makeconfig\n    path: $GAMEDIR/play.conf\n- task:\n    commands:\n    - 'D:'\n    - SETUP.EXE\n    - exit\n    drives:\n      c: $GAMEDIR/c\n      d: $GAMEDIR/d\n    name: makeconfig\n    path: $GAMEDIR/install.conf\n- task:\n    config_file: $GAMEDIR/install.conf\n    name: dosexec\n    working_dir: $GAMEDIR\n"
+}

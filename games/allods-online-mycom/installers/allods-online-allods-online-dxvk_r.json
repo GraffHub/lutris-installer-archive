@@ -1,0 +1,82 @@
+{
+  "id": 20580,
+  "game_id": 9478,
+  "game_slug": "allods-online-mycom",
+  "name": "Allods Online",
+  "year": 2010,
+  "user": "MertviyProrok",
+  "runner": "wine",
+  "slug": "allods-online-allods-online-dxvk_r",
+  "version": "allods-online-dxvk_RU_test",
+  "description": "This is the RU installer of Allods [Game Center].This Setup makes use of DirectX 9 Vulkan Layer [D9VK] and runs with high fps.",
+  "notes": "- Switched to legacy setup from 2019/08 (Otherwise Setup fails with OS not supported)\r\n- You can switch Language after Setup in Gamecenter\r\n- Everything works so far (even display of numbers / text in chat window)",
+  "created_at": "2020-05-18T10:40:15.042000Z",
+  "updated_at": "2020-05-19T13:05:59.447773Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 459160,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://static.dl.mail.ru/AllodsLoader.exe"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating 32bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
+          "arch": "win32",
+          "description": "Install MS Core-Fonts with winetricks",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "arch": "win32",
+          "description": "Setting Wine to Windows 7 32-Bit",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing Allods My.Com\n------------------------------\nLet Lutris installer finish first. Log in afterwards.",
+          "exclude_processes": "GameCenter.exe Launcher.exe",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": "gpuload"
+      },
+      "exclude_processes": "GameCenter.exe Launcher.exe"
+    },
+    "wine": {
+      "dxvk": true
+    }
+  },
+  "content": "files:\n- setup: https://static.dl.mail.ru/AllodsLoader.exe\ngame:\n  arch: win32\n  exe: drive_c/users/$USER/Local Settings/Application Data/GameCenter/GameCenter.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win32\n    description: Install MS Core-Fonts with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Wine to Windows 7 32-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: 'Installing Allods My.Com\n\n      ------------------------------\n\n      Let Lutris installer finish first. Log in afterwards.'\n    exclude_processes: GameCenter.exe Launcher.exe\n    executable: setup\n    name: wineexec\nsystem:\n  env:\n    DXVK_HUD: gpuload\n  exclude_processes: GameCenter.exe Launcher.exe\nwine:\n  dxvk: true\n"
+}

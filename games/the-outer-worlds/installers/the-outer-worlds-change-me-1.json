@@ -33,137 +33,137 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
       "arch": "win64",
-      "args": "-opengl"
+      "args": "-opengl",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "overrides": {
-        "mfplat": "native,builtin"
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "audio"
+        }
       },
-      "esync": true,
-      "dxvk": true
-    },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "mf",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "component": "mediafoundation",
+          "name": "install_cab_component",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "component": "mf_",
+          "name": "install_cab_component",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "component": "mfreadwrite",
+          "name": "install_cab_component",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "component": "wmadmod",
+          "name": "install_cab_component",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe",
+          "component": "wmvdecod",
+          "name": "install_cab_component",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial dotnet48",
+          "arch": "win64",
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "exclude_processes": "EpicGamesLauncher.exe",
+          "executable": "msiexec",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
     "system": {
       "env": {
-        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
         "DXVK_HUD": "compiler",
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
         "__GL_SHADER_DISK_CACHE": 1,
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
       },
       "pulse_latency": true
     },
-    "installer": [
-      {
-        "extract": {
-          "file": "audio",
-          "dst": "$CACHE/dxsetup"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "app": "mf",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "component": "mediafoundation",
-          "name": "install_cab_component",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "component": "mf_",
-          "name": "install_cab_component",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "component": "mfreadwrite",
-          "name": "install_cab_component",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "component": "wmadmod",
-          "name": "install_cab_component",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "component": "wmvdecod",
-          "name": "install_cab_component",
-          "cabfile": "$HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "executable": "$CACHE/dxsetup/DXSETUP.exe",
-          "name": "wineexec",
-          "args": "/silent"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "winekill"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "arial dotnet48",
-          "description": "Installing dependencies",
-          "name": "winetricks"
-        }
-      },
-      {
-        "copy": {
-          "src": "epic",
-          "dst": "$CACHE/epic/"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "exclude_processes": "EpicGamesLauncher.exe",
-          "name": "wineexec",
-          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
-          "prefix": "$GAMEDIR",
-          "executable": "msiexec"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "winekill"
-        }
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "mfplat": "native,builtin"
       }
-    ]
+    }
   },
   "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\n- mfplat_dll_64: https://lutris.net/files/tools/dll/mfplat/x64/mfplat.dll\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/dxsetup\n    file: audio\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mf\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mediafoundation\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mf_\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: mfreadwrite\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmadmod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    cabfile: $HOME/.cache/winetricks/win7sp1/windows6.1-KB976932-X64.exe\n    component: wmvdecod\n    name: install_cab_component\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial dotnet48\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  pulse_latency: true\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    mfplat: native,builtin\n"
 }

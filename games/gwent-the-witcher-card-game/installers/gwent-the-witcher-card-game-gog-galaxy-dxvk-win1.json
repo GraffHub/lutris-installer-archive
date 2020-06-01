@@ -16,7 +16,7 @@
   "published": true,
   "published_by": 20548,
   "rating": "1",
-  "steamid": null,
+  "steamid": 1284410,
   "gogid": 1971477531,
   "gogslug": "gwent_the_witcher_card_game",
   "humblestoreid": "",
@@ -27,60 +27,60 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
       "arch": "win64",
-      "args": "/deelevated"
+      "args": "/deelevated",
+      "exe": "drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe",
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "dxvk": true
-    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts vcrun2012 vcrun2013 vcrun2015",
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "galaxy",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win10",
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       }
     },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "create_prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "corefonts vcrun2012 vcrun2013 vcrun2015",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "executable": "galaxy",
-          "name": "wineexec",
-          "args": "/silent"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "win10",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "winekill"
-        }
-      }
-    ]
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "files:\n- galaxy: https://cdn.gog.com/open/galaxy/client/setup_galaxy_1.2.54.23.exe\ngame:\n  arch: win64\n  args: /deelevated\n  exe: drive_c/Program Files (x86)/GOG Galaxy/GalaxyClient.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2012 vcrun2013 vcrun2015\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    executable: galaxy\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe",
-      "arch": "win32"
-    },
     "files": [
       {
         "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
@@ -34,32 +29,37 @@
         "samp": "http://archive.org/download/sa-mp-0.3.dl/sa-mp-0.3.DL-R1-install.exe"
       }
     ],
-    "requires": "grand-theft-auto-san-andreas",
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe",
+      "prefix": "$GAMEDIR"
+    },
     "installer": [
       {
         "extract": {
-          "file": "$downgrade",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$downgrade"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Downgrading GTA:SA...",
           "executable": "$CACHE/gtasapatch.exe",
           "name": "wineexec",
-          "description": "Downgrading GTA:SA..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/silent",
+          "description": "Installing SA:MP...",
           "executable": "$samp",
           "name": "wineexec",
-          "description": "Installing SA:MP...",
-          "args": "/silent"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "requires": "grand-theft-auto-san-andreas"
   },
   "content": "files:\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\n- samp: http://archive.org/download/sa-mp-0.3.dl/sa-mp-0.3.DL-R1-install.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Rockstar Games/GTA San Andreas/samp.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing SA:MP...\n    executable: $samp\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
 }

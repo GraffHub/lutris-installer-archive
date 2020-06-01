@@ -21,11 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe",
-      "arch": "win32"
-    },
     "files": [
       {
         "mta": "http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.5.6.exe"
@@ -34,32 +29,37 @@
         "downgrade": "http://files.sa-mp.com/gtasapatch.zip"
       }
     ],
-    "requires": "grand-theft-auto-san-andreas",
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe",
+      "prefix": "$GAMEDIR"
+    },
     "installer": [
       {
         "extract": {
-          "file": "$downgrade",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$downgrade"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Downgrading GTA:SA...",
           "executable": "$CACHE/gtasapatch.exe",
           "name": "wineexec",
-          "description": "Downgrading GTA:SA..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/silent",
+          "description": "Installing MTA...",
           "executable": "$mta",
           "name": "wineexec",
-          "description": "Installing MTA...",
-          "args": "/silent"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "requires": "grand-theft-auto-san-andreas"
   },
   "content": "files:\n- mta: http://mirror.s4.mtasa.ohbah.com/mtasa/main/mtasa-1.5.6.exe\n- downgrade: http://files.sa-mp.com/gtasapatch.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/MTA San Andreas 1.5/Multi Theft Auto.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $downgrade\n- task:\n    description: Downgrading GTA:SA...\n    executable: $CACHE/gtasapatch.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /silent\n    description: Installing MTA...\n    executable: $mta\n    name: wineexec\n    prefix: $GAMEDIR\nrequires: grand-theft-auto-san-andreas\n"
 }

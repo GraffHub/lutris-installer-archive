@@ -28,53 +28,49 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/SEGA/Enemy Zero/EZERO.exe"
-    },
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
+      "exe": "drive_c/SEGA/Enemy Zero/EZERO.exe",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Preparing \"Enemy Zero\" folder",
           "name": "create_prefix",
-          "description": "Preparing \"Enemy Zero\" folder"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "insert-disc": {
-          "requires": "ezero/e0l.exe",
-          "description": "Please insert \"Enemy Zero\" CD1 and press autodetect"
+          "description": "Please insert \"Enemy Zero\" CD1 and press autodetect",
+          "requires": "ezero/e0l.exe"
         }
       },
       {
         "task": {
-          "include_processes": "explorer.exe",
-          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
-          "name": "wineexec",
+          "args": "/desktop=EnemyZero,1024x780 $DISC/ezero/e0l.exe",
           "description": "Running setup of the game. Just proceed and keep all settings at their defaults",
-          "args": "/desktop=EnemyZero,1024x780 $DISC/ezero/e0l.exe"
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "file": "dgv",
-          "dst": "$GAMEDIR/drive_c/SEGA/Enemy Zero/"
+          "dst": "$GAMEDIR/drive_c/SEGA/Enemy Zero/",
+          "file": "dgv"
         }
       },
       {
         "copy": {
-          "src": "$GAMEDIR/drive_c/SEGA/Enemy Zero/MS/DDraw.dll",
-          "dst": "$GAMEDIR/drive_c/SEGA/Enemy Zero/"
+          "dst": "$GAMEDIR/drive_c/SEGA/Enemy Zero/",
+          "src": "$GAMEDIR/drive_c/SEGA/Enemy Zero/MS/DDraw.dll"
         }
       },
       {
         "copy": {
-          "src": "$GAMEDIR/drive_c/SEGA/Enemy Zero/MS/D3DImm.dll",
-          "dst": "$GAMEDIR/drive_c/SEGA/Enemy Zero/"
+          "dst": "$GAMEDIR/drive_c/SEGA/Enemy Zero/",
+          "src": "$GAMEDIR/drive_c/SEGA/Enemy Zero/MS/D3DImm.dll"
         }
       },
       {
@@ -84,20 +80,20 @@
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/SEGA/Enemy Zero/dgVoodoo.conf",
           "data": {
             "DirectX": {
-              "Resolution": "max_qhd_isf",
               "ForceVerticalSync": true,
+              "Resolution": "max_qhd_isf",
               "VRAM": 256,
               "dgVoodooWatermark": false
             },
             "General": {
+              "CaptureMouse": false,
               "FullScreenMode": false,
-              "ScalingMode": "stretched_ar",
-              "CaptureMouse": false
+              "ScalingMode": "stretched_ar"
             }
-          }
+          },
+          "file": "$GAMEDIR/drive_c/SEGA/Enemy Zero/dgVoodoo.conf"
         }
       },
       {
@@ -108,37 +104,41 @@
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "ddraw",
-          "prefix": "$GAMEDIR",
-          "value": "native,builtin",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
-          "type": "REG_SZ"
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "native,builtin"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "csmt",
-          "prefix": "$GAMEDIR",
-          "value": "00000000",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
-          "type": "REG_DWORD"
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
+          "value": "00000000"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "background",
-          "prefix": "$GAMEDIR",
-          "value": "0 0 0",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
-          "type": "REG_SZ"
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
+    }
   },
   "content": "custom-name: Enemy Zero - CD\nfiles:\n- dgv: http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_55_4_1.zip\ngame:\n  exe: drive_c/SEGA/Enemy Zero/EZERO.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing \"Enemy Zero\" folder\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Please insert \"Enemy Zero\" CD1 and press autodetect\n    requires: ezero/e0l.exe\n- task:\n    args: /desktop=EnemyZero,1024x780 $DISC/ezero/e0l.exe\n    description: Running setup of the game. Just proceed and keep all settings at\n      their defaults\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\n- extract:\n    dst: $GAMEDIR/drive_c/SEGA/Enemy Zero/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/SEGA/Enemy Zero/\n    src: $GAMEDIR/drive_c/SEGA/Enemy Zero/MS/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/SEGA/Enemy Zero/\n    src: $GAMEDIR/drive_c/SEGA/Enemy Zero/MS/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/SEGA/Enemy Zero/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/SEGA/Enemy Zero/dgVoodoo.conf\n- execute:\n    command: cd \"$GAMEDIR/drive_c/SEGA/Enemy Zero/\"; rm -f -r 3Dfx MS Doc;\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

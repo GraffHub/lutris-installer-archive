@@ -1,0 +1,126 @@
+{
+  "id": 20720,
+  "game_id": 853,
+  "game_slug": "age-of-empires-iii-complete-collection",
+  "name": "Age of Empires III: Complete Collection",
+  "year": 2009,
+  "user": "JoViatrix",
+  "runner": "wine",
+  "slug": "age-of-empires-iii-complete-c-cd",
+  "version": "CD",
+  "description": "Complete cd edition. Thx to the wine community for helping to create this installation script.",
+  "notes": "If the installer can't copy the game files from the discs, try to copy  them yourself and then select them.\r\nThe game must be updated manually to be played without any disc. Just launch the game and look for updates in the options section or download the patch on the internet.\r\nThe sound rarelly crackles and there are minor graphic glitches. No workaround.",
+  "created_at": "2020-05-23T08:17:15.012000Z",
+  "updated_at": "2020-05-24T06:15:51.698645Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 105450,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Microsoft Games/Age of Empires III/age3y.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "app": "winxp",
+          "description": "Setting up wine to windows xp",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts d9vk quartz mfc42 l3codecx msxml4 vcrun6 riched20",
+          "description": "Installing required libraries",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 1",
+          "requires": "Disk1C~1.cab"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying files",
+          "dst": "$GAMEDIR/cds",
+          "src": "$DISC"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 2",
+          "requires": "Disk2C~1.cab"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying Disk2C~1.cab",
+          "dst": "$GAMEDIR/cds",
+          "src": "$DISC/Disk2C~1.cab"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 3",
+          "requires": "Disk3C~1.cab"
+        }
+      },
+      {
+        "merge": {
+          "description": "Copying Disk3C~1.cab",
+          "dst": "$GAMEDIR/cds",
+          "src": "$DISC/Disk3C~1.cab"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the game",
+          "executable": "$GAMEDIR/cds/install.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert the WarChiefs extension disc",
+          "requires": "The_Wa~1.cab"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the game extension",
+          "executable": "$DISC/install.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert the Asian Dynasties extension disc",
+          "requires": "ypack_~1.cab"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the game extension",
+          "executable": "$DISC/install.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "esync": true
+    }
+  },
+  "content": "game:\r\n  exe: drive_c/Program Files (x86)/Microsoft Games/Age of Empires III/age3y.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    app: winxp\r\n    description: Setting up wine to windows xp\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: corefonts d9vk quartz mfc42 l3codecx msxml4 vcrun6 riched20\r\n    description: Installing required libraries\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- insert-disc:\r\n    description: Insert disc 1\r\n    requires: Disk1C~1.cab\r\n- merge:\r\n    description: Copying files\r\n    dst: $GAMEDIR/cds\r\n    src: $DISC\r\n- insert-disc:\r\n    description: Insert disc 2\r\n    requires: Disk2C~1.cab\r\n- merge:\r\n    description: Copying Disk2C~1.cab\r\n    dst: $GAMEDIR/cds\r\n    src: $DISC/Disk2C~1.cab\r\n- insert-disc:\r\n    description: Insert disc 3\r\n    requires: Disk3C~1.cab\r\n- merge:\r\n    description: Copying Disk3C~1.cab\r\n    dst: $GAMEDIR/cds\r\n    src: $DISC/Disk3C~1.cab\r\n- task:\r\n    description: Installing the game\r\n    executable: $GAMEDIR/cds/install.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- insert-disc:\r\n    description: Insert the WarChiefs extension disc\r\n    requires: The_Wa~1.cab\r\n- task:\r\n    description: Installing the game extension\r\n    executable: $DISC/install.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- insert-disc:\r\n    description: Insert the Asian Dynasties extension disc\r\n    requires: ypack_~1.cab\r\n- task:\r\n    description: Installing the game extension\r\n    executable: $DISC/install.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nwine:\r\n  esync: true"
+}

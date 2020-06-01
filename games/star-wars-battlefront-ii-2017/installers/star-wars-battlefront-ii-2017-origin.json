@@ -9,9 +9,9 @@
   "slug": "star-wars-battlefront-ii-2017-origin",
   "version": "Origin",
   "description": "Only sets up Origin and DXVK. You will need to download Battlefront II manually within Origin.",
-  "notes": "Please read before installing: <a href=\"https://github.com/lutris/lutris/wiki/Game:-Origin\">https://github.com/lutris/lutris/wiki/Game:-Origin</a>\r\n\r\nIn order for mouse controls to work while in-game, the variable GstInput.MouseRawInput 1 must be changed to GstInput.MouseRawInput 0 within drive_c/users/$USER/My Documents/STAR WARS Battlefront II/settings/ProfileOptions_profile_synced\r\nMore information is available <a href=\"https://www.reddit.com/r/wine_gaming/comments/esgl76/how_to_get_star_wars_battlefront_ii2017_to_run_on/\">https://www.reddit.com/r/wine_gaming/comments/esgl76/how_to_get_star_wars_battlefront_ii2017_to_run_on/</a>. \r\n\r\nThere has also been success using Tk-Glitch's wine builds to fix mouse input. Releases are available at: <a href=\"https://github.com/Tk-Glitch/PKGBUILDS/releases\">https://github.com/Tk-Glitch/PKGBUILDS/releases</a>",
+  "notes": "Please read before installing: <a href=\"https://github.com/lutris/lutris/wiki/Game:-Origin\">https://github.com/lutris/lutris/wiki/Game:-Origin</a>\r\n\r\nThere has also been success using Tk-Glitch's wine builds to fix mouse input. Releases are available at: <a href=\"https://github.com/Tk-Glitch/PKGBUILDS/releases\">https://github.com/Tk-Glitch/PKGBUILDS/releases</a>",
   "created_at": "2019-04-20T15:09:17.444000Z",
-  "updated_at": "2020-03-07T10:02:08.806504Z",
+  "updated_at": "2020-05-23T09:34:07.613425Z",
   "draft": false,
   "published": true,
   "published_by": 20548,
@@ -30,31 +30,17 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/Origin/Origin.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "overrides": {
-        "nvapi,nvapi64": "disabled",
-        "OriginThinSetupInternal.exe": "disabled"
-      },
-      "esync": true,
-      "dxvk": true
-    },
-    "system": {
-      "env": {
-        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf"
-      },
-      "disable_runtime": false
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -64,7 +50,8 @@
       },
       {
         "input_menu": {
-          "preselect": "Not needed for AMD. Ignore this.",
+          "description": "Setting DXVK workarounds please choose your GPU:",
+          "id": "GPU",
           "options": [
             {
               "Not needed for AMD. Ignore this.": "AMD"
@@ -73,40 +60,39 @@
               "dxgi.customVendorId = 10DE dxgi.customDeviceId = 1C81 dxgi.nvapiHack = True": "Nvidia"
             }
           ],
-          "description": "Setting DXVK workarounds please choose your GPU:",
-          "id": "GPU"
+          "preselect": "Not needed for AMD. Ignore this."
         }
       },
       {
         "write_file": {
-          "file": "$GAMEDIR/dxvk.conf",
-          "content": "$INPUT_GPU"
+          "content": "$INPUT_GPU",
+          "file": "$GAMEDIR/dxvk.conf"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "nocrashdialog vcrun2017 win7",
-          "name": "winetricks"
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
-          "name": "wineexec",
-          "description": "Installing Origin... Login window will pop-up and close.",
           "args": "/silent",
-          "prefix": "$GAMEDIR",
-          "executable": "client"
+          "description": "Installing Origin... Login window will pop-up and close.",
+          "exclude_processes": "Origin.exe OriginClientService.exe OriginWebHelperService.exe QtWebEngineProcess.exe",
+          "executable": "client",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -114,11 +100,26 @@
       },
       {
         "merge": {
-          "src": "updater",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Origin"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Origin",
+          "src": "updater"
         }
       }
-    ]
+    ],
+    "system": {
+      "disable_runtime": false,
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "OriginThinSetupInternal.exe": "disabled",
+        "nvapi,nvapi64": "disabled",
+        "winedbg.exe": "d"
+      }
+    }
   },
-  "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir \"$GAMEDIR/bfv-nv-shaders\"\n- input_menu:\n    description: 'Setting DXVK workarounds please choose your GPU:'\n    id: GPU\n    options:\n    - Not needed for AMD. Ignore this.: AMD\n    - dxgi.customVendorId = 10DE dxgi.customDeviceId = 1C81 dxgi.nvapiHack = True: Nvidia\n    preselect: Not needed for AMD. Ignore this.\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: nocrashdialog vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    OriginThinSetupInternal.exe: disabled\n    nvapi,nvapi64: disabled\n"
+  "content": "files:\n- client: https://origin-a.akamaihd.net/Origin-Client-Download/origin/live/OriginThinSetup.exe\n- updater: https://raw.githubusercontent.com/DrDoctor13/wine-origin-updater/master/updateorigin.sh\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Origin/Origin.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- execute:\n    command: mkdir \"$GAMEDIR/bfv-nv-shaders\"\n- input_menu:\n    description: 'Setting DXVK workarounds please choose your GPU:'\n    id: GPU\n    options:\n    - Not needed for AMD. Ignore this.: AMD\n    - dxgi.customVendorId = 10DE dxgi.customDeviceId = 1C81 dxgi.nvapiHack = True: Nvidia\n    preselect: Not needed for AMD. Ignore this.\n- write_file:\n    content: $INPUT_GPU\n    file: $GAMEDIR/dxvk.conf\n- task:\n    app: nocrashdialog vcrun2017 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Origin... Login window will pop-up and close.\n    exclude_processes: Origin.exe OriginClientService.exe OriginWebHelperService.exe\n      QtWebEngineProcess.exe\n    executable: client\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- chmodx: updater\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Origin\n    src: updater\nsystem:\n  disable_runtime: false\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    OriginThinSetupInternal.exe: disabled\n    nvapi,nvapi64: disabled\n    winedbg.exe: d\n"
 }

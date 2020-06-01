@@ -21,20 +21,19 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "args": "-game hipnotic -hipnotic"
-    },
     "files": [
       {
         "game": "N/A:Select a file with *.PAK extension"
       }
     ],
-    "requires": "quake-cdrom-darkplaces",
+    "game": {
+      "args": "-game hipnotic -hipnotic"
+    },
     "installer": [
       {
         "write_file": {
-          "file": "$CACHE/selectcopy.sh",
-          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;"
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;",
+          "file": "$CACHE/selectcopy.sh"
         }
       },
       {
@@ -42,17 +41,18 @@
       },
       {
         "execute": {
-          "file": "mkdir",
-          "args": "$GAMEDIR/hipnotic"
+          "args": "$GAMEDIR/hipnotic",
+          "file": "mkdir"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/selectcopy.sh",
-          "args": "$game/ $GAMEDIR/hipnotic"
+          "args": "$game/ $GAMEDIR/hipnotic",
+          "file": "$CACHE/selectcopy.sh"
         }
       }
-    ]
+    ],
+    "requires": "quake-cdrom-darkplaces"
   },
   "content": "files:\n- game: N/A:Select a file with *.PAK extension\ngame:\n  args: -game hipnotic -hipnotic\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $GAMEDIR/hipnotic\n    file: mkdir\n- execute:\n    args: $game/ $GAMEDIR/hipnotic\n    file: $CACHE/selectcopy.sh\nrequires: quake-cdrom-darkplaces\n"
 }

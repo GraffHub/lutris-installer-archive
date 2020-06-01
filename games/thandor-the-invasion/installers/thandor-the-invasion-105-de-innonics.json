@@ -30,94 +30,94 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/Thandor/thandor.exe",
-      "arch": "win64"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "insert-disc": {
-          "requires": "Thandor/thandor.dat",
-          "description": "Installationsdaten wählen  Für nicht unterstützte Auflösungen gibt es im Verzeichnis customConfigs_Tools angepasste thandor.dat Dateien. Diese muss zur thandor.exe im Spielverzeichnis kopiert werden  und in thandor.dat umbenannt werden."
+          "description": "Installationsdaten wählen  Für nicht unterstützte Auflösungen gibt es im Verzeichnis customConfigs_Tools angepasste thandor.dat Dateien. Diese muss zur thandor.exe im Spielverzeichnis kopiert werden  und in thandor.dat umbenannt werden.",
+          "requires": "Thandor/thandor.dat"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Erzeuge WINE Prefix",
           "name": "create_prefix",
-          "description": "Erzeuge WINE Prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "win95",
           "description": "Bereite Prefix für das Ausführen des Setups vor (setze win95)",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win95",
           "executable": "$DISC/Setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "execute": {
-          "file": "7z",
-          "args": "e $dinput -o$CACHE/tmp/dinput"
+          "args": "e $dinput -o$CACHE/tmp/dinput",
+          "file": "7z"
         }
       },
       {
         "move": {
-          "src": "$CACHE/tmp/dinput/dinput.dll",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/",
+          "src": "$CACHE/tmp/dinput/dinput.dll"
         }
       },
       {
         "copy": {
-          "src": "$DISC/Thandor/Flm",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/Flm"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/Flm",
+          "src": "$DISC/Thandor/Flm"
         }
       },
       {
         "extract": {
-          "file": "patch105",
-          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/"
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/",
+          "file": "patch105"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "winxp",
-          "name": "winetricks"
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "arch": "win64",
-          "name": "set_regedit",
           "key": "GrabFullscreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "prefix": "$GAMEDIR",
-          "value": "N",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
+          "value": "N"
         }
       }
     ],
     "require-binaries": "7z",
-    "wine": {
-      "overrides": {
-        "dinput.dll": "native"
-      },
-      "dxvk": false
-    },
     "system": {
       "env": {
         "LUTRIS_RUNTIME": "0"
+      }
+    },
+    "wine": {
+      "dxvk": false,
+      "overrides": {
+        "dinput.dll": "native"
       }
     }
   },

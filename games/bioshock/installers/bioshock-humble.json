@@ -27,39 +27,39 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "dxvk": true
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "extract": {
-          "file": "$file1",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "$file1"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/S",
           "executable": "$CACHE/Setup.exe",
           "name": "wineexec",
-          "args": "/S"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "key": "dxgi",
-          "prefix": "$GAMEDIR",
-          "value": "",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "type": "REG_SZ"
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
         }
       }
-    ]
+    ],
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "files:\r\n- file1: N/A:Please select the Humble archive\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/2K Games/BioShock/Builds/Release/Bioshock.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE\r\n    file: $file1\r\n- task:\r\n    args: /S\r\n    executable: $CACHE/Setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    key: dxgi\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\r\n    prefix: $GAMEDIR\r\n    type: REG_SZ\r\n    value: ''\r\nwine:\r\n  dxvk: true"
 }

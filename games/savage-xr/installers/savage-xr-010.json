@@ -30,40 +30,40 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Savage XR/savage.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "overrides": {
-        "ddraw": "native",
-        "d3d11": "disabled"
-      }
-    },
-    "system": {
-      "env": {
-        "__GL_SHADER_DISK_CACHE": "1",
-        "mesa_glthread": "true",
-        "__GL_THREADED_OPTIMIZATIONS": "1"
-      }
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "installer",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "mesa_glthread": "true"
+      }
+    },
+    "wine": {
+      "overrides": {
+        "d3d11": "disabled",
+        "ddraw": "native"
+      }
+    }
   },
   "content": "files:\n- installer:\n    filename: xr_setup-1.0-cl_win_prod.exe\n    url: http://www.newerth.com/?id=downloads&op=downloadFile&file=xr_setup-1.0-cl_win_prod.exe&mirrorid=2\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Savage XR/savage.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwine:\n  overrides:\n    d3d11: disabled\n    ddraw: native\n"
 }

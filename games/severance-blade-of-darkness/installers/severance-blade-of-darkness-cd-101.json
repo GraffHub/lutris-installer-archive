@@ -27,12 +27,9 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "$GAMEDIR/drive_c/Codemasters/Severance/Bin/Blade.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "Desktop": true
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -42,27 +39,30 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating Wine prefix...",
           "name": "create_prefix",
-          "description": "Creating Wine prefix..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "arch": "win32",
+          "description": "Installing Severance Blade of Darkness...",
           "executable": "$DISC/SetUp.exe",
-          "name": "wineexec",
-          "description": "Installing Severance Blade of Darkness..."
+          "name": "wineexec"
         }
       },
       {
         "extract": {
-          "src": "raster",
-          "dst": "$GAMEDIR/drive_c/Codemasters/Severance/"
+          "dst": "$GAMEDIR/drive_c/Codemasters/Severance/",
+          "src": "raster"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true
+    }
   },
   "content": "files:\n- raster: http://rampage.bigtruck-canada.ca/blade/oth/raster.zip\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Codemasters/Severance/Bin/Blade.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: SetUp.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Severance Blade of Darkness...\n    executable: $DISC/SetUp.exe\n    name: wineexec\n- extract:\n    dst: $GAMEDIR/drive_c/Codemasters/Severance/\n    src: raster\nwine:\n  Desktop: true\n"
 }

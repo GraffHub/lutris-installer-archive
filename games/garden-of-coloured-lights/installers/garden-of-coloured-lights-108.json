@@ -27,58 +27,58 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/garden/garden.exe",
-      "arch": "win32"
-    },
-    "system": {
-      "use_us_layout": true
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "name": "set_regedit",
           "key": "winemenubuilder.exe",
-          "prefix": "$GAMEDIR",
-          "value": "",
+          "name": "set_regedit",
           "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
-          "type": "REG_SZ"
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "/S",
+          "description": "Installing...",
           "executable": "game",
           "name": "wineexec",
-          "description": "Installing...",
-          "args": "/S"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "description": "Disabling unused WINE features",
           "app": "sandbox",
-          "silent": true,
-          "name": "winetricks"
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "vd=640x480",
-          "silent": true,
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
         }
       }
-    ]
+    ],
+    "system": {
+      "use_us_layout": true
+    }
   },
   "content": "files:\n- game: http://netix.dl.sourceforge.net/project/garden/garden/1.0.8/garden-1.0.8-RC.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/garden/garden.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /S\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: vd=640x480\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  use_us_layout: true\n"
 }

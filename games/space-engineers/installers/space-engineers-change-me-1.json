@@ -21,66 +21,66 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "winesteam": {
-      "overrides": {
-        "msvcr120": "n,b",
-        "nvapi,nvapi64": "disabled"
-      },
-      "esync": true,
-      "dxvk": true
-    },
     "game": {
-      "prefix": "$GAMEDIR/prefix",
+      "appid": 244850,
       "arch": "win64",
-      "appid": 244850
-    },
-    "system": {
-      "env": {
-        "STAGING_SHARED_MEMORY": 0,
-        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
-        "DXVK_HUD": "compiler"
-      },
-      "pulse_latency": true
+      "prefix": "$GAMEDIR/prefix"
     },
     "installer": [
       {
         "write_file": {
-          "file": "$GAMEDIR/prefix/dxvk.conf",
-          "content": "dxgi.nvapiHack = False"
+          "content": "dxgi.nvapiHack = False",
+          "file": "$GAMEDIR/prefix/dxvk.conf"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "arch": "win64",
           "app": "vcrun2017 xact",
-          "name": "winetricks"
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "arch": "win64",
           "app": "dotnet48 win7",
+          "arch": "win64",
           "description": "Installing .NET 4.8. This will take a while...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/prefix/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "STAGING_SHARED_MEMORY": 0
+      },
+      "pulse_latency": true
+    },
+    "winesteam": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "msvcr120": "n,b",
+        "nvapi,nvapi64": "disabled"
+      }
+    }
   },
   "content": "game:\n  appid: 244850\n  arch: win64\n  prefix: $GAMEDIR/prefix\ninstaller:\n- write_file:\n    content: dxgi.nvapiHack = False\n    file: $GAMEDIR/prefix/dxvk.conf\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR/prefix\n- task:\n    app: vcrun2017 xact\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    app: dotnet48 win7\n    arch: win64\n    description: Installing .NET 4.8. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR/prefix\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/prefix/dxvk.conf\n    DXVK_HUD: compiler\n    STAGING_SHARED_MEMORY: 0\n  pulse_latency: true\nwinesteam:\n  dxvk: true\n  esync: true\n  overrides:\n    msvcr120: n,b\n    nvapi,nvapi64: disabled\n"
 }

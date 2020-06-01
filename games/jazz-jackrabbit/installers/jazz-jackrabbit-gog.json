@@ -36,33 +36,33 @@
       }
     ],
     "game": {
-      "main_file": "$GAMEDIR/dosbox_jazz_single.conf",
-      "config_file": "$GAMEDIR/dosbox_jazz.conf"
+      "config_file": "$GAMEDIR/dosbox_jazz.conf",
+      "main_file": "$GAMEDIR/dosbox_jazz_single.conf"
     },
     "installer": [
       {
         "extract": {
-          "file": "zip",
-          "dst": "$CACHE"
+          "dst": "$CACHE",
+          "file": "zip"
         }
       },
       {
         "execute": {
-          "file": "$CACHE/unzip",
+          "args": "$game -d \"$CACHE\" \"data/noarch/*\"",
           "description": "Extracting game data",
-          "args": "$game -d \"$CACHE\" \"data/noarch/*\""
+          "file": "$CACHE/unzip"
         }
       },
       {
         "rename": {
-          "src": "$CACHE/data/noarch/data/LEVEL1.005",
-          "dst": "$CACHE/data/noarch/data/LEVEL1.005.bak"
+          "dst": "$CACHE/data/noarch/data/LEVEL1.005.bak",
+          "src": "$CACHE/data/noarch/data/LEVEL1.005"
         }
       },
       {
         "extract": {
-          "file": "helper",
-          "dst": "$CACHE/data/noarch/data"
+          "dst": "$CACHE/data/noarch/data",
+          "file": "helper"
         }
       },
       {
@@ -74,17 +74,17 @@
       {
         "write_config": {
           "file": "$GAMEDIR/dosbox_jazz.conf",
-          "value": "false",
+          "key": "fullscreen",
           "section": "sdl",
-          "key": "fullscreen"
+          "value": "false"
         }
       },
       {
         "write_config": {
           "file": "$GAMEDIR/dosbox_jazz.conf",
-          "value": "false",
+          "key": "timed",
           "section": "joystick",
-          "key": "timed"
+          "value": "false"
         }
       }
     ]

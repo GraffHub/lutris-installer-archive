@@ -27,39 +27,39 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Algodoo/Algodoo.exe",
-      "arch": "win32"
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "esync": true,
-      "dxvk": true
-    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine 32-bit Prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing Algodoo 2.1.0",
+          "executable": "installer",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
     "system": {
       "env": {
         "__GL_SHADER_DISK_CACHE": 1,
         "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
       }
     },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
-          "name": "create_prefix",
-          "description": "Creating Wine 32-bit Prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
-          "executable": "installer",
-          "name": "wineexec",
-          "description": "Installing Algodoo 2.1.0"
-        }
-      }
-    ]
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
   },
   "content": "files:\n- installer: http://www.algodoo.com/download/Algodoo_2_1_0-Win32.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Algodoo/Algodoo.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine 32-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing Algodoo 2.1.0\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
 }

@@ -27,75 +27,75 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "$GAMEDIR/drive_c/Program Files (x86)/PUBGLite/Launcher.exe",
-      "arch": "win64"
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "dxvk": true
-    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine 64-bit Prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet472",
+          "arch": "win64",
+          "description": "Installing .NET Framework 4.7.2 (This will take several minutes, please wait)",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2017",
+          "arch": "win64",
+          "description": "Installing Visual Runtime C++ 2017",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts",
+          "arch": "win64",
+          "description": "Installing Corefonts",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing the game (WARNING: Do not run the game when the installation is complete)",
+          "executable": "launcher",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 10 mode for Wine",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "win10"
+        }
+      }
+    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       }
     },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "create_prefix",
-          "description": "Creating Wine 64-bit Prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "dotnet472",
-          "description": "Installing .NET Framework 4.7.2 (This will take several minutes, please wait)",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "vcrun2017",
-          "description": "Installing Visual Runtime C++ 2017",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "corefonts",
-          "description": "Installing Corefonts",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "executable": "launcher",
-          "name": "wineexec",
-          "description": "Installing the game (WARNING: Do not run the game when the installation is complete)"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "name": "set_regedit",
-          "description": "Setting Windows 10 mode for Wine",
-          "key": "Version",
-          "prefix": "$GAMEDIR",
-          "value": "win10",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine"
-        }
-      }
-    ]
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "files:\n- launcher: https://lpc-dl.playbattlegrounds.com/installer/PUBG-Lite-Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/PUBGLite/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine 64-bit Prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    arch: win64\n    description: Installing .NET Framework 4.7.2 (This will take several minutes,\n      please wait)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    arch: win64\n    description: Installing Visual Runtime C++ 2017\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: corefonts\n    arch: win64\n    description: Installing Corefonts\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing the game (WARNING: Do not run the game when the installation\n      is complete)'\n    executable: launcher\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

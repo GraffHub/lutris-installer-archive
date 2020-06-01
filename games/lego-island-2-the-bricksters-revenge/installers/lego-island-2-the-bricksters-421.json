@@ -30,16 +30,9 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/LEGO Media/LEGO Island 2/LEGO Island 2.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "overrides": {
-        "dsound": "b"
-      },
-      "Desktop": true,
-      "WineDesktop": "1280x1024"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -49,42 +42,49 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "directmusic",
-          "name": "winetricks"
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "$DISC/Setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "file": "patcher",
-          "dst": "$GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/"
+          "dst": "$GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/",
+          "file": "patcher"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "$GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/LI2ModManager.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1280x1024",
+      "overrides": {
+        "dsound": "b"
+      }
+    }
   },
   "content": "files:\r\n- patcher:\r\n    filename: LI2.Mod.Manager.V1.2.3.zip\r\n    url: https://github.com/JeffRuLz/LI2-Mod-Manager/releases/download/v1.2.3/LI2.Mod.Manager.V1.2.3.zip\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/LEGO Media/LEGO Island 2/LEGO Island 2.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- insert-disc:\r\n    requires: Setup.exe\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: directmusic\r\n    arch: win32\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    executable: $DISC/Setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/\r\n    file: patcher\r\n- task:\r\n    arch: win32\r\n    executable: $GAMEDIR/drive_c/Program Files/LEGO Media/LEGO Island 2/LI2ModManager.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\nwine:\r\n  Desktop: true\r\n  WineDesktop: 1280x1024\r\n  overrides:\r\n    dsound: b"
 }

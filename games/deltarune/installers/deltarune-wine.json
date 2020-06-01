@@ -27,34 +27,31 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe",
-      "arch": "win32"
-    },
-    "system": {
-      "fps_limit": "30"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating prefix",
           "name": "create_prefix",
-          "description": "Creating prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "vcrun2015 win7",
-          "name": "winetricks"
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "write_file": {
-          "file": "$CACHE/exclude.txt",
-          "content": "$PLUGINSDIR\n$TEMP"
+          "content": "$PLUGINSDIR\n$TEMP",
+          "file": "$CACHE/exclude.txt"
         }
       },
       {
@@ -62,7 +59,10 @@
           "command": "7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\" -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\""
         }
       }
-    ]
+    ],
+    "system": {
+      "fps_limit": "30"
+    }
   },
   "content": "files:\n- installer: https://fangamer-store.sfo2.digitaloceanspaces.com/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/SURVEY_PROGRAM/DELTARUNE.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015 win7\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- write_file:\n    content: '$PLUGINSDIR\n\n      $TEMP'\n    file: $CACHE/exclude.txt\n- execute:\n    command: 7z x -x@\"$CACHE/exclude.txt\" \"$CACHE/installer/SURVEY_PROGRAM_WINDOWS_ENGLISH.exe\"\n      -o\"$GAMEDIR/drive_c/Program Files/SURVEY_PROGRAM\"\nsystem:\n  fps_limit: '30'\n"
 }

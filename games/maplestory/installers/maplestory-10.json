@@ -1,0 +1,113 @@
+{
+  "id": 20202,
+  "game_id": 1455,
+  "game_slug": "maplestory",
+  "name": "MapleStory",
+  "year": null,
+  "user": "king123321",
+  "runner": "wine",
+  "slug": "maplestory-10",
+  "version": "1.0",
+  "description": "This is an installer for a private server version, it follows the same script from MapleLegends.\r\n\r\nLink for the DLL's: https://mega.nz/file/o08Bxbab#x5SgcKtAGxM81KTFJP2Nhl4vewjCTo3bmm4BOY-ky2Q",
+  "notes": "Gets stuck after a few minutes, needs more testing",
+  "created_at": "2020-05-02T15:41:13.987063Z",
+  "updated_at": "2020-05-02T15:41:13.987088Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 216150,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "",
+  "script": {
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
+      },
+      {
+        "ijl15": "N/A:Select ijl15.dll"
+      },
+      {
+        "ws2": "N/A:Select ws2_32.dll"
+      },
+      {
+        "ws2help": "N/A:Select ws2help.dll"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/MapleRoyals/MapleRoyals.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "app": "vcrun6sp6",
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\MapleRoyals.exe",
+          "prefix": "$GAMEDIR",
+          "value": "win98"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "setup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "winxp"
+        }
+      },
+      {
+        "rename": {
+          "dst": "$GAMEDIR/drive_c/windows/system32/ws2_32.dll.bak",
+          "src": "$GAMEDIR/drive_c/windows/system32/ws2_32.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "ws2"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "ws2help"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "ijl15"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup: N/A:Select the game's setup file\n- ijl15: N/A:Select ijl15.dll\n- ws2: N/A:Select ws2_32.dll\n- ws2help: N/A:Select ws2help.dll\ngame:\n  arch: win32\n  exe: drive_c/Program Files/MapleRoyals/MapleRoyals.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: vcrun6sp6\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\MapleRoyals.exe\n    prefix: $GAMEDIR\n    value: win98\n- task:\n    arch: win32\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- rename:\n    dst: $GAMEDIR/drive_c/windows/system32/ws2_32.dll.bak\n    src: $GAMEDIR/drive_c/windows/system32/ws2_32.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: ws2\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: ws2help\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: ijl15\n"
+}

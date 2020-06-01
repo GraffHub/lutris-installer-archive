@@ -34,11 +34,8 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
-    },
-    "wine": {
-      "xinput": true
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -48,50 +45,53 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Creating Windows File System (Wine Bottle)",
           "name": "create_prefix",
-          "description": "Creating Windows File System (Wine Bottle)"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": null,
+          "description": "Please follow the instructions of the Installer   Don't kill the Installer(As long as the Drive is spinning)   nIt will finish the installation even though it is recognized as Non responsive      This should take only about 5min",
           "executable": "$DISC/Launcher.exe",
           "name": "wineexec",
-          "description": "Please follow the instructions of the Installer   Don't kill the Installer(As long as the Drive is spinning)   nIt will finish the installation even though it is recognized as Non responsive      This should take only about 5min",
-          "args": null
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "file": "$X360",
           "description": "Installing x360 dinput8 for controller support",
-          "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/"
+          "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/",
+          "file": "$X360"
         }
       },
       {
         "extract": {
-          "file": "$NoCDfix",
           "description": "Installing NoCD fix",
           "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/",
+          "file": "$NoCDfix",
           "format": "tgz"
         }
       },
       {
         "extract": {
-          "file": "$GamepadSupportSettings",
           "description": "Setting up Gamepad support",
           "dst": "$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/",
+          "file": "$GamepadSupportSettings",
           "format": "tgz"
         }
       },
       {
         "execute": {
-          "file": "/bin/sh",
-          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/wine_custom_user.reg'\""
+          "args": "-v -c \"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO® The Lord of the Rings™/wine_custom_user.reg'\"",
+          "file": "/bin/sh"
         }
       }
-    ]
+    ],
+    "wine": {
+      "xinput": true
+    }
   },
   "content": "exe: \"drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO\\xAE The Lord\\\n  \\ of the Rings\\u2122/LEGOLOTR.exe\"\nfiles:\n- GamepadSupportSettings: https://dl.dropboxusercontent.com/s/o1d6nndmczd2els/LutrisGamepadSupportSettings.tar.gz\n- NoCDfix: https://dl.dropboxusercontent.com/s/zy3u3bj32k6cqbk/LutrisLegoLordOfTheRingsFix.tar.gz\n- X360: https://lutris.net/files/tools/x360ce-dinput8.tar.gz\ngame:\n  arch: win32\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: LEGOLOTR.msi\n- task:\n    description: Creating Windows File System (Wine Bottle)\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: null\n    description: Please follow the instructions of the Installer   Don't kill the\n      Installer(As long as the Drive is spinning)   nIt will finish the installation\n      even though it is recognized as Non responsive      This should take only about\n      5min\n    executable: $DISC/Launcher.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    description: Installing x360 dinput8 for controller support\n    dst: \"$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO\\xAE\\\n      \\ The Lord of the Rings\\u2122/\"\n    file: $X360\n- extract:\n    description: Installing NoCD fix\n    dst: \"$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO\\xAE\\\n      \\ The Lord of the Rings\\u2122/\"\n    file: $NoCDfix\n    format: tgz\n- extract:\n    description: Setting up Gamepad support\n    dst: \"$GAMEDIR/drive_c/Program Files/Warner Bros. Interactive Entertainment/LEGO\\xAE\\\n      \\ The Lord of the Rings\\u2122/\"\n    file: $GamepadSupportSettings\n    format: tgz\n- execute:\n    args: \"-v -c \\\"env WINEPREFIX=$GAMEDIR wine regedit '$GAMEDIR/drive_c/Program\\\n      \\ Files/Warner Bros. Interactive Entertainment/LEGO\\xAE The Lord of the Rings\\u2122\\\n      /wine_custom_user.reg'\\\"\"\n    file: /bin/sh\nwine:\n  xinput: true\n"
 }

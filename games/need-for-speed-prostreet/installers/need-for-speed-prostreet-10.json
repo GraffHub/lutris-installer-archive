@@ -27,40 +27,40 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Electronic Arts/Need for Speed ProStreet/nfs.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "1920x1080"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "vcrun2005",
-          "name": "winetricks"
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "args": "--windowed",
           "executable": "installer",
           "name": "wineexec",
-          "args": "--windowed"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1920x1080"
+    }
   },
   "content": "files:\n- installer: N/A:Insert DvD and point to the EASetup.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Electronic Arts/Need for Speed ProStreet/nfs.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: --windowed\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1920x1080\n"
 }

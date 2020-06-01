@@ -21,6 +21,10 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
+    "game": {
+      "arch": "win32",
+      "prefix": "$GAMEDIR"
+    },
     "script": {
       "files": [
         {
@@ -28,38 +32,34 @@
         }
       ],
       "game": {
-        "prefix": "$GAMEDIR",
-        "exe": "drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe",
         "arch": "win64",
+        "exe": "drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe",
+        "prefix": "$GAMEDIR",
         "working_dir": "$GAMEDIR"
-      },
-      "wine": {
-        "overrides": {
-          "ddraw.dll": "n"
-        },
-        "Desktop": true,
-        "WineDesktop": "1024x768"
-      },
-      "system": {
-        "env": {
-          "WINEDLLOVERRIDES": "d3d11=",
-          "SOMEENV": true
-        },
-        "terminal": true
       },
       "installer": [
         {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
           "executable": "$installer",
           "name": "wineexec",
+          "prefix": "$GAMEDIR",
           "task": null
         }
-      ]
-    },
-    "game": {
-      "prefix": "$GAMEDIR",
-      "arch": "win32"
+      ],
+      "system": {
+        "env": {
+          "SOMEENV": true,
+          "WINEDLLOVERRIDES": "d3d11="
+        },
+        "terminal": true
+      },
+      "wine": {
+        "Desktop": true,
+        "WineDesktop": "1024x768",
+        "overrides": {
+          "ddraw.dll": "n"
+        }
+      }
     }
   },
   "content": "game:\n  arch: win32\n  prefix: $GAMEDIR\nscript:\n  files:\n  - installer: http://cdn.legendsofaria.com/LegendsOfAria-07.1.exe\n  game:\n    arch: win64\n    exe: drive_c/Program Files/Legends of Aria Beta/LegendsOfAria.exe\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR\n  installer:\n  - arch: win64\n    executable: $installer\n    name: wineexec\n    prefix: $GAMEDIR\n    task: null\n  system:\n    env:\n      SOMEENV: true\n      WINEDLLOVERRIDES: d3d11=\n    terminal: true\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n    overrides:\n      ddraw.dll: n\n"

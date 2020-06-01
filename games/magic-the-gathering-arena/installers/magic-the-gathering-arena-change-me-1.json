@@ -1,17 +1,17 @@
 {
-  "id": 19885,
+  "id": 20661,
   "game_id": 17988,
   "game_slug": "magic-the-gathering-arena",
   "name": "Magic: The Gathering Arena",
   "year": 2017,
-  "user": "blenderfox",
+  "user": "sfredo",
   "runner": "wine",
   "slug": "magic-the-gathering-arena-change-me-1",
   "version": "Change Me",
-  "description": "Use if you have issues with Self-Updating version.",
-  "notes": "April 16th 2020 update MTGAInstaller_0.1.2165.777492.msi\r\n.Net can take a long time to install.",
-  "created_at": "2020-04-22T08:57:39.274748Z",
-  "updated_at": "2020-04-22T08:57:39.274771Z",
+  "description": "Use if you have issues with Self-Updating version. Requires manual periodical updates over existing installation.",
+  "notes": "April 23rd 2020 update MTGAInstaller_0.1.2182.781484.msi\r\n.Net can take a long time to install.",
+  "created_at": "2020-05-21T17:55:50.083096Z",
+  "updated_at": "2020-05-21T17:55:50.083128Z",
   "draft": false,
   "published": false,
   "published_by": 51687,
@@ -23,94 +23,95 @@
   "script": {
     "files": [
       {
-        "setup": "https://mtgarena.downloads.wizards.com/Live/Windows32/versions/2165.777492/MTGAInstaller_0.1.2165.777492.msi"
+        "setup": "https://mtgarena.downloads.wizards.com/Live/Windows32/versions/2182.781484/MTGAInstaller_0.1.2182.781484.msi"
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Wizards of the Coast/MTGA/MTGA.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "version": "lutris-mtga-5.6-2-x86_64",
-      "Desktop": true
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
           "arch": "win32",
-          "name": "set_regedit",
           "key": "GrabFullscreen",
-          "prefix": "$GAMEDIR",
-          "value": "Y",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
-        }
-      },
-      {
-        "task": {
-          "arch": "win32",
           "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
           "key": "UseTakeFocus",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
           "prefix": "$GAMEDIR",
-          "value": "N",
-          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver"
+          "value": "N"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "dotnet472",
-          "description": "Installing .NET 4.7.2. This will take a while...",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
-          "app": "xact arial win10",
-          "name": "winetricks"
+          "description": "Installing .NET 4.7.2. This will take a while...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "app": "xact arial win10",
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "copy": {
-          "src": "setup",
-          "dst": "$CACHE/mtg-arena/"
+          "dst": "$CACHE/mtg-arena/",
+          "src": "setup"
         }
       },
       {
         "task": {
           "arch": "win32",
-          "exclude_processes": "mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe",
-          "name": "wineexec",
+          "args": "/i \"$CACHE/mtg-arena/MTGAInstaller_0.1.2182.781484.msi\" /q",
           "description": "Installing Magic the Gathering Arena",
-          "args": "/i \"$CACHE/mtg-arena/MTGAInstaller_0.1.2165.777492.msi\" /q",
-          "prefix": "$GAMEDIR",
-          "executable": "msiexec"
+          "exclude_processes": "mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe",
+          "executable": "msiexec",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "dxvk": false,
+      "version": "lutris-mtga-4.21-x86_64"
+    }
   },
-  "content": "files:\n- setup: https://mtgarena.downloads.wizards.com/Live/Windows32/versions/2165.777492/MTGAInstaller_0.1.2165.777492.msi\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Wizards of the Coast/MTGA/MTGA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win32\n    key: UseTakeFocus\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    app: dotnet472\n    arch: win32\n    description: Installing .NET 4.7.2. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact arial win10\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/mtg-arena/\n    src: setup\n- task:\n    arch: win32\n    args: /i \"$CACHE/mtg-arena/MTGAInstaller_0.1.2165.777492.msi\" /q\n    description: Installing Magic the Gathering Arena\n    exclude_processes: mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  version: lutris-mtga-5.6-2-x86_64\n"
+  "content": "files:\n- setup: https://mtgarena.downloads.wizards.com/Live/Windows32/versions/2182.781484/MTGAInstaller_0.1.2182.781484.msi\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Wizards of the Coast/MTGA/MTGA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win32\n    key: UseTakeFocus\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    app: dotnet472\n    arch: win32\n    description: Installing .NET 4.7.2. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: xact arial win10\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/mtg-arena/\n    src: setup\n- task:\n    arch: win32\n    args: /i \"$CACHE/mtg-arena/MTGAInstaller_0.1.2182.781484.msi\" /q\n    description: Installing Magic the Gathering Arena\n    exclude_processes: mscorsvw.exe rundll32.exe MTGA.exe UnityCrashHandler32.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  dxvk: false\n  version: lutris-mtga-4.21-x86_64\n"
 }

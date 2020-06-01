@@ -1,0 +1,60 @@
+{
+  "id": 19987,
+  "game_id": 5641,
+  "game_slug": "star-warstm-x-wing-special-edition",
+  "name": "STAR WARS®: X-Wing Collector's CD (1994)",
+  "year": 1994,
+  "user": "AngryUbuntuNerd",
+  "runner": "dosbox",
+  "slug": "star-wars-x-wing-collectors-c-cd",
+  "version": "CD",
+  "description": "Install for DOS from retail CD",
+  "notes": "",
+  "created_at": "2020-04-25T22:21:18.646000Z",
+  "updated_at": "2020-04-26T09:24:10.996517Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 354430,
+  "gogid": 1207667213,
+  "gogslug": "star_wars_xwing_special_edition",
+  "humblestoreid": "",
+  "script": {
+    "game": {
+      "config_file": "$GAMEDIR/dosbox.ini",
+      "installer": [
+        {
+          "insert-disc": null,
+          "requires": "install.exe"
+        },
+        {
+          "copy": {
+            "dst": "$GAMEDIR",
+            "src": "$DISC"
+          }
+        },
+        {
+          "execute": {
+            "command": "chmod +w $GAMEDIR/*"
+          }
+        },
+        {
+          "write_file": {
+            "content": "[autoexec]\nmount d $GAMEDIR -t cdrom -usecd 0 -ioctl\n[cpu] cycles = max ",
+            "file": "$GAMEDIR/dosbox.ini"
+          }
+        },
+        {
+          "task": {
+            "description": "Configuring...",
+            "executable": "$GAMEDIR/install.exe",
+            "name": "dosexec"
+          }
+        }
+      ],
+      "main_file": "$GAMEDIR/bwing.exe"
+    }
+  },
+  "content": "game:\n  config_file: $GAMEDIR/dosbox.ini\n  installer:\n  - insert-disc: null\n    requires: install.exe\n  - copy:\n      dst: $GAMEDIR\n      src: $DISC\n  - execute:\n      command: chmod +w $GAMEDIR/*\n  - write_file:\n      content: '[autoexec]\n\n        mount d $GAMEDIR -t cdrom -usecd 0 -ioctl\n\n        [cpu] cycles = max '\n      file: $GAMEDIR/dosbox.ini\n  - task:\n      description: Configuring...\n      executable: $GAMEDIR/install.exe\n      name: dosexec\n  main_file: $GAMEDIR/bwing.exe\n"
+}

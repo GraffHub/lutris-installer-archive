@@ -27,73 +27,73 @@
       }
     ],
     "game": {
+      "arch": "win64",
       "custom-name": "Urban Terror",
-      "prefix": "$GAMEDIR/prefix",
       "exe": "$GAMEDIR/prefix/drive_c/Program Files/Urban Terror/Quake3-UrT.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "Audio": "pulse",
-      "esync": true,
-      "dxvk": true
-    },
-    "system": {
-      "disable_compositor": true,
-      "pulse_latency": true
+      "prefix": "$GAMEDIR/prefix"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
           "name": "create_prefix",
-          "description": "Creating 64-bit prefix ..."
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "extract": {
-          "file": "UrbanTerror.zip",
           "description": "Extracting Urban Terror ...",
-          "dst": "$GAMEDIR/prefix/drive_c/Program Files/Urban Terror/"
+          "dst": "$GAMEDIR/prefix/drive_c/Program Files/Urban Terror/",
+          "file": "UrbanTerror.zip"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "arch": "win64",
           "app": "d3drm",
+          "arch": "win64",
           "description": "DirectX ...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
-          "arch": "win64",
           "app": "d3dcompiler_43",
-          "description": "DirectX 11 ...",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win64",
-          "app": "d3dx11_43",
           "description": "DirectX 11 ...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
+          "app": "d3dx11_43",
+          "arch": "win64",
+          "description": "DirectX 11 ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR/prefix"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "description": "Urban Terror ...",
           "executable": "$GAMEDIR/prefix/drive_c/UrbanTerror43/UrTUpdater.exe",
           "name": "wineexec",
-          "description": "Urban Terror ...",
-          "args": "/S"
+          "prefix": "$GAMEDIR/prefix"
         }
       }
-    ]
+    ],
+    "system": {
+      "disable_compositor": true,
+      "pulse_latency": true
+    },
+    "wine": {
+      "Audio": "pulse",
+      "dxvk": true,
+      "esync": true
+    }
   },
   "content": "files:\r\n- UrbanTerror.zip: http://cdn.urbanterror.info/urt/43/releases/zips/UrbanTerror434_full.zip\r\ngame:\r\n  arch: win64\r\n  custom-name: Urban Terror\r\n  exe: $GAMEDIR/prefix/drive_c/Program Files/Urban Terror/Quake3-UrT.exe\r\n  prefix: $GAMEDIR/prefix\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating 64-bit prefix ...\r\n    name: create_prefix\r\n    prefix: $GAMEDIR/prefix\r\n- extract:\r\n    description: Extracting Urban Terror ...\r\n    dst: $GAMEDIR/prefix/drive_c/Program Files/Urban Terror/\r\n    file: UrbanTerror.zip\r\n- task:\r\n    app: d3drm\r\n    arch: win64\r\n    description: DirectX ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dcompiler_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    app: d3dx11_43\r\n    arch: win64\r\n    description: DirectX 11 ...\r\n    name: winetricks\r\n    prefix: $GAMEDIR/prefix\r\n- task:\r\n    args: /S\r\n    description: Urban Terror ...\r\n    executable: $GAMEDIR/prefix/drive_c/UrbanTerror43/UrTUpdater.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR/prefix\r\nsystem:\r\n  disable_compositor: true\r\n  pulse_latency: true\r\nwine:\r\n  Audio: pulse\r\n  dxvk: true\r\n  esync: true"
 }

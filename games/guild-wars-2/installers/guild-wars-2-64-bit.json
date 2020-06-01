@@ -30,34 +30,26 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
       "arch": "win64",
-      "args": "-maploadinfo"
-    },
-    "wine": {
-      "esync": true
-    },
-    "system": {
-      "env": {
-        "PBA_ENABLE": 1
-      }
+      "args": "-maploadinfo",
+      "exe": "drive_c/Program Files/Guild Wars 2/GW2-64.exe",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating win64 prefix",
           "name": "create_prefix",
-          "description": "Creating win64 prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "d3dx9",
           "description": "Installing d3dx9 and d3dcompiler_43",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
@@ -67,11 +59,19 @@
       },
       {
         "move": {
-          "src": "client",
-          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe"
+          "dst": "$GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe",
+          "src": "client"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "PBA_ENABLE": 1
+      }
+    },
+    "wine": {
+      "esync": true
+    }
   },
   "content": "files:\r\n- client: https://s3.amazonaws.com/gw2cdn/client/branches/Gw2Setup-64.exe\r\n- libfile: https://github.com/dhollinger/lutris_gw2_lib/raw/master/libpng16.so.16\r\ngame:\r\n  arch: win64\r\n  args: -maploadinfo\r\n  exe: drive_c/Program Files/Guild Wars 2/GW2-64.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    description: Creating win64 prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: d3dx9\r\n    description: Installing d3dx9 and d3dcompiler_43\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    command: mkdir -p \"$GAMEDIR/drive_c/Program Files/Guild Wars 2\"\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files/Guild Wars 2/GW2-64.exe\r\n    src: client\r\nsystem:\r\n  env:\r\n    PBA_ENABLE: 1\r\nwine:\r\n  esync: true"
 }

@@ -30,40 +30,40 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/ProPilkki2/ProPilkki2.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "overrides": {
-        "mscoree,mshtml": "disabled"
-      }
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating Wine Prefix...",
           "name": "create_prefix",
-          "description": "Creating Wine Prefix..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Installing Pro Pilkki 2...",
           "exclude_processes": "ProPilkki2.exe",
           "executable": "pilkki_installer",
           "name": "wineexec",
-          "description": "Installing Pro Pilkki 2..."
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "overrides": {
+        "mscoree,mshtml": "disabled"
+      }
+    }
   },
   "content": "files:\n- pilkki_installer:\n    filename: P2Installer_v1.4.2.exe\n    url: http://propilkki.ddns.net/propilkki2/download/PP2_download.php?id=0\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/ProPilkki2/ProPilkki2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Pro Pilkki 2...\n    exclude_processes: ProPilkki2.exe\n    executable: pilkki_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    mscoree,mshtml: disabled\n"
 }

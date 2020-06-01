@@ -27,17 +27,9 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "640x480"
-    },
-    "system": {
-      "xephyr": "16bpp",
-      "xephyr_resolution": "640x480"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -47,42 +39,50 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "win98",
+          "arch": "win32",
           "description": "Using Windows 98",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
           "executable": "$DISC/setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "move": {
-          "src": "$GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe",
-          "dst": "$GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe.orig"
+          "dst": "$GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe.orig",
+          "src": "$GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe"
         }
       },
       {
         "move": {
-          "src": "patch",
-          "dst": "$GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG"
+          "dst": "$GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG",
+          "src": "patch"
         }
       }
-    ]
+    ],
+    "system": {
+      "xephyr": "16bpp",
+      "xephyr_resolution": "640x480"
+    },
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "640x480"
+    }
   },
   "content": "files:\r\n- patch: https://lutris.net/files/games/warhammer-dark-omen/EngRel.exe\r\ngame:\r\n  arch: win32\r\n  exe: drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- insert-disc:\r\n    requires: data1.cab\r\n- task:\r\n    arch: win32\r\n    description: Creating Wine prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win98\r\n    arch: win32\r\n    description: Using Windows 98\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    executable: $DISC/setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe.orig\r\n    src: $GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG/EngRel.exe\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files/Dark Omen/PRG_ENG\r\n    src: patch\r\nsystem:\r\n  xephyr: 16bpp\r\n  xephyr_resolution: 640x480\r\nwine:\r\n  Desktop: true\r\n  WineDesktop: 640x480"
 }

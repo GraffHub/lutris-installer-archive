@@ -22,17 +22,9 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/Electronic Arts/Battlefield Bad Company 2/BFBC2Updater.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0
-      }
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -42,71 +34,79 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "win7",
+          "arch": "win32",
           "description": "Changing to Windows 7",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "vcrun2005",
+          "arch": "win32",
           "description": "Installing VisualC++ Runtime vcrun2005",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win32",
           "app": "vcrun2008",
-          "description": "Installing VisualC++ Runtime vcrun2008",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
-          "app": "vcrun2010 win7",
-          "description": "Installing VisualC++ Runtime vcrun2010",
-          "name": "winetricks"
+          "description": "Installing VisualC++ Runtime vcrun2008",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "app": "vcrun2010 win7",
+          "arch": "win32",
+          "description": "Installing VisualC++ Runtime vcrun2010",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
           "executable": "$DISC/Autorun.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "write_config": {
           "file": "$GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini",
-          "value": "1",
+          "key": "bBackgroundMouse",
           "section": "Controls",
-          "key": "bBackgroundMouse"
+          "value": "1"
         }
       },
       {
         "write_config": {
           "file": "$GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini",
-          "value": 11,
+          "key": "DxVersion",
           "section": "Graphics",
-          "key": "DxVersion"
+          "value": 11
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Electronic Arts/Battlefield Bad Company 2/BFBC2Updater.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: Setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Changing to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2005\n    arch: win32\n    description: Installing VisualC++ Runtime vcrun2005\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win32\n    description: Installing VisualC++ Runtime vcrun2008\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010 win7\n    arch: win32\n    description: Installing VisualC++ Runtime vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Autorun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- write_config:\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini\n    key: bBackgroundMouse\n    section: Controls\n    value: '1'\n- write_config:\n    file: $GAMEDIR/drive_c/users/$USER/My Documents/BFBC2/settings.ini\n    key: DxVersion\n    section: Graphics\n    value: 11\nsystem:\n  env:\n    DXVK_HUD: 0\nwine:\n  dxvk: true\n"
 }

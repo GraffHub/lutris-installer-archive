@@ -22,12 +22,8 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/Disney Interactive/Donald Duck/Donald.exe"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "800x600"
+      "exe": "drive_c/Program Files/Disney Interactive/Donald Duck/Donald.exe",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -37,27 +33,31 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Disk Found. Creating 32bit Wine prefix",
           "name": "create_prefix",
-          "description": "Disk Found. Creating 32bit Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
+          "description": "Installing Game. You have to use English as the installer language (You will be able to change the game language afterwards) and please don't change the installation directory!",
           "executable": "$DISC/setup/SETUP.EXE",
-          "name": "wineexec",
-          "description": "Installing Game. You have to use English as the installer language (You will be able to change the game language afterwards) and please don't change the installation directory!"
+          "name": "wineexec"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "--unattended winxp icodecs",
           "description": "Installing Indeo and setting the Windows version to XP. No manual action is required.",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "800x600"
+    }
   },
   "content": "game:\n  exe: drive_c/Program Files/Disney Interactive/Donald Duck/Donald.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: DONALDAG.GID\n- task:\n    description: Disk Found. Creating 32bit Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing Game. You have to use English as the installer language\n      (You will be able to change the game language afterwards) and please don't change\n      the installation directory!\n    executable: $DISC/setup/SETUP.EXE\n    name: wineexec\n- task:\n    app: --unattended winxp icodecs\n    description: Installing Indeo and setting the Windows version to XP. No manual\n      action is required.\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 800x600\n"
 }

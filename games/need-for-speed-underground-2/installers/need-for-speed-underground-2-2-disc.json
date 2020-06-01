@@ -27,77 +27,71 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "drive_c/Program Files/EA GAMES/Need for Speed Underground 2/speed2.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "dxvk": true,
-      "Desktop": true
-    },
-    "system": {
-      "prefix_command": "taskset --cpu-list 0-3"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
           "description": "Creating Wine Bottle, please stand by...",
           "install_mono": false,
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "d3dx9 dinput8",
           "description": "Installing Direct3D 9 and dinput8 for widescreen patch, please stand by...",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "insert-disc": {
-          "requires": "setup.exe",
-          "description": "Insert disc 1"
+          "description": "Insert disc 1",
+          "requires": "setup.exe"
         }
       },
       {
         "merge": {
-          "src": "$DISC",
           "description": "Extracting installation data from disc, please stand by ...",
-          "dst": "$GAMEDIR/drive_c/nfsusetup"
+          "dst": "$GAMEDIR/drive_c/nfsusetup",
+          "src": "$DISC"
         }
       },
       {
         "execute": {
-          "file": "chmod",
+          "args": "744 -R $GAMEDIR/drive_c/nfsusetup",
           "descritpion": "Set proper file permissions for extracted data, please stand by...",
-          "args": "744 -R $GAMEDIR/drive_c/nfsusetup"
+          "file": "chmod"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "executable": "$GAMEDIR/drive_c/nfsusetup/setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "file": "wspatch",
-          "dst": "$CACHE/wspatch"
+          "dst": "$CACHE/wspatch",
+          "file": "wspatch"
         }
       },
       {
         "merge": {
-          "src": "$CACHE/wspatch",
-          "dst": "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Underground 2/"
+          "dst": "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Underground 2/",
+          "src": "$CACHE/wspatch"
         }
       },
       {
         "input_menu": {
-          "preselect": "1920",
+          "description": "Please choose your main desktop width for the widescreen patch",
+          "id": "RESX",
           "options": [
             {
               "256": "256"
@@ -166,13 +160,13 @@
               "15360": "15360"
             }
           ],
-          "description": "Please choose your main desktop width for the widescreen patch",
-          "id": "RESX"
+          "preselect": "1920"
         }
       },
       {
         "input_menu": {
-          "preselect": "1080",
+          "description": "Please choose your main desktop height for the widescreen patch",
+          "id": "RESY",
           "options": [
             {
               "144": "144"
@@ -238,22 +232,28 @@
               "8640": "8640"
             }
           ],
-          "description": "Please choose your main desktop height for the widescreen patch",
-          "id": "RESY"
+          "preselect": "1080"
         }
       },
       {
         "write_config": {
-          "file": "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Underground 2/scripts/NFSUnderground2.WidescreenFix.ini",
           "data": {
             "MAIN": {
-              "ResY": "$INPUT_RESY",
-              "ResX": "$INPUT_RESX"
+              "ResX": "$INPUT_RESX",
+              "ResY": "$INPUT_RESY"
             }
-          }
+          },
+          "file": "$GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Underground 2/scripts/NFSUnderground2.WidescreenFix.ini"
         }
       }
-    ]
+    ],
+    "system": {
+      "prefix_command": "taskset --cpu-list 0-3"
+    },
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
+    }
   },
   "content": "files:\n- wspatch: https://github.com/ThirteenAG/WidescreenFixesPack/releases/download/nfsu2/NFSUnderground2.WidescreenFix.zip\ngame:\n  arch: win32\n  exe: drive_c/Program Files/EA GAMES/Need for Speed Underground 2/speed2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine Bottle, please stand by...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dx9 dinput8\n    description: Installing Direct3D 9 and dinput8 for widescreen patch, please stand\n      by...\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: setup.exe\n- merge:\n    description: Extracting installation data from disc, please stand by ...\n    dst: $GAMEDIR/drive_c/nfsusetup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/nfsusetup\n    descritpion: Set proper file permissions for extracted data, please stand by...\n    file: chmod\n- task:\n    executable: $GAMEDIR/drive_c/nfsusetup/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/wspatch\n    file: wspatch\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Underground 2/\n    src: $CACHE/wspatch\n- input_menu:\n    description: Please choose your main desktop width for the widescreen patch\n    id: RESX\n    options:\n    - '256': '256'\n    - '426': '426'\n    - '640': '640'\n    - '768': '768'\n    - '800': '800'\n    - '848': '848'\n    - '854': '854'\n    - '960': '960'\n    - '1024': '1024'\n    - '1280': '1280'\n    - '1366': '1366'\n    - '1600': '1600'\n    - '1920': '1920'\n    - '2048': '2048'\n    - '2560': '2560'\n    - '2880': '2880'\n    - '3200': '3200'\n    - '3840': '3840'\n    - '4096': '4096'\n    - '5120': '5120'\n    - '7680': '7680'\n    - '15360': '15360'\n    preselect: '1920'\n- input_menu:\n    description: Please choose your main desktop height for the widescreen patch\n    id: RESY\n    options:\n    - '144': '144'\n    - '240': '240'\n    - '360': '360'\n    - '432': '432'\n    - '450': '450'\n    - '480': '480'\n    - '540': '540'\n    - '576': '576'\n    - '720': '720'\n    - '768': '768'\n    - '900': '900'\n    - '1080': '1080'\n    - '1152': '1152'\n    - '1440': '1440'\n    - '1620': '1620'\n    - '1800': '1800'\n    - '2160': '2160'\n    - '2304': '2304'\n    - '2880': '2880'\n    - '4320': '4320'\n    - '8640': '8640'\n    preselect: '1080'\n- write_config:\n    data:\n      MAIN:\n        ResX: $INPUT_RESX\n        ResY: $INPUT_RESY\n    file: $GAMEDIR/drive_c/Program Files/EA GAMES/Need for Speed Underground 2/scripts/NFSUnderground2.WidescreenFix.ini\nsystem:\n  prefix_command: taskset --cpu-list 0-3\nwine:\n  Desktop: true\n  dxvk: true\n"
 }

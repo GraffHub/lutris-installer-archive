@@ -27,37 +27,37 @@
       }
     ],
     "game": {
-      "exe": "drive_c/Program Files/NCLauncher/NCLauncher.exe",
-      "arch": "win32"
-    },
-    "system": {
-      "disable_runtime": "true"
+      "arch": "win32",
+      "exe": "drive_c/Program Files/NCLauncher/NCLauncher.exe"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
           "app": "win7",
+          "arch": "win64",
           "description": "Setting Wine to Windows 7 64-Bit",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "executable": "$setup",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "disable_runtime": "true"
+    }
   },
   "content": "files:\n- setup: http://aion.patcher.ncsoft.com/AION/aioninstaller/AionInstaller.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/NCLauncher/NCLauncher.exe\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win64\n    description: Setting Wine to Windows 7 64-Bit\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  disable_runtime: 'true'\n"
 }

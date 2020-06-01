@@ -1,0 +1,146 @@
+{
+  "id": 20468,
+  "game_id": 4168,
+  "game_slug": "grand-theft-auto-v",
+  "name": "Grand Theft Auto V",
+  "year": 2013,
+  "user": "szczagi",
+  "runner": "wine",
+  "slug": "grand-theft-auto-v-epic-games-launcher",
+  "version": "Epic Games Launcher",
+  "description": "Only installs Epic Games Launcher. The game itself must be installed manually.",
+  "notes": "Only installs Epic Games Launcher. The game itself must be installed manually.\r\n\r\nOn first launch, resolution in Grand Theft Auto may be a bit borked. Switch game to borderless windowed mode in settings to workaround that.",
+  "created_at": "2020-05-14T18:48:27.780000Z",
+  "updated_at": "2020-05-20T21:57:21.795351Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1465,
+  "rating": "4",
+  "steamid": 271590,
+  "gogid": null,
+  "gogslug": "",
+  "humblestoreid": "grand-theft-auto-v",
+  "script": {
+    "files": [
+      {
+        "epic": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "audio": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "mfinstaller": "https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "-SkipBuildPatchPrereq -opengl",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "audio"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/mfinstaller",
+          "file": "mfinstaller"
+        }
+      },
+      {
+        "execute": {
+          "command": "$CACHE/mfinstaller/install-mf.sh",
+          "env": {
+            "WINEPREFIX": "$GAMEDIR"
+          }
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial vcrun2019 cjkfonts win10",
+          "arch": "win64",
+          "description": "Installing dependencies",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$CACHE/epic/",
+          "src": "epic"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q",
+          "exclude_processes": "EpicGamesLauncher.exe",
+          "executable": "msiexec",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-5.7-x86_64"
+    }
+  },
+  "content": "files:\r\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\r\n- audio: https://lutris.net/files/tools/directx-2010.tar.gz\r\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\r\ngame:\r\n  arch: win64\r\n  args: -SkipBuildPatchPrereq -opengl\r\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- extract:\r\n    dst: $CACHE/dxsetup\r\n    file: audio\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    args: /silent\r\n    executable: $CACHE/dxsetup/DXSETUP.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $CACHE/mfinstaller\r\n    file: mfinstaller\r\n- execute:\r\n    command: $CACHE/mfinstaller/install-mf.sh\r\n    env:\r\n      WINEPREFIX: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial vcrun2019 cjkfonts win10\r\n    arch: win64\r\n    description: Installing dependencies\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- copy:\r\n    dst: $CACHE/epic/\r\n    src: epic\r\n- task:\r\n    arch: win64\r\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\r\n    exclude_processes: EpicGamesLauncher.exe\r\n    executable: msiexec\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: compiler\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  dxvk: true\r\n  esync: true\r\n  version: lutris-5.7-x86_64"
+}

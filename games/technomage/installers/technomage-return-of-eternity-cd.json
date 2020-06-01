@@ -22,12 +22,8 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
-      "exe": "drive_c/Program Files/TechnoMage/Technomage.EXE"
-    },
-    "wine": {
-      "Desktop": true,
-      "WineDesktop": "1024x768"
+      "exe": "drive_c/Program Files/TechnoMage/Technomage.EXE",
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -37,27 +33,31 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "win98",
           "description": "Using Windows 98",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "executable": "$DISC/Setup.exe",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "wine": {
+      "Desktop": true,
+      "WineDesktop": "1024x768"
+    }
   },
   "content": "game:\n  exe: drive_c/Program Files/TechnoMage/Technomage.EXE\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: data1.cab\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win98\n    description: Using Windows 98\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  Desktop: true\n  WineDesktop: 1024x768\n"
 }

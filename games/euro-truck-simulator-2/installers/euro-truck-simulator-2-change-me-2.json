@@ -21,13 +21,6 @@
   "gogslug": "",
   "humblestoreid": "",
   "script": {
-    "game": {
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/truckersmp-cli.exe",
-      "arch": "win64",
-      "args": ". $GAMEDIR/prefix/drive_c/truckersmp",
-      "working_dir": "$steamdata"
-    },
     "files": [
       {
         "steamdata": "$WINESTEAM:227300:/"
@@ -39,7 +32,13 @@
         "downloader": "https://notabug.org/soredake/lutris-additions/raw/master/truckers-mp.sh"
       }
     ],
-    "require-binaries": "bash, wget, awk, md5sum",
+    "game": {
+      "arch": "win64",
+      "args": ". $GAMEDIR/prefix/drive_c/truckersmp",
+      "exe": "$GAMEDIR/truckersmp-cli.exe",
+      "prefix": "$GAMEDIR/prefix",
+      "working_dir": "$steamdata"
+    },
     "installer": [
       {
         "chmodx": "downloader"
@@ -51,11 +50,12 @@
       },
       {
         "move": {
-          "src": "$launcher",
-          "dst": "$GAMEDIR"
+          "dst": "$GAMEDIR",
+          "src": "$launcher"
         }
       }
-    ]
+    ],
+    "require-binaries": "bash, wget, awk, md5sum"
   },
   "content": "files:\n- steamdata: $WINESTEAM:227300:/\n- launcher: https://github.com/lhark/truckersmp-cli/raw/master/truckersmp-cli.exe\n- downloader: https://notabug.org/soredake/lutris-additions/raw/master/truckers-mp.sh\ngame:\n  arch: win64\n  args: . $GAMEDIR/prefix/drive_c/truckersmp\n  exe: $GAMEDIR/truckersmp-cli.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $steamdata\ninstaller:\n- chmodx: downloader\n- execute:\n    file: downloader\n- move:\n    dst: $GAMEDIR\n    src: $launcher\nrequire-binaries: bash, wget, awk, md5sum\n"
 }

@@ -33,14 +33,10 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR/prefix",
-      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe",
       "arch": "win32",
+      "exe": "$GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe",
+      "prefix": "$GAMEDIR/prefix",
       "working_dir": "$GAMEDIR/prefix"
-    },
-    "system": {
-      "xephyr_fullscreen": false,
-      "xephyr": "16bpp"
     },
     "installer": [
       {
@@ -50,43 +46,47 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win32",
-          "name": "create_prefix"
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "app": "winxp csmt=off",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win32",
           "executable": "setup",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win32",
           "executable": "directplay_patch",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR/prefix"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR/prefix",
           "arch": "win32",
           "executable": "xppat_patch",
-          "name": "wineexec"
+          "name": "wineexec",
+          "prefix": "$GAMEDIR/prefix"
         }
       }
-    ]
+    ],
+    "system": {
+      "xephyr": "16bpp",
+      "xephyr_fullscreen": false
+    }
   },
   "content": "files:\n- setup: N/A:Select 'setup.exe' on the game disc\n- xppat_patch: https://jacobspctuneup.tk/Midtown/mm1xppat.EXE\n- directplay_patch: https://jacobspctuneup.tk/Midtown/directplayupdate.exe\ngame:\n  arch: win32\n  exe: $GAMEDIR/prefix/drive_c/Program Files/Microsoft Games/Midtown Madness/midtown.exe\n  prefix: $GAMEDIR/prefix\n  working_dir: $GAMEDIR/prefix\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR/prefix\n- task:\n    app: winxp csmt=off\n    name: winetricks\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: directplay_patch\n    name: wineexec\n    prefix: $GAMEDIR/prefix\n- task:\n    arch: win32\n    executable: xppat_patch\n    name: wineexec\n    prefix: $GAMEDIR/prefix\nsystem:\n  xephyr: 16bpp\n  xephyr_fullscreen: false\n"
 }

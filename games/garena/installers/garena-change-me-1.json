@@ -27,41 +27,41 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "$GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe",
-      "arch": "win64"
-    },
-    "wine": {
-      "dxvk": true
-    },
-    "system": {
-      "env": {
-        "DXVK_HUD": 0,
-        "__GL_SHADER_DISK_CACHE": 1,
-        "mesa_glthread": true,
-        "__GL_THREADED_OPTIMIZATIONS": 1,
-        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
-      }
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win64",
+          "description": "Installing the garena (WARNING: Don't login, close the window)",
           "executable": "setup",
           "name": "wineexec",
-          "description": "Installing the garena (WARNING: Don't login, close the window)"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "mesa_glthread": true
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "files:\n- setup: http://cdn.gxx.garenanow.com/gxx/pc/installer/Garena-v2.0-VN.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Garena/Garena/Garena.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Installing the garena (WARNING: Don''t login, close the window)'\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: true\nwine:\n  dxvk: true\n"
 }

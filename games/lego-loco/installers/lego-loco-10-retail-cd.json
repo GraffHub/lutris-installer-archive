@@ -22,17 +22,9 @@
   "humblestoreid": "",
   "script": {
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win32",
       "exe": "$GAMEDIR/drive_c/Program Files/LEGO Media/Constructive/LEGO LOCO/Exe/Loco.exe",
-      "arch": "win32"
-    },
-    "wine": {
-      "Desktop": false
-    },
-    "system": {
-      "xephyr_fullscreen": false,
-      "xephyr": "16bpp",
-      "xephyr_resolution": "1024x768"
+      "prefix": "$GAMEDIR"
     },
     "installer": [
       {
@@ -42,29 +34,37 @@
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "arch": "win32",
+          "description": "Creating Wine prefix",
           "name": "create_prefix",
-          "description": "Creating Wine prefix"
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
           "app": "directplay",
           "description": "Installing networking capabilities",
-          "name": "winetricks"
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
         }
       },
       {
         "task": {
-          "prefix": "$GAMEDIR",
+          "description": "Run installer",
           "executable": "$DISC/SETUP.EXE",
           "name": "wineexec",
-          "description": "Run installer"
+          "prefix": "$GAMEDIR"
         }
       }
-    ]
+    ],
+    "system": {
+      "xephyr": "16bpp",
+      "xephyr_fullscreen": false,
+      "xephyr_resolution": "1024x768"
+    },
+    "wine": {
+      "Desktop": false
+    }
   },
   "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/LEGO Media/Constructive/LEGO LOCO/Exe/Loco.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: art-res\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: directplay\n    description: Installing networking capabilities\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Run installer\n    executable: $DISC/SETUP.EXE\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  xephyr: 16bpp\n  xephyr_fullscreen: false\n  xephyr_resolution: 1024x768\nwine:\n  Desktop: false\n"
 }

@@ -27,54 +27,54 @@
       }
     ],
     "game": {
-      "prefix": "$GAMEDIR",
+      "arch": "win64",
       "exe": "drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe",
-      "arch": "win64"
+      "prefix": "$GAMEDIR"
     },
-    "wine": {
-      "dxvk": true
-    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "corefonts vcrun2012 dotnet472 win7",
+          "arch": "win64",
+          "description": "Installing stuff with winetricks. This will take a while.",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "description": "Installing Elite Dangerous",
+          "executable": "setup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
     "system": {
       "env": {
         "DXVK_HUD": 0
       },
       "pulse_latency": true
     },
-    "installer": [
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "name": "create_prefix",
-          "description": "Creating Wine prefix"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "arch": "win64",
-          "app": "corefonts vcrun2012 dotnet472 win7",
-          "description": "Installing stuff with winetricks. This will take a while.",
-          "name": "winetricks"
-        }
-      },
-      {
-        "task": {
-          "arch": "win64",
-          "name": "wineexec",
-          "description": "Installing Elite Dangerous",
-          "args": "/silent",
-          "prefix": "$GAMEDIR",
-          "executable": "setup"
-        }
-      },
-      {
-        "task": {
-          "prefix": "$GAMEDIR",
-          "name": "winekill"
-        }
-      }
-    ]
+    "wine": {
+      "dxvk": true
+    }
   },
   "content": "files:\n- setup: N/A:Select setup exe for Elite Dangerous\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Frontier/EDLaunch/EDLaunch.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: corefonts vcrun2012 dotnet472 win7\n    arch: win64\n    description: Installing stuff with winetricks. This will take a while.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /silent\n    description: Installing Elite Dangerous\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n  pulse_latency: true\nwine:\n  dxvk: true\n"
 }
