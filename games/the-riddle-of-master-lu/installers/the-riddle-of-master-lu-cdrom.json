@@ -1,0 +1,85 @@
+{
+  "id": 21845,
+  "game_id": 37438,
+  "game_slug": "the-riddle-of-master-lu",
+  "name": "The Riddle of Master Lu",
+  "year": 1994,
+  "user": "appoloin",
+  "runner": "dosbox",
+  "slug": "the-riddle-of-master-lu-cdrom",
+  "version": "CDrom",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-06-22T11:14:51.806472Z",
+  "updated_at": "2020-06-22T11:14:51.806498Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/masterlu.conf"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\ncp -avr \"$src/.\"  \"$dst\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy-alt.sh"
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD",
+          "file": "mkdir"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc",
+          "requires": "install.bat"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC \"$GAMEDIR/CDD\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR/CDD\"",
+          "file": "/bin/chmod"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD\" -t cdrom\nD:\ninstall.bat\nexit",
+          "file": "$GAMEDIR/masterlu_setup.conf"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/masterlu_setup.conf",
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR/HDD/"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=30\nfullresolution=desktop\nwindowresolution=original\nfullscreen=true\noutput=opengl\n[render]\naspect=true\nscaler=normal2x\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD\" -t cdrom\nC:\ncd riddle\nmasterlu\nexit",
+          "file": "$GAMEDIR/masterlu.conf"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  main_file: $GAMEDIR/masterlu.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      cp -avr \"$src/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD\n    file: mkdir\n- insert-disc:\n    description: Please insert disc\n    requires: install.bat\n- execute:\n    args: $DISC \"$GAMEDIR/CDD\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD\"\n    file: /bin/chmod\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD\" -t cdrom\n\n      D:\n\n      install.bat\n\n      exit'\n    file: $GAMEDIR/masterlu_setup.conf\n- task:\n    config_file: $GAMEDIR/masterlu_setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      fullresolution=desktop\n\n      windowresolution=original\n\n      fullscreen=true\n\n      output=opengl\n\n      [render]\n\n      aspect=true\n\n      scaler=normal2x\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD\" -t cdrom\n\n      C:\n\n      cd riddle\n\n      masterlu\n\n      exit'\n    file: $GAMEDIR/masterlu.conf\n"
+}

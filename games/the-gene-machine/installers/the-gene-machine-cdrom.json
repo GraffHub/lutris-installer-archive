@@ -1,0 +1,85 @@
+{
+  "id": 21993,
+  "game_id": 37538,
+  "game_slug": "the-gene-machine",
+  "name": "The Gene Machine",
+  "year": 1996,
+  "user": "appoloin",
+  "runner": "dosbox",
+  "slug": "the-gene-machine-cdrom",
+  "version": "CDrom",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-06-27T14:53:36.851937Z",
+  "updated_at": "2020-06-27T14:53:36.851960Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/gene.conf"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\ncp -avr \"$src/.\"  \"$dst\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy-alt.sh"
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD",
+          "file": "mkdir"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc",
+          "requires": "install.bat"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC \"$GAMEDIR/CDD\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR/CDD\"",
+          "file": "/bin/chmod"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=30\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD\" -t dir\nD:\ninstall.bat\nexit",
+          "file": "$GAMEDIR/gene_setup.conf"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/gene_setup.conf",
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR/HDD/"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[cpu]\ncycles=25000\n[sdl]\nsensitivity=30\nfullresolution=desktop\nwindowresolution=original\nfullscreen=true\noutput=opengl\ncapture_mouse = onstart middlerelease\n[render]\naspect=true\nscaler=normal2x\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD\" -t dir\nC:\ncd gene\ncls\nECHO OFF\ngoto launcher\n:launcher\ncls\nECHO  -------------------------------------------\nECHO                 Gene Machine\nECHO  -------------------------------------------\nECHO   1) Play Game\nECHO   2) Setup\nECHO  -------------------------------------------\nECHO   3) Exit Program\nECHO  -------------------------------------------\n\nchoice /c123 /s Which program do you want to run? [1-3]: /n\nif errorlevel 3 goto exit\nif errorlevel 2 goto setup\nif errorlevel 1 goto game\n\n:game\ncls\ngene\ngoto exit\n\n:setup\ncls\nsetsound\ngoto launcher\n\n\n:exit\nexit",
+          "file": "$GAMEDIR/gene.conf"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  main_file: $GAMEDIR/gene.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      cp -avr \"$src/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD\n    file: mkdir\n- insert-disc:\n    description: Please insert disc\n    requires: install.bat\n- execute:\n    args: $DISC \"$GAMEDIR/CDD\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD\"\n    file: /bin/chmod\n- write_file:\n    content: '[sdl]\n\n      sensitivity=30\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD\" -t dir\n\n      D:\n\n      install.bat\n\n      exit'\n    file: $GAMEDIR/gene_setup.conf\n- task:\n    config_file: $GAMEDIR/gene_setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[cpu]\n\n      cycles=25000\n\n      [sdl]\n\n      sensitivity=30\n\n      fullresolution=desktop\n\n      windowresolution=original\n\n      fullscreen=true\n\n      output=opengl\n\n      capture_mouse = onstart middlerelease\n\n      [render]\n\n      aspect=true\n\n      scaler=normal2x\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD\" -t dir\n\n      C:\n\n      cd gene\n\n      cls\n\n      ECHO OFF\n\n      goto launcher\n\n      :launcher\n\n      cls\n\n      ECHO  -------------------------------------------\n\n      ECHO                 Gene Machine\n\n      ECHO  -------------------------------------------\n\n      ECHO   1) Play Game\n\n      ECHO   2) Setup\n\n      ECHO  -------------------------------------------\n\n      ECHO   3) Exit Program\n\n      ECHO  -------------------------------------------\n\n\n      choice /c123 /s Which program do you want to run? [1-3]: /n\n\n      if errorlevel 3 goto exit\n\n      if errorlevel 2 goto setup\n\n      if errorlevel 1 goto game\n\n\n      :game\n\n      cls\n\n      gene\n\n      goto exit\n\n\n      :setup\n\n      cls\n\n      setsound\n\n      goto launcher\n\n\n\n      :exit\n\n      exit'\n    file: $GAMEDIR/gene.conf\n"
+}

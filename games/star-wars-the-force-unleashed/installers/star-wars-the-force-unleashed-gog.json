@@ -1,0 +1,223 @@
+{
+  "id": 1277,
+  "game_id": 1114,
+  "game_slug": "star-wars-the-force-unleashed",
+  "name": "Star Wars: The Force Unleashed Ultimate Sith Edition",
+  "year": 2009,
+  "user": "strider",
+  "runner": "wine",
+  "slug": "star-wars-the-force-unleashed-gog",
+  "version": "GOG",
+  "description": "This script will facilitate you install of this game on Linux OS:\r\n\"Star Wars - The Force Unleashed Ultimate Sith Edition\" provided by GOG using Lutris Wine runner.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions on Linux platform.",
+  "notes": "- x360 compatible\r\n- Multilanguage: you could choose menus/subtitles/cut scenes languages between English, French, German, Italian, Spanish, Polish and Russian.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2015-02-04T22:05:00.728000Z",
+  "updated_at": "2020-05-17T22:22:13.035498Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 32430,
+  "gogid": 1189268228,
+  "gogslug": "star_wars_the_force_unleashed_ultimate_sith_edition",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "custom-name": "Star Wars - The Force Unleashed Ultimate Sith Edition - GOG",
+    "files": [
+      {
+        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Star%20Wars%20-%20The%20Force%20Unleashed%20Ultimate%20Sith%20Edition/swtfu_gog.bat"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Star%20Wars%20-%20The%20Force%20Unleashed%20Ultimate%20Sith%20Edition/swtfu.bmp"
+      },
+      {
+        "config": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Star%20Wars%20-%20The%20Force%20Unleashed%20Ultimate%20Sith%20Edition/Config.xml"
+      },
+      {
+        "fix": {
+          "filename": "SWTFU_Fixed_Files.7z",
+          "url": "https://www.dropbox.com/s/svgytg5fnd0mwb3/SWTFU_Fixed_Files.7z?dl=1"
+        }
+      },
+      {
+        "gnutils": "https://github.com/legluondunet/mlls-tools/raw/master/sed/sed_win32.zip"
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "gamesetup": "N/A:Please select the Windows setup exe file downloaded from your GOG account."
+      }
+    ],
+    "game": {
+      "args": "c:\\\\swtfu_gog.bat",
+      "exe": "drive_c/windows/syswow64/wineconsole.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Preparing wineprefix...",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "background",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "ActiveTitle",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "GradientActiveTitle",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/innoextract",
+          "file": "inno"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $gamesetup --output-dir \"$GAMEDIR/drive_c/GOG Games\"",
+          "file": "$CACHE/innoextract/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "src": "config"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/app/LevelPacks/",
+          "file": "fix"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Please choose your preferred game's language:",
+          "id": "LANG",
+          "options": [
+            {
+              "en": "English"
+            },
+            {
+              "fr": "French"
+            },
+            {
+              "de": "German"
+            },
+            {
+              "it": "Italian"
+            },
+            {
+              "es": "Spanish"
+            },
+            {
+              "pl": "Polish"
+            },
+            {
+              "ru": "Russian"
+            }
+          ],
+          "preselect": "en"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "Language",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\aspyr\\star wars the force unleashed\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "$INPUT_LANG"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_47",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/tmp/",
+          "file": "gnutils"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "menu"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "wpp"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "wallpaper",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "c:\\\\swtfu.bmp"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "csmt",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
+          "value": "00000000"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/tmp/\"; sed -i -e \"s/resolutionx/\"$RESOLUTION_WIDTH\"/g\" -e \"s/resolutiony/\"$RESOLUTION_HEIGHT\"/g\" Config.xml; cd .. ; cd \"GOG Games\"; mv app \"Star Wars - The Force Unleashed Ultimate Sith Edition\"; cd \"Star Wars - The Force Unleashed Ultimate Sith Edition\"; rm -f -r ../tmp __support GameuxInstallHelper.dll goggame-1189268228.* language_setup.* webcache.zip;"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": true
+    }
+  },
+  "content": "custom-name: Star Wars - The Force Unleashed Ultimate Sith Edition - GOG\nfiles:\n- menu: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Star%20Wars%20-%20The%20Force%20Unleashed%20Ultimate%20Sith%20Edition/swtfu_gog.bat\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Star%20Wars%20-%20The%20Force%20Unleashed%20Ultimate%20Sith%20Edition/swtfu.bmp\n- config: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Star%20Wars%20-%20The%20Force%20Unleashed%20Ultimate%20Sith%20Edition/Config.xml\n- fix:\n    filename: SWTFU_Fixed_Files.7z\n    url: https://www.dropbox.com/s/svgytg5fnd0mwb3/SWTFU_Fixed_Files.7z?dl=1\n- gnutils: https://github.com/legluondunet/mlls-tools/raw/master/sed/sed_win32.zip\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- gamesetup: N/A:Please select the Windows setup exe file downloaded from your GOG\n    account.\ngame:\n  args: c:\\\\swtfu_gog.bat\n  exe: drive_c/windows/syswow64/wineconsole.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- extract:\n    dst: $CACHE/innoextract\n    file: inno\n- execute:\n    args: --extract $gamesetup --output-dir \"$GAMEDIR/drive_c/GOG Games\"\n    file: $CACHE/innoextract/innoextract\n- merge:\n    dst: $GAMEDIR/drive_c/tmp/\n    src: config\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/app/LevelPacks/\n    file: fix\n- input_menu:\n    description: 'Please choose your preferred game''s language:'\n    id: LANG\n    options:\n    - en: English\n    - fr: French\n    - de: German\n    - it: Italian\n    - es: Spanish\n    - pl: Polish\n    - ru: Russian\n    preselect: en\n- task:\n    arch: win64\n    key: Language\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\aspyr\\star wars the force unleashed\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: $INPUT_LANG\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/tmp/\n    file: gnutils\n- merge:\n    dst: $GAMEDIR/drive_c/\n    src: menu\n- merge:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\swtfu.bmp\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- execute:\n    command: cd \"$GAMEDIR/drive_c/tmp/\"; sed -i -e \"s/resolutionx/\"$RESOLUTION_WIDTH\"/g\"\n      -e \"s/resolutiony/\"$RESOLUTION_HEIGHT\"/g\" Config.xml; cd .. ; cd \"GOG Games\";\n      mv app \"Star Wars - The Force Unleashed Ultimate Sith Edition\"; cd \"Star Wars\n      - The Force Unleashed Ultimate Sith Edition\"; rm -f -r ../tmp __support GameuxInstallHelper.dll\n      goggame-1189268228.* language_setup.* webcache.zip;\nwine:\n  Desktop: true\n"
+}

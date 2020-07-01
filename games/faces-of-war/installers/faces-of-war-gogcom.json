@@ -1,0 +1,85 @@
+{
+  "id": 2611,
+  "game_id": 5895,
+  "game_slug": "faces-of-war",
+  "name": "Faces of War",
+  "year": null,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "faces-of-war-gogcom",
+  "version": "GOG.com",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-08-27T15:31:15.583808Z",
+  "updated_at": "2016-09-30T21:10:07.201593Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 289300,
+  "gogid": 1428586504,
+  "gogslug": "faces_of_war",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/game/facesofwar.exe",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/game"
+    },
+    "gogid": "faces_of_war",
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "directx9",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": false
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/facesofwar.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ngogid: faces_of_war\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: directx9\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: false\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

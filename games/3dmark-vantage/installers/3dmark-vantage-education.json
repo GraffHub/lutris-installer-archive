@@ -1,0 +1,130 @@
+{
+  "id": 20847,
+  "game_id": 3100,
+  "game_slug": "3dmark-vantage",
+  "name": "3DMark Vantage",
+  "year": null,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "3dmark-vantage-education",
+  "version": "Education",
+  "description": "WinHQ: A DirectX 10 benchmark. D3D11 failure.",
+  "notes": "Demonstrating the problem ...",
+  "created_at": "2020-05-28T06:01:56.059755Z",
+  "updated_at": "2020-05-28T06:01:56.059778Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 205250,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://benchmarks.ul.com/downloads/3dmark-vantage.exe"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "--disable_system_info --config_file=\"test_config/entry.txt\"",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark Vantage/3DMarkVantageCmd.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2010",
+          "arch": "win64",
+          "description": "Visual C++ 2010 libraries ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vista",
+          "arch": "win64",
+          "description": "Windows Vista ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43 d3dx10_43 d3dx11_43",
+          "arch": "win64",
+          "description": "Managed DirectX ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dxvk",
+          "arch": "win64",
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "setup"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/3dmark-vantage.exe"
+      },
+      {
+        "task": {
+          "description": "3DMark Vantage ...",
+          "executable": "$GAMEDIR/3dmark-vantage.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Register KeyCode ...",
+          "key": "KeyCode",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMarkVantage",
+          "type": "REG_SZ",
+          "value": "3DMVA-LHJL6-LZZK8-LXDAH-3ZAL7-RHQ3S-VLALP-FYUQ8"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Register KeyCode ...",
+          "key": "KeyCode",
+          "name": "set_regedit",
+          "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMarkVantage",
+          "type": "REG_SZ",
+          "value": "3DMVA-LHJL6-LZZK8-LXDAH-3ZAL7-RHQ3S-VLALP-FYUQ8"
+        }
+      }
+    ],
+    "system": {
+      "disable_compositor": true
+    },
+    "wine": {
+      "dxvk": true
+    }
+  },
+  "content": "files:\n- setup: https://benchmarks.ul.com/downloads/3dmark-vantage.exe\ngame:\n  arch: win64\n  args: --disable_system_info --config_file=\"test_config/entry.txt\"\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Futuremark/3DMark Vantage/3DMarkVantageCmd.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    arch: win64\n    description: Visual C++ 2010 libraries ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vista\n    arch: win64\n    description: Windows Vista ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx10_43 d3dx11_43\n    arch: win64\n    description: Managed DirectX ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR\n    src: setup\n- chmodx: $GAMEDIR/3dmark-vantage.exe\n- task:\n    description: 3DMark Vantage ...\n    executable: $GAMEDIR/3dmark-vantage.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMarkVantage\n    type: REG_SZ\n    value: 3DMVA-LHJL6-LZZK8-LXDAH-3ZAL7-RHQ3S-VLALP-FYUQ8\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMarkVantage\n    type: REG_SZ\n    value: 3DMVA-LHJL6-LZZK8-LXDAH-3ZAL7-RHQ3S-VLALP-FYUQ8\nsystem:\n  disable_compositor: true\nwine:\n  dxvk: true\n"
+}

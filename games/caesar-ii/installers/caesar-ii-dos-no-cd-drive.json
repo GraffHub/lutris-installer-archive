@@ -1,0 +1,126 @@
+{
+  "id": 11557,
+  "game_id": 21762,
+  "game_slug": "caesar-ii",
+  "name": "Caesar II",
+  "year": 1995,
+  "user": "track16",
+  "runner": "dosbox",
+  "slug": "caesar-ii-dos-no-cd-drive",
+  "version": "DOS (no CD drive)",
+  "description": "This installer assumes that you own the game CD but do not have a functioning CD drive to access game files. It downloads these files from the internet for you.",
+  "notes": "",
+  "created_at": "2019-01-12T06:55:56.823000Z",
+  "updated_at": "2019-01-20T06:38:47.172423Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1386577474,
+  "gogslug": "caesar_ii",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "c2package": {
+          "filename": "c2.zip",
+          "url": "http://www.starehry.eu/download/strategy/Caesar.2.CD-www.oldgames.sk-Compilation.exe"
+        }
+      },
+      {
+        "p7package": "https://lutris.net/files/tools/p7zip-16.02-i686.tar.gz"
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/play.conf",
+      "main_file": "$GAMEDIR/C/C2.BAT"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$GAMEDIR/E",
+          "file": "c2package"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/p7z",
+          "file": "$p7package"
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir $GAMEDIR/C; cp -r $GAMEDIR/E/C/SIERRA/CAESAR2/* $GAMEDIR/C",
+          "description": "Extracting game data..."
+        }
+      },
+      {
+        "execute": {
+          "command": "mkdir $GAMEDIR/D; cd $GAMEDIR/D; $CACHE/p7z/7z x $GAMEDIR/E/CD/CAESAR2.ISO",
+          "description": "Extracting more game data..."
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/play.conf",
+          "key": "aspect",
+          "section": "render",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/play.conf",
+          "key": "fullscreen",
+          "section": "sdl",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/play.conf",
+          "key": "sbtype",
+          "section": "sblaster",
+          "value": "sb16"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/play.conf",
+          "key": "cycles",
+          "section": "cpu",
+          "value": "max"
+        }
+      },
+      {
+        "write_file": {
+          "content": "\n[autoexec]\n# Lines in this section will be run at startup.\n@echo off\nmount C $GAMEDIR/C\nmount D $GAMEDIR/D\nC:\n",
+          "file": "$GAMEDIR/play.conf",
+          "mode": "a"
+        }
+      },
+      {
+        "write_file": {
+          "content": "\n;\n;Miles Design Audio Interface Library V3.02 of 18-Jan-95\n;\nDEVICE      Creative Labs Sound Blaster(TM) 16\nDRIVER      SBPRO2.MDI\nIO_ADDR     220h\nIRQ         -1\nDMA_8_BIT   -1\nDMA_16_BIT  -1\n",
+          "file": "$GAMEDIR/C/MDI.INI"
+        }
+      },
+      {
+        "write_file": {
+          "content": "\n;\n;Miles Design Audio Interface Library V3.02 of 18-Jan-95\n;\nDEVICE      Creative Labs Sound Blaster 16 or AWE32\nDRIVER      SB16.DIG\nIO_ADDR     220h\nIRQ         -1\nDMA_8_BIT   -1\nDMA_16_BIT  -1\n",
+          "file": "$GAMEDIR/C/DIG.INI"
+        }
+      },
+      {
+        "write_file": {
+          "content": "\nresaud=D:\\\nresmap=D:\\\nressfx=D:\\\nrescdis=D:\\\nsync=D:\\\npatchDir=C:\\SIERRA\\Caesar2;D:\\;D:\\patches\n",
+          "file": "$GAMEDIR/C/RESOURCE.CFG"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- c2package:\n    filename: c2.zip\n    url: http://www.starehry.eu/download/strategy/Caesar.2.CD-www.oldgames.sk-Compilation.exe\n- p7package: https://lutris.net/files/tools/p7zip-16.02-i686.tar.gz\ngame:\n  config_file: $GAMEDIR/play.conf\n  main_file: $GAMEDIR/C/C2.BAT\ninstaller:\n- extract:\n    dst: $GAMEDIR/E\n    file: c2package\n- extract:\n    dst: $CACHE/p7z\n    file: $p7package\n- execute:\n    command: mkdir $GAMEDIR/C; cp -r $GAMEDIR/E/C/SIERRA/CAESAR2/* $GAMEDIR/C\n    description: Extracting game data...\n- execute:\n    command: mkdir $GAMEDIR/D; cd $GAMEDIR/D; $CACHE/p7z/7z x $GAMEDIR/E/CD/CAESAR2.ISO\n    description: Extracting more game data...\n- write_config:\n    file: $GAMEDIR/play.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/play.conf\n    key: fullscreen\n    section: sdl\n    value: true\n- write_config:\n    file: $GAMEDIR/play.conf\n    key: sbtype\n    section: sblaster\n    value: sb16\n- write_config:\n    file: $GAMEDIR/play.conf\n    key: cycles\n    section: cpu\n    value: max\n- write_file:\n    content: '\n\n      [autoexec]\n\n      # Lines in this section will be run at startup.\n\n      @echo off\n\n      mount C $GAMEDIR/C\n\n      mount D $GAMEDIR/D\n\n      C:\n\n      '\n    file: $GAMEDIR/play.conf\n    mode: a\n- write_file:\n    content: '\n\n      ;\n\n      ;Miles Design Audio Interface Library V3.02 of 18-Jan-95\n\n      ;\n\n      DEVICE      Creative Labs Sound Blaster(TM) 16\n\n      DRIVER      SBPRO2.MDI\n\n      IO_ADDR     220h\n\n      IRQ         -1\n\n      DMA_8_BIT   -1\n\n      DMA_16_BIT  -1\n\n      '\n    file: $GAMEDIR/C/MDI.INI\n- write_file:\n    content: '\n\n      ;\n\n      ;Miles Design Audio Interface Library V3.02 of 18-Jan-95\n\n      ;\n\n      DEVICE      Creative Labs Sound Blaster 16 or AWE32\n\n      DRIVER      SB16.DIG\n\n      IO_ADDR     220h\n\n      IRQ         -1\n\n      DMA_8_BIT   -1\n\n      DMA_16_BIT  -1\n\n      '\n    file: $GAMEDIR/C/DIG.INI\n- write_file:\n    content: '\n\n      resaud=D:\\\n\n      resmap=D:\\\n\n      ressfx=D:\\\n\n      rescdis=D:\\\n\n      sync=D:\\\n\n      patchDir=C:\\SIERRA\\Caesar2;D:\\;D:\\patches\n\n      '\n    file: $GAMEDIR/C/RESOURCE.CFG\n"
+}

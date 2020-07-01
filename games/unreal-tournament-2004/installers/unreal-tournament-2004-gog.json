@@ -1,0 +1,156 @@
+{
+  "id": 934,
+  "game_id": 140,
+  "game_slug": "unreal-tournament-2004",
+  "name": "Unreal Tournament 2004",
+  "year": 2004,
+  "user": "Xodetaetl",
+  "runner": "wine",
+  "slug": "unreal-tournament-2004-gog",
+  "version": "GOG",
+  "description": "This script will assist you to install \"Unreal Tournament\" GOG edition on Linux OS.\r\nDuring install please let all options by default.\r\nThis script uses D3D8to9 project: https://github.com/crosire/d3d8to9/.\r\nThanks to the people who helped us play this game in the best conditions on Linux platform.",
+  "notes": "- D3D8toD3D9 wrapper included to obtain better graphic quality and performance.\r\n- This script will install the Linux version too, you could choose which version to play in a menu at start.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2014-10-20T08:50:56.524000Z",
+  "updated_at": "2020-04-06T18:43:06.938564Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": 13230,
+  "gogid": 1207658691,
+  "gogslug": "unreal_tournament_2004_ece",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "custom-name": "Unreal Tournament 2004 - GOG",
+    "files": [
+      {
+        "ut2004x": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/ut2004_linux.tar.xz"
+      },
+      {
+        "wrapper": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/d3d8.zip"
+      },
+      {
+        "menu": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/ut2004.bat"
+      },
+      {
+        "bgi": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/ut2004.bmp"
+      },
+      {
+        "script": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/clean.sh"
+      },
+      {
+        "gogsetup": "N/A:Please select the game's setup Windows exe file downloaded from GOG."
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "c:\\\\ut2004.bat",
+      "exe": "drive_c/windows/syswow64/wineconsole.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "install_gecko": false,
+          "install_mono": false,
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/SP /SILENT",
+          "executable": "gogsetup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Unreal Tournament 2004/",
+          "format": "txz",
+          "src": "ut2004x"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Unreal Tournament 2004/System/",
+          "src": "wrapper"
+        }
+      },
+      {
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "$RESOLUTION_WIDTH $RESOLUTION_HEIGHT",
+          "file": "script"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "menu"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "bgi"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "d3d8",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "native,builtin"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "wallpaper",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "c:\\\\ut2004.bmp"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "csmt",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
+          "value": "00000000"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "background",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": true
+    }
+  },
+  "content": "custom-name: Unreal Tournament 2004 - GOG\nfiles:\n- ut2004x: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/ut2004_linux.tar.xz\n- wrapper: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/d3d8.zip\n- menu: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/ut2004.bat\n- bgi: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/ut2004.bmp\n- script: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Unreal%20Tournament%202004/clean.sh\n- gogsetup: N/A:Please select the game's setup Windows exe file downloaded from GOG.\ngame:\n  arch: win64\n  args: c:\\\\ut2004.bat\n  exe: drive_c/windows/syswow64/wineconsole.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP /SILENT\n    executable: gogsetup\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Tournament 2004/\n    format: txz\n    src: ut2004x\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Unreal Tournament 2004/System/\n    src: wrapper\n- chmodx: script\n- execute:\n    args: $RESOLUTION_WIDTH $RESOLUTION_HEIGHT\n    file: script\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: menu\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: bgi\n- task:\n    arch: win64\n    key: d3d8\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\ut2004.bmp\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
+}

@@ -1,0 +1,121 @@
+{
+  "id": 16322,
+  "game_id": 13892,
+  "game_slug": "earth-2150",
+  "name": "Earth 2150",
+  "year": 2000,
+  "user": "Eisi",
+  "runner": "wine",
+  "slug": "earth-2150-gog",
+  "version": "GOG",
+  "description": "The installer will raise the default FPS limit of 20 to 60 FPS and increase the maximum allowed zoom level and camera angles for convenience. The increased framerate will speed up some animations but shouldn't affect gameplay.",
+  "notes": "- The game crashes with aspect ratios wider than 16:10 when opening the research menu (F2 key). Select a 16:10 or more narrow resolution to work around this issue.\r\n- Playing back the intro movie doesn't work, please disable it in the setup tool.\r\n- To change the FPS limit of 60 FPS edit the value of \"graphrate\" in the file $GAMEDIR/drive_c/GOG Games/Earth 2150/autoexec.con\r\n- To play the game without the modifications to framerate and camera delete $GAMEDIR/drive_c/GOG Games/Earth 2150/autoexec.con",
+  "created_at": "2019-10-20T14:57:29.179000Z",
+  "updated_at": "2019-11-02T22:23:03.543520Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Please select the GOG.com Windows installer"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Earth 2150/Earth2150.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:/GOG Games/Earth 2150\"",
+          "executable": "installer",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "directmusic",
+          "arch": "win32",
+          "description": "Installing directmusic",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "cinepak",
+          "arch": "win32",
+          "description": "Installing cinepak",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "amstream",
+          "arch": "win32",
+          "description": "Installing amstream",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "icodecs",
+          "arch": "win32",
+          "description": "Installing icodecs",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "amstream.dll",
+          "executable": "$GAMEDIR/drive_c/windows/system32/regsvr32.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "quartz.dll",
+          "executable": "$GAMEDIR/drive_c/windows/system32/regsvr32.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Please select the desired resolution. Note: Resolutions wider than 16:10 make the game crash in the research menu (F2 key) and the OpenGL renderer does not work. Also uncheck \"Play intro\" otherwise the game won't launch.",
+          "executable": "$GAMEDIR/drive_c/GOG Games/Earth 2150/Setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "graphrate 60\ngraph.zoom.max 300\ngraph.limited.view 0",
+          "file": "$GAMEDIR/drive_c/GOG Games/Earth 2150/autoexec.con"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "dsound.dll": "builtin"
+      }
+    }
+  },
+  "content": "files:\n- installer: N/A:Please select the GOG.com Windows installer\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/GOG Games/Earth 2150/Earth2150.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    args: /LANG=en /SP- /NOCANCEL /SUPPRESSMSGBOXES /NOGUI /DIR=\"C:/GOG Games/Earth\n      2150\"\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: directmusic\n    arch: win32\n    description: Installing directmusic\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: cinepak\n    arch: win32\n    description: Installing cinepak\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: amstream\n    arch: win32\n    description: Installing amstream\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: icodecs\n    arch: win32\n    description: Installing icodecs\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: amstream.dll\n    executable: $GAMEDIR/drive_c/windows/system32/regsvr32.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: quartz.dll\n    executable: $GAMEDIR/drive_c/windows/system32/regsvr32.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: 'Please select the desired resolution. Note: Resolutions wider than\n      16:10 make the game crash in the research menu (F2 key) and the OpenGL renderer\n      does not work. Also uncheck \"Play intro\" otherwise the game won''t launch.'\n    executable: $GAMEDIR/drive_c/GOG Games/Earth 2150/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- write_file:\n    content: 'graphrate 60\n\n      graph.zoom.max 300\n\n      graph.limited.view 0'\n    file: $GAMEDIR/drive_c/GOG Games/Earth 2150/autoexec.con\nwine:\n  overrides:\n    dsound.dll: builtin\n"
+}

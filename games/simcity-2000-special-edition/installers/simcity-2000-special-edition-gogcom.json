@@ -1,0 +1,155 @@
+{
+  "id": 13639,
+  "game_id": 5491,
+  "game_slug": "simcity-2000-special-edition",
+  "name": "SimCity 2000: Special Edition",
+  "year": 1995,
+  "user": "rregeer",
+  "runner": "dosbox",
+  "slug": "simcity-2000-special-edition-gogcom",
+  "version": "GOG.com",
+  "description": "Will use the Windows installer from GOG.com. This installer will change the DOSBox settings to have the best available performance. The installer will also create the sim city configuration for you so sound and music will work out of the box.",
+  "notes": "",
+  "created_at": "2019-05-20T10:03:30.718662Z",
+  "updated_at": "2019-05-20T10:03:30.718687Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Select the GOG.com game setup file. Download it here: \nhttps://www.gog.com/downloads/simcity_2000_special_edition/en1installer0\n"
+      },
+      {
+        "fileextract": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxSC2000.conf",
+      "game_id": "simcity-2000-special-edition",
+      "main_file": "$GAMEDIR/dosboxSC2000_single.conf"
+    },
+    "installer": [
+      {
+        "extract": {
+          "description": "Extracting innoextract application",
+          "dst": "$CACHE",
+          "file": "$fileextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE/game\" \"$installer\"",
+          "description": "Extracting game data",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/game"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR",
+          "src": "$GAMEDIR/__support/app/dosboxSC2000.conf"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxSC2000.conf",
+          "key": "output",
+          "section": "sdl",
+          "value": "opengl"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxSC2000.conf",
+          "key": "fulldouble",
+          "section": "sdl",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxSC2000.conf",
+          "key": "fullresolution",
+          "section": "sdl",
+          "value": "desktop"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxSC2000.conf",
+          "key": "aspect",
+          "section": "render",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxSC2000.conf",
+          "key": "scaler",
+          "section": "render",
+          "value": "normal2x"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[ipx] ipx=false\n[autoexec]\nmount c .\nc:\nimgmount d SC2000SE.DAT -t iso -fs iso\nLOADFIX -1 SC2K %1\nexit\n",
+          "file": "$GAMEDIR/dosboxSC2000_single.conf"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/SC2000.CFG",
+          "key": "MUSICNAME",
+          "section": "Music",
+          "value": "Sound Blaster 16"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/SC2000.CFG",
+          "key": "MUSICDRIVER",
+          "section": "Music",
+          "value": "A32SP2FM.DLL"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/SC2000.CFG",
+          "key": "MUSICADDRESS",
+          "section": "Music",
+          "value": 220
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/SC2000.CFG",
+          "key": "MUSICIRQ",
+          "section": "Music",
+          "value": 5
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/SC2000.CFG",
+          "key": "MUSICDMA",
+          "section": "Music",
+          "value": 1
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: \"N/A:Select the GOG.com game setup file. Download it here: \\nhttps://www.gog.com/downloads/simcity_2000_special_edition/en1installer0\\n\"\n- fileextract: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/dosboxSC2000.conf\n  game_id: simcity-2000-special-edition\n  main_file: $GAMEDIR/dosboxSC2000_single.conf\ninstaller:\n- extract:\n    description: Extracting innoextract application\n    dst: $CACHE\n    file: $fileextract\n- execute:\n    args: -d \"$CACHE/game\" \"$installer\"\n    description: Extracting game data\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/game\n- move:\n    dst: $GAMEDIR\n    src: $GAMEDIR/__support/app/dosboxSC2000.conf\n- write_config:\n    file: $GAMEDIR/dosboxSC2000.conf\n    key: output\n    section: sdl\n    value: opengl\n- write_config:\n    file: $GAMEDIR/dosboxSC2000.conf\n    key: fulldouble\n    section: sdl\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxSC2000.conf\n    key: fullresolution\n    section: sdl\n    value: desktop\n- write_config:\n    file: $GAMEDIR/dosboxSC2000.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxSC2000.conf\n    key: scaler\n    section: render\n    value: normal2x\n- write_file:\n    content: '[ipx] ipx=false\n\n      [autoexec]\n\n      mount c .\n\n      c:\n\n      imgmount d SC2000SE.DAT -t iso -fs iso\n\n      LOADFIX -1 SC2K %1\n\n      exit\n\n      '\n    file: $GAMEDIR/dosboxSC2000_single.conf\n- write_config:\n    file: $GAMEDIR/SC2000.CFG\n    key: MUSICNAME\n    section: Music\n    value: Sound Blaster 16\n- write_config:\n    file: $GAMEDIR/SC2000.CFG\n    key: MUSICDRIVER\n    section: Music\n    value: A32SP2FM.DLL\n- write_config:\n    file: $GAMEDIR/SC2000.CFG\n    key: MUSICADDRESS\n    section: Music\n    value: 220\n- write_config:\n    file: $GAMEDIR/SC2000.CFG\n    key: MUSICIRQ\n    section: Music\n    value: 5\n- write_config:\n    file: $GAMEDIR/SC2000.CFG\n    key: MUSICDMA\n    section: Music\n    value: 1\n"
+}

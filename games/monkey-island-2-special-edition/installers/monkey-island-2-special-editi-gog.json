@@ -1,0 +1,91 @@
+{
+  "id": 12962,
+  "game_id": 393,
+  "game_slug": "monkey-island-2-special-edition",
+  "name": "Monkey Island 2 Special Edition: LeChuck’s Revenge",
+  "year": 2010,
+  "user": "nalex421",
+  "runner": "wine",
+  "slug": "monkey-island-2-special-editi-gog",
+  "version": "GOG",
+  "description": "Installer forked from The Secret of Monkey Island: Special Edition.",
+  "notes": "Do not launch the game from the GOG-Installer. Close the GOG-Installer when the install is done and start the game from Lutris.",
+  "created_at": "2019-04-19T22:18:02.334000Z",
+  "updated_at": "2019-04-20T09:14:17.563480Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 32460,
+  "gogid": 1425039730,
+  "gogslug": "monkey_island_2_special_edition_lechucks_revenge",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "goginstaller": "N/A:Select the game's setup file"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/GOG Games/Monkey Island 2 SE/Monkey2.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/silent",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2008",
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet35sp1",
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/SP- SUPPRESSMSGBOXES /NOCANCEL",
+          "executable": "goginstaller",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- goginstaller: N/A:Select the game's setup file\ngame:\n  arch: win32\n  exe: drive_c/GOG Games/Monkey Island 2 SE/Monkey2.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- task:\n    arch: win32\n    args: /silent\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2008\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SP- SUPPRESSMSGBOXES /NOCANCEL\n    executable: goginstaller\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

@@ -1,0 +1,93 @@
+{
+  "id": 11426,
+  "game_id": 1117,
+  "game_slug": "everquest",
+  "name": "EverQuest",
+  "year": 2012,
+  "user": "Magbed",
+  "runner": "wine",
+  "slug": "everquest-everquest-project-19",
+  "version": "Everquest Project 1999",
+  "description": "Everquest Project 1999 from the Titanium disks",
+  "notes": "Modify eqclient.ini with the desired resolution parameters once the game has run for the first time. Further information at https://wiki.project1999.com/EverQuest_in_Linux_Guide\r\n\r\nGetting MIDI Music to Play:\r\n\r\n- Install fluidsynth, a soundfont for it, and qsynth: sudo apt install fluidsynth fluid-soundfont-gm qsynth\r\n    Run qsynth\r\n    Go to Setup > Audio tab and select alsa\r\n    Go to Soundfonts tab and open the soundfont file FluidR3_GM.sf2\r\n    qsynth has to stay open to continue playing MIDI music \r\n\r\nNote: Might need to set sound to ALSA in wine, via winetricks sound=alsa and select proper ALSA driver under winecfg > Audio > output device.",
+  "created_at": "2019-01-03T14:58:53.279000Z",
+  "updated_at": "2020-05-03T10:36:36.884433Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 205710,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "custom-name": "Everquest Project 1999",
+    "files": [
+      {
+        "installer": "N/A:Select the game's setup file"
+      },
+      {
+        "p99Files": "https://www.project1999.com/files/P99Files53.zip"
+      }
+    ],
+    "game": {
+      "args": "patchme",
+      "exe": "drive_c/Program Files (x86)/Sony/EverQuest/eqgame.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "executable": "installer",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/",
+          "file": "p99Files"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/dsetup.dll\" \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/DSETUP.dll\""
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/Resources/loadscreen.jpg\" \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/Resources/loadscreen.JPG\""
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "Defaults": {
+              "WindowedMode": false
+            },
+            "VideoMode": {
+              "FullscreenBitsPerPixel": 32,
+              "FullscreenRefreshRate": 60,
+              "Height": "$RESOLUTION_HEIGHT",
+              "Width": "$RESOLUTION_WIDTH"
+            }
+          },
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/eqclient.ini"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": true
+    }
+  },
+  "content": "custom-name: Everquest Project 1999\nfiles:\n- installer: N/A:Select the game's setup file\n- p99Files: https://www.project1999.com/files/P99Files53.zip\ngame:\n  args: patchme\n  exe: drive_c/Program Files (x86)/Sony/EverQuest/eqgame.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/\n    file: p99Files\n- execute:\n    command: mv \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/dsetup.dll\" \"$GAMEDIR/drive_c/Program\n      Files (x86)/Sony/EverQuest/DSETUP.dll\"\n- execute:\n    command: mv \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/Resources/loadscreen.jpg\"\n      \"$GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/Resources/loadscreen.JPG\"\n- write_config:\n    data:\n      Defaults:\n        WindowedMode: false\n      VideoMode:\n        FullscreenBitsPerPixel: 32\n        FullscreenRefreshRate: 60\n        Height: $RESOLUTION_HEIGHT\n        Width: $RESOLUTION_WIDTH\n    file: $GAMEDIR/drive_c/Program Files (x86)/Sony/EverQuest/eqclient.ini\nwine:\n  Desktop: true\n"
+}

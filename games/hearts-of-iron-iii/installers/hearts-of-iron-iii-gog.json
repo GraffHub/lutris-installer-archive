@@ -1,0 +1,79 @@
+{
+  "id": 10743,
+  "game_id": 1037,
+  "game_slug": "hearts-of-iron-iii",
+  "name": "Hearts of Iron III",
+  "year": null,
+  "user": "batman",
+  "runner": "wine",
+  "slug": "hearts-of-iron-iii-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-11-03T06:49:06.592000Z",
+  "updated_at": "2018-11-03T11:42:41.827492Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 25890,
+  "gogid": 1437401338,
+  "gogslug": "hearts_of_iron_iii",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/game/Run/hoigame.exe",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/game"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ],
+    "system": {
+      "disable_runtime": true
+    }
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Run/hoigame.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: true\n"
+}

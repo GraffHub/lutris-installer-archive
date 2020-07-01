@@ -1,0 +1,167 @@
+{
+  "id": 8080,
+  "game_id": 18121,
+  "game_slug": "wing-commander-iv-the-price-of-freedom",
+  "name": "Wing Commander IV: The Price Of Freedom",
+  "year": 1996,
+  "user": "Wompus",
+  "runner": "dosbox",
+  "slug": "wing-commander-iv-the-price-o-gog-dos",
+  "version": "GoG-DOS",
+  "description": "The MS-DOS Version is available as a goodie/extra in your GoG library.",
+  "notes": "",
+  "created_at": "2018-05-06T22:31:52.278000Z",
+  "updated_at": "2019-09-09T00:28:20.276833Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "wing4dos": "N/A:Please select the GOG.com Wing Commander 4 Archive wing_commander_4_dos_english.zip"
+      },
+      {
+        "innoextract": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "args": "-noconsole",
+      "config_file": "$GAMEDIR/dosbox_wc4.conf",
+      "main_file": "$GAMEDIR/WC4/WC4.EXE",
+      "working_dir": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/inno",
+          "file": "$innoextract"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/arcext",
+          "file": "$wing4dos"
+        }
+      },
+      {
+        "execute": {
+          "args": "--extract $CACHE/arcext/setup_wing_commander4_bonus_2.0.0.2.exe --output-dir $CACHE/winggame --gog",
+          "file": "$CACHE/inno/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/WC4",
+          "src": "$CACHE/winggame/game/WC4"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/CD1",
+          "src": "$CACHE/winggame/game/CD1"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/winggame/support/app/dosbox_wc4.conf"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose your desktop resolution",
+          "id": "RES",
+          "options": [
+            {
+              "3840x2160": "3840x2160"
+            },
+            {
+              "2560x1440": "2560x1440"
+            },
+            {
+              "1600x1200": "1600x1200"
+            },
+            {
+              "1920x1200": "1920x1200"
+            },
+            {
+              "1920x1080": "1920x1080"
+            },
+            {
+              "1280x1024": "1280x1024"
+            },
+            {
+              "1600x900": "1600x900"
+            },
+            {
+              "1440x900": "1440x900"
+            },
+            {
+              "1280x800": "1280x800"
+            },
+            {
+              "1366x768": "1366x768"
+            },
+            {
+              "1360x768": "1360x768"
+            },
+            {
+              "1024x768": "1024x768"
+            },
+            {
+              "1280x720": "1280x720"
+            }
+          ],
+          "preselect": "1920x1080"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosbox_wc4.conf",
+          "key": "output",
+          "section": "sdl",
+          "value": "openglnb"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosbox_wc4.conf",
+          "key": "scaler",
+          "section": "render",
+          "value": "none"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosbox_wc4.conf",
+          "key": "aspect",
+          "section": "render",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosbox_wc4.conf",
+          "key": "fullresolution",
+          "section": "sdl",
+          "value": "$INPUT_RES"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[autoexec]\n@echo off\ncls\t\nmount c \"$GAMEDIR\"\nmount d \"$GAMEDIR/CD1\" -t cdrom\nc:\ncd WC4\ncls\nWC4.exe\nexit\n",
+          "file": "$GAMEDIR/dosbox_wc4.conf",
+          "mode": "a"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- wing4dos: N/A:Please select the GOG.com Wing Commander 4 Archive wing_commander_4_dos_english.zip\n- innoextract: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  args: -noconsole\n  config_file: $GAMEDIR/dosbox_wc4.conf\n  main_file: $GAMEDIR/WC4/WC4.EXE\n  working_dir: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/inno\n    file: $innoextract\n- extract:\n    dst: $CACHE/arcext\n    file: $wing4dos\n- execute:\n    args: --extract $CACHE/arcext/setup_wing_commander4_bonus_2.0.0.2.exe --output-dir\n      $CACHE/winggame --gog\n    file: $CACHE/inno/innoextract\n- merge:\n    dst: $GAMEDIR/WC4\n    src: $CACHE/winggame/game/WC4\n- merge:\n    dst: $GAMEDIR/CD1\n    src: $CACHE/winggame/game/CD1\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/winggame/support/app/dosbox_wc4.conf\n- input_menu:\n    description: Choose your desktop resolution\n    id: RES\n    options:\n    - 3840x2160: 3840x2160\n    - 2560x1440: 2560x1440\n    - 1600x1200: 1600x1200\n    - 1920x1200: 1920x1200\n    - 1920x1080: 1920x1080\n    - 1280x1024: 1280x1024\n    - 1600x900: 1600x900\n    - 1440x900: 1440x900\n    - 1280x800: 1280x800\n    - 1366x768: 1366x768\n    - 1360x768: 1360x768\n    - 1024x768: 1024x768\n    - 1280x720: 1280x720\n    preselect: 1920x1080\n- write_config:\n    file: $GAMEDIR/dosbox_wc4.conf\n    key: output\n    section: sdl\n    value: openglnb\n- write_config:\n    file: $GAMEDIR/dosbox_wc4.conf\n    key: scaler\n    section: render\n    value: none\n- write_config:\n    file: $GAMEDIR/dosbox_wc4.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosbox_wc4.conf\n    key: fullresolution\n    section: sdl\n    value: $INPUT_RES\n- write_file:\n    content: \"[autoexec]\\n@echo off\\ncls\\t\\nmount c \\\"$GAMEDIR\\\"\\nmount d \\\"$GAMEDIR/CD1\\\"\\\n      \\ -t cdrom\\nc:\\ncd WC4\\ncls\\nWC4.exe\\nexit\\n\"\n    file: $GAMEDIR/dosbox_wc4.conf\n    mode: a\n"
+}

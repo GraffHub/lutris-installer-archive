@@ -1,0 +1,103 @@
+{
+  "id": 2503,
+  "game_id": 5297,
+  "game_slug": "gabriel-knight-sins-of-the-fathers",
+  "name": "Gabriel Knight: Sins of the Fathers",
+  "year": 1993,
+  "user": "ssf",
+  "runner": "dosbox",
+  "slug": "gabriel-knight-sins-of-the-fa-gogcom",
+  "version": "GOG.com",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-08-18T18:53:44.927806Z",
+  "updated_at": "2016-09-30T21:09:00.538673Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 495700,
+  "gogid": 1207658828,
+  "gogslug": "gabriel_knight_sins_of_the_fathers",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer"
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxGK.conf",
+      "main_file": "$GAMEDIR/dosboxGK_single.conf"
+    },
+    "gogid": "gabriel_knight_sins_of_the_fathers",
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "wine.create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "wine.set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing ...",
+          "executable": "game",
+          "name": "wine.wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "args": "-c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'",
+          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "args": "-c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'",
+          "description": "cleaning...",
+          "file": "/bin/sh",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "args": "-i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxGK_single.conf",
+          "file": "/bin/sed",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "args": "-i 's|..\\GK1.gog|GK1.gog|g' $GAMEDIR/dosboxGK_single.conf",
+          "file": "/bin/sed",
+          "terminal": false
+        }
+      },
+      {
+        "execute": {
+          "args": "-c 'rm -rf $GAMEDIR/DOSBOX'",
+          "file": "/bin/sh",
+          "terminal": false
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer\ngame:\n  config_file: $GAMEDIR/dosboxGK.conf\n  main_file: $GAMEDIR/dosboxGK_single.conf\ngogid: gabriel_knight_sins_of_the_fathers\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: wine.create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: wine.set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing ...\n    executable: game\n    name: wine.wineexec\n    prefix: $GAMEDIR\n- execute:\n    args: -c 'mv $GAMEDIR/drive_c/game/* $GAMEDIR'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/drive_c $GAMEDIR/dosdevices $GAMEDIR/*.reg'\n    description: cleaning...\n    file: /bin/sh\n    terminal: false\n- execute:\n    args: -i 's|mount C \"..\"|mount C \".\"|g' $GAMEDIR/dosboxGK_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -i 's|..\\GK1.gog|GK1.gog|g' $GAMEDIR/dosboxGK_single.conf\n    file: /bin/sed\n    terminal: false\n- execute:\n    args: -c 'rm -rf $GAMEDIR/DOSBOX'\n    file: /bin/sh\n    terminal: false\n"
+}

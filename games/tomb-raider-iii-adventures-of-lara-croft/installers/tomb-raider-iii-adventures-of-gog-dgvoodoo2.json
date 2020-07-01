@@ -1,0 +1,263 @@
+{
+  "id": 13348,
+  "game_id": 6689,
+  "game_slug": "tomb-raider-iii-adventures-of-lara-croft",
+  "name": "Tomb Raider III: Adventures of Lara Croft",
+  "year": 1998,
+  "user": "legluondunet",
+  "runner": "wine",
+  "slug": "tomb-raider-iii-adventures-of-gog-dgvoodoo2",
+  "version": "GOG + DgVoodoo2",
+  "description": "This script will install \"Tomb Raider III - Adventures of Lara Croft\" Gog edition with support for modern computer config.\r\nDuring install please let all options by default.\r\nThis script uses different projects:\r\ndgVoodoo2: http://www.dege.freeweb.hu/\r\nArsunt Patch FOV FMV Sunglasses: https://www.tombraiderforums.com/index.php\r\nThanks to the people who contributed to play this game in the best conditions.",
+  "notes": "- \"Tomb Raider III: Adventures of Lara Croft\" has insufficient controller support, I invite you to use a keymapper. You will find profiles for x360 (Antimicro) and Steam Controller (sc-controller) in the \"gamepad profiles\" folder.\r\n- Please report issue concerning this script on my github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2019-05-05T19:21:21.792000Z",
+  "updated_at": "2019-09-08T22:59:43.635439Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": 225320,
+  "gogid": 1207663493,
+  "gogslug": "tomb_raider_123",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "custom-name": "Tomb Raider III - Adventures of Lara Croft - GOG",
+    "files": [
+      {
+        "setup": "N/A:Select the installer downloaded from GOG"
+      },
+      {
+        "dgv": "https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip"
+      },
+      {
+        "inno": "http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      },
+      {
+        "arsunt": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3_Arsunt_Patch_FOV_FMV_Sunglasses.zip"
+      },
+      {
+        "menu1": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3M1.BAT"
+      },
+      {
+        "menu2": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3M2.BAT"
+      },
+      {
+        "gppx360": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/gamepad%20profiles/tr3_x360.gamecontroller.amgp"
+      },
+      {
+        "gppsteam": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/gamepad%20profiles/tr3_steam.sccprofile"
+      },
+      {
+        "gppreadme": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/gamepad%20profiles/tr3_gamepad_readme.html"
+      },
+      {
+        "wpp": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/tr3.bmp"
+      }
+    ],
+    "game": {
+      "exe": "drive_c/GOG Games/Tomb Raider 3/TR3M1.BAT",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating WINE prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "inno"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE\" \"$setup\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "src": "$CACHE/app"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\"; mv tomb3.exe tomb3.gog;"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "file": "arsunt"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "file": "dgv"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "src": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/MS/x86/DDraw.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "src": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/MS/x86/D3DImm.dll"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\"; mv dgVoodoo.conf dgVoodoo_original.conf"
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "DirectX": {
+              "ForceVerticalSync": true,
+              "Resolution": "max_qhd_isf",
+              "VRAM": 256,
+              "dgVoodooWatermark": false
+            },
+            "General": {
+              "CaptureMouse": false,
+              "FullScreenMode": false,
+              "ScalingMode": "stretched_ar"
+            }
+          },
+          "file": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/dgVoodoo.conf"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "ddraw",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "native,builtin"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_47",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "src": "menu1"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/",
+          "src": "menu2"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/gamepad profiles/",
+          "src": "gppx360"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/gamepad profiles/",
+          "src": "gppsteam"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/gamepad profiles/",
+          "src": "gppreadme"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/",
+          "src": "wpp"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "wallpaper",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Desktop\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "c:\\\\tr3.bmp"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "background",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "ActiveTitle",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "GradientActiveTitle",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "255 177 94"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\"; rm -f -r __support/ gog* webcache.zip 3Dfx Doc MS os.dat layout.bin  lang.dat data.bin DATA.TAG config.txt tr3gold.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "csmt",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_DWORD",
+          "value": "00000000"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": true,
+      "dxvk": true
+    }
+  },
+  "content": "custom-name: Tomb Raider III - Adventures of Lara Croft - GOG\nfiles:\n- setup: N/A:Select the installer downloaded from GOG\n- dgv: https://github.com/legluondunet/mlls-tools/raw/master/dgVoodoo2/dgVoodoo2_61.zip\n- inno: http://constexpr.org/innoextract/files/snapshots/innoextract-1.8-dev-2019-01-13/innoextract-1.8-dev-2019-01-13-linux.tar.xz\n- arsunt: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3_Arsunt_Patch_FOV_FMV_Sunglasses.zip\n- menu1: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3M1.BAT\n- menu2: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/TR3M2.BAT\n- gppx360: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/gamepad%20profiles/tr3_x360.gamecontroller.amgp\n- gppsteam: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/gamepad%20profiles/tr3_steam.sccprofile\n- gppreadme: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/gamepad%20profiles/tr3_gamepad_readme.html\n- wpp: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Tomb%20Raider%20III%20-%20Adventures%20of%20Lara%20Croft/tr3.bmp\ngame:\n  exe: drive_c/GOG Games/Tomb Raider 3/TR3M1.BAT\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    file: inno\n- execute:\n    args: -d \"$CACHE\" \"$setup\"\n    file: $CACHE/innoextract\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    src: $CACHE/app\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\"; mv tomb3.exe tomb3.gog;\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    file: arsunt\n- extract:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    file: dgv\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    src: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/MS/x86/DDraw.dll\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    src: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/MS/x86/D3DImm.dll\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\"; mv dgVoodoo.conf dgVoodoo_original.conf\n- write_config:\n    data:\n      DirectX:\n        ForceVerticalSync: true\n        Resolution: max_qhd_isf\n        VRAM: 256\n        dgVoodooWatermark: false\n      General:\n        CaptureMouse: false\n        FullScreenMode: false\n        ScalingMode: stretched_ar\n    file: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/dgVoodoo.conf\n- task:\n    arch: win64\n    key: ddraw\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    app: d3dcompiler_47\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    src: menu1\n- move:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\n    src: menu2\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/gamepad profiles/\n    src: gppx360\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/gamepad profiles/\n    src: gppsteam\n- merge:\n    dst: $GAMEDIR/drive_c/GOG Games/Tomb Raider 3/gamepad profiles/\n    src: gppreadme\n- move:\n    dst: $GAMEDIR/drive_c/\n    src: wpp\n- task:\n    arch: win64\n    key: wallpaper\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Desktop\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: c:\\\\tr3.bmp\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: ActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\n- task:\n    arch: win64\n    key: GradientActiveTitle\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 255 177 94\n- execute:\n    command: cd \"$GAMEDIR/drive_c/GOG Games/Tomb Raider 3/\"; rm -f -r __support/ gog*\n      webcache.zip 3Dfx Doc MS os.dat layout.bin  lang.dat data.bin DATA.TAG config.txt\n      tr3gold.exe\n- task:\n    arch: win64\n    key: csmt\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\Direct3D\\\n    prefix: $GAMEDIR\n    type: REG_DWORD\n    value: '00000000'\nwine:\n  Desktop: true\n  dxvk: true\n"
+}

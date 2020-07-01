@@ -1,0 +1,95 @@
+{
+  "id": 13782,
+  "game_id": 2925,
+  "game_slug": "warcraft-iii-the-frozen-throne",
+  "name": "Warcraft III: The Frozen Throne",
+  "year": 2003,
+  "user": "agre",
+  "runner": "wine",
+  "slug": "warcraft-iii-the-frozen-thron-digital",
+  "version": "Digital",
+  "description": null,
+  "notes": "This should install WC3TFT for you with the installer from battle.net.\r\nIt will install the battlenet client first. When it's done with installing, log in before installing WC3. When you see the empty window where you should input your CD key, move it around until you see the field where you can type your CD key.",
+  "created_at": "2019-05-29T08:48:54.243000Z",
+  "updated_at": "2020-02-02T09:12:30.142733Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup2": "N/A:Select the installer for Warcraft III: Reign of Chaos"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/Program Files/Warcraft III/x86_64/Warcraft III.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "arch": "win64",
+          "description": "Installing Arial font...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 7 mode for Wine",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Warcraft III: The Frozen Throne",
+          "executable": "setup2",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "STAGING_SHARED_MEMORY": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true,
+      "overrides": {
+        "d3d12": "disabled",
+        "nvapi": "disabled",
+        "nvapi64": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- setup2: 'N/A:Select the installer for Warcraft III: Reign of Chaos'\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Warcraft III/x86_64/Warcraft III.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    arch: win64\n    description: Setting Windows 7 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: 'Installing Warcraft III: The Frozen Throne'\n    executable: setup2\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    STAGING_SHARED_MEMORY: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  overrides:\n    d3d12: disabled\n    nvapi: disabled\n    nvapi64: disabled\n"
+}

@@ -1,0 +1,76 @@
+{
+  "id": 2519,
+  "game_id": 794,
+  "game_slug": "commandos-beyond-the-call-of-duty",
+  "name": "Commandos: Beyond the Call of Duty",
+  "year": 1999,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "commandos-beyond-the-call-of-gogcom",
+  "version": "GOG.com",
+  "description": "the GOG standalone version",
+  "notes": "",
+  "created_at": "2016-08-21T13:59:14.112281Z",
+  "updated_at": "2016-09-30T21:11:36.175729Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 6810,
+  "gogid": 1207662203,
+  "gogslug": "commandos_beyond_the_call_of_duty",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/game/coman_mp.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "gogid": "commandos_ammo_pack",
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/coman_mp.exe\n  prefix: $GAMEDIR\ngogid: commandos_ammo_pack\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

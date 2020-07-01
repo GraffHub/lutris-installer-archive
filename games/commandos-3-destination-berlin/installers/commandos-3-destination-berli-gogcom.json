@@ -1,0 +1,76 @@
+{
+  "id": 2521,
+  "game_id": 796,
+  "game_slug": "commandos-3-destination-berlin",
+  "name": "Commandos 3: Destination Berlin",
+  "year": 2003,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "commandos-3-destination-berli-gogcom",
+  "version": "GOG.com",
+  "description": "GOG standalone version",
+  "notes": "Resolution is fixed to 800x600 (see here for a fix: http://pcgamingwiki.com/wiki/Commandos_3:_Destination_Berlin#Video_settings)",
+  "created_at": "2016-08-21T14:13:27.600667Z",
+  "updated_at": "2016-09-30T16:14:23.522305Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": 6840,
+  "gogid": 1207662223,
+  "gogslug": "commandos_2_3",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/game/Commandos3.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "gogid": "commandos_2_3",
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: drive_c/game/Commandos3.exe\n  prefix: $GAMEDIR\ngogid: commandos_2_3\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

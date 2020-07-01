@@ -1,0 +1,104 @@
+{
+  "id": 7391,
+  "game_id": 4514,
+  "game_slug": "betrayal-at-krondor",
+  "name": "Betrayal at Krondor",
+  "year": 1993,
+  "user": "knathrak",
+  "runner": "dosbox",
+  "slug": "betrayal-at-krondor-dosbox-gog",
+  "version": "Dosbox + GOG",
+  "description": "This is the dosbox version that requires the GOG windows installer.",
+  "notes": "The game runs fine but without sound. In order to make the sound work you need to manually run install.exe from the game's directory inside dosbox and select the soundblaster/adlib soundcard for the music and effects. After saving the setup the sound will work fine as well.\r\n\r\nTo run INSTALL.EXE:\r\n   I - Configure --> Game Options --> Main File --> Select 'dosboxBAK_settings.conf'\r\n   II - Run the game and you'll start the Setup\r\n   III - Choose Music --> Soundblaster /AdLib Card (or compatibles)\r\n   IV - Accept these choices and save configuration\r\n   V - In Lutris, Configure --> Game Options --> Main File --> Select 'dosboxBAK_single.conf'\r\n   VI - Start the game\r\n\r\nFor better quality MIDI audio perform the same steps as above.  But instead for Music select 'General MIDI'.\r\nThen you need to install fluid-soundfont-gm and fluidsynth.  For Mint 19:\r\nsudo apt install -y fluid-soundfont-gm fluidsynth\r\nOpen terminal and run the command (needs to be run each time you want to play):\r\nfluidsynth -l -s -i -aalsa -o audio.alsa.device=default /usr/share/sounds/sf2/FluidR3_GM.sf2\r\nThen start the game.",
+  "created_at": "2018-02-24T22:47:54.633000Z",
+  "updated_at": "2020-06-28T23:52:38.491452Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207658850,
+  "gogslug": "betrayal_at_krondor",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "file1": "N/A:Please select the GOG installer"
+      },
+      {
+        "file2": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "config_file": "$GAMEDIR/dosboxBAK.conf"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$file2"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$CACHE\" \"$file1\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$CACHE/app"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/DOSBOX",
+          "src": "$GAMEDIR/dosboxBAK_single.conf"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "key": "aspect",
+          "section": "render",
+          "value": true
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "key": "fullscreen",
+          "section": "sdl",
+          "value": false
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "key": "fullresolution",
+          "section": "sdl",
+          "value": "1920x1080"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/dosboxBAK.conf",
+          "key": "midiconfig",
+          "section": "midi",
+          "value": "128:0"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[IPX]\nEnable=0\nConnection=0\nipx=false\n\n[autoexec]\n# Lines in this section will be run at startup.\n\n@ECHO OFF\nmount C \"..\"\nimgmount d \"..\\bak.inst\" -t iso -fs iso\nc:\ncls\nINSTALL.EXE\nexit\n",
+          "file": "$GAMEDIR/DOSBOX/dosboxBAK_settings.conf"
+        }
+      }
+    ],
+    "main_file": "DOSBOX/dosboxBAK_single.conf"
+  },
+  "content": "files:\n- file1: N/A:Please select the GOG installer\n- file2: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  config_file: $GAMEDIR/dosboxBAK.conf\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $file2\n- execute:\n    args: -d \"$CACHE\" \"$file1\"\n    file: $CACHE/innoextract\n- merge:\n    dst: $GAMEDIR\n    src: $CACHE/app\n- merge:\n    dst: $GAMEDIR/DOSBOX\n    src: $GAMEDIR/dosboxBAK_single.conf\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: aspect\n    section: render\n    value: true\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: fullscreen\n    section: sdl\n    value: false\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: fullresolution\n    section: sdl\n    value: 1920x1080\n- write_config:\n    file: $GAMEDIR/dosboxBAK.conf\n    key: midiconfig\n    section: midi\n    value: '128:0'\n- write_file:\n    content: '[IPX]\n\n      Enable=0\n\n      Connection=0\n\n      ipx=false\n\n\n      [autoexec]\n\n      # Lines in this section will be run at startup.\n\n\n      @ECHO OFF\n\n      mount C \"..\"\n\n      imgmount d \"..\\bak.inst\" -t iso -fs iso\n\n      c:\n\n      cls\n\n      INSTALL.EXE\n\n      exit\n\n      '\n    file: $GAMEDIR/DOSBOX/dosboxBAK_settings.conf\nmain_file: DOSBOX/dosboxBAK_single.conf\n"
+}

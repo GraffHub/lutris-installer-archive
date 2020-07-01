@@ -1,0 +1,89 @@
+{
+  "id": 18857,
+  "game_id": 8113,
+  "game_slug": "total-annihilation",
+  "name": "Total Annihilation",
+  "year": 1997,
+  "user": "Armageddon91",
+  "runner": "wine",
+  "slug": "total-annihilation-gog-german-patch",
+  "version": "GOG + German Patch",
+  "description": "This script installs Total Annihilation - Commander Pack from GOG and patch it into German. Thanks to Ionisator from GOG-Forum for the german patch.",
+  "notes": "-download the patch file from: https://mega.nz/#!ZEcDBAJA!JcseiyMODIGK9uxYoEJ3-H--CHzKC-5pCMdWsKVTPDs\r\n-Directplay for Multiplayer",
+  "created_at": "2020-03-14T11:38:23.512000Z",
+  "updated_at": "2020-05-14T12:50:38.555605Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 298030,
+  "gogid": 1207658880,
+  "gogslug": "total_anihilation_commander_pack",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the installer downloaded from GOG."
+      },
+      {
+        "patch": "N/A:Please select the Patch file"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/drive_c/GOG Games/Total Annihilation/TotalA.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating WINE prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/SP- /SUPPRESSMSGBOXES /VERYSILENT",
+          "description": "Installing game",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "src": "$patch"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/GOG Games/Total Annihilation",
+          "src": "$CACHE/Deutschpatch"
+        }
+      },
+      {
+        "task": {
+          "key": "Language",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Total Annihilation",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "german"
+        }
+      },
+      {
+        "task": {
+          "app": "directplay",
+          "description": "Installing Directplay",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: N/A:Please select the installer downloaded from GOG.\n- patch: N/A:Please select the Patch file\ngame:\n  exe: $GAMEDIR/drive_c/GOG Games/Total Annihilation/TotalA.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating WINE prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    args: /SP- /SUPPRESSMSGBOXES /VERYSILENT\n    description: Installing game\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE\n    src: $patch\n- copy:\n    dst: $GAMEDIR/drive_c/GOG Games/Total Annihilation\n    src: $CACHE/Deutschpatch\n- task:\n    key: Language\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Cavedog Entertainment\\Total Annihilation\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: german\n- task:\n    app: directplay\n    description: Installing Directplay\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

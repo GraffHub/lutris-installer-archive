@@ -1,0 +1,80 @@
+{
+  "id": 2509,
+  "game_id": 7226,
+  "game_slug": "blitzkrieg",
+  "name": "Blitzkrieg",
+  "year": 2003,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "blitzkrieg-gogcom",
+  "version": "GOG.com",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-08-19T10:05:51.035182Z",
+  "updated_at": "2016-09-30T21:07:21.901154Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207663993,
+  "gogslug": "blitzkrieg",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Please select the GOG.com Windows installer."
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/game/Run/game.exe",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/game"
+    },
+    "gogid": "blitzkrieg",
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "args": "/VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'",
+          "description": "Installing...",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ],
+    "system": {
+      "disable_runtime": true
+    }
+  },
+  "content": "files:\n- game: N/A:Please select the GOG.com Windows installer.\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/game/Run/game.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/game\ngogid: blitzkrieg\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    args: /VERYSILENT /SP- /NOCANCEL /SUPPRESSMSGBOXES '/DIR=C:/game'\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  disable_runtime: true\n"
+}

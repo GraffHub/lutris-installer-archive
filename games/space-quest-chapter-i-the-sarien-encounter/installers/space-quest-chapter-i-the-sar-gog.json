@@ -1,0 +1,72 @@
+{
+  "id": 21578,
+  "game_id": 29109,
+  "game_slug": "space-quest-chapter-i-the-sarien-encounter",
+  "name": "Space Quest: Chapter I - The Sarien Encounter",
+  "year": 1986,
+  "user": "appoloin",
+  "runner": "scummvm",
+  "slug": "space-quest-chapter-i-the-sar-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-06-15T22:37:00.740417Z",
+  "updated_at": "2020-06-15T22:37:00.740443Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "N/A:Select Setup.exe"
+      },
+      {
+        "inno": "https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz"
+      }
+    ],
+    "game": {
+      "game_id": "sci",
+      "path": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\nfind \"$src\" -maxdepth 1 -type d \\( -iname app -o -iname commonappdata -o -iname *redist -o -iname scummvm -o -iname *support -o -iname dosbox -o -iname ega -o -iname tmp \\) -exec rm -r {}  \\;\nfind \"$src\" -maxdepth 1 -type f \\( -iname \"goggame*\" -o -iname \"999.*\" -o -iname \"994.*\" \\) -exec rm {}  \\;",
+          "file": "$CACHE/remove.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/remove.sh"
+      },
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$inno"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$GAMEDIR\" \"$game\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR",
+          "file": "$CACHE/remove.sh"
+        }
+      }
+    ],
+    "scummvm": {
+      "fullscreen": true
+    }
+  },
+  "content": "files:\n- game: N/A:Select Setup.exe\n- inno: https://lutris.nyc3.digitaloceanspaces.com/tools/innoextract/innoextract-1.8-dev-2019-01-13-linux.tar.xz\ngame:\n  game_id: sci\n  path: $GAMEDIR\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      find \"$src\" -maxdepth 1 -type d \\( -iname app -o -iname commonappdata -o -iname\n      *redist -o -iname scummvm -o -iname *support -o -iname dosbox -o -iname ega\n      -o -iname tmp \\) -exec rm -r {}  \\;\n\n      find \"$src\" -maxdepth 1 -type f \\( -iname \"goggame*\" -o -iname \"999.*\" -o -iname\n      \"994.*\" \\) -exec rm {}  \\;'\n    file: $CACHE/remove.sh\n- chmodx: $CACHE/remove.sh\n- extract:\n    dst: $CACHE\n    file: $inno\n- execute:\n    args: -d \"$GAMEDIR\" \"$game\"\n    file: $CACHE/innoextract\n- execute:\n    args: $GAMEDIR\n    file: $CACHE/remove.sh\nscummvm:\n  fullscreen: true\n"
+}

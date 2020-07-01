@@ -1,0 +1,87 @@
+{
+  "id": 21663,
+  "game_id": 36913,
+  "game_slug": "ultima-viitm-serpent-isle-the-silver-seed",
+  "name": "Ultima VII™  - Serpent Isle + The Silver Seed",
+  "year": null,
+  "user": "Kimplul",
+  "runner": "linux",
+  "slug": "ultima-viitm-serpent-isle-the-gog-exult-16",
+  "version": "GOG + Exult 1.6",
+  "description": "Installs via GOG and comes with exult, a rewrite of the game engine with some more modern features",
+  "notes": "",
+  "created_at": "2020-06-18T16:15:57.791246Z",
+  "updated_at": "2020-06-18T16:15:57.791272Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207662633,
+  "gogslug": "ultima_vii_serpent_isle",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "exult_engine": "https://lutris.nyc3.digitaloceanspaces.com/games/exult/exult-1.6-x86_64.tar.xz"
+      },
+      {
+        "exult_audio": "https://lutris.nyc3.digitaloceanspaces.com/games/exult/exult_audio.zip"
+      },
+      {
+        "innoextracttarball": "https://constexpr.org/innoextract/files/innoextract-1.8/innoextract-1.8-linux.tar.xz"
+      },
+      {
+        "ultima7_gog": "N/A:Select the GOG installer"
+      }
+    ],
+    "game": {
+      "args": "-c $GAMEDIR/exult.cfg",
+      "exe": "exult",
+      "gogid": 1207658984
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$innoextracttarball"
+        }
+      },
+      {
+        "execute": {
+          "args": "-d \"$GAMEDIR/serpentisle\" \"$ultima7_gog\"",
+          "file": "$CACHE/innoextract"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "file": "exult_engine"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/data",
+          "file": "exult_audio"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/exult.cfg.bak",
+          "src": "$GAMEDIR/exult.cfg"
+        }
+      },
+      {
+        "execute": {
+          "args": "https://raw.githubusercontent.com/Kimplul/ultimaVIIserpentisle/master/exult.cfg",
+          "description": "Downloading exult.cfg",
+          "dst": "$GAMEDIR",
+          "file": "/usr/bin/wget"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- exult_engine: https://lutris.nyc3.digitaloceanspaces.com/games/exult/exult-1.6-x86_64.tar.xz\n- exult_audio: https://lutris.nyc3.digitaloceanspaces.com/games/exult/exult_audio.zip\n- innoextracttarball: https://constexpr.org/innoextract/files/innoextract-1.8/innoextract-1.8-linux.tar.xz\n- ultima7_gog: N/A:Select the GOG installer\ngame:\n  args: -c $GAMEDIR/exult.cfg\n  exe: exult\n  gogid: 1207658984\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $innoextracttarball\n- execute:\n    args: -d \"$GAMEDIR/serpentisle\" \"$ultima7_gog\"\n    file: $CACHE/innoextract\n- extract:\n    dst: $GAMEDIR\n    file: exult_engine\n- extract:\n    dst: $GAMEDIR/data\n    file: exult_audio\n- move:\n    dst: $GAMEDIR/exult.cfg.bak\n    src: $GAMEDIR/exult.cfg\n- execute:\n    args: https://raw.githubusercontent.com/Kimplul/ultimaVIIserpentisle/master/exult.cfg\n    description: Downloading exult.cfg\n    dst: $GAMEDIR\n    file: /usr/bin/wget\n"
+}

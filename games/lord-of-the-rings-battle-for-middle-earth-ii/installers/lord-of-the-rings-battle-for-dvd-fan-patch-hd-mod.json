@@ -1,0 +1,94 @@
+{
+  "id": 17614,
+  "game_id": 22919,
+  "game_slug": "lord-of-the-rings-battle-for-middle-earth-ii",
+  "name": "Lord of the Rings - Battle for Middle Earth II",
+  "year": 2006,
+  "user": "CyFreeze",
+  "runner": "wine",
+  "slug": "lord-of-the-rings-battle-for-dvd-fan-patch-hd-mod",
+  "version": "DVD + Fan Patch + HD Mod",
+  "description": "When asked to run the Patch Switcher do so and choose the patch you want to install. Version 1.09 is recommend but can be changed at any time.The game features a limited amount of in-game resolution options. The default will be 1080p. To use e.g. 1440p you'll have to edit the Options.ini manually or re-run the Patch Switcher and click the \"Fix my resolution\" button.",
+  "notes": "",
+  "created_at": "2019-12-28T16:48:43.551985Z",
+  "updated_at": "2020-04-18T06:59:49.285030Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "patch109": {
+          "filename": "BFME2 PatchSwitcher Setup.exe",
+          "referer": "https://duckduckgo.com",
+          "url": "http://www.shatabrick.org/downloads/BFME2%20PatchSwitcher%20Setup.exe"
+        }
+      },
+      {
+        "hdmod": "N/A:Download the Mod from https://www.moddb.com/mods/battle-for-middle-earth-2-hd-edition/downloads/bfme-2-hd-edition-v-11"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "args": "-mod \"$GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth(tm) II Files/HDEdition.big\"",
+      "exe": "$GAMEDIR/drive_c/Program Files/Electronic Arts/The Battle for Middle-earth (tm) II/lotrbfme2.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "autorun.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Run Installer",
+          "executable": "$DISC/autorun.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR",
+          "working_dir": "$DISC"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing hd mod",
+          "executable": "hdmod",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing unoffical patch 1.09",
+          "executable": "patch109",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "AudioLOD = Low\nHasSeenLogoMovies = yes\nIdealStaticGameLOD = VeryLow\nResolution = 1920 1080\nStaticGameLOD = VeryLow\nTimesInGame = 2",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth(tm) II Files/Options.ini"
+        }
+      }
+    ]
+  },
+  "content": "files:\r\n- patch109:\r\n    filename: BFME2 PatchSwitcher Setup.exe\r\n    referer: https://duckduckgo.com\r\n    url: http://www.shatabrick.org/downloads/BFME2%20PatchSwitcher%20Setup.exe\r\n- hdmod: N/A:Download the Mod from https://www.moddb.com/mods/battle-for-middle-earth-2-hd-edition/downloads/bfme-2-hd-edition-v-11\r\ngame:\r\n  arch: win32\r\n  args: -mod \"$GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth(tm)\r\n    II Files/HDEdition.big\"\r\n  exe: $GAMEDIR/drive_c/Program Files/Electronic Arts/The Battle for Middle-earth\r\n    (tm) II/lotrbfme2.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win32\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- insert-disc:\r\n    requires: autorun.exe\r\n- task:\r\n    arch: win32\r\n    description: Run Installer\r\n    executable: $DISC/autorun.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n    working_dir: $DISC\r\n- task:\r\n    arch: win32\r\n    description: Installing hd mod\r\n    executable: hdmod\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win32\r\n    description: Installing unoffical patch 1.09\r\n    executable: patch109\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- write_file:\r\n    content: 'AudioLOD = Low\r\n\r\n      HasSeenLogoMovies = yes\r\n\r\n      IdealStaticGameLOD = VeryLow\r\n\r\n      Resolution = 1920 1080\r\n\r\n      StaticGameLOD = VeryLow\r\n\r\n      TimesInGame = 2'\r\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth(tm)\r\n      II Files/Options.ini"
+}
