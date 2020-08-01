@@ -11,7 +11,7 @@
   "description": "Ark",
   "notes": "Ark",
   "created_at": "2020-06-16T03:03:03.446728Z",
-  "updated_at": "2020-06-16T03:03:03.446750Z",
+  "updated_at": "2020-07-19T10:44:01.308716Z",
   "draft": true,
   "published": false,
   "published_by": null,
@@ -109,9 +109,8 @@
     },
     "wine": {
       "dxvk": true,
-      "esync": true,
-      "vkd3d": true
+      "esync": true
     }
   },
-  "content": "files:\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\ngame:\n  arch: win64\n  args: -opengl -SkipBuildPatchPrereq\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    dst: $CACHE/mfinstaller\n    file: mfinstaller\n- execute:\n    command: $CACHE/mfinstaller/install-mf.sh\n    env:\n      WINEPREFIX: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial cjkfonts vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9\n    arch: win64\n    description: Installing dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- copy:\n    dst: $CACHE/epic/\n    src: epic\n- task:\n    arch: win64\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\n    exclude_processes: EpicGamesLauncher.exe\n    executable: msiexec\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: compiler\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n  vkd3d: true\n"
+  "content": "files:\r\n- epic: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\r\n- mfinstaller: https://lutris.nyc3.cdn.digitaloceanspaces.com/games/epic-games-store/mf-install-master.zip\r\ngame:\r\n  arch: win64\r\n  args: -opengl -SkipBuildPatchPrereq\r\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- task:\r\n    arch: win64\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- extract:\r\n    dst: $CACHE/mfinstaller\r\n    file: mfinstaller\r\n- execute:\r\n    command: $CACHE/mfinstaller/install-mf.sh\r\n    env:\r\n      WINEPREFIX: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: arial cjkfonts vcrun2019 d3dcompiler_43 d3dcompiler_47 d3dx9\r\n    arch: win64\r\n    description: Installing dependencies\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- copy:\r\n    dst: $CACHE/epic/\r\n    src: epic\r\n- task:\r\n    arch: win64\r\n    args: /i \"$CACHE/epic/EpicGamesLauncherInstaller.msi\" /q\r\n    exclude_processes: EpicGamesLauncher.exe\r\n    executable: msiexec\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    name: winekill\r\n    prefix: $GAMEDIR\r\nsystem:\r\n  env:\r\n    DXVK_HUD: compiler\r\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\r\n    __GL_SHADER_DISK_CACHE: 1\r\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\r\nwine:\r\n  dxvk: true\r\n  esync: true"
 }

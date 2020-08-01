@@ -1,0 +1,93 @@
+{
+  "id": 22558,
+  "game_id": 22995,
+  "game_slug": "the-lord-of-the-rings-the-battle-for-middle-earth",
+  "name": "The Lord of The Rings The Battle For Middle-Earth",
+  "year": 2004,
+  "user": "marcoshuck",
+  "runner": "wine",
+  "slug": "the-lord-of-the-rings-the-bat-108",
+  "version": "1.08",
+  "description": "Please be sure to install the game in English when prompted. After the initial installer finishes do not run the game, the patches and HD Edition need the game closed to run install properly.",
+  "notes": "The resolution in: $GAMEDIR/drive_c/users/$USER/Application Data/My Battle for Middle-earth Files/Options.ini needs to be set manually. For example the Resolution line should be set as follows:\r\nResolution = 1920 1080",
+  "created_at": "2020-07-26T00:47:51.656000Z",
+  "updated_at": "2020-07-26T07:57:33.154977Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "patch103": {
+          "filename": "patch103.exe",
+          "url": "https://www.moddb.com/downloads/mirror/35515/123/206700507a59083b62212dc1a3dfd8e2/"
+        }
+      },
+      {
+        "patch108": {
+          "filename": "patch108.exe",
+          "url": "https://www.moddb.com/downloads/mirror/188799/115/e891d45097e823b900381e3be4b62805/"
+        }
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "AutoRun.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Running game installer (Select \"Quit\" after the installation has finished)",
+          "executable": "$DISC/AutoRun.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing official patch version 1.03 (Exit the patch after it shows 100% overall progress)",
+          "executable": "patch103",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing patch 1.08",
+          "executable": "patch108",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting OS as Windows XP.",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "winxp"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch103:\n    filename: patch103.exe\n    url: https://www.moddb.com/downloads/mirror/35515/123/206700507a59083b62212dc1a3dfd8e2/\n- patch108:\n    filename: patch108.exe\n    url: https://www.moddb.com/downloads/mirror/188799/115/e891d45097e823b900381e3be4b62805/\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: AutoRun.exe\n- task:\n    arch: win32\n    description: Running game installer (Select \"Quit\" after the installation has\n      finished)\n    executable: $DISC/AutoRun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing official patch version 1.03 (Exit the patch after it shows\n      100% overall progress)\n    executable: patch103\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing patch 1.08\n    executable: patch108\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows XP.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n"
+}

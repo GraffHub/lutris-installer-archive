@@ -9,9 +9,9 @@
   "slug": "escape-from-monkey-island-cd",
   "version": "CD",
   "description": "Escape from Monkey Island was the fourth game in the Monkey Island series, and the second game to use the GrimE Lua-based scripting language. The game follows Guybrush Threepwood and Elaine Marley as they return to Mêlée Island from their honeymoon. There they discover that Elaine Marley's position of governor has been revoked, her mansion is scheduled to be demolished, and a politician named Charles L. Charles is running for the governorship. Guybrush learns that the islands are being purchased one by one,",
-  "notes": "See https://wiki.residualvm.org/index.php/Datafiles#Escape_From_Monkey_Island for how to prepare the datafiles",
+  "notes": "https://archive.org/details/escapefrommonkeyislandeurope",
   "created_at": "2020-04-11T19:07:00.767000Z",
-  "updated_at": "2020-04-12T08:07:04.413917Z",
+  "updated_at": "2020-07-29T05:44:25.998025Z",
   "draft": false,
   "published": true,
   "published_by": 20548,
@@ -25,10 +25,7 @@
   "script": {
     "files": [
       {
-        "archive": "N/A:Please select an archive containing all the game data"
-      },
-      {
-        "xboxdrvcfg": "https://lutris.net/files/games/grim-fandango/grim.xboxdrv"
+        "mupdate": "https://demos.residualvm.org/patches/MonkeyUpdate.exe"
       }
     ],
     "game": {
@@ -37,21 +34,74 @@
     },
     "installer": [
       {
-        "extract": {
-          "dst": "$GAMEDIR",
-          "file": "archive"
+        "insert-disc": {
+          "description": "Please insert disc 1",
+          "requires": "Monkey.exe"
         }
       },
       {
-        "move": {
+        "copy": {
           "dst": "$GAMEDIR",
-          "src": "xboxdrvcfg"
+          "src": "$DISC/MONKEY4/MonkeyData"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/MONKEY4/MonkeyInstall/local.m4b"
+        }
+      },
+      {
+        "execute": {
+          "args": "chmod -R 755 \"$GAMEDIR\"",
+          "file": "/usr/bin/env"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR\"/voiceAll.m4b \"$GAMEDIR\"/voiceAll1.m4b"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR\"/Textures/FullMonkeyMap.imt \"$GAMEDIR\"/Textures/FullMonkeyMap1.imt"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc 2",
+          "requires": "Monkey4"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "$DISC/Monkey4/MonkeyData"
+        }
+      },
+      {
+        "execute": {
+          "args": "chmod -R 755 \"$GAMEDIR\"",
+          "file": "/usr/bin/env"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR\"/voiceAll1.m4b \"$GAMEDIR\"/voiceAll.m4b"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv \"$GAMEDIR\"/Textures/FullMonkeyMap.imt \"$GAMEDIR\"/Textures/FullMonkeyMap2.imt"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR",
+          "src": "mupdate"
         }
       }
-    ],
-    "system": {
-      "xboxdrv": "--config $GAMEDIR/grim.xboxdrv"
-    }
+    ]
   },
-  "content": "files:\n- archive: N/A:Please select an archive containing all the game data\n- xboxdrvcfg: https://lutris.net/files/games/grim-fandango/grim.xboxdrv\ngame:\n  game_id: monkey4\n  path: $GAMEDIR\ninstaller:\n- extract:\n    dst: $GAMEDIR\n    file: archive\n- move:\n    dst: $GAMEDIR\n    src: xboxdrvcfg\nsystem:\n  xboxdrv: --config $GAMEDIR/grim.xboxdrv\n"
+  "content": "files:\n- mupdate: https://demos.residualvm.org/patches/MonkeyUpdate.exe\ngame:\n  game_id: monkey4\n  path: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: Please insert disc 1\n    requires: Monkey.exe\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/MONKEY4/MonkeyData\n- copy:\n    dst: $GAMEDIR\n    src: $DISC/MONKEY4/MonkeyInstall/local.m4b\n- execute:\n    args: chmod -R 755 \"$GAMEDIR\"\n    file: /usr/bin/env\n- execute:\n    command: mv \"$GAMEDIR\"/voiceAll.m4b \"$GAMEDIR\"/voiceAll1.m4b\n- execute:\n    command: mv \"$GAMEDIR\"/Textures/FullMonkeyMap.imt \"$GAMEDIR\"/Textures/FullMonkeyMap1.imt\n- insert-disc:\n    description: Please insert disc 2\n    requires: Monkey4\n- merge:\n    dst: $GAMEDIR\n    src: $DISC/Monkey4/MonkeyData\n- execute:\n    args: chmod -R 755 \"$GAMEDIR\"\n    file: /usr/bin/env\n- execute:\n    command: mv \"$GAMEDIR\"/voiceAll1.m4b \"$GAMEDIR\"/voiceAll.m4b\n- execute:\n    command: mv \"$GAMEDIR\"/Textures/FullMonkeyMap.imt \"$GAMEDIR\"/Textures/FullMonkeyMap2.imt\n- merge:\n    dst: $GAMEDIR\n    src: mupdate\n"
 }

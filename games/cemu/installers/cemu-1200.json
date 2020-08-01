@@ -1,0 +1,77 @@
+{
+  "id": 22467,
+  "game_id": 16449,
+  "game_slug": "cemu",
+  "name": "Cemu",
+  "year": 2015,
+  "user": "FintasticMan",
+  "runner": "wine",
+  "slug": "cemu-1200",
+  "version": "1.20.0",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-07-19T22:26:10.715950Z",
+  "updated_at": "2020-07-19T22:26:10.715983Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "cemu": "http://cemu.info/releases/cemu_1.20.0.zip"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/cemu_1.20.0/Cemu.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2017 win7",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/cemu_1.20.0",
+          "file": "cemu"
+        }
+      }
+    ],
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "R600_DEBUG": "nohyperz",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "mesa_glthread": "true",
+        "vblank_mode": 0
+      }
+    },
+    "wine": {
+      "esync": true,
+      "overrides": {
+        "dbghelp": "native,builtin",
+        "mscoree": "disabled",
+        "mshtml": "disabled"
+      }
+    }
+  },
+  "content": "files:\n- cemu: http://cemu.info/releases/cemu_1.20.0.zip\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/cemu_1.20.0/Cemu.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017 win7\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/cemu_1.20.0\n    file: cemu\nsystem:\n  disable_compositor: true\n  env:\n    R600_DEBUG: nohyperz\n    __GL_THREADED_OPTIMIZATIONS: 1\n    mesa_glthread: 'true'\n    vblank_mode: 0\nwine:\n  esync: true\n  overrides:\n    dbghelp: native,builtin\n    mscoree: disabled\n    mshtml: disabled\n"
+}

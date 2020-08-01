@@ -1,0 +1,71 @@
+{
+  "id": 22156,
+  "game_id": 28750,
+  "game_slug": "itunes",
+  "name": "iTunes",
+  "year": null,
+  "user": "yxx4c",
+  "runner": "wine",
+  "slug": "itunes-12",
+  "version": "12.+",
+  "description": "Latest update installer",
+  "notes": "",
+  "created_at": "2020-07-05T22:11:09.363364Z",
+  "updated_at": "2020-07-05T22:11:09.363391Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "installer": "https://secure-appldnld.apple.com/itunes12/001-09461-20200521-4DFB20C8-9B87-11EA-8595-7349566C00C0/iTunes64Setup.exe"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine Prefix...",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "gdiplus tahoma",
+          "description": "Installing dependencies...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing iTunes...",
+          "exclude_processes": "iTunesHelper.exe iPodService.exe",
+          "executable": "installer",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- installer: https://secure-appldnld.apple.com/itunes12/001-09461-20200521-4DFB20C8-9B87-11EA-8595-7349566C00C0/iTunes64Setup.exe\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files/iTunes/iTunes.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine Prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: gdiplus tahoma\n    description: Installing dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Installing iTunes...\n    exclude_processes: iTunesHelper.exe iPodService.exe\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
+}

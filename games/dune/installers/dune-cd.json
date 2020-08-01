@@ -1,0 +1,102 @@
+{
+  "id": 19983,
+  "game_id": 5503,
+  "game_slug": "dune",
+  "name": "Dune",
+  "year": 1992,
+  "user": "tfk",
+  "runner": "dosbox",
+  "slug": "dune-cd",
+  "version": "CD",
+  "description": "This script will facilitate you install of this game on Linux OS:\r\n\"Dune\" DOS CD edition using Lutris DOSBox runner.\r\nDuring install please let all options by default.\r\nBig thanks to people who gave their time to permit us playing this game in the best conditions on Linux platform.",
+  "notes": "- You will need the CD only one time during install.\r\n- Multilanguage: during install you could choose your preferred language for menu and subtitles game between english (default), french, german, spanish and italian.\r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2020-04-25T19:08:14.297000Z",
+  "updated_at": "2020-07-06T22:38:44.035084Z",
+  "draft": false,
+  "published": true,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "custom-name": "Dune - CD DOS - DOSBox",
+    "files": [
+      {
+        "cdrtools": "https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip"
+      },
+      {
+        "script": "https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh"
+      },
+      {
+        "conf": "https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Dune/dune_dosbox.conf"
+      }
+    ],
+    "game": {
+      "main_file": "$GAMEDIR/dune_dosbox.conf"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "description": "Please insert disc Dune",
+          "requires": "dune.exe"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "src": "cdrtools"
+        }
+      },
+      {
+        "chmodx": "script"
+      },
+      {
+        "execute": {
+          "args": "dune",
+          "file": "script"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR",
+          "src": "conf"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose your preferred game's language for menu and subtitles:",
+          "id": "LANG",
+          "options": [
+            {
+              "ENG": "English"
+            },
+            {
+              "FRA": "French"
+            },
+            {
+              "SPA": "Spanish"
+            },
+            {
+              "ITA": "Italian"
+            },
+            {
+              "GER": "German"
+            }
+          ],
+          "preselect": "ENG"
+        }
+      },
+      {
+        "write_file": {
+          "content": "@echo off\nREM *** DUNE-CD launcher V3.6 ***\nD:\nDNCDPRG $INPUT_LANG ADP220 SBP2227 EMS 386 WRIC:\\DUNECD\\",
+          "file": "$GAMEDIR/DUNECD/DUNE.BAT"
+        }
+      }
+    ]
+  },
+  "content": "custom-name: Dune - CD DOS - DOSBox\nfiles:\n- cdrtools: https://github.com/legluondunet/mlls-tools/raw/master/cdrtools/cdrtools.zip\n- script: https://github.com/legluondunet/mlls-tools/raw/master/scripts/copycd.sh\n- conf: https://github.com/legluondunet/MyLittleLutrisScripts/raw/master/Dune/dune_dosbox.conf\ngame:\n  main_file: $GAMEDIR/dune_dosbox.conf\ninstaller:\n- insert-disc:\n    description: Please insert disc Dune\n    requires: dune.exe\n- extract:\n    dst: $GAMEDIR\n    src: cdrtools\n- chmodx: script\n- execute:\n    args: dune\n    file: script\n- copy:\n    dst: $GAMEDIR\n    src: conf\n- input_menu:\n    description: 'Choose your preferred game''s language for menu and subtitles:'\n    id: LANG\n    options:\n    - ENG: English\n    - FRA: French\n    - SPA: Spanish\n    - ITA: Italian\n    - GER: German\n    preselect: ENG\n- write_file:\n    content: '@echo off\n\n      REM *** DUNE-CD launcher V3.6 ***\n\n      D:\n\n      DNCDPRG $INPUT_LANG ADP220 SBP2227 EMS 386 WRIC:\\DUNECD\\'\n    file: $GAMEDIR/DUNECD/DUNE.BAT\n"
+}

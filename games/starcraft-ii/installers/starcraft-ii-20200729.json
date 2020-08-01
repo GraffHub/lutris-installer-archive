@@ -1,0 +1,154 @@
+{
+  "id": 22615,
+  "game_id": 3367,
+  "game_slug": "starcraft-ii",
+  "name": "StarCraft II",
+  "year": 2010,
+  "user": "binarydepth",
+  "runner": "wine",
+  "slug": "starcraft-ii-20200729",
+  "version": "20200729",
+  "description": "Updated download link for Battle.net app",
+  "notes": "",
+  "created_at": "2020-07-29T13:02:25.658515Z",
+  "updated_at": "2020-07-29T13:02:25.658538Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": {
+          "filename": "Battle.net-Setup.exe",
+          "url": "http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe"
+        }
+      },
+      {
+        "d3dcompiler47": "https://lutris.net/files/tools/dll/d3dcompiler_47.dll"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "arch": "win64",
+          "description": "Installing Arial font",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43",
+          "arch": "win64",
+          "description": "Install d3dcompiler_43 with winetricks",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll.ORIG",
+          "src": "$GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "d3dcompiler47"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 10 mode for Wine",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "win10"
+        }
+      },
+      {
+        "write_json": {
+          "data": {
+            "Client": {
+              "GameLaunchWindowBehavior": "2",
+              "HardwareAcceleration": "false",
+              "Sound": {
+                "Enabled": "false"
+              },
+              "Streaming": {
+                "StreamingEnabled": "false"
+              }
+            },
+            "Games": {
+              "s2": {
+                "AdditionalLaunchArguments": "-Displaymode 1"
+              }
+            }
+          },
+          "description": "Disabling Sound/Hardware Acceleration/Streaming in Blizzard App",
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing Blizzard App\n------------------------------\nDo not try to log into Battle.net. Lutris will automatically close the login window. After Lutris installer is finished, you can start Blizzard App with \"Launch the game\", and install / locate your Blizzard game.",
+          "exclude_processes": "Battle.net.exe Agent.exe \"Battle.net Helper.exe\"",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Wine Staging: Enabling DXVA2",
+          "key": "backend",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "prefix": "$GAMEDIR",
+          "value": "va"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      },
+      "exclude_processes": "Agent.exe \"Battle.net Helper.exe\""
+    },
+    "wine": {
+      "esync": true
+    }
+  },
+  "content": "files:\n- setup:\n    filename: Battle.net-Setup.exe\n    url: http://dist.blizzard.com/downloads/bna-installers/322d5bb9ae0318de3d4cde7641c96425/retail.1/Battle.net-Setup-enUS.exe\n- d3dcompiler47: https://lutris.net/files/tools/dll/d3dcompiler_47.dll\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/Battle.net/Battle.net Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: arial\n    arch: win64\n    description: Installing Arial font\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43\n    arch: win64\n    description: Install d3dcompiler_43 with winetricks\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll.ORIG\n    src: $GAMEDIR/drive_c/windows/system32/d3dcompiler_47.dll\n- merge:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: d3dcompiler47\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- write_json:\n    data:\n      Client:\n        GameLaunchWindowBehavior: '2'\n        HardwareAcceleration: 'false'\n        Sound:\n          Enabled: 'false'\n        Streaming:\n          StreamingEnabled: 'false'\n      Games:\n        s2:\n          AdditionalLaunchArguments: -Displaymode 1\n    description: Disabling Sound/Hardware Acceleration/Streaming in Blizzard App\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Battle.net/Battle.net.config\n- task:\n    arch: win64\n    description: 'Installing Blizzard App\n\n      ------------------------------\n\n      Do not try to log into Battle.net. Lutris will automatically close the login\n      window. After Lutris installer is finished, you can start Blizzard App with\n      \"Launch the game\", and install / locate your Blizzard game.'\n    exclude_processes: Battle.net.exe Agent.exe \"Battle.net Helper.exe\"\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\nsystem:\n  env:\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n  exclude_processes: Agent.exe \"Battle.net Helper.exe\"\nwine:\n  esync: true\n"
+}

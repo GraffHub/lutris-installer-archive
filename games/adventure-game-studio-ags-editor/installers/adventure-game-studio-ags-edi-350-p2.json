@@ -1,0 +1,109 @@
+{
+  "id": 22175,
+  "game_id": 37652,
+  "game_slug": "adventure-game-studio-ags-editor",
+  "name": "Adventure Game Studio (AGS) Editor",
+  "year": 1999,
+  "user": "christofsteel",
+  "runner": "wine",
+  "slug": "adventure-game-studio-ags-edi-350-p2",
+  "version": "3.5.0 P2",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-07-06T07:54:01.968518Z",
+  "updated_at": "2020-07-06T07:54:01.968542Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://www.adventuregamestudio.co.uk/releases/finals/AGS-3.5.0P2/AGS-3.5.0.24-P2.exe"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Adventure Game Studio 3.5.0/AGSEditor.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet45",
+          "arch": "win32",
+          "description": "Installing .NET 4.5. This will take a while...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2015",
+          "arch": "win32",
+          "description": "Microsoft Visual C++ Redistributable for Visual Studio 2015",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "arch": "win32",
+          "description": "Setting Windows version to Windows 7",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/SILENT",
+          "description": "Installing Adventure Game Studio...",
+          "executable": "setup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": false
+    }
+  },
+  "content": "files:\n- setup: https://www.adventuregamestudio.co.uk/releases/finals/AGS-3.5.0P2/AGS-3.5.0.24-P2.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Adventure Game Studio 3.5.0/AGSEditor.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet45\n    arch: win32\n    description: Installing .NET 4.5. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015\n    arch: win32\n    description: Microsoft Visual C++ Redistributable for Visual Studio 2015\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    arch: win32\n    description: Setting Windows version to Windows 7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /SILENT\n    description: Installing Adventure Game Studio...\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\nwine:\n  dxvk: false\n"
+}
