@@ -1,0 +1,158 @@
+{
+  "id": 22669,
+  "game_id": 38144,
+  "game_slug": "ballance",
+  "name": "Ballance",
+  "year": 2004,
+  "user": "umbreon",
+  "runner": "wine",
+  "slug": "ballance-113",
+  "version": "1.13",
+  "description": null,
+  "notes": "The game's launcher will open after the game data is installed. The launcher must be manually closed when it opens.",
+  "created_at": "2020-08-01T18:09:17.581224Z",
+  "updated_at": "2020-08-01T18:09:17.581259Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "bonuslevel": "https://web.archive.org/web/20070928022817if_/http://www.ballance.org/movies4/SuDu__BallanceLv13.zip"
+      }
+    ],
+    "game": {
+      "exe": "drive_c/Ballance/Bin/Player.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "description": "Insert Ballance",
+          "requires": "Ballance.ico"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Apply No-CD patch to the game?",
+          "id": "NOCD",
+          "options": [
+            {
+              "true": "Yes"
+            },
+            {
+              "false": "No"
+            }
+          ],
+          "preselect": "true"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose the game's language",
+          "id": "LANG",
+          "options": [
+            {
+              "0009": "English"
+            },
+            {
+              "040c": "French"
+            },
+            {
+              "0007": "German"
+            },
+            {
+              "0010": "Italian"
+            },
+            {
+              "000a": "Spanish"
+            }
+          ],
+          "preselect": "0009"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose the game's resolution",
+          "id": "RESOLUTION",
+          "options": [
+            {
+              "028001e0": "640 x 480"
+            },
+            {
+              "03200258": "800 x 600"
+            },
+            {
+              "04000300": "1024 x 768"
+            },
+            {
+              "050003c0": "1280 x 960"
+            },
+            {
+              "064004b0": "1600 x 1200"
+            }
+          ],
+          "preselect": "028001e0"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[InstallShield Silent]\nVersion=v6.00.000\nFile=Response File\n[File Transfer]\nOverwrittenReadOnly=NoToAll\n[{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-DlgOrder]\nDlg0={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdWelcome-0\nCount=4\nDlg1={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdAskDestPath-0\nDlg2={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdSelectFolder-0\nDlg3={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdFinish-0\n[{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdWelcome-0]\nResult=1\n[{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdAskDestPath-0]\nszDir=C:\\Ballance\nResult=1\n[{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdSelectFolder-0]\nszFolder=Ballance\nResult=1\n[Application]\nName=Ballance\nVersion=1.13.000\nCompany=Cyparade\nLang=$INPUT_LANG\n[{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdFinish-0]\nResult=1\nbOpt1=0\nbOpt2=0\n",
+          "file": "$GAMEDIR/drive_c/ballance_silent.iss"
+        }
+      },
+      {
+        "task": {
+          "args": "/L$INPUT_LANG /s /f1\"C:\\\\ballance_silent.iss\"",
+          "description": "Installing game data. Close the launcher when it opens.",
+          "executable": "$DISC/Setup/Setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "FullScreen",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Ballance\\Settings",
+          "type": "REG_DWORD",
+          "value": "00000000"
+        }
+      },
+      {
+        "task": {
+          "key": "VideoMode",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Ballance\\Settings",
+          "type": "REG_DWORD",
+          "value": "$INPUT_RESOLUTION"
+        }
+      },
+      {
+        "move": {
+          "dst": "$CACHE/ballance_silent.iss",
+          "src": "$GAMEDIR/drive_c/ballance_silent.iss"
+        }
+      },
+      {
+        "execute": {
+          "command": "$INPUT_NOCD &&  cp $GAMEDIR/drive_c/Ballance/Bin/Player.exe $GAMEDIR/drive_c/Ballance/Bin/Player-bak.exe &&  printf '\\x90\\x90' | dd of=$GAMEDIR/drive_c/Ballance/Bin/Player.exe bs=1 seek=5638 count=2 conv=notrunc &&  printf '\\x90\\x90' | dd of=$GAMEDIR/drive_c/Ballance/Bin/Player.exe bs=1 seek=5657 count=2 conv=notrunc &&  printf '\\x90\\x90' | dd of=$GAMEDIR/drive_c/Ballance/Bin/Player.exe bs=1 seek=5717 count=2 conv=notrunc\n"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Ballance",
+          "file": "bonuslevel"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- bonuslevel: https://web.archive.org/web/20070928022817if_/http://www.ballance.org/movies4/SuDu__BallanceLv13.zip\ngame:\n  exe: drive_c/Ballance/Bin/Player.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    description: Insert Ballance\n    requires: Ballance.ico\n- input_menu:\n    description: Apply No-CD patch to the game?\n    id: NOCD\n    options:\n    - 'true': 'Yes'\n    - 'false': 'No'\n    preselect: 'true'\n- input_menu:\n    description: Choose the game's language\n    id: LANG\n    options:\n    - 0009: English\n    - 040c: French\n    - '0007': German\n    - '0010': Italian\n    - 000a: Spanish\n    preselect: 0009\n- input_menu:\n    description: Choose the game's resolution\n    id: RESOLUTION\n    options:\n    - 028001e0: 640 x 480\n    - 03200258: 800 x 600\n    - '04000300': 1024 x 768\n    - 050003c0: 1280 x 960\n    - 064004b0: 1600 x 1200\n    preselect: 028001e0\n- write_file:\n    content: '[InstallShield Silent]\n\n      Version=v6.00.000\n\n      File=Response File\n\n      [File Transfer]\n\n      OverwrittenReadOnly=NoToAll\n\n      [{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-DlgOrder]\n\n      Dlg0={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdWelcome-0\n\n      Count=4\n\n      Dlg1={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdAskDestPath-0\n\n      Dlg2={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdSelectFolder-0\n\n      Dlg3={42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdFinish-0\n\n      [{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdWelcome-0]\n\n      Result=1\n\n      [{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdAskDestPath-0]\n\n      szDir=C:\\Ballance\n\n      Result=1\n\n      [{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdSelectFolder-0]\n\n      szFolder=Ballance\n\n      Result=1\n\n      [Application]\n\n      Name=Ballance\n\n      Version=1.13.000\n\n      Company=Cyparade\n\n      Lang=$INPUT_LANG\n\n      [{42E0783D-3BA4-454B-B58A-BF26E49EB7DE}-SdFinish-0]\n\n      Result=1\n\n      bOpt1=0\n\n      bOpt2=0\n\n      '\n    file: $GAMEDIR/drive_c/ballance_silent.iss\n- task:\n    args: /L$INPUT_LANG /s /f1\"C:\\\\ballance_silent.iss\"\n    description: Installing game data. Close the launcher when it opens.\n    executable: $DISC/Setup/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    key: FullScreen\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Ballance\\Settings\n    type: REG_DWORD\n    value: '00000000'\n- task:\n    key: VideoMode\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Ballance\\Settings\n    type: REG_DWORD\n    value: $INPUT_RESOLUTION\n- move:\n    dst: $CACHE/ballance_silent.iss\n    src: $GAMEDIR/drive_c/ballance_silent.iss\n- execute:\n    command: '$INPUT_NOCD &&  cp $GAMEDIR/drive_c/Ballance/Bin/Player.exe $GAMEDIR/drive_c/Ballance/Bin/Player-bak.exe\n      &&  printf ''\\x90\\x90'' | dd of=$GAMEDIR/drive_c/Ballance/Bin/Player.exe bs=1\n      seek=5638 count=2 conv=notrunc &&  printf ''\\x90\\x90'' | dd of=$GAMEDIR/drive_c/Ballance/Bin/Player.exe\n      bs=1 seek=5657 count=2 conv=notrunc &&  printf ''\\x90\\x90'' | dd of=$GAMEDIR/drive_c/Ballance/Bin/Player.exe\n      bs=1 seek=5717 count=2 conv=notrunc\n\n      '\n- extract:\n    dst: $GAMEDIR/drive_c/Ballance\n    file: bonuslevel\n"
+}

@@ -1,0 +1,116 @@
+{
+  "id": 18981,
+  "game_id": 23560,
+  "game_slug": "geforce-now",
+  "name": "GeForce NOW",
+  "year": 2015,
+  "user": "haru-san",
+  "runner": "wine",
+  "slug": "geforce-now-55",
+  "version": "5.5",
+  "description": null,
+  "notes": "This will not work on Intel GPUs due to a bug in the libva driver that makes the video garbled. This will be fixed in the future.\r\n\r\nWith AMD graphics, by default, only Southern Islands and newer graphics will work. To make it work with Sea Islands and Southern Island generation of graphics, amdgpu needs to be enabled on your system. You will need the libva-mesa-driver.\r\n\r\nWith Nvidia graphics, you need the proprietary driver (not nouveau). You also must install libvdpau and libva-vdpau-driver. Check with your distribution's repositories to install it.\r\n\r\nIf libva is not setup correctly, you will see:\r\n\r\n“Your system does not meet the minimum requirements for streaming ERROR CODE: 0xC0F1103F”\r\n\r\nUse `vainfo` to check to see if H264 decode is working.\r\n\r\nIf the streams are blurry, set streaming quality to custom and disable \"Adjust for poor network conditions\" in the GeForce Now application. This resolves issues for most people, unless they use Intel graphics.\r\n\r\nKnown Issues:\r\n- There can be a random blur issue when vsync is enabled. This is known to affect GNOME with nvidia graphics at the moment. It is not known to affect KDE (although only KDE with kwin-lowlatency has been tested). It can be worked around by either enabling the composition pipeline instead of vsync or switching to KDE. Please report issues to us if you have them with vsync, but they are not described here.\r\n- There is a garbled video issue when doing decoding with Intel's iGPU. People are working on a solution. This will be updated when we have the solution.\r\n- If the loading window opens but stays black, right click on the game in lutris and click \"Kill all wine processes\", then try again. This is a known issue that will be fixed in the future.\r\n- Error 0xC0F52132 when launching any games. Just keep trying to run the game again until it lets you connect. Alternatively, you may launch the game via Chrome by following the instructions provided for Intel users above. Then launching it via the Windows client from Lutris will connect you to the session launched by the ChromeOS client.\r\n- Currently, the network test will claim that you are using a VPN and could have stutter issues. This is a known bug that needs to be fixed in wine. As long as the result is yellow, the network is fine. You may ignore this.\r\n- If you are having issues with no sound, try configuring lutris to use the ALSA backend with GeForce NOW.\r\n- If you are encountering audio stutter with Pulse Audio, try setting PULSE_LATENCY_MSEC=40 as an environment variable in lutris for GeForce Now.",
+  "created_at": "2020-03-19T22:07:20.124000Z",
+  "updated_at": "2020-08-21T12:38:01.222402Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://download.nvidia.com/gfnpc/GeForceNOW-release.exe"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/users/$USER/Local Settings/Application Data/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing GeForce Now",
+          "exclude_processes": "GeForceNOW.exe GeForceNOWReliabilityMonitor.exe GeForceNOWStreamer.exe GeForceNOWContainer.exe",
+          "executable": "setup",
+          "name": "wineexec"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "mf",
+          "arch": "win64",
+          "description": "Installing Media Foundation library",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Wine Staging: Enabling DXVA2",
+          "key": "backend",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "va"
+        }
+      },
+      {
+        "execute": {
+          "args": "sed -i -e 's/dx11/dx9/' -e 's/nv-sdl-iohid-configurable=false/nv-sdl-iohid-configurable=true/' -e 's/nv-sdl-hidpi=false/nv-sdl-hidpi=true/' \"$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOWStreamer.json\"",
+          "description": "Editing configuration files",
+          "file": "/usr/bin/env"
+        }
+      },
+      {
+        "write_file": {
+          "content": "#!/bin/sh\nsed -i -e \"s/dx11/dx9/\" -e \"s/nv-sdl-iohid-configurable=false/nv-sdl-iohid-configurable=true/\" -e \"s/nv-sdl-hidpi=false/nv-sdl-hidpi=true/\" \"$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOWStreamer.json\"",
+          "file": "$GAMEDIR/configupdater.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/configupdater.sh"
+      },
+      {
+        "execute": {
+          "file": "$GAMEDIR/configupdater.sh"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR"
+      },
+      "manual_command": "$GAMEDIR/configupdater.sh",
+      "prelaunch_command": "$GAMEDIR/configupdater.sh",
+      "prelaunch_wait": true
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": false,
+      "version": "lutris-gfn-6-x86_64"
+    }
+  },
+  "content": "files:\n- setup: https://download.nvidia.com/gfnpc/GeForceNOW-release.exe\ngame:\n  arch: win64\n  exe: drive_c/users/$USER/Local Settings/Application Data/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOW.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing GeForce Now\n    exclude_processes: GeForceNOW.exe GeForceNOWReliabilityMonitor.exe GeForceNOWStreamer.exe\n      GeForceNOWContainer.exe\n    executable: setup\n    name: wineexec\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: mf\n    arch: win64\n    description: Installing Media Foundation library\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Wine Staging: Enabling DXVA2'\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: va\n- execute:\n    args: sed -i -e 's/dx11/dx9/' -e 's/nv-sdl-iohid-configurable=false/nv-sdl-iohid-configurable=true/'\n      -e 's/nv-sdl-hidpi=false/nv-sdl-hidpi=true/' \"$GAMEDIR/drive_c/users/$USER/Local\n      Settings/Application Data/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOWStreamer.json\"\n    description: Editing configuration files\n    file: /usr/bin/env\n- write_file:\n    content: '#!/bin/sh\n\n      sed -i -e \"s/dx11/dx9/\" -e \"s/nv-sdl-iohid-configurable=false/nv-sdl-iohid-configurable=true/\"\n      -e \"s/nv-sdl-hidpi=false/nv-sdl-hidpi=true/\" \"$GAMEDIR/drive_c/users/$USER/Local\n      Settings/Application Data/NVIDIA Corporation/GeForceNOW/CEF/GeForceNOWStreamer.json\"'\n    file: $GAMEDIR/configupdater.sh\n- chmodx: $GAMEDIR/configupdater.sh\n- execute:\n    file: $GAMEDIR/configupdater.sh\nsystem:\n  env:\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n  manual_command: $GAMEDIR/configupdater.sh\n  prelaunch_command: $GAMEDIR/configupdater.sh\n  prelaunch_wait: true\nwine:\n  dxvk: true\n  esync: false\n  version: lutris-gfn-6-x86_64\n"
+}

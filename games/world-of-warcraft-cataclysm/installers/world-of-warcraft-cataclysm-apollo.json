@@ -1,5 +1,5 @@
 {
-  "id": 21779,
+  "id": 22716,
   "game_id": 13878,
   "game_slug": "world-of-warcraft-cataclysm",
   "name": "World of Warcraft: Cataclysm",
@@ -8,10 +8,10 @@
   "runner": "wine",
   "slug": "world-of-warcraft-cataclysm-apollo",
   "version": "Apollo",
-  "description": "Use this installer to play the apollo version (since there is no longer a way to play the game in battle.net)",
+  "description": "Use this installer to play the apollo version (since there is no longer a way to play the game in battle.net)\r\n\r\nAll required files will be downloaded automatically",
   "notes": "If this is your first time using Lutris, you should probably take a look at:\r\n\r\n<a href=\"https://github.com/lutris/lutris/wiki/Installing-drivers\">https://github.com/lutris/lutris/wiki/Installing-drivers</a> (install your video drivers [most linux distros come with the latest AMD drivers right away])\r\n\r\n<a href=\"https://github.com/lutris/lutris/wiki/Game:-Blizzard-App\">https://github.com/lutris/lutris/wiki/Game:-Blizzard-App</a> (install the dependencies just in case) \r\n\r\n<a href=\"https://github.com/lutris/lutris/wiki/How-to:-Esync\">https://github.com/lutris/lutris/wiki/How-to:-Esync</a> (another thing to do, just in case [most linux distros have it already set up]) \r\n\r\n<a href=\"https://github.com/lutris/lutris/wiki/Game:-World-of-Warcraft\">https://github.com/lutris/lutris/wiki/Game:-World-of-Warcraft</a> (some info)",
-  "created_at": "2020-06-21T23:46:34.571188Z",
-  "updated_at": "2020-06-21T23:46:34.571214Z",
+  "created_at": "2020-08-04T21:10:36.765347Z",
+  "updated_at": "2020-08-04T21:10:36.765375Z",
   "draft": true,
   "published": false,
   "published_by": null,
@@ -25,7 +25,10 @@
   "script": {
     "files": [
       {
-        "zipped_files": "N/A:Select the .zip World of Warcraft file"
+        "zipped_game": "https://twinstar-wow.eu/files/WoW434_mini.zip"
+      },
+      {
+        "mfil_file": "https://twinstar-wow.eu/files/WoW.mfil"
       }
     ],
     "game": {
@@ -35,17 +38,24 @@
     "installer": [
       {
         "task": {
-          "description": "(1/2) Creating wine prefix prefix...",
+          "description": "Creating wine prefix prefix...",
           "name": "create_prefix",
           "prefix": "$GAMEDIR"
         }
       },
       {
         "extract": {
-          "description": "(2/2) Extracting the game files...",
+          "description": "Extracting WoW434_mini.zip",
           "dst": "$GAMEDIR/drive_c/wow-cataclysm",
-          "file": "zipped_files",
+          "file": "zipped_game",
           "format": "zip"
+        }
+      },
+      {
+        "copy": {
+          "description": "Copying WoW.mfil",
+          "dst": "$GAMEDIR/drive_c/wow-cataclysm",
+          "src": "mfil_file"
         }
       },
       {
@@ -56,5 +66,5 @@
       }
     ]
   },
-  "content": "files:\n- zipped_files: N/A:Select the .zip World of Warcraft file\ngame:\n  exe: drive_c/wow-cataclysm/Wow.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: (1/2) Creating wine prefix prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    description: (2/2) Extracting the game files...\n    dst: $GAMEDIR/drive_c/wow-cataclysm\n    file: zipped_files\n    format: zip\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
+  "content": "files:\n- zipped_game: https://twinstar-wow.eu/files/WoW434_mini.zip\n- mfil_file: https://twinstar-wow.eu/files/WoW.mfil\ngame:\n  exe: drive_c/wow-cataclysm/Wow.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating wine prefix prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting WoW434_mini.zip\n    dst: $GAMEDIR/drive_c/wow-cataclysm\n    file: zipped_game\n    format: zip\n- copy:\n    description: Copying WoW.mfil\n    dst: $GAMEDIR/drive_c/wow-cataclysm\n    src: mfil_file\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n"
 }

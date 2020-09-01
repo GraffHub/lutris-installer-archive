@@ -1,0 +1,115 @@
+{
+  "id": 23020,
+  "game_id": 38440,
+  "game_slug": "cbm-prg-studio",
+  "name": "CBM prg Studio",
+  "year": null,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "cbm-prg-studio-3140-vice-vulkan",
+  "version": "3.14.0-vice-vulkan",
+  "description": "* MS.NET 4.6 \r\n* CMB prg Studio (x86) c:/program files (x86)/CBM prg Studio/\r\n* Vice 3.1 (x64) c:/program files/Vice/",
+  "notes": "VICE emulator: Video Settings > Disable DirectX9 video driver",
+  "created_at": "2020-08-23T21:18:05.938971Z",
+  "updated_at": "2020-08-23T21:18:05.938999Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "vice.7z": "https://deac-fra.dl.sourceforge.net/project/vice-emu/releases/binaries/windows/WinVICE-3.1-x64.7z"
+      },
+      {
+        "setup.zip": "https://download1857.mediafire.com/7ca7tij4wwzg/ntnsjydkwile3xz/CBMprgStudio_3_14_0_Setup_x86.zip"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/CBM prg Studio/CBMPrgStudio.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64-bit prefix ...",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2015",
+          "arch": "win64",
+          "description": "Visual C++ 2015 libraries ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet46",
+          "arch": "win64",
+          "description": "MS.NET 4.6 ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win81",
+          "arch": "win64",
+          "description": "Windows version 8.1 ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dxvk",
+          "arch": "win64",
+          "description": "Vulkan ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting setup.zip ...",
+          "dst": "$GAMEDIR",
+          "file": "setup.zip"
+        }
+      },
+      {
+        "extract": {
+          "description": "Extracting vice.7z ...",
+          "dst": "$GAMEDIR/drive_c/Program Files/Vice/",
+          "file": "vice.7z"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/CBMprgStudio_3_14_0_Setup_x86.exe"
+      },
+      {
+        "task": {
+          "description": "CBM prg Studio ...",
+          "executable": "$GAMEDIR/CBMprgStudio_3_14_0_Setup_x86.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true
+    }
+  },
+  "content": "files:\n- vice.7z: https://deac-fra.dl.sourceforge.net/project/vice-emu/releases/binaries/windows/WinVICE-3.1-x64.7z\n- setup.zip: https://download1857.mediafire.com/7ca7tij4wwzg/ntnsjydkwile3xz/CBMprgStudio_3_14_0_Setup_x86.zip\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/Program Files (x86)/CBM prg Studio/CBMPrgStudio.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64-bit prefix ...\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2015\n    arch: win64\n    description: Visual C++ 2015 libraries ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet46\n    arch: win64\n    description: MS.NET 4.6 ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win81\n    arch: win64\n    description: Windows version 8.1 ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dxvk\n    arch: win64\n    description: Vulkan ...\n    name: winetricks\n    prefix: $GAMEDIR\n- extract:\n    description: Extracting setup.zip ...\n    dst: $GAMEDIR\n    file: setup.zip\n- extract:\n    description: Extracting vice.7z ...\n    dst: $GAMEDIR/drive_c/Program Files/Vice/\n    file: vice.7z\n- chmodx: $GAMEDIR/CBMprgStudio_3_14_0_Setup_x86.exe\n- task:\n    description: CBM prg Studio ...\n    executable: $GAMEDIR/CBMprgStudio_3_14_0_Setup_x86.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n"
+}

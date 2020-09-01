@@ -1,0 +1,113 @@
+{
+  "id": 23019,
+  "game_id": 37613,
+  "game_slug": "hyper-scape",
+  "name": "Hyper Scape",
+  "year": 2020,
+  "user": "commaster1",
+  "runner": "wine",
+  "slug": "hyper-scape-01",
+  "version": "0.1",
+  "description": "Fork from watch dogs",
+  "notes": "Fork from watch dogs",
+  "created_at": "2020-08-23T18:01:16.731619Z",
+  "updated_at": "2020-08-23T18:01:16.731646Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "dx2010": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      },
+      {
+        "uplay": "https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe"
+      },
+      {
+        "cache": "https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "uplay://launch/11957/0 -eac_launcher -nosplash",
+      "exe": "drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix...",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "overlay: \n  enabled: false\n",
+          "file": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game Launcher/settings.yml"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$CACHE/dxsetup",
+          "file": "dx2010"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "file": "cache"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/silent",
+          "description": "Installing prerequisites...",
+          "executable": "$CACHE/dxsetup/DXSETUP.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial vcrun2010 vcrun2012 win7 d3dcompiler_43",
+          "description": "Installing prerequisites...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "description": "Installing Uplay...",
+          "executable": "uplay",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_CONFIG_FILE": "$GAMEDIR/dxvk.conf",
+        "DXVK_HUD": "compiler",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- dx2010: https://lutris.net/files/tools/directx-2010.tar.gz\n- uplay: https://ubistatic3-a.akamaihd.net/orbit/launcher_installer/UplayInstaller.exe\n- cache: https://github.com/Cervoxx/DXVKCACHE/raw/master/WD2-cache.tar.xz\ngame:\n  arch: win64\n  args: uplay://launch/11957/0 -eac_launcher -nosplash\n  exe: drive_c/Program Files (x86)/Ubisoft/Ubisoft Game Launcher/Uplay.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix...\n    name: create_prefix\n    prefix: $GAMEDIR\n- write_file:\n    content: \"overlay: \\n  enabled: false\\n\"\n    file: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Ubisoft Game\n      Launcher/settings.yml\n- extract:\n    dst: $CACHE/dxsetup\n    file: dx2010\n- extract:\n    dst: $GAMEDIR\n    file: cache\n- task:\n    arch: win64\n    args: /silent\n    description: Installing prerequisites...\n    executable: $CACHE/dxsetup/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: arial vcrun2010 vcrun2012 win7 d3dcompiler_43\n    description: Installing prerequisites...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    description: Installing Uplay...\n    executable: uplay\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_CONFIG_FILE: $GAMEDIR/dxvk.conf\n    DXVK_HUD: compiler\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

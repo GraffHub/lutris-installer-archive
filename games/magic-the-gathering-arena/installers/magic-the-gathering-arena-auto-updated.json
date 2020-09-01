@@ -1,0 +1,127 @@
+{
+  "id": 23109,
+  "game_id": 17988,
+  "game_slug": "magic-the-gathering-arena",
+  "name": "Magic: The Gathering Arena",
+  "year": 2017,
+  "user": "yamatowestern",
+  "runner": "wine",
+  "slug": "magic-the-gathering-arena-auto-updated",
+  "version": "Auto Updated",
+  "description": "Self-Updating version",
+  "notes": "Disable dxvk",
+  "created_at": "2020-08-30T02:39:42.753089Z",
+  "updated_at": "2020-08-30T02:39:42.753115Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": "https://mtgarena.downloads.wizards.com/Live/Windows32/MTGAInstaller.exe"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/Program Files/Wizards of the Coast/MTGA/MTGALauncher/MTGALauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet48",
+          "arch": "win64",
+          "description": "Installing .NET 4.8. This will take a while...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial d3dcompiler_47 win10",
+          "arch": "win64",
+          "description": "Installing additional dependencies...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "GrabFullscreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "UseTakeFocus",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "N"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "args": "/Q",
+          "description": "Installing Magic the Gathering Arena ...",
+          "exclude_processes": "mscorsvw.exe rundll32.exe rpcss.exe powershell.exe UnityCrashHandler32.exe svchost.exe MTGALauncher.exe MTGA.exe",
+          "executable": "setup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_LOG_LEVEL": "none"
+      }
+    },
+    "wine": {
+      "dxvk": false,
+      "version": "lutris-mtga-5.0-x86_64"
+    }
+  },
+  "content": "files:\n- setup: https://mtgarena.downloads.wizards.com/Live/Windows32/MTGAInstaller.exe\ngame:\n  arch: win64\n  exe: drive_c/Program Files/Wizards of the Coast/MTGA/MTGALauncher/MTGALauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: dotnet48\n    arch: win64\n    description: Installing .NET 4.8. This will take a while...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    app: arial d3dcompiler_47 win10\n    arch: win64\n    description: Installing additional dependencies...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: GrabFullscreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win64\n    key: UseTakeFocus\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    args: /Q\n    description: Installing Magic the Gathering Arena ...\n    exclude_processes: mscorsvw.exe rundll32.exe rpcss.exe powershell.exe UnityCrashHandler32.exe\n      svchost.exe MTGALauncher.exe MTGA.exe\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\nwine:\n  dxvk: false\n  version: lutris-mtga-5.0-x86_64\n"
+}
