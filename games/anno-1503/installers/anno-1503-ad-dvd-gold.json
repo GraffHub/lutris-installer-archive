@@ -1,0 +1,79 @@
+{
+  "id": 14384,
+  "game_id": 11850,
+  "game_slug": "anno-1503",
+  "name": "Anno 1503 A.D.",
+  "year": 2003,
+  "user": "codingHahn",
+  "runner": "wine",
+  "slug": "anno-1503-ad-dvd-gold",
+  "version": "DVD Gold",
+  "description": "Installs the gold version of the game with the DVD-ROM.",
+  "notes": "Remember to uncheck `Install Acrobat Reader` during installation",
+  "created_at": "2019-07-02T15:09:44.502000Z",
+  "updated_at": "2020-01-23T02:57:01.240406Z",
+  "draft": false,
+  "published": true,
+  "published_by": 1,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1438074791,
+  "gogslug": "anno_1503_ad",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/ANNO 1503 GOLD/1503Startup.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "install_gecko": false,
+          "install_mono": false,
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing...",
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "windowmanagermanaged=n",
+          "description": "Setting up winetricks...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "app": "directmusic",
+          "description": "Setting up winetricks...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ],
+    "system": {
+      "reset_desktop": true
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/ANNO 1503 GOLD/1503Startup.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Installing...\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: windowmanagermanaged=n\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: directmusic\n    description: Setting up winetricks...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\nsystem:\n  reset_desktop: true\n"
+}

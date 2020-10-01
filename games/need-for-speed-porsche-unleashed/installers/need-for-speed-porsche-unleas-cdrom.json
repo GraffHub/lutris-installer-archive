@@ -1,0 +1,96 @@
+{
+  "id": 20051,
+  "game_id": 11318,
+  "game_slug": "need-for-speed-porsche-unleashed",
+  "name": "Need for Speed: Porsche Unleashed",
+  "year": 2000,
+  "user": "tfk",
+  "runner": "wine",
+  "slug": "need-for-speed-porsche-unleas-cdrom",
+  "version": "CDROM",
+  "description": "This installs the CDROM version of Need for Speed: Porsche Unleashed.\r\n\r\nThis game is abandon-ware and can be found here:\r\nhttps://www.myabandonware.com/game/need-for-speed-porsche-unleashed-bg9\r\n\r\nThe CD-Key is listed there also: 14077 BUSY BURP SEEK PRAY",
+  "notes": "Current issues:\r\n\r\nThe game crashed when the Porsche Chronicle button is clicked.\r\n\r\nThe iso is in bin/cue format. It is generally easier to mount and iso. Use this command to convert the bin/cue version to iso:\r\n\r\ncd <cd-image-location>\r\nbchunk ./NFS_PU.bin ./NFS_PU.cue ./NFS_PU.iso\r\n\r\nIf bchunk isn't installed then you'll need to install it. It should be in the repositories.\r\n\r\nFedora:\r\n# Find it:\r\ndnf search bchunk\r\n\r\n# Install it:\r\nsudo dnf install bchunk\r\n\r\nUbuntu based:\r\n# Find it:\r\napt-cache search bchunk\r\n\r\n# Install it:\r\nsudo apt-get install bchunk\r\n\r\nInstall the game as usual.\r\n\r\nAfter the installation the installer for patch 3.5 will run. Navigate to the NFS installation directory. Apply the No-CD patch when asked.\r\n\r\nThings done automatically:\r\n\r\n- The game is enabled for wide screen resolutions. The nfs.ini is set to OpenGL 3, run the config.exe inside the prefix to change settings.\r\n\r\n- Extra cars are installed.\r\n\r\nMods: take a look at this site:\r\nInstall the game as usual.\r\n\r\nAfter the installation the installer for patch 3.5 will run. Navigate to the NFS installation directory. Apply the No-CD patch when asked.\r\n\r\nThings done automatically:\r\nhttps://www.nfscars.net/need-for-speed-porsche-unleashed/3/downloads/list/",
+  "created_at": "2020-04-27T19:18:17.441000Z",
+  "updated_at": "2020-05-04T11:55:11.414785Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "patch": "https://github.com/tfks/lutris-installers/raw/master/need-for-speed-porsche-unleashed/supporting-files/patches/Need-for-Speed-Porsche-Unleashed_Patch_Win_EN_Patch-35.exe"
+      },
+      {
+        "widescreen": "https://github.com/tfks/lutris-installers/raw/master/need-for-speed-porsche-unleashed/supporting-files/patches/nfs5_pu_patch_1.06.tar.gz"
+      },
+      {
+        "extracars": "https://github.com/tfks/lutris-installers/raw/master/need-for-speed-porsche-unleashed/supporting-files/add-ons/NFS_5_Cars.tar.gz"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche Unleashed/nfs5.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "AutoRun.exe"
+        }
+      },
+      {
+        "task": {
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/AutoRun.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "executable": "patch",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche Unleashed/",
+          "file": "widescreen"
+        }
+      },
+      {
+        "write_config": {
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche Unleashed/nfs5.ini",
+          "key": "ThrashDriver",
+          "section": "NFS5",
+          "value": "opengl3"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche Unleashed/",
+          "file": "extracars"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche Unleashed/FEData/Movies/",
+          "src": "$DISC/FEData/Movies/"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- patch: https://github.com/tfks/lutris-installers/raw/master/need-for-speed-porsche-unleashed/supporting-files/patches/Need-for-Speed-Porsche-Unleashed_Patch_Win_EN_Patch-35.exe\n- widescreen: https://github.com/tfks/lutris-installers/raw/master/need-for-speed-porsche-unleashed/supporting-files/patches/nfs5_pu_patch_1.06.tar.gz\n- extracars: https://github.com/tfks/lutris-installers/raw/master/need-for-speed-porsche-unleashed/supporting-files/add-ons/NFS_5_Cars.tar.gz\ngame:\n  exe: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche\n    Unleashed/nfs5.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: AutoRun.exe\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/AutoRun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: patch\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche\n      Unleashed/\n    file: widescreen\n- write_config:\n    file: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche\n      Unleashed/nfs5.ini\n    key: ThrashDriver\n    section: NFS5\n    value: opengl3\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche\n      Unleashed/\n    file: extracars\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Electronic Arts/Need For Speed - Porsche\n      Unleashed/FEData/Movies/\n    src: $DISC/FEData/Movies/\n"
+}

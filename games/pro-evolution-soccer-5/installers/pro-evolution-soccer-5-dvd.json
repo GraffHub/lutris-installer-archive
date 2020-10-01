@@ -1,0 +1,72 @@
+{
+  "id": 16477,
+  "game_id": 29990,
+  "game_slug": "pro-evolution-soccer-5",
+  "name": "Pro Evolution Soccer 5",
+  "year": 2005,
+  "user": "lazanet",
+  "runner": "wine",
+  "slug": "pro-evolution-soccer-5-dvd",
+  "version": "DVD",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-10-29T22:47:16.273000Z",
+  "updated_at": "2019-10-31T00:50:33.521012Z",
+  "draft": false,
+  "published": true,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/KONAMI/Pro Evolution Soccer 5/PES5.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating 32bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Enabling CSMT for better graphic performance.",
+          "key": "wined3d",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "prefix": "$GAMEDIR",
+          "value": "wined3d-csmt.dll"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing PES5.\nThe installating folder MUST BE 'C:\\Program Files\\KONAMI\\Pro Evolution Soccer 5'",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "dxgi": "disable",
+        "nvcuda": "disable"
+      }
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/KONAMI/Pro Evolution Soccer 5/PES5.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    description: Creating 32bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Enabling CSMT for better graphic performance.\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- task:\n    description: 'Installing PES5.\n\n      The installating folder MUST BE ''C:\\Program Files\\KONAMI\\Pro Evolution Soccer\n      5'''\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    dxgi: disable\n    nvcuda: disable\n"
+}

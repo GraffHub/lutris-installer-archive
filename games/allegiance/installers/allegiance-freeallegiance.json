@@ -1,0 +1,110 @@
+{
+  "id": 2687,
+  "game_id": 7610,
+  "game_slug": "allegiance",
+  "name": "Allegiance",
+  "year": 2000,
+  "user": "ssf",
+  "runner": "wine",
+  "slug": "allegiance-freeallegiance",
+  "version": "FreeAllegiance",
+  "description": "",
+  "notes": "",
+  "created_at": "2016-09-05T20:24:42.594560Z",
+  "updated_at": "2016-09-06T16:42:52.009301Z",
+  "draft": false,
+  "published": true,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "game": "http://www.german-borg.de/files/allegsetup_302.exe"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Microsoft Games/Allegiance 1.2/Launcher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "winemenubuilder.exe",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": ""
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2010",
+          "description": "Installing...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet35",
+          "description": "Installing...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "description": "Rebooting...",
+          "executable": "wineboot",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "description": "Installing...",
+          "executable": "game",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "directplay",
+          "description": "Installing...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      },
+      {
+        "task": {
+          "app": "sandbox",
+          "description": "Disabling unused WINE features",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR",
+          "silent": true
+        }
+      }
+    ]
+  },
+  "content": "files:\n- game: http://www.german-borg.de/files/allegsetup_302.exe\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Games/Allegiance 1.2/Launcher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    key: winemenubuilder.exe\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: ''\n- task:\n    app: vcrun2010\n    description: Installing...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: dotnet35\n    description: Installing...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    description: Rebooting...\n    executable: wineboot\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    args: /S\n    description: Installing...\n    executable: game\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: directplay\n    description: Installing...\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n- task:\n    app: sandbox\n    description: Disabling unused WINE features\n    name: winetricks\n    prefix: $GAMEDIR\n    silent: true\n"
+}

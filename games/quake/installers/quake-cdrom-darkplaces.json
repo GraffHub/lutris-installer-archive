@@ -1,0 +1,71 @@
+{
+  "id": 15337,
+  "game_id": 1,
+  "game_slug": "quake",
+  "name": "Quake",
+  "year": 1996,
+  "user": "appoloin",
+  "runner": "linux",
+  "slug": "quake-cdrom-darkplaces",
+  "version": "CDROM + Darkplaces",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-07T00:09:22.749893Z",
+  "updated_at": "2019-09-07T00:09:22.749921Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 2310,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "darkplaces-engine": "http://icculus.org/twilight/darkplaces/files/darkplacesengine20140513.zip"
+      },
+      {
+        "game": "N/A:Select a file with *.PAK extension"
+      }
+    ],
+    "game": {
+      "exe": "darkplaces-linux-x86_64-glx"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\nsrc_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\nfind \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/selectcopy.sh"
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/id1",
+          "file": "mkdir"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR",
+          "file": "darkplaces-engine"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/darkplaces-linux-x86_64-glx"
+      },
+      {
+        "execute": {
+          "args": "$game/ $GAMEDIR/id1",
+          "file": "$CACHE/selectcopy.sh"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- darkplaces-engine: http://icculus.org/twilight/darkplaces/files/darkplacesengine20140513.zip\n- game: N/A:Select a file with *.PAK extension\ngame:\n  exe: darkplaces-linux-x86_64-glx\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      src_path=$(echo \"$1\" | sed -r \"s/(.+)\\/.+/\\1/\")\n\n      find \"$src_path\" -type f \\( -iname \"*.PAK\"  \\) -exec cp {} \"$dst\" \\;'\n    file: $CACHE/selectcopy.sh\n- chmodx: $CACHE/selectcopy.sh\n- execute:\n    args: $GAMEDIR/id1\n    file: mkdir\n- extract:\n    dst: $GAMEDIR\n    file: darkplaces-engine\n- chmodx: $GAMEDIR/darkplaces-linux-x86_64-glx\n- execute:\n    args: $game/ $GAMEDIR/id1\n    file: $CACHE/selectcopy.sh\n"
+}

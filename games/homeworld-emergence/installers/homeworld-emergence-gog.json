@@ -1,0 +1,101 @@
+{
+  "id": 19708,
+  "game_id": 24193,
+  "game_slug": "homeworld-emergence",
+  "name": "Homeworld: Emergence",
+  "year": 2000,
+  "user": "Eisi",
+  "runner": "wine",
+  "slug": "homeworld-emergence-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "- The GOG installer may throw errors which can be ignored\r\n- To setup the game properly a few manual steps are required:\r\n 1. When the GOG installer finished do not exit it, instead click \"Launch Game\"\r\n 2. In the game go to Options -> Video and set the settings to your liking but do not touch renderer or resolution\r\n 3. Exit the game\r\n 4. Regedit will now open, navigate to HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm and set screenHeight and screenWidth to height and width of the native resolution of your monitor (switch from hexadecimal to decimal before entering the values)\r\n- Changing video options afterwards requires to setup renderer and resolution again, for this follow the steps at https://appdb.winehq.org/objectManager.php?sClass=version&iId=38025&iTestingId=105557",
+  "created_at": "2020-04-14T11:13:17.877000Z",
+  "updated_at": "2020-04-15T07:49:20.600861Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1766413869,
+  "gogslug": "homeworld_emergence",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Please select the GOG.com Windows installer"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "args": "-disableAVI -noglddraw -noswddraw -device gl -enableSSE",
+      "exe": "$GAMEDIR/drive_c/GOG Games/Homeworld Emergence/cataclysm.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "install_gecko": false,
+          "install_mono": false,
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "installer",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "key": "deviceToSelect",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_SZ",
+          "value": "gl"
+        }
+      },
+      {
+        "task": {
+          "key": "glToSelect",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_SZ",
+          "value": "opengl32.dll"
+        }
+      },
+      {
+        "task": {
+          "key": "screenDepth",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm",
+          "type": "REG_DWORD",
+          "value": "20"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Please navigate to HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm and set screenHeight and screenWidth to height and width of the native resolution of your monitor (switch from hexadecimal to decimal before entering the values). Exit regedit afterwards.",
+          "executable": "regedit",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "__GL_FSAA_MODE": -1,
+        "__GL_LOG_MAX_ANISO": -1
+      },
+      "pulse_latency": true
+    }
+  },
+  "content": "files:\n- installer: N/A:Please select the GOG.com Windows installer\ngame:\n  arch: win32\n  args: -disableAVI -noglddraw -noswddraw -device gl -enableSSE\n  exe: $GAMEDIR/drive_c/GOG Games/Homeworld Emergence/cataclysm.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    executable: installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    key: deviceToSelect\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    type: REG_SZ\n    value: gl\n- task:\n    key: glToSelect\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    type: REG_SZ\n    value: opengl32.dll\n- task:\n    key: screenDepth\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n    type: REG_DWORD\n    value: '20'\n- task:\n    arch: win32\n    description: Please navigate to HKEY_LOCAL_MACHINE\\Software\\Sierra On-Line\\Cataclysm\n      and set screenHeight and screenWidth to height and width of the native resolution\n      of your monitor (switch from hexadecimal to decimal before entering the values).\n      Exit regedit afterwards.\n    executable: regedit\n    name: wineexec\n    prefix: $GAMEDIR\nsystem:\n  env:\n    __GL_FSAA_MODE: -1\n    __GL_LOG_MAX_ANISO: -1\n  pulse_latency: true\n"
+}

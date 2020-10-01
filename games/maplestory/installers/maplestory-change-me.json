@@ -1,0 +1,125 @@
+{
+  "id": 17721,
+  "game_id": 1455,
+  "game_slug": "maplestory",
+  "name": "MapleStory",
+  "year": null,
+  "user": "aragmor",
+  "runner": "wine",
+  "slug": "maplestory-change-me",
+  "version": "Change Me",
+  "description": "This is an installer for a private server version, it follows the guide for Linux installation from the game forum: <a href=\"https://forum.maplelegends.com/index.php?threads/playing-maple-legends-on-a-linux-box-the-guide.5400/\">https://forum.maplelegends.com/index.php?threads/playing-maple-legends-on-a-linux-box-the-guide.5400/</a> for easier installation.",
+  "notes": "Must download setup exe from the <a href=\"https://maplelegends.com/download>website</a>before running this installer.\r\n\r\nMust provide your own ijl15, ws2_32, and ws2help dll files.\r\n\r\nFor game updates you have to download the patch installer for windows at <a href=\"https://maplelegends.com/download\">https://maplelegends.com/download</a> and load it with lutris by right clicking the game banner and selecting \"Run EXE inside wine prefix\"",
+  "created_at": "2020-01-03T16:06:37.962030Z",
+  "updated_at": "2020-01-23T02:56:59.002878Z",
+  "draft": false,
+  "published": false,
+  "published_by": 19464,
+  "rating": "",
+  "steamid": 216150,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": "N/A:Select the game's setup file"
+      },
+      {
+        "ijl15": "N/A:Select ijl15.dll"
+      },
+      {
+        "ws2": "N/A:Select ws2_32.dll"
+      },
+      {
+        "ws2help": "N/A:Select ws2help.dll"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/MapleLegendsHD/MapleLegends.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "app": "vcrun6sp6",
+          "arch": "win32",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\MapleLegends.exe",
+          "prefix": "$GAMEDIR",
+          "value": "win98"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\MapleLegendsWindowed.exe",
+          "prefix": "$GAMEDIR",
+          "value": "win98"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "executable": "setup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "winxp"
+        }
+      },
+      {
+        "rename": {
+          "dst": "$GAMEDIR/drive_c/windows/system32/ws2_32.dll.bak",
+          "src": "$GAMEDIR/drive_c/windows/system32/ws2_32.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "ws2"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "ws2help"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/system32",
+          "src": "ijl15"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- setup: N/A:Select the game's setup file\n- ijl15: N/A:Select ijl15.dll\n- ws2: N/A:Select ws2_32.dll\n- ws2help: N/A:Select ws2help.dll\ngame:\n  arch: win32\n  exe: drive_c/MapleLegendsHD/MapleLegends.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    app: vcrun6sp6\n    arch: win32\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\MapleLegends.exe\n    prefix: $GAMEDIR\n    value: win98\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\AppDefaults\\MapleLegendsWindowed.exe\n    prefix: $GAMEDIR\n    value: win98\n- task:\n    arch: win32\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: winxp\n- rename:\n    dst: $GAMEDIR/drive_c/windows/system32/ws2_32.dll.bak\n    src: $GAMEDIR/drive_c/windows/system32/ws2_32.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: ws2\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: ws2help\n- move:\n    dst: $GAMEDIR/drive_c/windows/system32\n    src: ijl15\n"
+}

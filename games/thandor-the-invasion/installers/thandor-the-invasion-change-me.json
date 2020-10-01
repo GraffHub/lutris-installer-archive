@@ -1,0 +1,127 @@
+{
+  "id": 20653,
+  "game_id": 27750,
+  "game_slug": "thandor-the-invasion",
+  "name": "Thandor: The Invasion",
+  "year": 2000,
+  "user": "dr2okevin",
+  "runner": "wine",
+  "slug": "thandor-the-invasion-change-me",
+  "version": "Change Me",
+  "description": "Dieser Installer benötigt auch einen Patch, der Link ist im Installer.Patch MD5 ist 4133020e5a7c9f74a633f586d231dc6b.Virustotal Link: https://www.virustotal.com/gui/file/a6cd7445cd2ab6d36e00664b9b02d99d912704ad3fdfb98233b2705599437cf3/details",
+  "notes": "Für manche neuere Auflösungen wie 1080p muss die thandor.dat manuell angepasst werden, fertige Dateien gibt es im Spielverzeichnis (Ordner customConfigs_Tools)!",
+  "created_at": "2020-05-21T13:36:14.043622Z",
+  "updated_at": "2020-05-21T13:36:14.043651Z",
+  "draft": false,
+  "published": false,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "patch105": "N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937 (md5 4133020e5a7c9f74a633f586d231dc6b)"
+      },
+      {
+        "dinput": "https://github.com/elishacloud/dinputto8/releases/download/v1.0.30.0/dinput.zip"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/Thandor/thandor.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "description": "Installationsdaten wählen  Für nicht unterstützte Auflösungen gibt es im Verzeichnis customConfigs_Tools angepasste thandor.dat Dateien. Diese muss zur thandor.exe im Spielverzeichnis kopiert werden  und in thandor.dat umbenannt werden.",
+          "requires": "Thandor/thandor.dat"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Erzeuge WINE Prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win95",
+          "description": "Bereite Prefix für das Ausführen des Setups vor (setze win95)",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win95",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "execute": {
+          "args": "e $dinput -o$CACHE/tmp/dinput",
+          "file": "7z"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/",
+          "src": "$CACHE/tmp/dinput/dinput.dll"
+        }
+      },
+      {
+        "copy": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/Flm",
+          "src": "$DISC/Thandor/Flm"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Thandor/",
+          "file": "patch105"
+        }
+      },
+      {
+        "task": {
+          "app": "winxp",
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "GrabFullscreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "N"
+        }
+      }
+    ],
+    "require-binaries": "7z",
+    "system": {
+      "env": {
+        "LUTRIS_RUNTIME": "0"
+      }
+    },
+    "wine": {
+      "dxvk": false,
+      "overrides": {
+        "dinput.dll": "native"
+      }
+    }
+  },
+  "content": "files:\r\n- patch105: N/A:Bitte lade den Patch 1.05 von http://s000.tinyupload.com/index.php?file_id=09051709526305652937\r\n    (md5 4133020e5a7c9f74a633f586d231dc6b)\r\n- dinput: https://github.com/elishacloud/dinputto8/releases/download/v1.0.30.0/dinput.zip\r\ngame:\r\n  arch: win64\r\n  exe: drive_c/Program Files (x86)/Thandor/thandor.exe\r\n  prefix: $GAMEDIR\r\ninstaller:\r\n- insert-disc:\r\n    description: \"Installationsdaten w\\xE4hlen  F\\xFCr nicht unterst\\xFCtzte Aufl\\xF6\\\r\n      sungen gibt es im Verzeichnis customConfigs_Tools angepasste thandor.dat Dateien.\\\r\n      \\ Diese muss zur thandor.exe im Spielverzeichnis kopiert werden  und in thandor.dat\\\r\n      \\ umbenannt werden.\"\r\n    requires: Thandor/thandor.dat\r\n- task:\r\n    arch: win64\r\n    description: Erzeuge WINE Prefix\r\n    name: create_prefix\r\n    prefix: $GAMEDIR\r\n- task:\r\n    app: win95\r\n    description: \"Bereite Prefix f\\xFCr das Ausf\\xFChren des Setups vor (setze win95)\"\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win95\r\n    executable: $DISC/Setup.exe\r\n    name: wineexec\r\n    prefix: $GAMEDIR\r\n- execute:\r\n    args: e $dinput -o$CACHE/tmp/dinput\r\n    file: 7z\r\n- move:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/\r\n    src: $CACHE/tmp/dinput/dinput.dll\r\n- copy:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/Flm\r\n    src: $DISC/Thandor/Flm\r\n- extract:\r\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Thandor/\r\n    file: patch105\r\n- task:\r\n    app: winxp\r\n    arch: win64\r\n    name: winetricks\r\n    prefix: $GAMEDIR\r\n- task:\r\n    arch: win64\r\n    key: GrabFullscreen\r\n    name: set_regedit\r\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\r\n    prefix: $GAMEDIR\r\n    value: N\r\nrequire-binaries: 7z\r\nsystem:\r\n  env:\r\n    LUTRIS_RUNTIME: '0'\r\nwine:\r\n  dxvk: false\r\n  overrides:\r\n    dinput.dll: native"
+}

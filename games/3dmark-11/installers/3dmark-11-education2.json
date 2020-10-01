@@ -1,0 +1,130 @@
+{
+  "id": 21454,
+  "game_id": 1929,
+  "game_slug": "3dmark-11",
+  "name": "3DMark 11",
+  "year": null,
+  "user": "vanstaveren",
+  "runner": "wine",
+  "slug": "3dmark-11-education2",
+  "version": "Education#2",
+  "description": null,
+  "notes": "* SystemInfo: 4.15",
+  "created_at": "2020-06-13T05:56:57.263845Z",
+  "updated_at": "2020-06-13T05:56:57.263871Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 205270,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "setup": "http://ftp.nluug.nl/pub/games/PC/guru3d/benchmark/3DMark11-v1-0-132-[Guru3D.com].zip"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "--definition=entry_definition.xml",
+      "custum-name": "3DMark 11",
+      "exe": "$GAMEDIR/drive_c/Program Files/Futuremark/3DMark 11/bin/x64/3DMark11Cmd.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2010",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx10_43 d3dx11_43",
+          "arch": "win64",
+          "description": "DirectX ...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dxvk",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Register KeyCode ...",
+          "key": "KeyCode",
+          "name": "set_regedit",
+          "path": "HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark11",
+          "type": "REG_SZ",
+          "value": "3D11-PRO-7SEDW-YACTV-M7V37-D6TQD-HSV3Q"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Register KeyCode ...",
+          "key": "KeyCode",
+          "name": "set_regedit",
+          "path": "HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark11",
+          "type": "REG_SZ",
+          "value": "3D11-PRO-7SEDW-YACTV-M7V37-D6TQD-HSV3Q"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c",
+          "src": "setup"
+        }
+      },
+      {
+        "execute": {
+          "command": "mv $GAMEDIR/drive_c/3DMark11-v1-0-132-[Guru3D.com].zip $GAMEDIR/drive_c/setup.zip"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/",
+          "file": "$GAMEDIR/drive_c/setup.zip"
+        }
+      },
+      {
+        "task": {
+          "args": "/S",
+          "description": "3DMark 11 ...",
+          "executable": "$GAMEDIR/drive_c/3dmark11-setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- setup: http://ftp.nluug.nl/pub/games/PC/guru3d/benchmark/3DMark11-v1-0-132-[Guru3D.com].zip\ngame:\n  arch: win64\n  args: --definition=entry_definition.xml\n  custum-name: 3DMark 11\n  exe: $GAMEDIR/drive_c/Program Files/Futuremark/3DMark 11/bin/x64/3DMark11Cmd.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2010\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: d3dx10_43 d3dx11_43\n    arch: win64\n    description: DirectX ...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dxvk\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win7\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_LOCAL_MACHINE\\Software\\Wow6432Node\\Futuremark\\3DMark11\n    type: REG_SZ\n    value: 3D11-PRO-7SEDW-YACTV-M7V37-D6TQD-HSV3Q\n- task:\n    arch: win64\n    description: Register KeyCode ...\n    key: KeyCode\n    name: set_regedit\n    path: HKEY_USERS\\S-1-5-21-0-0-0-1000\\Software\\Futuremark\\3DMark11\n    type: REG_SZ\n    value: 3D11-PRO-7SEDW-YACTV-M7V37-D6TQD-HSV3Q\n- move:\n    dst: $GAMEDIR/drive_c\n    src: setup\n- execute:\n    command: mv $GAMEDIR/drive_c/3DMark11-v1-0-132-[Guru3D.com].zip $GAMEDIR/drive_c/setup.zip\n- extract:\n    dst: $GAMEDIR/drive_c/\n    file: $GAMEDIR/drive_c/setup.zip\n- task:\n    args: /S\n    description: 3DMark 11 ...\n    executable: $GAMEDIR/drive_c/3dmark11-setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

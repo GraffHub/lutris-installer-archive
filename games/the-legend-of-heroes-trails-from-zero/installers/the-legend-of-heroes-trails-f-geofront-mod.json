@@ -1,0 +1,83 @@
+{
+  "id": 23189,
+  "game_id": 38634,
+  "game_slug": "the-legend-of-heroes-trails-from-zero",
+  "name": "The Legend of Heroes: Trails from Zero",
+  "year": 2010,
+  "user": "TommyB",
+  "runner": "wine",
+  "slug": "the-legend-of-heroes-trails-f-geofront-mod",
+  "version": "Geofront Mod",
+  "description": "Downloads the Geofront installer and uses it to install the game (DLSite version and physical copies are supported)",
+  "notes": "",
+  "created_at": "2020-09-04T18:06:53.896880Z",
+  "updated_at": "2020-09-04T18:06:53.896904Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "geofront": "https://cdn.redcountyrp.com/zero/Geofront_ZeroLauncher_1.0.2.zip"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/FALCOM/ED_ZERO/ED_ZERO.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE",
+          "file": "$geofront"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2017",
+          "description": "Installing C++ runtimes",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet472",
+          "description": "Installing required .net prerequisites",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Geofront Installer",
+          "executable": "$CACHE/setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "dinput8": "native,builtin"
+      }
+    }
+  },
+  "content": "files:\n- geofront: https://cdn.redcountyrp.com/zero/Geofront_ZeroLauncher_1.0.2.zip\ngame:\n  arch: win64\n  exe: drive_c/FALCOM/ED_ZERO/ED_ZERO.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE\n    file: $geofront\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2017\n    description: Installing C++ runtimes\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet472\n    description: Installing required .net prerequisites\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running Geofront Installer\n    executable: $CACHE/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    dinput8: native,builtin\n"
+}

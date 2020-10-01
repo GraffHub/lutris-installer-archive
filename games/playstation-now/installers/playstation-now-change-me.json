@@ -1,0 +1,82 @@
+{
+  "id": 22554,
+  "game_id": 19386,
+  "game_slug": "playstation-now",
+  "name": "PlayStation Now",
+  "year": 2018,
+  "user": "NoyTheBiche",
+  "runner": "wine",
+  "slug": "playstation-now-change-me",
+  "version": "Change Me",
+  "description": "Play Playstation 1,2,3,4 games on Linux.",
+  "notes": "- This script will download the latest PSNow client version from PlayStation official servers.\r\n- x360 and PS3 Dualshock 3 compatible\r\n- Known issues: \r\n-- \"PlayStation Now\" does not exit cleanly with Wine, you have to force application exit with Lutris \"Stop\" button or \"Kill all wine process\".\r\n-- White rectangular window at the right bottom corner. Workaround: open PSNow window in fullscreen.",
+  "created_at": "2020-07-25T19:34:15.276059Z",
+  "updated_at": "2020-07-25T19:34:15.276094Z",
+  "draft": false,
+  "published": false,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "psnowsetup": {
+          "filename": "psnowlatest.exe",
+          "url": "https://download-psnow.playstation.com/downloads/psnow/pc/latest"
+        }
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "install_gecko": false,
+          "install_mono": false,
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_47 vcrun2013 win7",
+          "arch": "win64",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "executable": "psnowsetup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "background",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "0 0 0"
+        }
+      }
+    ],
+    "wine": {
+      "Desktop": true
+    }
+  },
+  "content": "files:\n- psnowsetup:\n    filename: psnowlatest.exe\n    url: https://download-psnow.playstation.com/downloads/psnow/pc/latest\ngame:\n  arch: win64\n  exe: drive_c/Program Files (x86)/PlayStationNow/psnowlauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    install_gecko: false\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_47 vcrun2013 win7\n    arch: win64\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    executable: psnowsetup\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    key: background\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: 0 0 0\nwine:\n  Desktop: true\n"
+}

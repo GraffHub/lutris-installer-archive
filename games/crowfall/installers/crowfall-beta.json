@@ -1,0 +1,77 @@
+{
+  "id": 23321,
+  "game_id": 24416,
+  "game_slug": "crowfall",
+  "name": "Crowfall",
+  "year": null,
+  "user": "twisty",
+  "runner": "wine",
+  "slug": "crowfall-beta",
+  "version": "Beta",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-09-12T10:35:53.533346Z",
+  "updated_at": "2020-09-12T10:35:53.533370Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "installer": "N/A:Please select the Crowfall installer (CFInstaller_Live.exe)"
+      }
+    ],
+    "game": {
+      "exe": "$GAMEDIR/drive_c/Crowfall/crowfall.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Setting Windows 10 mode for Wine",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "win10"
+        }
+      },
+      {
+        "task": {
+          "app": "arial",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Running Crowfall Installer",
+          "executable": "setup",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- installer: N/A:Please select the Crowfall installer (CFInstaller_Live.exe)\ngame:\n  exe: $GAMEDIR/drive_c/Crowfall/crowfall.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Setting Windows 10 mode for Wine\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win10\n- task:\n    app: arial\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: Running Crowfall Installer\n    executable: setup\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  dxvk: true\n  esync: true\n"
+}

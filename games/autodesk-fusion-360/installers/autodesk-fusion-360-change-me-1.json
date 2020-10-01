@@ -1,0 +1,129 @@
+{
+  "id": 22791,
+  "game_id": 28225,
+  "game_slug": "autodesk-fusion-360",
+  "name": "Autodesk Fusion 360",
+  "year": null,
+  "user": "justine-vt",
+  "runner": "wine",
+  "slug": "autodesk-fusion-360-change-me-1",
+  "version": "Change Me",
+  "description": "Downloads newest client from Autodesk and patches the installer for installation.",
+  "notes": "Notes about the Installer:\r\nKnown issues:\r\n- The GUI's floating tooltip/toolsettings windows seem to float above anything, resize them once for a small amount to stop them from staying on top of everything, some menues also need to be clicked once too.\r\n- Some native dialogs like a filepicker can pop up under a floating window from Fusion. It can be tricky to get to that window sometimes.\r\n- Do not try to use the \"Learning Panel\"\r\n\r\nMANUAL TASKS:\r\n- The installer will, after downloading files and applying patched, launch the 'fusion installer'. It will look frozen for a while while it is downloading the fusion files\r\n- Once it's done, the login page will pop up\r\n- After login you'll need to change the grapics driver to DirectX 9:\r\n(check this video: https://imgur.com/a/oZCuoP2)\r\n  - Go to your preferences by clicking on your name on the top right\r\n  - Under Graphics Driver, select DirectX 9\r\n  - Hit Apply\r\n  - Don't Restart! Instead, kill the lutris-wrapper process with your task-manager\r\n  - Now the scrip will patch some things again and launch (the now installed) Fusion\r\n  - Test around and check if you can create a sketch and draw around\r\n  - After testing, you might need to kill the lutris-wrapper again to fully close it for the first time\r\n  - Now everything is finished\r\n\r\nThis install script has been tested with a intel cpu and integrated graphics and a amd ryzen cpu with amd radeon gpu",
+  "created_at": "2020-08-09T18:47:30.620510Z",
+  "updated_at": "2020-08-09T18:47:30.620537Z",
+  "draft": false,
+  "published": false,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "fusion_installer": {
+          "filename": "Fusion%20360%20Client%20Downloader.exe",
+          "url": "https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe"
+        }
+      },
+      {
+        "platform_py": "https://raw.githubusercontent.com/python/cpython/3.7/Lib/platform.py"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "exe": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "input_menu": {
+          "description": "Is the 'Fusion 360 Client Downloader.exe' in your $CACHE (default: ~/.cache/lutris/installer/autodesk_fusion_360/)?",
+          "id": "download",
+          "options": [
+            {
+              "wait": "Wait a bit, your connection might be slow"
+            }
+          ],
+          "preselect": "wait"
+        }
+      },
+      {
+        "extract": {
+          "description": "extracting installer",
+          "dst": "$CACHE/fusion_installer/",
+          "extractor": "exe",
+          "file": "fusion_installer"
+        }
+      },
+      {
+        "move": {
+          "description": "moving installer",
+          "dst": "$CACHE/fusion_installer/",
+          "src": "platform_py"
+        }
+      },
+      {
+        "execute": {
+          "command": "sed -i '/maj, min, build = /c\\    maj, min, build = winver[:3]' $CACHE/fusion_installer/platform.py;",
+          "description": "patch installer 1"
+        }
+      },
+      {
+        "execute": {
+          "command": "sed -i \"/return uname().system/c\\    return 'Windows'\" $CACHE/fusion_installer/platform.py;",
+          "description": "patch installer 2"
+        }
+      },
+      {
+        "execute": {
+          "command": "sed -i \"/return uname().release/c\\    return '7'\" $CACHE/fusion_installer/platform.py;",
+          "description": "patch installer 3"
+        }
+      },
+      {
+        "execute": {
+          "command": "sed -i \"/return uname().version/c\\    return '6.1.7601'\" $CACHE/fusion_installer/platform.py",
+          "description": "patch installer 4"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2017 corefonts wininet winhttp atmlib gdiplus iertutil msxml3 msxml6 urlmon win7 dxvk",
+          "description": "doing the winetrickery",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "running the installer with DXVK (needed to log in and change graphics driver (check video in description)",
+          "executable": "$CACHE/fusion_installer/streamer.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dxvk=disabled",
+          "description": "disabling dxvk",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "running fusion, check if everything works",
+          "executable": "$GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- fusion_installer:\n    filename: Fusion%20360%20Client%20Downloader.exe\n    url: https://dl.appstreaming.autodesk.com/production/installers/Fusion%20360%20Client%20Downloader.exe\n- platform_py: https://raw.githubusercontent.com/python/cpython/3.7/Lib/platform.py\ngame:\n  arch: win64\n  exe: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- input_menu:\n    description: 'Is the ''Fusion 360 Client Downloader.exe'' in your $CACHE (default:\n      ~/.cache/lutris/installer/autodesk_fusion_360/)?'\n    id: download\n    options:\n    - wait: Wait a bit, your connection might be slow\n    preselect: wait\n- extract:\n    description: extracting installer\n    dst: $CACHE/fusion_installer/\n    extractor: exe\n    file: fusion_installer\n- move:\n    description: moving installer\n    dst: $CACHE/fusion_installer/\n    src: platform_py\n- execute:\n    command: sed -i '/maj, min, build = /c\\    maj, min, build = winver[:3]' $CACHE/fusion_installer/platform.py;\n    description: patch installer 1\n- execute:\n    command: sed -i \"/return uname().system/c\\    return 'Windows'\" $CACHE/fusion_installer/platform.py;\n    description: patch installer 2\n- execute:\n    command: sed -i \"/return uname().release/c\\    return '7'\" $CACHE/fusion_installer/platform.py;\n    description: patch installer 3\n- execute:\n    command: sed -i \"/return uname().version/c\\    return '6.1.7601'\" $CACHE/fusion_installer/platform.py\n    description: patch installer 4\n- task:\n    app: vcrun2017 corefonts wininet winhttp atmlib gdiplus iertutil msxml3 msxml6\n      urlmon win7 dxvk\n    description: doing the winetrickery\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: running the installer with DXVK (needed to log in and change graphics\n      driver (check video in description)\n    executable: $CACHE/fusion_installer/streamer.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: dxvk=disabled\n    description: disabling dxvk\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: running fusion, check if everything works\n    executable: $GAMEDIR/drive_c/users/$USER/Local Settings/Application Data/Autodesk/webdeploy/production/6a0c9611291d45bb9226980209917c3d/FusionLauncher.exe\n    name: wineexec\n    prefix: $GAMEDIR\n"
+}

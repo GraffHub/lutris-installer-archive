@@ -1,0 +1,199 @@
+{
+  "id": 19969,
+  "game_id": 32727,
+  "game_slug": "rise-of-nations-gold-edition",
+  "name": "Rise of Nations Gold Edition",
+  "year": 2004,
+  "user": "Autolycus",
+  "runner": "wine",
+  "slug": "rise-of-nations-gold-edition-cd-v0302120800-patch",
+  "version": "CD + v03.02.12.0800 Patch",
+  "description": "Installs the 2 CD Gold Edition version.\r\nInstalls the last Gold patch 03.02.12.0800.",
+  "notes": "- Download the patch before installation.\r\n- When installing the patch, the screen will go blank, just hit enter and you will be at the game menu. Exit the game and let the installer finish.\r\n- To run the game without the expansion, change the exe:",
+  "created_at": "2020-04-25T02:48:32.170000Z",
+  "updated_at": "2020-05-10T08:15:14.608228Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "dgvoodoo": "http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_61.zip"
+      },
+      {
+        "archive": "N/A:Select the downloaded patch archive"
+      }
+    ],
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/thrones.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "mfc42 msxml4 directplay directmusic",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Rise of Nations Gold Edition.",
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/",
+          "src": "archive"
+        }
+      },
+      {
+        "write_file": {
+          "content": "thrones.exe /patch rngu.rtp /p",
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/Patch.bat"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/Patch.bat"
+      },
+      {
+        "task": {
+          "executable": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/Patch.bat",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR",
+          "working_dir": "$GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations"
+        }
+      },
+      {
+        "extract": {
+          "dst": "/tmp/dgvoodoo2/",
+          "file": "dgvoodoo"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/syswow64/d3d9.dll.old",
+          "src": "$GAMEDIR/drive_c/windows/syswow64/d3d9.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/syswow64/d3d8.dll.old",
+          "src": "$GAMEDIR/drive_c/windows/syswow64/d3d8.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/windows/syswow64/ddraw.dll.old",
+          "src": "$GAMEDIR/drive_c/windows/syswow64/ddraw.dll"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/windows/syswow64",
+          "src": "/tmp/dgvoodoo2/MS/x86"
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "RISE OF NATIONS": {
+              "AllowAllResolutions": 1,
+              "BackVidAsSlideShow": 1,
+              "CPU_grade_override(A-F or AUTO)": "AUTO",
+              "CTWMapScroll": 35,
+              "CTWScrollInc": 7,
+              "ClickDragHighSensitive": 64,
+              "ClickDragLowSensitive": 20,
+              "ClickDragRightSensitive": 6,
+              "ClickDragTiming": 5,
+              "ConfigDatabase": "BHGVidCardConfig.txt",
+              "Console Coord Mode": 0,
+              "Console Name Mode": 2,
+              "DefaultScenarioDirectory": ".\\scenario\\Custom\\",
+              "DefaultScriptDirectory": ".\\scenario\\Scripts\\",
+              "Don't Allow Texture Compression": 0,
+              "ESCKeyGoesToMenu": 1,
+              "EnableGraphicsToggles": 0,
+              "Force Profile Menu": 0,
+              "ForceAGPVBs": 1,
+              "ForceBWCursor": 0,
+              "ForceGDICursor": 0,
+              "ForceHardwareCursor": 1,
+              "ForceLowCPUBackgroundVid": 1,
+              "ForceStaticCursor": 0,
+              "FullScreen": 1,
+              "GPU_grade_override(A-F or AUTO)": "AUTO",
+              "GameFrameTestDelayMax": 0,
+              "GameFrameTestDelayMin": 0,
+              "IgnoreMinimizeOnTabOut": 0,
+              "MEM_grade_override(A-F or AUTO)": "AUTO",
+              "RebuildBalance": 0,
+              "RenderMinimap": 1,
+              "SYS_grade_override(A-F or AUTO)": "AUTO",
+              "ScenarioDirectory": "\\Scenarios",
+              "SkipIntroMovies": 1,
+              "Sound Enabled": 1,
+              "StandaloneScriptsDirectory": "Stand-alone Scripts",
+              "StartConsole": 0,
+              "StartPaused": 0,
+              "StartReveal": 0,
+              "TEXTURE_grade_override(FULL, HALF, QUARTER, AUTO)": "AUTO",
+              "TPModsDirectory": ".\\Mods",
+              "TestDelayRenderAMax": 0,
+              "TestDelayRenderAMin": 0,
+              "TestDelayRenderBMax": 0,
+              "TestDelayRenderBMin": 0,
+              "UseAltColors": 0,
+              "UseNetworkSimulator": 0,
+              "UseVTUNEDLL": 0,
+              "VSync": 0,
+              "Windowed Height": "$RESOLUTION_HEIGHT",
+              "Windowed Width": "$RESOLUTION_WIDTH"
+            }
+          },
+          "file": "$GAMEDIR/drive_c/users/$USER/Application Data/Microsoft Games/Rise of Nations/rise2.ini"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "PULSE_LATENCY_MSEC": "30"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": false,
+      "overrides": {
+        "d3d8.dll": "n",
+        "d3d9.dll": "n",
+        "d3dimm.dll": "n",
+        "ddraw.dll": "n"
+      }
+    }
+  },
+  "content": "files:\n- dgvoodoo: http://dege.freeweb.hu/dgVoodoo2/dgVoodoo2_61.zip\n- archive: N/A:Select the downloaded patch archive\ngame:\n  exe: drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/thrones.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: mfc42 msxml4 directplay directmusic\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: setup.exe\n- task:\n    description: Installing Rise of Nations Gold Edition.\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/\n    src: archive\n- write_file:\n    content: thrones.exe /patch rngu.rtp /p\n    file: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/Patch.bat\n- chmodx: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/Patch.bat\n- task:\n    executable: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations/Patch.bat\n    name: wineexec\n    prefix: $GAMEDIR\n    working_dir: $GAMEDIR/drive_c/Program Files (x86)/Microsoft Games/Rise of Nations\n- extract:\n    dst: /tmp/dgvoodoo2/\n    file: dgvoodoo\n- move:\n    dst: $GAMEDIR/drive_c/windows/syswow64/d3d9.dll.old\n    src: $GAMEDIR/drive_c/windows/syswow64/d3d9.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/syswow64/d3d8.dll.old\n    src: $GAMEDIR/drive_c/windows/syswow64/d3d8.dll\n- move:\n    dst: $GAMEDIR/drive_c/windows/syswow64/ddraw.dll.old\n    src: $GAMEDIR/drive_c/windows/syswow64/ddraw.dll\n- merge:\n    dst: $GAMEDIR/drive_c/windows/syswow64\n    src: /tmp/dgvoodoo2/MS/x86\n- write_config:\n    data:\n      RISE OF NATIONS:\n        AllowAllResolutions: 1\n        BackVidAsSlideShow: 1\n        CPU_grade_override(A-F or AUTO): AUTO\n        CTWMapScroll: 35\n        CTWScrollInc: 7\n        ClickDragHighSensitive: 64\n        ClickDragLowSensitive: 20\n        ClickDragRightSensitive: 6\n        ClickDragTiming: 5\n        ConfigDatabase: BHGVidCardConfig.txt\n        Console Coord Mode: 0\n        Console Name Mode: 2\n        DefaultScenarioDirectory: .\\scenario\\Custom\\\n        DefaultScriptDirectory: .\\scenario\\Scripts\\\n        Don't Allow Texture Compression: 0\n        ESCKeyGoesToMenu: 1\n        EnableGraphicsToggles: 0\n        Force Profile Menu: 0\n        ForceAGPVBs: 1\n        ForceBWCursor: 0\n        ForceGDICursor: 0\n        ForceHardwareCursor: 1\n        ForceLowCPUBackgroundVid: 1\n        ForceStaticCursor: 0\n        FullScreen: 1\n        GPU_grade_override(A-F or AUTO): AUTO\n        GameFrameTestDelayMax: 0\n        GameFrameTestDelayMin: 0\n        IgnoreMinimizeOnTabOut: 0\n        MEM_grade_override(A-F or AUTO): AUTO\n        RebuildBalance: 0\n        RenderMinimap: 1\n        SYS_grade_override(A-F or AUTO): AUTO\n        ScenarioDirectory: \\Scenarios\n        SkipIntroMovies: 1\n        Sound Enabled: 1\n        StandaloneScriptsDirectory: Stand-alone Scripts\n        StartConsole: 0\n        StartPaused: 0\n        StartReveal: 0\n        TEXTURE_grade_override(FULL, HALF, QUARTER, AUTO): AUTO\n        TPModsDirectory: .\\Mods\n        TestDelayRenderAMax: 0\n        TestDelayRenderAMin: 0\n        TestDelayRenderBMax: 0\n        TestDelayRenderBMin: 0\n        UseAltColors: 0\n        UseNetworkSimulator: 0\n        UseVTUNEDLL: 0\n        VSync: 0\n        Windowed Height: $RESOLUTION_HEIGHT\n        Windowed Width: $RESOLUTION_WIDTH\n    file: $GAMEDIR/drive_c/users/$USER/Application Data/Microsoft Games/Rise of Nations/rise2.ini\nsystem:\n  env:\n    PULSE_LATENCY_MSEC: '30'\nwine:\n  dxvk: true\n  esync: false\n  overrides:\n    d3d8.dll: n\n    d3d9.dll: n\n    d3dimm.dll: n\n    ddraw.dll: n\n"
+}

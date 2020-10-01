@@ -1,0 +1,91 @@
+{
+  "id": 20476,
+  "game_id": 23934,
+  "game_slug": "myst-v-end-of-ages-limited-edition",
+  "name": "Myst V: End of Ages Limited Edition",
+  "year": 2005,
+  "user": "tiberianpun",
+  "runner": "wine",
+  "slug": "myst-v-end-of-ages-limited-ed-gog",
+  "version": "GOG",
+  "description": null,
+  "notes": "The game will start in 800x600, you can go to Options from the main menu and adjust the resolution.\r\n\r\nIf you encounter mouse issues go into the Graphical settings in game and set the game to run in Windowed mode. This also seems to improve performance on the system I tested it on.",
+  "created_at": "2020-05-14T20:40:16.914476Z",
+  "updated_at": "2020-05-14T20:40:16.914499Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": 1207659029,
+  "gogslug": "myst_5_end_of_ages",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "script": {
+      "files": [
+        {
+          "installer": "N/A:Select the EXE file downloaded from GOG"
+        }
+      ],
+      "game": {
+        "exe": "drive_c/GOG Games/Myst V End Of Ages/Launch Myst V End Of Ages.lnk",
+        "prefix": "$GAMEDIR"
+      },
+      "installer": [
+        {
+          "task": {
+            "arch": "win64",
+            "description": "Creating WINE prefix",
+            "install_gecko": false,
+            "install_mono": false,
+            "name": "create_prefix",
+            "prefix": "$GAMEDIR"
+          }
+        },
+        {
+          "task": {
+            "app": "d3dx9",
+            "arch": "win64",
+            "name": "winetricks",
+            "prefix": "$GAMEDIR"
+          }
+        },
+        {
+          "task": {
+            "app": "d3dcompiler_47",
+            "arch": "win64",
+            "name": "winetricks",
+            "prefix": "$GAMEDIR"
+          }
+        },
+        {
+          "task": {
+            "arch": "win64",
+            "args": "/VERYSILENT /SUPPRESSMSGBOXES /NOCANCEL",
+            "executable": "installer",
+            "name": "wineexec",
+            "prefix": "$GAMEDIR"
+          }
+        },
+        {
+          "task": {
+            "arch": "win64",
+            "key": "background",
+            "name": "set_regedit",
+            "path": "HKEY_CURRENT_USER\\Control Panel\\Colors\\",
+            "prefix": "$GAMEDIR",
+            "type": "REG_SZ",
+            "value": "0 0 0"
+          }
+        }
+      ],
+      "wine": {
+        "Desktop": true,
+        "WineDesktop": "1024x768"
+      }
+    }
+  },
+  "content": "script:\n  files:\n  - installer: N/A:Select the EXE file downloaded from GOG\n  game:\n    exe: drive_c/GOG Games/Myst V End Of Ages/Launch Myst V End Of Ages.lnk\n    prefix: $GAMEDIR\n  installer:\n  - task:\n      arch: win64\n      description: Creating WINE prefix\n      install_gecko: false\n      install_mono: false\n      name: create_prefix\n      prefix: $GAMEDIR\n  - task:\n      app: d3dx9\n      arch: win64\n      name: winetricks\n      prefix: $GAMEDIR\n  - task:\n      app: d3dcompiler_47\n      arch: win64\n      name: winetricks\n      prefix: $GAMEDIR\n  - task:\n      arch: win64\n      args: /VERYSILENT /SUPPRESSMSGBOXES /NOCANCEL\n      executable: installer\n      name: wineexec\n      prefix: $GAMEDIR\n  - task:\n      arch: win64\n      key: background\n      name: set_regedit\n      path: HKEY_CURRENT_USER\\Control Panel\\Colors\\\n      prefix: $GAMEDIR\n      type: REG_SZ\n      value: 0 0 0\n  wine:\n    Desktop: true\n    WineDesktop: 1024x768\n"
+}

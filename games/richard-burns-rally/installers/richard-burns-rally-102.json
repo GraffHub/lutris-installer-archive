@@ -1,0 +1,139 @@
+{
+  "id": 23410,
+  "game_id": 26738,
+  "game_slug": "richard-burns-rally",
+  "name": "Richard Burns Rally",
+  "year": 2004,
+  "user": "daft",
+  "runner": "wine",
+  "slug": "richard-burns-rally-102",
+  "version": "1.02",
+  "description": null,
+  "notes": "",
+  "created_at": "2020-09-18T10:31:27.799238Z",
+  "updated_at": "2020-09-18T10:31:27.799264Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "install": "N/A:Please select the Installer RichardBurnsRally_Setup.exe"
+      },
+      {
+        "update": "N/A:Please select the patch Richard Burns Rally 1.02 Patch.exe"
+      },
+      {
+        "dgv": "N/A:Please select the dgVoodoo 2 zip from http://www.dege.freeweb.hu"
+      },
+      {
+        "rbrcit": "N/A:Please select the RBRCIT zip from https://github.com/zissakos/RBRCIT/releases"
+      }
+    ],
+    "installer": [
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Preparing wineprefix...",
+          "install_mono": false,
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "executable": "install",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "executable": "update",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/",
+          "file": "rbrcit"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/",
+          "file": "dgv"
+        }
+      },
+      {
+        "merge": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/",
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/MS/x86/D3D9.dll"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/dgVoodoo_original.conf",
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/dgVoodoo.conf"
+        }
+      },
+      {
+        "write_config": {
+          "data": {
+            "DirectX": {
+              "dgVoodooWatermark": false
+            }
+          },
+          "file": "$GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/dgVoodoo.conf",
+          "merge": false
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "msvcr71",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "native,builtin"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "key": "dsound",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\",
+          "prefix": "$GAMEDIR",
+          "type": "REG_SZ",
+          "value": "native,builtin"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet48",
+          "description": "Installing Dotnet 4.8, could take a long time, 10-20 mn...",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- install: N/A:Please select the Installer RichardBurnsRally_Setup.exe\n- update: N/A:Please select the patch Richard Burns Rally 1.02 Patch.exe\n- dgv: N/A:Please select the dgVoodoo 2 zip from http://www.dege.freeweb.hu\n- rbrcit: N/A:Please select the RBRCIT zip from https://github.com/zissakos/RBRCIT/releases\ninstaller:\n- task:\n    arch: win64\n    description: Preparing wineprefix...\n    install_mono: false\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    executable: install\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    executable: update\n    name: wineexec\n    prefix: $GAMEDIR\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/\n    file: rbrcit\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/\n    file: dgv\n- merge:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/\n    src: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/MS/x86/D3D9.dll\n- move:\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/dgVoodoo_original.conf\n    src: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/dgVoodoo.conf\n- write_config:\n    data:\n      DirectX:\n        dgVoodooWatermark: false\n    file: $GAMEDIR/drive_c/Program Files (x86)/Eidos/Richard Burns Rally/dgVoodoo.conf\n    merge: false\n- task:\n    arch: win64\n    key: msvcr71\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    arch: win64\n    key: dsound\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllOverrides\\\n    prefix: $GAMEDIR\n    type: REG_SZ\n    value: native,builtin\n- task:\n    app: dotnet48\n    description: Installing Dotnet 4.8, could take a long time, 10-20 mn...\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n"
+}

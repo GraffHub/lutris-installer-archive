@@ -1,0 +1,69 @@
+{
+  "id": 19655,
+  "game_id": 32349,
+  "game_slug": "star-trek-starfleet-command-iii",
+  "name": "Star Trek Starfleet Command III",
+  "year": 2002,
+  "user": "Autolycus",
+  "runner": "wine",
+  "slug": "star-trek-starfleet-command-i-cdrom-only",
+  "version": "CDROM only",
+  "description": "Installs game from CD.\r\nAfter installation, you will need to install a patch and/or mod using the Run EXE inside wine prefix option. Recommend using the 534b patch: http://starfleetcommand3.filefront.com/file/sfc3_beta_patch_v534b_all_languages;28800",
+  "notes": "Do NOT install DirectX 8 when offered.\r\nDo NOT install GameSpy when offered.\r\nRenamed the Cinema directory to prevent resolution change problems at startup.",
+  "created_at": "2020-04-12T06:31:20.084000Z",
+  "updated_at": "2020-04-20T07:35:44.511586Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Starfleet Command III",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dxof",
+          "description": "Installing d3dxof winetrick",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "description": "Disabling Cinemas",
+          "dst": "$GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema-disabled",
+          "src": "$GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  exe: drive_c/Program Files (x86)/Activision/Sfc3/SFC3.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    requires: setup.exe\n- task:\n    description: Installing Starfleet Command III\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    app: d3dxof\n    description: Installing d3dxof winetrick\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    description: Disabling Cinemas\n    dst: $GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema-disabled\n    src: $GAMEDIR/drive_c/Program Files (x86)/Activision/Sfc3/Assets/Cinema\n"
+}

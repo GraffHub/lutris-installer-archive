@@ -1,0 +1,126 @@
+{
+  "id": 23556,
+  "game_id": 22923,
+  "game_slug": "lord-of-the-rings-the-return-of-the-king",
+  "name": "Lord of the Rings - The Return of the King",
+  "year": 2003,
+  "user": "Lochrey",
+  "runner": "wine",
+  "slug": "lord-of-the-rings-the-return-3-discs",
+  "version": "3 discs",
+  "description": "Installer which requires 3 CDs for the game installation. You also need a legal key of the game and a No-CD patch to run the game properly. One can find a No-CD  here: https://gamecopyworld.eu/games/pc_lord_of_the_rings_rotk.shtml#LotR:%20The%20Return%20Of%20The%20King%20v1.0%20[ENGLISH]%20No-CD/Fixed%20EXE",
+  "notes": "After finishing the installation  the setup will try to run the game. An error message will pop-up: \"Please insert the correct CD-ROM, select OK and restart the application.\"  Don't bother with the error message, close it. The script will copy the No-CD afterward and fix the issue.",
+  "created_at": "2020-09-27T18:31:19.151860Z",
+  "updated_at": "2020-09-27T18:31:19.151895Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "nocd": "N/A:Select the game's NOCD patch"
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Program Files/EA GAMES/LOTR The Return of the King tm/ROTK.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 1",
+          "requires": "AutoRun.exe"
+        }
+      },
+      {
+        "merge": {
+          "description": "Extracting installation data from disc 1...",
+          "dst": "$GAMEDIR/drive_c/setup",
+          "src": "$DISC"
+        }
+      },
+      {
+        "execute": {
+          "args": "744 -R $GAMEDIR/drive_c/setup",
+          "file": "chmod"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 2",
+          "requires": "data_2.pac"
+        }
+      },
+      {
+        "merge": {
+          "description": "Extracting installation data from disc 2...",
+          "dst": "$GAMEDIR/drive_c/setup",
+          "src": "$DISC"
+        }
+      },
+      {
+        "execute": {
+          "args": "744 -R $GAMEDIR/drive_c/setup",
+          "file": "chmod"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Insert disc 3",
+          "requires": "data_3.pac"
+        }
+      },
+      {
+        "merge": {
+          "description": "Extracting installation data from disc 3...",
+          "dst": "$GAMEDIR/drive_c/setup",
+          "src": "$DISC"
+        }
+      },
+      {
+        "execute": {
+          "args": "744 -R $GAMEDIR/drive_c/setup",
+          "file": "chmod"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing the game...",
+          "executable": "$GAMEDIR/drive_c/setup/AutoRun.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "copy": {
+          "description": "Copying NOCD patch...",
+          "dst": "$GAMEDIR/drive_c/Program Files/EA GAMES/LOTR The Return of the King tm/ROTK.exe",
+          "src": "nocd"
+        }
+      },
+      {
+        "execute": {
+          "args": "-rf $GAMEDIR/drive_c/setup",
+          "description": "Wiping installationn data from Wine prefix...",
+          "file": "rm"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- nocd: N/A:Select the game's NOCD patch\ngame:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/EA GAMES/LOTR The Return of the King tm/ROTK.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Insert disc 1\n    requires: AutoRun.exe\n- merge:\n    description: Extracting installation data from disc 1...\n    dst: $GAMEDIR/drive_c/setup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/setup\n    file: chmod\n- insert-disc:\n    description: Insert disc 2\n    requires: data_2.pac\n- merge:\n    description: Extracting installation data from disc 2...\n    dst: $GAMEDIR/drive_c/setup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/setup\n    file: chmod\n- insert-disc:\n    description: Insert disc 3\n    requires: data_3.pac\n- merge:\n    description: Extracting installation data from disc 3...\n    dst: $GAMEDIR/drive_c/setup\n    src: $DISC\n- execute:\n    args: 744 -R $GAMEDIR/drive_c/setup\n    file: chmod\n- task:\n    description: Installing the game...\n    executable: $GAMEDIR/drive_c/setup/AutoRun.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- copy:\n    description: Copying NOCD patch...\n    dst: $GAMEDIR/drive_c/Program Files/EA GAMES/LOTR The Return of the King tm/ROTK.exe\n    src: nocd\n- execute:\n    args: -rf $GAMEDIR/drive_c/setup\n    description: Wiping installationn data from Wine prefix...\n    file: rm\n"
+}

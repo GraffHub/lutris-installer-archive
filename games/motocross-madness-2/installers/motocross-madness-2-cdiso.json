@@ -1,0 +1,83 @@
+{
+  "id": 13673,
+  "game_id": 27424,
+  "game_slug": "motocross-madness-2",
+  "name": "Motocross Madness 2",
+  "year": 2000,
+  "user": "danber",
+  "runner": "wine",
+  "slug": "motocross-madness-2-cdiso",
+  "version": "CD/ISO",
+  "description": "Installs Motocross Madness 2 including a No CD patch and required libraries with winetricks (amstream, quartz, icodecs)",
+  "notes": "- Do not interrupt the Indeo Codecs setup\r\n- Use default options during game installation\r\n- Close the game installer when it is done",
+  "created_at": "2019-05-21T21:04:46.821000Z",
+  "updated_at": "2020-06-01T13:29:30.507497Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "nocd_patch": {
+          "checksum": "9e0f8a8623aaf387234a80f1e599d1188c32977a33d16945c35ffdd6887e92d9",
+          "filename": "MCM2.NoCD.Patch.zip",
+          "referer": "http://www.mcm2central.com/mcm2downloads/utilities/nocd-patch/",
+          "url": "http://www.mcm2central.com/download/mcm2-no-cd-patch/"
+        }
+      }
+    ],
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Microsoft Games/Motocross Madness 2/mcm2.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "amstream quartz icodecs",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$CACHE",
+          "src": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Motocross Madness 2/MCM2.EXE"
+        }
+      },
+      {
+        "extract": {
+          "dst": "$GAMEDIR/drive_c/Program Files/Microsoft Games/Motocross Madness 2/",
+          "file": "nocd_patch"
+        }
+      }
+    ]
+  },
+  "content": "files:\n- nocd_patch:\n    checksum: 9e0f8a8623aaf387234a80f1e599d1188c32977a33d16945c35ffdd6887e92d9\n    filename: MCM2.NoCD.Patch.zip\n    referer: http://www.mcm2central.com/mcm2downloads/utilities/nocd-patch/\n    url: http://www.mcm2central.com/download/mcm2-no-cd-patch/\ngame:\n  arch: win32\n  exe: drive_c/Program Files/Microsoft Games/Motocross Madness 2/mcm2.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win32\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: amstream quartz icodecs\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    executable: $DISC/setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- move:\n    dst: $CACHE\n    src: $GAMEDIR/drive_c/Program Files/Microsoft Games/Motocross Madness 2/MCM2.EXE\n- extract:\n    dst: $GAMEDIR/drive_c/Program Files/Microsoft Games/Motocross Madness 2/\n    file: nocd_patch\n"
+}

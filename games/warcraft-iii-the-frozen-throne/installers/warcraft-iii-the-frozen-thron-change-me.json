@@ -1,0 +1,104 @@
+{
+  "id": 23388,
+  "game_id": 2925,
+  "game_slug": "warcraft-iii-the-frozen-throne",
+  "name": "Warcraft III: The Frozen Throne",
+  "year": 2003,
+  "user": "kiluas",
+  "runner": "wine",
+  "slug": "warcraft-iii-the-frozen-thron-change-me",
+  "version": "Change Me",
+  "description": "This script will facilitate you install of this game on Linux OS: \r\n\"Warcraft III - The Frozen Throne\" CD edition. \r\nThis script uses \"Widescreen fix for Warcraft III\" project: https://github.com/ENAleksey/RenderEdge_Widescreen and https://www.hiveworkshop.com/threads/renderedge-widescreen-fix.293641/ \r\nDuring install please let all options by default. Thanks to the people who helped us play this game in the best conditions on Linux platform.",
+  "notes": "- You need first to install \"Warcraft III - ROC\" called \"CD + patch 1.27b + WS before to install this extension \r\n- This script is compatible with all \"Warcraft III - TFT\" PC CD which contain \"installer.exe\" file, whatever the language is. \r\n- During install, your game will be updated with last available version for  CD: 1.27b.\r\n- You will need the CD only one time during install.\r\n- The game will ask you a valid key at first launch.\r\n- Widescreen compliant without stretch.\r\n- Known issues:\r\n-- You can not play multiplayer games on Internet, only Local LAN network games will be available. If it's a problem prefer playing Reforged version instead. \r\n- Please report issue concerning this script on my Github page:\r\nhttps://github.com/legluondunet/MyLittleLutrisScripts/",
+  "created_at": "2020-09-17T11:18:23.091645Z",
+  "updated_at": "2020-09-17T11:18:23.091673Z",
+  "draft": false,
+  "published": false,
+  "published_by": 494,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "extends": "warcraft-iii-reign-of-chaos",
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "installer.exe"
+        }
+      },
+      {
+        "task": {
+          "args": "/desktop=WarcraftIII,1024x780 \"$DISC/installer.exe\"",
+          "description": "Installing Warcraft III - The Frozen Throne...",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Please choose your CD native language in the list. Do not choose another language than the one from your CD or the update will not install and you will have to reinstall all the game.",
+          "id": "LANG",
+          "options": [
+            {
+              "English": "English"
+            },
+            {
+              "Francais": "Français"
+            },
+            {
+              "Italiano": "Italiano"
+            },
+            {
+              "Deutsch": "Deutsch"
+            },
+            {
+              "Castellano": "Castellano"
+            },
+            {
+              "Cesky": "Cesky"
+            },
+            {
+              "Chinese_Simp": "simplified Chinese"
+            },
+            {
+              "Chinese_Trad": "traditionnal Chinese"
+            },
+            {
+              "Japanese": "Japanese"
+            },
+            {
+              "Korean": "Korean"
+            },
+            {
+              "Polski": "Polski"
+            },
+            {
+              "Russian": "Russian"
+            }
+          ],
+          "preselect": "English"
+        }
+      },
+      {
+        "execute": {
+          "command": "cd \"$GAMEDIR/drive_c/\"; cd tmp; wget http://ftp.blizzard.com/pub/war3x/patches/pc/War3TFT_127b_$INPUT_LANG.exe;"
+        }
+      },
+      {
+        "task": {
+          "args": "/desktop=WarcraftIIIupdate,$RESOLUTION '$GAMEDIR/drive_c/tmp/War3TFT_127b_'$INPUT_LANG'.exe'",
+          "description": "Updating Warcraft III to 1.27b...",
+          "executable": "$GAMEDIR/drive_c/windows/explorer.exe",
+          "include_processes": "explorer.exe",
+          "name": "wineexec"
+        }
+      }
+    ]
+  },
+  "content": "extends: warcraft-iii-reign-of-chaos\ninstaller:\n- insert-disc:\n    requires: installer.exe\n- task:\n    args: /desktop=WarcraftIII,1024x780 \"$DISC/installer.exe\"\n    description: Installing Warcraft III - The Frozen Throne...\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\n- input_menu:\n    description: Please choose your CD native language in the list. Do not choose\n      another language than the one from your CD or the update will not install and\n      you will have to reinstall all the game.\n    id: LANG\n    options:\n    - English: English\n    - Francais: \"Fran\\xE7ais\"\n    - Italiano: Italiano\n    - Deutsch: Deutsch\n    - Castellano: Castellano\n    - Cesky: Cesky\n    - Chinese_Simp: simplified Chinese\n    - Chinese_Trad: traditionnal Chinese\n    - Japanese: Japanese\n    - Korean: Korean\n    - Polski: Polski\n    - Russian: Russian\n    preselect: English\n- execute:\n    command: cd \"$GAMEDIR/drive_c/\"; cd tmp; wget http://ftp.blizzard.com/pub/war3x/patches/pc/War3TFT_127b_$INPUT_LANG.exe;\n- task:\n    args: /desktop=WarcraftIIIupdate,$RESOLUTION '$GAMEDIR/drive_c/tmp/War3TFT_127b_'$INPUT_LANG'.exe'\n    description: Updating Warcraft III to 1.27b...\n    executable: $GAMEDIR/drive_c/windows/explorer.exe\n    include_processes: explorer.exe\n    name: wineexec\n"
+}

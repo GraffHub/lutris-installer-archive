@@ -1,0 +1,138 @@
+{
+  "id": 7978,
+  "game_id": 16124,
+  "game_slug": "mass-effect-3",
+  "name": "Mass Effect 3",
+  "year": 2012,
+  "user": "aloade",
+  "runner": "wine",
+  "slug": "mass-effect-3-dvd",
+  "version": "DVD",
+  "description": null,
+  "notes": "",
+  "created_at": "2018-04-23T17:30:04.264000Z",
+  "updated_at": "2019-10-28T20:41:59.957731Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 1238020,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "arch": "win32",
+      "exe": "drive_c/Program Files/Mass Effect 3/Binaries/Win32/MassEffect3.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating 64bit Wine prefix.",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Setting OS as Windows 7.",
+          "key": "Version",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine",
+          "prefix": "$GAMEDIR",
+          "value": "win7"
+        }
+      },
+      {
+        "task": {
+          "description": "Allow DirectX apps to stop the mouse leaving their window.",
+          "key": "GrabFullScreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "description": "Deny the window manager to decorate the windows.",
+          "key": "Decorated",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "N"
+        }
+      },
+      {
+        "task": {
+          "description": "Allow the window manager to control the windows.",
+          "key": "Managed",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "description": "Enabling CSMT for better graphic performance.",
+          "key": "wined3d",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects",
+          "prefix": "$GAMEDIR",
+          "value": "wined3d-csmt.dll"
+        }
+      },
+      {
+        "task": {
+          "description": "Enabling VAAPI as backend for DXVA2 GPU decoding.",
+          "key": "backend",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\DXVA2",
+          "prefix": "$GAMEDIR",
+          "value": "va"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dx11_43",
+          "description": "Installing DirectX 11.",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "physx",
+          "description": "Installing PhysX.",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "description": "Installing Mass Effect 3.\nThe installating folder MUST BE 'C:\\Program Files\\Mass Effect 3'\nIgnore install of DirectX, Visual C++ and PhysX.",
+          "executable": "$DISC/Setup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "dxgi": "disable",
+        "nvcuda": "disable"
+      }
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: drive_c/Program Files/Mass Effect 3/Binaries/Win32/MassEffect3.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    arch: win64\n    description: Creating 64bit Wine prefix.\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    description: Setting OS as Windows 7.\n    key: Version\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\n    prefix: $GAMEDIR\n    value: win7\n- task:\n    description: Allow DirectX apps to stop the mouse leaving their window.\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Deny the window manager to decorate the windows.\n    key: Decorated\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- task:\n    description: Allow the window manager to control the windows.\n    key: Managed\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    description: Enabling CSMT for better graphic performance.\n    key: wined3d\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DllRedirects\n    prefix: $GAMEDIR\n    value: wined3d-csmt.dll\n- task:\n    description: Enabling VAAPI as backend for DXVA2 GPU decoding.\n    key: backend\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\DXVA2\n    prefix: $GAMEDIR\n    value: va\n- task:\n    app: d3dx11_43\n    description: Installing DirectX 11.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: physx\n    description: Installing PhysX.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    description: 'Installing Mass Effect 3.\n\n      The installating folder MUST BE ''C:\\Program Files\\Mass Effect 3''\n\n      Ignore install of DirectX, Visual C++ and PhysX.'\n    executable: $DISC/Setup.exe\n    name: wineexec\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    dxgi: disable\n    nvcuda: disable\n"
+}

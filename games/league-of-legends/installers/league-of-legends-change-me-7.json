@@ -1,0 +1,329 @@
+{
+  "id": 21674,
+  "game_id": 2424,
+  "game_slug": "league-of-legends",
+  "name": "League of Legends",
+  "year": 2009,
+  "user": "itsbyte",
+  "runner": "wine",
+  "slug": "league-of-legends-change-me-7",
+  "version": "Change Me",
+  "description": "New Riot Launcher with vsyscall32 override. Uses d9vk, esync, and various GL improvements. Also installs Blitz.gg.",
+  "notes": "IMPORTANT: These programs do not \"finish\" installing without closing them first run. Be sure to exit Blitz once done installing (you can close as soon as the login window appears) and the Riot launcher after all updates install, but before signing in (note: *after* the updates finish installing). \r\n\r\nLutris may not recognize that your game is installed unless you do, and will not preserve the Wine Prefix. \r\n\r\nKnown Issue: \r\n\r\nThere seems to be a warning about an install issue, but it should still close and relaunch/run properly.",
+  "created_at": "2020-06-18T20:32:22.924101Z",
+  "updated_at": "2020-06-18T20:32:22.924130Z",
+  "draft": false,
+  "published": false,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 20590,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "custom-name": "League of Legends + Blitz.gg Overlay",
+    "files": [
+      {
+        "lol_installer": "https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe"
+      },
+      {
+        "overlay_installer": {
+          "filename": "blitz_install.exe",
+          "url": "https://dl.blitz.gg/download/windows"
+        }
+      }
+    ],
+    "game": {
+      "args": "/trustlevel:0x20000 LeagueClient.exe",
+      "exe": "$GAMEDIR/drive_c/windows/system32/runas.exe",
+      "prefix": "$GAMEDIR",
+      "working_dir": "$GAMEDIR/drive_c/Riot Games/League of Legends"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating Wine prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43 d3dx9",
+          "arch": "win32",
+          "description": "Installing D9VK Dependencies",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet461",
+          "arch": "win32",
+          "description": "Installing .NET Framework. (4.6.1)",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "move": {
+          "dst": "$GAMEDIR/drive_c/users/Public/Documents",
+          "src": "overlay_installer"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose the game's language:",
+          "id": "LOCALE",
+          "options": [
+            {
+              "cs_CZ": "Čeština"
+            },
+            {
+              "en_AU": "English AUS"
+            },
+            {
+              "en_GB": "English U.K."
+            },
+            {
+              "en_US": "English U.S."
+            },
+            {
+              "fr_FR": "Français"
+            },
+            {
+              "de_DE": "Deutsch"
+            },
+            {
+              "es_ES": "Español"
+            },
+            {
+              "es_MX": "Español Mexicano"
+            },
+            {
+              "it_IT": "Italiano"
+            },
+            {
+              "ja_JP": "日本語"
+            },
+            {
+              "hu_HU": "Magyar"
+            },
+            {
+              "pl_PL": "Polski"
+            },
+            {
+              "pt_BR": "Português do Brasil"
+            },
+            {
+              "ro_RO": "Romanian"
+            },
+            {
+              "ru_RU": "русский"
+            },
+            {
+              "tr_TR": "Türkçe"
+            }
+          ],
+          "preselect": "en_US"
+        }
+      },
+      {
+        "input_menu": {
+          "description": "Choose the game's server region:",
+          "id": "REGION",
+          "options": [
+            {
+              "BR": "Brazil"
+            },
+            {
+              "EUNE": "Europe Nordic & East"
+            },
+            {
+              "EUW": "Europe West"
+            },
+            {
+              "LAN": "Latin America North"
+            },
+            {
+              "LAS": "Latin America South"
+            },
+            {
+              "NA": "North America"
+            },
+            {
+              "OCE": "Oceania"
+            },
+            {
+              "RU": "Russia"
+            },
+            {
+              "TR": "Turkey"
+            },
+            {
+              "JP": "Japan"
+            },
+            {
+              "SEA": "South East Asia"
+            }
+          ],
+          "preselect": "NA"
+        }
+      },
+      {
+        "task": {
+          "app": "win7",
+          "arch": "win32",
+          "description": "Switching to Windows 7 for Blitz Install",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/trustlevel:0x20000 \"C:\\users\\Public\\Documents\\blitz_install.exe\"",
+          "description": "Installing Blitz.gg Overlay",
+          "executable": "$GAMEDIR/drive_c/windows/system32/runas.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Installing League of Legends",
+          "executable": "lol_installer",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "GrabFullScreen",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "Y"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "key": "UseXVidMode",
+          "name": "set_regedit",
+          "path": "HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver",
+          "prefix": "$GAMEDIR",
+          "value": "N"
+        }
+      },
+      {
+        "write_file": {
+          "content": {
+            "install": {
+              "globals": {
+                "locale": "$INPUT_LOCALE",
+                "region": "$INPUT_REGION"
+              }
+            }
+          },
+          "file": "$GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "write_file": {
+          "content": "#!/usr/bin/env sh\n\n# If abi.vsyscall32=0 is already set, no need to do anything\nif [ \"$(cat /proc/sys/abi/vsyscall32)\" -eq 0 ]; then\n    exit 0\nfi\n\ndialog() {\n    zenity \"$@\" --icon-name='lutris' --width=\"400\" --title=\"League of Legends anticheat compatibility check\"\n}\n\nfinal_check() {\n    if [ \"$(cat /proc/sys/abi/vsyscall32)\" -ne 0 ]; then\n        dialog --warning --text=\"As far as this script can detect, your system is not configured to work with League's anticheat. Please verify that you can get into the practice tool before playing a multiplayer game.\"\n    fi\n}\n\ntrap final_check EXIT\n\nif grep -E -x -q \"abi.vsyscall32( )?=( )?0\" /etc/sysctl.conf; then\n    if dialog --question --text=\"It looks like you already configured your system to work with League anticheat, and saved the setting to persist across reboots. However, for some reason the persistence part did not work.\\n\\nFor now, would you like to enable the setting again until the next reboot?\"\n    then\n        pkexec sh -c 'sysctl -w abi.vsyscall32=0'\n    fi\n    exit 0\nfi\n\nonce=\"Change setting until next reboot\"\npersist=\"Change setting and persist after reboot\"\nmanual=\"Show me the commands; I'll handle it myself\"\n\nif dialog --question --text=\"League of Legends' anticheat requires using a modified version of wine and changing a system setting. Otherwise, the game will crash after champion select. Wine-lol comes with the Lutris installer, but as far as this script can detect, the setting has not been changed yet.\\nNote: The setting (abi.vsyscall32=0) may reduce the performance of some 32 bit applications.\\n\\nWould you like to change the setting now?\"\nthen\n    # I tried to embed the command in the dialog and run the output, but\n    # parsing variables with embedded quotes is an excercise in frustration.\n    RESULT=$(dialog --list --radiolist --height=\"200\" \\\n        --column=\"\" --column=\"Command\" \\\n        \"TRUE\" \"$once\" \\\n        \"FALSE\" \"$persist\" \\\n        \"FALSE\" \"$manual\")\n\n    case \"$RESULT\" in\n        \"$once\")\n            pkexec sh -c 'sysctl -w abi.vsyscall32=0'\n            ;;\n        \"$persist\")\n            pkexec sh -c 'echo \"abi.vsyscall32 = 0\" >> /etc/sysctlutris:league-of-legends?revision=43948l.conf && sysctl -p'\n            ;;\n        \"$manual\")\n            dialog --info --no-wrap --text=\"To change the setting (a kernel parameter) until next boot, run:\\n\\nsudo sh -c 'sysctl -w abi.vsyscall32=0'\\n\\nTo persist the setting between reboots, run:\\n\\nsudo sh -c 'echo \\\"abi.vsyscall32 = 0\\\" >> /etc/sysctl.conf &amp;&amp; sysctl -p'\"\n            # Anyone who wants to do it manually doesn't need another warning\n            trap - EXIT\n            ;;\n        *)\n            echo \"Dialog canceled or unknown option selected: $RESULT\"\n            ;;\n    esac\nfi\n",
+          "file": "$GAMEDIR/syscall_check.sh"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/syscall_check.sh"
+      },
+      {
+        "write_file": {
+          "content": "#!/usr/bin/env sh\n#Update Wine/Prefix Refs as needed \n\n /bin/bash syscall_check.sh\n WINEPREFIX=",
+          "file": "$GAMEDIR/launch_overlay.sh"
+        }
+      },
+      {
+        "write_file": {
+          "content": "$GAMEDIR",
+          "file": "$GAMEDIR/launch_overlay.sh",
+          "mode": "a"
+        }
+      },
+      {
+        "write_file": {
+          "content": " ",
+          "file": "$GAMEDIR/launch_overlay.sh",
+          "mode": "a"
+        }
+      },
+      {
+        "write_file": {
+          "content": "$HOME/.local/share/lutris/runners/wine/lutris-lol-4.20-x86_64/bin/wine",
+          "file": "$GAMEDIR/launch_overlay.sh",
+          "mode": "a"
+        }
+      },
+      {
+        "write_file": {
+          "content": " runas /trustlevel:0x20000 ",
+          "file": "$GAMEDIR/launch_overlay.sh",
+          "mode": "a"
+        }
+      },
+      {
+        "write_file": {
+          "content": "\"C:\\users\\$USER\\Local Settings\\Application Data\\Blitz\\blitz.exe\"",
+          "file": "$GAMEDIR/launch_overlay.sh",
+          "mode": "a"
+        }
+      },
+      {
+        "chmodx": "$GAMEDIR/launch_overlay.sh"
+      }
+    ],
+    "system": {
+      "disable_compositor": true,
+      "env": {
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "PBA_DISABLE": 0,
+        "STAGING_SHARED_MEMORY": 1,
+        "WINE_LARGE_ADDRESS_AWARE": 1,
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR",
+        "__GL_THREADED_OPTIMIZATIONS": 1,
+        "pulse_latency": "true"
+      },
+      "prelaunch_command": "$GAMEDIR/launch_overlay.sh"
+    },
+    "wine": {
+      "MouseWarpOverride": "enable",
+      "UseGLSL": "disabled",
+      "dxvk": true,
+      "esync": true,
+      "version": "lutris-lol-5.0-x86_64"
+    }
+  },
+  "content": "custom-name: League of Legends + Blitz.gg Overlay\nfiles:\n- lol_installer: https://lol.secure.dyn.riotcdn.net/channels/public/x/installer/current/live.na.exe\n- overlay_installer:\n    filename: blitz_install.exe\n    url: https://dl.blitz.gg/download/windows\ngame:\n  args: /trustlevel:0x20000 LeagueClient.exe\n  exe: $GAMEDIR/drive_c/windows/system32/runas.exe\n  prefix: $GAMEDIR\n  working_dir: $GAMEDIR/drive_c/Riot Games/League of Legends\ninstaller:\n- task:\n    arch: win32\n    description: Creating Wine prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    arch: win32\n    description: Installing D9VK Dependencies\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet461\n    arch: win32\n    description: Installing .NET Framework. (4.6.1)\n    name: winetricks\n    prefix: $GAMEDIR\n- move:\n    dst: $GAMEDIR/drive_c/users/Public/Documents\n    src: overlay_installer\n- input_menu:\n    description: 'Choose the game''s language:'\n    id: LOCALE\n    options:\n    - cs_CZ: \"\\u010Ce\\u0161tina\"\n    - en_AU: English AUS\n    - en_GB: English U.K.\n    - en_US: English U.S.\n    - fr_FR: \"Fran\\xE7ais\"\n    - de_DE: Deutsch\n    - es_ES: \"Espa\\xF1ol\"\n    - es_MX: \"Espa\\xF1ol Mexicano\"\n    - it_IT: Italiano\n    - ja_JP: \"\\u65E5\\u672C\\u8A9E\"\n    - hu_HU: Magyar\n    - pl_PL: Polski\n    - pt_BR: \"Portugu\\xEAs do Brasil\"\n    - ro_RO: Romanian\n    - ru_RU: \"\\u0440\\u0443\\u0441\\u0441\\u043A\\u0438\\u0439\"\n    - tr_TR: \"T\\xFCrk\\xE7e\"\n    preselect: en_US\n- input_menu:\n    description: 'Choose the game''s server region:'\n    id: REGION\n    options:\n    - BR: Brazil\n    - EUNE: Europe Nordic & East\n    - EUW: Europe West\n    - LAN: Latin America North\n    - LAS: Latin America South\n    - NA: North America\n    - OCE: Oceania\n    - RU: Russia\n    - TR: Turkey\n    - JP: Japan\n    - SEA: South East Asia\n    preselect: NA\n- task:\n    app: win7\n    arch: win32\n    description: Switching to Windows 7 for Blitz Install\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    args: /trustlevel:0x20000 \"C:\\users\\Public\\Documents\\blitz_install.exe\"\n    description: Installing Blitz.gg Overlay\n    executable: $GAMEDIR/drive_c/windows/system32/runas.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    description: Installing League of Legends\n    executable: lol_installer\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    key: GrabFullScreen\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: Y\n- task:\n    arch: win32\n    key: UseXVidMode\n    name: set_regedit\n    path: HKEY_CURRENT_USER\\Software\\Wine\\X11 Driver\n    prefix: $GAMEDIR\n    value: N\n- write_file:\n    content:\n      install:\n        globals:\n          locale: $INPUT_LOCALE\n          region: $INPUT_REGION\n    file: $GAMEDIR/drive_c/Riot Games/League of Legends/Config/LeagueClientSettings.yaml\n- task:\n    arch: win32\n    name: winekill\n    prefix: $GAMEDIR\n- write_file:\n    content: \"#!/usr/bin/env sh\\n\\n# If abi.vsyscall32=0 is already set, no need to\\\n      \\ do anything\\nif [ \\\"$(cat /proc/sys/abi/vsyscall32)\\\" -eq 0 ]; then\\n    exit\\\n      \\ 0\\nfi\\n\\ndialog() {\\n    zenity \\\"$@\\\" --icon-name='lutris' --width=\\\"400\\\"\\\n      \\ --title=\\\"League of Legends anticheat compatibility check\\\"\\n}\\n\\nfinal_check()\\\n      \\ {\\n    if [ \\\"$(cat /proc/sys/abi/vsyscall32)\\\" -ne 0 ]; then\\n        dialog\\\n      \\ --warning --text=\\\"As far as this script can detect, your system is not configured\\\n      \\ to work with League's anticheat. Please verify that you can get into the practice\\\n      \\ tool before playing a multiplayer game.\\\"\\n    fi\\n}\\n\\ntrap final_check EXIT\\n\\\n      \\nif grep -E -x -q \\\"abi.vsyscall32( )?=( )?0\\\" /etc/sysctl.conf; then\\n   \\\n      \\ if dialog --question --text=\\\"It looks like you already configured your system\\\n      \\ to work with League anticheat, and saved the setting to persist across reboots.\\\n      \\ However, for some reason the persistence part did not work.\\\\n\\\\nFor now,\\\n      \\ would you like to enable the setting again until the next reboot?\\\"\\n    then\\n\\\n      \\        pkexec sh -c 'sysctl -w abi.vsyscall32=0'\\n    fi\\n    exit 0\\nfi\\n\\\n      \\nonce=\\\"Change setting until next reboot\\\"\\npersist=\\\"Change setting and persist\\\n      \\ after reboot\\\"\\nmanual=\\\"Show me the commands; I'll handle it myself\\\"\\n\\n\\\n      if dialog --question --text=\\\"League of Legends' anticheat requires using a\\\n      \\ modified version of wine and changing a system setting. Otherwise, the game\\\n      \\ will crash after champion select. Wine-lol comes with the Lutris installer,\\\n      \\ but as far as this script can detect, the setting has not been changed yet.\\\\\\\n      nNote: The setting (abi.vsyscall32=0) may reduce the performance of some 32\\\n      \\ bit applications.\\\\n\\\\nWould you like to change the setting now?\\\"\\nthen\\n\\\n      \\    # I tried to embed the command in the dialog and run the output, but\\n\\\n      \\    # parsing variables with embedded quotes is an excercise in frustration.\\n\\\n      \\    RESULT=$(dialog --list --radiolist --height=\\\"200\\\" \\\\\\n        --column=\\\"\\\n      \\\" --column=\\\"Command\\\" \\\\\\n        \\\"TRUE\\\" \\\"$once\\\" \\\\\\n        \\\"FALSE\\\"\\\n      \\ \\\"$persist\\\" \\\\\\n        \\\"FALSE\\\" \\\"$manual\\\")\\n\\n    case \\\"$RESULT\\\" in\\n\\\n      \\        \\\"$once\\\")\\n            pkexec sh -c 'sysctl -w abi.vsyscall32=0'\\n\\\n      \\            ;;\\n        \\\"$persist\\\")\\n            pkexec sh -c 'echo \\\"abi.vsyscall32\\\n      \\ = 0\\\" >> /etc/sysctlutris:league-of-legends?revision=43948l.conf && sysctl\\\n      \\ -p'\\n            ;;\\n        \\\"$manual\\\")\\n            dialog --info --no-wrap\\\n      \\ --text=\\\"To change the setting (a kernel parameter) until next boot, run:\\\\\\\n      n\\\\nsudo sh -c 'sysctl -w abi.vsyscall32=0'\\\\n\\\\nTo persist the setting between\\\n      \\ reboots, run:\\\\n\\\\nsudo sh -c 'echo \\\\\\\"abi.vsyscall32 = 0\\\\\\\" >> /etc/sysctl.conf\\\n      \\ &amp;&amp; sysctl -p'\\\"\\n            # Anyone who wants to do it manually\\\n      \\ doesn't need another warning\\n            trap - EXIT\\n            ;;\\n  \\\n      \\      *)\\n            echo \\\"Dialog canceled or unknown option selected: $RESULT\\\"\\\n      \\n            ;;\\n    esac\\nfi\\n\"\n    file: $GAMEDIR/syscall_check.sh\n- chmodx: $GAMEDIR/syscall_check.sh\n- write_file:\n    content: \"#!/usr/bin/env sh\\n#Update Wine/Prefix Refs as needed \\n\\n /bin/bash\\\n      \\ syscall_check.sh\\n WINEPREFIX=\"\n    file: $GAMEDIR/launch_overlay.sh\n- write_file:\n    content: $GAMEDIR\n    file: $GAMEDIR/launch_overlay.sh\n    mode: a\n- write_file:\n    content: ' '\n    file: $GAMEDIR/launch_overlay.sh\n    mode: a\n- write_file:\n    content: $HOME/.local/share/lutris/runners/wine/lutris-lol-4.20-x86_64/bin/wine\n    file: $GAMEDIR/launch_overlay.sh\n    mode: a\n- write_file:\n    content: ' runas /trustlevel:0x20000 '\n    file: $GAMEDIR/launch_overlay.sh\n    mode: a\n- write_file:\n    content: '\"C:\\users\\$USER\\Local Settings\\Application Data\\Blitz\\blitz.exe\"'\n    file: $GAMEDIR/launch_overlay.sh\n    mode: a\n- chmodx: $GAMEDIR/launch_overlay.sh\nsystem:\n  disable_compositor: true\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    PBA_DISABLE: 0\n    STAGING_SHARED_MEMORY: 1\n    WINE_LARGE_ADDRESS_AWARE: 1\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\n    __GL_THREADED_OPTIMIZATIONS: 1\n    pulse_latency: 'true'\n  prelaunch_command: $GAMEDIR/launch_overlay.sh\nwine:\n  MouseWarpOverride: enable\n  UseGLSL: disabled\n  dxvk: true\n  esync: true\n  version: lutris-lol-5.0-x86_64\n"
+}

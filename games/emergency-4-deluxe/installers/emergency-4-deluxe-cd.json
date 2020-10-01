@@ -1,0 +1,88 @@
+{
+  "id": 23005,
+  "game_id": 30943,
+  "game_slug": "emergency-4-deluxe",
+  "name": "EMERGENCY 4 Deluxe",
+  "year": null,
+  "user": "akitosenshi",
+  "runner": "wine",
+  "slug": "emergency-4-deluxe-cd",
+  "version": "CD",
+  "description": "this is an installer for the 1.3f version of the game",
+  "notes": "if the directx setup fails manually set the Windows version in winecfg to Windows XP and try again",
+  "created_at": "2020-08-23T04:53:05.256001Z",
+  "updated_at": "2020-08-23T04:53:05.256027Z",
+  "draft": true,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": 757210,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "arch": "win32",
+      "exe": "$GAMEDIR/drive_c/Program Files/sixteen tons entertainment/Emergency4/Em4.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "insert-disc": {
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "task": {
+          "app": "winxp",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "blocking": true,
+          "executable": "$DISC/setup.exe",
+          "name": "wineexec"
+        }
+      },
+      {
+        "execute": {
+          "command": "regsvr32 quartz",
+          "env": {
+            "WINEARCH": "win32",
+            "WINEDLLOVERRIDES": "quartz,devenum=n",
+            "WINEPREFIX": "$GAMEDIR"
+          }
+        }
+      },
+      {
+        "execute": {
+          "command": "regsvr32 devenum",
+          "env": {
+            "WINEARCH": "win32",
+            "WINEDLLOVERRIDES": "quartz,devenum=n",
+            "WINEPREFIX": "$GAMEDIR"
+          }
+        }
+      },
+      {
+        "task": {
+          "app": "directplay",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "wine": {
+      "overrides": {
+        "devenum": "n",
+        "quartz": "n"
+      }
+    }
+  },
+  "content": "game:\n  arch: win32\n  exe: $GAMEDIR/drive_c/Program Files/sixteen tons entertainment/Emergency4/Em4.exe\n  prefix: $GAMEDIR\ninstaller:\n- insert-disc:\n    requires: setup.exe\n- task:\n    app: winxp\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win32\n    blocking: true\n    executable: $DISC/setup.exe\n    name: wineexec\n- execute:\n    command: regsvr32 quartz\n    env:\n      WINEARCH: win32\n      WINEDLLOVERRIDES: quartz,devenum=n\n      WINEPREFIX: $GAMEDIR\n- execute:\n    command: regsvr32 devenum\n    env:\n      WINEARCH: win32\n      WINEDLLOVERRIDES: quartz,devenum=n\n      WINEPREFIX: $GAMEDIR\n- task:\n    app: directplay\n    name: winetricks\n    prefix: $GAMEDIR\nwine:\n  overrides:\n    devenum: n\n    quartz: n\n"
+}

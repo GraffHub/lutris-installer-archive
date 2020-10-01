@@ -1,0 +1,152 @@
+{
+  "id": 22337,
+  "game_id": 25106,
+  "game_slug": "farming-simulator-19",
+  "name": "Farming Simulator 19",
+  "year": 2018,
+  "user": "ALATEKA",
+  "runner": "wine",
+  "slug": "farming-simulator-19-epic-store",
+  "version": "Epic Store",
+  "description": "This installer will download the Epic Store with its dependencies.",
+  "notes": "You will need to download the game manually through the Epic Store.",
+  "created_at": "2020-07-14T11:16:03.020000Z",
+  "updated_at": "2020-07-15T16:40:40.043019Z",
+  "draft": false,
+  "published": true,
+  "published_by": 51687,
+  "rating": "",
+  "steamid": 787860,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "files": [
+      {
+        "epicstore": "https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi"
+      },
+      {
+        "dx10": "https://lutris.net/files/tools/directx-2010.tar.gz"
+      }
+    ],
+    "game": {
+      "arch": "win64",
+      "args": "-opengl",
+      "exe": "drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "extract": {
+          "dst": "$CACHE/directx-2010",
+          "file": "dx10"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Creating a Wine prefix (64bits).",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win10",
+          "arch": "win64",
+          "description": "Changing Windows version to (Win10).",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "arial mdx d3dcompiler_43 d3dx9_43",
+          "arch": "win64",
+          "description": "Adding the software necessary.",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "vcrun2019",
+          "arch": "win64",
+          "description": "Installing libraries.",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "dotnet35sp1",
+          "arch": "win64",
+          "description": "Installing .NET Framework. (3.5 SP1)",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "win10",
+          "arch": "win64",
+          "description": "Changing Windows version to (Win10).",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "(Microsoft`s software) Installing directx-2010.",
+          "executable": "$CACHE/directx-2010/DXSETUP.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "description": "Installing Epic Store.",
+          "exclude_processes": "EpicGamesLauncher.exe",
+          "executable": "epicstore",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "arch": "win64",
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_HUD": 0,
+        "DXVK_STATE_CACHE": "1",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR/StateCache/",
+        "MESA_GL_VERSION_OVERRIDE": "4.4COMPAT",
+        "__GL_SHADER_DISK_CACHE": "1",
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR/ShadersCache/",
+        "__GL_THREADED_OPTIMIZATIONS": "1",
+        "mesa_glthread": "true"
+      }
+    },
+    "wine": {
+      "dxvk": true,
+      "esync": true
+    }
+  },
+  "content": "files:\n- epicstore: https://launcher-public-service-prod06.ol.epicgames.com/launcher/api/installer/download/EpicGamesLauncherInstaller.msi\n- dx10: https://lutris.net/files/tools/directx-2010.tar.gz\ngame:\n  arch: win64\n  args: -opengl\n  exe: drive_c/Program Files (x86)/Epic Games/Launcher/Portal/Binaries/Win32/EpicGamesLauncher.exe\n  prefix: $GAMEDIR\ninstaller:\n- extract:\n    dst: $CACHE/directx-2010\n    file: dx10\n- task:\n    arch: win64\n    description: Creating a Wine prefix (64bits).\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Changing Windows version to (Win10).\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: arial mdx d3dcompiler_43 d3dx9_43\n    arch: win64\n    description: Adding the software necessary.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: vcrun2019\n    arch: win64\n    description: Installing libraries.\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: dotnet35sp1\n    arch: win64\n    description: Installing .NET Framework. (3.5 SP1)\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    app: win10\n    arch: win64\n    description: Changing Windows version to (Win10).\n    name: winetricks\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: (Microsoft`s software) Installing directx-2010.\n    executable: $CACHE/directx-2010/DXSETUP.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    description: Installing Epic Store.\n    exclude_processes: EpicGamesLauncher.exe\n    executable: epicstore\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    arch: win64\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_HUD: 0\n    DXVK_STATE_CACHE: '1'\n    DXVK_STATE_CACHE_PATH: $GAMEDIR/StateCache/\n    MESA_GL_VERSION_OVERRIDE: 4.4COMPAT\n    __GL_SHADER_DISK_CACHE: '1'\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR/ShadersCache/\n    __GL_THREADED_OPTIMIZATIONS: '1'\n    mesa_glthread: 'true'\nwine:\n  dxvk: true\n  esync: true\n"
+}

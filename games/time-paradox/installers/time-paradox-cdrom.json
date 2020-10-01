@@ -1,0 +1,85 @@
+{
+  "id": 15492,
+  "game_id": 29366,
+  "game_slug": "time-paradox",
+  "name": "Time Paradox",
+  "year": 1996,
+  "user": "appoloin",
+  "runner": "dosbox",
+  "slug": "time-paradox-cdrom",
+  "version": "CDrom",
+  "description": null,
+  "notes": "",
+  "created_at": "2019-09-12T18:52:28.652953Z",
+  "updated_at": "2019-09-12T18:52:28.652980Z",
+  "draft": false,
+  "published": false,
+  "published_by": null,
+  "rating": "",
+  "steamid": null,
+  "gogid": null,
+  "gogslug": "",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "main_file": "$GAMEDIR/time-paradox.conf"
+    },
+    "installer": [
+      {
+        "write_file": {
+          "content": "#!/bin/bash\nsrc=$1\ndst=$2\ncp -avr \"$src/.\"  \"$dst\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "chmodx": "$CACHE/bulkcopy-alt.sh"
+      },
+      {
+        "execute": {
+          "args": "$GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1",
+          "file": "mkdir"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Please insert disc 1",
+          "requires": "setup.exe"
+        }
+      },
+      {
+        "execute": {
+          "args": "$DISC \"$GAMEDIR/CDD/DISC1\"",
+          "file": "$CACHE/bulkcopy-alt.sh"
+        }
+      },
+      {
+        "execute": {
+          "args": "-R 775  \"$GAMEDIR/CDD/DISC1\"",
+          "file": "/bin/chmod"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD/DISC1\" -t dir\nD:\ninstall.bat\nexit",
+          "file": "$GAMEDIR/time-paradox_setup.conf"
+        }
+      },
+      {
+        "task": {
+          "config_file": "$GAMEDIR/time-paradox_setup.conf",
+          "name": "dosexec",
+          "working_dir": "$GAMEDIR/HDD/"
+        }
+      },
+      {
+        "write_file": {
+          "content": "[sdl]\nsensitivity=20\n[autoexec]\nmount C \"$GAMEDIR/HDD\" -t dir\nmount D \"$GAMEDIR/CDD/DISC1\" -t dir\nD:\nparadox.bat\nexit",
+          "file": "$GAMEDIR/time-paradox.conf"
+        }
+      }
+    ]
+  },
+  "content": "game:\n  main_file: $GAMEDIR/time-paradox.conf\ninstaller:\n- write_file:\n    content: '#!/bin/bash\n\n      src=$1\n\n      dst=$2\n\n      cp -avr \"$src/.\"  \"$dst\"'\n    file: $CACHE/bulkcopy-alt.sh\n- chmodx: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: $GAMEDIR/HDD $GAMEDIR/CDD $GAMEDIR/CDD/DISC1\n    file: mkdir\n- insert-disc:\n    description: Please insert disc 1\n    requires: setup.exe\n- execute:\n    args: $DISC \"$GAMEDIR/CDD/DISC1\"\n    file: $CACHE/bulkcopy-alt.sh\n- execute:\n    args: -R 775  \"$GAMEDIR/CDD/DISC1\"\n    file: /bin/chmod\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t dir\n\n      D:\n\n      install.bat\n\n      exit'\n    file: $GAMEDIR/time-paradox_setup.conf\n- task:\n    config_file: $GAMEDIR/time-paradox_setup.conf\n    name: dosexec\n    working_dir: $GAMEDIR/HDD/\n- write_file:\n    content: '[sdl]\n\n      sensitivity=20\n\n      [autoexec]\n\n      mount C \"$GAMEDIR/HDD\" -t dir\n\n      mount D \"$GAMEDIR/CDD/DISC1\" -t dir\n\n      D:\n\n      paradox.bat\n\n      exit'\n    file: $GAMEDIR/time-paradox.conf\n"
+}

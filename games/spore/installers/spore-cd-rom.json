@@ -1,0 +1,83 @@
+{
+  "id": 20447,
+  "game_id": 1599,
+  "game_slug": "spore",
+  "name": "Spore",
+  "year": 2008,
+  "user": "Luhrel",
+  "runner": "wine",
+  "slug": "spore-cd-rom",
+  "version": "CD-ROM",
+  "description": "First CD-ROM version forked from the GOG version.",
+  "notes": "To entirely exit Spore, you'll also need to exit EA Download Manager.\r\n\r\n**CONFIGURE AND INSTALL THE DEPENDENCIES FIRST**\r\nInstructions for D9VK support: <a href=\"https://github.com/lutris/lutris/wiki/Installing-drivers\">https://github.com/lutris/lutris/wiki/Installing-drivers</a>",
+  "created_at": "2020-05-14T10:41:30.024000Z",
+  "updated_at": "2020-05-15T09:32:59.683887Z",
+  "draft": false,
+  "published": true,
+  "published_by": 20548,
+  "rating": "",
+  "steamid": 17390,
+  "gogid": 1948823323,
+  "gogslug": "spore_collection",
+  "humbleid": "",
+  "humblestoreid": "",
+  "humblestoreid_real": "",
+  "script": {
+    "game": {
+      "exe": "drive_c/Program Files/Electronic Arts/SPORE/Sporebin/SporeApp.exe",
+      "prefix": "$GAMEDIR"
+    },
+    "installer": [
+      {
+        "task": {
+          "arch": "win32",
+          "description": "Creating prefix",
+          "name": "create_prefix",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "app": "d3dcompiler_43 d3dx9",
+          "name": "winetricks",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "insert-disc": {
+          "description": "Waiting for game installer...",
+          "message": "Insert the Spore CD-ROM.",
+          "requires": "SPORESetup.exe"
+        }
+      },
+      {
+        "task": {
+          "arch": "win32",
+          "args": "/NOCANCEL /SP- /SUPPRESSMSGBOXES",
+          "description": "Executing setup from disc. Select \"Yes\"/\"Next\" on everything and follow the prompts. Do not change the default installation directory.",
+          "executable": "$DISC/SPORESetup.exe",
+          "name": "wineexec",
+          "prefix": "$GAMEDIR"
+        }
+      },
+      {
+        "task": {
+          "name": "winekill",
+          "prefix": "$GAMEDIR"
+        }
+      }
+    ],
+    "system": {
+      "env": {
+        "DXVK_LOG_LEVEL": "none",
+        "DXVK_STATE_CACHE_PATH": "$GAMEDIR",
+        "__GL_SHADER_DISK_CACHE": 1,
+        "__GL_SHADER_DISK_CACHE_PATH": "$GAMEDIR"
+      }
+    },
+    "wine": {
+      "dxvk": true
+    }
+  },
+  "content": "game:\n  exe: drive_c/Program Files/Electronic Arts/SPORE/Sporebin/SporeApp.exe\n  prefix: $GAMEDIR\ninstaller:\n- task:\n    arch: win32\n    description: Creating prefix\n    name: create_prefix\n    prefix: $GAMEDIR\n- task:\n    app: d3dcompiler_43 d3dx9\n    name: winetricks\n    prefix: $GAMEDIR\n- insert-disc:\n    description: Waiting for game installer...\n    message: Insert the Spore CD-ROM.\n    requires: SPORESetup.exe\n- task:\n    arch: win32\n    args: /NOCANCEL /SP- /SUPPRESSMSGBOXES\n    description: Executing setup from disc. Select \"Yes\"/\"Next\" on everything and\n      follow the prompts. Do not change the default installation directory.\n    executable: $DISC/SPORESetup.exe\n    name: wineexec\n    prefix: $GAMEDIR\n- task:\n    name: winekill\n    prefix: $GAMEDIR\nsystem:\n  env:\n    DXVK_LOG_LEVEL: none\n    DXVK_STATE_CACHE_PATH: $GAMEDIR\n    __GL_SHADER_DISK_CACHE: 1\n    __GL_SHADER_DISK_CACHE_PATH: $GAMEDIR\nwine:\n  dxvk: true\n"
+}
